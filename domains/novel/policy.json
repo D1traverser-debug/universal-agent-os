@@ -1,0 +1,12 @@
+{
+  "policy_version":"1.0.0-pilot",
+  "whole_source_is_completion_unit":true,
+  "coverage_cursor_required":true,
+  "single_source_distillation_is_candidate_only":true,
+  "canon_and_plan_are_distinct":true,
+  "writer_context_is_minimum_sufficient":true,
+  "body_hash_change_invalidates_body_dependent_reviews":true,
+  "producer_may_not_self_certify_release":true,
+  "published_canon_requires_explicit_retcon":true,
+  "external_publish_requires_authorization":true
+}

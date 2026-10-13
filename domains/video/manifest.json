@@ -1,0 +1,14 @@
+{
+  "domain_id":"video",
+  "version":"1.0.0-pilot",
+  "owner":"VIDEO",
+  "capabilities":["video.concept","video.asset_plan","video.shot_plan","video.pre_generation_review","video.generate_shot","video.shot_review","video.edit","video.final_review","video.delivery"],
+  "workflow_template_ids":["short_video_v1"],
+  "routes":[{"intent":"NEW_TASK","task_type":"short_video","template_id":"short_video_v1"}],
+  "knowledge_namespaces":["domain:video","project:video"],
+  "required_tools":["image.generate","video.generate","media.probe","media.edit","artifact.publish"],
+  "eval_suites":["video.asset_continuity","video.generation","video.cost","video.release"],
+  "dependencies":[],
+  "risk_profile":{"generation_cost":"HIGH","identity_drift":"HIGH","external_publish":"HIGH"},
+  "legacy_refs":["D1traverser-debug/video-growth-agent@8f7d0cfb8121fc1a06e1e3a24c1167649d4def94:skills/video-growth-agent/references/generation-governance.md","D1traverser-debug/video-growth-agent@8f7d0cfb8121fc1a06e1e3a24c1167649d4def94:skills/video-growth-agent/references/agent-studio.md"]
+}

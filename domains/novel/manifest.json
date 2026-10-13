@@ -1,0 +1,14 @@
+{
+  "domain_id": "novel",
+  "version": "1.0.0-pilot",
+  "owner": "NOVEL",
+  "capabilities": ["novel.source_coverage","novel.distillation","novel.architecture","novel.canon","novel.drafting","novel.review","novel.revision","novel.artifact_qa","novel.release"],
+  "workflow_template_ids": ["distill_and_create_v1"],
+  "routes": [{"intent":"NEW_TASK","task_type":"novel_project","template_id":"distill_and_create_v1"}],
+  "knowledge_namespaces": ["domain:novel", "project:novel"],
+  "required_tools": ["files.long_text_read", "document.render", "artifact.publish"],
+  "eval_suites": ["novel.coverage", "novel.canon", "novel.quality", "novel.release"],
+  "dependencies": [],
+  "risk_profile": {"long_context":"HIGH","canon_drift":"HIGH","external_publish":"HIGH"},
+  "legacy_refs": ["D1traverser-debug/novel-writing-agent@46606fee061a5cf5421a5d0ef145a5955fd66760:SKILL.md"]
+}

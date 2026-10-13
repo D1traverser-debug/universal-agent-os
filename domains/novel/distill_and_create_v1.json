@@ -1,0 +1,17 @@
+{
+  "template_id":"distill_and_create_v1",
+  "description":"Whole-source coverage, bounded distillation, original architecture, canon-bound drafting and verified release.",
+  "external_inputs":["user_brief","source_corpus"],
+  "delivery_outputs":["novel_release_artifact","delivery_receipt"],
+  "units":[
+    {"unit_id":"source_coverage","name":"Read and cover the complete source corpus","required_inputs":["source_corpus"],"expected_outputs":["coverage_ledger","source_evidence"],"executor_constraints":["novel.source_coverage"],"risk":"HIGH"},
+    {"unit_id":"distill","name":"Distill patterns, failures, methods and scope limits","dependencies":["source_coverage"],"required_inputs":["coverage_ledger","source_evidence"],"expected_outputs":["candidate_mastery"],"executor_constraints":["novel.distillation"],"risk":"HIGH"},
+    {"unit_id":"architecture","name":"Design original series and arc architecture","dependencies":["distill"],"required_inputs":["user_brief","candidate_mastery"],"expected_outputs":["novel_architecture"],"executor_constraints":["novel.architecture"],"risk":"HIGH"},
+    {"unit_id":"canon_bootstrap","name":"Freeze project identity and canon baseline","dependencies":["architecture"],"required_inputs":["novel_architecture"],"expected_outputs":["canon_pack","context_pack"],"executor_constraints":["novel.canon"],"risk":"HIGH"},
+    {"unit_id":"draft","name":"Draft from frozen context and contract","dependencies":["canon_bootstrap"],"required_inputs":["context_pack","canon_pack"],"expected_outputs":["draft_prose"],"executor_constraints":["novel.drafting"],"risk":"HIGH"},
+    {"unit_id":"review","name":"Independent continuity, reader, retention and editorial review","dependencies":["draft"],"required_inputs":["draft_prose","canon_pack"],"expected_outputs":["issue_ledger"],"executor_constraints":["novel.review"],"risk":"HIGH"},
+    {"unit_id":"revise","name":"Revise only from issue ledger","dependencies":["review"],"required_inputs":["draft_prose","issue_ledger","canon_pack"],"expected_outputs":["final_prose"],"executor_constraints":["novel.revision"],"risk":"HIGH"},
+    {"unit_id":"artifact_qa","name":"Render and QA exact final artifact","dependencies":["revise"],"required_inputs":["final_prose"],"expected_outputs":["novel_release_artifact","release_gate"],"executor_constraints":["novel.artifact_qa"],"risk":"MEDIUM"},
+    {"unit_id":"release","name":"Release exact approved hash and checkpoint","dependencies":["artifact_qa"],"required_inputs":["novel_release_artifact","release_gate"],"expected_outputs":["delivery_receipt"],"executor_constraints":["novel.release"],"risk":"HIGH"}
+  ]
+}

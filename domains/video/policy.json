@@ -1,0 +1,13 @@
+{
+  "policy_version":"1.0.0-pilot",
+  "approved_asset_identity_required":true,
+  "generation_brief_required_before_spend":true,
+  "generation_brief_fields":["narrative_job","before_state","crossing_state","after_state","must_have","must_not_have","engine_route","quality_floor","stop_conditions","exact_prompt"],
+  "pre_generation_review_roles":["ART_DIRECTOR","CREATIVE_DIRECTOR","RED_TEAM"],
+  "role_labels_are_not_execution_proof":true,
+  "shot_generation_is_runtime_fanout":true,
+  "cost_envelope_required":true,
+  "failed_output_updates_brief_or_technique_not_ad_hoc_retry":true,
+  "generated_output_is_evidence_not_success":true,
+  "producer_cannot_approve_own_output":true
+}

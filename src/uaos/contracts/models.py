@@ -87,12 +87,18 @@ class WorkUnit:
     executor_constraints: tuple[str, ...] = ()
     risk: str = "LOW"
     status: WorkStatus = WorkStatus.PENDING
+    bindings: tuple[tuple[str, str], ...] = ()
 
     def __post_init__(self) -> None:
         if not self.work_unit_id.strip() or not self.task_id.strip() or not self.name.strip():
             raise ValueError("work_unit_id, task_id and name are required")
         if self.work_unit_id in self.dependencies:
             raise ValueError("work unit cannot depend on itself")
+        binding_keys = [key for key, _ in self.bindings]
+        if any(not key.strip() for key in binding_keys):
+            raise ValueError("binding keys are required")
+        if len(binding_keys) != len(set(binding_keys)):
+            raise ValueError("duplicate work-unit binding key")
 
 
 @dataclass(frozen=True, slots=True)

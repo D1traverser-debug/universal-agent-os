@@ -13,6 +13,7 @@ class WorkUnitTemplate:
     expected_outputs: tuple[str, ...] = ()
     executor_constraints: tuple[str, ...] = ()
     risk: str = "LOW"
+    initial_status: WorkStatus = WorkStatus.PENDING
 
     def __post_init__(self) -> None:
         if not self.unit_id.strip() or not self.name.strip():
@@ -53,7 +54,7 @@ class WorkflowTemplate:
                 expected_outputs=unit.expected_outputs,
                 executor_constraints=unit.executor_constraints,
                 risk=unit.risk,
-                status=WorkStatus.PENDING,
+                status=unit.initial_status,
             )
             for unit in self.units
         )

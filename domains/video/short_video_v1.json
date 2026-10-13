@@ -1,0 +1,16 @@
+{
+  "template_id":"short_video_v1",
+  "description":"Asset-consistent, cost-governed short-video production with reviewed generation briefs and runtime shot fanout.",
+  "external_inputs":["user_brief"],
+  "delivery_outputs":["final_video","delivery_receipt"],
+  "units":[
+    {"unit_id":"concept","name":"Narrative concept and audience job","required_inputs":["user_brief"],"expected_outputs":["concept_brief"],"executor_constraints":["video.concept"],"risk":"MEDIUM"},
+    {"unit_id":"asset_plan","name":"Approve reusable character, scene and prop identities","dependencies":["concept"],"required_inputs":["concept_brief"],"expected_outputs":["approved_asset_pack"],"executor_constraints":["video.asset_plan"],"risk":"HIGH"},
+    {"unit_id":"shot_plan","name":"Create shot list, generation briefs and cost envelope","dependencies":["asset_plan"],"required_inputs":["concept_brief","approved_asset_pack"],"expected_outputs":["shot_specs"],"executor_constraints":["video.shot_plan"],"risk":"HIGH"},
+    {"unit_id":"pre_generation_review","name":"Independent Art, Creative and Red-Team review of exact briefs","dependencies":["shot_plan"],"required_inputs":["shot_specs","approved_asset_pack"],"expected_outputs":["authorized_shot_specs"],"executor_constraints":["video.pre_generation_review"],"risk":"HIGH"},
+    {"unit_id":"assemble_shots","name":"Merge independently generated and reviewed shot artifacts","dependencies":["pre_generation_review"],"required_inputs":[],"expected_outputs":["rough_cut_inputs"],"executor_constraints":["video.edit"],"risk":"MEDIUM","initial_status":"HOLD"},
+    {"unit_id":"edit","name":"Edit picture, timing, narration and sound","dependencies":["assemble_shots"],"required_inputs":["rough_cut_inputs"],"expected_outputs":["rough_cut"],"executor_constraints":["video.edit"],"risk":"MEDIUM"},
+    {"unit_id":"final_review","name":"Review playback, continuity, facts, rights and delivery spec","dependencies":["edit"],"required_inputs":["rough_cut","approved_asset_pack"],"expected_outputs":["final_video","final_review"],"executor_constraints":["video.final_review"],"risk":"HIGH"},
+    {"unit_id":"deliver","name":"Deliver exact reviewed video artifact","dependencies":["final_review"],"required_inputs":["final_video","final_review"],"expected_outputs":["delivery_receipt"],"executor_constraints":["video.delivery"],"risk":"MEDIUM"}
+  ]
+}

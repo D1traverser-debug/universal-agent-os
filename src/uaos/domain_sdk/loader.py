@@ -1,7 +1,7 @@
 from __future__ import annotations
 import json
 from pathlib import Path
-from uaos.contracts.enums import IntentType
+from uaos.contracts.enums import IntentType, WorkStatus
 from .manifest import DomainManifest, WorkflowRoute
 from .workflows import WorkflowTemplate, WorkUnitTemplate
 
@@ -35,6 +35,7 @@ def load_domain_package(path: Path) -> tuple[DomainManifest, tuple[WorkflowTempl
             expected_outputs=tuple(u.get("expected_outputs",[])),
             executor_constraints=tuple(u.get("executor_constraints",[])),
             risk=u.get("risk","LOW"),
+            initial_status=WorkStatus(u.get("initial_status","PENDING")),
         ) for u in data["units"])
         templates.append(WorkflowTemplate(
             template_id=data["template_id"], description=data["description"], units=units,
