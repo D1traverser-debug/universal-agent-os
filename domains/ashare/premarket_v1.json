@@ -1,0 +1,16 @@
+{
+  "template_id":"premarket_v1",
+  "description":"Point-in-time A-share premarket workflow with source completeness gates, runtime ticker fanout and frozen decision output.",
+  "external_inputs":["target_trading_day"],
+  "delivery_outputs":["frozen_decision","premarket_report"],
+  "units":[
+    {"unit_id":"freeze","name":"Establish trading-day and knowledge freeze boundary","required_inputs":["target_trading_day"],"expected_outputs":["freeze_card"],"executor_constraints":["ashare.freeze"],"risk":"CRITICAL"},
+    {"unit_id":"sources","name":"Acquire preferred structured and official sources","dependencies":["freeze"],"required_inputs":["freeze_card"],"expected_outputs":["source_snapshots"],"executor_constraints":["ashare.source_acquisition"],"risk":"CRITICAL"},
+    {"unit_id":"completeness","name":"Verify P01-P09/five-pool completeness and point-in-time admissibility","dependencies":["sources"],"required_inputs":["source_snapshots","freeze_card"],"expected_outputs":["frozen_evidence"],"executor_constraints":["ashare.completeness"],"risk":"CRITICAL"},
+    {"unit_id":"market_structure","name":"Build market, industry and event context","dependencies":["completeness"],"required_inputs":["frozen_evidence"],"expected_outputs":["market_context"],"executor_constraints":["ashare.market_structure"],"risk":"HIGH"},
+    {"unit_id":"recall","name":"Build recall-first candidate universe","dependencies":["market_structure"],"required_inputs":["frozen_evidence","market_context"],"expected_outputs":["candidate_universe"],"executor_constraints":["ashare.recall"],"risk":"HIGH"},
+    {"unit_id":"rank_candidates","name":"Merge per-ticker analyses","dependencies":["recall"],"required_inputs":[],"expected_outputs":["ranked_candidates"],"executor_constraints":["ashare.selection"],"risk":"HIGH","initial_status":"HOLD"},
+    {"unit_id":"selection","name":"Select bounded candidates or valid NO_TRADE","dependencies":["rank_candidates"],"required_inputs":["ranked_candidates","market_context","freeze_card"],"expected_outputs":["frozen_decision"],"executor_constraints":["ashare.selection"],"risk":"CRITICAL"},
+    {"unit_id":"deliver","name":"Deliver frozen premarket decision and evidence map","dependencies":["selection"],"required_inputs":["frozen_decision"],"expected_outputs":["premarket_report"],"executor_constraints":["ashare.selection"],"risk":"HIGH"}
+  ]
+}

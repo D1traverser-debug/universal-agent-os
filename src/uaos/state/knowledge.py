@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 from datetime import UTC, datetime
+from typing import Mapping
 
 from uaos.contracts.context import CompactionArtifact, SourceSnapshot
 from uaos.contracts.enums import KnowledgeState
@@ -9,7 +10,19 @@ from uaos.contracts.models import KnowledgeItem
 from uaos.contracts.state_machines import transition_knowledge
 
 
-def snapshot_bytes(*, snapshot_id: str, source_uri: str, content: bytes, storage_uri: str, media_type: str = "application/octet-stream", observed_at: datetime | None = None) -> SourceSnapshot:
+def snapshot_bytes(
+    *,
+    snapshot_id: str,
+    source_uri: str,
+    content: bytes,
+    storage_uri: str,
+    media_type: str = "application/octet-stream",
+    observed_at: datetime | None = None,
+    content_max_available_at: datetime | None = None,
+    completeness: str = "UNKNOWN",
+    gaps: tuple[str, ...] = (),
+    metadata: Mapping[str, str] | None = None,
+) -> SourceSnapshot:
     return SourceSnapshot(
         snapshot_id=snapshot_id,
         source_uri=source_uri,
@@ -17,6 +30,10 @@ def snapshot_bytes(*, snapshot_id: str, source_uri: str, content: bytes, storage
         observed_at=observed_at or datetime.now(UTC),
         storage_uri=storage_uri,
         media_type=media_type,
+        content_max_available_at=content_max_available_at,
+        completeness=completeness,
+        gaps=gaps,
+        metadata=dict(metadata or {}),
     )
 
 

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Mapping
 
@@ -13,6 +13,35 @@ class SourceSnapshot:
     observed_at: datetime
     storage_uri: str
     media_type: str = "application/octet-stream"
+    content_max_available_at: datetime | None = None
+    completeness: str = "UNKNOWN"
+    gaps: tuple[str, ...] = ()
+    metadata: Mapping[str, str] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not all((self.snapshot_id.strip(), self.source_uri.strip(), self.content_hash.strip(), self.storage_uri.strip())):
+            raise ValueError("snapshot identity, source, hash and storage are required")
+        if self.observed_at.tzinfo is None:
+            raise ValueError("observed_at must be timezone-aware")
+        if self.content_max_available_at is not None:
+            if self.content_max_available_at.tzinfo is None:
+                raise ValueError("content_max_available_at must be timezone-aware")
+            if self.content_max_available_at > self.observed_at:
+                raise ValueError("content_max_available_at cannot be after observation")
+        if self.completeness not in {"FULL", "PARTIAL", "UNKNOWN"}:
+            raise ValueError("invalid completeness")
+        if self.completeness == "FULL" and self.gaps:
+            raise ValueError("FULL snapshot cannot declare gaps")
+
+    def assert_usable_for(self, freeze_at: datetime, *, require_full: bool = True) -> None:
+        if freeze_at.tzinfo is None:
+            raise ValueError("freeze_at must be timezone-aware")
+        if self.content_max_available_at is None:
+            raise ValueError("snapshot has no knowledge-availability boundary")
+        if self.content_max_available_at > freeze_at:
+            raise ValueError("snapshot contains information unavailable at freeze boundary")
+        if require_full and self.completeness != "FULL":
+            raise ValueError(f"snapshot completeness is {self.completeness}, not FULL")
 
 
 @dataclass(frozen=True, slots=True)

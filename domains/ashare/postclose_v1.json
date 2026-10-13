@@ -1,0 +1,13 @@
+{
+  "template_id":"postclose_v1",
+  "description":"Post-close reconciliation against immutable premarket evidence without future-information contamination.",
+  "external_inputs":["frozen_decision_ref","target_trading_day"],
+  "delivery_outputs":["review_report","learning_candidate"],
+  "units":[
+    {"unit_id":"load_frozen","name":"Load immutable premarket decision and recall universe","required_inputs":["frozen_decision_ref"],"expected_outputs":["premarket_cassette"],"executor_constraints":["ashare.freeze"],"risk":"CRITICAL"},
+    {"unit_id":"outcomes","name":"Freeze post-close outcomes and five-pool state","required_inputs":["target_trading_day"],"expected_outputs":["outcome_snapshot"],"executor_constraints":["ashare.outcome"],"risk":"HIGH"},
+    {"unit_id":"reconcile","name":"Reconcile pool counts and mutually exclusive outcomes","dependencies":["load_frozen","outcomes"],"required_inputs":["premarket_cassette","outcome_snapshot"],"expected_outputs":["reconciled_outcomes"],"executor_constraints":["ashare.outcome"],"risk":"HIGH"},
+    {"unit_id":"attribution","name":"Attribute hits and misses to earliest failed layer","dependencies":["reconcile"],"required_inputs":["premarket_cassette","reconciled_outcomes"],"expected_outputs":["attribution_ledger","review_report"],"executor_constraints":["ashare.attribution"],"risk":"HIGH"},
+    {"unit_id":"learning","name":"Create bounded learning candidate without single-day promotion","dependencies":["attribution"],"required_inputs":["attribution_ledger"],"expected_outputs":["learning_candidate"],"executor_constraints":["ashare.learning"],"risk":"MEDIUM"}
+  ]
+}

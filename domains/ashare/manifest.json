@@ -1,0 +1,23 @@
+{
+  "domain_id":"ashare",
+  "version":"1.0.0-pilot",
+  "owner":"A_SHARE_MARKET",
+  "capabilities":[
+    "ashare.freeze","ashare.source_acquisition","ashare.completeness","ashare.market_structure",
+    "ashare.recall","ashare.stock_analysis","ashare.selection","ashare.outcome","ashare.attribution","ashare.learning"
+  ],
+  "workflow_template_ids":["premarket_v1","postclose_v1"],
+  "routes":[
+    {"intent":"NEW_TASK","task_type":"premarket","template_id":"premarket_v1"},
+    {"intent":"NEW_TASK","task_type":"postclose_review","template_id":"postclose_v1"}
+  ],
+  "knowledge_namespaces":["domain:ashare","market:ashare"],
+  "required_tools":["market.structured_data","web.current_research","artifact.snapshot"],
+  "eval_suites":["ashare.point_in_time","ashare.source_completeness","ashare.recall","ashare.review"],
+  "dependencies":[],
+  "risk_profile":{"point_in_time_leakage":"CRITICAL","financial_decision":"HIGH","source_conflict":"HIGH"},
+  "legacy_refs":[
+    "D1traverser-debug/a-share-event-driven-agent@651d97533cd62d34dc230f0b5047715074ab1803:ashare_event_agent/resources/references/sources.md",
+    "D1traverser-debug/a-share-event-driven-agent@651d97533cd62d34dc230f0b5047715074ab1803:ashare_event_agent/resources/references/review.md"
+  ]
+}

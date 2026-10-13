@@ -1,0 +1,18 @@
+{
+  "policy_version":"1.0.0-pilot",
+  "timezone":"Asia/Shanghai",
+  "horizon_days":[1,2],
+  "no_trade_is_valid":true,
+  "source_retrieval_priority":["STRUCTURED_API","OFFICIAL","STATIC_HTTP","EMBEDDED_JSON","DATABASE","WEB","BROWSER"],
+  "browser_last_resort":true,
+  "point_in_time_proof_required":true,
+  "full_requires_explicit_completeness":true,
+  "source_conflicts_must_be_preserved_until_reconciled":true,
+  "five_pool_semantics":["limit_up","limit_down","limit_up_broken","super_stock","yesterday_limit_up"],
+  "postclose_may_not_rewrite_premarket_evidence":true,
+  "single_day_promotion_forbidden":true,
+  "min_replay_cases":5,
+  "min_regimes":2,
+  "positive_and_negative_samples_required":true,
+  "future_contamination_forbidden":true
+}
