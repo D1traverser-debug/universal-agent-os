@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "universal-agent-os"
+version = "0.1.0"
+description = "Requirement-driven durable control plane for multi-agent work"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Proprietary"}
+authors = [{name = "D1traverser-debug"}]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<10",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/uaos"]

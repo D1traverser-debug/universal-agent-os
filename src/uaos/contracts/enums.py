@@ -1,0 +1,86 @@
+from __future__ import annotations
+
+from enum import StrEnum
+
+
+class IntentType(StrEnum):
+    NEW_TASK = "NEW_TASK"
+    CONTINUE = "CONTINUE"
+    REQUIREMENT_CHANGE = "REQUIREMENT_CHANGE"
+    QUERY = "QUERY"
+    SYSTEM_MAINTENANCE = "SYSTEM_MAINTENANCE"
+    PAUSE = "PAUSE"
+    CANCEL = "CANCEL"
+
+
+class ScopeType(StrEnum):
+    GLOBAL = "GLOBAL"
+    SUBSYSTEM = "SUBSYSTEM"
+    TASK_TYPE = "TASK_TYPE"
+    TASK = "TASK"
+    ONE_SHOT = "ONE_SHOT"
+
+
+class RequirementState(StrEnum):
+    ACTIVE = "ACTIVE"
+    SUPERSEDED = "SUPERSEDED"
+    CANCELLED = "CANCELLED"
+    EXPIRED = "EXPIRED"
+
+
+class TaskStatus(StrEnum):
+    PENDING = "PENDING"
+    RUNNING = "RUNNING"
+    HOLD = "HOLD"
+    BLOCKED = "BLOCKED"
+    PARTIAL = "PARTIAL"
+    UNVERIFIED = "UNVERIFIED"
+    VERIFIED = "VERIFIED"
+    COMPLETE = "COMPLETE"
+    FAILED = "FAILED"
+    CANCELLED = "CANCELLED"
+    UNKNOWN = "UNKNOWN"
+
+
+class WorkStatus(StrEnum):
+    PENDING = "PENDING"
+    READY = "READY"
+    RUNNING = "RUNNING"
+    WAITING = "WAITING"
+    HOLD = "HOLD"
+    BLOCKED = "BLOCKED"
+    SUCCEEDED = "SUCCEEDED"
+    FAILED = "FAILED"
+    CANCELLED = "CANCELLED"
+    INVALIDATED = "INVALIDATED"
+
+
+class ActionStatus(StrEnum):
+    PREPARED = "PREPARED"
+    SENT = "SENT"
+    UNKNOWN = "UNKNOWN"
+    RECONCILED = "RECONCILED"
+    CONFIRMED = "CONFIRMED"
+    FAILED = "FAILED"
+    COMPENSATED = "COMPENSATED"
+
+
+class ArtifactState(StrEnum):
+    DRAFT = "DRAFT"
+    CANDIDATE = "CANDIDATE"
+    APPROVED = "APPROVED"
+    RETIRED = "RETIRED"
+
+
+class KnowledgeState(StrEnum):
+    RAW_EVIDENCE = "RAW_EVIDENCE"
+    CANDIDATE = "CANDIDATE"
+    EVALUATED = "EVALUATED"
+    CANONICAL = "CANONICAL"
+    RETIRED = "RETIRED"
+
+
+class Lane(StrEnum):
+    PRODUCTION = "PRODUCTION"
+    CANDIDATE = "CANDIDATE"
+    EXPLORATION = "EXPLORATION"
