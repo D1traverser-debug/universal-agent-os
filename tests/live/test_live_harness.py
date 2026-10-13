@@ -59,3 +59,15 @@ def test_live_openai_requires_key_and_explicit_model(monkeypatch):
         LiveConfig.from_env().require_openai()
     monkeypatch.setenv("UAOS_OPENAI_PROBE_MODEL", "explicit-model")
     assert LiveConfig.from_env().require_openai() == "explicit-model"
+
+
+def test_live_object_store_requires_endpoint_and_bucket(monkeypatch):
+    monkeypatch.delenv("UAOS_OBJECT_STORE_URL", raising=False)
+    monkeypatch.delenv("UAOS_OBJECT_STORE_BUCKET", raising=False)
+    with pytest.raises(LiveConfigurationError, match="UAOS_OBJECT_STORE_URL"):
+        LiveConfig.from_env().require_object_store()
+    monkeypatch.setenv("UAOS_OBJECT_STORE_URL", "http://localhost:9000")
+    with pytest.raises(LiveConfigurationError, match="UAOS_OBJECT_STORE_BUCKET"):
+        LiveConfig.from_env().require_object_store()
+    monkeypatch.setenv("UAOS_OBJECT_STORE_BUCKET", "uaos-live")
+    assert LiveConfig.from_env().require_object_store() == ("http://localhost:9000", "uaos-live", "us-east-1")

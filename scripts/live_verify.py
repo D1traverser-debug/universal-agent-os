@@ -9,12 +9,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from uaos.live import LiveConfig, LiveConfigurationError, run_dbos_probe, run_postgres_probe
+from uaos.live.object_store_probe import run_object_store_probe
 from uaos.live.openai_probe import run_openai_probe
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="UAOS live integration verifier")
-    parser.add_argument("target", choices=("postgres", "dbos", "openai", "all"))
+    parser.add_argument("target", choices=("postgres", "dbos", "object-store", "openai", "all"))
     args = parser.parse_args()
     cfg = LiveConfig.from_env()
     out: dict[str, object] = {"target": args.target, "status": "PASS", "checks": {}}
@@ -32,6 +33,15 @@ def main() -> int:
                 "workflow_id": result.workflow_id,
                 "result": result.result,
                 "duplicate_returned_existing": result.duplicate_returned_existing,
+            }
+        if args.target in {"object-store", "all"}:
+            endpoint, bucket, region = cfg.require_object_store()
+            result = run_object_store_probe(endpoint_url=endpoint, bucket=bucket, region=region)
+            out["checks"]["object_store"] = {
+                "bucket": result.bucket,
+                "content_hash": result.content_hash,
+                "roundtrip_verified": result.roundtrip_verified,
+                "cleanup_verified": result.cleanup_verified,
             }
         if args.target in {"openai", "all"}:
             result = run_openai_probe(cfg.require_openai())

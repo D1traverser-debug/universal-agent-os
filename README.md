@@ -10,7 +10,7 @@ Universal Agent OS is a clean-slate, requirement-driven control plane for durabl
 
 The repository contains deterministic contracts and reference implementations for task/requirement authority, durable runtime adapters, execution/capability routing, approvals and ambiguous side effects, DAG orchestration and dynamic fan-out, source/knowledge governance, evidence-based completion, domain SDKs (financial writing, novel, video, A-share), governed self-evolution, control-target resolution, topology authority, compatibility and retry policy.
 
-A separate live-verification harness now exists for real PostgreSQL, DBOS workflow identity/crash recovery and an opt-in OpenAI Agents executor probe. Missing infrastructure is reported as BLOCKED rather than replaced by mocks. See `docs/assurance/LIVE_INTEGRATION.md`.
+A separate live-verification harness exists for real PostgreSQL, DBOS workflow identity/crash recovery, S3-compatible content-addressed artifacts, and an opt-in OpenAI Agents executor probe. Missing infrastructure is reported as BLOCKED rather than replaced by mocks. See `docs/assurance/LIVE_INTEGRATION.md`.
 
 Local cumulative integration passes the recorded Phase 0–11 suite, and the live harness has its own contract tests. This is not production certification. See `docs/assurance/PRODUCTION_READINESS.json` for live blockers and `docs/assurance/FROZEN_SCENARIO_COVERAGE.json` for the 20 frozen acceptance scenarios.
 

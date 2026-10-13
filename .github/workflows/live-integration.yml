@@ -8,6 +8,7 @@ on:
       - 'src/uaos/live/**'
       - 'src/uaos/runtime/**'
       - 'src/uaos/execution/**'
+      - 'src/uaos/state/**'
       - 'scripts/live_verify.py'
       - 'scripts/dbos_crash_probe.py'
       - '.github/workflows/live-integration.yml'
@@ -59,6 +60,36 @@ jobs:
           test "$code" -eq 91
       - name: Recover DBOS workflow in a fresh process
         run: python scripts/dbos_crash_probe.py recover
+
+  object-store:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: uaos-minio
+      AWS_SECRET_ACCESS_KEY: uaos-minio-secret
+      AWS_DEFAULT_REGION: us-east-1
+      UAOS_OBJECT_STORE_URL: http://localhost:9000
+      UAOS_OBJECT_STORE_BUCKET: uaos-live
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Start MinIO
+        run: |
+          docker run -d --name uaos-minio -p 9000:9000 \
+            -e MINIO_ROOT_USER=uaos-minio \
+            -e MINIO_ROOT_PASSWORD=uaos-minio-secret \
+            minio/minio:latest server /data
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:9000/minio/health/live >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          docker logs uaos-minio
+          exit 1
+      - name: Install live dependencies
+        run: python -m pip install -e '.[dev,live]'
+      - name: S3-compatible artifact roundtrip
+        run: python scripts/live_verify.py object-store
 
   openai-provider:
     if: github.event_name == 'workflow_dispatch'
