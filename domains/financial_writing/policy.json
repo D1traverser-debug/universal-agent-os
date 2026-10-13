@@ -1,0 +1,31 @@
+{
+  "policy_version": "1.0.0-pilot",
+  "distribution_mode": "DUAL",
+  "required_delivery_outputs": ["FINANCE_DEEP_DOCX", "FINANCE_BROAD_DOCX", "AUDIT_DOCX"],
+  "finance_compliance": {
+    "hard_fail_phrases": ["加仓","减仓","低吸","追涨","抄底","止盈","止损","目标价","仓位","买卖点","介入时点","核心推荐","最值得买"],
+    "semantic_review_terms": ["买入", "卖出"],
+    "no_covert_recommendation_evasion": true,
+    "company_comparison_must_remain_non_actionable": true
+  },
+  "research": {
+    "current_sources_required": true,
+    "universe_class_coverage_required": true,
+    "universe_recall_sources_min": 2,
+    "silent_company_omission_forbidden": true,
+    "evidence_stage_non_escalation_required": true
+  },
+  "delivery": {
+    "word_file_only": true,
+    "actual_current_artifact_visibility_required": true,
+    "historical_filename_or_hash_is_not_delivery_proof": true,
+    "regenerated_binary_requires_fresh_mechanical_and_render_qa": true
+  },
+  "document": {"tables_allowed": false, "risk_disclaimer_required": true},
+  "assurance": {
+    "self_review_may_route_workflow": true,
+    "self_review_is_not_independent_certification": true,
+    "requirement_coverage_required": true
+  },
+  "migration_note": "Pilot policy carries only confirmed business invariants needed for the first UAOS scenario. Remaining style/editorial rules stay legacy evidence until migrated through requirement/eval mapping."
+}

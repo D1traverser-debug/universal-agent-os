@@ -1,0 +1,19 @@
+{
+  "template_id": "article_v1",
+  "description": "Dual-output financial article research, drafting, rendered-deliverable audit and delivery.",
+  "external_inputs": ["user_brief"],
+  "delivery_outputs": ["finance_broad_docx", "finance_deep_docx", "audit_docx", "delivery_receipt"],
+  "units": [
+    {"unit_id":"research","name":"Current-source research","required_inputs":["user_brief"],"expected_outputs":["research_pack"],"executor_constraints":["financial.research"],"risk":"MEDIUM"},
+    {"unit_id":"research_audit","name":"Research evidence audit","dependencies":["research"],"required_inputs":["research_pack"],"expected_outputs":["audited_research"],"executor_constraints":["financial.research_audit"],"risk":"MEDIUM"},
+    {"unit_id":"editorial","name":"Editorial structure and comparison plan","dependencies":["research_audit"],"required_inputs":["audited_research"],"expected_outputs":["editorial_plan"],"executor_constraints":["financial.editorial"],"risk":"MEDIUM"},
+    {"unit_id":"title","name":"Headline generation and selection","dependencies":["editorial"],"required_inputs":["audited_research","editorial_plan"],"expected_outputs":["title_set"],"executor_constraints":["financial.title"],"risk":"LOW"},
+    {"unit_id":"draft","name":"Draft broad and deep article versions","dependencies":["title"],"required_inputs":["audited_research","editorial_plan","title_set"],"expected_outputs":["finance_broad_draft","finance_deep_draft"],"executor_constraints":["financial.drafting"],"risk":"MEDIUM"},
+    {"unit_id":"editorial_audit","name":"Semantic, style and finance-compliance audit","dependencies":["draft"],"required_inputs":["finance_broad_draft","finance_deep_draft","editorial_plan","audited_research"],"expected_outputs":["editorial_audit"],"executor_constraints":["financial.editorial_audit"],"risk":"HIGH"},
+    {"unit_id":"render_documents","name":"Render current article deliverables","dependencies":["editorial_audit"],"required_inputs":["finance_broad_draft","finance_deep_draft","editorial_audit"],"expected_outputs":["finance_broad_docx","finance_deep_docx"],"executor_constraints":["financial.document_render"],"risk":"LOW"},
+    {"unit_id":"mechanical_audit","name":"Mechanical and render QA of actual documents","dependencies":["render_documents"],"required_inputs":["finance_broad_docx","finance_deep_docx"],"expected_outputs":["mechanical_audit"],"executor_constraints":["financial.mechanical_audit"],"risk":"MEDIUM"},
+    {"unit_id":"final_audit","name":"Final requirement and deliverable audit","dependencies":["mechanical_audit","research_audit","editorial_audit"],"required_inputs":["finance_broad_docx","finance_deep_docx","audited_research","editorial_audit","mechanical_audit"],"expected_outputs":["final_audit"],"executor_constraints":["financial.final_audit"],"risk":"HIGH"},
+    {"unit_id":"render_audit_report","name":"Render audit report document","dependencies":["final_audit"],"required_inputs":["final_audit","editorial_audit","mechanical_audit"],"expected_outputs":["audit_docx"],"executor_constraints":["financial.document_render"],"risk":"LOW"},
+    {"unit_id":"deliver","name":"Verify visibility and deliver exact approved artifacts","dependencies":["render_audit_report","final_audit"],"required_inputs":["finance_broad_docx","finance_deep_docx","audit_docx","final_audit"],"expected_outputs":["delivery_receipt"],"executor_constraints":["financial.delivery"],"risk":"MEDIUM"}
+  ]
+}
