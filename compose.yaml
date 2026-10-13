@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: uaos
+      POSTGRES_USER: uaos
+      POSTGRES_PASSWORD: uaos-local-only
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U uaos -d uaos"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - uaos-postgres:/var/lib/postgresql/data
+
+volumes:
+  uaos-postgres:

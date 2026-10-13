@@ -1,0 +1,77 @@
+name: live-integration
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'migrations/**'
+      - 'src/uaos/live/**'
+      - 'src/uaos/runtime/**'
+      - 'src/uaos/execution/**'
+      - 'scripts/live_verify.py'
+      - 'scripts/dbos_crash_probe.py'
+      - '.github/workflows/live-integration.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-dbos:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: uaos
+          POSTGRES_USER: uaos
+          POSTGRES_PASSWORD: uaos-ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U uaos -d uaos"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 30
+    env:
+      UAOS_DATABASE_URL: postgresql://uaos:uaos-ci@localhost:5432/uaos
+      DBOS_SYSTEM_DATABASE_URL: postgresql://uaos:uaos-ci@localhost:5432/uaos
+      UAOS_DBOS_CRASH_WORKFLOW_ID: uaos-ci-crash-recovery-v1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install live dependencies
+        run: python -m pip install -e '.[dev,live]'
+      - name: Contract suite
+        run: pytest
+      - name: Live PostgreSQL authority probe
+        run: python scripts/live_verify.py postgres
+      - name: Live DBOS identity/idempotency probe
+        run: python scripts/live_verify.py dbos
+      - name: Crash first DBOS process after durable start
+        shell: bash
+        run: |
+          set +e
+          python scripts/dbos_crash_probe.py start
+          code=$?
+          set -e
+          test "$code" -eq 91
+      - name: Recover DBOS workflow in a fresh process
+        run: python scripts/dbos_crash_probe.py recover
+
+  openai-provider:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      UAOS_OPENAI_PROBE_MODEL: ${{ vars.UAOS_OPENAI_PROBE_MODEL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install live dependencies
+        run: python -m pip install -e '.[live]'
+      - name: Live OpenAI Agents executor probe
+        run: python scripts/live_verify.py openai

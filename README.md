@@ -6,11 +6,13 @@ Universal Agent OS is a clean-slate, requirement-driven control plane for durabl
 
 ## Current stage
 
-**Phase 11 implementation baseline complete; production readiness is still OPEN.**
+**Phase 11 implementation baseline complete; Live Integration & Cutover is in progress. Production readiness is still OPEN.**
 
-The repository now contains deterministic contracts and reference implementations for task/requirement authority, durable runtime adapters, execution/capability routing, approvals and ambiguous side effects, DAG orchestration and dynamic fan-out, source/knowledge governance, evidence-based completion, domain SDKs (financial writing, novel, video, A-share), governed self-evolution, control-target resolution, topology authority, compatibility and retry policy.
+The repository contains deterministic contracts and reference implementations for task/requirement authority, durable runtime adapters, execution/capability routing, approvals and ambiguous side effects, DAG orchestration and dynamic fan-out, source/knowledge governance, evidence-based completion, domain SDKs (financial writing, novel, video, A-share), governed self-evolution, control-target resolution, topology authority, compatibility and retry policy.
 
-Local cumulative integration currently passes the recorded Phase 0–11 suite. This is not a production certification. See `docs/assurance/PRODUCTION_READINESS.json` for live blockers and `docs/assurance/FROZEN_SCENARIO_COVERAGE.json` for the 20 frozen acceptance scenarios.
+A separate live-verification harness now exists for real PostgreSQL, DBOS workflow identity/crash recovery and an opt-in OpenAI Agents executor probe. Missing infrastructure is reported as BLOCKED rather than replaced by mocks. See `docs/assurance/LIVE_INTEGRATION.md`.
+
+Local cumulative integration passes the recorded Phase 0–11 suite, and the live harness has its own contract tests. This is not production certification. See `docs/assurance/PRODUCTION_READINESS.json` for live blockers and `docs/assurance/FROZEN_SCENARIO_COVERAGE.json` for the 20 frozen acceptance scenarios.
 
 ## Authority
 
@@ -19,6 +21,7 @@ Local cumulative integration currently passes the recorded Phase 0–11 suite. T
 - Architecture blueprint: `docs/architecture/ARCHITECTURE_BLUEPRINT_v1.md`
 - Requirement mapping: `docs/architecture/REQUIREMENT_MAPPING.md`
 - Production readiness: `docs/assurance/PRODUCTION_READINESS.json`
+- Live verification: `docs/assurance/LIVE_INTEGRATION.md`
 
 Frozen Requirements v1.0 is not edited in place. Requirement changes create a new version with explicit user/evidence-driven justification.
 
@@ -31,4 +34,11 @@ The implementation remains a modular monolith. PostgreSQL is the intended author
 ```bash
 python -m pip install -e '.[dev]'
 pytest
+```
+
+For real dependency verification:
+
+```bash
+python -m pip install -e '.[dev,live]'
+# See docs/assurance/LIVE_INTEGRATION.md
 ```
