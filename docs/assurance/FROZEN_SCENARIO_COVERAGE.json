@@ -1,0 +1,26 @@
+{
+  "requirements_version": "v1.0",
+  "coverage_version": "phase11-2026-10-14",
+  "scenarios": [
+    {"id":"S01","name":"普通做XX自主闭环","local_status":"CONTRACT_PASS","evidence":["tests/contracts/test_planning.py","tests/assurance/test_completion_gate.py","tests/test_phase11_scheduling_context.py"],"live_e2e":"OPEN"},
+    {"id":"S02","name":"财经新文章","local_status":"STRUCTURAL_PASS","evidence":["tests/test_domain_sdk_financial.py","domains/financial_writing/article_v1.json"],"live_e2e":"OPEN"},
+    {"id":"S03","name":"财经系统审视不误续写","local_status":"CONTRACT_PASS","evidence":["tests/test_phase11_control_topology.py"],"live_e2e":"OPEN"},
+    {"id":"S04","name":"A股盘前冻结与完整性门禁","local_status":"STRUCTURAL_PASS","evidence":["tests/test_phase9_ashare.py","domains/ashare/premarket_v1.json"],"live_e2e":"OPEN"},
+    {"id":"S05","name":"A股盘后冻结复盘与学习候选","local_status":"STRUCTURAL_PASS","evidence":["tests/test_phase9_ashare.py","domains/ashare/postclose_v1.json"],"live_e2e":"OPEN"},
+    {"id":"S06","name":"视频多Agent与资产连续性","local_status":"STRUCTURAL_PASS","evidence":["tests/test_phase8_domains.py","domains/video/short_video_v1.json"],"live_e2e":"OPEN"},
+    {"id":"S07","name":"小说整本蒸馏并原创","local_status":"STRUCTURAL_PASS","evidence":["tests/test_phase8_domains.py","domains/novel/distill_and_create_v1.json","tests/state/test_knowledge_and_context.py"],"live_e2e":"OPEN"},
+    {"id":"S08","name":"聊天上限后继承","local_status":"CONTRACT_PASS","evidence":["tests/runtime/test_reference_runtime.py","tests/test_phase11_control_topology.py"],"live_e2e":"OPEN"},
+    {"id":"S09","name":"新增撤销长期要求","local_status":"CONTRACT_PASS","evidence":["tests/contracts/test_task_and_requirements.py","tests/test_phase11_control_topology.py"],"live_e2e":"OPEN"},
+    {"id":"S10","name":"工具超时未知副作用","local_status":"CONTRACT_PASS","evidence":["tests/execution/test_execution_fabric.py","tests/test_phase11_compat_retry.py"],"live_e2e":"OPEN"},
+    {"id":"S11","name":"重复故障提升失败类","local_status":"CONTRACT_PASS","evidence":["tests/test_evolution.py"],"live_e2e":"OPEN"},
+    {"id":"S12","name":"多任务多Agent竞争协调","local_status":"CONTRACT_PASS","evidence":["tests/state/test_versioned_repository.py","tests/test_phase11_scheduling_context.py","tests/test_phase8_domains.py"],"live_e2e":"OPEN"},
+    {"id":"S13","name":"新Agent模型工具引入治理","local_status":"CONTRACT_PASS","evidence":["tests/execution/test_execution_fabric.py","tests/test_evolution.py"],"live_e2e":"OPEN"},
+    {"id":"S14","name":"系统升级继续旧任务","local_status":"CONTRACT_PASS","evidence":["tests/test_phase11_compat_retry.py","tests/runtime/test_reference_runtime.py"],"live_e2e":"OPEN"},
+    {"id":"S15","name":"当前产物真实交付","local_status":"CONTRACT_PASS","evidence":["tests/state/test_artifact_store.py","tests/assurance/test_completion_gate.py"],"live_e2e":"OPEN"},
+    {"id":"S16","name":"空闲维护","local_status":"POLICY_PASS","evidence":["tests/test_evolution.py"],"live_e2e":"OPEN_BACKGROUND_RUNTIME_REQUIRED"},
+    {"id":"S17","name":"上下文压缩后恢复","local_status":"CONTRACT_PASS","evidence":["tests/state/test_knowledge_and_context.py","tests/test_phase11_scheduling_context.py"],"live_e2e":"OPEN"},
+    {"id":"S18","name":"两个故障同时发生","local_status":"MULTIFAULT_PASS","evidence":["tests/test_phase11_multifault.py"],"live_e2e":"OPEN"},
+    {"id":"S19","name":"用户中途改目标局部重算","local_status":"CONTRACT_PASS","evidence":["tests/kernel/test_replanning.py"],"live_e2e":"OPEN"},
+    {"id":"S20","name":"权限不足明确阻断","local_status":"CONTRACT_PASS","evidence":["tests/execution/test_execution_fabric.py","tests/contracts/test_actions_and_approvals.py"],"live_e2e":"OPEN"}
+  ]
+}

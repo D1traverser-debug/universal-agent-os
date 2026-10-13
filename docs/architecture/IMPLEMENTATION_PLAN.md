@@ -1,6 +1,6 @@
 # Clean-Slate v4 Implementation Plan
 
-Status: ACTIVE. The new repository exists and Phase 0 is in progress.
+Status: IMPLEMENTATION BASELINE COMPLETE THROUGH PHASE 11. Live integration and production-readiness validation remain OPEN; see `docs/assurance/PRODUCTION_READINESS.json`.
 
 ## Phase 0 — New repository and contracts
 - initialize Python project and CI;
@@ -124,7 +124,10 @@ Exit: S11/S13/S16 pass; maintenance cannot bypass production gates.
 - storage corruption/visibility tests;
 - cost and context budgets.
 
-## Explicit non-goals before Phase 11
+## Phase 11 exit boundary
+The deterministic/reference implementation baseline is complete only when the cumulative local suite and the 20-scenario coverage ledger pass. Production readiness additionally requires the live evidence tracked in `docs/assurance/PRODUCTION_READINESS.json`; local tests are not a substitute.
+
+## Explicit non-goals before production cutover
 - Kubernetes;
 - microservices;
 - multiple orchestration frameworks;

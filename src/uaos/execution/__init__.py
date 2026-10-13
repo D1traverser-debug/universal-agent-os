@@ -5,6 +5,7 @@ from .coordinator import ActionCoordinator, CoordinatedExecution
 from .models import CapabilityHealth, CapabilityObservation, ExecutionDisposition, ExecutionOutcome, ExecutionRequest
 from .openai_agents import OpenAIAgentSpec, OpenAIAgentsExecutor
 from .registry import CapabilityRegistry, CapabilityRouter, CapabilityUnavailable, RegisteredCapability
+from .retry import RetryDecision, RetryPolicy, assess_retry
 
 __all__ = [
     "ActionCoordinator",
@@ -23,4 +24,7 @@ __all__ = [
     "OpenAIAgentSpec",
     "OpenAIAgentsExecutor",
     "RegisteredCapability",
+    "RetryDecision",
+    "RetryPolicy",
+    "assess_retry",
 ]

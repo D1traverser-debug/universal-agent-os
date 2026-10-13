@@ -1,0 +1,18 @@
+{
+  "snapshot_date": "2026-10-14",
+  "status": "IMPLEMENTATION_BASELINE_COMPLETE__PRODUCTION_NOT_READY",
+  "frozen_requirements_blob": "2f51531a0f34bc7fe59e022d3c70c454c5608453",
+  "local_integrated_test_count": 97,
+  "local_integrated_test_status": "PASS",
+  "hosted_ci": "BLOCKED_BEFORE_RUNNER_ASSIGNMENT",
+  "open_blockers": [
+    {"id":"R1","name":"GitHub Actions runner allocation","required_evidence":"hosted workflow job obtains runner and executes full suite"},
+    {"id":"R2","name":"Live PostgreSQL authority","required_evidence":"migrations 0001-0005 applied and transaction/CAS behavior verified against real PostgreSQL"},
+    {"id":"R3","name":"Live DBOS crash recovery","required_evidence":"process interruption and resume/replay verified with real DBOS + PostgreSQL"},
+    {"id":"R4","name":"Live executor/provider integration","required_evidence":"OpenAI/tool/provider adapters execute and reconcile real actions through Action Authority"},
+    {"id":"R5","name":"Live artifact/object-store delivery","required_evidence":"current visible artifacts verified from real external/object storage"},
+    {"id":"R6","name":"Domain live E2E","required_evidence":"financial, novel, video and A-share workflows each pass at least one real end-to-end task on UAOS"},
+    {"id":"R7","name":"Background maintenance runtime","required_evidence":"real scheduler/background capability executes maintenance without stealing foreground work"},
+    {"id":"R8","name":"Production self-change","required_evidence":"intentionally disabled until R1-R7 and dedicated promotion/rollback drills pass"}
+  ]
+}
