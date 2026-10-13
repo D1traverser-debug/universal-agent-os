@@ -30,7 +30,14 @@ _KNOWLEDGE_TRANSITIONS = {
 }
 
 
-def transition_knowledge(item: KnowledgeItem, to_state: KnowledgeState) -> KnowledgeItem:
+def transition_knowledge(item: KnowledgeItem, to_state: KnowledgeState, *, usage_links: tuple[str, ...] | None = None) -> KnowledgeItem:
     if to_state not in _KNOWLEDGE_TRANSITIONS[item.state]:
         raise ValueError(f"invalid knowledge transition: {item.state} -> {to_state}")
-    return replace(item, state=to_state)
+    updated = replace(
+        item,
+        state=to_state,
+        usage_links=usage_links if usage_links is not None else item.usage_links,
+    )
+    if to_state is KnowledgeState.CANONICAL and not updated.usage_links:
+        raise ValueError("canonical knowledge requires at least one validated usage/evaluation link")
+    return updated

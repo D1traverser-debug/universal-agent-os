@@ -13,8 +13,10 @@ def test_knowledge_cannot_jump_from_raw_evidence_to_canonical():
         transition_knowledge(item(), KnowledgeState.CANONICAL)
 
 
-def test_knowledge_promotion_requires_evaluated_stage():
+def test_knowledge_promotion_requires_evaluated_stage_and_usage_link():
     candidate = transition_knowledge(item(), KnowledgeState.CANDIDATE)
     evaluated = transition_knowledge(candidate, KnowledgeState.EVALUATED)
-    canonical = transition_knowledge(evaluated, KnowledgeState.CANONICAL)
+    with pytest.raises(ValueError, match="usage"):
+        transition_knowledge(evaluated, KnowledgeState.CANONICAL)
+    canonical = transition_knowledge(evaluated, KnowledgeState.CANONICAL, usage_links=("eval:e1",))
     assert canonical.state is KnowledgeState.CANONICAL
