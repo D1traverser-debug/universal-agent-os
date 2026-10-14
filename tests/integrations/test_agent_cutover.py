@@ -38,15 +38,20 @@ def test_aliases_resolve_current_agents_and_tasks():
     assert r.resolve_agent("NOVEL_OS").agent_id == "novel"
     assert r.resolve_agent("A_SHARE_MARKET_AGENT").agent_id == "ashare"
     assert r.resolve_task("小说系统").task_id == "FQ001_MINGRI_ORDER"
-    assert r.resolve_task("原创数字IP设计").task_id == "video:ai-self-media-commercialization"
+    assert r.resolve_task("原创数字IP设计").task_id == "video:main"
+    assert r.resolve_task("video:ai-self-media-commercialization").task_id == "video:main"
+    assert r.resolve_task("video-growth:main").task_id == "video:main"
 
 
-def test_video_default_is_current_digital_ip_not_old_program():
+def test_video_domain_has_one_default_parent_router_not_parent_business_projects():
     r = registry()
-    defaults = [task for task in r.tasks if task.domain_id == "video" and task.default_resume_within_domain]
-    assert [task.task_id for task in defaults] == ["video:ai-self-media-commercialization"]
-    old = r.resolve_task("video-growth:main")
-    assert old.default_resume_within_domain is False
+    video_tasks = [task for task in r.tasks if task.domain_id == "video"]
+    defaults = [task for task in video_tasks if task.default_resume_within_domain]
+
+    assert [task.task_id for task in video_tasks] == ["video:main"]
+    assert [task.task_id for task in defaults] == ["video:main"]
+    assert r.resolve_task("Pilot 002").task_id == "video:main"
+    assert r.resolve_task("AI自媒体视频商业化与原创数字IP").task_id == "video:main"
 
 
 def test_unknown_agent_and_task_fail_closed():
