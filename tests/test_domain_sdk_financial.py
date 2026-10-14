@@ -66,5 +66,6 @@ def test_financial_router_does_not_own_child_article_identity_or_implementation_
     assert "capability_profile_version" not in json.dumps(router)
     assert "release_commit" not in json.dumps(router)
     assert "ci_run" not in json.dumps(router)
-    assert indexed["state_model"] == "UAOS_NATIVE_ROUTER_ONLY"
+    assert indexed["state_model"] == "UAOS_NATIVE"
+    assert indexed["task_type"] == "article_workspace_router"
     assert "owns its own article identity/state" in indexed["semantic_summary"]
