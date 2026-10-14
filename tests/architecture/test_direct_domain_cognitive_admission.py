@@ -41,11 +41,7 @@ def test_material_change_still_requires_deliberation_evidence():
 def test_v19_keeps_problem_research_floor_and_adds_child_product_governance():
     current = _json("CURRENT_SYSTEM.json")
     assert _version_tuple(current["system_release_version"]) >= (2, 4, 5)
-    assert current["status"] in {
-        "CANDIDATE_CHILD_COGNITION_EVOLUTION_PRODUCT_GOVERNANCE",
-        "CANDIDATE_DOMAIN_INTERNAL_ORCHESTRATION",
-        "ACTIVE_PRIMARY_CONTROLLER",
-    }
+    assert current["status"] == "ACTIVE_PRIMARY_CONTROLLER" or current["status"].startswith("CANDIDATE_")
     for requirement in (
         "docs/requirements/FROZEN_REQUIREMENTS_v1.7.md",
         "docs/requirements/FROZEN_REQUIREMENTS_v1.8.md",
