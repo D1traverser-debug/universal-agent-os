@@ -1,0 +1,39 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261014-FINANCIAL-BINDING-DRIFT",
+  "status":"EVALUATING",
+  "trigger":"CHILD_INHERITANCE_AUDIT",
+  "opened_at":"2026-10-14T10:55:00Z",
+  "incidents":[
+    {
+      "incident_id":"INC-20261014-FIN-BINDING-POLICY-001",
+      "summary":"Financial inheritance exposed that BINDING_POLICY still restated the retired 2.3 same-owner/cross-scope-handoff mutation semantics while AUTHORITY_WRITE_POLICY had already promoted hierarchical parent governance.",
+      "failure_class":"DUPLICATED_POLICY_TEXT_DRIFTED_BEHIND_AUTHORITY_OWNER"
+    },
+    {
+      "incident_id":"INC-20261014-FIN-DUAL-BUSINESS-AUTHORITY-001",
+      "summary":"UAOS still retained domains/financial_writing manifest/policy/workflow files after SYSTEM_MAP and AGENT_REGISTRY cut current Financial business authority over to the external financial-writing-agent repository.",
+      "failure_class":"EXTERNAL_DOMAIN_CUTOVER_LEFT_COMPETING_PARENT_BUSINESS_PACKAGE"
+    }
+  ],
+  "root_cause":"Two migration-era copies outlived their ownership boundary: BINDING_POLICY duplicated mutation semantics owned by AUTHORITY_WRITE_POLICY, and the parent repository retained a Financial business workflow package after external cutover.",
+  "proposal":{
+    "proposal_id":"CP-FINANCIAL-BINDING-DRIFT-001",
+    "state":"CANDIDATE",
+    "target_scope":"UAOS_PARENT_INTEGRATION_BOUNDARY",
+    "changes":[
+      "Make BINDING_POLICY delegate mutation hierarchy exclusively to AUTHORITY_WRITE_POLICY while retaining binding/compatibility admission.",
+      "Retire the parent domains/financial_writing business package without removing the reusable Domain SDK.",
+      "Replace the old parent Financial workflow test with external-authority uniqueness and binding-policy ownership tests."
+    ],
+    "new_components":0,
+    "new_state_surfaces":0,
+    "retired_current_surfaces":["domains/financial_writing/article_v1.json","domains/financial_writing/manifest.json","domains/financial_writing/policy.json"],
+    "rollback_plan":"Do not promote candidate if full UAOS CI regresses; parent main remains unchanged until evaluated CAS promotion."
+  },
+  "evaluation":{
+    "state":"PENDING",
+    "required":["full parent pytest PASS","no current Financial in-repo business package","hierarchical authority tests remain PASS","Financial external binding uniqueness test PASS"]
+  },
+  "updated_at":"2026-10-14T10:55:00Z"
+}
