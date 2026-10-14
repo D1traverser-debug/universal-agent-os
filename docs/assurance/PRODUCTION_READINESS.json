@@ -1,44 +1,33 @@
 {
   "snapshot_date": "2026-10-14",
-  "status": "USABLE_ZERO_COST_BASELINE_COMPLETE__OPTIONAL_ENHANCEMENTS_ONLY",
-  "requirements_authority": [
-    "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
-    "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"
-  ],
+  "status": "USABLE_ZERO_COST_BASELINE_COMPLETE__RESILIENCE_HARDENED",
+  "requirements_authority": ["docs/requirements/FROZEN_REQUIREMENTS_v1.0.md", "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"],
   "mandatory_external_services": [],
   "default_stack": {
     "state_authority": "SQLiteVersionedRepository + SQLiteAppendOnlyLedger",
     "continuity_runtime": "SQLiteCheckpointRuntime",
     "artifacts": "LocalContentAddressedStore",
-    "agent_provider": "zero-cost-first host capability registry",
-    "background_maintenance": "opportunistic by default"
+    "agent_provider": "zero-cost-first host capability registry with circuit breaking/fallback",
+    "background_maintenance": "opportunistic by default",
+    "portable_recovery": "SQLite backup snapshot + artifact hash manifest"
   },
   "verification": {
     "phase0_11_local_integrated_tests": {"count": 97, "status": "PASS_AT_PHASE11"},
     "zero_cost_local_targeted_tests": {"count": 3, "status": "PASS"},
     "host_capability_policy_tests": {"count": 4, "status": "PASS"},
-    "zero_cost_domain_control_e2e": {"count": 5, "status": "PASS", "scope": "financial article, novel, video with shot fanout, A-share premarket with ticker fanout, A-share postclose"},
-    "legacy_cutover_tests": {"count": 4, "status": "PASS", "scope": "exact frozen blob, idempotent provenance import, control rejection, no old runtime identifiers"},
-    "self_change_tests": {"count": 2, "status": "PASS", "scope": "workspace confinement plus real promote/observe/rollback/retire drill"},
+    "zero_cost_domain_control_e2e": {"count": 5, "status": "PASS"},
+    "legacy_cutover_tests": {"count": 4, "status": "PASS"},
+    "self_change_tests": {"count": 2, "status": "PASS"},
+    "phase18_resilience_tests": {"count": 13, "status": "PASS", "scope": "circuit/fallback, wait/degrade states, portable snapshot integrity, opportunistic maintenance, risk-tier self-change"},
     "hosted_ci": "OPTIONAL_ENHANCEMENT__CURRENTLY_ZERO_STEPS_BEFORE_RUNNER"
   },
   "core_open_work": [],
-  "core_completion": {
-    "C1_zero_cost_domain_e2e": "PASS_CONTROL_PLANE",
-    "C2_legacy_cutover": "PASS_SELECTIVE_SEMANTIC_MIGRATION",
-    "C3_controlled_self_change": "PASS_REAL_LOCAL_ROLLBACK_DRILL"
-  },
   "known_limitations": [
-    "semantic generation/research quality depends on the host capability actually available in the active session",
-    "without an always-on free host, between-session maintenance is opportunistic rather than continuously running",
-    "SQLite/local files are a single-machine baseline and do not provide multi-node HA",
-    "high-impact external self-modification remains approval/policy gated"
+    "semantic generation/research quality depends on host capabilities actually available in the active session",
+    "without an always-on free host, between-session work cannot execute continuously; due maintenance runs opportunistically on the next invocation",
+    "SQLite/local files are a single-machine authority baseline; portability is snapshot/restore rather than live multi-writer sync",
+    "high-impact external self-modification remains explicitly approval/policy gated",
+    "an unavailable capability with no safe fallback leaves only the affected work waiting rather than fabricating a result"
   ],
-  "optional_enhancement_evidence": [
-    "GitHub hosted Actions runner",
-    "PostgreSQL adapter/live concurrency",
-    "DBOS transparent crash replay and durable scheduling",
-    "S3-compatible remote object storage",
-    "OpenAI Agents SDK/API provider"
-  ]
+  "optional_enhancement_evidence": ["GitHub hosted Actions runner", "PostgreSQL adapter/live concurrency", "DBOS transparent crash replay and durable scheduling", "S3-compatible remote object storage", "OpenAI Agents SDK/API provider"]
 }
