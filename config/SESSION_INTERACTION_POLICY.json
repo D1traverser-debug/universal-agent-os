@@ -1,34 +1,16 @@
 {
-  "schema_version": "1.1",
-  "policy_version": "1.1.0",
-  "authority": "UAOS",
-  "updated_at": "2026-10-14T08:48:07Z",
-  "bare_inheritance_selector": {
-    "trigger": "CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
-    "controller_option": {
-      "option_id": "uaos:controller",
-      "display_name_zh": "总控系统",
-      "intent": "SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY",
-      "creates_business_task": false,
-      "authority_context": "UAOS"
-    },
-    "task_source": "state/TASK_INDEX.json",
-    "include_task_when": "resume_eligible == true",
-    "ordering": [
-      "controller_option_first",
-      "RUNNING_default_resume_tasks",
-      "HOLD_default_resume_tasks",
-      "explicit_only_resume_tasks"
-    ],
-    "display_fields": [
-      "display_name_zh",
-      "task_id",
-      "domain_id",
-      "status",
-      "current_stage",
-      "default_resume_within_domain"
-    ],
-    "rules": [
+  "schema_version":"1.2",
+  "policy_version":"1.2.0",
+  "authority":"UAOS",
+  "updated_at":"2026-10-14T09:46:00Z",
+  "bare_inheritance_selector":{
+    "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
+    "controller_option":{"option_id":"uaos:controller","display_name_zh":"总控系统","intent":"SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY","creates_business_task":false,"authority_context":"UAOS"},
+    "task_source":"state/TASK_INDEX.json",
+    "include_task_when":"resume_eligible == true",
+    "ordering":["controller_option_first","RUNNING_default_resume_tasks","HOLD_default_resume_tasks","explicit_only_resume_tasks"],
+    "display_fields":["display_name_zh","task_id","domain_id","status","current_stage","default_resume_within_domain"],
+    "rules":[
       "The selector is derived from current authority on every invocation; it is not a hard-coded alias menu.",
       "Selecting an option does not create or mutate aliases.",
       "Explicit-only or HOLD tasks must be visibly labelled and never silently selected by a bare inheritance request.",
@@ -36,31 +18,28 @@
       "Selecting a domain task establishes authority_context=DOMAIN:<domain_id>; selecting controller establishes authority_context=UAOS."
     ]
   },
-  "authority_context": {
-    "write_policy_ref": "config/AUTHORITY_WRITE_POLICY.json",
-    "controller_context": "UAOS",
-    "domain_context_format": "DOMAIN:<domain_id>",
-    "context_switch_rule": "OWNER_CHANGE_IS_AN_EXPLICIT_CONTROL_PLANE_TRANSITION__NEVER_A_HIDDEN_PRIVILEGE_ESCALATION"
+  "authority_context":{
+    "write_policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
+    "controller_context":"UAOS",
+    "domain_context_format":"DOMAIN:<domain_id>",
+    "hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS",
+    "parent_upcall_rule":"A child may invoke UAOS guidance without replacing the selected child task authority; parent consultation is not a hidden child privilege escalation."
   },
-  "inherited_session_progress_report": {
-    "scope": "EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
-    "required": true,
-    "placement": "END_OF_FINAL_RESPONSE",
-    "format": "COMPACT_AGENT_PROGRESS_BLOCK",
-    "fields": [
-      "current_agent",
-      "current_scope_or_task",
-      "authority_context",
-      "status",
-      "current_stage",
-      "next_action_or_blocker",
-      "evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER",
-      "version_identity",
-      "progress_timestamp"
-    ],
-    "timestamp_rule": "Use the timestamp of the freshest authoritative state actually used for the report; do not substitute the response clock when authority freshness is known.",
-    "version_rule": "Report system/domain/task version identities that materially govern the current action. Schema version alone is not a release version.",
-    "evolution_rule": "If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id; otherwise report NO_EVOLUTION_TRIGGER.",
-    "assurance_rule": "If progress, authority scope, evolution state or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
+  "adaptive_deliberation":{
+    "policy_ref":"config/DELIBERATION_POLICY.json",
+    "visibility":"REPORT_WHEN_MATERIALLY_TRIGGERED",
+    "rule":"Report the actual escalation used (for example macro alignment, external research, counterexample or independent verification) rather than claiming generic self-reflection."
+  },
+  "inherited_session_progress_report":{
+    "scope":"EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
+    "required":true,
+    "placement":"END_OF_FINAL_RESPONSE",
+    "format":"COMPACT_AGENT_PROGRESS_BLOCK",
+    "fields":["current_agent","current_scope_or_task","authority_context","status","current_stage","next_action_or_blocker","evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER","deliberation_state_when_triggered_or_NOT_TRIGGERED","version_identity","progress_timestamp"],
+    "timestamp_rule":"Use the timestamp of the freshest authoritative state actually used for the report; do not substitute the response clock when authority freshness is known.",
+    "version_rule":"Report system/domain/task version identities that materially govern the current action. Schema version alone is not a release version.",
+    "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id; otherwise report NO_EVOLUTION_TRIGGER.",
+    "deliberation_rule":"When adaptive deliberation materially changed the path, report which escalation dimensions were used; do not expose private chain-of-thought or fabricate independent review.",
+    "assurance_rule":"If progress, authority scope, deliberation/evolution state or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
   }
 }

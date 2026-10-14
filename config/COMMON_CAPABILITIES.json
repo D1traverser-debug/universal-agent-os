@@ -1,69 +1,60 @@
 {
-  "schema_version": "1.1",
-  "contract_version": "1.1.0",
-  "authority": "UAOS",
-  "updated_at": "2026-10-14T08:48:07Z",
-  "inheritance_model": "UAOS_HOSTED_COMMON_CAPABILITIES__DOMAIN_BUSINESS_LOGIC_REMAINS_WITH_OWNER",
-  "applies_to": "ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
-  "capabilities": [
+  "schema_version":"1.2",
+  "contract_version":"1.2.0",
+  "authority":"UAOS",
+  "updated_at":"2026-10-14T09:46:00Z",
+  "inheritance_model":"UAOS_HOSTED_COMMON_CAPABILITIES__DOMAIN_BUSINESS_LOGIC_REMAINS_WITH_OWNER",
+  "applies_to":"ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
+  "capabilities":[
+    {"capability_id":"intent_and_requirement_governance","owner":"UAOS","domain_role":"consume scoped requirements and return business evidence"},
+    {"capability_id":"cross_chat_continuity_and_recovery","owner":"UAOS","domain_role":"supply current business authority, checkpoints, cursors and artifact identities"},
+    {"capability_id":"capability_handshake_and_graceful_degradation","owner":"UAOS","domain_role":"declare domain capability ceiling and action-specific requirements; current host proves executability"},
+    {"capability_id":"assurance_evidence_and_completion_governance","owner":"UAOS","domain_role":"produce domain verification evidence without overstating assurance"},
     {
-      "capability_id": "intent_and_requirement_governance",
-      "owner": "UAOS",
-      "domain_role": "consume scoped requirements and return business evidence"
-    },
-    {
-      "capability_id": "cross_chat_continuity_and_recovery",
-      "owner": "UAOS",
-      "domain_role": "supply current business authority, checkpoints, cursors and artifact identities"
-    },
-    {
-      "capability_id": "capability_handshake_and_graceful_degradation",
-      "owner": "UAOS",
-      "domain_role": "declare domain capability ceiling and action-specific requirements; current host proves executability"
-    },
-    {
-      "capability_id": "assurance_evidence_and_completion_governance",
-      "owner": "UAOS",
-      "domain_role": "produce domain verification evidence without overstating assurance"
-    },
-    {
-      "capability_id": "owner_scoped_authoritative_mutation",
-      "owner": "UAOS",
-      "policy_ref": "config/AUTHORITY_WRITE_POLICY.json",
-      "domain_role": "mutate only authority owned by the active domain context; escalate cross-scope changes as proposals/handoffs",
-      "rules": [
-        "Mutating execution is same-owner and fail-closed.",
-        "A child/domain context cannot directly mutate UAOS or another domain.",
-        "UAOS cannot directly impersonate a domain owner for business mutation; it must hand off/dispatch into that owner context.",
-        "Approval cannot override authority ownership."
+      "capability_id":"hierarchical_authority_governance",
+      "owner":"UAOS",
+      "policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
+      "domain_role":"own normal domain execution while accepting parent governance and using parent upcalls for system-level guidance",
+      "rules":[
+        "Same-owner mutation remains allowed under normal controls.",
+        "UAOS may govern a registered descendant when ancestry and governance_basis are explicit and domain authority/impact/verification are respected.",
+        "A child/domain cannot directly mutate UAOS or a sibling domain.",
+        "A child may call parent guidance without transferring the selected business task.",
+        "Approval cannot override hierarchy."
       ]
     },
     {
-      "capability_id": "governed_self_evolution",
-      "owner": "UAOS_FOR_COMMON_OR_CROSS_DOMAIN_MECHANISMS__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_RULE_PROMOTION",
-      "lifecycle": "Incident -> Failure Class -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep/Rollback/Retire",
-      "domain_role": "produce incidents, learning candidates, failure-class evidence, alternatives, eval/replay evidence and owner-scoped promotion proposals",
-      "rules": [
+      "capability_id":"adaptive_deliberation_and_parent_guidance",
+      "owner":"UAOS",
+      "policy_ref":"config/DELIBERATION_POLICY.json",
+      "domain_role":"surface current symptoms/evidence/unknowns and request parent diagnosis, replan, external research, counterexample or assurance escalation when needed",
+      "rules":[
+        "Deliberation depth is event/risk-triggered; actual questions/methods are generated dynamically from current evidence.",
+        "Use micro -> macro -> micro reasoning when local repair may reflect a larger goal/assumption/topology problem.",
+        "External method/architecture research is required when current knowledge or framing is insufficient; architecture names never become authority by popularity.",
+        "Same-model reflection/debate is candidate generation, not independent verification.",
+        "Do not create a parallel architecture-advisor or debate control plane."
+      ]
+    },
+    {
+      "capability_id":"governed_self_evolution",
+      "owner":"UAOS_FOR_COMMON_OR_CROSS_DOMAIN_MECHANISMS__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_RULE_PROMOTION",
+      "lifecycle":"Incident -> Failure Class -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep/Rollback/Retire",
+      "domain_role":"produce incidents, learning candidates, failure-class evidence, alternatives, eval/replay evidence and owner-scoped promotion proposals",
+      "rules":[
         "Domain-local learning is evidence/candidate generation, not a second controller or unrestricted production rewriter.",
-        "A candidate may mutate production only through the unique owning authority and normal action/side-effect controls.",
-        "Cross-domain/common-capability changes are promoted by UAOS; domain-specific business rules remain owned and promoted by the domain owner under UAOS requirement/action lineage.",
+        "A candidate may mutate production only through the governing authority and normal action/side-effect controls.",
+        "Cross-domain/common-capability changes are promoted by UAOS; domain-specific business rules remain domain-owned under UAOS lineage.",
         "Repeated failures are repaired at the common failure class/root abstraction and require regression evidence before closure.",
         "Triggered evolution must expose a durable lifecycle state in inherited system-maintenance reporting."
       ]
     },
-    {
-      "capability_id": "inherited_session_progress_reporting",
-      "owner": "UAOS",
-      "domain_role": "supply fresh current_stage, next_action/blocker, authority context, evolution state and business update/version data"
-    },
-    {
-      "capability_id": "version_and_timestamp_provenance",
-      "owner": "UAOS",
-      "domain_role": "expose stable version/hash/schema identities and ISO-8601 update timestamps for material authority"
-    }
+    {"capability_id":"inherited_session_progress_reporting","owner":"UAOS","domain_role":"supply fresh current_stage, next_action/blocker, authority context, evolution/deliberation state and business update/version data"},
+    {"capability_id":"version_and_timestamp_provenance","owner":"UAOS","domain_role":"expose stable version/hash/schema identities and ISO-8601 update timestamps for material authority"}
   ],
-  "anti_duplication": [
+  "anti_duplication":[
     "Do not copy UAOS task indexes, continuation protocols, requirement registries, evolution catalogs or promotion state into domain repositories.",
-    "A domain may implement business-specific learning, evaluation and maintenance hooks, but those hooks feed the common governance contract rather than replacing it."
+    "Do not create a parallel parent-guidance, architecture-advisor, self-dialogue or verification control plane when existing Control/Context/Assurance/Evolution contracts can be extended.",
+    "A domain may implement business-specific learning/evaluation hooks, but those hooks feed the common governance contract rather than replacing it."
   ]
 }

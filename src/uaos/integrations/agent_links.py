@@ -13,6 +13,7 @@ from uaos.kernel.control import TaskCandidate
 class AgentLink:
     agent_id: str
     domain_id: str
+    parent_authority: str
     owner_aliases: tuple[str, ...]
     repository: str
     skill_ref: str
@@ -29,6 +30,10 @@ class AgentLink:
             self.domain_id.lower(),
             *(alias.lower() for alias in self.owner_aliases),
         }
+
+    @property
+    def authority(self) -> str:
+        return f"DOMAIN:{self.domain_id}"
 
 
 @dataclass(frozen=True, slots=True)
@@ -49,8 +54,6 @@ class CurrentTaskRecord:
         return normalized == self.task_id.lower() or normalized in {alias.lower() for alias in self.aliases}
 
     def as_candidate(self) -> TaskCandidate:
-        # Current task ordering is resolved by explicit identity/defaults and durable state,
-        # never by fabricated recency from a registry file.
         return TaskCandidate(
             task_id=self.task_id,
             owner_domain=self.domain_id,
@@ -68,6 +71,8 @@ class AgentLinkRegistry:
             raise ValueError("duplicate agent_id")
         if len({agent.domain_id for agent in agents}) != len(agents):
             raise ValueError("duplicate domain_id")
+        if any(not agent.parent_authority.strip() for agent in agents):
+            raise ValueError("registered agents require parent_authority")
         known_domains = {agent.domain_id for agent in agents}
         unknown = {task.domain_id for task in tasks} - known_domains
         if unknown:
@@ -98,6 +103,7 @@ class AgentLinkRegistry:
             AgentLink(
                 agent_id=item["agent_id"],
                 domain_id=item["domain_id"],
+                parent_authority=item["parent_authority"],
                 owner_aliases=tuple(item.get("owner_aliases", [])),
                 repository=item["repository"],
                 skill_ref=item["skill_ref"],
@@ -140,3 +146,6 @@ class AgentLinkRegistry:
 
     def domain_candidates(self, domain_id: str) -> tuple[TaskCandidate, ...]:
         return tuple(task.as_candidate() for task in self.tasks if task.domain_id == domain_id)
+
+    def authority_parent_map(self) -> dict[str, str]:
+        return {agent.authority: agent.parent_authority for agent in self.agents}

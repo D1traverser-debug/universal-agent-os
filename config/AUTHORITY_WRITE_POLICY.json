@@ -1,34 +1,24 @@
 {
-  "schema_version": "1.0",
-  "policy_version": "1.0.0",
-  "authority": "UAOS",
-  "updated_at": "2026-10-14T08:48:07Z",
-  "context_model": {
-    "controller": "UAOS",
-    "domain_format": "DOMAIN:<domain_id>",
-    "source": "CURRENT_SELECTED_CONTROLLER_OR_TASK_DOMAIN"
-  },
-  "mutation_admission": {
-    "default": "FAIL_CLOSED",
-    "same_owner_required": true,
-    "non_mutating_side_effects": ["NONE", "READ"],
-    "rules": [
+  "schema_version":"1.1",
+  "policy_version":"1.1.0",
+  "authority":"UAOS",
+  "updated_at":"2026-10-14T09:46:00Z",
+  "context_model":{"controller":"UAOS","domain_format":"DOMAIN:<domain_id>","source":"CURRENT_SELECTED_CONTROLLER_OR_TASK_DOMAIN","hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS"},
+  "mutation_admission":{
+    "default":"FAIL_CLOSED",
+    "non_mutating_side_effects":["NONE","READ"],
+    "rules":[
       "Every mutating ExecutionRequest must declare target_authority.",
       "ActionCoordinator must be bound to the selected authority_context.",
-      "A mutation is admitted only when authority_context == target_authority before approval and executor dispatch.",
-      "DOMAIN:X -> UAOS direct mutation is prohibited.",
-      "DOMAIN:X -> DOMAIN:Y direct mutation is prohibited.",
-      "UAOS -> DOMAIN:X direct business mutation is prohibited; dispatch/handoff into the domain owner instead.",
-      "Cross-scope change requests are proposals/handoffs, not direct authoritative writes."
+      "Same-authority mutation is permitted subject to normal action/approval/CAS controls.",
+      "A registered ancestor may mutate a descendant only when the hierarchy is known and the request carries a non-empty governance_basis.",
+      "UAOS parent-governed descendant changes must read current domain binding/business authority, perform impact analysis and preserve domain-specific validation; governance_basis is lineage, not a bypass.",
+      "DOMAIN:X -> UAOS direct authoritative mutation is prohibited.",
+      "DOMAIN:X -> DOMAIN:Y direct authoritative mutation is prohibited.",
+      "A child may issue a non-mutating parent upcall for diagnosis, replan, research, assurance or evolution guidance without surrendering its selected task authority.",
+      "Approval cannot override hierarchy or ownership restrictions."
     ]
   },
-  "host_enforcement": {
-    "UAOS_ACTION_COORDINATOR": "MECHANICAL_FAIL_CLOSED",
-    "CHATGPT_RAW_CONNECTOR": "POLICY_ENFORCED_BUT_NOT_PHYSICALLY_INTERCEPTABLE_BY_UAOS_CODE",
-    "full_host_level_enforcement_requires": [
-      "repository-scoped credentials or tool mediation by authority context",
-      "and/or repository rulesets/branch protections restricting the raw writer identity"
-    ]
-  },
-  "branch_protection_semantics": "DEFENSE_IN_DEPTH_ONLY__NOT_A_SUBSTITUTE_FOR_AGENT_AUTHORITY_ISOLATION"
+  "host_enforcement":{"UAOS_ACTION_COORDINATOR":"MECHANICAL_FAIL_CLOSED_WHEN_HIERARCHY_MAP_IS_BOUND","CHATGPT_RAW_CONNECTOR":"POLICY_ENFORCED_BUT_NOT_PHYSICALLY_INTERCEPTABLE_BY_UAOS_CODE","full_host_level_enforcement_requires":["repository-scoped credentials or tool mediation by authority context","and/or repository rulesets/branch protections restricting the raw writer identity"]},
+  "branch_protection_semantics":"DEFENSE_IN_DEPTH_ONLY__NOT_A_SUBSTITUTE_FOR_AGENT_HIERARCHY"
 }

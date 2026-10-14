@@ -75,6 +75,73 @@ class CompactionArtifact:
 
 
 @dataclass(frozen=True, slots=True)
+class GovernanceFrame:
+    """Minimum parent guidance needed to keep delegated work on the governing track."""
+
+    parent_goal: str
+    local_goal_link: str
+    non_goals: tuple[str, ...] = ()
+    invariants: tuple[str, ...] = ()
+    autonomy_bounds: tuple[str, ...] = ()
+    escalation_conditions: tuple[str, ...] = ()
+    stop_conditions: tuple[str, ...] = ()
+    verification_expectations: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not self.parent_goal.strip() or not self.local_goal_link.strip():
+            raise ValueError("parent_goal and local_goal_link are required")
+
+    @property
+    def item_count(self) -> int:
+        return sum(
+            len(items)
+            for items in (
+                self.non_goals,
+                self.invariants,
+                self.autonomy_bounds,
+                self.escalation_conditions,
+                self.stop_conditions,
+                self.verification_expectations,
+            )
+        ) + 2
+
+
+@dataclass(frozen=True, slots=True)
+class ParentUpcall:
+    """Child-to-parent guidance request that does not transfer child task ownership."""
+
+    task_id: str
+    child_authority: str
+    problem_statement: str
+    requested_outcome: str
+    evidence_refs: tuple[str, ...] = ()
+    unknowns: tuple[str, ...] = ()
+    current_hypothesis: str | None = None
+
+    def __post_init__(self) -> None:
+        if not all((self.task_id.strip(), self.child_authority.strip(), self.problem_statement.strip(), self.requested_outcome.strip())):
+            raise ValueError("parent upcall requires task, child authority, problem and requested outcome")
+
+
+@dataclass(frozen=True, slots=True)
+class ParentGuidance:
+    parent_authority: str
+    task_id: str
+    directive: str
+    goal_link: str
+    constraints: tuple[str, ...] = ()
+    plan_changes: tuple[str, ...] = ()
+    evidence_refs: tuple[str, ...] = ()
+    external_research_required: bool = False
+    independent_verification_required: bool = False
+    child_may_resume: bool = True
+
+    def __post_init__(self) -> None:
+        if not all((self.parent_authority.strip(), self.task_id.strip(), self.directive.strip(), self.goal_link.strip())):
+            raise ValueError("parent guidance requires parent authority, task, directive and goal linkage")
+
+
+@dataclass(frozen=True, slots=True)
 class ContextPacket:
     task_id: str
     work_unit_id: str
@@ -86,3 +153,4 @@ class ContextPacket:
     unresolved_obligations: tuple[str, ...]
     approval_ids: tuple[str, ...]
     metadata: Mapping[str, str]
+    governance: GovernanceFrame | None = None

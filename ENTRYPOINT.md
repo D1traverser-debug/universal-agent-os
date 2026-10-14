@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `ACTIVE_PRIMARY_CONTROLLER`
-System release: `2.3.0`
-Authority updated at: `2026-10-14T08:48:07Z`
+System release: `2.4.0`
+Authority updated at: `2026-10-14T09:46:00Z`
 
 ## Minimal bootstrap
 
@@ -52,46 +52,63 @@ When routing or continuing, load:
 - `state/TASK_INDEX.json`;
 - the selected `state/tasks/<task>.json`.
 
-There is one cross-domain controller: UAOS. Business repositories own domain code, rules, fine-grained business state, Canon/media/data and artifacts. They do not own cross-chat controller state.
+There is one cross-domain parent controller: UAOS. Business repositories own domain methods, fine-grained business state, Canon/media/data and artifacts for normal execution. They do not own cross-chat controller state or parent governance policy.
 
-## Authority ownership and mutation admission
+## Hierarchical authority and mutation admission
 
 `config/AUTHORITY_WRITE_POLICY.json` is mandatory for authoritative mutation.
 
-The selected controller/domain is a real authority context, not merely a label:
+The selected controller/domain is a real authority context:
 - controller: `UAOS`;
 - domain: `DOMAIN:<domain_id>`.
 
-Mutating execution is fail-closed and same-owner:
-- `UAOS -> UAOS`: allowed subject to action/approval/CAS rules;
+The relationship is hierarchical, not symmetric peer isolation:
+- `UAOS -> UAOS`: allowed subject to normal action/approval/CAS rules;
 - `DOMAIN:X -> DOMAIN:X`: allowed subject to domain-owner rules;
-- `DOMAIN:X -> UAOS`: direct mutation blocked;
-- `DOMAIN:X -> DOMAIN:Y`: direct mutation blocked;
-- `UAOS -> DOMAIN:X` direct business mutation: blocked; dispatch/handoff into the domain owner instead.
+- `UAOS -> registered DOMAIN:X`: allowed only as an explicit parent-governed change with known ancestry, non-empty `governance_basis`, fresh domain binding/business authority, impact analysis and domain-aware verification;
+- `DOMAIN:X -> UAOS`: direct authoritative mutation blocked;
+- `DOMAIN:X -> DOMAIN:Y`: direct authoritative mutation blocked.
 
-A cross-scope defect may be diagnosed and proposed from the current owner, but changing another authority requires an explicit owner/context transition. Approval never overrides ownership.
+Parent governance is not permission to write a child blindly. UAOS must read the current child authority and preserve business-specific validation. A child can request parent guidance at any time without receiving parent write authority.
 
-`src/uaos/execution/authority.py` mechanically enforces this for UAOS `ActionCoordinator` mutations before approval/executor dispatch. Cross-scope reads remain governed by retrieval policy.
+`src/uaos/execution/authority.py` mechanically enforces same-owner and registered ancestor-to-descendant admission when the hierarchy map is bound. `config/AGENT_REGISTRY.json` exposes each domain's `parent_authority`; `AgentLinkRegistry.authority_parent_map()` supplies the mapping. Approval never overrides hierarchy.
 
-Git branch/ruleset protection is defense-in-depth, not the parent/child authority model. On `CHATGPT_GITHUB`, a raw native connector call is a host surface outside Python `ActionCoordinator`; UAOS policy forbids bypassing the owner gate, but full physical interception of that raw connector additionally requires repository-scoped credentials/tool mediation and/or GitHub rulesets. Report this assurance boundary explicitly.
+Git branch/ruleset protection is defense-in-depth, not the parent/child authority model. On `CHATGPT_GITHUB`, a raw native connector call is outside Python `ActionCoordinator`; UAOS policy still forbids out-of-policy bypass, while full physical enforcement additionally requires repository-scoped credentials/tool mediation and/or GitHub rulesets.
 
 ## Common capability inheritance
 
-All registered domains inherit the UAOS-hosted common capability contract at `config/COMMON_CAPABILITIES.json`.
-
-The inherited layer includes:
+All registered domains inherit `config/COMMON_CAPABILITIES.json`, including:
 - intent/requirement governance;
 - cross-chat continuity and recovery;
 - capability handshake and graceful degradation;
 - assurance/evidence/completion governance;
-- owner-scoped authoritative mutation;
+- hierarchical authority governance;
+- adaptive deliberation and parent guidance;
 - governed self-evolution;
 - inherited-session progress reporting;
 - version/timestamp provenance.
 
-This is reuse, not code/state duplication. Domain repositories keep their business methods, business state, domain-specific learning/evaluation and artifacts. They must not create a second task index, continuation plane, requirement registry, evolution catalog or promotion controller.
+This is reuse, not duplication. Domain repositories keep business methods/state/learning/artifacts. They must not create a second controller, task index, continuation plane, requirement registry, evolution catalog, architecture-advisor plane or parent-guidance controller.
 
-Domain-local learning may produce incidents, failure classes, candidates, alternatives and eval/replay evidence. Common/cross-domain changes promote through UAOS; domain-specific business rules promote through the domain owner under UAOS requirement/action lineage.
+## Adaptive deliberation and parent guidance
+
+`config/DELIBERATION_POLICY.json` defines epistemic escalation. It is not a fixed self-question checklist.
+
+Trigger signals decide when deeper deliberation is required; current evidence generates the actual questions, hypotheses, methods and search terms. The control path can escalate across:
+- concrete/micro diagnosis;
+- macro goal/topology alignment;
+- governing-assumption challenge (double-loop style);
+- external method/architecture research when current framing is insufficient;
+- counterexample search for material proposals;
+- genuinely independent verification for high-risk or disputed outcomes when available.
+
+Use a micro -> macro -> micro loop: reproduce the concrete symptom, ask whether the governing goal/assumption/control structure is wrong when evidence warrants it, then return to the smallest correct change and verify concrete behavior plus strategic alignment.
+
+Same-model self-critique/refinement/debate may generate candidates but is not automatically independent evidence. Do not run debate, architecture search or extra Agents as ritual. External patterns are candidate mechanisms: extract the relevant property, fit/misfit, costs/failure modes and minimum useful borrowing; popularity or names never become authority.
+
+Delegated work may carry a bounded `GovernanceFrame` inside the existing `ContextPacket`: parent goal, local-goal linkage, non-goals, invariants, autonomy bounds, escalation conditions, stop conditions and verification expectations.
+
+A selected child may issue `ParentUpcall` with problem/evidence/unknowns/requested outcome. UAOS returns `ParentGuidance` without automatically replacing the selected child task authority. Parent guidance may diagnose, replan, request external research/verification or decide that a parent-governed descendant change is required.
 
 ## Domain execution admission
 
@@ -129,7 +146,7 @@ For the video domain, the current default project is the active original-digital
 
 ## Inherited-session progress reporting
 
-After a controller or task/project has been selected for the current conversation, every final assistant response must end with the compact progress block defined by `config/SESSION_INTERACTION_POLICY.json`.
+After a controller or task/project has been selected, every final assistant response ends with the compact progress block defined by `config/SESSION_INTERACTION_POLICY.json`.
 
 Report:
 - current Agent/controller;
@@ -138,10 +155,11 @@ Report:
 - lifecycle status and current stage;
 - next action or blocker;
 - actual governed-evolution state when triggered, otherwise `NO_EVOLUTION_TRIGGER`;
+- material adaptive-deliberation escalation when triggered, otherwise `NOT_TRIGGERED`;
 - governing version identity;
 - freshest authoritative progress/update timestamp.
 
-Do not use the response clock as a substitute for an authority timestamp. Do not present a schema number as a release number. Unknown/unverified values stay labelled unknown/unverified.
+Do not expose private chain-of-thought. Deliberation reporting describes the control/evidence escalation used, not hidden reasoning text. Do not use response time as an authority timestamp or a schema number as a release number.
 
 ## Version and timestamp semantics
 
@@ -154,14 +172,18 @@ Material continuation/reporting should prefer:
 
 Version identity may include system release, domain runtime/profile/manifest version, task schema/version, artifact version/hash, or exact commit identity as appropriate.
 
-## Knowledge and learning
+## Knowledge, verification and evolution
 
-Only promoted/current knowledge is used by default. Raw evidence and candidates remain scoped and non-authoritative until evaluation/promotion. One project/day/book/result may create a candidate; it does not silently become a global rule.
+Only promoted/current knowledge is used by default. Raw evidence/candidates remain non-authoritative until evaluation/promotion. One project/day/book/result may create a candidate; it does not silently become a global rule.
+
+The Assurance layer already distinguishes declaration/structural/deterministic/semantic/independent/live-outcome evidence. Role-play or self-review must not be promoted to `INDEPENDENT` without real independence evidence.
 
 Governed self-evolution follows:
 `Incident -> Failure Class -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep / Rollback / Retire`.
 
-For `CHATGPT_GITHUB` system maintenance, active durable evolution records live under `state/evolution/`. A material user correction/failure that triggers evolution must record its real lifecycle state there and surface it in progress reporting. Do not claim evolution was used merely because a direct edit resembles the intended workflow.
+Before a material system proposal is promoted, apply adaptive deliberation when trigger signals exist. Repeated failure must challenge the governing abstraction instead of adding another local guarantee. A new mechanism states overlap, replacement/retirement, new failure modes, rollback and complexity delta.
+
+For `CHATGPT_GITHUB` maintenance, durable evolution records live under `state/evolution/`. Surface real lifecycle state; do not claim evolution merely because an edit resembles it.
 
 ## Host model
 
@@ -169,25 +191,25 @@ For `CHATGPT_GITHUB` system maintenance, active durable evolution records live u
 - `CHATGPT_GITHUB`: controller JSON under `state/`; observed-HEAD CAS + authoritative reread; current tools/connectors are session capabilities.
 - `LOCAL`: SQLite CAS/checkpoint runtime + local artifact store.
 
-Both hosts share the same controller semantics. They are persistence adapters, not separate business workflows.
+Both hosts share controller semantics. They are persistence adapters, not separate business workflows.
 
 ## Fresh ChatGPT bootstrap
 
-UAOS core does not require account-level Custom Instructions. However, a completely fresh ordinary ChatGPT conversation has no deterministic way to know which private repository is the controller unless the host injects the bootstrap or the account carries one stable pointer.
+UAOS core does not require account-level Custom Instructions. A completely fresh ordinary ChatGPT conversation still needs the host to inject the bootstrap or one stable account pointer to this repository.
 
-For deterministic fresh-chat use in ordinary ChatGPT, use the single pointer stored at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`. That pointer is bootstrap-only and non-authoritative; all real policy remains in UAOS.
+For deterministic fresh-chat use, use only the pointer at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`; it is bootstrap-only and non-authoritative.
 
 ## GitHub material writes
 
-A UAOS controller write is valid only when the selected authority context is `UAOS`. A domain context may not directly write parent UAOS authority.
+A mutation of UAOS parent authority requires selected authority context `UAOS`. A child context may not directly write parent UAOS authority; it uses a parent upcall/proposal.
 
-For a valid UAOS controller state mutation:
+For a UAOS controller state mutation:
 1. reread current `main` HEAD;
 2. build one coherent tree/commit on that HEAD;
 3. update `main` with `expected_sha=<observed HEAD>` and no force;
 4. reread the exact written authority.
 
-A stale writer must re-read and rebase; never overwrite concurrent work. CAS protects concurrency, not owner authorization; owner authorization is separately governed by `config/AUTHORITY_WRITE_POLICY.json`.
+For a parent-governed descendant mutation, additionally read the descendant's current binding/business authority and preserve its validation/impact requirements before writing its repository. A stale writer must re-read and rebase; never overwrite concurrent work.
 
 ## External custom instructions
 

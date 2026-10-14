@@ -1,30 +1,45 @@
 {
-  "snapshot_date": "2026-10-14",
-  "status": "USABLE_ZERO_COST_BASELINE_COMPLETE__RESILIENCE_HARDENED__HOT_PATH_ISOLATION_IMPLEMENTED",
-  "requirements_authority": ["docs/requirements/FROZEN_REQUIREMENTS_v1.0.md", "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"],
-  "mandatory_external_services": [],
-  "default_stack": {
-    "state_authority": "SQLiteVersionedRepository + SQLiteAppendOnlyLedger (LOCAL) or GitHub JSON observed-HEAD CAS (CHATGPT_GITHUB)",
-    "continuity_runtime": "UAOS current task/controller state only",
-    "retrieval_admission": "config/RETRIEVAL_POLICY.json",
-    "domain_binding_guard": "config/BINDING_POLICY.json",
-    "agent_provider": "zero-cost-first current-host capability registry",
-    "background_maintenance": "opportunistic by default"
+  "snapshot_date":"2026-10-14",
+  "status":"USABLE_ZERO_COST_BASELINE_COMPLETE__HIERARCHICAL_ADAPTIVE_GOVERNANCE_TARGETED_VERIFIED__HOSTED_FULL_CI_BLOCKED",
+  "requirements_authority":[
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.2.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.3.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.4.md"
+  ],
+  "mandatory_external_services":[],
+  "default_stack":{
+    "state_authority":"SQLiteVersionedRepository + SQLiteAppendOnlyLedger (LOCAL) or GitHub JSON observed-HEAD CAS (CHATGPT_GITHUB)",
+    "continuity_runtime":"UAOS current task/controller state only",
+    "retrieval_admission":"config/RETRIEVAL_POLICY.json",
+    "domain_binding_guard":"config/BINDING_POLICY.json",
+    "authority_hierarchy":"config/AGENT_REGISTRY.json + config/AUTHORITY_WRITE_POLICY.json",
+    "adaptive_deliberation":"config/DELIBERATION_POLICY.json",
+    "agent_provider":"zero-cost-first current-host capability registry",
+    "background_maintenance":"opportunistic by default"
   },
-  "verification": {
-    "phase0_18_prior_baseline": "PASS_RETAINED",
-    "phase19_cross_repo_cutover": "PASS_BY_AUTHORITATIVE_REREAD",
-    "phase20_hot_path_isolation": "TARGETED_REGRESSION_PASS_23",
-    "phase20_validation_ref": "docs/assurance/PHASE20_VALIDATION.json",
-    "hosted_full_ci": "RUNNER_NOT_STARTED__NO_TEST_RESULT"
+  "verification":{
+    "phase0_18_prior_baseline":"PASS_RETAINED",
+    "phase19_cross_repo_cutover":"PASS_BY_AUTHORITATIVE_REREAD",
+    "phase20_hot_path_isolation":"TARGETED_REGRESSION_PASS_23",
+    "phase20_validation_ref":"docs/assurance/PHASE20_VALIDATION.json",
+    "v1_4_hierarchical_adaptive_governance":"TARGETED_DETERMINISTIC_EVAL_PASS_13__PROMOTION_GATE_APPROVED",
+    "v1_4_independent_evidence_semantics":"EXISTING_ASSURANCE_GATE_REQUIRES_REAL_REVIEW_INDEPENDENCE_AXES_AND_DIFFERENT_IDENTITY",
+    "hosted_full_ci":"RUNNER_NOT_STARTED__NO_TEST_RESULT"
   },
-  "core_open_work": ["HOSTED_FULL_REPOSITORY_CI_EXECUTION_EVIDENCE"],
-  "known_limitations": [
+  "core_open_work":[
+    "HOSTED_FULL_REPOSITORY_CI_EXECUTION_EVIDENCE",
+    "LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE"
+  ],
+  "known_limitations":[
     "semantic generation/research quality depends on capabilities actually available in the active host session",
     "without an always-on free host, between-session work cannot execute continuously",
+    "same-model self-critique/debate is not independent verification and cannot raise assurance to INDEPENDENT without real evidence",
+    "parent upcall and hierarchy contracts are implemented in UAOS but each child runtime still needs live integration evidence before claiming end-to-end coverage",
     "high-impact external self-modification remains approval/policy gated",
     "account-level ChatGPT Custom Instructions cannot be transactionally controlled by this repository and therefore are optional non-authority pointers only",
-    "business repositories may retain denied historical/internal files, but normal UAOS retrieval excludes the superseded controller surfaces listed in RETRIEVAL_POLICY",
-    "the current ChatGPT connector surface cannot physically intercept arbitrary out-of-policy manual repository searches; UAOS prevents them from becoming authority through bootstrap/retrieval/binding admission, while the retired controller default branch is physically tombstoned"
+    "business repositories may retain denied historical/internal files, but normal UAOS retrieval excludes superseded controller surfaces",
+    "the current ChatGPT raw connector surface cannot be physically intercepted by UAOS Python gates; repository-scoped credentials/tool mediation/rulesets are required for full physical enforcement"
   ]
 }

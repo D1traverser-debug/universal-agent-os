@@ -49,6 +49,7 @@ class ExecutionRequest:
     allow_unknown_cost: bool = False
     requires_background: bool = False
     target_authority: str | None = None
+    governance_basis: str | None = None
 
 
 @dataclass(frozen=True, slots=True)

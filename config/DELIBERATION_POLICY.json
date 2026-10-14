@@ -1,0 +1,21 @@
+{
+  "schema_version":"1.0",
+  "policy_version":"1.0.0",
+  "authority":"UAOS",
+  "updated_at":"2026-10-14T09:46:00Z",
+  "purpose":"Select epistemic depth from current risk/evidence signals without constraining reasoning to a fixed questionnaire.",
+  "principles":[
+    "Triggers decide when deeper deliberation is required; current evidence generates the actual questions and methods.",
+    "Move micro -> macro -> micro: reproduce the concrete symptom, challenge goal/assumption/topology when warranted, then return to the smallest correct change and concrete verification.",
+    "Do not default to multi-agent debate, architecture search or self-reflection rituals.",
+    "Same-model critique is candidate-generation evidence, not independent verification.",
+    "When a knowledge/method/architecture gap exists, actively search external evidence and compare properties, fit, costs, failure modes and rejected alternatives.",
+    "Material proposals should be challenged by counterexamples; high-risk or disputed outcomes require genuinely independent evidence when available.",
+    "Stop deliberating when evidence is sufficient for the risk level, contradictions are resolved or explicitly bounded, and the plan demonstrably advances the governing done-condition without unnecessary complexity."
+  ],
+  "representative_trigger_signals":["USER_CORRECTION","REPEATED_FAILURE","GOAL_PROGRESS_UNCERTAIN","SCOPE_EXPANSION","CROSS_SUBSYSTEM","COMPLEXITY_GROWTH","CONFLICTING_EVIDENCE","UNKNOWN_FAILURE_CLASS","KNOWLEDGE_GAP","ARCHITECTURE_GAP","HIGH_RISK_CHANGE"],
+  "trigger_semantics":"EXTENSIBLE__NOT_AN_EXHAUSTIVE_PROBLEM_ONTOLOGY",
+  "escalation_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH","COUNTEREXAMPLE_SEARCH","INDEPENDENT_VERIFICATION"],
+  "external_architecture_scout":{"default":"OFF","enable_when":"CURRENT_METHOD_OR_ARCHITECTURE_KNOWLEDGE_IS_INSUFFICIENT_OR_UNKNOWN","output_contract":["required_property","candidate_patterns","fit_and_misfit","cost_and_failure_modes","minimum_borrowable_mechanism","rejected_alternatives","evidence_refs"]},
+  "anti_bloat":["Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem.","Every new mechanism must state overlap, replacement/retirement, or why extension is impossible.","Do not turn guidance principles into accumulating guarantee prose when an invariant can be encoded as a contract/test/fitness property."]
+}

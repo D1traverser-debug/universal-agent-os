@@ -1,62 +1,28 @@
 {
-  "schema_version": "1.3",
-  "controller": {
-    "repository": "D1traverser-debug/universal-agent-os",
-    "entrypoint": "ENTRYPOINT.md",
-    "system_state": "CURRENT_SYSTEM.json",
-    "repo_instructions": "AGENTS.md",
-    "agent_registry": "config/AGENT_REGISTRY.json",
-    "task_index": "state/TASK_INDEX.json",
-    "task_state_root": "state/tasks",
-    "evolution_state_root": "state/evolution",
-    "intent_resolution_policy": "config/INTENT_RESOLUTION_POLICY.json",
-    "session_interaction_policy": "config/SESSION_INTERACTION_POLICY.json",
-    "common_capabilities": "config/COMMON_CAPABILITIES.json",
-    "authority_write_policy": "config/AUTHORITY_WRITE_POLICY.json",
-    "retrieval_policy": "config/RETRIEVAL_POLICY.json",
-    "binding_policy": "config/BINDING_POLICY.json"
+  "schema_version":"1.3",
+  "controller":{
+    "repository":"D1traverser-debug/universal-agent-os",
+    "entrypoint":"ENTRYPOINT.md",
+    "system_state":"CURRENT_SYSTEM.json",
+    "repo_instructions":"AGENTS.md",
+    "agent_registry":"config/AGENT_REGISTRY.json",
+    "task_index":"state/TASK_INDEX.json",
+    "task_state_root":"state/tasks",
+    "intent_resolution_policy":"config/INTENT_RESOLUTION_POLICY.json",
+    "session_interaction_policy":"config/SESSION_INTERACTION_POLICY.json",
+    "common_capabilities":"config/COMMON_CAPABILITIES.json",
+    "authority_write_policy":"config/AUTHORITY_WRITE_POLICY.json",
+    "deliberation_policy":"config/DELIBERATION_POLICY.json",
+    "retrieval_policy":"config/RETRIEVAL_POLICY.json",
+    "binding_policy":"config/BINDING_POLICY.json"
   },
-  "domains": {
-    "financial_writing": {
-      "repository": "D1traverser-debug/financial-writing-agent",
-      "entrypoint": "UAOS_SKILL.md",
-      "binding_root": ".uaos",
-      "business_contract": "config/EXECUTION_CONTRACT.json",
-      "business_state": "workspaces/articles/{task_id}/STATE.json",
-      "rule_roots": ["references", "config", "financial_writing_agent"]
-    },
-    "ashare": {
-      "repository": "D1traverser-debug/a-share-event-driven-agent",
-      "entrypoint": "UAOS_SKILL.md",
-      "binding_root": ".uaos",
-      "runtime_authority": "config/RUNTIME_AUTHORITY.json",
-      "rule_roots": ["references", "config", "ashare_event_agent"]
-    },
-    "novel": {
-      "repository": "D1traverser-debug/novel-writing-agent",
-      "entrypoint": "UAOS_SKILL.md",
-      "binding_root": ".uaos",
-      "business_state": "projects/<task>/checkpoints/CURRENT_CHECKPOINT.json",
-      "canon_root": "projects/<task>/canon",
-      "rule_roots": ["protocols", "projects", "research", "config"]
-    },
-    "video": {
-      "repository": "D1traverser-debug/video-growth-agent",
-      "entrypoint": "UAOS_SKILL.md",
-      "binding_root": ".uaos",
-      "business_state": "projects/<project>/PROJECT_MANIFEST.json + project-local progress/decision artifacts",
-      "rule_roots": ["video_growth_agent", "projects", "skills/video-growth-agent/references"]
-    }
+  "domains":{
+    "financial_writing":{"repository":"D1traverser-debug/financial-writing-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_contract":"config/EXECUTION_CONTRACT.json","business_state":"workspaces/articles/{task_id}/STATE.json","rule_roots":["references","config","financial_writing_agent"]},
+    "ashare":{"repository":"D1traverser-debug/a-share-event-driven-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","runtime_authority":"config/RUNTIME_AUTHORITY.json","rule_roots":["references","config","ashare_event_agent"]},
+    "novel":{"repository":"D1traverser-debug/novel-writing-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_state":"projects/<task>/checkpoints/CURRENT_CHECKPOINT.json","canon_root":"projects/<task>/canon","rule_roots":["protocols","projects","research","config"]},
+    "video":{"repository":"D1traverser-debug/video-growth-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_state":"projects/<project>/PROJECT_MANIFEST.json + project-local progress/decision artifacts","rule_roots":["video_growth_agent","projects","skills/video-growth-agent/references"]}
   },
-  "external_integration": {
-    "chatgpt_custom_instructions": "BOOTSTRAP_POINTER_FOR_DETERMINISTIC_PLAIN_CHATGPT_FRESH_CHAT__NON_AUTHORITY",
-    "pointer_ref": "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
-    "copilot_ref": ".github/copilot-instructions.md"
-  },
-  "retired_controller": {
-    "repository": "D1traverser-debug/universal-continuity-agent",
-    "default_branch_role": "TOMBSTONE_REDIRECT_ONLY",
-    "executable_or_recovery_authority": false
-  },
-  "updated_at": "2026-10-14T08:48:07Z"
+  "external_integration":{"chatgpt_custom_instructions":"BOOTSTRAP_POINTER_FOR_DETERMINISTIC_PLAIN_CHATGPT_FRESH_CHAT__NON_AUTHORITY","pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md","copilot_ref":".github/copilot-instructions.md"},
+  "retired_controller":{"repository":"D1traverser-debug/universal-continuity-agent","default_branch_role":"TOMBSTONE_REDIRECT_ONLY","executable_or_recovery_authority":false},
+  "updated_at":"2026-10-14T09:46:00Z"
 }
