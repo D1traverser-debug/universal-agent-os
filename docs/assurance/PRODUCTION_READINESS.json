@@ -1,6 +1,6 @@
 {
   "snapshot_date":"2026-10-15",
-  "status":"PARENT_CORE_BASELINE_COMPLETE__FINANCIAL_VIDEO_ASHARE_SPECIALIZED_CHILDREN_PRODUCTION_VERIFIED__UAOS_2_5_2_CANDIDATE",
+  "status":"PARENT_CORE_BASELINE_COMPLETE__FINANCIAL_VIDEO_ASHARE_SPECIALIZED_CHILDREN_PRODUCTION_VERIFIED__UAOS_2_5_2_PRODUCTION_VERIFIED",
   "requirements_authority":[
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
@@ -17,25 +17,27 @@
   "system_release_version":"2.5.2",
   "common_capabilities_contract":"1.6.0",
   "mandatory_external_services":[],
-  "local_integrated_test_status":"CANDIDATE_VALIDATION_PENDING",
+  "local_integrated_test_status":"PRODUCTION_VERIFIED",
   "verification":{
     "phase0_18_prior_baseline":"PASS_RETAINED",
     "uaos_2_5_1_current_main":"ee09842c590d5e9679a8c942cf2861154e6744bf",
     "uaos_2_5_1_final_production_ci":{"run_id":38624000027,"status":"PASS","required_check":"promotion-gate"},
+    "uaos_2_5_2_release_main":"40726145488f72465a02f4768c5463e7aceebd2f",
+    "uaos_2_5_2_production_ci":{"run_id":38629993564,"status":"PASS","required_check":"promotion-gate"},
     "parent_common_capability_reread":{"contract_version":"1.6.0","status":"PASS"},
     "financial_child":{"release":"0.8.4","profile_version":16,"status":"PRODUCTION_VERIFIED","current_main":"45658bd95128c38b07de8d561124ff6a7914bc33","closure_ci_run":38610083693},
     "video_child":{"release":"0.6.0","status":"PRODUCTION_VERIFIED","release_main":"2f2e45eed9175499c86081d00c080e4e7cf9d11f","production_ci_run":38622448588,"semantics":"CHILD_OWNS_PROJECT_PROGRAM_WORKSTREAM_SUBTASK_IDENTITIES__ONE_UAOS_VIDEO_ROUTER"},
     "ashare_child":{
-      "release":"0.2.0",
-      "profile_version":4,
+      "release":"0.3.0",
+      "profile_version":5,
       "status":"PRODUCTION_VERIFIED",
-      "release_main":"1fb2cda4dba3a4dd1f6c6fe5a2a7fe1b3039d292",
-      "candidate_final_head":"2e187dd349eea39da0fc35901e9f3429b11ad75e",
-      "candidate_ci_run":38628786127,
-      "production_ci_run":38628981077,
-      "verified_chain":"MCP_SMOKE__61_TESTS__CONTRACT_EVAL__STATIC_ARCHITECTURE_AUDIT__WHEEL_BUILD__ISOLATED_WHEEL_SMOKE",
+      "release_main":"ed83b2b6246605e9d236b0b184dddcb936553298",
+      "candidate_final_head":"5e14d859235e51b5ebaba0287906d9adb0ec96ea",
+      "candidate_ci_run":38634289915,
+      "production_ci_run":38634603142,
+      "verified_chain":"MCP_SMOKE__TESTS__CONTRACT_EVAL__STATIC_ARCHITECTURE_AUDIT__WHEEL_BUILD__ISOLATED_WHEEL_SMOKE",
       "identity_semantics":"CHILD_TASKCONTRACT_TASK_ID_PLUS_MARKETDAYSTATE__DISTINCT_FROM_UAOS_ROUTER",
-      "product_semantics":"POINT_IN_TIME_FREEZE__P01_P09__OFFICIAL_FACTS__TONGHUASHUN_LEVEL2_PREFERRED_MICROSTRUCTURE__XUANGUTONG_FIVE_POOLS__U0_U1_RECALL__U3_OR_NO_TRADE__FROZEN_POSTCLOSE_ATTRIBUTION__REPLAY_GATED_LEARNING",
+      "product_semantics":"SPECIALIZED_POINT_IN_TIME_ASHARE_RECOMMENDATION_REVIEW_AND_REPLAY_PRODUCT",
       "cognition_semantics":"EVERY_PROBLEM_REQUIRES_DIAGNOSIS__MACRO_PRODUCT_WORKFLOW_CHECK__GOVERNING_ASSUMPTION_CHALLENGE__EXTERNAL_RESEARCH"
     },
     "observed_host_state":{
@@ -48,12 +50,7 @@
   "parent_core_open_work":[],
   "financial_integration_open_work":[],
   "video_integration_open_work":[],
-  "ashare_integration_open_work":[
-    {
-      "item":"UAOS_2_5_2_SINGLE_ASHARE_ROUTER_PROMOTION_AND_PRODUCTION_REREAD",
-      "status":"CANDIDATE_IN_PROGRESS"
-    }
-  ],
+  "ashare_integration_open_work":[],
   "optional_host_hardening":[
     {
       "id":"H1",
@@ -79,8 +76,8 @@
     "hosted CI provides independent execution evidence, not independent semantic architecture judgment",
     "raw connector remains outside Python ActionCoordinator, so the baseline does not claim physical non-bypassability",
     "GitHub rulesets/protected branches are optional defense-in-depth, not a baseline completion condition",
-    "A-share 0.2.0 architecture is production-verified, but real current-session Tonghuashun/Level-2 access must still be proven at runtime before Level-2-specific evidence claims"
+    "A-share 0.3.0 architecture is production-verified, while stronger live-data/runtime-specific claims still require current execution evidence"
   ],
-  "readiness_semantics":"UAOS 2.5.2 is a patch-level ownership cleanup over production common contract 1.6.0. Financial 0.8.4, Video 0.6.0 and A-share 0.2.0 are domain-specialized children: each owns its own business identity/state/product rules and inherits common cognition/evolution/product-governance method without becoming a copy of the parent or another domain. The A-share child is production-verified; remaining candidate work is only retiring the parent-owned ashare:recommendation state in favor of one ashare:main domain router.",
-  "updated_at":"2026-10-15T04:13:00+08:00"
+  "readiness_semantics":"UAOS 2.5.2 and A-share 0.3.0 are production-verified. UAOS keeps one A-share domain router while the A-share child owns its market-day business identity, state, product rules and specialized workflow. Stronger hosted-runtime claims remain evidence-gated and do not change domain ownership.",
+  "updated_at":"2026-10-15T04:52:00+08:00"
 }
