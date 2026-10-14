@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.3",
-  "contract_version":"1.3.0",
+  "schema_version":"1.4",
+  "contract_version":"1.4.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T13:48:00Z",
+  "updated_at":"2026-10-14T15:47:00Z",
   "inheritance_model":"UAOS_HOSTED_COMMON_CAPABILITIES__DIRECT_DOMAIN_WORK_PLANE__DOMAIN_BUSINESS_LOGIC_IDENTITY_STATE_REMAIN_WITH_OWNER",
   "applies_to":"ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
   "capabilities":[
@@ -16,12 +16,26 @@
       "policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
       "domain_role":"own normal domain execution while accepting parent governance and using parent upcalls for system-level guidance",
       "rules":[
-        "Same-owner mutation remains allowed under normal controls.",
+        "Same-owner mutation remains allowed under normal owner controls plus host enforcement.",
         "UAOS may govern a registered descendant when ancestry and governance_basis are explicit and domain authority/impact/verification are respected.",
         "A child/domain cannot directly mutate UAOS or a sibling domain.",
         "A registered child may be activated directly as the current Agent/work plane in a fresh chat; parent authority does not imply a mandatory per-turn business gateway.",
         "A child may call parent guidance without transferring the selected business task, business identity, workflow or state.",
         "Approval cannot override hierarchy."
+      ]
+    },
+    {
+      "capability_id":"mutation_sentinel_and_host_complete_mediation",
+      "owner":"UAOS_FOR_COMMON_SAFETY_PROPERTY__DOMAIN_OWNER_FOR_REPOSITORY_SPECIFIC_REALIZATION",
+      "policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
+      "domain_role":"before external/durable mutation, surface target/authority and use an owner-appropriate protected production promotion path without surrendering business ownership",
+      "rules":[
+        "The lightweight mutation sentinel is always-on; deep deliberation remains trigger-based.",
+        "Every registered production repository must have a non-bypassable production mutation boundary before system-wide physical-enforcement claims are RESOLVED.",
+        "Normal GitHub production promotion uses candidate branch -> pull request -> owner-appropriate required checks -> protected merge.",
+        "CAS is concurrency control, not authorization or complete mediation.",
+        "UAOS governs the shared safety property but does not duplicate a child's CI, release semantics or business validation.",
+        "Custom Instructions may bootstrap the sentinel across chats but are not physical enforcement."
       ]
     },
     {
@@ -45,11 +59,12 @@
       "domain_role":"produce incidents, learning candidates, failure-class evidence, alternatives, eval/replay evidence and owner-scoped promotion proposals",
       "rules":[
         "Domain-local learning is evidence/candidate generation, not a second controller or unrestricted production rewriter.",
-        "A candidate may mutate production only through the governing authority and normal action/side-effect controls.",
+        "A candidate may mutate production only through the governing authority and owner-appropriate host policy-enforcement point.",
         "Cross-domain/common-capability changes are promoted by UAOS; domain-specific business rules remain domain-owned under UAOS lineage.",
         "Repeated failures are repaired at the common failure class/root abstraction and require regression evidence before closure.",
         "Triggered evolution must expose a durable lifecycle state in inherited system-maintenance reporting.",
-        "Evolution closure requires an authority-wide contradiction scan across every current surface that can encode the changed semantic; edited-file success alone is not closure."
+        "Evolution closure requires an authority-wide contradiction scan plus relevant host-control-surface scan; edited-file success alone is not closure.",
+        "A known production bypass prevents technical RESOLVED for the affected invariant."
       ]
     },
     {"capability_id":"inherited_session_progress_reporting","owner":"UAOS","domain_role":"supply fresh current_stage, next_action/blocker, authority context, evolution/deliberation state and business update/version data"},
@@ -59,6 +74,7 @@
     "Do not copy UAOS cross-domain task indexes, parent-continuation protocols, global requirement registries, evolution catalogs or promotion state into domain repositories.",
     "Do not turn UAOS into a mandatory per-turn business proxy merely because a domain inherits common capabilities.",
     "Do not create a parallel parent-guidance, architecture-advisor, self-dialogue or verification control plane when existing Control/Context/Assurance/Evolution contracts can be extended.",
+    "Do not duplicate a child repository's business-specific CI/release logic merely to satisfy the common complete-mediation property; reuse owner-declared checks where available.",
     "A domain may implement business-specific learning/evaluation hooks, but those hooks feed the common governance contract rather than replacing it."
   ]
 }
