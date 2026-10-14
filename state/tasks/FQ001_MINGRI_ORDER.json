@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "task_id": "FQ001_MINGRI_ORDER",
   "domain_id": "novel",
   "status": "HOLD",
@@ -20,5 +20,8 @@
   "last_final_chapter": 8,
   "next_serial_chapter": 9,
   "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"],
+  "controller_updated_at": "2026-10-14T08:21:28Z",
+  "progress_timestamp": "2026-10-14T08:21:28Z",
+  "progress_timestamp_semantics": "UAOS_TASK_STATE_NORMALIZED_ONLY__BUSINESS_CHECKPOINT_MUST_BE_REREAD_BEFORE_RESUME",
   "project_business_state_is_controller": false
 }

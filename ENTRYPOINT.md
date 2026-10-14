@@ -1,6 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `ACTIVE_PRIMARY_CONTROLLER`
+System release: `2.2.0`
+Authority updated at: `2026-10-14T08:21:28Z`
 
 ## Minimal bootstrap
 
@@ -26,17 +28,48 @@ Natural-language resolution obeys `config/INTENT_RESOLUTION_POLICY.json`:
 - never add or mutate aliases merely because the user used one colloquial description;
 - after semantic intent/domain resolution, use exact/default-resume mechanical rules;
 - if a continued request resolves to one domain and that domain has exactly one default-resume task, that task is selected even when the wording matches no stored alias;
+- a bare generic “继承/继续/恢复” that resolves to no domain or exact task opens the current inheritance selector instead of silently choosing a task;
 - ambiguity still fails closed rather than guessing across multiple current tasks.
+
+## Bare inheritance selector
+
+`config/SESSION_INTERACTION_POLICY.json` defines the selector.
+
+For a generic inheritance request with no resolved target, present:
+1. `总控系统` as the controller/system-maintenance option;
+2. every current `resume_eligible` task/project from `state/TASK_INDEX.json`.
+
+Show enough current metadata to distinguish running/default, hold, and explicit-only projects. The menu is generated from current authority every time and never mutates aliases.
+
+Selecting `总控系统` establishes controller maintenance/query context; it does not create a fake business task.
 
 ## Current routing
 
 When routing or continuing, load:
 - `config/INTENT_RESOLUTION_POLICY.json`;
+- `config/SESSION_INTERACTION_POLICY.json`;
 - `config/AGENT_REGISTRY.json`;
 - `state/TASK_INDEX.json`;
 - the selected `state/tasks/<task>.json`.
 
 There is one cross-domain controller: UAOS. Business repositories own domain code, rules, fine-grained business state, Canon/media/data and artifacts. They do not own cross-chat controller state.
+
+## Common capability inheritance
+
+All registered domains inherit the UAOS-hosted common capability contract at `config/COMMON_CAPABILITIES.json`.
+
+The inherited layer includes:
+- intent/requirement governance;
+- cross-chat continuity and recovery;
+- capability handshake and graceful degradation;
+- assurance/evidence/completion governance;
+- governed self-evolution;
+- inherited-session progress reporting;
+- version/timestamp provenance.
+
+This is reuse, not code/state duplication. Domain repositories keep their business methods, business state, domain-specific learning/evaluation and artifacts. They must not create a second task index, continuation plane, requirement registry, evolution catalog or promotion controller.
+
+Domain-local learning may produce incidents, failure classes, candidates, alternatives and eval/replay evidence. Common/cross-domain changes promote through UAOS; domain-specific business rules promote through the domain owner under UAOS requirement/action lineage.
 
 ## Domain execution admission
 
@@ -64,6 +97,7 @@ Search presence is not authority. Retrieval starts from `config/SYSTEM_MAP.json`
 - otherwise resolve intent/domain/task semantics before consulting aliases;
 - each domain may have at most one default-resume task;
 - a domain-level continuation selects that one default task without requiring a literal alias match;
+- a target-less generic inheritance request opens the selector;
 - multiple non-default tasks are never merged;
 - time-sensitive work is revalidated against current time/business semantics before material execution;
 - current controller progress is stored under `state/tasks/`, while domain business progress remains in its declared domain authority;
@@ -71,9 +105,37 @@ Search presence is not authority. Retrieval starts from `config/SYSTEM_MAP.json`
 
 For the video domain, the current default project is the active original-digital-IP incubation task; the older video-growth program is explicit-only.
 
+## Inherited-session progress reporting
+
+After a controller or task/project has been selected for the current conversation, every final assistant response must end with the compact progress block defined by `config/SESSION_INTERACTION_POLICY.json`.
+
+Report:
+- current Agent/controller;
+- current task/project or maintenance scope;
+- lifecycle status and current stage;
+- next action or blocker;
+- governing version identity;
+- freshest authoritative progress/update timestamp.
+
+Do not use the response clock as a substitute for an authority timestamp. Do not present a schema number as a release number. Unknown/unverified values stay labelled unknown/unverified.
+
+## Version and timestamp semantics
+
+`CURRENT_SYSTEM.json` exposes the current `system_release_version` and `updated_at`.
+
+Material continuation/reporting should prefer:
+1. explicit authority/business `updated_at` or equivalent progress timestamp;
+2. exact authoritative Git commit timestamp when the authority file has no own timestamp;
+3. `UNKNOWN` if neither can be verified.
+
+Version identity may include system release, domain runtime/profile/manifest version, task schema/version, artifact version/hash, or exact commit identity as appropriate.
+
 ## Knowledge and learning
 
 Only promoted/current knowledge is used by default. Raw evidence and candidates remain scoped and non-authoritative until evaluation/promotion. One project/day/book/result may create a candidate; it does not silently become a global rule.
+
+Governed self-evolution follows:
+`Incident -> Failure Class -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep / Rollback / Retire`.
 
 ## Host model
 

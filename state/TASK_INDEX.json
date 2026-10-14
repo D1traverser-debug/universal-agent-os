@@ -1,8 +1,9 @@
 {
-  "schema_version": "2.2",
+  "schema_version": "2.3",
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
-  "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules.",
+  "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task.",
+  "updated_at": "2026-10-14T08:21:28Z",
   "tasks": [
     {
       "task_id": "financial-writing:main",
@@ -55,7 +56,7 @@
       "resume_eligible": true,
       "default_resume_within_domain": true,
       "aliases": ["原创数字IP设计", "AI自媒体视频商业化与原创数字IP", "ai-self-media-commercialization", "视频系统"],
-      "semantic_summary": "Current default video-domain project: original male digital-IP character design. H1 face-shell work is active, currently at controlled upper-face brow/eye aesthetic tuning on the fixed S1+S3 front sculpt.",
+      "semantic_summary": "Current default video-domain project: original male digital-IP character design. H1 face-shell work is active; A1 was rejected and A2 positive-morph upper-face tuning is the current business-authority next step.",
       "state_model": "UAOS_NATIVE",
       "current_stage": "H1_SCULPTURAL_MASSING_V2",
       "state_ref": "state/tasks/video-ai-self-media-commercialization.json"

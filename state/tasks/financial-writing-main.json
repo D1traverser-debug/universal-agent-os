@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "task_id": "financial-writing:main",
   "domain_id": "financial_writing",
   "status": "RUNNING",
@@ -7,5 +7,8 @@
   "next_action": "For a normal article request create a new article task and durable Financial article state; completed historical articles are not auto-reactivated.",
   "domain_business_authority": "D1traverser-debug/financial-writing-agent@main:workspaces/articles/{article_task_id}/STATE.json",
   "freshness_rule": "REREAD_EXACT_ARTICLE_STATE_BEFORE_EVERY_MATERIAL_ARTICLE_ACTION",
+  "controller_updated_at": "2026-10-14T08:21:28Z",
+  "progress_timestamp": "2026-10-14T08:21:28Z",
+  "progress_timestamp_semantics": "UAOS_ROUTER_STATE_UPDATED__NO_ACTIVE_ARTICLE_SELECTED",
   "domain_business_state_is_controller": false
 }

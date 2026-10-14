@@ -1,10 +1,65 @@
 {
-  "schema_version":"3.0",
-  "authority":"D1traverser-debug/universal-agent-os@main",
-  "agents":[
-    {"agent_id":"financial_writing","domain_id":"financial_writing","owner_aliases":["FINANCIAL_WRITING_AGENT_RUNTIME","FINANCIAL_WRITING","财经写作","金融文章"],"repository":"D1traverser-debug/financial-writing-agent","skill_ref":"UAOS_SKILL.md","agent_manifest_ref":".uaos/MANIFEST.json","capability_ref":".uaos/CAPABILITIES.json","uaos_adapter_ref":".uaos/ADAPTER.json","new_task_mode":"UAOS_NATIVE","business_repository_role":"DOMAIN_CODE_RULES_ARTIFACTS_AND_ARTICLE_STATE"},
-    {"agent_id":"ashare","domain_id":"ashare","owner_aliases":["A_SHARE_MARKET_AGENT","A_SHARE_RECOMMENDATION","A_SHARE_REVIEW","A_SHARE_MARKET","A股","荐股"],"repository":"D1traverser-debug/a-share-event-driven-agent","skill_ref":"UAOS_SKILL.md","agent_manifest_ref":".uaos/MANIFEST.json","capability_ref":".uaos/CAPABILITIES.json","uaos_adapter_ref":".uaos/ADAPTER.json","new_task_mode":"UAOS_NATIVE","business_repository_role":"DOMAIN_CODE_RULES_DATA_CONTRACTS_AND_MARKET_EVIDENCE"},
-    {"agent_id":"novel","domain_id":"novel","owner_aliases":["NOVEL_WRITING_AGENT","NOVEL_OS","NOVEL","小说系统"],"repository":"D1traverser-debug/novel-writing-agent","skill_ref":"UAOS_SKILL.md","agent_manifest_ref":".uaos/MANIFEST.json","capability_ref":".uaos/CAPABILITIES.json","uaos_adapter_ref":".uaos/ADAPTER.json","new_task_mode":"UAOS_NATIVE","business_repository_role":"DOMAIN_CODE_CANON_RESEARCH_AND_PROJECT_ARTIFACTS"},
-    {"agent_id":"video","domain_id":"video","owner_aliases":["VIDEO_GROWTH_AGENT","VIDEO_GROWTH","视频系统","AI视频","原创数字IP"],"repository":"D1traverser-debug/video-growth-agent","skill_ref":"UAOS_SKILL.md","agent_manifest_ref":".uaos/MANIFEST.json","capability_ref":".uaos/CAPABILITIES.json","uaos_adapter_ref":".uaos/ADAPTER.json","new_task_mode":"UAOS_NATIVE","business_repository_role":"DOMAIN_CODE_MEDIA_RULES_WORK_ORDERS_AND_PROJECT_ARTIFACTS"}
-  ]
+  "schema_version": "3.1",
+  "authority": "D1traverser-debug/universal-agent-os@main",
+  "common_capabilities_ref": "config/COMMON_CAPABILITIES.json",
+  "common_capability_inheritance": "MANDATORY_UAOS_HOSTED_FOR_ALL_REGISTERED_AGENTS",
+  "agents": [
+    {
+      "agent_id": "financial_writing",
+      "domain_id": "financial_writing",
+      "owner_aliases": ["FINANCIAL_WRITING_AGENT_RUNTIME", "FINANCIAL_WRITING", "财经写作", "金融文章"],
+      "repository": "D1traverser-debug/financial-writing-agent",
+      "skill_ref": "UAOS_SKILL.md",
+      "agent_manifest_ref": ".uaos/MANIFEST.json",
+      "capability_ref": ".uaos/CAPABILITIES.json",
+      "uaos_adapter_ref": ".uaos/ADAPTER.json",
+      "new_task_mode": "UAOS_NATIVE",
+      "business_repository_role": "DOMAIN_CODE_RULES_ARTIFACTS_AND_ARTICLE_STATE",
+      "common_capabilities_inheritance": "UAOS_HOSTED",
+      "evolution_role": "DOMAIN_EVIDENCE_EVAL_AND_BUSINESS_OWNER_PROMOTION"
+    },
+    {
+      "agent_id": "ashare",
+      "domain_id": "ashare",
+      "owner_aliases": ["A_SHARE_MARKET_AGENT", "A_SHARE_RECOMMENDATION", "A_SHARE_REVIEW", "A_SHARE_MARKET", "A股", "荐股"],
+      "repository": "D1traverser-debug/a-share-event-driven-agent",
+      "skill_ref": "UAOS_SKILL.md",
+      "agent_manifest_ref": ".uaos/MANIFEST.json",
+      "capability_ref": ".uaos/CAPABILITIES.json",
+      "uaos_adapter_ref": ".uaos/ADAPTER.json",
+      "new_task_mode": "UAOS_NATIVE",
+      "business_repository_role": "DOMAIN_CODE_RULES_DATA_CONTRACTS_AND_MARKET_EVIDENCE",
+      "common_capabilities_inheritance": "UAOS_HOSTED",
+      "evolution_role": "DOMAIN_EVIDENCE_EVAL_AND_BUSINESS_OWNER_PROMOTION"
+    },
+    {
+      "agent_id": "novel",
+      "domain_id": "novel",
+      "owner_aliases": ["NOVEL_WRITING_AGENT", "NOVEL_OS", "NOVEL", "小说系统"],
+      "repository": "D1traverser-debug/novel-writing-agent",
+      "skill_ref": "UAOS_SKILL.md",
+      "agent_manifest_ref": ".uaos/MANIFEST.json",
+      "capability_ref": ".uaos/CAPABILITIES.json",
+      "uaos_adapter_ref": ".uaos/ADAPTER.json",
+      "new_task_mode": "UAOS_NATIVE",
+      "business_repository_role": "DOMAIN_CODE_CANON_RESEARCH_AND_PROJECT_ARTIFACTS",
+      "common_capabilities_inheritance": "UAOS_HOSTED",
+      "evolution_role": "DOMAIN_EVIDENCE_EVAL_AND_BUSINESS_OWNER_PROMOTION"
+    },
+    {
+      "agent_id": "video",
+      "domain_id": "video",
+      "owner_aliases": ["VIDEO_GROWTH_AGENT", "VIDEO_GROWTH", "视频系统", "AI视频", "原创数字IP"],
+      "repository": "D1traverser-debug/video-growth-agent",
+      "skill_ref": "UAOS_SKILL.md",
+      "agent_manifest_ref": ".uaos/MANIFEST.json",
+      "capability_ref": ".uaos/CAPABILITIES.json",
+      "uaos_adapter_ref": ".uaos/ADAPTER.json",
+      "new_task_mode": "UAOS_NATIVE",
+      "business_repository_role": "DOMAIN_CODE_MEDIA_RULES_WORK_ORDERS_AND_PROJECT_ARTIFACTS",
+      "common_capabilities_inheritance": "UAOS_HOSTED",
+      "evolution_role": "DOMAIN_EVIDENCE_EVAL_AND_BUSINESS_OWNER_PROMOTION"
+    }
+  ],
+  "updated_at": "2026-10-14T08:21:28Z"
 }

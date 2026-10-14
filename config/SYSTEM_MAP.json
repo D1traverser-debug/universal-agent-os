@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "controller": {
     "repository": "D1traverser-debug/universal-agent-os",
     "entrypoint": "ENTRYPOINT.md",
@@ -9,6 +9,8 @@
     "task_index": "state/TASK_INDEX.json",
     "task_state_root": "state/tasks",
     "intent_resolution_policy": "config/INTENT_RESOLUTION_POLICY.json",
+    "session_interaction_policy": "config/SESSION_INTERACTION_POLICY.json",
+    "common_capabilities": "config/COMMON_CAPABILITIES.json",
     "retrieval_policy": "config/RETRIEVAL_POLICY.json",
     "binding_policy": "config/BINDING_POLICY.json"
   },
@@ -53,5 +55,6 @@
     "repository": "D1traverser-debug/universal-continuity-agent",
     "default_branch_role": "TOMBSTONE_REDIRECT_ONLY",
     "executable_or_recovery_authority": false
-  }
+  },
+  "updated_at": "2026-10-14T08:21:28Z"
 }

@@ -1,1 +1,32 @@
-{"schema_version":"2.1","system":"UNIVERSAL_AGENT_OS","status":"ACTIVE_PRIMARY_CONTROLLER","repository":"D1traverser-debug/universal-agent-os","entrypoint":"ENTRYPOINT.md","repo_instructions":"AGENTS.md","system_map":"config/SYSTEM_MAP.json","requirements":["docs/requirements/FROZEN_REQUIREMENTS_v1.0.md","docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"],"agent_registry":"config/AGENT_REGISTRY.json","task_index":"state/TASK_INDEX.json","host_profiles":"config/HOST_PROFILES.json","retrieval_policy":"config/RETRIEVAL_POLICY.json","binding_policy":"config/BINDING_POLICY.json","intent_resolution_policy":"config/INTENT_RESOLUTION_POLICY.json","controller_state_root":"state/tasks","controller_state_model":"UAOS_ONLY","fresh_chat_bootstrap":{"core_requires_account_custom_instructions":false,"deterministic_plain_chatgpt_requires_bootstrap_pointer_unless_host_injects_entrypoint":true,"pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md"},"mandatory_external_services":[]}
+{
+  "schema_version": "2.2",
+  "system_release_version": "2.2.0",
+  "system": "UNIVERSAL_AGENT_OS",
+  "status": "ACTIVE_PRIMARY_CONTROLLER",
+  "repository": "D1traverser-debug/universal-agent-os",
+  "entrypoint": "ENTRYPOINT.md",
+  "repo_instructions": "AGENTS.md",
+  "system_map": "config/SYSTEM_MAP.json",
+  "requirements": [
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.2.md"
+  ],
+  "agent_registry": "config/AGENT_REGISTRY.json",
+  "task_index": "state/TASK_INDEX.json",
+  "host_profiles": "config/HOST_PROFILES.json",
+  "retrieval_policy": "config/RETRIEVAL_POLICY.json",
+  "binding_policy": "config/BINDING_POLICY.json",
+  "intent_resolution_policy": "config/INTENT_RESOLUTION_POLICY.json",
+  "session_interaction_policy": "config/SESSION_INTERACTION_POLICY.json",
+  "common_capabilities": "config/COMMON_CAPABILITIES.json",
+  "controller_state_root": "state/tasks",
+  "controller_state_model": "UAOS_ONLY",
+  "fresh_chat_bootstrap": {
+    "core_requires_account_custom_instructions": false,
+    "deterministic_plain_chatgpt_requires_bootstrap_pointer_unless_host_injects_entrypoint": true,
+    "pointer_ref": "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md"
+  },
+  "mandatory_external_services": [],
+  "updated_at": "2026-10-14T08:21:28Z"
+}
