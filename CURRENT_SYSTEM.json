@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "system": "UNIVERSAL_AGENT_OS",
-  "status": "ACTIVE_PRIMARY_CONTROLLER",
+  "status": "ACTIVE_PRIMARY_CONTROLLER__CUTOVER_COMPLETE",
   "repository": "D1traverser-debug/universal-agent-os",
   "entrypoint": "ENTRYPOINT.md",
   "requirements": [
@@ -10,6 +10,7 @@
   ],
   "agent_registry": "config/AGENT_REGISTRY.json",
   "task_index": "state/TASK_INDEX.json",
+  "cutover_status": "state/CUTOVER_STATUS.json",
   "host_profiles": "config/HOST_PROFILES.json",
   "legacy_controller": {
     "repository": "D1traverser-debug/universal-continuity-agent",

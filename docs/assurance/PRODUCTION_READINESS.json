@@ -1,15 +1,15 @@
 {
   "snapshot_date": "2026-10-14",
-  "status": "USABLE_ZERO_COST_BASELINE_COMPLETE__RESILIENCE_HARDENED",
+  "status": "USABLE_ZERO_COST_BASELINE_COMPLETE__RESILIENCE_HARDENED__CONTROL_PLANE_CUTOVER_COMPLETE",
   "requirements_authority": ["docs/requirements/FROZEN_REQUIREMENTS_v1.0.md", "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"],
   "mandatory_external_services": [],
   "default_stack": {
-    "state_authority": "SQLiteVersionedRepository + SQLiteAppendOnlyLedger",
-    "continuity_runtime": "SQLiteCheckpointRuntime",
-    "artifacts": "LocalContentAddressedStore",
+    "state_authority": "SQLiteVersionedRepository + SQLiteAppendOnlyLedger (LOCAL host) or GitHub JSON observed-HEAD CAS (CHATGPT_GITHUB host)",
+    "continuity_runtime": "SQLiteCheckpointRuntime locally; UAOS state/task/action records in ChatGPT/GitHub host",
+    "artifacts": "LocalContentAddressedStore or exact domain/external artifacts registered through UAOS",
     "agent_provider": "zero-cost-first host capability registry with circuit breaking/fallback",
     "background_maintenance": "opportunistic by default",
-    "portable_recovery": "SQLite backup snapshot + artifact hash manifest"
+    "portable_recovery": "SQLite backup snapshot + artifact hash manifest for LOCAL host; Git history/CAS for CHATGPT_GITHUB controller state"
   },
   "verification": {
     "phase0_11_local_integrated_tests": {"count": 97, "status": "PASS_AT_PHASE11"},
@@ -19,15 +19,21 @@
     "legacy_cutover_tests": {"count": 4, "status": "PASS"},
     "self_change_tests": {"count": 2, "status": "PASS"},
     "phase18_resilience_tests": {"count": 13, "status": "PASS", "scope": "circuit/fallback, wait/degrade states, portable snapshot integrity, opportunistic maintenance, risk-tier self-change"},
-    "hosted_ci": "OPTIONAL_ENHANCEMENT__CURRENTLY_ZERO_STEPS_BEFORE_RUNNER"
+    "phase19_cross_repo_cutover": {
+      "status": "PASS_BY_AUTHORITATIVE_REREAD",
+      "evidence_ref": "state/CUTOVER_STATUS.json",
+      "scope": "old controller retirement, four Agent adapters/manifests/Skill entries, legacy task migration dispositions"
+    },
+    "hosted_ci": "OPTIONAL_ENHANCEMENT__NOT_REQUIRED_FOR_USABLE_BASELINE"
   },
   "core_open_work": [],
   "known_limitations": [
     "semantic generation/research quality depends on host capabilities actually available in the active session",
     "without an always-on free host, between-session work cannot execute continuously; due maintenance runs opportunistically on the next invocation",
-    "SQLite/local files are a single-machine authority baseline; portability is snapshot/restore rather than live multi-writer sync",
+    "SQLite/local files are a single-machine LOCAL baseline; ChatGPT/GitHub host uses repository CAS rather than live multi-writer SQLite sync",
     "high-impact external self-modification remains explicitly approval/policy gated",
-    "an unavailable capability with no safe fallback leaves only the affected work waiting rather than fabricating a result"
+    "an unavailable capability with no safe fallback leaves only the affected work waiting rather than fabricating a result",
+    "legacy unfinished task business data remains in its domain repository until first explicit UAOS continuation/import; this is intentional lazy migration, not a second active controller"
   ],
   "optional_enhancement_evidence": ["GitHub hosted Actions runner", "PostgreSQL adapter/live concurrency", "DBOS transparent crash replay and durable scheduling", "S3-compatible remote object storage", "OpenAI Agents SDK/API provider"]
 }

@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "cutover_date": "2026-10-14",
+  "status": "COMPLETE__OLD_CONTROLLER_RETIRED__FOUR_AGENTS_BOUND__SKILL_ENTRYPOINTS_ALIGNED",
+  "primary_controller": {
+    "repository": "D1traverser-debug/universal-agent-os",
+    "phase19_entrypoint_commit": "cd132b53b65278dd97bcc97bf8cd62fc2e9994a3",
+    "entrypoint": "ENTRYPOINT.md",
+    "task_index": "state/TASK_INDEX.json",
+    "agent_registry": "config/AGENT_REGISTRY.json"
+  },
+  "retired_controller": {
+    "repository": "D1traverser-debug/universal-continuity-agent",
+    "verified_head": "be58e115d542fc13e8210f81e1ab7b5a032d7283",
+    "status": "RETIRED_READ_ONLY",
+    "new_task_writes_allowed": false,
+    "lease_writes_allowed": false,
+    "maintenance_writes_allowed": false,
+    "deletion_policy": "RETAIN_FOR_AUDIT_PROVENANCE_AND_HISTORICAL_REFERENCES"
+  },
+  "agents": [
+    {
+      "agent_id": "financial_writing",
+      "repository": "D1traverser-debug/financial-writing-agent",
+      "verified_head": "b9968b2d4d03639df66b2b09306a40832aab3be3",
+      "adapter": "continuity/UAOS_ADAPTER.json",
+      "skill": "skills/financial-writing-agent/SKILL.md",
+      "status": "BOUND_TO_UAOS",
+      "legacy_continuity": "READ_ONLY_COMPATIBILITY_EVIDENCE"
+    },
+    {
+      "agent_id": "ashare",
+      "repository": "D1traverser-debug/a-share-event-driven-agent",
+      "verified_head": "a77b64117e4cb195485d1789d322342734ce8b77",
+      "adapter": "continuity/UAOS_ADAPTER.json",
+      "skill": "skills/a-share-event-driven-agent/SKILL.md",
+      "status": "BOUND_TO_UAOS",
+      "legacy_continuity": "READ_ONLY_COMPATIBILITY_EVIDENCE"
+    },
+    {
+      "agent_id": "novel",
+      "repository": "D1traverser-debug/novel-writing-agent",
+      "verified_head": "b435f76b1f93f96383f698d59ebd43d1dc44713c",
+      "adapter": "continuity/UAOS_ADAPTER.json",
+      "skill": "UAOS_SKILL.md",
+      "status": "BOUND_TO_UAOS",
+      "legacy_continuity": "READ_ONLY_AFTER_IMPORT"
+    },
+    {
+      "agent_id": "video",
+      "repository": "D1traverser-debug/video-growth-agent",
+      "verified_head": "57c9e3d7c70d0e95ed111d4e39119e42d47e1d9a",
+      "adapter": "continuity/UAOS_ADAPTER.json",
+      "skill": "skills/video-growth-agent/SKILL.md",
+      "status": "BOUND_TO_UAOS",
+      "legacy_continuity": "READ_ONLY_AFTER_IMPORT",
+      "concurrent_business_work_preserved": true
+    }
+  ],
+  "legacy_task_migration": {
+    "financial-writing:main": "ROUTING_ENTRY_ONLY__NEW_ARTICLES_CREATE_UAOS_TASK",
+    "ashare:recommendation": "ROUTING_ENTRY_ONLY__RESOLVE_CURRENT_TRADING_DAY",
+    "ashare:2026-10-12": "HISTORICAL_STALE__RECONCILE_BEFORE_IMPORT",
+    "FQ001_MINGRI_ORDER": "LAZY_IMPORT_ON_CONTINUE__PRESERVE_GUI_CHUI_DENG_LINE_3914_CURSOR",
+    "video-growth:main": "LAZY_IMPORT_ON_CONTINUE__PRESERVE_REJECTED_EVIDENCE_AND_CURRENT_VISUAL_PREVIEW_STAGE"
+  },
+  "anti_split_brain_invariants": [
+    "UAOS is the only active cross-domain controller",
+    "new tasks are UAOS-native",
+    "legacy unfinished tasks are read once for migration then continuation writes go to UAOS only",
+    "legacy resume_epoch/lease/progress-receipt fields are not active controller authority",
+    "domain repositories continue to own domain code/rules/canon/media/business artifacts rather than being copied into a second authority",
+    "time-sensitive legacy tasks are reconciled before resume"
+  ],
+  "verification": {
+    "agent_adapter_files_reread": true,
+    "agent_manifests_point_to_uaos": true,
+    "active_skill_entrypoints_aligned": true,
+    "old_controller_protocol_reread_as_retired": true,
+    "no_forced_ref_updates_used": true
+  }
+}

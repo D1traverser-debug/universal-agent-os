@@ -38,7 +38,7 @@
       "domain_id": "novel",
       "owner_aliases": ["NOVEL_WRITING_AGENT", "NOVEL_OS", "NOVEL"],
       "repository": "D1traverser-debug/novel-writing-agent",
-      "skill_ref": "SKILL.md",
+      "skill_ref": "UAOS_SKILL.md",
       "agent_manifest_ref": "continuity/AGENT_MANIFEST.json",
       "capability_ref": "continuity/EXECUTION_CAPABILITIES.json",
       "task_index_ref": "continuity/TASK_INDEX.json",
