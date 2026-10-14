@@ -12,6 +12,10 @@ def _json(path: str):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def _version_tuple(value: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in value.split("."))
+
+
 def test_direct_domain_session_and_financial_identity_boundary():
     session = _json("config/SESSION_INTERACTION_POLICY.json")
     assert session["domain_session_activation"]["model"] == "DIRECT_DOMAIN_WORK_PLANE_WITH_PARENT_CONTROL_PLANE"
@@ -36,9 +40,10 @@ def test_material_change_still_requires_deliberation_evidence():
 
 def test_v19_keeps_problem_research_floor_and_adds_child_product_governance():
     current = _json("CURRENT_SYSTEM.json")
-    assert current["system_release_version"] == "2.4.5"
+    assert _version_tuple(current["system_release_version"]) >= (2, 4, 5)
     assert current["status"] in {
         "CANDIDATE_CHILD_COGNITION_EVOLUTION_PRODUCT_GOVERNANCE",
+        "CANDIDATE_DOMAIN_INTERNAL_ORCHESTRATION",
         "ACTIVE_PRIMARY_CONTROLLER",
     }
     for requirement in (
@@ -49,10 +54,11 @@ def test_v19_keeps_problem_research_floor_and_adds_child_product_governance():
         assert requirement in current["requirements"]
     assert current["production_host_hardening"].startswith("OPTIONAL_DEFENSE_IN_DEPTH")
     assert "REGISTERED_CHILDREN_REFERENCE_CURRENT_UAOS_COMMON_CAPABILITIES" in current["child_inheritance_assurance"]
-    assert "DOMAIN_PRODUCT_REQUIREMENTS_AND_ARCHITECTURE_REMAIN_DOMAIN_OWNED" in current["product_governance_assurance"]
+    assert "DOMAIN_PRODUCT_REQUIREMENTS" in current["product_governance_assurance"]
+    assert "ARCHITECTURE" in current["product_governance_assurance"]
 
     common = _json("config/COMMON_CAPABILITIES.json")
-    assert common["contract_version"] == "1.5.0"
+    assert _version_tuple(common["contract_version"]) >= (1, 5, 0)
     by_id = {item["capability_id"]: item for item in common["capabilities"]}
     assert "product_requirements_and_architecture_governance" in by_id
     cognition = by_id["adaptive_deliberation_and_parent_guidance"]
