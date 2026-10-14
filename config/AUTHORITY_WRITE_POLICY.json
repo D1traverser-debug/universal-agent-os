@@ -1,16 +1,21 @@
 {
-  "schema_version":"1.1",
-  "policy_version":"1.1.0",
+  "schema_version":"1.4",
+  "policy_version":"1.4.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T09:46:00Z",
-  "context_model":{"controller":"UAOS","domain_format":"DOMAIN:<domain_id>","source":"CURRENT_SELECTED_CONTROLLER_OR_TASK_DOMAIN","hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS"},
+  "updated_at":"2026-10-14T16:31:00Z",
+  "context_model":{
+    "controller":"UAOS",
+    "domain_format":"DOMAIN:<domain_id>",
+    "source":"CURRENT_SELECTED_CONTROLLER_OR_TASK_DOMAIN",
+    "hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS"
+  },
   "mutation_admission":{
     "default":"FAIL_CLOSED",
     "non_mutating_side_effects":["NONE","READ"],
     "rules":[
       "Every mutating ExecutionRequest must declare target_authority.",
-      "ActionCoordinator must be bound to the selected authority_context.",
-      "Same-authority mutation is permitted subject to normal action/approval/CAS controls.",
+      "ActionCoordinator or the host-equivalent decision layer must be bound to the selected authority_context.",
+      "Same-authority mutation is permitted subject to owner rules, normal action/approval/concurrency controls and the applicable repository workflow.",
       "A registered ancestor may mutate a descendant only when the hierarchy is known and the request carries a non-empty governance_basis.",
       "UAOS parent-governed descendant changes must read current domain binding/business authority, perform impact analysis and preserve domain-specific validation; governance_basis is lineage, not a bypass.",
       "DOMAIN:X -> UAOS direct authoritative mutation is prohibited.",
@@ -19,6 +24,53 @@
       "Approval cannot override hierarchy or ownership restrictions."
     ]
   },
-  "host_enforcement":{"UAOS_ACTION_COORDINATOR":"MECHANICAL_FAIL_CLOSED_WHEN_HIERARCHY_MAP_IS_BOUND","CHATGPT_RAW_CONNECTOR":"POLICY_ENFORCED_BUT_NOT_PHYSICALLY_INTERCEPTABLE_BY_UAOS_CODE","full_host_level_enforcement_requires":["repository-scoped credentials or tool mediation by authority context","and/or repository rulesets/branch protections restricting the raw writer identity"]},
-  "branch_protection_semantics":"DEFENSE_IN_DEPTH_ONLY__NOT_A_SUBSTITUTE_FOR_AGENT_HIERARCHY"
+  "always_on_mutation_sentinel":{
+    "enabled":true,
+    "scope":"EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT",
+    "checks":[
+      "SELECTED_AUTHORITY_CONTEXT",
+      "TARGET_AUTHORITY_OR_RESOURCE",
+      "MUTATING_VS_READ_ONLY",
+      "OWNER_APPROPRIATE_MUTATION_WORKFLOW",
+      "TRIGGER_SIGNALS_REQUIRING_ADAPTIVE_DELIBERATION"
+    ],
+    "depth_rule":"LIGHTWEIGHT_ALWAYS_ON__ESCALATE_DELIBERATION_ONLY_WHEN_TRIGGERED"
+  },
+  "autonomous_maintenance_baseline":{
+    "goal":"SELF_CHECK__SELF_EXECUTE__VERIFY__REPORT_WITHOUT_PER_WRITE_USER_APPROVAL",
+    "normal_material_github_path":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_CHECKS__CONTROLLED_MERGE_OR_UPDATE__PRODUCTION_REREAD",
+    "required_properties":[
+      "candidate isolation for material architecture/governance changes",
+      "problem-response research and reflection per current deliberation policy",
+      "owner-appropriate reproducible validation",
+      "freshness/concurrency protection appropriate to the write path",
+      "production authority reread and post-promotion observation",
+      "user-visible report of changes and evidence"
+    ],
+    "direct_production_write":"NOT_THE_NORMAL_PATH_FOR_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGES",
+    "user_confirmation":"NOT_REQUIRED_PER_WRITE_WHEN_HOST_PERMISSION_ALLOWS_AUTONOMOUS_ACTION"
+  },
+  "optional_host_hardening":{
+    "classification":"DEFENSE_IN_DEPTH",
+    "mechanisms":["GITHUB_RULESET","BRANCH_PROTECTION","MANDATORY_REVIEW","EQUIVALENT_REMOTE_ENFORCEMENT"],
+    "default_requirement":"OPTIONAL_UNLESS_RISK_OR_EXPLICIT_REQUIREMENT_CALLS_FOR_NON_BYPASSABLE_ENFORCEMENT",
+    "selection_rule":"ADD_ONLY_WHEN_THE_EXTRA_ASSURANCE_JUSTIFIES_OPERATIONAL_FRICTION_AND_COMPLEXITY",
+    "assurance_rule":"ABSENCE_DOES_NOT_BLOCK_BASELINE_RELEASE_OR_AGENT_OPERATION"
+  },
+  "physical_complete_mediation_assurance":{
+    "claim_is_optional":true,
+    "when_claimed":"REMOTE_NON_BYPASSABLE_ENFORCEMENT_EVIDENCE_IS_MANDATORY",
+    "required_evidence":[
+      "active protection on the relevant production ref",
+      "required owner-appropriate status checks when part of the claim",
+      "no writer bypass inconsistent with the claimed guarantee"
+    ],
+    "without_evidence":"DO_NOT_CLAIM_PHYSICAL_COMPLETE_MEDIATION"
+  },
+  "concurrency_semantics":{
+    "candidate_branch_updates":"CAS_OR_NORMAL_BRANCH_CONCURRENCY_CONTROLS_ALLOWED",
+    "production_updates":"USE_CONTROLLED_MERGE_OR_OWNER_APPROPRIATE_FRESH_WRITE_PROTOCOL",
+    "cas_semantics":"CAS_PREVENTS_STALE_OVERWRITE_BUT_IS_NOT_AUTHORIZATION_OR_PHYSICAL_ENFORCEMENT"
+  },
+  "branch_protection_semantics":"OPTIONAL_DEFENSE_IN_DEPTH__NOT_A_SUBSTITUTE_FOR_AGENT_HIERARCHY_DELIBERATION_OR_VALIDATION"
 }

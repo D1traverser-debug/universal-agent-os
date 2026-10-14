@@ -1,0 +1,62 @@
+{
+  "schema_version":"1.3",
+  "evolution_id":"EVO-20261014-COMPLETE-MEDIATION-HOST-ENFORCEMENT",
+  "status":"RETIRED__OVERCONSTRAINED_ASSURANCE_GOAL",
+  "trigger":["REPEATED_USER_CORRECTION","ARCHITECTURE_GAP","CONTROL_PLANE_GAP","USER_REQUIREMENT_CHANGE__EVERY_PROBLEM_RESEARCH_AND_REFLECTION","USER_CHALLENGE__PHYSICAL_ENFORCEMENT_NOT_ALWAYS_NECESSARY"],
+  "incident":{
+    "failure_class":"FC-ASSURANCE-STRENGTH-MISTAKEN-FOR-BASELINE-REQUIREMENT-001",
+    "summary":"The repair correctly distinguished logical controls from physical host enforcement, but then overcorrected by making non-bypassable GitHub rulesets a universal release blocker. The governing user objective is autonomous self-checking maintenance with research/reflection, candidate isolation, validation, controlled promotion and post-action reporting. Remote rulesets are useful defense-in-depth but are not universally required for that objective."
+  },
+  "root_cause":[
+    "A stronger assurance property (physical complete mediation) was promoted into a baseline requirement without first proving that the governing user objective required that guarantee.",
+    "Security architecture research was applied as a maximum-strength target rather than through proportional risk/complexity selection.",
+    "The user preference for autonomous execution without per-write confirmation was temporarily subordinated to the stronger enforcement model.",
+    "The correct lesson from the raw-connector incident is to preserve candidate/validation discipline and report the assurance ceiling accurately, not to require the strongest possible host control in every repository."
+  ],
+  "deliberation_evidence":{
+    "MICRO_DIAGNOSIS":[
+      "rulesets were absent across current repositories but Agents remained operational and candidate CI/live verification remained reproducible",
+      "the user explicitly questioned whether rulesets were actually necessary",
+      "GitHub connector full-access is the user's preferred autonomous operating mode"
+    ],
+    "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT":[
+      "primary goal: autonomous maintenance that researches/reflection on every problem, isolates material changes, verifies them, promotes them, and reports results",
+      "secondary optional goal: platform-enforced non-bypassability when risk or explicit requirement justifies it"
+    ],
+    "GOVERNING_ASSUMPTION_CHALLENGE":[
+      "rejected: stronger protection is automatically required",
+      "rejected: missing rulesets imply the Agent system is incomplete or unusable",
+      "retained: do not claim physical non-bypassability without actual remote enforcement evidence"
+    ],
+    "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH":[
+      "GitHub documentation: rulesets/protected branches are configurable protection mechanisms",
+      "NIST defense-in-depth: layered safeguards provide additional barriers rather than defining one universal minimum for every system",
+      "Google SRE incident learning: problems should produce root-cause/system learning rather than symptom-only repair"
+    ],
+    "COUNTEREXAMPLE_SEARCH":[
+      "candidate branch + PR + CI + production reread provides useful isolation/evidence even without a remote ruleset",
+      "requiring five repository rulesets adds operational complexity unrelated to the user's main objective",
+      "per-write user confirmation conflicts with the explicit autonomous-maintenance preference"
+    ]
+  },
+  "implemented_scope_correction":{
+    "requirements_delta":"docs/requirements/FROZEN_REQUIREMENTS_v1.8.md",
+    "baseline_material_change_path":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_CHECKS__CONTROLLED_MERGE_OR_UPDATE__PRODUCTION_REREAD",
+    "host_hardening":"OPTIONAL_DEFENSE_IN_DEPTH",
+    "physical_complete_mediation":"OPTIONAL_HIGH_ASSURANCE_TIER__REQUIRED_ONLY_IF_CLAIMED",
+    "github_permission":"FULL_ACCESS__AUTONOMOUS_EXECUTION_WITH_POST_ACTION_REPORTING"
+  },
+  "optional_future_hardening":{
+    "rulesets_or_branch_protection":"MAY_BE_ADDED_WHEN_RISK_OR_USER_REQUIREMENT_JUSTIFIES_NON_BYPASSABLE_ENFORCEMENT",
+    "not_parent_core_open_work":true
+  },
+  "acceptance":{
+    "ruleset_absence_no_longer_blocks_baseline_release":"PASS_BY_V1_8_REQUIREMENT",
+    "physical_non_bypassability_not_overclaimed":"PASS",
+    "every_problem_research_and_reflection_floor":"PASS_IN_CANDIDATE_POLICY_AND_CODE",
+    "candidate_branch_pr_validation_workflow_retained":"PASS",
+    "final_candidate_ci_live":"PENDING_AFTER_V1_8_FINAL_TREE",
+    "post_promotion_observation":"PENDING"
+  },
+  "updated_at":"2026-10-14T16:37:00Z"
+}

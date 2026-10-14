@@ -30,22 +30,31 @@ Parent authority is a control/supervision relationship, not a mandatory business
 
 A child may issue a non-mutating parent upcall for diagnosis, goal clarification, replanning, architecture/method research, assurance or evolution support without surrendering its selected task authority, business identity, workflow or state.
 
-## Deliberation
+## Problem response and deliberation
 
-Apply `config/DELIBERATION_POLICY.json` when trigger signals indicate cognitive/system risk. Do not promote the first plausible framing merely because it sounds coherent.
+Apply `config/DELIBERATION_POLICY.json` whenever a problem is detected or a material change is proposed. Do not promote the first plausible framing merely because it sounds coherent.
 
-- Start from concrete evidence; move to macro goal/assumption/topology when warranted; return to the smallest correct concrete change.
-- Trigger conditions select depth, not a finite question list. Generate questions/methods from current evidence and unknowns.
-- If the current method/architecture knowledge is insufficient, search external evidence; do not remain confined to internally generated options.
+- Every detected problem requires concrete diagnosis, macro goal/topology alignment, governing-assumption challenge and relevant external research before selecting the repair.
+- Familiarity is not a waiver. Small problems may use a lightweight research/reflection pass; material/systemic problems require deeper evidence.
+- Research must affect the diagnosis or repair choice; ceremonial browsing does not count.
 - Same-model critique/refinement/debate may generate candidates but is not independent verification.
-- Material proposals seek counterexamples. High-risk/disputed claims require real independent evidence when available or an explicit assurance ceiling.
-- Do not run extra Agents, debates or architecture searches as ritual.
-- For material architecture/governance changes and any material change after a trigger signal, call the executable deliberation admission (`require_deliberation_admission`) or its host-equivalent before mutation/promotion. If any required dimension lacks evidence, fail closed.
-- Before declaring an evolution incident resolved, scan every current authority that can encode the changed semantic; local edited-file success is not enough.
+- Counterexample search and independent verification add depth according to risk.
+- For material architecture/governance changes, call the executable deliberation admission (`require_deliberation_admission`) or its host-equivalent before mutation/promotion. If any required dimension lacks evidence, fail closed.
+- Before declaring an evolution incident resolved, scan every current authority that can encode the changed semantic; include host control surfaces only when the assurance claim depends on them.
 
-## Mutation
+## Autonomous mutation baseline
 
-Material UAOS GitHub writes use observed-HEAD CAS: reread HEAD -> build one coherent commit on that tree -> update with expected SHA -> reread authority. Never force through a stale concurrent writer.
+Before every external or durable mutation, apply the lightweight mutation sentinel from `config/AUTHORITY_WRITE_POLICY.json` and `config/SESSION_INTERACTION_POLICY.json`: resolve authority, target, read-vs-write, owner-appropriate workflow, and current problem/risk signals.
+
+For material UAOS changes on `CHATGPT_GITHUB`, the normal workflow is:
+
+`candidate branch -> pull request -> promotion-gate / owner-appropriate checks -> controlled merge/update -> authoritative reread`
+
+This workflow provides isolation, auditability and reproducible evidence. Direct `main` mutation is not the normal path for material architecture/governance changes. CAS remains useful for stale-write/concurrency integrity where appropriate; it is not authorization.
+
+GitHub rulesets, branch protection and mandatory reviews are optional defense-in-depth by default. Their absence does not block normal Agent operation or a verified release. They become required only when the user/risk model explicitly requires a non-bypassable physical-enforcement guarantee. Do not claim that guarantee without remote evidence.
+
+The current user prefers autonomous GitHub execution: self-check, execute, verify and report afterward rather than request approval for every ordinary write.
 
 For parent-governed descendant writes, reread that descendant's current binding/business authority and satisfy its validation/impact requirements before mutation.
 
@@ -55,6 +64,8 @@ Repair the unique owning abstraction. Prefer extending/replacing/removing supers
 
 A proposed new mechanism must state existing overlap, why extension is insufficient, what it replaces/retires (or why nothing can be retired), new failure modes, rollback and complexity delta. Do not convert every incident into another guarantee sentence when a contract, state machine, fitness check or deletion is the correct fix.
 
+Stronger assurance is not automatically required. Before adding a stronger control, ask which objective/failure mode requires it, what existing controls already cover, and whether the added operational complexity is justified.
+
 ## Custom instructions
 
-External account Custom Instructions are never policy authority. If present, they should only point to `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md`.
+External account Custom Instructions are never policy authority. If present, they should contain only a compact bootstrap pointer. Repository requirements and current authority override stale pointer wording. Custom Instructions may help bootstrap behavior across chats, but they are not physical enforcement.

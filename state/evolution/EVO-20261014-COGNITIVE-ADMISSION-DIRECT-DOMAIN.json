@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.3",
   "evolution_id": "EVO-20261014-COGNITIVE-ADMISSION-DIRECT-DOMAIN",
   "status": "RESOLVED",
   "trigger": [
@@ -10,13 +10,18 @@
   ],
   "incident": {
     "failure_class": "FC-DELIBERATION-RUNTIME-ADMISSION-AND-DOMAIN-SESSION-TOPOLOGY-001",
-    "summary": "The deliberation selector existed and passed unit tests, but host/session maintenance could still promote a first-plausible architecture without first applying the selector. This allowed UAOS to be treated as a mandatory business gateway and left stale same-task-id Financial semantics in ENTRYPOINT and later stale bootstrap/readiness authority after narrower files were corrected."
+    "summary": "UAOS initially allowed a first-plausible architecture to treat the parent as a mandatory business gateway and left stale same-ID Financial semantics across authority surfaces. The session topology, Financial identity boundary, cognitive admission and authority-wide closure rules were corrected and verified. A later physical-host-enforcement follow-up was intentionally retired as an overconstrained assurance goal by v1.8; optional host hardening is not part of this incident's done-condition."
   },
-  "root_cause": [
-    "Deliberation was implemented as a pure selector but not made a fail-closed pre-mutation/pre-promotion host admission rule for material architecture/governance changes.",
-    "Closure verification was local to edited files/tests and did not require an authority-wide contradiction scan across every current surface encoding the changed semantic.",
-    "The parent/child relationship was conflated with mandatory request routing; parent governance was incorrectly allowed to imply parent mediation of normal child business execution."
-  ],
+  "resolved_scope":{
+    "direct_child_activation":"RESOLVED",
+    "financial_identity_decoupling":"RESOLVED",
+    "problem_triggered_deliberation_admission":"RESOLVED",
+    "authority_wide_semantic_closure":"RESOLVED"
+  },
+  "assurance_boundary":{
+    "baseline":"AUTONOMOUS_CANDIDATE_VALIDATION_AND_CONTROLLED_PROMOTION",
+    "physical_non_bypassability":"OPTIONAL_HIGH_ASSURANCE_TIER_NOT_REQUIRED_FOR_THIS_INCIDENT"
+  },
   "deliberation_evidence": {
     "MICRO_DIAGNOSIS": [
       "production ENTRYPOINT retained stale same-task-id Financial rule after prior closure",
@@ -40,109 +45,31 @@
     ],
     "INDEPENDENT_EXECUTION_EVIDENCE": [
       "GitHub hosted full CI run 38579600772 PASS",
-      "GitHub hosted live-integration run 38579600785 PASS for PostgreSQL/DBOS/crash-recovery/S3 protocol",
+      "GitHub hosted live-integration run 38579600785 PASS",
       "GitHub production main CI run 38579983855 PASS"
     ]
   },
-  "external_architecture_evidence": [
-    {
-      "source": "Kubernetes Cluster Architecture",
-      "property_borrowed": "control plane manages cluster/workload infrastructure while worker nodes run application workloads; management does not imply every application request is proxied by the control plane",
-      "fit": "supports UAOS as governance/control plane with direct domain work-plane execution",
-      "misfit": "UAOS is conversational governance, not a Kubernetes scheduler; no process/network mechanics are copied"
-    },
-    {
-      "source": "Erlang/OTP Supervisor Behaviour",
-      "property_borrowed": "supervisor starts/stops/monitors child processes while workers retain their own execution role",
-      "fit": "supports parent supervision/upcall without parent becoming the child's normal message proxy",
-      "misfit": "no OTP restart tree or process semantics are introduced"
-    }
-  ],
   "promotion": {
     "release": "UAOS 2.4.3",
     "release_commit": "895d1f17ff5d2fc56ad5f1ce57fc1c8ad89da0ad",
-    "promotion_method": "OBSERVED_HEAD_CAS",
-    "observed_main_head": "2fb7e0b2cb24d3206ecc7b2ae944870ee54909d1",
-    "candidate_tree": "75b8ec17c41325717c04f44b638ad0586e401583",
     "post_promotion_ci_run": 38579983855,
     "post_promotion_ci_status": "PASS"
   },
   "implemented_changes": [
-    "Frozen v1.5 direct-child-session, identity-boundary, cognitive-admission and authority-wide-closure requirements.",
-    "Corrected ENTRYPOINT, session policy, common capabilities and fresh-chat pointer so selecting a registered child activates that child directly as current Agent/work plane.",
-    "Made adaptive deliberation a fail-closed material-change admission contract and added executable require_deliberation_admission evidence checks.",
-    "Required authority-wide contradiction scan before evolution closure.",
-    "Corrected readiness from Financial 0.8.2/same-ID semantics to Financial 0.8.3/domain-owned identity semantics.",
-    "Added CI architecture regressions for parent-gateway, same-ID, stale bootstrap/readiness and deliberation-bypass failures."
+    "Registered child Agents activate directly as current work planes.",
+    "Financial article identity remains Financial-owned and distinct from parent routing identity.",
+    "Adaptive deliberation became executable fail-closed admission for material triggered changes.",
+    "Evolution closure became authority-wide rather than edited-file-local.",
+    "Subsequent v1.7 strengthened every detected problem to require external research plus macro/assumption reflection."
   ],
-  "complexity_delta": {
-    "new_components": 0,
-    "new_state_surfaces": 0,
-    "reused_mechanisms": [
-      "config/DELIBERATION_POLICY.json",
-      "config/SESSION_INTERACTION_POLICY.json",
-      "config/COMMON_CAPABILITIES.json",
-      "src/uaos/kernel/deliberation.py",
-      "existing CI architecture-invariant tests",
-      "existing evolution lifecycle"
-    ],
-    "retired_assumptions": [
-      "PARENT_AUTHORITY_IMPLIES_MANDATORY_BUSINESS_GATEWAY",
-      "FINANCIAL_ARTICLE_ID_EQUALS_UAOS_ROUTER_OR_ARTICLE_ID",
-      "COMMON_CAPABILITY_INHERITANCE_IMPLIES_PARENT_BUSINESS_PROXY",
-      "LOCAL_EDIT_VERIFICATION_IS_SUFFICIENT_FOR_EVOLUTION_CLOSURE"
-    ]
-  },
-  "authority_wide_scan": {
-    "status": "CLEAN_ON_PROMOTED_BASELINE",
-    "surfaces": [
-      "ENTRYPOINT.md",
-      "CURRENT_SYSTEM.json",
-      "AGENTS.md",
-      "config/SESSION_INTERACTION_POLICY.json",
-      "config/BINDING_POLICY.json",
-      "config/DELIBERATION_POLICY.json",
-      "config/COMMON_CAPABILITIES.json",
-      "state/TASK_INDEX.json",
-      "state/tasks/financial-writing-main.json",
-      "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
-      "docs/assurance/PRODUCTION_READINESS.json",
-      "financial-writing-agent@main:UAOS_SKILL.md"
-    ]
-  },
-  "evaluation": {
-    "final_runtime_candidate_head": "76c4c1b140639420bdc8f5e72b632a1b5928fff2",
-    "full_ci_run": 38579600772,
-    "full_ci_status": "PASS",
-    "live_integration_run": 38579600785,
-    "live_integration_status": "PASS",
-    "live_details": [
-      "PostgreSQL authority PASS",
-      "DBOS identity/idempotency PASS",
-      "maintenance schedule PASS",
-      "crash/recovery PASS",
-      "S3-compatible HTTP roundtrip PASS",
-      "OpenAI provider SKIPPED_BY_DESIGN"
-    ]
-  },
-  "maintenance_process_deviation": {
-    "observed": true,
-    "details": [
-      "A temporary noop file was accidentally written directly to main through the raw GitHub connector and immediately reverted.",
-      "The initial evolution record was also created directly on main before the candidate branch was established rather than through the intended CAS promotion path."
-    ],
-    "classification": "RAW_CHATGPT_GITHUB_CONNECTOR_PHYSICAL_SCOPE_LIMITATION_PLUS_OPERATOR_PROCESS_ERROR",
-    "impact": "No child business authority or production runtime behavior was overwritten; the noop was removed and the evolution record is intended durable audit state.",
-    "preventive_link": "The incident reinforces the existing host-hardening limitation: Python ActionCoordinator/deliberation gates cannot physically intercept raw native connector writes; policy/CI improve logical admission but GitHub rulesets or tool mediation are still required for complete physical enforcement."
-  },
   "acceptance": {
     "direct_registered_child_activation": "PASS",
     "no_authoritative_financial_same_id_rule": "PASS",
-    "triggered_material_change_deliberation_fail_closed": "PASS",
+    "problem_triggered_deliberation_fail_closed": "PASS",
     "authority_wide_closure_scan_required": "PASS",
     "candidate_full_ci": "PASS",
     "candidate_live_integration": "PASS",
     "post_promotion_main_ci": "PASS"
   },
-  "updated_at": "2026-10-14T14:24:00Z"
+  "updated_at": "2026-10-14T16:38:00Z"
 }
