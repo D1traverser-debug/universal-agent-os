@@ -1,9 +1,10 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "evolution_id": "EVO-20261014-FINANCIAL-IDENTITY-DECOUPLING",
-  "status": "EVALUATED_PASS__PROMOTION_READY",
+  "status": "RESOLVED",
   "trigger": "USER_CHALLENGE_TO_PARENT_CHILD_TASK_ID_EQUALITY",
   "opened_at": "2026-10-14T12:58:00Z",
+  "resolved_at": "2026-10-14T13:12:00Z",
   "incident": {
     "failure_class": "PARENT_CHILD_IDENTITY_NAMESPACE_COLLAPSE",
     "summary": "The prior Financial binding repair incorrectly required a UAOS article task ID and Financial article state ID to be equal, and cached child implementation/version/CI details in the parent router state."
@@ -15,10 +16,10 @@
   ],
   "repair": {
     "changes": [
-      "BINDING_POLICY now states that parent controller identity and domain business identity are distinct by default; correlation uses a domain-declared opaque reference.",
+      "BINDING_POLICY states that parent controller identity and domain business identity are distinct by default; correlation uses a domain-declared opaque reference.",
       "financial-writing:main is a UAOS domain router with optional opaque child state reference only.",
       "Child package/profile/validator/release/CI implementation details are removed from parent router state.",
-      "Task discovery metadata describes delegation to the independent Financial owner without adding a new UAOS state-model enum.",
+      "Task discovery metadata describes delegation to the independent Financial owner while retaining the existing UAOS_NATIVE state model.",
       "Regression tests prevent task-ID equality and child implementation-detail caching from returning."
     ],
     "new_components": 0,
@@ -33,21 +34,25 @@
     "initial_parent_ci_run": 38568402408,
     "initial_result": "1_FAILED_180_PASSED__UNNECESSARY_NEW_STATE_MODEL_ENUM",
     "corrective_action": "Keep existing UAOS_NATIVE state model and express router-only semantics in task_type/router state rather than adding a new global enum.",
-    "final_parent_candidate_ci_run": 38568752780,
+    "final_parent_candidate_ci_run": 38569325972,
     "final_parent_candidate_ci": "PASS",
     "financial_child_candidate_ci_run": 38567735219,
     "financial_child_candidate_ci": "PASS__101_TESTS__CONTRACT_STATIC_WHEEL_DOCX_RENDER",
     "financial_child_release": "0.8.3",
     "financial_child_release_commit": "289e8d6fa1d27613e5fd3c5f9dceecfa9d89b954",
     "financial_child_main_ci_run": 38568945008,
-    "financial_child_main_ci": "PASS"
+    "financial_child_main_ci": "PASS",
+    "financial_child_closure_commit": "0c1c0e1fc23301d5aa488026e66ab411663104c2",
+    "financial_child_closure_ci_run": 38569198573,
+    "financial_child_closure_ci": "PASS"
   },
-  "acceptance": [
-    "full UAOS CI passes",
-    "Financial router contains no same-ID rule or child internal validator symbol",
-    "Financial router contains no child package/profile/release/CI pins",
-    "parent stores only registration metadata and optional opaque child reference",
-    "generic binding policy preserves distinct identity namespaces by default"
-  ],
-  "updated_at": "2026-10-14T13:10:00Z"
+  "promotion": {
+    "method": "OBSERVED_HEAD_CAS",
+    "previous_main": "914b9cafc4cb6e8e64f1dcede36f111a5e5da1ce",
+    "release_commit": "fd1861bbadee5333f4283863c95b71e553312282",
+    "post_promotion_main_ci_run": 38569471592,
+    "post_promotion_main_ci": "PASS"
+  },
+  "terminal_disposition": "KEEP_DISTINCT_PARENT_AND_FINANCIAL_IDENTITY_NAMESPACES__OPAQUE_CHILD_REFERENCE_ONLY",
+  "updated_at": "2026-10-14T13:12:00Z"
 }
