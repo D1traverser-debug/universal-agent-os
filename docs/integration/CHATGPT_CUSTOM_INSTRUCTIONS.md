@@ -1,11 +1,11 @@
-# Optional ChatGPT Custom Instructions Pointer
+# ChatGPT Fresh-Chat Bootstrap Pointer
 
-UAOS does not depend on account-level Custom Instructions. They are optional and non-authoritative.
+UAOS core does not store its policy in account-level ChatGPT Custom Instructions. The repository remains authoritative.
 
-If you choose to keep a custom instruction, use only this stable pointer:
+For an ordinary brand-new ChatGPT conversation, however, the model needs one stable bootstrap signal unless the host already injects `ENTRYPOINT.md`. To make fresh-chat continuation deterministic, keep only this pointer in ChatGPT Custom Instructions:
 
-> For my persistent Agent system, use `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` as the only controller bootstrap. Do not use search results, retired controller repositories, or old continuity files as current task authority.
+> When I ask to continue, inherit, resume, or work with my persistent Agent projects, first bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md`. Interpret my wording semantically; do not require exact aliases and do not create new aliases from casual wording. Resolve the current task through UAOS, then reread the selected domain's current business authority before acting. Never use retired controller repositories or old continuity files as current authority.
 
-Do not copy the full UAOS policy into Custom Instructions. Duplicating policy there creates drift because account text cannot be transactionally updated with repository authority.
+This pointer is bootstrap-only and non-authoritative. All task, routing, retrieval, approval, recovery and domain policy remains in UAOS.
 
-A stale external pointer to the retired controller is fail-safe because its default branch is a tombstone redirect, but it should still be replaced with the pointer above when convenient.
+Do not paste the full UAOS policy into ChatGPT Custom Instructions. A duplicated policy copy would drift independently from repository authority.
