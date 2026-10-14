@@ -1,26 +1,35 @@
 {
-  "schema_version":"1.1",
-  "policy_version":"1.1.0",
+  "schema_version":"1.2",
+  "policy_version":"1.2.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T13:48:00Z",
-  "purpose":"Select epistemic depth from current risk/evidence signals without constraining reasoning to a fixed questionnaire, and fail closed before material mutation when required deliberation has not been satisfied.",
+  "updated_at":"2026-10-14T15:31:00Z",
+  "purpose":"Select epistemic depth from current risk/evidence signals without constraining reasoning to a fixed questionnaire, while remaining downstream of an always-on mutation sentinel that verifies side-effect mediation before external durable writes.",
   "principles":[
+    "The mutation sentinel is always-on and lightweight; adaptive deliberation is not a permanent heavy debate loop.",
     "Triggers decide when deeper deliberation is required; current evidence generates the actual questions and methods.",
     "Move micro -> macro -> micro: reproduce the concrete symptom, challenge goal/assumption/topology when warranted, then return to the smallest correct change and concrete verification.",
     "Do not default to multi-agent debate, architecture search or self-reflection rituals.",
     "Same-model critique is candidate-generation evidence, not independent verification.",
     "When a knowledge/method/architecture gap exists, actively search external evidence and compare properties, fit, costs, failure modes and rejected alternatives.",
     "Material proposals should be challenged by counterexamples; high-risk or disputed outcomes require genuinely independent evidence when available.",
-    "Stop deliberating when evidence is sufficient for the risk level, contradictions are resolved or explicitly bounded, and the plan demonstrably advances the governing done-condition without unnecessary complexity."
+    "Stop deliberating when evidence is sufficient for the risk level, contradictions are resolved or explicitly bounded, the mutation path is properly mediated, and the plan demonstrably advances the governing done-condition without unnecessary complexity."
   ],
-  "representative_trigger_signals":["USER_CORRECTION","REPEATED_FAILURE","GOAL_PROGRESS_UNCERTAIN","SCOPE_EXPANSION","CROSS_SUBSYSTEM","COMPLEXITY_GROWTH","CONFLICTING_EVIDENCE","UNKNOWN_FAILURE_CLASS","KNOWLEDGE_GAP","ARCHITECTURE_GAP","HIGH_RISK_CHANGE"],
+  "representative_trigger_signals":["USER_CORRECTION","REPEATED_FAILURE","GOAL_PROGRESS_UNCERTAIN","SCOPE_EXPANSION","CROSS_SUBSYSTEM","COMPLEXITY_GROWTH","CONFLICTING_EVIDENCE","UNKNOWN_FAILURE_CLASS","KNOWLEDGE_GAP","ARCHITECTURE_GAP","CONTROL_PLANE_GAP","HIGH_RISK_CHANGE"],
   "trigger_semantics":"EXTENSIBLE__NOT_AN_EXHAUSTIVE_PROBLEM_ONTOLOGY",
   "escalation_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH","COUNTEREXAMPLE_SEARCH","INDEPENDENT_VERIFICATION"],
   "external_architecture_scout":{"default":"OFF","enable_when":"CURRENT_METHOD_OR_ARCHITECTURE_KNOWLEDGE_IS_INSUFFICIENT_OR_UNKNOWN","output_contract":["required_property","candidate_patterns","fit_and_misfit","cost_and_failure_modes","minimum_borrowable_mechanism","rejected_alternatives","evidence_refs"]},
+  "mutation_sentinel_contract":{
+    "policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
+    "session_ref":"config/SESSION_INTERACTION_POLICY.json",
+    "always_on":true,
+    "responsibility":"Before any external/durable mutation, verify authority/target/mutation class and whether the proposed path is mediated by the required host enforcement point; then pass trigger signals to adaptive deliberation.",
+    "not_a_deliberation_dimension":"The sentinel is an admission precondition, not evidence that macro analysis/research/counterexample work has been completed."
+  },
   "material_change_admission":{
     "scope":"MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGE_AND_ANY_MATERIAL_CHANGE_AFTER_A_TRIGGER_SIGNAL",
     "fail_closed":true,
     "before_mutation":[
+      "pass the always-on mutation sentinel for the proposed side-effect path",
       "construct current DeliberationSignals from observed evidence rather than from the preferred solution",
       "run assess_deliberation(signals)",
       "satisfy every escalation dimension marked required before promoting the proposed architecture/governance mutation",
@@ -30,10 +39,12 @@
     ],
     "closure_guard":[
       "scan all current top-level authorities that can encode the changed semantic, including ENTRYPOINT, CURRENT_SYSTEM, session/binding/authority policies, task/router state and affected domain bindings",
-      "resolve or explicitly bound every contradiction before reporting RESOLVED",
-      "run reproducible evaluation on the final candidate tree and post-promotion observation on production authority"
+      "scan actual host control surfaces relevant to the claimed invariant, including connector permissions and remote repository protection when mutation safety is in scope",
+      "resolve or explicitly bound every contradiction before reporting progress",
+      "do not report RESOLVED when a known active production write path can bypass the invariant being claimed",
+      "run reproducible evaluation on the final candidate tree and post-promotion observation on production authority at the assurance level appropriate to the change"
     ],
-    "host_note":"CHATGPT_GITHUB raw connector calls are outside the Python ActionCoordinator, so the host/session must apply this admission rule before material repository mutation; CI invariants provide independent regression detection for durable contradictions."
+    "host_note":"CHATGPT_GITHUB raw connector calls are outside the Python ActionCoordinator. Repository policy therefore requires a host enforcement point for production mutation. Custom Instructions and the model-side sentinel are useful bootstrap/decision aids but are not physical enforcement."
   },
   "anti_bloat":["Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem.","Every new mechanism must state overlap, replacement/retirement, or why extension is impossible.","Do not turn guidance principles into accumulating guarantee prose when an invariant can be encoded as a contract/test/fitness property."]
 }
