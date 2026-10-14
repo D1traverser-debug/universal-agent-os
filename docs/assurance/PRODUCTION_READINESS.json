@@ -1,17 +1,18 @@
 {
   "snapshot_date":"2026-10-14",
-  "status":"PARENT_CORE_BASELINE_COMPLETE__DIRECT_DOMAIN_ACTIVATION_AND_COGNITIVE_ADMISSION_VERIFIED__FINANCIAL_0_8_3_EXTERNAL_BINDING_VERIFIED",
+  "status":"UAOS_2_4_4_CANDIDATE__LOGICAL_COMPLETE_MEDIATION_DEFINED__PHYSICAL_HOST_ENFORCEMENT_PENDING",
   "requirements_authority":[
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.2.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.3.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.4.md",
-    "docs/requirements/FROZEN_REQUIREMENTS_v1.5.md"
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.5.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.6.md"
   ],
-  "system_release_version":"2.4.3",
+  "system_release_version":"2.4.4",
   "mandatory_external_services":[],
-  "local_integrated_test_status":"PASS",
+  "local_integrated_test_status":"PENDING_FINAL_CANDIDATE_EVALUATION",
   "verification":{
     "phase0_18_prior_baseline":"PASS_RETAINED",
     "prior_parent_baseline":"PASS_RETAINED",
@@ -23,55 +24,60 @@
     "financial_child_post_promotion_ci":{"run_id":38568945008,"status":"PASS"},
     "financial_child_closure_ci":{"run_id":38569198573,"status":"PASS"},
     "financial_identity_semantics":"FINANCIAL_STATE_TASK_ID_IS_DOMAIN_OWNED_ARTICLE_IDENTITY__TASK_CONTRACT_IDENTITY_FREE__NO_PARENT_CHILD_ID_EQUALITY",
-    "uaos_financial_identity_decoupling_main_ci":{"run_id":38569471592,"status":"PASS"},
-    "uaos_financial_identity_decoupling_closure_ci":{"run_id":38569704289,"status":"PASS"},
     "uaos_2_4_3_release_commit":"895d1f17ff5d2fc56ad5f1ce57fc1c8ad89da0ad",
+    "uaos_2_4_3_post_promotion_ci":{"run_id":38579983855,"status":"PASS"},
     "cognitive_direct_domain_final_candidate_ci":{"run_id":38579600772,"status":"PASS"},
     "cognitive_direct_domain_final_candidate_live":{"run_id":38579600785,"status":"PASS","postgres_authority":"PASS","dbos_identity_idempotency":"PASS","maintenance_schedule":"PASS","crash_recovery":"PASS","s3_http_roundtrip":"PASS","openai_provider":"SKIPPED_BY_DESIGN"},
-    "uaos_2_4_3_post_promotion_ci":{"run_id":38579983855,"status":"PASS"},
-    "external_architecture_evidence":[
-      "Kubernetes control-plane versus worker/workload separation: borrowed only the property that governance/control does not imply per-request workload proxying",
-      "Erlang/OTP supervisor versus worker separation: borrowed only the property that parent supervision does not replace child execution ownership"
+    "complete_mediation_external_architecture_evidence":[
+      "NIST reference-monitor property: complete mediation / always invoked, tamper resistance, verifiability",
+      "GitHub rulesets: require pull requests and required status checks on protected refs",
+      "OpenAI Custom Instructions: applied across chats, suitable for bootstrap/sentinel but not physical enforcement"
     ],
-    "authority_wide_scan_surfaces":[
-      "ENTRYPOINT.md",
-      "CURRENT_SYSTEM.json",
-      "AGENTS.md",
-      "config/SESSION_INTERACTION_POLICY.json",
-      "config/BINDING_POLICY.json",
-      "config/DELIBERATION_POLICY.json",
-      "config/COMMON_CAPABILITIES.json",
-      "state/TASK_INDEX.json",
-      "state/tasks/financial-writing-main.json",
-      "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
-      "financial-writing-agent@main:UAOS_SKILL.md",
-      "docs/assurance/PRODUCTION_READINESS.json"
-    ],
-    "authority_wide_scan_status":"CLEAN_ON_PROMOTED_BASELINE"
+    "observed_host_state":{
+      "github_main_protected":false,
+      "github_rulesets":[],
+      "chatgpt_github_plugin_permission":"APP_SPECIFIC_ALLOW_ALL_ACTIONS",
+      "raw_connector_can_write_without_uaos_python_interception":true
+    }
   },
-  "parent_core_open_work":[],
+  "parent_core_open_work":[
+    {
+      "id":"P1",
+      "item":"PHYSICAL_COMPLETE_MEDIATION_FOR_GITHUB_PRODUCTION_MAIN",
+      "status":"BLOCKED_HOST_CONFIGURATION",
+      "required":{
+        "ruleset_target":"main",
+        "require_pull_request":true,
+        "required_status_check":"promotion-gate",
+        "block_force_push":true,
+        "block_branch_deletion":true,
+        "chatgpt_github_app_bypass":false
+      },
+      "closure_rule":"Remote ruleset must be read back as active and candidate PR must pass promotion-gate before 2.4.4 may be promoted."
+    }
+  ],
   "financial_integration_open_work":[],
   "deferred_work":[
     {
       "id":"D1",
       "scope":"OTHER_OR_GENERIC_CHILD_INTEGRATION",
       "item":"LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE_OUTSIDE_THE_VERIFIED_FINANCIAL_ROUTING_PATH",
-      "reason":"Direct child-session topology is now governed generically; live end-to-end upcall evidence for every registered domain remains outside this Financial-focused verification."
+      "reason":"Direct child-session topology is governed generically; live end-to-end upcall evidence for every registered domain remains outside this Financial-focused verification."
     }
   ],
-  "host_hardening":[
+  "host_control_surface":[
     {
-      "id":"H1",
-      "item":"GITHUB_MAIN_RULESET_OR_BRANCH_PROTECTION",
-      "status":"NOT_CONFIGURED",
-      "classification":"HOST_LEVEL_DEFENSE_IN_DEPTH",
-      "note":"Public outsiders do not receive repository write permission by default, but main is not protected against authorized writers/owner-level mistakes. Current connector does not expose ruleset/protection administration."
+      "id":"HC1",
+      "item":"CHATGPT_GITHUB_CONNECTOR_PERMISSION",
+      "current":"ALLOW_ALL_ACTIONS",
+      "risk":"RAW_WRITES_DO_NOT_REQUIRE_PREWRITE_CONFIRMATION",
+      "role":"TEMPORARY_HOST_PERMISSION_CAN_REDUCE_RISK_BUT_DOES_NOT_REPLACE_REPOSITORY_RULESET"
     },
     {
-      "id":"H2",
-      "item":"RAW_CHATGPT_GITHUB_CONNECTOR_PHYSICAL_SCOPE",
-      "status":"HOST_LEVEL_LIMITATION",
-      "note":"Raw connector calls remain physically outside Python ActionCoordinator interception. UAOS 2.4.3 adds fail-closed host/session admission requirements and CI contradiction checks, but repository-scoped credentials/rulesets/tool mediation are still required for complete physical enforcement. A direct-main noop write during this maintenance was immediately reverted and recorded in the evolution audit."
+      "id":"HC2",
+      "item":"GITHUB_MAIN_RULESET",
+      "current":"ABSENT",
+      "role":"REQUIRED_PRODUCTION_POLICY_ENFORCEMENT_POINT"
     }
   ],
   "known_limitations":[
@@ -79,9 +85,9 @@
     "hosted CI/live runs provide independent execution evidence, not independent semantic architecture judgment",
     "S3 CI evidence uses a standalone HTTP protocol emulator and does not certify any eventual production bucket/provider configuration",
     "live OpenAI provider evidence is optional/manual and was not rerun because provider integration code is unchanged",
-    "raw native connector calls cannot be physically intercepted by the Python deliberation or ActionCoordinator gates",
+    "until the active GitHub ruleset is configured and read back, production complete mediation is not physically enforced",
     "Financial historical article receipts remain immutable and explicit historical resume uses the exact Financial-owned article reference without parent identity adoption"
   ],
-  "readiness_semantics":"UAOS 2.4.3 treats UAOS as parent control/governance plane rather than a mandatory child-business gateway. Registered children may activate directly in fresh chats; domain business identity/workflow/state remain domain-owned. Triggered material architecture/governance changes fail closed until required deliberation evidence exists, and evolution closure requires an authority-wide contradiction scan. Financial 0.8.3 is the verified Financial baseline and no same-ID parent/Financial article binding remains authoritative.",
-  "updated_at":"2026-10-14T14:24:00Z"
+  "readiness_semantics":"UAOS 2.4.4 candidate separates always-on mutation sensing, adaptive cognition, policy decision, and physical policy enforcement. The repository policy now retires direct-main CAS as the normal production promotion path and requires candidate branch -> PR -> promotion-gate -> protected merge. Because main currently has no active ruleset, this incident is not RESOLVED and 2.4.4 is not production-promoted.",
+  "updated_at":"2026-10-14T15:38:00Z"
 }
