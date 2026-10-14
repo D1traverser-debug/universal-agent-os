@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "task_id": "FQ001_MINGRI_ORDER",
   "domain_id": "novel",
   "status": "HOLD",
@@ -15,6 +15,7 @@
     "rolling_ledger_sha256": "3cec0a78067c7d1acbc6605b4af859d1860f13d46e1770141b979b7f3143c02f"
   },
   "project_business_authority": "D1traverser-debug/novel-writing-agent@main:projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+  "freshness_rule": "REREAD_PROJECT_CHECKPOINT_BEFORE_MATERIAL_ACTION_AND_RECONCILE_UAOS_CURSOR_IF_PROJECT_ADVANCED",
   "canon_version": 12,
   "last_final_chapter": 8,
   "next_serial_chapter": 9,

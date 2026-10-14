@@ -14,15 +14,17 @@
   "verification": {
     "phase0_18_prior_baseline": "PASS_RETAINED",
     "phase19_cross_repo_cutover": "PASS_BY_AUTHORITATIVE_REREAD",
-    "phase20_hot_path_isolation": "IMPLEMENTED__HOSTED_CI_PENDING",
-    "phase20_scope": "old-controller tombstone; clean domain UAOS Skill/manifest bindings; active registry/task-state cleanup; retrieval isolation; binding-drift fail-closed guard; repo/custom-instruction entry guidance"
+    "phase20_hot_path_isolation": "TARGETED_REGRESSION_PASS_23",
+    "phase20_validation_ref": "docs/assurance/PHASE20_VALIDATION.json",
+    "hosted_full_ci": "RUNNER_NOT_STARTED__NO_TEST_RESULT"
   },
-  "core_open_work": ["PHASE20_HOSTED_CI_CONFIRMATION"],
+  "core_open_work": ["HOSTED_FULL_REPOSITORY_CI_EXECUTION_EVIDENCE"],
   "known_limitations": [
     "semantic generation/research quality depends on capabilities actually available in the active host session",
     "without an always-on free host, between-session work cannot execute continuously",
     "high-impact external self-modification remains approval/policy gated",
     "account-level ChatGPT Custom Instructions cannot be transactionally controlled by this repository and therefore are optional non-authority pointers only",
-    "business repositories may retain denied historical/internal files, but normal UAOS retrieval mechanically excludes the superseded controller surfaces listed in RETRIEVAL_POLICY"
+    "business repositories may retain denied historical/internal files, but normal UAOS retrieval excludes the superseded controller surfaces listed in RETRIEVAL_POLICY",
+    "the current ChatGPT connector surface cannot physically intercept arbitrary out-of-policy manual repository searches; UAOS prevents them from becoming authority through bootstrap/retrieval/binding admission, while the retired controller default branch is physically tombstoned"
   ]
 }

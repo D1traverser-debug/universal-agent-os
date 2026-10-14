@@ -1,10 +1,11 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "task_id": "financial-writing:main",
   "domain_id": "financial_writing",
   "status": "RUNNING",
   "current_stage": "READY_FOR_NEW_OR_EXPLICIT_ARTICLE",
   "next_action": "For a normal article request create a new article task and durable Financial article state; completed historical articles are not auto-reactivated.",
   "domain_business_authority": "D1traverser-debug/financial-writing-agent@main:workspaces/articles/{article_task_id}/STATE.json",
+  "freshness_rule": "REREAD_EXACT_ARTICLE_STATE_BEFORE_EVERY_MATERIAL_ARTICLE_ACTION",
   "domain_business_state_is_controller": false
 }

@@ -1,6 +1,7 @@
 {
-  "schema_version": "2.0",
+  "schema_version": "2.1",
   "authority": "UAOS",
+  "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "tasks": [
     {
       "task_id": "financial-writing:main",
@@ -49,7 +50,7 @@
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume_within_domain": true,
-      "aliases": ["原创数字IP设计", "AI自媒体视频商业化与原创数字IP", "ai-self-media-commercialization", "继续视频系统"],
+      "aliases": ["原创数字IP设计", "AI自媒体视频商业化与原创数字IP", "ai-self-media-commercialization", "视频系统"],
       "state_model": "UAOS_NATIVE",
       "current_stage": "H1_SCULPTURAL_MASSING_V2",
       "state_ref": "state/tasks/video-ai-self-media-commercialization.json"

@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "validated_at": "2026-10-14",
+  "phase": "PHASE20_HOT_PATH_ISOLATION",
+  "authoritative_main_commit": "2507888a1796e09273f5a73361f9a95a1ea69dcb",
+  "authoritative_reread": {
+    "entrypoint_blob": "9a03fa3f1b011c11b6b143ca399466490d304d2a",
+    "task_index_blob_before_freshness_patch": "b46a066b3a59a4764d2c346cc0bdaa0449783697",
+    "retrieval_policy_blob": "1d5acfc543e88af40360d80e6f9728bf7c5850e1",
+    "active_state_cutover_status_present": false,
+    "domain_manifest_blobs": {
+      "financial_writing": "0c6be6e6f413a4558217ceaf88eebf5ab9bacc43",
+      "ashare": "f46fc117a81f02f6f56249f4191a898916a23dfa",
+      "novel": "f2bfbd30c88fe83d68e6d25094a304193be75e97",
+      "video": "d077421e7e1a84ebea951d28aea39f88ee2c0083"
+    }
+  },
+  "targeted_regression": {
+    "environment": "LOCAL_RECONSTRUCTED_PHASE20_HARNESS",
+    "result": "PASS",
+    "tests": 23,
+    "scope": ["agent registry/task-index hygiene", "retrieval admission", "binding drift fail-closed", "hot-path pollution checks"]
+  },
+  "hosted_ci": {
+    "run_id": 38508429085,
+    "job_id": 115671153807,
+    "conclusion": "FAILURE_BEFORE_RUNNER",
+    "runner_id": 0,
+    "steps": 0,
+    "pytest_executed": false,
+    "interpretation": "NO_HOSTED_TEST_RESULT__DO_NOT_TREAT_AS_REGRESSION_FAILURE_OR_PASS"
+  },
+  "full_repository_regression": "NOT_EXECUTED_IN_HOSTED_RUNNER",
+  "assurance_rule": "TARGETED_PASS_DOES_NOT_UPGRADE_FULL_REPOSITORY_CI"
+}
