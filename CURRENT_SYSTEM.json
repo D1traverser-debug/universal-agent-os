@@ -1,22 +1,20 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "system": "UNIVERSAL_AGENT_OS",
-  "status": "ACTIVE_PRIMARY_CONTROLLER__CUTOVER_COMPLETE",
+  "status": "ACTIVE_PRIMARY_CONTROLLER",
   "repository": "D1traverser-debug/universal-agent-os",
   "entrypoint": "ENTRYPOINT.md",
-  "requirements": [
-    "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
-    "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"
-  ],
+  "repo_instructions": "AGENTS.md",
+  "requirements": ["docs/requirements/FROZEN_REQUIREMENTS_v1.0.md", "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"],
   "agent_registry": "config/AGENT_REGISTRY.json",
   "task_index": "state/TASK_INDEX.json",
-  "cutover_status": "state/CUTOVER_STATUS.json",
   "host_profiles": "config/HOST_PROFILES.json",
-  "legacy_controller": {
-    "repository": "D1traverser-debug/universal-continuity-agent",
-    "status": "RETIRED_READ_ONLY",
-    "write_allowed": false
-  },
-  "cutover_policy": "NEW_TASKS_UAOS_NATIVE__LEGACY_TASKS_LAZY_IMPORT_THEN_UAOS_WRITE_ONLY",
-  "paid_external_services_required": false
+  "retrieval_policy": "config/RETRIEVAL_POLICY.json",
+  "binding_policy": "config/BINDING_POLICY.json",
+  "controller_state_root": "state/tasks",
+  "controller_state_model": "UAOS_ONLY",
+  "historical_evidence_root": "docs/migration",
+  "historical_evidence_bootstrap_load": false,
+  "external_custom_instructions_required": false,
+  "mandatory_external_services": []
 }

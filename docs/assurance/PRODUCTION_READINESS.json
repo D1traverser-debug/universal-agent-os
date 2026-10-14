@@ -1,39 +1,28 @@
 {
   "snapshot_date": "2026-10-14",
-  "status": "USABLE_ZERO_COST_BASELINE_COMPLETE__RESILIENCE_HARDENED__CONTROL_PLANE_CUTOVER_COMPLETE",
+  "status": "USABLE_ZERO_COST_BASELINE_COMPLETE__RESILIENCE_HARDENED__HOT_PATH_ISOLATION_IMPLEMENTED",
   "requirements_authority": ["docs/requirements/FROZEN_REQUIREMENTS_v1.0.md", "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"],
   "mandatory_external_services": [],
   "default_stack": {
-    "state_authority": "SQLiteVersionedRepository + SQLiteAppendOnlyLedger (LOCAL host) or GitHub JSON observed-HEAD CAS (CHATGPT_GITHUB host)",
-    "continuity_runtime": "SQLiteCheckpointRuntime locally; UAOS state/task/action records in ChatGPT/GitHub host",
-    "artifacts": "LocalContentAddressedStore or exact domain/external artifacts registered through UAOS",
-    "agent_provider": "zero-cost-first host capability registry with circuit breaking/fallback",
-    "background_maintenance": "opportunistic by default",
-    "portable_recovery": "SQLite backup snapshot + artifact hash manifest for LOCAL host; Git history/CAS for CHATGPT_GITHUB controller state"
+    "state_authority": "SQLiteVersionedRepository + SQLiteAppendOnlyLedger (LOCAL) or GitHub JSON observed-HEAD CAS (CHATGPT_GITHUB)",
+    "continuity_runtime": "UAOS current task/controller state only",
+    "retrieval_admission": "config/RETRIEVAL_POLICY.json",
+    "domain_binding_guard": "config/BINDING_POLICY.json",
+    "agent_provider": "zero-cost-first current-host capability registry",
+    "background_maintenance": "opportunistic by default"
   },
   "verification": {
-    "phase0_11_local_integrated_tests": {"count": 97, "status": "PASS_AT_PHASE11"},
-    "zero_cost_local_targeted_tests": {"count": 3, "status": "PASS"},
-    "host_capability_policy_tests": {"count": 4, "status": "PASS"},
-    "zero_cost_domain_control_e2e": {"count": 5, "status": "PASS"},
-    "legacy_cutover_tests": {"count": 4, "status": "PASS"},
-    "self_change_tests": {"count": 2, "status": "PASS"},
-    "phase18_resilience_tests": {"count": 13, "status": "PASS", "scope": "circuit/fallback, wait/degrade states, portable snapshot integrity, opportunistic maintenance, risk-tier self-change"},
-    "phase19_cross_repo_cutover": {
-      "status": "PASS_BY_AUTHORITATIVE_REREAD",
-      "evidence_ref": "state/CUTOVER_STATUS.json",
-      "scope": "old controller retirement, four Agent adapters/manifests/Skill entries, legacy task migration dispositions"
-    },
-    "hosted_ci": "OPTIONAL_ENHANCEMENT__NOT_REQUIRED_FOR_USABLE_BASELINE"
+    "phase0_18_prior_baseline": "PASS_RETAINED",
+    "phase19_cross_repo_cutover": "PASS_BY_AUTHORITATIVE_REREAD",
+    "phase20_hot_path_isolation": "IMPLEMENTED__HOSTED_CI_PENDING",
+    "phase20_scope": "old-controller tombstone; clean domain UAOS Skill/manifest bindings; active registry/task-state cleanup; retrieval isolation; binding-drift fail-closed guard; repo/custom-instruction entry guidance"
   },
-  "core_open_work": [],
+  "core_open_work": ["PHASE20_HOSTED_CI_CONFIRMATION"],
   "known_limitations": [
-    "semantic generation/research quality depends on host capabilities actually available in the active session",
-    "without an always-on free host, between-session work cannot execute continuously; due maintenance runs opportunistically on the next invocation",
-    "SQLite/local files are a single-machine LOCAL baseline; ChatGPT/GitHub host uses repository CAS rather than live multi-writer SQLite sync",
-    "high-impact external self-modification remains explicitly approval/policy gated",
-    "an unavailable capability with no safe fallback leaves only the affected work waiting rather than fabricating a result",
-    "legacy unfinished task business data remains in its domain repository until first explicit UAOS continuation/import; this is intentional lazy migration, not a second active controller"
-  ],
-  "optional_enhancement_evidence": ["GitHub hosted Actions runner", "PostgreSQL adapter/live concurrency", "DBOS transparent crash replay and durable scheduling", "S3-compatible remote object storage", "OpenAI Agents SDK/API provider"]
+    "semantic generation/research quality depends on capabilities actually available in the active host session",
+    "without an always-on free host, between-session work cannot execute continuously",
+    "high-impact external self-modification remains approval/policy gated",
+    "account-level ChatGPT Custom Instructions cannot be transactionally controlled by this repository and therefore are optional non-authority pointers only",
+    "business repositories may retain denied historical/internal files, but normal UAOS retrieval mechanically excludes the superseded controller surfaces listed in RETRIEVAL_POLICY"
+  ]
 }

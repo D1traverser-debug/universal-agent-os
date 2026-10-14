@@ -1,70 +1,90 @@
-# Universal Agent OS — ChatGPT Entry Point
+# Universal Agent OS — Entry Point
 
-Status: ACTIVE_PRIMARY_CONTROLLER
-Successor of: `D1traverser-debug/universal-continuity-agent`
+Status: `ACTIVE_PRIMARY_CONTROLLER`
 
 ## Minimal bootstrap
 
-When UAOS is used from ChatGPT, load only:
-1. `ENTRYPOINT.md`
-2. `CURRENT_SYSTEM.json`
+For a fresh ChatGPT/session bootstrap load only:
+1. `ENTRYPOINT.md`;
+2. `CURRENT_SYSTEM.json`.
 
-Then load `config/AGENT_REGISTRY.json` and `state/TASK_INDEX.json` only when routing or continuation is required. Do not preload every domain repository.
+Do not preload migration evidence, domain repositories, historical task files, or broad search results.
 
-## Intent first
+## Intent before state
 
-Classify the user request before touching durable task state:
-- NEW_TASK: create a new UAOS task. Never inherit an old business stage merely because the domain matches.
-- CONTINUE: resolve an exact UAOS task or a legacy task seed. If a legacy task has not yet been imported, read its declared source checkpoint once, translate it through the UAOS adapter, then write only UAOS continuity state afterwards.
-- REQUIREMENT_CHANGE: update requirement authority and invalidate only affected downstream work.
-- QUERY: read only what is needed.
-- SYSTEM_MAINTENANCE: operate on UAOS itself. Never resume an ordinary business task by accident.
-- PAUSE/CANCEL: checkpoint first when possible, then change lifecycle state.
+Classify the request first:
+- `NEW_TASK`: create a new UAOS task; never inherit unfinished state merely because the domain matches.
+- `CONTINUE`: resolve an exact current UAOS task from `state/TASK_INDEX.json`; do not reconstruct task identity from search results or chat memory.
+- `REQUIREMENT_CHANGE`: update the requirement authority at the narrowest valid scope and invalidate only affected downstream work.
+- `QUERY`: read only what the question requires.
+- `SYSTEM_MAINTENANCE`: operate on UAOS/system authority, not an ordinary business task.
+- `PAUSE/CANCEL`: persist a safe checkpoint when possible, then change lifecycle state.
+
+## Current routing
+
+When routing or continuing, load:
+- `config/AGENT_REGISTRY.json`;
+- `state/TASK_INDEX.json`;
+- the selected `state/tasks/<task>.json`.
+
+There is one cross-domain controller: UAOS. Business repositories own domain code, rules, fine-grained business state, Canon/media/data and artifacts. They do not own cross-chat controller state.
+
+## Domain execution admission
+
+Before material domain work:
+1. read `config/BINDING_POLICY.json`;
+2. read the selected Agent's exact `UAOS_SKILL`, `continuity/UAOS_MANIFEST.json`, `continuity/UAOS_ADAPTER.json`, and required capability profile;
+3. validate the binding with the current repository state;
+4. if controller/Skill/manifest/adapter binding drifts, block the affected domain execution until reconciled.
+
+A repository declaration is a capability ceiling, not proof that the active session can execute it.
+
+## Retrieval isolation
+
+All controller/domain repository retrieval obeys `config/RETRIEVAL_POLICY.json`.
+
+Normal execution must not use:
+- retired controller repositories;
+- old continuity protocols, task indexes, leases or resume metadata;
+- migration evidence under `docs/migration/`;
+- superseded domain Skill/manifest surfaces denied by the retrieval policy.
+
+Historical evidence is a cold path. It may be accessed only for an explicit historical/forensic question and never overrides current authority.
+
+Search presence is not authority. Retrieval must start from the current registry/task/Skill/manifest/adapter chain.
+
+## Continuation
+
+- exact current task id/alias wins;
+- each domain may have at most one default-resume task;
+- multiple non-default tasks are never merged;
+- time-sensitive work is revalidated against current time/business semantics before material execution;
+- current controller progress is stored under `state/tasks/`, while domain business progress remains in its declared domain authority.
+
+For the video domain, the current default project is the active original-digital-IP incubation task; the older video-growth program remains explicit-only.
+
+## Knowledge and learning
+
+Only promoted/current knowledge is used by default. Raw evidence and candidates remain scoped and non-authoritative until evaluation/promotion. One project/day/book/result may create a candidate; it does not silently become a global rule.
 
 ## Host model
 
-UAOS has one control model with two persistence adapters:
-- CHATGPT_GITHUB: free ChatGPT/GitHub host. Durable controller state is JSON under `state/`; material writes use current-main observed-head CAS and authoritative reread. Current search/connectors/plugins/tools are session capabilities, not permanent background capabilities.
-- LOCAL: SQLite authority/checkpoint runtime and local content-addressed artifacts.
+`config/HOST_PROFILES.json` defines the persistence adapter:
+- `CHATGPT_GITHUB`: controller JSON under `state/`; observed-HEAD CAS + authoritative reread; current tools/connectors are session capabilities.
+- `LOCAL`: SQLite CAS/checkpoint runtime + local artifact store.
 
-Both hosts use the same Task, Requirement, WorkUnit, Action, Artifact, Knowledge and Assurance semantics. They are not separate business workflows.
+Both hosts share the same controller semantics. They are persistence adapters, not separate business workflows.
 
-## Agent/domain routing
+## GitHub material writes
 
-`config/AGENT_REGISTRY.json` is the sole active registry for the four migrated business Agents:
-- financial-writing-agent -> `financial_writing`
-- a-share-event-driven-agent -> `ashare`
-- novel-writing-agent -> `novel`
-- video-growth-agent -> `video`
-
-The business repositories remain domain code/rule/artifact providers. They are no longer independent cross-chat controllers. Their old v3.7 continuity/lease/resume_epoch files are compatibility evidence only.
-
-New tasks use UAOS-native domain workflows. Existing unfinished tasks use `state/TASK_INDEX.json` migration dispositions. After a legacy task is imported, never dual-write its old continuity state.
-
-## Continuation rules
-
-- Exact task id or alias wins.
-- Domain-scoped CONTINUE may use that domain's single default entry.
-- Bare CONTINUE across multiple eligible domains must not guess. Use current conversational task identity if durably bound; otherwise present the small set of candidates.
-- Stale time-sensitive tasks are reconciled before resume. In particular, a past A-share premarket task must not execute as if it were still premarket.
-- Source checkpoints/artifacts remain readable for provenance after migration, but UAOS is the continuity authority after import.
-
-## Capability rules
-
-Discover capabilities from the active host at execution time. Prefer INCLUDED/FREE capabilities that meet permission and quality floors. PAID and UNKNOWN-cost capabilities are disabled unless explicitly authorized. Session-only tools may not be represented as background workers.
-
-Missing capability handling is WorkUnit-scoped: safe fallback -> degraded execution; otherwise WAITING_CAPABILITY. Side-effecting actions never fail over blindly across providers; UNKNOWN outcomes are reconciled first.
-
-## Material state writes in ChatGPT/GitHub host
-
-For controller state under this repository:
+For UAOS controller state:
 1. reread current `main` HEAD;
-2. build one coherent Git tree/commit on that HEAD;
-3. update `main` with `expected_sha=<observed HEAD>`;
-4. reread the written authority.
+2. build one coherent tree/commit on that HEAD;
+3. update `main` with `expected_sha=<observed HEAD>` and no force;
+4. reread the exact written authority.
 
-Do not use the retired universal-continuity lease/resume_epoch protocol. CAS protects against stale concurrent writers; task identity and action idempotency protect business semantics.
+A stale writer must re-read and rebase; never overwrite concurrent work.
 
-## Old controller
+## External custom instructions
 
-`D1traverser-debug/universal-continuity-agent` is RETIRED_READ_ONLY. It may be read for historical evidence only. Never create new tasks, leases, maintenance runs or controller state there.
+Account-level custom instructions are optional and non-authoritative. If used, they should contain only a stable pointer to this entrypoint; do not duplicate system policy there. Canonical pointer text is stored at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`.

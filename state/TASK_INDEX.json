@@ -1,24 +1,19 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "authority": "UAOS",
-  "cutover_at": "2026-10-14",
   "tasks": [
     {
       "task_id": "financial-writing:main",
       "domain_id": "financial_writing",
-      "task_type": "article_workspace",
+      "task_type": "article_workspace_router",
       "display_name_zh": "金融文章写作",
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume_within_domain": true,
       "aliases": ["金融文章", "财经文章", "财经写作", "financial-writing:main"],
-      "migration_disposition": "ROUTING_ENTRY_ONLY",
+      "state_model": "UAOS_NATIVE",
       "current_stage": "READY_FOR_NEW_OR_EXPLICIT_ARTICLE",
-      "next_action": "For a normal article request create a NEW_TASK in UAOS; do not reactivate a completed historical article unless explicitly named.",
-      "legacy_source_refs": [
-        "D1traverser-debug/financial-writing-agent@main:continuity/tasks/financial-writing-main/TASK_MANIFEST.json",
-        "D1traverser-debug/financial-writing-agent@main:continuity/TASK_INDEX.md"
-      ]
+      "state_ref": "state/tasks/financial-writing-main.json"
     },
     {
       "task_id": "ashare:recommendation",
@@ -29,29 +24,9 @@
       "resume_eligible": true,
       "default_resume_within_domain": true,
       "aliases": ["荐股", "A股荐股", "盘前荐股", "ashare:recommendation"],
-      "migration_disposition": "ROUTING_ENTRY_ONLY",
-      "current_stage": "UAOS_CURRENT_TRADING_DAY_RESOLUTION_REQUIRED",
-      "next_action": "Resolve the current trading day and create or locate the current UAOS market-day task. Never carry an old FrozenDecision into a new trading day.",
-      "legacy_source_refs": [
-        "D1traverser-debug/a-share-event-driven-agent@main:continuity/tasks/recommendation-workflow/TASK_MANIFEST.json"
-      ]
-    },
-    {
-      "task_id": "ashare:2026-10-12",
-      "domain_id": "ashare",
-      "task_type": "premarket_market_day",
-      "display_name_zh": "A股荐股｜2026-10-12",
-      "status": "HOLD",
-      "resume_eligible": true,
-      "default_resume_within_domain": false,
-      "aliases": ["ashare:2026-10-12", "2026-10-12 A股"],
-      "migration_disposition": "HISTORICAL_STALE_REQUIRES_RECONCILIATION",
-      "current_stage": "PAST_PREMARKET_TASK_AT_CUTOVER",
-      "next_action": "Do not execute the old premarket next_action. If explicitly resumed, reconcile it as historical/post-close evidence first and decide whether to close, review or migrate remaining learning work.",
-      "legacy_source_refs": [
-        "D1traverser-debug/a-share-event-driven-agent@main:continuity/tasks/2026-10-12-market-day/TASK_MANIFEST.json",
-        "D1traverser-debug/a-share-event-driven-agent@main:continuity/tasks/2026-10-12-market-day/HANDOFF.md"
-      ]
+      "state_model": "UAOS_NATIVE",
+      "current_stage": "CURRENT_TRADING_DAY_RESOLUTION_REQUIRED",
+      "state_ref": "state/tasks/ashare-recommendation.json"
     },
     {
       "task_id": "FQ001_MINGRI_ORDER",
@@ -62,37 +37,35 @@
       "resume_eligible": true,
       "default_resume_within_domain": true,
       "aliases": ["小说系统", "NOVEL_OS", "FQ001", "FQ001_MINGRI_ORDER", "凌晨零点，我接到明天的订单"],
-      "migration_disposition": "LAZY_IMPORT_ON_CONTINUE",
+      "state_model": "UAOS_NATIVE",
       "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
-      "next_action": "Resume GUI_CHUI_DENG exactly at source line 3914 in 《鬼吹灯I-1之精绝古城》第二十六章《天砖秘道》. Keep the same rolling ledger; do not start QING_YU_NIAN before GUI_CHUI_DENG is complete.",
-      "progress_cursor": {
-        "active_work": "GUI_CHUI_DENG",
-        "covered_source_lines": "77-3913",
-        "next_source_line": 3914,
-        "source_total_lines": 61201,
-        "source_sha256": "c02631f309cb6e30981a56566b5194c5e7c8661c4c71f66a7888d6970116bc3a"
-      },
-      "legacy_source_refs": [
-        "D1traverser-debug/novel-writing-agent@main:projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
-        "D1traverser-debug/novel-writing-agent@main:continuity/TASK_INDEX.json"
-      ]
+      "state_ref": "state/tasks/FQ001_MINGRI_ORDER.json"
+    },
+    {
+      "task_id": "video:ai-self-media-commercialization",
+      "domain_id": "video",
+      "task_type": "digital_ip_incubation",
+      "display_name_zh": "AI自媒体视频商业化与原创数字IP",
+      "status": "RUNNING",
+      "resume_eligible": true,
+      "default_resume_within_domain": true,
+      "aliases": ["原创数字IP设计", "AI自媒体视频商业化与原创数字IP", "ai-self-media-commercialization", "继续视频系统"],
+      "state_model": "UAOS_NATIVE",
+      "current_stage": "H1_SCULPTURAL_MASSING_V2",
+      "state_ref": "state/tasks/video-ai-self-media-commercialization.json"
     },
     {
       "task_id": "video-growth:main",
       "domain_id": "video",
       "task_type": "video_growth_program",
-      "display_name_zh": "AI视频涨粉与商业化",
+      "display_name_zh": "AI视频涨粉与商业化｜旧主项目",
       "status": "HOLD",
       "resume_eligible": true,
-      "default_resume_within_domain": true,
-      "aliases": ["AI视频", "视频系统", "视频涨粉", "video-growth:main"],
-      "migration_disposition": "LAZY_IMPORT_ON_CONTINUE",
+      "default_resume_within_domain": false,
+      "aliases": ["video-growth:main", "Pilot 002", "旧视频主项目"],
+      "state_model": "UAOS_NATIVE",
       "current_stage": "VISUAL_PREVIEW_PROCESS_REENTRY",
-      "next_action": "Keep quality-critical generation fail-closed; preserve rejected Sample V2/H3 evidence; continue deterministic Shot B timing/compositing where allowed; do not generate promotable Shot A/D pixels until the required review capability is genuinely available or the UAOS policy is explicitly changed.",
-      "legacy_source_refs": [
-        "D1traverser-debug/video-growth-agent@main:continuity/tasks/video-growth-main/TASK_MANIFEST.json",
-        "D1traverser-debug/video-growth-agent@main:continuity/tasks/video-growth-main/CHECKPOINT.json"
-      ]
+      "state_ref": "state/tasks/video-growth-main.json"
     }
   ]
 }

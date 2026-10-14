@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "task_id": "FQ001_MINGRI_ORDER",
+  "domain_id": "novel",
+  "status": "HOLD",
+  "current_stage": "MASTERWORK_SINGLE_BOOK_DISTILLATION_ACTIVE__STORY_RESELECTION_PENDING",
+  "next_action": "Resume GUI_CHUI_DENG exactly at source line 3914 in 《鬼吹灯I-1之精绝古城》第二十六章《天砖秘道》; keep the same rolling ledger and do not start QING_YU_NIAN before GUI_CHUI_DENG is complete.",
+  "progress_cursor": {
+    "active_work": "GUI_CHUI_DENG",
+    "covered_source_lines": "77-3913",
+    "next_source_line": 3914,
+    "source_total_lines": 61201,
+    "source_sha256": "c02631f309cb6e30981a56566b5194c5e7c8661c4c71f66a7888d6970116bc3a",
+    "rolling_ledger_file_id": "1j9Lx98jpx-pmNMma8EW8DEYTiqjKurtF",
+    "rolling_ledger_sha256": "3cec0a78067c7d1acbc6605b4af859d1860f13d46e1770141b979b7f3143c02f"
+  },
+  "project_business_authority": "D1traverser-debug/novel-writing-agent@main:projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+  "canon_version": 12,
+  "last_final_chapter": 8,
+  "next_serial_chapter": 9,
+  "user_locked_business_constraints": ["SIGNING_MODE_IMMUTABLE", "SERIALIZATION_MODE_IMMUTABLE"],
+  "project_business_state_is_controller": false
+}

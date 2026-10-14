@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "controller": "D1traverser-debug/universal-agent-os@main",
+  "controller_ref": "D1traverser-debug/universal-agent-os@main:CURRENT_SYSTEM.json",
+  "required_adapter_status": "UAOS_CONTROL_PLANE_ACTIVE",
+  "required_manifest_status": "UAOS_CONTROL_PLANE_ACTIVE",
+  "checks": ["ADAPTER_CONTROLLER", "ADAPTER_STATUS", "MANIFEST_CONTROLLER", "MANIFEST_STATUS", "MANIFEST_SKILL_ENTRYPOINT", "MANIFEST_ADAPTER_REF", "SKILL_CONTROLLER_MARKER"],
+  "apply_on": ["NEW_TASK", "CONTINUE", "BEFORE_MATERIAL_DOMAIN_EXECUTION"],
+  "failure": "BLOCK_DOMAIN_EXECUTION_AS_BINDING_DRIFT"
+}

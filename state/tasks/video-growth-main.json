@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "task_id": "video-growth:main",
+  "domain_id": "video",
+  "status": "HOLD",
+  "default_resume": false,
+  "current_stage": "VISUAL_PREVIEW_PROCESS_REENTRY",
+  "next_action": "When explicitly resumed, reread the exact current Pilot/video business artifacts before action. Preserve prior rejected Sample V2/H3 evidence; do not replay rejected work as accepted progress.",
+  "known_blockers": [
+    "quality-critical generation/review capability must be genuinely available before promotable generation",
+    "rejected/process-invalid candidates are historical evidence only"
+  ],
+  "domain_business_state_is_controller": false
+}

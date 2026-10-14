@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "task_id": "video:ai-self-media-commercialization",
+  "domain_id": "video",
+  "status": "RUNNING",
+  "display_name_zh": "AI自媒体视频商业化与原创数字IP",
+  "current_stage": "H1_SCULPTURAL_MASSING_V2",
+  "next_action": "Generate exactly one H1-S13-HYBRID front-view matte-gray sculpt using the creator certificate portrait as structural ancestry only, S1 as the primary geometry base, and S3 only as the lower-face transition donor; review the front geometry before any 3/4 study, then validate the same geometry in 3/4 before returning to stylized skin/hair or H2.",
+  "domain_business_authority": "D1traverser-debug/video-growth-agent@main:projects/ai-self-media-commercialization/PROJECT_MANIFEST.json",
+  "resume_entry": "projects/ai-self-media-commercialization/RESUME_ENTRY.md",
+  "current_progress": "projects/ai-self-media-commercialization/CURRENT_PROGRESS.md",
+  "current_face_review": "projects/ai-self-media-commercialization/H1_S1_S2_S3_SCULPT_REVIEW_2026-10-14.md",
+  "current_face_prompt": "projects/ai-self-media-commercialization/H1_S13_HYBRID_SCULPT_PROMPT_V2.md",
+  "current_truth": {
+    "S1": "PRIMARY_GEOMETRY_BASE",
+    "S2": "REJECTED",
+    "S3": "LOWER_FACE_RHYTHM_DONOR_ONLY",
+    "current_face_proposal": "H1-S13-HYBRID",
+    "presentation_modes": "DORMANT_UNTIL_CANON_H9"
+  },
+  "freshness_rule": "REREAD_PROJECT_MANIFEST_BEFORE_MATERIAL_ACTION",
+  "project_business_state_is_controller": false
+}

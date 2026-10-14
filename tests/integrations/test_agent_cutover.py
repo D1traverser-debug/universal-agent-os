@@ -15,34 +15,33 @@ def test_all_four_business_agents_are_registered_to_uaos():
     r = registry()
     assert {a.agent_id for a in r.agents} == {"financial_writing", "ashare", "novel", "video"}
     assert all(a.new_task_mode == "UAOS_NATIVE" for a in r.agents)
-    assert all(a.legacy_resume_mode == "LAZY_IMPORT_THEN_UAOS_WRITE_ONLY" for a in r.agents)
 
 
-def test_old_controller_is_not_an_agent_authority():
+def test_active_registry_has_no_legacy_protocol_or_task_index_refs():
     r = registry()
-    assert all(a.repository != "D1traverser-debug/universal-continuity-agent" for a in r.agents)
+    assert all(a.legacy_protocol_ref is None for a in r.agents)
+    assert all(a.task_index_ref is None for a in r.agents)
 
 
-def test_aliases_resolve_business_agents_and_tasks():
+def test_active_tasks_are_uaos_native_and_have_state_refs():
     r = registry()
-    assert r.resolve_agent("NOVEL_OS").agent_id == "novel"
-    assert r.resolve_agent("A_SHARE_MARKET_AGENT").agent_id == "ashare"
-    assert r.resolve_task("小说系统").task_id == "FQ001_MINGRI_ORDER"
-    assert r.resolve_task("视频系统").task_id == "video-growth:main"
+    assert r.tasks
+    assert all(t.migration_disposition is MigrationDisposition.UAOS_NATIVE for t in r.tasks)
+    assert all(t.state_ref for t in r.tasks)
+    assert all(not t.legacy_source_refs for t in r.tasks)
 
 
-def test_past_ashare_premarket_task_cannot_auto_resume():
+def test_old_ashare_market_day_is_not_active_candidate():
     r = registry()
-    task = r.resolve_task("ashare:2026-10-12")
-    assert task.migration_disposition is MigrationDisposition.HISTORICAL_STALE_REQUIRES_RECONCILIATION
-    assert r.migration_action(task.task_id, already_imported=False) == "RECONCILE_BEFORE_IMPORT"
+    with pytest.raises(LookupError):
+        r.resolve_task("ashare:2026-10-12")
 
 
-def test_novel_and_video_use_lazy_one_way_import():
+def test_video_current_project_is_default_and_old_program_is_explicit_only():
     r = registry()
-    for task_id in ("FQ001_MINGRI_ORDER", "video-growth:main"):
-        assert r.migration_action(task_id, already_imported=False) == "READ_LEGACY_SOURCE_ONCE__IMPORT__THEN_UAOS_WRITE_ONLY"
-        assert r.migration_action(task_id, already_imported=True) == "RESUME_UAOS"
+    candidates = {t.task_id: t for t in r.tasks if t.domain_id == "video"}
+    assert candidates["video:ai-self-media-commercialization"].default_resume_within_domain is True
+    assert candidates["video-growth:main"].default_resume_within_domain is False
 
 
 def test_unknown_agent_and_task_fail_closed():

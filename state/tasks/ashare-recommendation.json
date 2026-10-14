@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "task_id": "ashare:recommendation",
+  "domain_id": "ashare",
+  "status": "RUNNING",
+  "current_stage": "CURRENT_TRADING_DAY_RESOLUTION_REQUIRED",
+  "next_action": "Resolve the current China trading day and create or locate the current market-day UAOS task before any premarket work.",
+  "time_semantics": {"timezone": "Asia/Shanghai", "point_in_time_required": true},
+  "historical_premarket_tasks_in_active_resume": false,
+  "historical_access": "EXPLICIT_HISTORICAL_QUERY_ONLY",
+  "frozen_decision_rule": "NEVER_CARRY_OR_BACKFILL_OLD_FROZEN_DECISIONS"
+}

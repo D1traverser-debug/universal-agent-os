@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "scope": "CONTROLLER_AND_DOMAIN_REPOSITORIES",
+  "unlisted_repository_action": "ALLOW_AS_EXTERNAL_REFERENCE_NOT_AUTHORITY",
+  "historical_requires_explicit_intent": true,
+  "retired_repositories": ["D1traverser-debug/universal-continuity-agent"],
+  "uaos_cold_patterns": ["docs/migration/**"],
+  "repositories": {
+    "D1traverser-debug/financial-writing-agent": {
+      "allow_exact": ["UAOS_SKILL.md", "continuity/UAOS_MANIFEST.json", "continuity/UAOS_ADAPTER.json", "continuity/EXECUTION_CAPABILITIES.json", "continuity/FINANCIAL_OWNER_EXECUTION.json"],
+      "deny_patterns": ["continuity/UNIVERSAL_PROTOCOL_ADAPTER.json", "continuity/AGENT_MANIFEST.json", "continuity/TASK_INDEX*", "continuity/tasks/**", "skills/financial-writing-agent/SKILL.md"],
+      "allow_prefixes": ["references/", "financial_writing_agent/", "workspaces/articles/", "config/"]
+    },
+    "D1traverser-debug/a-share-event-driven-agent": {
+      "allow_exact": ["UAOS_SKILL.md", "continuity/UAOS_MANIFEST.json", "continuity/UAOS_ADAPTER.json", "continuity/EXECUTION_CAPABILITIES.json", "config/cutover_status.json"],
+      "deny_patterns": ["continuity/UNIVERSAL_PROTOCOL_ADAPTER.json", "continuity/AGENT_MANIFEST.json", "continuity/TASK_INDEX*", "continuity/tasks/**", "skills/a-share-event-driven-agent/SKILL.md"],
+      "allow_prefixes": ["references/", "ashare_event_agent/", "config/", "audits/"]
+    },
+    "D1traverser-debug/novel-writing-agent": {
+      "allow_exact": ["UAOS_SKILL.md", "continuity/UAOS_MANIFEST.json", "continuity/UAOS_ADAPTER.json", "continuity/EXECUTION_CAPABILITIES.json", "protocols/ACTIVE_RULEBOOK.md", "protocols/NOVEL_MASTERY_MODEL.md"],
+      "deny_patterns": ["continuity/UNIVERSAL_PROTOCOL_ADAPTER.json", "continuity/AGENT_MANIFEST.json", "continuity/TASK_INDEX*", "continuity/tasks/**", "SKILL.md"],
+      "allow_prefixes": ["projects/", "protocols/", "research/"]
+    },
+    "D1traverser-debug/video-growth-agent": {
+      "allow_exact": ["skills/video-growth-agent/SKILL.md", "continuity/UAOS_MANIFEST.json", "continuity/UAOS_ADAPTER.json", "continuity/EXECUTION_CAPABILITIES.json"],
+      "deny_patterns": ["continuity/OWNER_ADAPTER.json", "continuity/AGENT_MANIFEST.json", "continuity/TASK_INDEX*", "continuity/tasks/**"],
+      "allow_prefixes": ["skills/video-growth-agent/references/", "video_growth_agent/", "projects/"]
+    }
+  },
+  "semantic_rules": [
+    "BROAD_SEARCH_MUST_EXCLUDE_RETIRED_AND_DENIED_PATHS",
+    "HISTORICAL_ACCESS_REQUIRES_EXPLICIT_HISTORICAL_INTENT",
+    "SEARCH_PRESENCE_IS_NOT_AUTHORITY",
+    "HISTORY_NEVER_OVERRIDES_CURRENT_AUTHORITY",
+    "ACTIVE_RETRIEVAL_STARTS_FROM_REGISTRY_TASK_SKILL_MANIFEST_ADAPTER"
+  ]
+}

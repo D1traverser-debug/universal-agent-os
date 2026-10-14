@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "role": "HISTORICAL_CUTOVER_EVIDENCE__NOT_ACTIVE_STATE",
+  "date": "2026-10-14",
+  "retrieval_class": "COLD_EXPLICIT_HISTORICAL_ONLY",
+  "old_controller": {
+    "repository": "D1traverser-debug/universal-continuity-agent",
+    "pre_tombstone_head": "be58e115d542fc13e8210f81e1ab7b5a032d7283",
+    "tombstone_head": "1c61e3f8ef1f9160d5cecfa58e095ce2580481d5",
+    "default_branch_runtime_removed": true,
+    "historical_implementation_location": "GIT_HISTORY_ONLY",
+    "normal_retrieval_authority": false
+  },
+  "domain_cutover_heads": {
+    "financial_writing": "5e4d4523e8b37616931b3b1a977e38f66803f0a8",
+    "ashare": "f4874acb4cdfac495340c5de84fb6adf42b111da",
+    "novel": "eb2b94fa32b25f96e85c6a0bdf94a4478059e6d2",
+    "video_clean_manifest_commit": "91cd4894ccc47553635d1b3ea61a5097df2c9f0c"
+  },
+  "controller_import": {
+    "financial-writing:main": "UAOS_NATIVE_ROUTER",
+    "ashare:recommendation": "UAOS_NATIVE_ROUTER",
+    "ashare:2026-10-12": "REMOVED_FROM_ACTIVE_RESUME_INDEX",
+    "FQ001_MINGRI_ORDER": "UAOS_NATIVE_CONTROLLER_STATE_AT_GUI_CHUI_DENG_LINE_3914",
+    "video:ai-self-media-commercialization": "UAOS_NATIVE_CURRENT_VIDEO_DEFAULT",
+    "video-growth:main": "UAOS_NATIVE_EXPLICIT_ONLY_HOLD"
+  }
+}
