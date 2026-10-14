@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "evolution_id": "EVO-20261014-AUTHORITY-BOUNDARY",
-  "status": "PROMOTED",
+  "status": "OBSERVING",
   "trigger": "USER_CORRECTION",
   "opened_at": "2026-10-14T08:44:50Z",
   "incidents": [
@@ -116,8 +116,27 @@
     "reasons": [],
     "action_route": "UAOS_CONTROLLER_GITHUB_CAS_RELEASE_COMMIT",
     "owner_context": "UAOS",
+    "release_commit": "329882975b0d6b69e90bf16210b5b59eb542a553",
     "host_scope_note": "Mechanical inside ActionCoordinator; raw ChatGPT GitHub connector remains outside Python interception and is explicitly lower-assurance."
   },
-  "post_promotion_observation": null,
-  "updated_at": "2026-10-14T08:52:22Z"
+  "post_promotion_observation": {
+    "observation_id": "OBS-AUTHORITY-ISOLATION-001",
+    "proposal_id": "CP-AUTHORITY-ISOLATION-AND-EVO-TRACE-001",
+    "healthy": true,
+    "observed_at": "2026-10-14T08:53:20Z",
+    "evidence_refs": [
+      "CURRENT_SYSTEM.json reread: release 2.3.0",
+      "config/AUTHORITY_WRITE_POLICY.json reread: same-owner fail-closed",
+      "src/uaos/execution/authority.py reread from main",
+      "src/uaos/execution/coordinator.py reread from main",
+      "targeted deterministic evaluation 8/8 passed"
+    ],
+    "open_assurance_gaps": [
+      "GitHub Actions run 38538327341 failed before steps were exposed (steps=null), so hosted full-repository CI remains unverified",
+      "Raw ChatGPT GitHub connector calls are outside Python ActionCoordinator interception; full physical repository isolation requires host/repository-scoped enforcement"
+    ],
+    "recommendation": "KEEP_OBSERVING",
+    "assurance": "TARGETED_VERIFIED__HOSTED_FULL_CI_AND_RAW_CONNECTOR_PHYSICAL_SCOPE_OPEN"
+  },
+  "updated_at": "2026-10-14T08:53:20Z"
 }
