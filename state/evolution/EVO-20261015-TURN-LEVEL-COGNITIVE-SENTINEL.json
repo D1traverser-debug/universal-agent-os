@@ -1,0 +1,60 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261015-TURN-LEVEL-COGNITIVE-SENTINEL",
+  "status":"CANDIDATE_EVALUATION",
+  "authority":"UAOS",
+  "trigger":[
+    "USER_CORRECTION",
+    "CONTROL_PLANE_GAP",
+    "AUTHORITY_METADATA_DRIFT"
+  ],
+  "incident":{
+    "failure_class":"FC-TURN-LEVEL-PROBLEM-DETECTION-AND-PROGRESS-CONSISTENCY-001",
+    "summary":"During UAOS inheritance, the controller correctly observed that ENTRYPOINT.md still declared release 2.4.4 while CURRENT_SYSTEM.json declared 2.5.2, but the same response reported Deliberation: NOT_TRIGGERED and Evolution: NO_EVOLUTION_TRIGGER. Existing executable admission enforced problem-triggered research/reflection for material mutations, but the selected-agent read/report path lacked an explicit always-on problem-detection sentinel and a progress-report consistency invariant."
+  },
+  "deliberation_evidence":{
+    "MICRO_DIAGNOSIS":[
+      "ENTRYPOINT.md production release marker 2.4.4 contradicted CURRENT_SYSTEM.json release 2.5.2",
+      "the assistant explicitly classified the mismatch as a defect but then emitted Deliberation: NOT_TRIGGERED",
+      "tests/architecture/test_problem_research_floor.py validates assess_deliberation signals but does not validate selected-session progress-report consistency"
+    ],
+    "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT":[
+      "UAOS should continuously detect problem signals while keeping expensive research/reflection event-triggered rather than permanently running heavy self-debate",
+      "turn-level problem detection and pre-mutation authority admission are separate control responsibilities"
+    ],
+    "GOVERNING_ASSUMPTION_CHALLENGE":[
+      "rejected assumption: an always-on mutation sentinel is sufficient to guarantee problem-trigger cognition on read-only or reporting turns",
+      "rejected alternative: run full external research and heavy deliberation on every clean turn, because it adds latency/noise without improving clean-path assurance"
+    ],
+    "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH":[
+      "IBM autonomic-computing MAPE-K pattern: continuous monitoring feeds analysis/planning/execution when conditions require it",
+      "Google SRE monitoring guidance: continuously observe systems but escalate actionable conditions rather than turning all observations into heavy incident work"
+    ],
+    "COUNTEREXAMPLE_SEARCH":[
+      "mutation-only detection misses defects discovered during read-only authority inspection, as reproduced by this incident",
+      "full heavy deliberation on every no-problem turn would violate the existing lightweight clean-path requirement and create control-plane bloat"
+    ],
+    "INDEPENDENT_VERIFICATION":[
+      "PENDING_GITHUB_HOSTED_CI_AND_POST_PROMOTION_REREAD"
+    ]
+  },
+  "candidate":{
+    "branch":"fix/always-on-problem-detection-20261015",
+    "changes":[
+      "add always-on lightweight problem-detection sentinel to DELIBERATION_POLICY and SESSION_INTERACTION_POLICY",
+      "forbid progress reports from claiming NOT_TRIGGERED/NO_EVOLUTION_TRIGGER when the same turn reports a detected problem",
+      "synchronize ENTRYPOINT release metadata to CURRENT_SYSTEM 2.5.2 and document turn-level cognition",
+      "add regression tests for sentinel scope, report consistency and ENTRYPOINT/CURRENT_SYSTEM release synchronization",
+      "declare the turn-level problem-detection sentinel in CURRENT_SYSTEM without changing the UAOS release identity"
+    ]
+  },
+  "acceptance":{
+    "candidate_ci":"PENDING",
+    "entrypoint_release_sync":"PENDING_CI",
+    "turn_level_sentinel_contract":"PENDING_CI",
+    "progress_consistency_guard":"PENDING_CI",
+    "post_promotion_main_ci":"PENDING",
+    "production_reread":"PENDING"
+  },
+  "updated_at":"2026-10-15T05:06:35+08:00"
+}
