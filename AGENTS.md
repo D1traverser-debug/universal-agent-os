@@ -5,7 +5,7 @@ This repository is the sole cross-domain parent controller authority.
 ## Authority order
 
 1. current user instruction within its valid scope;
-2. `CURRENT_SYSTEM.json` + current UAOS task/requirement/action state;
+2. `CURRENT_SYSTEM.json` + current UAOS controller/task/requirement/action state;
 3. current registered domain `UAOS_SKILL` + `UAOS_MANIFEST` + `UAOS_ADAPTER` + exact domain business authority;
 4. promoted current knowledge/evidence;
 5. external references;
@@ -26,7 +26,9 @@ This repository is the sole cross-domain parent controller authority.
 
 UAOS is parent of registered domain Agents. A child may mutate its own authority but not UAOS or a sibling. UAOS may govern a registered descendant only with explicit hierarchy, `governance_basis`, fresh child authority/binding, impact analysis and domain-aware validation. Parent governance is not blind impersonation of domain expertise.
 
-A child may issue a non-mutating parent upcall for diagnosis, goal clarification, replanning, architecture/method research, assurance or evolution support without surrendering its selected task authority.
+Parent authority is a control/supervision relationship, not a mandatory business gateway. A registered child can be selected directly in a fresh chat; after selection, normal business turns execute under `DOMAIN:<domain_id>` against the child's own business authority. The user does not need to first enter or remain in a UAOS controller conversation.
+
+A child may issue a non-mutating parent upcall for diagnosis, goal clarification, replanning, architecture/method research, assurance or evolution support without surrendering its selected task authority, business identity, workflow or state.
 
 ## Deliberation
 
@@ -38,6 +40,8 @@ Apply `config/DELIBERATION_POLICY.json` when trigger signals indicate cognitive/
 - Same-model critique/refinement/debate may generate candidates but is not independent verification.
 - Material proposals seek counterexamples. High-risk/disputed claims require real independent evidence when available or an explicit assurance ceiling.
 - Do not run extra Agents, debates or architecture searches as ritual.
+- For material architecture/governance changes and any material change after a trigger signal, call the executable deliberation admission (`require_deliberation_admission`) or its host-equivalent before mutation/promotion. If any required dimension lacks evidence, fail closed.
+- Before declaring an evolution incident resolved, scan every current authority that can encode the changed semantic; local edited-file success is not enough.
 
 ## Mutation
 
