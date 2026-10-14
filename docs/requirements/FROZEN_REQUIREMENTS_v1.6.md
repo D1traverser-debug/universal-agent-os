@@ -2,7 +2,7 @@
 
 Status: `FROZEN_BASELINE_V1_6 / REQUIREMENTS_AUTHORITY`
 Date: 2026-10-14
-Updated-at: 2026-10-14T15:20:00Z
+Updated-at: 2026-10-14T15:28:00Z
 
 v1.6 incorporates v1.0 + v1.1 + v1.2 + v1.3 + v1.4 + v1.5. It closes the gap between cognitive/policy admission and physical mutation enforcement. The governing principle is complete mediation: a production mutation invariant is not fully enforced while any known write path can bypass the enforcing control point.
 
@@ -14,12 +14,12 @@ Every write path capable of changing current/production authority must satisfy o
 A policy, prompt, Custom Instruction, self-review, Python guard or CI test does not by itself satisfy this requirement when a separate writer can still mutate production without passing that control.
 
 ## V16-02 — Separate policy decision from policy enforcement
-UAOS may compute mutation/deliberation decisions in its control plane, but the host must provide an enforcement point that cannot be bypassed by the same writer identity.
+UAOS may compute mutation/deliberation decisions in its control plane, but the host must provide an enforcement point that cannot be bypassed by the same ordinary writer path.
 
 For GitHub-hosted production authority:
 - branch/repository rulesets are the production policy-enforcement boundary;
-- direct writes to `main` are not an accepted production promotion path once ruleset enforcement is available;
-- the normal production path is `candidate branch -> pull request -> required promotion gate -> protected merge`;
+- direct writes to `main` are not an accepted normal production promotion path once ruleset enforcement is active;
+- the normal production path is `candidate branch -> pull request -> required promotion check(s) -> protected merge`;
 - no ChatGPT/GitHub App bypass entry is granted for the production ruleset;
 - force-push and deletion of the protected production branch are prohibited.
 
@@ -47,19 +47,32 @@ An evolution incident whose target invariant can still be violated by a known un
 
 Permitted intermediate states include `REOPENED`, `LOGICALLY_MITIGATED__PHYSICAL_ENFORCEMENT_PENDING`, or `BLOCKED_HOST_ENFORCEMENT` as appropriate. A user may explicitly accept residual host risk, but risk acceptance is not equivalent to technical resolution and must be recorded separately.
 
-## V16-06 — GitHub promotion gate is a stable required check
-GitHub protection should require one stable `promotion-gate` status rather than a changing set of low-level jobs. The workflow may conditionally run expensive live verification according to changed-path/risk classification, but `promotion-gate` must fail unless every verification required for that change has succeeded.
+## V16-06 — Stable promotion check
+GitHub protection must require at least one stable promotion status check for `main`. For UAOS the stable check context is `promotion-gate`; it runs the repository contract/architecture suite on the candidate PR commit.
 
-The required gate itself must always produce a terminal status on pull requests targeting `main`.
+Additional expensive live verification is selected by the assurance/risk policy and may remain separate, but a change that requires such live evidence must not be semantically reported as ready merely because `promotion-gate` passed. The ruleset is the physical production write barrier; assurance still determines which evidence is sufficient for promotion.
 
 ## V16-07 — Host enforcement is assurance evidence
 Production readiness must separately report:
 - logical/cognitive admission status;
 - repository/host enforcement status;
-- actual remote protection evidence (for example active GitHub ruleset identity and required gate);
+- actual remote protection evidence (for example active GitHub ruleset identity and required promotion check);
 - any remaining bypass identity or path.
 
 A local configuration declaring intended protection is not evidence that GitHub or another host actually enforces it.
+
+## V16-08 — Reference-monitor fitness
+The production mutation boundary should satisfy the reference-monitor properties relevant to this system:
+- complete mediation: every protected production mutation is checked;
+- tamper resistance: the governed writer cannot silently disable or bypass the enforcement point as part of the same ordinary write path;
+- verifiability: the enforcement mechanism and its tests/rules are small and inspectable enough to audit.
+
+This borrows the security property, not an operating-system implementation.
+
+## V16-09 — Host permission is part of the control surface
+ChatGPT connector permissions and GitHub repository rules are part of the actual execution control surface and must be inspected when diagnosing write-governance failures.
+
+A connector permission such as unrestricted write access may be operationally convenient but cannot be ignored when evaluating whether mutation admission is physically enforceable.
 
 ## Authority composition
 Current requirements authority = `FROZEN_REQUIREMENTS_v1.0.md` + `FROZEN_REQUIREMENTS_v1.1.md` + `FROZEN_REQUIREMENTS_v1.2.md` + `FROZEN_REQUIREMENTS_v1.3.md` + `FROZEN_REQUIREMENTS_v1.4.md` + `FROZEN_REQUIREMENTS_v1.5.md` + this v1.6 delta.
