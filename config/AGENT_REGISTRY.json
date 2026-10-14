@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "authority": "D1traverser-debug/universal-agent-os@main",
+  "legacy_controller": "D1traverser-debug/universal-continuity-agent",
+  "agents": [
+    {
+      "agent_id": "financial_writing",
+      "domain_id": "financial_writing",
+      "owner_aliases": ["FINANCIAL_WRITING_AGENT_RUNTIME", "FINANCIAL_WRITING_AGENT_ENGINEERING", "FINANCIAL_WRITING_AGENT_STANDALONE", "FINANCIAL_WRITING"],
+      "repository": "D1traverser-debug/financial-writing-agent",
+      "skill_ref": "skills/financial-writing-agent/SKILL.md",
+      "agent_manifest_ref": "continuity/AGENT_MANIFEST.json",
+      "capability_ref": "continuity/EXECUTION_CAPABILITIES.json",
+      "task_index_ref": "continuity/TASK_INDEX.md",
+      "uaos_adapter_ref": "continuity/UAOS_ADAPTER.json",
+      "legacy_protocol_ref": "continuity/UNIVERSAL_PROTOCOL_ADAPTER.json",
+      "new_task_mode": "UAOS_NATIVE",
+      "legacy_resume_mode": "LAZY_IMPORT_THEN_UAOS_WRITE_ONLY",
+      "business_repository_role": "DOMAIN_CODE_RULES_ARTIFACTS_PROVIDER"
+    },
+    {
+      "agent_id": "ashare",
+      "domain_id": "ashare",
+      "owner_aliases": ["A_SHARE_MARKET_AGENT", "A_SHARE_RECOMMENDATION", "A_SHARE_REVIEW", "A_SHARE_MARKET", "A_SHARE_MARKET_DAY"],
+      "repository": "D1traverser-debug/a-share-event-driven-agent",
+      "skill_ref": "skills/a-share-event-driven-agent/SKILL.md",
+      "agent_manifest_ref": "continuity/AGENT_MANIFEST.json",
+      "capability_ref": "continuity/EXECUTION_CAPABILITIES.json",
+      "task_index_ref": "continuity/TASK_INDEX.md",
+      "uaos_adapter_ref": "continuity/UAOS_ADAPTER.json",
+      "legacy_protocol_ref": "continuity/UNIVERSAL_PROTOCOL_ADAPTER.json",
+      "new_task_mode": "UAOS_NATIVE",
+      "legacy_resume_mode": "LAZY_IMPORT_THEN_UAOS_WRITE_ONLY",
+      "business_repository_role": "DOMAIN_CODE_RULES_DATA_CONTRACTS_PROVIDER"
+    },
+    {
+      "agent_id": "novel",
+      "domain_id": "novel",
+      "owner_aliases": ["NOVEL_WRITING_AGENT", "NOVEL_OS", "NOVEL"],
+      "repository": "D1traverser-debug/novel-writing-agent",
+      "skill_ref": "SKILL.md",
+      "agent_manifest_ref": "continuity/AGENT_MANIFEST.json",
+      "capability_ref": "continuity/EXECUTION_CAPABILITIES.json",
+      "task_index_ref": "continuity/TASK_INDEX.json",
+      "uaos_adapter_ref": "continuity/UAOS_ADAPTER.json",
+      "legacy_protocol_ref": "continuity/UNIVERSAL_PROTOCOL_ADAPTER.json",
+      "new_task_mode": "UAOS_NATIVE",
+      "legacy_resume_mode": "LAZY_IMPORT_THEN_UAOS_WRITE_ONLY",
+      "business_repository_role": "DOMAIN_CODE_CANON_RESEARCH_ARTIFACTS_PROVIDER"
+    },
+    {
+      "agent_id": "video",
+      "domain_id": "video",
+      "owner_aliases": ["VIDEO_GROWTH_AGENT", "VIDEO_GROWTH"],
+      "repository": "D1traverser-debug/video-growth-agent",
+      "skill_ref": "skills/video-growth-agent/SKILL.md",
+      "agent_manifest_ref": "continuity/AGENT_MANIFEST.json",
+      "capability_ref": "continuity/EXECUTION_CAPABILITIES.json",
+      "task_index_ref": "continuity/TASK_INDEX.md",
+      "uaos_adapter_ref": "continuity/UAOS_ADAPTER.json",
+      "legacy_protocol_ref": "continuity/OWNER_ADAPTER.json",
+      "new_task_mode": "UAOS_NATIVE",
+      "legacy_resume_mode": "LAZY_IMPORT_THEN_UAOS_WRITE_ONLY",
+      "business_repository_role": "DOMAIN_CODE_MEDIA_CONTRACTS_ARTIFACTS_PROVIDER"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "profiles": {
+    "CHATGPT_GITHUB": {
+      "state_authority": "GITHUB_JSON_CAS",
+      "state_root": "state",
+      "mutation_protocol": "OBSERVED_HEAD_TREE_COMMIT_EXPECTED_SHA_REREAD",
+      "capability_discovery": "CURRENT_SESSION",
+      "background_execution": false,
+      "maintenance_mode_without_background": "OPPORTUNISTIC_ON_NEXT_INVOCATION",
+      "cost_policy": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
+    },
+    "LOCAL": {
+      "state_authority": "SQLITE_CAS",
+      "continuity_runtime": "SQLiteCheckpointRuntime",
+      "artifact_store": "LocalContentAddressedStore",
+      "capability_discovery": "LOCAL_AND_CURRENT_HOST",
+      "background_execution": "ONLY_IF_A_FREE_OR_ALREADY_AVAILABLE_HOST_EXISTS",
+      "cost_policy": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
+    }
+  }
+}
