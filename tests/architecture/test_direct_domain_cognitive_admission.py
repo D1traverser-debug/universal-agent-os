@@ -34,35 +34,50 @@ def test_material_change_still_requires_deliberation_evidence():
     assert require_deliberation_admission(signals, evidence).required
 
 
-def test_v16_adds_always_on_sentinel_without_permanent_heavy_deliberation():
+def test_v18_keeps_always_on_sentinel_and_problem_research_floor_without_ruleset_blocker():
     current = _json("CURRENT_SYSTEM.json")
     assert current["system_release_version"] == "2.4.4"
-    assert current["status"] == "CANDIDATE_COMPLETE_MEDIATION__REGISTERED_REPOSITORY_RULESETS_PENDING"
-    assert "docs/requirements/FROZEN_REQUIREMENTS_v1.6.md" in current["requirements"]
+    assert current["status"] == "CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE__FINAL_VALIDATION_PENDING"
+    assert "docs/requirements/FROZEN_REQUIREMENTS_v1.7.md" in current["requirements"]
+    assert "docs/requirements/FROZEN_REQUIREMENTS_v1.8.md" in current["requirements"]
+    assert current["production_host_hardening"].startswith("OPTIONAL_DEFENSE_IN_DEPTH")
+
     session = _json("config/SESSION_INTERACTION_POLICY.json")
     sentinel = session["always_on_mutation_sentinel"]
     assert sentinel["required"] is True
     assert sentinel["depth_rule"] == "SENTINEL_ALWAYS_ON__DEEP_DELIBERATION_TRIGGERED_ONLY"
+    assert "optional defense-in-depth" in sentinel["production_rule"]
 
 
-def test_production_promotion_uses_host_mediation_not_direct_main_cas():
+def test_material_production_workflow_uses_candidate_validation_without_requiring_remote_ruleset():
     host = _json("config/HOST_PROFILES.json")["profiles"]["CHATGPT_GITHUB"]
-    assert host["production_mutation_protocol"] == "CANDIDATE_BRANCH__PULL_REQUEST__PROMOTION_GATE__PROTECTED_MERGE__REREAD"
-    assert host["required_promotion_check"] == "promotion-gate"
+    assert host["production_mutation_protocol"] == "CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_CHECKS__CONTROLLED_MERGE_OR_UPDATE__REREAD"
+    assert host["uaos_promotion_check"] == "promotion-gate"
+    assert host["production_ref_enforcement"].startswith("OPTIONAL_DEFENSE_IN_DEPTH")
+
     authority = _json("config/AUTHORITY_WRITE_POLICY.json")
-    assert "DIRECT_CAS_UPDATE_RETIRED" in authority["promotion_concurrency"]["production_branch"]
-    assert "EVERY_REGISTERED_PRODUCTION_REPOSITORY" in authority["host_enforcement"]["policy_enforcement_requirement"]
+    assert authority["optional_host_hardening"]["classification"] == "DEFENSE_IN_DEPTH"
+    assert authority["physical_complete_mediation_assurance"]["claim_is_optional"] is True
+    assert "CANDIDATE_BRANCH" in authority["autonomous_maintenance_baseline"]["normal_material_github_path"]
+
     workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     assert "name: promotion-gate" in workflow
 
 
-def test_known_host_gap_prevents_resolved_status():
+def test_ruleset_absence_is_not_parent_core_blocker_but_physical_claim_remains_bounded():
     readiness = _json("docs/assurance/PRODUCTION_READINESS.json")
-    assert readiness["parent_core_open_work"][0]["status"] == "BLOCKED_HOST_CONFIGURATION"
-    repos = readiness["verification"]["observed_host_state"]["repositories"]
-    assert len(repos) == 5
-    assert all(not repo["physically_mediated"] for repo in repos)
+    assert readiness["parent_core_open_work"] == []
+    assert readiness["optional_host_hardening"][0]["status"] == "OPTIONAL_NOT_CONFIGURED"
+    assert readiness["verification"]["observed_host_state"]["interpretation"] == "OPTIONAL_DEFENSE_IN_DEPTH_GAP__NOT_BASELINE_RELEASE_BLOCKER"
+
     followup = _json("state/evolution/EVO-20261014-COMPLETE-MEDIATION-HOST-ENFORCEMENT.json")
-    assert followup["status"] == "BLOCKED_HOST_ENFORCEMENT"
+    assert followup["status"] == "RETIRED__OVERCONSTRAINED_ASSURANCE_GOAL"
     previous = _json("state/evolution/EVO-20261014-COGNITIVE-ADMISSION-DIRECT-DOMAIN.json")
-    assert previous["status"] == "REOPENED__PHYSICAL_ENFORCEMENT_FOLLOWUP"
+    assert previous["status"] == "RESOLVED"
+
+
+def test_physical_non_bypassability_still_requires_evidence_if_claimed():
+    authority = _json("config/AUTHORITY_WRITE_POLICY.json")
+    physical = authority["physical_complete_mediation_assurance"]
+    assert physical["when_claimed"] == "REMOTE_NON_BYPASSABLE_ENFORCEMENT_EVIDENCE_IS_MANDATORY"
+    assert physical["without_evidence"] == "DO_NOT_CLAIM_PHYSICAL_COMPLETE_MEDIATION"
