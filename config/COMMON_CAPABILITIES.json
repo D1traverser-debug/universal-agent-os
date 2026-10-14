@@ -1,22 +1,50 @@
 {
-  "schema_version":"1.4",
-  "contract_version":"1.4.0",
+  "schema_version":"1.5",
+  "contract_version":"1.5.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T15:47:00Z",
+  "updated_at":"2026-10-15T00:45:00+08:00",
   "inheritance_model":"UAOS_HOSTED_COMMON_CAPABILITIES__DIRECT_DOMAIN_WORK_PLANE__DOMAIN_BUSINESS_LOGIC_IDENTITY_STATE_REMAIN_WITH_OWNER",
   "applies_to":"ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
   "capabilities":[
-    {"capability_id":"intent_and_requirement_governance","owner":"UAOS","domain_role":"consume scoped parent/global requirements while owning normal domain business execution and returning business evidence"},
-    {"capability_id":"cross_chat_continuity_and_recovery","owner":"UAOS_FOR_PARENT_OR_SELECTOR_CONTINUITY__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_CONTINUITY","domain_role":"expose current domain business authority, checkpoints, cursors and artifact identities; direct child sessions do not require a live parent proxy"},
-    {"capability_id":"capability_handshake_and_graceful_degradation","owner":"UAOS","domain_role":"declare domain capability ceiling and action-specific requirements; current host proves executability"},
-    {"capability_id":"assurance_evidence_and_completion_governance","owner":"UAOS","domain_role":"produce domain verification evidence without overstating assurance"},
+    {
+      "capability_id":"intent_and_requirement_governance",
+      "owner":"UAOS_FOR_GLOBAL_AND_PARENT_SCOPED_REQUIREMENTS__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_REQUIREMENTS",
+      "domain_role":"consume scoped parent/global requirements while owning normal domain business requirements and execution; return business evidence without transferring domain ownership"
+    },
+    {
+      "capability_id":"product_requirements_and_architecture_governance",
+      "owner":"UAOS_FOR_COMMON_PRODUCT_METHOD__DOMAIN_OWNER_FOR_DOMAIN_PRODUCT_REQUIREMENTS_AND_ARCHITECTURE",
+      "domain_role":"use parent guidance to turn user outcomes and functional expectations into a complete domain product definition covering requirements, non-goals, workflow/state, failure/recovery, assurance, acceptance/evals and ownership boundaries; persist the resulting domain product authority in the domain repository",
+      "rules":[
+        "Use this capability for a new domain product, major rebuild, material feature family, or when failures expose missing/incorrect product requirements or architecture.",
+        "Start from user outcomes and observed functions; fill missing requirement details before choosing implementation structure.",
+        "Define functional requirements, non-functional constraints, state/workflow, failure and recovery semantics, evidence/assurance, acceptance criteria, non-goals and authority ownership before calling the product architecture complete.",
+        "UAOS may challenge scope, assumptions and topology and may supply reusable product-engineering method, but domain-specific requirements and architecture remain owned by the domain repository.",
+        "Product review must create traceable acceptance/eval targets rather than documentation-only confidence."
+      ]
+    },
+    {
+      "capability_id":"cross_chat_continuity_and_recovery",
+      "owner":"UAOS_FOR_PARENT_OR_SELECTOR_CONTINUITY__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_CONTINUITY",
+      "domain_role":"expose current domain business authority, checkpoints, cursors and artifact identities; direct child sessions do not require a live parent proxy"
+    },
+    {
+      "capability_id":"capability_handshake_and_graceful_degradation",
+      "owner":"UAOS",
+      "domain_role":"declare domain capability ceiling and action-specific requirements; current host proves executability"
+    },
+    {
+      "capability_id":"assurance_evidence_and_completion_governance",
+      "owner":"UAOS",
+      "domain_role":"produce domain verification evidence without overstating assurance"
+    },
     {
       "capability_id":"hierarchical_authority_governance",
       "owner":"UAOS",
       "policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
       "domain_role":"own normal domain execution while accepting parent governance and using parent upcalls for system-level guidance",
       "rules":[
-        "Same-owner mutation remains allowed under normal owner controls plus host enforcement.",
+        "Same-owner mutation remains allowed under normal owner controls.",
         "UAOS may govern a registered descendant when ancestry and governance_basis are explicit and domain authority/impact/verification are respected.",
         "A child/domain cannot directly mutate UAOS or a sibling domain.",
         "A registered child may be activated directly as the current Agent/work plane in a fresh chat; parent authority does not imply a mandatory per-turn business gateway.",
@@ -26,15 +54,17 @@
     },
     {
       "capability_id":"mutation_sentinel_and_host_complete_mediation",
-      "owner":"UAOS_FOR_COMMON_SAFETY_PROPERTY__DOMAIN_OWNER_FOR_REPOSITORY_SPECIFIC_REALIZATION",
+      "owner":"UAOS_FOR_COMMON_MUTATION_DISCIPLINE__DOMAIN_OWNER_FOR_REPOSITORY_SPECIFIC_REALIZATION",
       "policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
-      "domain_role":"before external/durable mutation, surface target/authority and use an owner-appropriate protected production promotion path without surrendering business ownership",
+      "domain_role":"before external/durable mutation, surface target/authority and follow the owner-appropriate autonomous maintenance path without surrendering business ownership",
+      "baseline_semantics":"AUTONOMOUS_CANDIDATE_ISOLATION__OWNER_APPROPRIATE_CHECKS__CONTROLLED_PROMOTION__PRODUCTION_REREAD",
+      "optional_high_assurance_semantics":"REMOTE_NON_BYPASSABLE_HOST_ENFORCEMENT_WHEN_EXPLICITLY_REQUIRED_OR_CLAIMED",
       "rules":[
-        "The lightweight mutation sentinel is always-on; deep deliberation remains trigger-based.",
-        "Every registered production repository must have a non-bypassable production mutation boundary before system-wide physical-enforcement claims are RESOLVED.",
-        "Normal GitHub production promotion uses candidate branch -> pull request -> owner-appropriate required checks -> protected merge.",
-        "CAS is concurrency control, not authorization or complete mediation.",
-        "UAOS governs the shared safety property but does not duplicate a child's CI, release semantics or business validation.",
+        "The lightweight mutation sentinel is always-on; problem-response cognition is mandatory when a problem is detected.",
+        "Normal material GitHub maintenance uses candidate isolation, owner-appropriate checks, controlled merge/update and production reread.",
+        "Rulesets or protected branches are optional defense-in-depth for the baseline and are required only when physical non-bypassability is explicitly required or claimed.",
+        "CAS is concurrency control, not authorization or evidence of physical non-bypassability.",
+        "UAOS governs the shared maintenance property but does not duplicate a child's CI, release semantics or business validation.",
         "Custom Instructions may bootstrap the sentinel across chats but are not physical enforcement."
       ]
     },
@@ -42,11 +72,19 @@
       "capability_id":"adaptive_deliberation_and_parent_guidance",
       "owner":"UAOS",
       "policy_ref":"config/DELIBERATION_POLICY.json",
-      "domain_role":"surface current symptoms/evidence/unknowns and request parent diagnosis, replan, external research, counterexample or assurance escalation when needed",
+      "domain_role":"for every detected problem, surface symptoms/evidence/unknowns and perform at least lightweight external research plus macro/topology and governing-assumption reflection; request parent guidance when common/cross-domain diagnosis, replanning or architecture support is useful",
+      "problem_response_floor":[
+        "MICRO_DIAGNOSIS",
+        "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT",
+        "GOVERNING_ASSUMPTION_CHALLENGE",
+        "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH"
+      ],
       "rules":[
-        "Deliberation depth is event/risk-triggered; actual questions/methods are generated dynamically from current evidence.",
-        "Use micro -> macro -> micro reasoning when local repair may reflect a larger goal/assumption/topology problem.",
-        "External method/architecture research is required when current knowledge or framing is insufficient; architecture names never become authority by popularity.",
+        "Every detected defect, failed/degraded outcome, user correction, contradiction or evidence of unreliable goal satisfaction activates the problem-response floor; familiarity is not a waiver.",
+        "Problem size changes research/reflection depth, not whether research/reflection happens.",
+        "Use micro -> macro -> micro reasoning: diagnose the concrete symptom, challenge goal/assumption/topology, consult relevant external evidence, then return to the smallest correct repair.",
+        "Research must affect or validate the diagnosis/repair; ceremonial browsing does not satisfy the capability.",
+        "Counterexample search and independent verification add depth according to risk and disputed evidence.",
         "Same-model reflection/debate is candidate generation, not independent verification.",
         "For material architecture/governance changes and material changes after a trigger signal, required deliberation dimensions are fail-closed admission evidence rather than optional advice.",
         "Do not create a parallel architecture-advisor or debate control plane."
@@ -55,26 +93,35 @@
     {
       "capability_id":"governed_self_evolution",
       "owner":"UAOS_FOR_COMMON_OR_CROSS_DOMAIN_MECHANISMS__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_RULE_PROMOTION",
-      "lifecycle":"Incident -> Failure Class -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep/Rollback/Retire",
-      "domain_role":"produce incidents, learning candidates, failure-class evidence, alternatives, eval/replay evidence and owner-scoped promotion proposals",
+      "lifecycle":"Problem/Incident -> Research+Reflection -> Failure Class -> Change Candidate -> Reproducible Evaluation -> Owner-Scoped Promotion -> Post-Promotion Observation -> Keep/Rollback/Retire",
+      "domain_role":"turn domain problems and user feedback into evidence-bound learning candidates, evaluate generalization and alternatives, promote only domain-owned rules with regression/eval evidence, and upcall common/cross-domain changes to UAOS",
       "rules":[
+        "Every detected problem is evaluated for learning/evolution impact after the mandatory research/reflection floor; not every problem must become a durable global rule or release.",
         "Domain-local learning is evidence/candidate generation, not a second controller or unrestricted production rewriter.",
-        "A candidate may mutate production only through the governing authority and owner-appropriate host policy-enforcement point.",
+        "One article or one feedback event may create a candidate but must not silently become a universal writing rule.",
         "Cross-domain/common-capability changes are promoted by UAOS; domain-specific business rules remain domain-owned under UAOS lineage.",
         "Repeated failures are repaired at the common failure class/root abstraction and require regression evidence before closure.",
-        "Triggered evolution must expose a durable lifecycle state in inherited system-maintenance reporting.",
-        "Evolution closure requires an authority-wide contradiction scan plus relevant host-control-surface scan; edited-file success alone is not closure.",
-        "A known production bypass prevents technical RESOLVED for the affected invariant."
+        "Triggered material evolution must expose a durable lifecycle/evaluation record at the owning scope.",
+        "Evolution closure requires an authority-wide contradiction scan across the surfaces that can encode the changed semantic; edited-file success alone is not closure.",
+        "Post-promotion observation determines keep, rollback or retirement."
       ]
     },
-    {"capability_id":"inherited_session_progress_reporting","owner":"UAOS","domain_role":"supply fresh current_stage, next_action/blocker, authority context, evolution/deliberation state and business update/version data"},
-    {"capability_id":"version_and_timestamp_provenance","owner":"UAOS","domain_role":"expose stable version/hash/schema identities and ISO-8601 update timestamps for material authority"}
+    {
+      "capability_id":"inherited_session_progress_reporting",
+      "owner":"UAOS",
+      "domain_role":"supply fresh current_stage, next_action/blocker, authority context, evolution/deliberation state and business update/version data"
+    },
+    {
+      "capability_id":"version_and_timestamp_provenance",
+      "owner":"UAOS",
+      "domain_role":"expose stable version/hash/schema identities and ISO-8601 update timestamps for material authority"
+    }
   ],
   "anti_duplication":[
     "Do not copy UAOS cross-domain task indexes, parent-continuation protocols, global requirement registries, evolution catalogs or promotion state into domain repositories.",
     "Do not turn UAOS into a mandatory per-turn business proxy merely because a domain inherits common capabilities.",
     "Do not create a parallel parent-guidance, architecture-advisor, self-dialogue or verification control plane when existing Control/Context/Assurance/Evolution contracts can be extended.",
-    "Do not duplicate a child repository's business-specific CI/release logic merely to satisfy the common complete-mediation property; reuse owner-declared checks where available.",
+    "Do not duplicate a child repository's business-specific CI/release logic merely to satisfy common mutation discipline; reuse owner-declared checks where available.",
     "A domain may implement business-specific learning/evaluation hooks, but those hooks feed the common governance contract rather than replacing it."
   ]
 }
