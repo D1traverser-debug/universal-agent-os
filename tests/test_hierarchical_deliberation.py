@@ -12,10 +12,19 @@ def test_low_risk_familiar_work_does_not_force_meta_process():
     assert not d.independent_verification_required
 
 
+def test_single_failure_always_requires_research_and_reflection():
+    d=assess_deliberation(DeliberationSignals(repeated_failure_count=1))
+    assert d.required and d.micro_diagnosis_required
+    assert d.macro_alignment_required
+    assert d.governing_assumptions_challenge_required
+    assert d.external_research_required
+
+
 def test_user_correction_challenges_micro_macro_assumptions_and_counterexamples():
     d=assess_deliberation(DeliberationSignals(user_correction=True,change_proposal=True))
     assert d.required and d.micro_diagnosis_required and d.macro_alignment_required
     assert d.governing_assumptions_challenge_required
+    assert d.external_research_required
     assert d.counterexample_search_required
 
 
@@ -26,17 +35,25 @@ def test_architecture_gap_forces_external_research_beyond_internal_framing():
     assert d.governing_assumptions_challenge_required
 
 
-def test_high_risk_or_conflicting_evidence_escalates_independent_verification():
-    high=assess_deliberation(DeliberationSignals(high_risk=True))
-    conflict=assess_deliberation(DeliberationSignals(conflicting_evidence=True))
-    assert high.independent_verification_required and high.counterexample_search_required
-    assert conflict.independent_verification_required and conflict.counterexample_search_required
+def test_conflicting_evidence_still_has_problem_floor_plus_independent_verification():
+    d=assess_deliberation(DeliberationSignals(conflicting_evidence=True))
+    assert d.external_research_required
+    assert d.macro_alignment_required
+    assert d.governing_assumptions_challenge_required
+    assert d.independent_verification_required and d.counterexample_search_required
+
+
+def test_high_risk_without_detected_problem_escalates_independent_verification_only():
+    d=assess_deliberation(DeliberationSignals(high_risk=True))
+    assert d.independent_verification_required and d.counterexample_search_required
+    assert not d.external_research_required
 
 
 def test_repeated_failure_uses_double_loop_instead_of_another_local_patch():
     d=assess_deliberation(DeliberationSignals(repeated_failure_count=2,complexity_increasing=True))
     assert d.macro_alignment_required
     assert d.governing_assumptions_challenge_required
+    assert d.external_research_required
     assert d.counterexample_search_required
 
 
