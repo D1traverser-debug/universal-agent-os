@@ -54,6 +54,7 @@ def test_readiness_does_not_certify_retired_financial_same_id_binding():
     readiness = _json("docs/assurance/PRODUCTION_READINESS.json")
     serialized = json.dumps(readiness, ensure_ascii=False)
 
+    assert readiness["verification"]["phase0_18_prior_baseline"] == "PASS_RETAINED"
     assert "Financial 0.8.2" not in serialized
     assert "mechanically validated UAOS article-task binding" not in serialized
     assert "exact UAOS article identity" not in serialized
@@ -63,6 +64,7 @@ def test_readiness_does_not_certify_retired_financial_same_id_binding():
 
 def test_current_requirements_include_direct_domain_and_cognitive_admission_delta():
     current = _json("CURRENT_SYSTEM.json")
+    assert current["system_release_version"] == "2.4.3"
     assert "docs/requirements/FROZEN_REQUIREMENTS_v1.5.md" in current["requirements"]
     requirements = (ROOT / "docs/requirements/FROZEN_REQUIREMENTS_v1.5.md").read_text(encoding="utf-8")
     assert "Registered child Agents are directly activatable work planes" in requirements
