@@ -1,8 +1,8 @@
 {
-  "schema_version":"2.8",
+  "schema_version":"2.9",
   "system_release_version":"2.4.4",
   "system":"UNIVERSAL_AGENT_OS",
-  "status":"CANDIDATE_COMPLETE_MEDIATION__REGISTERED_REPOSITORY_RULESETS_PENDING",
+  "status":"CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE__FINAL_VALIDATION_PENDING",
   "repository":"D1traverser-debug/universal-agent-os",
   "entrypoint":"ENTRYPOINT.md",
   "repo_instructions":"AGENTS.md",
@@ -15,7 +15,8 @@
     "docs/requirements/FROZEN_REQUIREMENTS_v1.4.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.5.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.6.md",
-    "docs/requirements/FROZEN_REQUIREMENTS_v1.7.md"
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.7.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.8.md"
   ],
   "agent_registry":"config/AGENT_REGISTRY.json",
   "task_index":"state/TASK_INDEX.json",
@@ -30,22 +31,22 @@
   "controller_state_root":"state/tasks",
   "evolution_state_root":"state/evolution",
   "controller_state_model":"UAOS_ONLY",
-  "fresh_chat_bootstrap":{"core_requires_account_custom_instructions":false,"deterministic_plain_chatgpt_requires_bootstrap_pointer_unless_host_injects_entrypoint":true,"pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md","selected_domain_activation":"DIRECT_CHILD_AGENT_WORK_PLANE__NO_PERSISTENT_UAOS_BUSINESS_PROXY","mutation_sentinel":"ALWAYS_ON_LIGHTWEIGHT__DEEP_DELIBERATION_TRIGGERED_ONLY"},
+  "fresh_chat_bootstrap":{
+    "core_requires_account_custom_instructions":false,
+    "deterministic_plain_chatgpt_requires_bootstrap_pointer_unless_host_injects_entrypoint":true,
+    "pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "selected_domain_activation":"DIRECT_CHILD_AGENT_WORK_PLANE__NO_PERSISTENT_UAOS_BUSINESS_PROXY",
+    "mutation_sentinel":"ALWAYS_ON_LIGHTWEIGHT__PROBLEM_RESPONSE_RESEARCH_AND_REFLECTION_REQUIRED"
+  },
   "mandatory_external_services":[],
-  "parent_core_assurance":"FULL_REPOSITORY_CI_AND_LIVE_BASELINE_EXIST__2_4_4_COMPLETE_MEDIATION_CANDIDATE_NOT_YET_PROMOTED",
+  "parent_core_assurance":"2_4_4_CANDIDATE__AUTONOMOUS_BRANCH_PR_CHECKS_PROMOTION_MODEL__FINAL_TREE_VALIDATION_PENDING",
   "session_topology_assurance":"DIRECT_REGISTERED_DOMAIN_ACTIVATION__PARENT_CONTROL_PLANE_NOT_MANDATORY_BUSINESS_GATEWAY",
-  "cognitive_admission_assurance":"EVERY_DETECTED_PROBLEM_REQUIRES_EXTERNAL_RESEARCH_PLUS_MACRO_AND_GOVERNING_ASSUMPTION_REFLECTION__RISK_ADDS_COUNTEREXAMPLE_AND_INDEPENDENT_VERIFICATION_DEPTH__EVOLUTION_CLOSURE_REQUIRES_AUTHORITY_AND_HOST_CONTROL_SCAN",
-  "production_mutation_topology":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_REQUIRED_CHECKS__PROTECTED_MERGE__PRODUCTION_REREAD",
-  "production_host_enforcement":"PENDING_ACTIVE_RULESETS_OR_EQUIVALENT_PROTECTION_FOR_UAOS_AND_ALL_REGISTERED_DOMAIN_PRODUCTION_REPOSITORIES",
-  "observed_unprotected_registered_repositories":[
-    "D1traverser-debug/universal-agent-os",
-    "D1traverser-debug/financial-writing-agent",
-    "D1traverser-debug/a-share-event-driven-agent",
-    "D1traverser-debug/novel-writing-agent",
-    "D1traverser-debug/video-growth-agent"
-  ],
-  "complete_mediation_assurance":"LOGICALLY_DEFINED__SYSTEM_WIDE_PHYSICAL_ENFORCEMENT_NOT_YET_VERIFIED",
+  "cognitive_admission_assurance":"EVERY_DETECTED_PROBLEM_REQUIRES_EXTERNAL_RESEARCH_PLUS_MACRO_AND_GOVERNING_ASSUMPTION_REFLECTION__RISK_ADDS_COUNTEREXAMPLE_AND_INDEPENDENT_VERIFICATION_DEPTH",
+  "production_mutation_topology":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_CHECKS__CONTROLLED_MERGE_OR_UPDATE__PRODUCTION_REREAD",
+  "production_host_hardening":"OPTIONAL_DEFENSE_IN_DEPTH__RULESETS_OR_BRANCH_PROTECTION_NOT_BASELINE_RELEASE_BLOCKER",
+  "physical_complete_mediation_assurance":"OPTIONAL_HIGH_ASSURANCE_TIER__NOT_CLAIMED_BY_BASELINE__REMOTE_ENFORCEMENT_REQUIRED_ONLY_IF_CLAIMED",
+  "github_connector_permission":"FULL_ACCESS__USER_PREFERS_AUTONOMOUS_EXECUTION_WITH_POST_ACTION_REPORTING",
   "financial_binding_assurance":"EXTERNAL_BUSINESS_AUTHORITY_UNIQUE__DISTINCT_PARENT_AND_FINANCIAL_IDENTITY_NAMESPACES__OPAQUE_DOMAIN_REFERENCE_ONLY__FINANCIAL_0_8_3_VERIFIED",
   "deferred_scope":["LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE_OUTSIDE_THE_VERIFIED_FINANCIAL_ROUTING_PATH"],
-  "updated_at":"2026-10-14T16:08:00Z"
+  "updated_at":"2026-10-14T16:35:00Z"
 }
