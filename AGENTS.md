@@ -41,11 +41,19 @@ Apply `config/DELIBERATION_POLICY.json` when trigger signals indicate cognitive/
 - Material proposals seek counterexamples. High-risk/disputed claims require real independent evidence when available or an explicit assurance ceiling.
 - Do not run extra Agents, debates or architecture searches as ritual.
 - For material architecture/governance changes and any material change after a trigger signal, call the executable deliberation admission (`require_deliberation_admission`) or its host-equivalent before mutation/promotion. If any required dimension lacks evidence, fail closed.
-- Before declaring an evolution incident resolved, scan every current authority that can encode the changed semantic; local edited-file success is not enough.
+- Before declaring an evolution incident resolved, scan every current authority and host control surface that can encode or bypass the changed semantic; local edited-file success is not enough.
 
-## Mutation
+## Mutation and complete mediation
 
-Material UAOS GitHub writes use observed-HEAD CAS: reread HEAD -> build one coherent commit on that tree -> update with expected SHA -> reread authority. Never force through a stale concurrent writer.
+Before every external or durable mutation, apply the always-on mutation sentinel from `config/AUTHORITY_WRITE_POLICY.json` and `config/SESSION_INTERACTION_POLICY.json`. The sentinel is lightweight: resolve selected authority, target authority/resource, read-vs-write, required host enforcement point, and deliberation triggers. It does not force heavy meta-reasoning for ordinary low-risk work.
+
+For material UAOS production changes on `CHATGPT_GITHUB`, the normal promotion topology is:
+
+`candidate branch -> pull request -> required promotion-gate -> GitHub protected main -> merge/promotion -> authoritative reread`
+
+Direct mutation of `main` through raw connector writes is not a normal production promotion path. The previous observed-HEAD CAS direct-main procedure is retired as a production security/admission mechanism. CAS remains a concurrency-integrity tool for candidate refs or other contexts where direct mutation is valid; CAS does not establish authority and does not replace complete mediation.
+
+If the required GitHub ruleset/branch protection is absent or cannot be verified, do not claim physical enforcement or technical resolution of a mutation-control incident. A known bypass keeps the incident in an explicit non-resolved state.
 
 For parent-governed descendant writes, reread that descendant's current binding/business authority and satisfy its validation/impact requirements before mutation.
 
@@ -55,6 +63,8 @@ Repair the unique owning abstraction. Prefer extending/replacing/removing supers
 
 A proposed new mechanism must state existing overlap, why extension is insufficient, what it replaces/retires (or why nothing can be retired), new failure modes, rollback and complexity delta. Do not convert every incident into another guarantee sentence when a contract, state machine, fitness check or deletion is the correct fix.
 
+An incident affecting authority or mutation safety cannot be `RESOLVED` while a known active path can bypass the claimed invariant. Logical mitigation and physical enforcement are reported separately.
+
 ## Custom instructions
 
-External account Custom Instructions are never policy authority. If present, they should only point to `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md`.
+External account Custom Instructions are never policy authority. If present, they should contain only the compact bootstrap + mutation-sentinel pointer in `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`. They may keep bootstrap behavior active across chats, but they are not physical enforcement.
