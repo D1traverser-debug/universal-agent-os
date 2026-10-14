@@ -1,0 +1,84 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261015-DOMAIN-INTERNAL-ORCHESTRATION-VIDEO-UNIFICATION",
+  "status":"EVALUATING",
+  "trigger":[
+    "USER_REQUEST__UNIFY_AI_VIDEO_GROWTH_COMMERCIALIZATION_AND_ORIGINAL_DIGITAL_IP",
+    "USER_REQUEST__SUPPORT_PARALLEL_DEPENDENT_COMPETITIVE_AND_NEGOTIATED_SUBTASKS_INSIDE_ONE_AGENT",
+    "VIDEO_PARENT_CHILD_BUSINESS_IDENTITY_DUPLICATION_FOUND",
+    "VIDEO_PROJECT_TOPOLOGY_CONTRADICTION_FOUND"
+  ],
+  "scope":{
+    "parent":"D1traverser-debug/universal-agent-os",
+    "reference_child":"D1traverser-debug/video-growth-agent",
+    "parent_candidate_release":"2.5.0",
+    "parent_common_contract_candidate":"1.6.0",
+    "child_target_release":"0.6.0"
+  },
+  "initial_findings":[
+    "Video Growth Agent already claims AI-video production, growth systems and original digital-IP incubation as one domain, while the ai-self-media-commercialization package is isolated as a future-import reference package despite already containing account positioning, monetization and advertiser strategy.",
+    "UAOS currently mirrors two Video business identities/cursors, video:ai-self-media-commercialization and video-growth:main, while the child repository separately owns projects/ai-self-media-commercialization and projects/pilot-002 business state.",
+    "The existing AgenticStudio supports coarse wave concurrency and review panels but readiness requires all lower-wave work to complete, so it cannot express explicit partial dependencies or general competitive/adjudication relations.",
+    "The existing specialist model correctly forbids peer chat and uses artifact handoffs; the missing abstraction is an explicit domain-owned work graph rather than more persistent agents."
+  ],
+  "deliberation_evidence":{
+    "MICRO_DIAGNOSIS":[
+      "read UAOS registry/task index/video parent task state",
+      "read Video manifest/adapter/capabilities/skill/readme/runtime/execution plan/agent registry/tests",
+      "read integrated self-media/IP project manifest/progress/resume/workflow/account positioning and Pilot 002 program state"
+    ],
+    "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT":[
+      "one selected Video domain owner should coordinate media growth, original digital IP, commercialization and production-system workstreams without parent business-state duplication",
+      "internal tasks require explicit graph relations so parallel work is not blocked by unrelated lower-wave tasks and competitive decisions have durable ownership"
+    ],
+    "GOVERNING_ASSUMPTION_CHALLENGE":[
+      "rejected: AI self-media commercialization and original digital IP should remain a permanently isolated reference package",
+      "rejected: combining related work means forcing all workstreams into one serial workflow",
+      "rejected: every internal concern needs a new persistent Agent",
+      "rejected: negotiation should be unbounded peer chat",
+      "rejected: UAOS should keep a mirrored task identity/state for every child Video project"
+    ],
+    "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH":[
+      "OpenAI agent orchestration guidance: manager-style orchestration is appropriate when one owner must preserve unified control while specialized agents/tools execute bounded tasks",
+      "OpenAI practical multi-agent guidance: split specialists for meaningful instruction/tool/policy differences rather than cosmetic roles",
+      "Anthropic multi-agent research architecture: orchestrator-worker decomposition enables parallel breadth/depth work when tasks are independently scoped, with explicit guardrails and synthesis"
+    ],
+    "COUNTEREXAMPLE_SEARCH":[
+      "a single global wave number over-serializes C when C depends on A but not on unfinished B",
+      "free peer debate can create loops and hidden authority transfer instead of a reproducible decision",
+      "merging all work into one project stage would make unfinished character design block unrelated growth/commercial research",
+      "keeping parent Video project cursors after child-owned project indexing recreates the previously corrected Financial identity-boundary failure"
+    ]
+  },
+  "candidate_design":{
+    "parent_common_capability_contract":"1.6.0",
+    "requirements_delta":"docs/requirements/FROZEN_REQUIREMENTS_v2.0.md",
+    "new_common_capability":"domain_internal_work_orchestration",
+    "child_business_owner":"VIDEO_GROWTH_AGENT",
+    "child_program_workstreams":["MEDIA_GROWTH","ORIGINAL_DIGITAL_IP","COMMERCIALIZATION","PRODUCTION_SYSTEM"],
+    "coordination_patterns":["SERIAL_DEPENDENCY","INDEPENDENT_PARALLEL","FAN_OUT_FAN_IN","CONSULTATIVE_ADVICE","COMPETITIVE_CANDIDATES","STRUCTURED_CRITIQUE_AND_REVISION","OWNER_ADJUDICATION","QUORUM_OR_PANEL_REVIEW"],
+    "negotiation_model":"BOUNDED_ARTIFACT_ROUNDS_NOT_PEER_CHAT",
+    "parent_video_end_state":"ONE_DOMAIN_ROUTER_WITH_OPTIONAL_OPAQUE_CHILD_REF__NO_PARENT_BUSINESS_PROJECT_CURSOR",
+    "new_parent_microscheduler":false
+  },
+  "promotion_order":[
+    "validate and promote UAOS 2.5.0/common 1.6 first",
+    "implement and validate Video 0.6.0 product/workstream/task-graph reference architecture",
+    "promote Video 0.6.0 and observe production CI",
+    "collapse parent Video business task mirrors into one router and close assurance with exact child evidence"
+  ],
+  "acceptance":[
+    "parent common contract exposes domain_internal_work_orchestration and v2.0 requirements",
+    "Video directly owns project/program/workstream/subtask identities and exact business state",
+    "Video current common-capability binding consumes minimum 1.6.0 and current cognition/evolution semantics",
+    "Video runtime supports explicit acyclic dependencies while preserving old wave behavior for legacy plans",
+    "unrelated lower-wave work does not block explicitly independent downstream work",
+    "competition/consultation/adjudication semantics are structurally testable and peer_chat remains false",
+    "integrated self-media program contains media-growth, original-IP, commercialization and production-system workstreams without destroying current H1 progress",
+    "Pilot 002 remains exact historical child project state and is not adopted as a UAOS task identity",
+    "final UAOS Video state is a router only, not a duplicate business registry",
+    "parent and child candidate and production CI pass"
+  ],
+  "assurance":"EVALUATING__PARENT_COMMON_CONTRACT_CANDIDATE_IN_PROGRESS",
+  "updated_at":"2026-10-15T02:26:00+08:00"
+}

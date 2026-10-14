@@ -8,6 +8,10 @@ def _json(path: str):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def _version_tuple(value: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in value.split("."))
+
+
 def test_financial_business_authority_is_external_and_unique():
     system_map = _json("config/SYSTEM_MAP.json")
     registry = _json("config/AGENT_REGISTRY.json")
@@ -43,7 +47,7 @@ def test_financial_binding_requires_current_common_capability_inheritance():
     common = _json("config/COMMON_CAPABILITIES.json")
     ids = {item["capability_id"] for item in common["capabilities"]}
     assert "CAPABILITY_COMMON_INHERITANCE" in binding["checks"]
-    assert common["contract_version"] == "1.5.0"
+    assert _version_tuple(common["contract_version"]) >= (1, 5, 0)
     assert {
         "intent_and_requirement_governance",
         "product_requirements_and_architecture_governance",
