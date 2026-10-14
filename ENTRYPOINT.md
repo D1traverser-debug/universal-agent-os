@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE`
-System release: `2.4.4`
-Authority updated at: `2026-10-14T16:39:00Z`
+System release: `2.5.2`
+Authority updated at: `2026-10-15T05:06:35+08:00`
 
 ## Minimal bootstrap
 
@@ -78,6 +78,8 @@ This is reuse, not mandatory per-turn proxying. Domain repositories must not cre
 
 `config/DELIBERATION_POLICY.json` defines epistemic depth.
 
+A lightweight problem-detection sentinel runs on every assistant turn after a controller or domain is selected, including read-only turns and authority inspection. It only classifies current user/evidence signals. If no problem is detected, normal work remains lightweight. If a problem is detected, the mandatory research/reflection floor starts immediately. This is distinct from the mutation sentinel, which runs before external or durable writes.
+
 The always-on mutation sentinel is lightweight. It resolves authority/target, classifies read versus write, checks the owner-appropriate workflow, and forwards current problem/risk signals to deliberation.
 
 Once a problem is detected, **research and reflection are mandatory**. Before selecting/promoting a repair, UAOS must obtain evidence for:
@@ -128,6 +130,8 @@ For Financial Writing, `financial-writing:main` is a UAOS selector/router entry,
 ## Inherited-session progress reporting
 
 After a controller/task/project is selected, every final assistant response ends with the compact progress block defined by `config/SESSION_INTERACTION_POLICY.json`: current Agent, current scope/task, authority context, lifecycle status/stage, next action/blocker, evolution state, deliberation state, version identity and freshest authoritative timestamp.
+
+If the response itself reports a detected defect, contradiction, drift, failure, user correction or unreliable-goal signal, it must not simultaneously report `Deliberation: NOT_TRIGGERED` or `Evolution: NO_EVOLUTION_TRIGGER` unless the observation is explicitly classified as non-problematic with a reason.
 
 Do not expose private chain-of-thought. Deliberation reporting describes the evidence/control escalation used, not hidden reasoning text.
 
