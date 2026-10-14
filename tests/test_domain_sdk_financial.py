@@ -21,6 +21,8 @@ def test_financial_business_authority_is_external_and_unique():
     assert registered["agent_manifest_ref"] == ".uaos/MANIFEST.json"
     assert registered["capability_ref"] == ".uaos/CAPABILITIES.json"
     assert registered["uaos_adapter_ref"] == ".uaos/ADAPTER.json"
+    assert registered["common_capabilities_inheritance"] == "UAOS_HOSTED"
+    assert registered["evolution_role"] == "DOMAIN_EVIDENCE_EVAL_AND_BUSINESS_OWNER_PROMOTION"
     assert not (ROOT / "domains" / "financial_writing").exists()
 
 
@@ -41,12 +43,26 @@ def test_financial_binding_requires_current_common_capability_inheritance():
     common = _json("config/COMMON_CAPABILITIES.json")
     ids = {item["capability_id"] for item in common["capabilities"]}
     assert "CAPABILITY_COMMON_INHERITANCE" in binding["checks"]
+    assert common["contract_version"] == "1.5.0"
     assert {
+        "intent_and_requirement_governance",
+        "product_requirements_and_architecture_governance",
         "cross_chat_continuity_and_recovery",
         "hierarchical_authority_governance",
+        "mutation_sentinel_and_host_complete_mediation",
         "adaptive_deliberation_and_parent_guidance",
         "governed_self_evolution",
     }.issubset(ids)
+
+    cognition = next(item for item in common["capabilities"] if item["capability_id"] == "adaptive_deliberation_and_parent_guidance")
+    assert cognition["problem_response_floor"] == [
+        "MICRO_DIAGNOSIS",
+        "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT",
+        "GOVERNING_ASSUMPTION_CHALLENGE",
+        "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH",
+    ]
+    evolution = next(item for item in common["capabilities"] if item["capability_id"] == "governed_self_evolution")
+    assert "not every problem must become a durable global rule" in "\n".join(evolution["rules"])
 
 
 def test_financial_router_does_not_own_child_article_identity_or_implementation_details():

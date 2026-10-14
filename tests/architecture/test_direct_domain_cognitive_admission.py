@@ -34,22 +34,38 @@ def test_material_change_still_requires_deliberation_evidence():
     assert require_deliberation_admission(signals, evidence).required
 
 
-def test_v18_keeps_always_on_sentinel_and_problem_research_floor_without_ruleset_blocker():
+def test_v19_keeps_problem_research_floor_and_adds_child_product_governance():
     current = _json("CURRENT_SYSTEM.json")
-    assert current["system_release_version"] == "2.4.4"
+    assert current["system_release_version"] == "2.4.5"
     assert current["status"] in {
-        "CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE__FINAL_VALIDATION_PENDING",
+        "CANDIDATE_CHILD_COGNITION_EVOLUTION_PRODUCT_GOVERNANCE",
         "ACTIVE_PRIMARY_CONTROLLER",
     }
-    assert "docs/requirements/FROZEN_REQUIREMENTS_v1.7.md" in current["requirements"]
-    assert "docs/requirements/FROZEN_REQUIREMENTS_v1.8.md" in current["requirements"]
+    for requirement in (
+        "docs/requirements/FROZEN_REQUIREMENTS_v1.7.md",
+        "docs/requirements/FROZEN_REQUIREMENTS_v1.8.md",
+        "docs/requirements/FROZEN_REQUIREMENTS_v1.9.md",
+    ):
+        assert requirement in current["requirements"]
     assert current["production_host_hardening"].startswith("OPTIONAL_DEFENSE_IN_DEPTH")
+    assert "REGISTERED_CHILDREN_REFERENCE_CURRENT_UAOS_COMMON_CAPABILITIES" in current["child_inheritance_assurance"]
+    assert "DOMAIN_PRODUCT_REQUIREMENTS_AND_ARCHITECTURE_REMAIN_DOMAIN_OWNED" in current["product_governance_assurance"]
 
-    session = _json("config/SESSION_INTERACTION_POLICY.json")
-    sentinel = session["always_on_mutation_sentinel"]
-    assert sentinel["required"] is True
-    assert sentinel["depth_rule"] == "SENTINEL_ALWAYS_ON__DEEP_DELIBERATION_TRIGGERED_ONLY"
-    assert "optional defense-in-depth" in sentinel["production_rule"]
+    common = _json("config/COMMON_CAPABILITIES.json")
+    assert common["contract_version"] == "1.5.0"
+    by_id = {item["capability_id"]: item for item in common["capabilities"]}
+    assert "product_requirements_and_architecture_governance" in by_id
+    cognition = by_id["adaptive_deliberation_and_parent_guidance"]
+    assert cognition["problem_response_floor"] == [
+        "MICRO_DIAGNOSIS",
+        "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT",
+        "GOVERNING_ASSUMPTION_CHALLENGE",
+        "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH",
+    ]
+    cognition_rules = "\n".join(cognition["rules"]).lower()
+    assert "familiarity is not a waiver" in cognition_rules
+    assert "problem size changes" in cognition_rules
+    assert "research must affect or validate" in cognition_rules
 
 
 def test_material_production_workflow_uses_candidate_validation_without_requiring_remote_ruleset():
