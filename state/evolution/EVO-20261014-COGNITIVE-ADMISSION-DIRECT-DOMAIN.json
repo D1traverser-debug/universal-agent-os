@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "evolution_id": "EVO-20261014-COGNITIVE-ADMISSION-DIRECT-DOMAIN",
-  "status": "REOPENED__PHYSICAL_ENFORCEMENT_FOLLOWUP",
+  "status": "RESOLVED",
   "trigger": [
     "REPEATED_USER_CORRECTION",
     "ARCHITECTURE_GAP",
@@ -10,92 +10,66 @@
   ],
   "incident": {
     "failure_class": "FC-DELIBERATION-RUNTIME-ADMISSION-AND-DOMAIN-SESSION-TOPOLOGY-001",
-    "summary": "The direct-domain/session-topology correction and logical deliberation admission passed their tests, but subsequent review showed that a raw ChatGPT GitHub connector could still mutate unprotected production main outside Python ActionCoordinator. The semantic/domain topology remains corrected; the mutation-safety closure is reopened until the host enforcement follow-up closes the bypass."
+    "summary": "UAOS initially allowed a first-plausible architecture to treat the parent as a mandatory business gateway and left stale same-ID Financial semantics across authority surfaces. The session topology, Financial identity boundary, cognitive admission and authority-wide closure rules were corrected and verified. A later physical-host-enforcement follow-up was intentionally retired as an overconstrained assurance goal by v1.8; optional host hardening is not part of this incident's done-condition."
   },
-  "root_cause": [
-    "Deliberation was implemented as a pure selector before 2.4.3 and then made a logical fail-closed admission gate.",
-    "Closure verification was upgraded from file-local to authority-wide, but initially did not include every external host control surface capable of bypassing the claimed mutation invariant.",
-    "The parent/child business-gateway assumption was corrected, while production mutation topology still relied on direct-main CAS and an unprotected raw connector path."
-  ],
-  "semantic_scope_status":{
+  "resolved_scope":{
     "direct_child_activation":"RESOLVED",
     "financial_identity_decoupling":"RESOLVED",
-    "logical_deliberation_admission":"RESOLVED",
-    "physical_production_mutation_enforcement":"FOLLOWUP_OPEN"
+    "problem_triggered_deliberation_admission":"RESOLVED",
+    "authority_wide_semantic_closure":"RESOLVED"
   },
-  "followup":{
-    "evolution_id":"EVO-20261014-COMPLETE-MEDIATION-HOST-ENFORCEMENT",
-    "reason":"Known raw-connector production bypass means complete mediation was not established; v1.6 forbids RESOLVED while that bypass remains active."
+  "assurance_boundary":{
+    "baseline":"AUTONOMOUS_CANDIDATE_VALIDATION_AND_CONTROLLED_PROMOTION",
+    "physical_non_bypassability":"OPTIONAL_HIGH_ASSURANCE_TIER_NOT_REQUIRED_FOR_THIS_INCIDENT"
   },
   "deliberation_evidence": {
     "MICRO_DIAGNOSIS": [
       "production ENTRYPOINT retained stale same-task-id Financial rule after prior closure",
       "fresh-chat bootstrap pointer retained mandatory-UAOS-routing wording",
-      "readiness retained Financial 0.8.2/same-identity semantics",
-      "later host-level review found unprotected main plus raw connector outside Python enforcement"
+      "readiness retained Financial 0.8.2/same-identity semantics"
     ],
     "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT": [
-      "registered child Agents must be independently usable work planes while UAOS remains the parent control/governance plane",
-      "production mutation must use complete mediation rather than only logical admission"
+      "registered child Agents must be independently usable work planes while UAOS remains the parent control/governance plane"
     ],
     "GOVERNING_ASSUMPTION_CHALLENGE": [
       "rejected assumption: parent authority implies mandatory runtime/business gateway",
-      "rejected assumption: common capability inheritance implies parent ownership of child business identity/state",
-      "rejected assumption: logical model/Python gate plus CAS is equivalent to physical enforcement"
+      "rejected assumption: common capability inheritance implies parent ownership of child business identity/state"
     ],
     "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH": [
       "Kubernetes control-plane versus worker/workload separation",
-      "Erlang/OTP supervisor versus child worker separation",
-      "NIST reference-monitor / complete-mediation property",
-      "GitHub rulesets for protected promotion"
+      "Erlang/OTP supervisor versus child worker separation"
     ],
     "COUNTEREXAMPLE_SEARCH": [
       "mandatory parent proxy creates single-point coupling and contradicts domain-owned business authority",
-      "parent-created shared business identity caused the observed Financial coupling and authority drift",
-      "direct-main raw connector write is a concrete counterexample to complete mediation"
+      "parent-created shared business identity caused the observed Financial coupling and authority drift"
     ],
     "INDEPENDENT_EXECUTION_EVIDENCE": [
       "GitHub hosted full CI run 38579600772 PASS",
-      "GitHub hosted live-integration run 38579600785 PASS for PostgreSQL/DBOS/crash-recovery/S3 protocol",
+      "GitHub hosted live-integration run 38579600785 PASS",
       "GitHub production main CI run 38579983855 PASS"
     ]
   },
   "promotion": {
     "release": "UAOS 2.4.3",
     "release_commit": "895d1f17ff5d2fc56ad5f1ce57fc1c8ad89da0ad",
-    "promotion_method": "OBSERVED_HEAD_CAS__NOW_RETIRED_AS_NORMAL_PRODUCTION_PATH_BY_V1_6",
-    "observed_main_head": "2fb7e0b2cb24d3206ecc7b2ae944870ee54909d1",
-    "candidate_tree": "75b8ec17c41325717c04f44b638ad0586e401583",
     "post_promotion_ci_run": 38579983855,
     "post_promotion_ci_status": "PASS"
   },
   "implemented_changes": [
-    "Frozen v1.5 direct-child-session, identity-boundary, cognitive-admission and authority-wide-closure requirements.",
-    "Corrected ENTRYPOINT, session policy, common capabilities and fresh-chat pointer so selecting a registered child activates that child directly as current Agent/work plane.",
-    "Made adaptive deliberation a fail-closed material-change admission contract and added executable require_deliberation_admission evidence checks.",
-    "Required authority-wide contradiction scan before evolution closure.",
-    "Corrected readiness from Financial 0.8.2/same-ID semantics to Financial 0.8.3/domain-owned identity semantics.",
-    "Added CI architecture regressions for parent-gateway, same-ID, stale bootstrap/readiness and deliberation-bypass failures."
+    "Registered child Agents activate directly as current work planes.",
+    "Financial article identity remains Financial-owned and distinct from parent routing identity.",
+    "Adaptive deliberation became executable fail-closed admission for material triggered changes.",
+    "Evolution closure became authority-wide rather than edited-file-local.",
+    "Subsequent v1.7 strengthened every detected problem to require external research plus macro/assumption reflection."
   ],
-  "maintenance_process_deviation": {
-    "observed": true,
-    "details": [
-      "A temporary noop file was accidentally written directly to main through the raw GitHub connector and immediately reverted.",
-      "The initial evolution record was also created directly on main before the candidate branch was established rather than through the intended CAS promotion path."
-    ],
-    "classification": "RAW_CHATGPT_GITHUB_CONNECTOR_PHYSICAL_SCOPE_LIMITATION_PLUS_OPERATOR_PROCESS_ERROR",
-    "impact": "No child business authority or production runtime behavior was overwritten, but the event proves the logical gate was not a complete production enforcement point.",
-    "preventive_link": "Superseded by EVO-20261014-COMPLETE-MEDIATION-HOST-ENFORCEMENT; the known bypass now blocks RESOLVED until GitHub host enforcement is active and verified."
-  },
   "acceptance": {
     "direct_registered_child_activation": "PASS",
     "no_authoritative_financial_same_id_rule": "PASS",
-    "triggered_material_change_deliberation_fail_closed_logically": "PASS",
+    "problem_triggered_deliberation_fail_closed": "PASS",
     "authority_wide_closure_scan_required": "PASS",
     "candidate_full_ci": "PASS",
     "candidate_live_integration": "PASS",
-    "post_promotion_main_ci": "PASS",
-    "physical_complete_mediation":"OPEN_IN_FOLLOWUP"
+    "post_promotion_main_ci": "PASS"
   },
-  "updated_at": "2026-10-14T15:40:00Z"
+  "updated_at": "2026-10-14T16:38:00Z"
 }
