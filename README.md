@@ -6,39 +6,32 @@ Universal Agent OS is a clean-slate, requirement-driven control plane for durabl
 
 ## Current stage
 
-**Phase 11 implementation baseline complete; Live Integration & Cutover is in progress. Production readiness is still OPEN.**
+**Zero-cost local-first baseline is now the default. Domain cutover/E2E is still open.**
 
-The repository contains deterministic contracts and reference implementations for task/requirement authority, durable runtime adapters, execution/capability routing, approvals and ambiguous side effects, DAG orchestration and dynamic fan-out, source/knowledge governance, evidence-based completion, domain SDKs (financial writing, novel, video, A-share), governed self-evolution, control-target resolution, topology authority, compatibility and retry policy.
+The core does not require PostgreSQL, DBOS, S3, OpenAI API or GitHub Actions. The default usable stack is Python + SQLite + local content-addressed files + whichever Agent/model/tool executor is already available in the host environment.
 
-A separate live-verification harness exists for real PostgreSQL, DBOS workflow identity/crash recovery, S3-compatible content-addressed artifacts, and an opt-in OpenAI Agents executor probe. Missing infrastructure is reported as BLOCKED rather than replaced by mocks. See `docs/assurance/LIVE_INTEGRATION.md`.
-
-Local cumulative integration passes the recorded Phase 0–11 suite, and the live harness has its own contract tests. This is not production certification. See `docs/assurance/PRODUCTION_READINESS.json` for live blockers and `docs/assurance/FROZEN_SCENARIO_COVERAGE.json` for the 20 frozen acceptance scenarios.
+Optional adapters may improve scale or guarantees, but they are not prerequisites for the controller to function.
 
 ## Authority
 
-- Frozen requirements: `docs/requirements/FROZEN_REQUIREMENTS_v1.0.md`
-- Requirement lock: `docs/requirements/FROZEN_REQUIREMENTS_v1.0.gitblob`
-- Architecture blueprint: `docs/architecture/ARCHITECTURE_BLUEPRINT_v1.md`
-- Requirement mapping: `docs/architecture/REQUIREMENT_MAPPING.md`
-- Production readiness: `docs/assurance/PRODUCTION_READINESS.json`
-- Live verification: `docs/assurance/LIVE_INTEGRATION.md`
+- Requirements v1.0: `docs/requirements/FROZEN_REQUIREMENTS_v1.0.md`
+- Zero-cost requirement delta v1.1: `docs/requirements/FROZEN_REQUIREMENTS_v1.1.md`
+- Local-first architecture: `docs/architecture/ARCHITECTURE_BLUEPRINT_v1.1.md`
+- Production/readiness boundary: `docs/assurance/PRODUCTION_READINESS.json`
 
-Frozen Requirements v1.0 is not edited in place. Requirement changes create a new version with explicit user/evidence-driven justification.
+## Default local stack
 
-## Architecture stance
+- `SQLiteVersionedRepository` + `SQLiteAppendOnlyLedger` for durable authority and CAS;
+- `SQLiteCheckpointRuntime` for cross-process workflow identity/checkpoints/control messages;
+- `LocalContentAddressedStore` for artifacts;
+- UAOS executor ports for current host/Agent/model/tool capabilities;
+- opportunistic maintenance when no always-on scheduler exists.
 
-The implementation remains a modular monolith. PostgreSQL is the intended authority, DBOS is behind a `DurableRuntime` boundary, OpenAI Agents SDK is an execution adapter rather than the control plane, and domain packages cannot redefine shared continuity/action/knowledge/assurance authorities.
+PostgreSQL, DBOS, remote S3, OpenAI Agents SDK/API and hosted CI remain optional enhancement adapters.
 
 ## Development
 
 ```bash
 python -m pip install -e '.[dev]'
 pytest
-```
-
-For real dependency verification:
-
-```bash
-python -m pip install -e '.[dev,live]'
-# See docs/assurance/LIVE_INTEGRATION.md
 ```

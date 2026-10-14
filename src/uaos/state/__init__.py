@@ -6,6 +6,7 @@ from .ledger import InMemoryAppendOnlyLedger, LedgerEvent
 from .memory import InMemoryVersionedRepository
 from .ports import NotFound, VersionConflict, Versioned, VersionedRepository
 from .s3_artifacts import S3ContentAddressedStore, S3StoredObject
+from .sqlite import SQLiteAppendOnlyLedger, SQLiteVersionedRepository
 
 __all__ = [
     "InMemoryAppendOnlyLedger",
@@ -16,6 +17,8 @@ __all__ = [
     "NotFound",
     "S3ContentAddressedStore",
     "S3StoredObject",
+    "SQLiteAppendOnlyLedger",
+    "SQLiteVersionedRepository",
     "StoredObject",
     "VersionConflict",
     "Versioned",

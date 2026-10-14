@@ -1,30 +1,45 @@
 {
   "snapshot_date": "2026-10-14",
-  "status": "IMPLEMENTATION_BASELINE_COMPLETE__PRODUCTION_NOT_READY",
-  "frozen_requirements_blob": "2f51531a0f34bc7fe59e022d3c70c454c5608453",
-  "local_integrated_test_count": 97,
-  "local_integrated_test_status": "PASS",
-  "live_harness_contract_tests": {"count":8,"status":"PASS"},
-  "idle_maintenance_contract_tests": {"count":4,"status":"PASS"},
-  "live_harness": {
-    "status":"READY_TO_RUN__LIVE_EVIDENCE_PENDING",
-    "postgres":"python scripts/live_verify.py postgres",
-    "dbos":"python scripts/live_verify.py dbos",
-    "dbos_crash":"python scripts/dbos_crash_probe.py start && <fresh process> recover",
-    "maintenance":"python scripts/live_verify.py maintenance",
-    "object_store":"python scripts/live_verify.py object-store",
-    "openai":"python scripts/live_verify.py openai",
-    "workflow":".github/workflows/live-integration.yml"
+  "status": "ZERO_COST_LOCAL_BASELINE_IMPLEMENTED__DOMAIN_CUTOVER_OPEN",
+  "requirements_authority": [
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"
+  ],
+  "mandatory_external_services": [],
+  "default_stack": {
+    "state_authority": "SQLiteVersionedRepository + SQLiteAppendOnlyLedger",
+    "continuity_runtime": "SQLiteCheckpointRuntime",
+    "artifacts": "LocalContentAddressedStore",
+    "agent_provider": "host/currently-available executor via UAOS ports",
+    "background_maintenance": "opportunistic by default"
   },
-  "hosted_ci": "BLOCKED_BEFORE_RUNNER_ASSIGNMENT__RETRY_REPRODUCED_ZERO_STEPS",
-  "open_blockers": [
-    {"id":"R1","name":"GitHub Actions runner allocation","observation":"original and explicit job rerun both fail before any step/log is created","required_evidence":"hosted workflow job obtains runner and executes full suite"},
-    {"id":"R2","name":"Live PostgreSQL authority","harness":"scripts/live_verify.py postgres","required_evidence":"migrations 0001-0005 applied and transaction/CAS behavior verified against real PostgreSQL"},
-    {"id":"R3","name":"Live DBOS crash recovery","harness":"scripts/dbos_crash_probe.py start/recover","required_evidence":"process interruption and resume/replay verified with real DBOS + PostgreSQL"},
-    {"id":"R4","name":"Live executor/provider integration","harness":"scripts/live_verify.py openai","required_evidence":"OpenAI/tool/provider adapters execute and reconcile real actions through Action Authority"},
-    {"id":"R5","name":"Live artifact/object-store delivery","harness":"scripts/live_verify.py object-store","intermediate_evidence":"S3-compatible MinIO protocol roundtrip prepared; production bucket still required","required_evidence":"current visible artifacts verified from real production external/object storage"},
-    {"id":"R6","name":"Domain live E2E","required_evidence":"financial, novel, video and A-share workflows each pass at least one real end-to-end task on UAOS"},
-    {"id":"R7","name":"Background maintenance runtime","harness":"scripts/live_verify.py maintenance","intermediate_evidence":"DBOS durable schedule/queue probe plus fail-closed idle-admission contract prepared","required_evidence":"production maintenance workflow enforces authority-derived idle admission under live foreground/no-foreground cases"},
-    {"id":"R8","name":"Production self-change","required_evidence":"intentionally disabled until R1-R7 and dedicated promotion/rollback drills pass"}
+  "verification": {
+    "phase0_11_local_integrated_tests": {"count": 97, "status": "PASS_AT_PHASE11"},
+    "zero_cost_local_targeted_tests": {"count": 3, "status": "PASS"},
+    "hosted_ci": "OPTIONAL_ENHANCEMENT__CURRENTLY_ZERO_STEPS_BEFORE_RUNNER"
+  },
+  "core_open_work": [
+    {
+      "id": "C1",
+      "name": "Zero-cost domain E2E",
+      "required_evidence": "financial, novel, video and A-share orchestration each complete at least one representative task using available/free host executors; provider-specific generation may remain adapter-dependent"
+    },
+    {
+      "id": "C2",
+      "name": "Legacy cutover/migration",
+      "required_evidence": "selected durable requirements/tasks/knowledge migrate from the legacy continuity repository without importing obsolete control machinery"
+    },
+    {
+      "id": "C3",
+      "name": "Controlled self-change drill",
+      "required_evidence": "candidate -> evaluation -> approval -> promotion -> observation -> rollback/retire path works on the zero-cost baseline before production self-change is enabled"
+    }
+  ],
+  "optional_enhancement_evidence": [
+    "GitHub hosted Actions runner",
+    "PostgreSQL adapter/live concurrency",
+    "DBOS transparent crash replay and durable scheduling",
+    "S3-compatible remote object storage",
+    "OpenAI Agents SDK/API provider"
   ]
 }
