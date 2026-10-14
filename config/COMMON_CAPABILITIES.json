@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.5",
-  "contract_version":"1.5.0",
+  "schema_version":"1.6",
+  "contract_version":"1.6.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-15T00:45:00+08:00",
+  "updated_at":"2026-10-15T02:26:00+08:00",
   "inheritance_model":"UAOS_HOSTED_COMMON_CAPABILITIES__DIRECT_DOMAIN_WORK_PLANE__DOMAIN_BUSINESS_LOGIC_IDENTITY_STATE_REMAIN_WITH_OWNER",
   "applies_to":"ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
   "capabilities":[
@@ -21,6 +21,32 @@
         "Define functional requirements, non-functional constraints, state/workflow, failure and recovery semantics, evidence/assurance, acceptance criteria, non-goals and authority ownership before calling the product architecture complete.",
         "UAOS may challenge scope, assumptions and topology and may supply reusable product-engineering method, but domain-specific requirements and architecture remain owned by the domain repository.",
         "Product review must create traceable acceptance/eval targets rather than documentation-only confidence."
+      ]
+    },
+    {
+      "capability_id":"domain_internal_work_orchestration",
+      "owner":"UAOS_FOR_COMMON_ORCHESTRATION_SEMANTICS__DOMAIN_OWNER_FOR_INTERNAL_TASK_GRAPH_BUSINESS_STATE_AND_DECISIONS",
+      "domain_role":"allow one selected domain Agent to decompose business work into independently owned subtasks/workstreams with explicit dependency, concurrency, consultation, competition, revision, synthesis and adjudication relations while the domain remains the single user-facing business owner",
+      "patterns":[
+        "SERIAL_DEPENDENCY",
+        "INDEPENDENT_PARALLEL",
+        "FAN_OUT_FAN_IN",
+        "CONSULTATIVE_ADVICE",
+        "COMPETITIVE_CANDIDATES",
+        "STRUCTURED_CRITIQUE_AND_REVISION",
+        "OWNER_ADJUDICATION",
+        "QUORUM_OR_PANEL_REVIEW"
+      ],
+      "rules":[
+        "The domain owns its internal work graph, workstream identities, project/program identities, decision receipts and business state. UAOS must not mirror these as parent task identities or become the domain micro-scheduler.",
+        "Subtasks may run concurrently when their declared inputs and dependencies are satisfied; unrelated unfinished work must not block them merely because it belongs to an earlier global wave.",
+        "A downstream task depends only on declared dependencies plus required artifact inputs. Dependency edges must be acyclic and mechanically inspectable.",
+        "Consultation produces advisory evidence; it does not silently transfer decision authority.",
+        "Competition uses independently produced candidates and declared evaluation criteria. Same-context candidate generation is diversity evidence, not independent verification.",
+        "Negotiation or deliberation must be represented as structured artifact rounds such as proposal -> critique -> revision -> adjudication rather than unbounded peer chat.",
+        "A decision that selects, merges or rejects competing candidates must identify the authorized adjudicator/owner and emit a durable decision result before dependent work proceeds.",
+        "Specialists are split only when their tools, policy, context or output contract materially differ; do not multiply agents for cosmetic role-play.",
+        "Internal orchestration must preserve least-context execution, explicit artifact handoffs, producer/reviewer separation where required, and current domain recovery/evolution rules."
       ]
     },
     {
@@ -119,9 +145,10 @@
   ],
   "anti_duplication":[
     "Do not copy UAOS cross-domain task indexes, parent-continuation protocols, global requirement registries, evolution catalogs or promotion state into domain repositories.",
+    "Do not mirror child project/program/workstream/subtask identities into UAOS parent task state; parent routing may retain only opaque child references when continuity requires them.",
     "Do not turn UAOS into a mandatory per-turn business proxy merely because a domain inherits common capabilities.",
     "Do not create a parallel parent-guidance, architecture-advisor, self-dialogue or verification control plane when existing Control/Context/Assurance/Evolution contracts can be extended.",
     "Do not duplicate a child repository's business-specific CI/release logic merely to satisfy common mutation discipline; reuse owner-declared checks where available.",
-    "A domain may implement business-specific learning/evaluation hooks, but those hooks feed the common governance contract rather than replacing it."
+    "A domain may implement business-specific learning/evaluation hooks and internal task orchestration, but those remain domain business mechanisms under the common governance contract rather than replacement parent controllers."
   ]
 }
