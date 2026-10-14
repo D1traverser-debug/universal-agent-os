@@ -4,7 +4,14 @@ from dataclasses import dataclass
 from threading import RLock
 import time
 
-from .models import CapabilityHealth, CapabilityObservation, ExecutionRequest, Executor
+from .models import (
+    CapabilityAvailability,
+    CapabilityCostClass,
+    CapabilityHealth,
+    CapabilityObservation,
+    ExecutionRequest,
+    Executor,
+)
 
 
 class CapabilityUnavailable(RuntimeError):
@@ -33,6 +40,10 @@ class CapabilityRegistry:
             except KeyError as exc:
                 raise CapabilityUnavailable(f"capability not registered: {capability_id}") from exc
 
+    def all(self) -> tuple[RegisteredCapability, ...]:
+        with self._lock:
+            return tuple(self._items.values())
+
     def candidates(self, request: ExecutionRequest) -> tuple[RegisteredCapability, ...]:
         with self._lock:
             values = tuple(self._items.values())
@@ -55,22 +66,36 @@ class CapabilityRegistry:
                 continue
             if request.cost_ceiling is not None and obs.estimated_cost > request.cost_ceiling:
                 continue
+            if obs.cost_class is CapabilityCostClass.PAID and not request.allow_paid:
+                continue
+            if obs.cost_class is CapabilityCostClass.UNKNOWN and not request.allow_unknown_cost:
+                continue
+            if request.requires_background and obs.availability is not CapabilityAvailability.BACKGROUND:
+                continue
             eligible.append(item)
         return tuple(eligible)
 
 
 class CapabilityRouter:
-    """Deterministic selection after mandatory constraints are satisfied."""
+    """Deterministic zero-cost-first selection after mandatory constraints."""
+
+    _cost_rank = {
+        CapabilityCostClass.INCLUDED: 0,
+        CapabilityCostClass.FREE: 0,
+        CapabilityCostClass.UNKNOWN: 1,
+        CapabilityCostClass.PAID: 2,
+    }
 
     def select(self, registry: CapabilityRegistry, request: ExecutionRequest) -> RegisteredCapability:
         candidates = registry.candidates(request)
         if not candidates:
             raise CapabilityUnavailable(
-                f"no executable capability satisfies action={request.action_name!r}, permissions, quality and cost constraints"
+                f"no executable capability satisfies action={request.action_name!r}, permissions, quality, cost and availability constraints"
             )
         return sorted(
             candidates,
             key=lambda item: (
+                self._cost_rank[item.observation.cost_class],
                 -item.observation.quality_score,
                 item.observation.estimated_cost,
                 item.observation.capability_id,

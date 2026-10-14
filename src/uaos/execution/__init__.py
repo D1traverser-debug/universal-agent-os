@@ -2,7 +2,16 @@
 
 from .approvals import ApprovalGate, ApprovalGrant, ApprovalRequired
 from .coordinator import ActionCoordinator, CoordinatedExecution
-from .models import CapabilityHealth, CapabilityObservation, ExecutionDisposition, ExecutionOutcome, ExecutionRequest
+from .host import HostCallableExecutor, HostCapabilitySpec, register_host_capability
+from .models import (
+    CapabilityAvailability,
+    CapabilityCostClass,
+    CapabilityHealth,
+    CapabilityObservation,
+    ExecutionDisposition,
+    ExecutionOutcome,
+    ExecutionRequest,
+)
 from .openai_agents import OpenAIAgentSpec, OpenAIAgentsExecutor
 from .registry import CapabilityRegistry, CapabilityRouter, CapabilityUnavailable, RegisteredCapability
 from .retry import RetryDecision, RetryPolicy, assess_retry
@@ -12,6 +21,8 @@ __all__ = [
     "ApprovalGate",
     "ApprovalGrant",
     "ApprovalRequired",
+    "CapabilityAvailability",
+    "CapabilityCostClass",
     "CapabilityHealth",
     "CapabilityObservation",
     "CapabilityRegistry",
@@ -21,10 +32,13 @@ __all__ = [
     "ExecutionDisposition",
     "ExecutionOutcome",
     "ExecutionRequest",
+    "HostCallableExecutor",
+    "HostCapabilitySpec",
     "OpenAIAgentSpec",
     "OpenAIAgentsExecutor",
     "RegisteredCapability",
     "RetryDecision",
     "RetryPolicy",
     "assess_retry",
+    "register_host_capability",
 ]

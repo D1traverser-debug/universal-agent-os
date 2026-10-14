@@ -1,6 +1,6 @@
 {
   "snapshot_date": "2026-10-14",
-  "status": "ZERO_COST_LOCAL_BASELINE_IMPLEMENTED__DOMAIN_CUTOVER_OPEN",
+  "status": "ZERO_COST_LOCAL_BASELINE_IMPLEMENTED__C1_CONTROL_E2E_PASS__C2_C3_OPEN",
   "requirements_authority": [
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md"
@@ -10,28 +10,33 @@
     "state_authority": "SQLiteVersionedRepository + SQLiteAppendOnlyLedger",
     "continuity_runtime": "SQLiteCheckpointRuntime",
     "artifacts": "LocalContentAddressedStore",
-    "agent_provider": "host/currently-available executor via UAOS ports",
+    "agent_provider": "zero-cost-first host capability registry",
     "background_maintenance": "opportunistic by default"
   },
   "verification": {
     "phase0_11_local_integrated_tests": {"count": 97, "status": "PASS_AT_PHASE11"},
     "zero_cost_local_targeted_tests": {"count": 3, "status": "PASS"},
+    "host_capability_policy_tests": {"count": 4, "status": "PASS"},
+    "zero_cost_domain_control_e2e": {"count": 5, "status": "PASS", "scope": "financial article, novel, video with shot fanout, A-share premarket with ticker fanout, A-share postclose"},
     "hosted_ci": "OPTIONAL_ENHANCEMENT__CURRENTLY_ZERO_STEPS_BEFORE_RUNNER"
   },
   "core_open_work": [
     {
       "id": "C1",
       "name": "Zero-cost domain E2E",
-      "required_evidence": "financial, novel, video and A-share orchestration each complete at least one representative task using available/free host executors; provider-specific generation may remain adapter-dependent"
+      "status": "PASS_CONTROL_PLANE",
+      "evidence": "all representative domain workflows complete through LocalWorkflowRunner using INCLUDED host callback capabilities; semantic quality remains the responsibility of the actual host capability selected at runtime"
     },
     {
       "id": "C2",
       "name": "Legacy cutover/migration",
+      "status": "OPEN",
       "required_evidence": "selected durable requirements/tasks/knowledge migrate from the legacy continuity repository without importing obsolete control machinery"
     },
     {
       "id": "C3",
       "name": "Controlled self-change drill",
+      "status": "OPEN",
       "required_evidence": "candidate -> evaluation -> approval -> promotion -> observation -> rollback/retire path works on the zero-cost baseline before production self-change is enabled"
     }
   ],
