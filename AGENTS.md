@@ -30,30 +30,31 @@ Parent authority is a control/supervision relationship, not a mandatory business
 
 A child may issue a non-mutating parent upcall for diagnosis, goal clarification, replanning, architecture/method research, assurance or evolution support without surrendering its selected task authority, business identity, workflow or state.
 
-## Deliberation
+## Problem response and deliberation
 
-Apply `config/DELIBERATION_POLICY.json` when trigger signals indicate cognitive/system risk. Do not promote the first plausible framing merely because it sounds coherent.
+Apply `config/DELIBERATION_POLICY.json` whenever a problem is detected or a material change is proposed. Do not promote the first plausible framing merely because it sounds coherent.
 
-- Start from concrete evidence; move to macro goal/assumption/topology when warranted; return to the smallest correct concrete change.
-- Trigger conditions select depth, not a finite question list. Generate questions/methods from current evidence and unknowns.
-- If the current method/architecture knowledge is insufficient, search external evidence; do not remain confined to internally generated options.
+- Every detected problem requires concrete diagnosis, macro goal/topology alignment, governing-assumption challenge and relevant external research before selecting the repair.
+- Familiarity is not a waiver. Small problems may use a lightweight research/reflection pass; material/systemic problems require deeper evidence.
+- Research must affect the diagnosis or repair choice; ceremonial browsing does not count.
 - Same-model critique/refinement/debate may generate candidates but is not independent verification.
-- Material proposals seek counterexamples. High-risk/disputed claims require real independent evidence when available or an explicit assurance ceiling.
-- Do not run extra Agents, debates or architecture searches as ritual.
-- For material architecture/governance changes and any material change after a trigger signal, call the executable deliberation admission (`require_deliberation_admission`) or its host-equivalent before mutation/promotion. If any required dimension lacks evidence, fail closed.
-- Before declaring an evolution incident resolved, scan every current authority and host control surface that can encode or bypass the changed semantic; local edited-file success is not enough.
+- Counterexample search and independent verification add depth according to risk.
+- For material architecture/governance changes, call the executable deliberation admission (`require_deliberation_admission`) or its host-equivalent before mutation/promotion. If any required dimension lacks evidence, fail closed.
+- Before declaring an evolution incident resolved, scan every current authority that can encode the changed semantic; include host control surfaces only when the assurance claim depends on them.
 
-## Mutation and complete mediation
+## Autonomous mutation baseline
 
-Before every external or durable mutation, apply the always-on mutation sentinel from `config/AUTHORITY_WRITE_POLICY.json` and `config/SESSION_INTERACTION_POLICY.json`. The sentinel is lightweight: resolve selected authority, target authority/resource, read-vs-write, required host enforcement point, and deliberation triggers. It does not force heavy meta-reasoning for ordinary low-risk work.
+Before every external or durable mutation, apply the lightweight mutation sentinel from `config/AUTHORITY_WRITE_POLICY.json` and `config/SESSION_INTERACTION_POLICY.json`: resolve authority, target, read-vs-write, owner-appropriate workflow, and current problem/risk signals.
 
-For material UAOS production changes on `CHATGPT_GITHUB`, the normal promotion topology is:
+For material UAOS changes on `CHATGPT_GITHUB`, the normal workflow is:
 
-`candidate branch -> pull request -> required promotion-gate -> GitHub protected main -> merge/promotion -> authoritative reread`
+`candidate branch -> pull request -> promotion-gate / owner-appropriate checks -> controlled merge/update -> authoritative reread`
 
-Direct mutation of `main` through raw connector writes is not a normal production promotion path. The previous observed-HEAD CAS direct-main procedure is retired as a production security/admission mechanism. CAS remains a concurrency-integrity tool for candidate refs or other contexts where direct mutation is valid; CAS does not establish authority and does not replace complete mediation.
+This workflow provides isolation, auditability and reproducible evidence. Direct `main` mutation is not the normal path for material architecture/governance changes. CAS remains useful for stale-write/concurrency integrity where appropriate; it is not authorization.
 
-If the required GitHub ruleset/branch protection is absent or cannot be verified, do not claim physical enforcement or technical resolution of a mutation-control incident. A known bypass keeps the incident in an explicit non-resolved state.
+GitHub rulesets, branch protection and mandatory reviews are optional defense-in-depth by default. Their absence does not block normal Agent operation or a verified release. They become required only when the user/risk model explicitly requires a non-bypassable physical-enforcement guarantee. Do not claim that guarantee without remote evidence.
+
+The current user prefers autonomous GitHub execution: self-check, execute, verify and report afterward rather than request approval for every ordinary write.
 
 For parent-governed descendant writes, reread that descendant's current binding/business authority and satisfy its validation/impact requirements before mutation.
 
@@ -63,8 +64,8 @@ Repair the unique owning abstraction. Prefer extending/replacing/removing supers
 
 A proposed new mechanism must state existing overlap, why extension is insufficient, what it replaces/retires (or why nothing can be retired), new failure modes, rollback and complexity delta. Do not convert every incident into another guarantee sentence when a contract, state machine, fitness check or deletion is the correct fix.
 
-An incident affecting authority or mutation safety cannot be `RESOLVED` while a known active path can bypass the claimed invariant. Logical mitigation and physical enforcement are reported separately.
+Stronger assurance is not automatically required. Before adding a stronger control, ask which objective/failure mode requires it, what existing controls already cover, and whether the added operational complexity is justified.
 
 ## Custom instructions
 
-External account Custom Instructions are never policy authority. If present, they should contain only the compact bootstrap + mutation-sentinel pointer in `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`. They may keep bootstrap behavior active across chats, but they are not physical enforcement.
+External account Custom Instructions are never policy authority. If present, they should contain only a compact bootstrap pointer. Repository requirements and current authority override stale pointer wording. Custom Instructions may help bootstrap behavior across chats, but they are not physical enforcement.
