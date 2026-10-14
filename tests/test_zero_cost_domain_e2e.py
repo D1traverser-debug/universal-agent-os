@@ -1,9 +1,11 @@
+import json
 from pathlib import Path
 
 import pytest
 
 from uaos.domain_sdk import LocalWorkflowRunner, load_domain_package
 from uaos.execution import ActionCoordinator, CapabilityCostClass, CapabilityRegistry, HostCapabilitySpec, register_host_capability
+from uaos.integrations import AgentLinkRegistry
 from uaos.kernel import expand_fanout
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,11 +47,23 @@ def _template(domain, template_id):
     return next(item for item in templates if item.template_id == template_id)
 
 
-def test_financial_writing_zero_cost_control_e2e():
-    template = _template("financial_writing", "article_v1")
-    result = _runner_for(template).run(template, task_id="finance:e2e", external_inputs={"user_brief": "representative brief"})
-    assert result.status == "COMPLETE"
-    assert set(template.delivery_outputs).issubset(result.objects)
+def test_financial_writing_zero_cost_control_e2e_uses_external_domain_binding():
+    links = AgentLinkRegistry.from_paths(ROOT / "config/AGENT_REGISTRY.json", ROOT / "state/TASK_INDEX.json")
+    financial = links.resolve_agent("financial_writing")
+    router = links.resolve_task("financial-writing:main")
+    system_map = json.loads((ROOT / "config/SYSTEM_MAP.json").read_text(encoding="utf-8"))
+    assert financial.repository == "D1traverser-debug/financial-writing-agent"
+    assert financial.skill_ref == "UAOS_SKILL.md"
+    assert financial.agent_manifest_ref == ".uaos/MANIFEST.json"
+    assert financial.capability_ref == ".uaos/CAPABILITIES.json"
+    assert financial.uaos_adapter_ref == ".uaos/ADAPTER.json"
+    assert financial.parent_authority == "UAOS"
+    assert router.domain_id == "financial_writing"
+    assert router.task_type == "article_workspace_router"
+    assert router.default_resume_within_domain is True
+    assert links.authority_parent_map()["DOMAIN:financial_writing"] == "UAOS"
+    assert system_map["domains"]["financial_writing"]["repository"] == financial.repository
+    assert not (ROOT / "domains" / "financial_writing").exists()
 
 
 def test_novel_zero_cost_control_e2e():

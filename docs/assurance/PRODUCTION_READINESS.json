@@ -1,6 +1,6 @@
 {
   "snapshot_date":"2026-10-14",
-  "status":"PARENT_CORE_BASELINE_COMPLETE__FULL_CI_AND_LIVE_INFRA_VERIFIED",
+  "status":"PARENT_CORE_BASELINE_COMPLETE__FINANCIAL_EXTERNAL_BINDING_VERIFIED",
   "requirements_authority":[
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
@@ -8,23 +8,26 @@
     "docs/requirements/FROZEN_REQUIREMENTS_v1.3.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.4.md"
   ],
-  "system_release_version":"2.4.1",
+  "system_release_version":"2.4.2",
   "mandatory_external_services":[],
   "local_integrated_test_status":"PASS",
   "verification":{
     "phase0_18_prior_baseline":"PASS_RETAINED",
-    "candidate_full_ci":{"run_id":38550933132,"status":"PASS"},
-    "candidate_live_integration":{"run_id":38550933043,"status":"PASS","postgres_dbos":"PASS","object_store_s3_http_protocol":"PASS","openai_provider":"SKIPPED_BY_DESIGN_ON_PR_UNCHANGED_PROVIDER_CODE"},
-    "post_promotion_main_ci":{"run_id":38551611820,"commit":"a18bfb165aa35b338296851344ed13d5c704d127","status":"PASS"},
-    "baseline_regression_repair":"7_PREVIOUS_FAILURES_CLOSED"
+    "parent_2_4_1_post_promotion_ci":{"run_id":38551611820,"status":"PASS"},
+    "financial_binding_candidate_ci":{"run_id":38554440824,"status":"PASS","note":"parent full suite passes after retiring in-repo Financial business package and migrating Financial E2E to external binding"},
+    "financial_child_candidate_ci":{"run_id":38554338677,"status":"PASS","pytest":"109 passed","wheel_smoke":"PASS","docx_render_smoke":"PASS"},
+    "financial_child_promoted_main":"88f1b7b6c490e334908c9eddbf062bbd4648c034",
+    "financial_child_package_version":"0.8.2",
+    "financial_child_capability_profile_version":14
   },
   "parent_core_open_work":[],
+  "financial_integration_open_work":[],
   "deferred_work":[
     {
       "id":"D1",
-      "scope":"CHILD_INTEGRATION",
-      "item":"LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE",
-      "reason":"Explicitly deferred by user while parent-system legacy closure is completed; not a parent-core defect."
+      "scope":"OTHER_OR_GENERIC_CHILD_INTEGRATION",
+      "item":"LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE_OUTSIDE_THE_VERIFIED_FINANCIAL_BINDING_PATH",
+      "reason":"Financial inheritance/binding is now explicitly verified; this deferred item no longer describes Financial usage."
     }
   ],
   "host_hardening":[
@@ -45,9 +48,9 @@
   "known_limitations":[
     "same-model self-critique, refinement or debate is candidate-generation evidence and is not independent verification by itself",
     "S3 CI evidence uses a standalone HTTP protocol emulator and does not certify any eventual production bucket/provider configuration",
-    "live OpenAI provider evidence is optional/manual and was not rerun because provider integration code was unchanged in this parent-core maintenance release",
-    "child parent-upcall and parent-governed descendant E2E evidence is deferred by scope rather than claimed complete"
+    "live OpenAI provider evidence is optional/manual and was not rerun because provider integration code is unchanged",
+    "Financial historical article receipts remain immutable; explicit resume adopts/creates the exact UAOS article identity instead of rewriting old receipts"
   ],
-  "readiness_semantics":"Parent controller core has no known internally reproducible blocker after full repository CI, PostgreSQL/DBOS live verification, crash/recovery verification and S3 protocol roundtrip. This is not a claim that every future child/provider integration is complete or that host-level GitHub protection is enabled.",
-  "updated_at":"2026-10-14T10:45:00Z"
+  "readiness_semantics":"UAOS parent core remains healthy and Financial now has one external business authority with a mechanically validated UAOS article-task binding. BINDING_POLICY no longer duplicates mutation hierarchy owned by AUTHORITY_WRITE_POLICY. This does not claim host-level GitHub branch protection or every other child integration is complete.",
+  "updated_at":"2026-10-14T11:12:00Z"
 }

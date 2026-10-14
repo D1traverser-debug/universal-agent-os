@@ -1,63 +1,49 @@
+import json
 from pathlib import Path
-import pytest
-from uaos.contracts.enums import IntentType
-from uaos.contracts.planning import execution_layers, validate_plan
-from uaos.domain_sdk import (
-    DomainManifest, DomainRegistry, DomainRouteNotFound,
-    WorkflowTemplate, WorkUnitTemplate, load_domain_package
-)
 
-ROOT=Path(__file__).resolve().parents[1]
-DOMAIN=ROOT/"domains"/"financial_writing"
+ROOT = Path(__file__).resolve().parents[1]
 
-def registry():
-    manifest, templates=load_domain_package(DOMAIN)
-    reg=DomainRegistry(); reg.register(manifest,templates); return reg,manifest,templates
 
-def test_domain_cannot_redefine_shared_infrastructure():
-    with pytest.raises(ValueError,match="infrastructure"):
-        DomainManifest("bad","1","owner",("continuity.runtime",),(),(),())
+def _json(path: str):
+    return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
-def test_only_new_task_routes_create_business_workflow():
-    reg,_,_=registry()
-    template=reg.resolve_new_task("financial_writing",intent=IntentType.NEW_TASK,task_type="article")
-    assert template.template_id=="article_v1"
-    with pytest.raises(DomainRouteNotFound,match="control-plane"):
-        reg.resolve_new_task("financial_writing",intent=IntentType.SYSTEM_MAINTENANCE,task_type="article")
-    with pytest.raises(DomainRouteNotFound):
-        reg.resolve_new_task("financial_writing",intent=IntentType.CONTINUE,task_type="article")
 
-def test_financial_plan_is_valid_and_task_isolated():
-    reg,_,_=registry()
-    template=reg.resolve_new_task("financial_writing",intent=IntentType.NEW_TASK,task_type="article")
-    p1=template.compile(task_id="article-1",plan_id="p1")
-    p2=template.compile(task_id="article-2",plan_id="p2")
-    validate_plan(p1); validate_plan(p2)
-    assert set(u.work_unit_id for u in p1.work_units).isdisjoint(u.work_unit_id for u in p2.work_units)
-    assert all(u.task_id=="article-1" for u in p1.work_units)
+def test_financial_business_authority_is_external_and_unique():
+    system_map = _json("config/SYSTEM_MAP.json")
+    registry = _json("config/AGENT_REGISTRY.json")
+    financial = system_map["domains"]["financial_writing"]
+    assert financial["repository"] == "D1traverser-debug/financial-writing-agent"
+    assert financial["entrypoint"] == "UAOS_SKILL.md"
+    assert financial["business_contract"] == "config/EXECUTION_CONTRACT.json"
+    assert financial["business_state"] == "workspaces/articles/{task_id}/STATE.json"
+    registered = next(item for item in registry["agents"] if item["domain_id"] == "financial_writing")
+    assert registered["repository"] == financial["repository"]
+    assert registered["agent_manifest_ref"] == ".uaos/MANIFEST.json"
+    assert registered["capability_ref"] == ".uaos/CAPABILITIES.json"
+    assert registered["uaos_adapter_ref"] == ".uaos/ADAPTER.json"
+    assert not (ROOT / "domains" / "financial_writing").exists()
 
-def test_financial_final_audit_inspects_rendered_documents_before_delivery():
-    reg,_,_=registry()
-    p=reg.resolve_new_task("financial_writing",intent=IntentType.NEW_TASK,task_type="article").compile(task_id="a",plan_id="p")
-    by={u.work_unit_id.split(":",1)[1]:u for u in p.work_units}
-    assert "a:render_documents" in by["mechanical_audit"].dependencies
-    assert "a:mechanical_audit" in by["final_audit"].dependencies
-    assert {"finance_broad_docx","finance_deep_docx"}.issubset(by["final_audit"].required_inputs)
-    assert "a:final_audit" in by["deliver"].dependencies
-    assert {"finance_broad_docx","finance_deep_docx","audit_docx","final_audit"}.issubset(by["deliver"].required_inputs)
 
-def test_financial_required_delivery_outputs_have_real_producers():
-    _,_,templates=registry()
-    t=templates[0]
-    produced={o for u in t.units for o in u.expected_outputs}
-    assert set(t.delivery_outputs).issubset(produced)
-    assert set(t.delivery_outputs)=={"finance_broad_docx","finance_deep_docx","audit_docx","delivery_receipt"}
+def test_binding_policy_does_not_redefine_hierarchical_mutation_semantics():
+    binding = _json("config/BINDING_POLICY.json")
+    authority = _json("config/AUTHORITY_WRITE_POLICY.json")
+    assert binding["authority_write_policy"] == "config/AUTHORITY_WRITE_POLICY.json"
+    assert binding["mutation_rule"] == "DELEGATE_TO_AUTHORITY_WRITE_POLICY__BINDING_VALIDATION_MUST_NOT_REDEFINE_MUTATION_HIERARCHY"
+    assert authority["context_model"]["hierarchy"] == "UAOS_PARENT_OF_REGISTERED_DOMAINS"
+    rules = "\n".join(authority["mutation_admission"]["rules"])
+    assert "registered ancestor may mutate a descendant" in rules
+    assert "DOMAIN:X -> UAOS" in rules
+    assert "DOMAIN:X -> DOMAIN:Y" in rules
 
-def test_workflow_preserves_core_business_stages_but_not_legacy_runtime_state():
-    _,_,templates=registry()
-    unit_ids={u.unit_id for u in templates[0].units}
-    expected={"research","research_audit","editorial","title","draft","editorial_audit","mechanical_audit","final_audit","deliver"}
-    assert expected.issubset(unit_ids)
-    layers=execution_layers(templates[0].compile(task_id="a",plan_id="p"))
-    flattened=[x.split(":",1)[1] for layer in layers for x in layer]
-    assert flattened.index("render_documents") < flattened.index("mechanical_audit") < flattened.index("final_audit") < flattened.index("deliver")
+
+def test_financial_binding_requires_current_common_capability_inheritance():
+    binding = _json("config/BINDING_POLICY.json")
+    common = _json("config/COMMON_CAPABILITIES.json")
+    ids = {item["capability_id"] for item in common["capabilities"]}
+    assert "CAPABILITY_COMMON_INHERITANCE" in binding["checks"]
+    assert {
+        "cross_chat_continuity_and_recovery",
+        "hierarchical_authority_governance",
+        "adaptive_deliberation_and_parent_guidance",
+        "governed_self_evolution",
+    }.issubset(ids)

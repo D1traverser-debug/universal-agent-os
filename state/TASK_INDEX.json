@@ -1,9 +1,9 @@
 {
-  "schema_version": "2.3",
+  "schema_version": "2.4",
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task.",
-  "updated_at": "2026-10-14T08:21:28Z",
+  "updated_at": "2026-10-14T11:12:00Z",
   "tasks": [
     {
       "task_id": "financial-writing:main",
@@ -14,9 +14,9 @@
       "resume_eligible": true,
       "default_resume_within_domain": true,
       "aliases": ["金融文章", "财经文章", "财经写作", "financial-writing:main"],
-      "semantic_summary": "Financial-writing domain router for creating a new article or resuming an explicitly identified article workspace.",
+      "semantic_summary": "Financial-writing router. New article requests create one UAOS article task and one Financial STATE with the same task_id; explicit historical resume adopts/creates that exact UAOS article identity before mutation.",
       "state_model": "UAOS_NATIVE",
-      "current_stage": "READY_FOR_NEW_OR_EXPLICIT_ARTICLE",
+      "current_stage": "READY_FOR_NEW_OR_EXPLICIT_ARTICLE__BINDING_VERIFIED",
       "state_ref": "state/tasks/financial-writing-main.json"
     },
     {

@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `ACTIVE_PRIMARY_CONTROLLER`
-System release: `2.4.1`
-Authority updated at: `2026-10-14T10:42:00Z`
+System release: `2.4.2`
+Authority updated at: `2026-10-14T11:12:00Z`
 
 ## Minimal bootstrap
 
@@ -115,8 +115,12 @@ A selected child may issue `ParentUpcall` with problem/evidence/unknowns/request
 Before material domain work:
 1. read `config/BINDING_POLICY.json`;
 2. from the selected registry entry read its exact root `UAOS_SKILL.md`, `.uaos/MANIFEST.json`, `.uaos/ADAPTER.json`, `.uaos/CAPABILITIES.json`, plus only the business authority required by the current action;
-3. validate the binding against current repository state;
+3. validate the binding against current repository state, including required UAOS common capabilities declared by the domain;
 4. if controller/Skill/manifest/adapter/capability binding drifts, block the affected domain execution until reconciled.
+
+`config/BINDING_POLICY.json` validates binding identity and capability compatibility; it does not redefine mutation hierarchy. Mutation admission remains owned exclusively by `config/AUTHORITY_WRITE_POLICY.json`.
+
+Once a registered domain has cut its current business authority over to its external repository, UAOS must not keep or execute a competing current business workflow package under `domains/<domain_id>/`. Migration/forensic material is cold evidence only. Financial Writing is externally owned by `D1traverser-debug/financial-writing-agent` and has no current parent-repository business workflow package.
 
 A repository declaration is a capability ceiling, not proof that the active session can execute it.
 
@@ -141,6 +145,8 @@ Search presence is not authority. Retrieval starts from `config/SYSTEM_MAP.json`
 - time-sensitive work is revalidated against current time/business semantics before material execution;
 - current controller progress is stored under `state/tasks/`, while domain business progress remains in its declared domain authority;
 - before executing a continued domain task, reread the domain business authority named by the current task state; cached `next_action` is a pointer, not permission to ignore fresher business state.
+
+For the Financial Writing domain, `financial-writing:main` is a router rather than an article task. A normal new article gets a new UAOS `task_type=article` identity and a Financial `STATE.json` with the same task id; explicit historical resume adopts/creates that exact UAOS article identity before material mutation and never rewrites historical receipts.
 
 For the video domain, the current default project is the active original-digital-IP incubation task; the older video-growth program is explicit-only.
 
