@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Mapping
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,6 +36,26 @@ class DeliberationDirective:
     counterexample_search_required: bool
     independent_verification_required: bool
     reason_codes: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class DeliberationEvidence:
+    """Evidence that the required epistemic escalations were actually performed.
+
+    Keys are the stable dimension names returned by ``required_deliberation_dimensions``.
+    Values are evidence references; the gate does not treat an empty declaration as proof.
+    """
+
+    by_dimension: Mapping[str, tuple[str, ...]]
+
+    def __post_init__(self) -> None:
+        for dimension, refs in self.by_dimension.items():
+            if not dimension.strip():
+                raise ValueError("deliberation evidence dimension cannot be empty")
+            if not refs or not all(ref.strip() for ref in refs):
+                raise ValueError(
+                    f"deliberation evidence for {dimension!r} requires non-empty references"
+                )
 
 
 def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
@@ -116,3 +137,54 @@ def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
         independent_verification_required=independent,
         reason_codes=tuple(reasons),
     )
+
+
+def required_deliberation_dimensions(
+    directive: DeliberationDirective,
+) -> tuple[str, ...]:
+    """Return the exact evidence dimensions required by a directive."""
+
+    dimensions: list[str] = []
+    if directive.micro_diagnosis_required:
+        dimensions.append("MICRO_DIAGNOSIS")
+    if directive.macro_alignment_required:
+        dimensions.append("MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT")
+    if directive.governing_assumptions_challenge_required:
+        dimensions.append("GOVERNING_ASSUMPTION_CHALLENGE")
+    if directive.external_research_required:
+        dimensions.append("EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH")
+    if directive.counterexample_search_required:
+        dimensions.append("COUNTEREXAMPLE_SEARCH")
+    if directive.independent_verification_required:
+        dimensions.append("INDEPENDENT_VERIFICATION")
+    return tuple(dimensions)
+
+
+def require_deliberation_admission(
+    signals: DeliberationSignals,
+    evidence: DeliberationEvidence | None = None,
+) -> DeliberationDirective:
+    """Fail closed until every required deliberation dimension has evidence.
+
+    This is the executable admission counterpart to ``assess_deliberation``. It does not
+    decide *how* to reason; it prevents a caller from observing a required directive and
+    then silently promoting a material change without satisfying that directive.
+    """
+
+    directive = assess_deliberation(signals)
+    if not directive.required:
+        return directive
+
+    required = required_deliberation_dimensions(directive)
+    available = evidence.by_dimension if evidence is not None else {}
+    missing = tuple(
+        dimension
+        for dimension in required
+        if not available.get(dimension)
+    )
+    if missing:
+        raise RuntimeError(
+            "deliberation admission blocked; missing evidence for: "
+            + ", ".join(missing)
+        )
+    return directive
