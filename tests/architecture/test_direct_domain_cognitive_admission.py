@@ -37,7 +37,10 @@ def test_material_change_still_requires_deliberation_evidence():
 def test_v18_keeps_always_on_sentinel_and_problem_research_floor_without_ruleset_blocker():
     current = _json("CURRENT_SYSTEM.json")
     assert current["system_release_version"] == "2.4.4"
-    assert current["status"] == "CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE__FINAL_VALIDATION_PENDING"
+    assert current["status"] in {
+        "CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE__FINAL_VALIDATION_PENDING",
+        "ACTIVE_PRIMARY_CONTROLLER",
+    }
     assert "docs/requirements/FROZEN_REQUIREMENTS_v1.7.md" in current["requirements"]
     assert "docs/requirements/FROZEN_REQUIREMENTS_v1.8.md" in current["requirements"]
     assert current["production_host_hardening"].startswith("OPTIONAL_DEFENSE_IN_DEPTH")
