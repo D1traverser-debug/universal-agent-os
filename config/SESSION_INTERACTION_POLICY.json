@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.5",
-  "policy_version":"1.5.0",
+  "schema_version":"1.6",
+  "policy_version":"1.6.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T16:33:00Z",
+  "updated_at":"2026-10-15T05:06:35+08:00",
   "bare_inheritance_selector":{
     "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option":{"option_id":"uaos:controller","display_name_zh":"总控系统","intent":"SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY","creates_business_task":false,"authority_context":"UAOS"},
@@ -41,6 +41,18 @@
     "hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS",
     "parent_upcall_rule":"A child may invoke UAOS guidance without replacing the selected child task authority; parent consultation is not a hidden child privilege escalation."
   },
+  "always_on_problem_detection_sentinel":{
+    "required":true,
+    "scope":"EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_READ_ONLY_TURNS",
+    "policy_ref":"config/DELIBERATION_POLICY.json",
+    "checks":[
+      "classify the current user message for correction/failure/contradiction/uncertainty or other problem signals",
+      "classify newly read authority/evidence for defects, drift, knowledge gaps or control-plane gaps",
+      "before reporting NOT_TRIGGERED, verify that no current problem signal was observed",
+      "when a problem is detected, construct current deliberation signals and execute the required research/reflection floor before selecting or promoting a repair"
+    ],
+    "anti_bloat":"The detector is always-on and lightweight; external research, reflection, counterexample search and independent verification are activated only at the depth required by current signals."
+  },
   "always_on_mutation_sentinel":{
     "required":true,
     "scope":"BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT",
@@ -59,9 +71,9 @@
   "adaptive_deliberation":{
     "policy_ref":"config/DELIBERATION_POLICY.json",
     "visibility":"REPORT_WHEN_MATERIALLY_TRIGGERED",
-    "rule":"Every detected problem requires at least lightweight external research plus macro/assumption reflection; risk signals add counterexample and independent-verification depth.",
+    "rule":"Every detected problem requires at least lightweight external research plus macro/topology and governing-assumption reflection; request risk-sensitive counterexample and independent-verification depth when required.",
     "material_change_admission":"FAIL_CLOSED_PER_DELIBERATION_POLICY_BEFORE_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_MUTATION",
-    "relationship_to_sentinel":"The mutation sentinel is always-on and lightweight; problem/risk signals select the required epistemic depth."
+    "relationship_to_sentinels":"The problem-detection sentinel runs on every selected-agent turn; the mutation sentinel runs before external/durable writes. Problem/risk signals select the required epistemic depth."
   },
   "inherited_session_progress_report":{
     "scope":"EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
@@ -71,8 +83,9 @@
     "fields":["current_agent","current_scope_or_task","authority_context","status","current_stage","next_action_or_blocker","evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER","deliberation_state_when_triggered_or_NOT_TRIGGERED","version_identity","progress_timestamp"],
     "timestamp_rule":"Use the timestamp of the freshest authoritative state actually used for the report; do not substitute the response clock when authority freshness is known.",
     "version_rule":"Report system/domain/task version identities that materially govern the current action. Schema version alone is not a release version.",
-    "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id; otherwise report NO_EVOLUTION_TRIGGER.",
-    "deliberation_rule":"When adaptive deliberation materially changed the path, report which escalation dimensions were used; do not expose private chain-of-thought or fabricate independent review.",
+    "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id. If a detected problem was evaluated but did not justify a durable evolution record, report EVALUATED_NO_DURABLE_EVOLUTION. Use NO_EVOLUTION_TRIGGER only when no problem/evolution trigger was detected in the current turn.",
+    "deliberation_rule":"When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the trigger/research-control state without exposing private chain-of-thought or fabricating independent review.",
+    "consistency_rule":"A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless it clearly states that the observation is not classified as a problem and why.",
     "assurance_rule":"If progress, authority scope, deliberation/evolution state, assurance level or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
   }
 }
