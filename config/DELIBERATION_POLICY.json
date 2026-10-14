@@ -1,11 +1,12 @@
 {
-  "schema_version":"1.4",
-  "policy_version":"1.4.0",
+  "schema_version":"1.5",
+  "policy_version":"1.5.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T16:34:00Z",
-  "purpose":"Select epistemic depth from current problem/risk signals, enforce a mandatory research-and-reflection floor for every detected problem, and keep optional host-hardening claims separate from the autonomous maintenance baseline.",
+  "updated_at":"2026-10-15T05:06:35+08:00",
+  "purpose":"Keep lightweight problem detection continuously active, select epistemic depth from current problem/risk signals, enforce a mandatory research-and-reflection floor for every detected problem, and keep optional host-hardening claims separate from the autonomous maintenance baseline.",
   "principles":[
-    "The mutation sentinel is always-on and lightweight; adaptive deliberation is not a permanent heavy debate loop.",
+    "Lightweight problem detection is always-on for every assistant turn after authority selection; adaptive deliberation is not a permanent heavy debate loop.",
+    "The mutation sentinel is separately always-on before external or durable mutation attempts.",
     "Once a problem is detected, external research and reflective challenge are mandatory even when the problem appears familiar or local.",
     "Problem size changes research/reflection depth, not whether research/reflection happens.",
     "Move micro -> macro -> micro: reproduce the concrete symptom, challenge goal/assumption/topology, consult relevant external evidence, then return to the smallest correct change and concrete verification.",
@@ -18,6 +19,14 @@
   ],
   "representative_trigger_signals":["USER_CORRECTION","FAILURE","REPEATED_FAILURE","GOAL_PROGRESS_UNCERTAIN","SCOPE_EXPANSION","CROSS_SUBSYSTEM","COMPLEXITY_GROWTH","CONFLICTING_EVIDENCE","UNKNOWN_FAILURE_CLASS","KNOWLEDGE_GAP","ARCHITECTURE_GAP","CONTROL_PLANE_GAP","HIGH_RISK_CHANGE"],
   "trigger_semantics":"EXTENSIBLE__NOT_AN_EXHAUSTIVE_PROBLEM_ONTOLOGY",
+  "always_on_problem_detection_sentinel":{
+    "enabled":true,
+    "scope":"EVERY_ASSISTANT_TURN_AFTER_AUTHORITY_SELECTION__INCLUDING_READ_ONLY_TURNS_AND_AUTHORITY_INSPECTION",
+    "responsibility":"Before declaring deliberation NOT_TRIGGERED, classify the current user turn and newly observed authority/evidence for defects, degradation, correction, contradiction, uncertainty, knowledge gaps, architecture/control-plane gaps or other unreliable-goal signals.",
+    "clear_path":"NO_PROBLEM_DETECTED__KEEP_NORMAL_WORK_LIGHTWEIGHT",
+    "triggered_path":"CONSTRUCT_CURRENT_DELIBERATION_SIGNALS__RUN_ASSESS_DELIBERATION__SATISFY_REQUIRED_PROBLEM_RESPONSE_FLOOR_BEFORE_REPAIR_OR_RESOLUTION_CLAIM",
+    "anti_bloat":"Always-on means always-on detection, not permanent external research, debate or self-dialogue when no problem is detected."
+  },
   "problem_detection_floor":{
     "scope":"ANY_DETECTED_DEFECT_FAILURE_DEGRADATION_USER_CORRECTION_CONTRADICTION_OR_EVIDENCE_THAT_CURRENT_BEHAVIOR_IS_NOT_RELIABLY_SATISFYING_THE_GOVERNING_OBJECTIVE",
     "always_required_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH"],
@@ -34,7 +43,7 @@
     "session_ref":"config/SESSION_INTERACTION_POLICY.json",
     "always_on":true,
     "responsibility":"Before any external/durable mutation, verify authority/target/mutation class and owner-appropriate workflow; then pass problem/risk signals to adaptive deliberation.",
-    "not_a_deliberation_dimension":"The sentinel is an admission precondition, not evidence that diagnosis/research/reflection/counterexample work has been completed."
+    "not_a_deliberation_dimension":"The mutation sentinel is an admission precondition, not evidence that diagnosis/research/reflection/counterexample work has been completed."
   },
   "material_change_admission":{
     "scope":"MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGE_AND_ANY_MATERIAL_CHANGE_AFTER_A_TRIGGER_SIGNAL",
