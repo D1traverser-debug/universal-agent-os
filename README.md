@@ -28,9 +28,9 @@ No current domain control binding lives under a `continuity/` namespace.
 - `config/BINDING_POLICY.json` fails closed if a domain Skill/manifest/adapter/capability binding drifts.
 - `config/SYSTEM_MAP.json` is the current location map; search ranking is never authority.
 - controller state lives under `state/tasks/`; domain business truth stays in each domain's declared business-state location.
-- retired migration executables/importers are not part of the current tree.
+- retired migration executables/importers and predecessor-controller bindings are not part of the current hot path.
 
-The retired `D1traverser-debug/universal-continuity-agent` default branch is a tombstone redirect only. Historical Git commits may be inspected explicitly for forensics but are never runtime/recovery authority.
+Historical Git commits and retired predecessor repositories may be inspected explicitly for forensics but are never runtime/recovery authority.
 
 ## ChatGPT Custom Instructions
 
@@ -42,6 +42,6 @@ The same controller semantics run through `CHATGPT_GITHUB` or `LOCAL` persistenc
 
 ## Authority
 
-- Requirements: `docs/requirements/FROZEN_REQUIREMENTS_v1.0.md`, `docs/requirements/FROZEN_REQUIREMENTS_v1.1.md`
+- Requirements: `docs/requirements/FROZEN_REQUIREMENTS_v1.0.md` through `docs/requirements/FROZEN_REQUIREMENTS_v1.4.md`
 - Architecture: `docs/architecture/ARCHITECTURE_BLUEPRINT_v1.1.md`
 - Readiness: `docs/assurance/PRODUCTION_READINESS.json`
