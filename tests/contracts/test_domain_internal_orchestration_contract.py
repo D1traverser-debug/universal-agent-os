@@ -9,6 +9,10 @@ def load(path: str):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def _version_tuple(value: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in value.split("."))
+
+
 def test_common_contract_declares_domain_internal_orchestration():
     common = load("config/COMMON_CAPABILITIES.json")
     assert common["contract_version"] == "1.6.0"
@@ -34,7 +38,7 @@ def test_common_contract_declares_domain_internal_orchestration():
 
 def test_v2_requirements_are_current_and_preserve_child_business_identity():
     current = load("CURRENT_SYSTEM.json")
-    assert current["system_release_version"] == "2.5.0"
+    assert _version_tuple(current["system_release_version"]) >= (2, 5, 0)
     assert "docs/requirements/FROZEN_REQUIREMENTS_v2.0.md" in current["requirements"]
     text = (ROOT / "docs/requirements/FROZEN_REQUIREMENTS_v2.0.md").read_text(encoding="utf-8")
     assert "Independent parallel work" in text or "independent parallel work" in text

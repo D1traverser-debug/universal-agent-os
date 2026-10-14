@@ -1,9 +1,9 @@
 {
-  "schema_version": "2.5",
+  "schema_version": "2.6",
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
-  "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task.",
-  "updated_at": "2026-10-14T13:04:00Z",
+  "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain.",
+  "updated_at": "2026-10-15",
   "tasks": [
     {
       "task_id": "financial-writing:main",
@@ -48,32 +48,30 @@
       "state_ref": "state/tasks/FQ001_MINGRI_ORDER.json"
     },
     {
-      "task_id": "video:ai-self-media-commercialization",
+      "task_id": "video:main",
       "domain_id": "video",
-      "task_type": "digital_ip_incubation",
-      "display_name_zh": "AI自媒体视频商业化与原创数字IP",
+      "task_type": "domain_project_router",
+      "display_name_zh": "视频系统｜AI自媒体增长、原创数字IP与商业化",
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume_within_domain": true,
-      "aliases": ["原创数字IP设计", "AI自媒体视频商业化与原创数字IP", "ai-self-media-commercialization", "视频系统"],
-      "semantic_summary": "Current default video-domain project: original male digital-IP character design. H1 face-shell work is active; A1 was rejected and A2 positive-morph upper-face tuning is the current business-authority next step.",
+      "aliases": [
+        "视频系统",
+        "AI视频",
+        "AI视频涨粉与商业化",
+        "原创数字IP",
+        "原创数字IP设计",
+        "AI自媒体视频商业化与原创数字IP",
+        "ai-self-media-commercialization",
+        "video:ai-self-media-commercialization",
+        "video-growth:main",
+        "Pilot 002",
+        "旧视频主项目"
+      ],
+      "semantic_summary": "Video domain router only. Generic media-growth/original-IP/commercialization/production intent is delegated to the Video owner, which resolves and owns its own project/program/workstream/subtask identities and state through its child project index. Exact historical child references or legacy child aliases are resolved by the Video domain. UAOS may retain only an opaque child reference for parent continuity.",
       "state_model": "UAOS_NATIVE",
-      "current_stage": "H1_SCULPTURAL_MASSING_V2",
-      "state_ref": "state/tasks/video-ai-self-media-commercialization.json"
-    },
-    {
-      "task_id": "video-growth:main",
-      "domain_id": "video",
-      "task_type": "video_growth_program",
-      "display_name_zh": "AI视频涨粉与商业化｜旧主项目",
-      "status": "HOLD",
-      "resume_eligible": true,
-      "default_resume_within_domain": false,
-      "aliases": ["video-growth:main", "Pilot 002", "旧视频主项目"],
-      "semantic_summary": "Older video-growth program retained only for explicit resume. It is not the default target for current original-digital-IP character work.",
-      "state_model": "UAOS_NATIVE",
-      "current_stage": "VISUAL_PREVIEW_PROCESS_REENTRY",
-      "state_ref": "state/tasks/video-growth-main.json"
+      "current_stage": "READY_FOR_GENERIC_OR_EXPLICIT_CHILD_PROJECT__IDENTITY_DECOUPLED",
+      "state_ref": "state/tasks/video-main.json"
     }
   ]
 }

@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "task_id": "video:main",
+  "domain_id": "video",
+  "task_type": "domain_project_router",
+  "status": "RUNNING",
+  "current_stage": "READY_FOR_GENERIC_OR_EXPLICIT_CHILD_PROJECT__IDENTITY_DECOUPLED",
+  "next_action": "For generic Video-domain intent, delegate the user brief, applicable global requirements and bounded governance context to DOMAIN:video. Video Growth Agent resolves its own child project/program through projects/PROJECT_INDEX.json and owns project/program/workstream/subtask identities, business state, dependency graphs, decisions and artifacts. For explicit historical continuation, preserve the exact child project reference or legacy child alias and let the Video domain resolve it. Parent continuity may retain only an opaque child state reference returned by or selected within the Video domain; never adopt that child identity as the UAOS router identity.",
+  "domain_registration": {
+    "source": "config/AGENT_REGISTRY.json + config/SYSTEM_MAP.json",
+    "repository": "D1traverser-debug/video-growth-agent",
+    "entrypoint": "UAOS_SKILL.md"
+  },
+  "active_domain_state_ref": null,
+  "domain_reference_semantics": "OPAQUE_REFERENCE_RETURNED_BY_OR_SELECTED_WITHIN_VIDEO_DOMAIN__NOT_PARENT_TASK_IDENTITY",
+  "identity_boundary": "UAOS_VIDEO_ROUTER_ID_AND_VIDEO_CHILD_PROJECT_PROGRAM_WORKSTREAM_SUBTASK_IDS_ARE_DISTINCT_NAMESPACES__NO_EQUALITY_REQUIREMENT",
+  "generic_resolution_rule": "GENERIC_VIDEO_INTENT_DELEGATES_TO_CHILD_PROJECT_INDEX__NO_PARENT_BUSINESS_PROJECT_SELECTION",
+  "historical_resume_rule": "EXPLICIT_CHILD_PROJECT_REFERENCE_OR_LEGACY_CHILD_ALIAS_WINS__NO_PARENT_ID_ADOPTION__DO_NOT_REWRITE_CHILD_HISTORY",
+  "freshness_rule": "REREAD_CURRENT_VIDEO_DOMAIN_BINDING_BEFORE_DELEGATION__WHEN_AN_EXACT_CHILD_REF_IS_SELECTED_REREAD_THAT_CHILD_STATE_BEFORE_MATERIAL_BUSINESS_ACTION",
+  "controller_updated_at": "2026-10-15",
+  "progress_timestamp": "2026-10-15",
+  "progress_timestamp_semantics": "UAOS_VIDEO_ROUTER_IDENTITY_DECOUPLED__NO_ACTIVE_CHILD_PROJECT_SELECTED",
+  "domain_business_state_is_controller": false
+}
