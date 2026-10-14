@@ -1,13 +1,13 @@
 {
-  "schema_version":"1.2",
-  "contract_version":"1.2.0",
+  "schema_version":"1.3",
+  "contract_version":"1.3.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T09:46:00Z",
-  "inheritance_model":"UAOS_HOSTED_COMMON_CAPABILITIES__DOMAIN_BUSINESS_LOGIC_REMAINS_WITH_OWNER",
+  "updated_at":"2026-10-14T13:48:00Z",
+  "inheritance_model":"UAOS_HOSTED_COMMON_CAPABILITIES__DIRECT_DOMAIN_WORK_PLANE__DOMAIN_BUSINESS_LOGIC_IDENTITY_STATE_REMAIN_WITH_OWNER",
   "applies_to":"ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
   "capabilities":[
-    {"capability_id":"intent_and_requirement_governance","owner":"UAOS","domain_role":"consume scoped requirements and return business evidence"},
-    {"capability_id":"cross_chat_continuity_and_recovery","owner":"UAOS","domain_role":"supply current business authority, checkpoints, cursors and artifact identities"},
+    {"capability_id":"intent_and_requirement_governance","owner":"UAOS","domain_role":"consume scoped parent/global requirements while owning normal domain business execution and returning business evidence"},
+    {"capability_id":"cross_chat_continuity_and_recovery","owner":"UAOS_FOR_PARENT_OR_SELECTOR_CONTINUITY__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_CONTINUITY","domain_role":"expose current domain business authority, checkpoints, cursors and artifact identities; direct child sessions do not require a live parent proxy"},
     {"capability_id":"capability_handshake_and_graceful_degradation","owner":"UAOS","domain_role":"declare domain capability ceiling and action-specific requirements; current host proves executability"},
     {"capability_id":"assurance_evidence_and_completion_governance","owner":"UAOS","domain_role":"produce domain verification evidence without overstating assurance"},
     {
@@ -19,7 +19,8 @@
         "Same-owner mutation remains allowed under normal controls.",
         "UAOS may govern a registered descendant when ancestry and governance_basis are explicit and domain authority/impact/verification are respected.",
         "A child/domain cannot directly mutate UAOS or a sibling domain.",
-        "A child may call parent guidance without transferring the selected business task.",
+        "A registered child may be activated directly as the current Agent/work plane in a fresh chat; parent authority does not imply a mandatory per-turn business gateway.",
+        "A child may call parent guidance without transferring the selected business task, business identity, workflow or state.",
         "Approval cannot override hierarchy."
       ]
     },
@@ -33,6 +34,7 @@
         "Use micro -> macro -> micro reasoning when local repair may reflect a larger goal/assumption/topology problem.",
         "External method/architecture research is required when current knowledge or framing is insufficient; architecture names never become authority by popularity.",
         "Same-model reflection/debate is candidate generation, not independent verification.",
+        "For material architecture/governance changes and material changes after a trigger signal, required deliberation dimensions are fail-closed admission evidence rather than optional advice.",
         "Do not create a parallel architecture-advisor or debate control plane."
       ]
     },
@@ -46,14 +48,16 @@
         "A candidate may mutate production only through the governing authority and normal action/side-effect controls.",
         "Cross-domain/common-capability changes are promoted by UAOS; domain-specific business rules remain domain-owned under UAOS lineage.",
         "Repeated failures are repaired at the common failure class/root abstraction and require regression evidence before closure.",
-        "Triggered evolution must expose a durable lifecycle state in inherited system-maintenance reporting."
+        "Triggered evolution must expose a durable lifecycle state in inherited system-maintenance reporting.",
+        "Evolution closure requires an authority-wide contradiction scan across every current surface that can encode the changed semantic; edited-file success alone is not closure."
       ]
     },
     {"capability_id":"inherited_session_progress_reporting","owner":"UAOS","domain_role":"supply fresh current_stage, next_action/blocker, authority context, evolution/deliberation state and business update/version data"},
     {"capability_id":"version_and_timestamp_provenance","owner":"UAOS","domain_role":"expose stable version/hash/schema identities and ISO-8601 update timestamps for material authority"}
   ],
   "anti_duplication":[
-    "Do not copy UAOS task indexes, continuation protocols, requirement registries, evolution catalogs or promotion state into domain repositories.",
+    "Do not copy UAOS cross-domain task indexes, parent-continuation protocols, global requirement registries, evolution catalogs or promotion state into domain repositories.",
+    "Do not turn UAOS into a mandatory per-turn business proxy merely because a domain inherits common capabilities.",
     "Do not create a parallel parent-guidance, architecture-advisor, self-dialogue or verification control plane when existing Control/Context/Assurance/Evolution contracts can be extended.",
     "A domain may implement business-specific learning/evaluation hooks, but those hooks feed the common governance contract rather than replacing it."
   ]
