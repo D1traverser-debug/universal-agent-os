@@ -1,0 +1,24 @@
+{
+  "schema_version":"1.0",
+  "task_id":"ashare:main",
+  "domain_id":"ashare",
+  "task_type":"domain_market_day_router",
+  "status":"RUNNING",
+  "current_stage":"READY_FOR_CURRENT_OR_EXPLICIT_CHILD_MARKET_DAY__IDENTITY_DECOUPLED",
+  "next_action":"For a new/current A-share recommendation, activate DOMAIN:ashare and delegate the user brief, applicable global requirements and bounded governance context. The A-share domain resolves the current China trading day and creates/loads its own TaskContract.task_id + MarketDayState. For explicit historical continuation, preserve the exact child task/reference and let the A-share domain resolve it. UAOS must not create/adopt/mirror a per-day A-share business identity or state.",
+  "domain_registration":{
+    "source":"config/AGENT_REGISTRY.json + config/SYSTEM_MAP.json",
+    "repository":"D1traverser-debug/a-share-event-driven-agent",
+    "entrypoint":"UAOS_SKILL.md"
+  },
+  "active_domain_state_ref":null,
+  "domain_reference_semantics":"OPTIONAL_OPAQUE_CHILD_MARKET_DAY_REFERENCE__NOT_PARENT_ROUTER_IDENTITY",
+  "identity_boundary":"UAOS_ASHARE_ROUTER_ID_AND_ASHARE_TASKCONTRACT_TASK_ID_ARE_DISTINCT_NAMESPACES__NO_EQUALITY_REQUIREMENT",
+  "generic_resolution_rule":"GENERIC_OR_CURRENT_ASHARE_INTENT_DELEGATES_TO_CHILD__CHILD_RESOLVES_CURRENT_CHINA_TRADING_DAY_AND_BUSINESS_RUN",
+  "historical_resume_rule":"EXACT_CHILD_TASK_ID_OR_EXPLICIT_HISTORICAL_REFERENCE_WINS__NO_PARENT_ID_ADOPTION__OLD_PREMARKET_NEVER_AUTO_BECOMES_CURRENT_DAY",
+  "freshness_rule":"BEFORE_TIME_SENSITIVE_ASHARE_WORK_ACTIVATE_CHILD_AND_REQUIRE_CURRENT_TRADING_DAY_PLUS_POINT_IN_TIME_SOURCE_EVIDENCE",
+  "domain_business_state_is_controller":false,
+  "controller_updated_at":"2026-10-15",
+  "progress_timestamp":"2026-10-15",
+  "progress_timestamp_semantics":"UAOS_ASHARE_ROUTER_IDENTITY_DECOUPLED__NO_ACTIVE_CHILD_MARKET_DAY_SELECTED"
+}

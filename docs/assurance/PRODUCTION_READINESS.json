@@ -1,6 +1,6 @@
 {
   "snapshot_date":"2026-10-15",
-  "status":"PARENT_CORE_BASELINE_COMPLETE__CHILD_COGNITION_EVOLUTION_PRODUCT_GOVERNANCE_VERIFIED__FINANCIAL_0_8_4_VERIFIED",
+  "status":"PARENT_CORE_BASELINE_COMPLETE__FINANCIAL_VIDEO_ASHARE_SPECIALIZED_CHILDREN_PRODUCTION_VERIFIED__UAOS_2_5_2_CANDIDATE",
   "requirements_authority":[
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
@@ -11,50 +11,49 @@
     "docs/requirements/FROZEN_REQUIREMENTS_v1.6.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.7.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.8.md",
-    "docs/requirements/FROZEN_REQUIREMENTS_v1.9.md"
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.9.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v2.0.md"
   ],
-  "system_release_version":"2.4.5",
-  "common_capabilities_contract":"1.5.0",
+  "system_release_version":"2.5.2",
+  "common_capabilities_contract":"1.6.0",
   "mandatory_external_services":[],
-  "local_integrated_test_status":"PASS",
+  "local_integrated_test_status":"CANDIDATE_VALIDATION_PENDING",
   "verification":{
     "phase0_18_prior_baseline":"PASS_RETAINED",
-    "prior_parent_baseline":"PASS_RETAINED",
-    "uaos_2_4_4_release_commit":"cd935e42e83e65ce8f2f39f8c505e1e74bde9d96",
-    "uaos_2_4_5_candidate_head":"2493f3c7d430759a7ecac8801e24d6b9765ed4d2",
-    "uaos_2_4_5_candidate_ci":{"run_id":38608148631,"status":"PASS","required_check":"promotion-gate"},
-    "uaos_2_4_5_release_commit":"55b18d9419fe96ef7051d1d7280273bfbd0d4c2b",
-    "uaos_2_4_5_post_promotion_ci":{"run_id":38609119968,"status":"PASS"},
-    "parent_common_capability_reread":{"contract_version":"1.5.0","status":"PASS"},
-    "financial_child_release":"0.8.4",
-    "financial_child_profile_version":16,
-    "financial_binding_assurance":"FINANCIAL_0_8_4__DIRECT_DOMAIN__DISTINCT_PARENT_AND_FINANCIAL_IDENTITY_NAMESPACES__UAOS_COMMON_1_5__EVERY_PROBLEM_RESEARCH_REFLECTION__DOMAIN_EVOLUTION_OWNERSHIP__PRODUCT_REQUIREMENT_TRACEABILITY",
-    "financial_child_final_candidate_head":"fc5fd50a3a71a44b69f96c6e9c7e4b7ac229d3cf",
-    "financial_child_candidate_ci":{"run_id":38609262769,"status":"PASS","unit_and_trajectory":"PASS","contract_eval":"PASS","static_single_owner_audit":"PASS","retired_runtime_audit":"PASS","wheel_smoke":"PASS","docx_render_smoke":"PASS"},
-    "financial_child_release_commit":"6a4d6d8a1dc95444ced2a8c42f5f00d03da0ab3c",
-    "financial_child_post_promotion_ci":{"run_id":38609447053,"status":"PASS","full_chain":"PASS"},
-    "financial_child_current_main":"45658bd95128c38b07de8d561124ff6a7914bc33",
-    "financial_child_closure_ci":{"run_id":38610083693,"status":"PASS","full_chain":"PASS"},
-    "financial_product_authority":"docs/product_requirements.md + docs/architecture.md",
-    "financial_identity_semantics":"FINANCIAL_STATE_TASK_ID_IS_DOMAIN_OWNED_ARTICLE_IDENTITY__TASK_CONTRACT_IDENTITY_FREE__NO_PARENT_CHILD_ID_EQUALITY",
-    "financial_cognition_semantics":"EVERY_DETECTED_PROBLEM_REQUIRES_MICRO_DIAGNOSIS__MACRO_GOAL_TOPOLOGY_ALIGNMENT__GOVERNING_ASSUMPTION_CHALLENGE__EXTERNAL_RESEARCH__RISK_ADDS_COUNTEREXAMPLE_AND_INDEPENDENT_VERIFICATION",
-    "financial_evolution_semantics":"FINANCIAL_OWNS_DOMAIN_BUSINESS_RULE_EVOLUTION__UAOS_OWNS_COMMON_CROSS_DOMAIN_EVOLUTION__ONE_OFF_DOES_NOT_AUTO_PROMOTE__SYSTEMIC_CHANGE_REQUIRES_REGRESSION_OR_EVAL_EVIDENCE__POST_PROMOTION_OBSERVATION_REQUIRED",
-    "external_method_evidence":[
-      "Anthropic agent-eval guidance used to align product requirements with concrete eval success criteria and avoid stale grader assumptions",
-      "OpenAI eval guidance used to require structured repeatable checks for variable agent behavior",
-      "Google SRE incident-learning guidance used to enforce root-cause/system learning rather than symptom-only repairs",
-      "evolutionary-architecture fitness-function guidance used to turn ownership/topology/negative-space boundaries into stable automated checks",
-      "Google developer-documentation guidance used to correct stale candidate labels in current production product authority"
-    ],
+    "uaos_2_5_1_current_main":"ee09842c590d5e9679a8c942cf2861154e6744bf",
+    "uaos_2_5_1_final_production_ci":{"run_id":38624000027,"status":"PASS","required_check":"promotion-gate"},
+    "parent_common_capability_reread":{"contract_version":"1.6.0","status":"PASS"},
+    "financial_child":{"release":"0.8.4","profile_version":16,"status":"PRODUCTION_VERIFIED","current_main":"45658bd95128c38b07de8d561124ff6a7914bc33","closure_ci_run":38610083693},
+    "video_child":{"release":"0.6.0","status":"PRODUCTION_VERIFIED","release_main":"2f2e45eed9175499c86081d00c080e4e7cf9d11f","production_ci_run":38622448588,"semantics":"CHILD_OWNS_PROJECT_PROGRAM_WORKSTREAM_SUBTASK_IDENTITIES__ONE_UAOS_VIDEO_ROUTER"},
+    "ashare_child":{
+      "release":"0.2.0",
+      "profile_version":4,
+      "status":"PRODUCTION_VERIFIED",
+      "release_main":"1fb2cda4dba3a4dd1f6c6fe5a2a7fe1b3039d292",
+      "candidate_final_head":"2e187dd349eea39da0fc35901e9f3429b11ad75e",
+      "candidate_ci_run":38628786127,
+      "production_ci_run":38628981077,
+      "verified_chain":"MCP_SMOKE__61_TESTS__CONTRACT_EVAL__STATIC_ARCHITECTURE_AUDIT__WHEEL_BUILD__ISOLATED_WHEEL_SMOKE",
+      "identity_semantics":"CHILD_TASKCONTRACT_TASK_ID_PLUS_MARKETDAYSTATE__DISTINCT_FROM_UAOS_ROUTER",
+      "product_semantics":"POINT_IN_TIME_FREEZE__P01_P09__OFFICIAL_FACTS__TONGHUASHUN_LEVEL2_PREFERRED_MICROSTRUCTURE__XUANGUTONG_FIVE_POOLS__U0_U1_RECALL__U3_OR_NO_TRADE__FROZEN_POSTCLOSE_ATTRIBUTION__REPLAY_GATED_LEARNING",
+      "cognition_semantics":"EVERY_PROBLEM_REQUIRES_DIAGNOSIS__MACRO_PRODUCT_WORKFLOW_CHECK__GOVERNING_ASSUMPTION_CHALLENGE__EXTERNAL_RESEARCH"
+    },
     "observed_host_state":{
       "chatgpt_github_plugin_permission":"FULL_ACCESS__USER_PREFERENCE",
       "raw_connector_outside_uaos_python_interception":true,
-      "registered_repository_rulesets_observed":"ABSENT_ON_5_CURRENT_REPOSITORIES",
+      "registered_repository_rulesets_observed":"OPTIONAL_NOT_REQUIRED_FOR_BASELINE",
       "interpretation":"OPTIONAL_DEFENSE_IN_DEPTH_GAP__NOT_BASELINE_RELEASE_BLOCKER"
     }
   },
   "parent_core_open_work":[],
   "financial_integration_open_work":[],
+  "video_integration_open_work":[],
+  "ashare_integration_open_work":[
+    {
+      "item":"UAOS_2_5_2_SINGLE_ASHARE_ROUTER_PROMOTION_AND_PRODUCTION_REREAD",
+      "status":"CANDIDATE_IN_PROGRESS"
+    }
+  ],
   "optional_host_hardening":[
     {
       "id":"H1",
@@ -68,15 +67,20 @@
     }
   ],
   "deferred_work":[
-    {"id":"D1","scope":"OTHER_OR_GENERIC_CHILD_INTEGRATION","item":"LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE_OUTSIDE_THE_VERIFIED_FINANCIAL_PATH","reason":"Financial is the verified reference integration for the current child cognition/evolution/product-governance contract; live end-to-end evidence for every other registered domain remains outside this Financial-focused verification."}
+    {
+      "id":"D1",
+      "scope":"NOVEL_OR_OTHER_DOMAIN_INTERNAL_ORCHESTRATION",
+      "item":"ADOPT_COMMON_1_6_INTERNAL_ORCHESTRATION_ONLY_IF_DOMAIN_PRODUCT_NEEDS_IT",
+      "reason":"Common orchestration is a method vocabulary, not a mandate to reshape every domain product."
+    }
   ],
   "known_limitations":[
     "same-model self-critique, refinement or debate is candidate-generation evidence and is not independent semantic verification by itself",
     "hosted CI provides independent execution evidence, not independent semantic architecture judgment",
     "raw connector remains outside Python ActionCoordinator, so the baseline does not claim physical non-bypassability",
-    "GitHub rulesets/protected branches are not currently configured across the registered repositories; this limits the maximum host-enforcement assurance but is not a baseline blocker",
-    "this verification establishes the specified Financial inheritance/product-governance properties and no known internally reproducible blocker; it cannot prove future bugs are impossible"
+    "GitHub rulesets/protected branches are optional defense-in-depth, not a baseline completion condition",
+    "A-share 0.2.0 architecture is production-verified, but real current-session Tonghuashun/Level-2 access must still be proven at runtime before Level-2-specific evidence claims"
   ],
-  "readiness_semantics":"UAOS 2.4.5 is production-verified for the current registered-child inheritance model. Financial Writing 0.8.4 is the reference verified child: it activates directly as DOMAIN:financial_writing, inherits UAOS common cognition/evolution/product-review method through common contract 1.5.0, keeps Financial product requirements/architecture/article identity/workflow/business rules/domain evolution in its own repository, escalates common/cross-domain evolution to UAOS, and preserves its complete article/recovery/package/DOCX-delivery validation chain. The baseline does not claim independent semantic judgment or physical non-bypassability beyond the evidence stated.",
-  "updated_at":"2026-10-14T17:53:00Z"
+  "readiness_semantics":"UAOS 2.5.2 is a patch-level ownership cleanup over production common contract 1.6.0. Financial 0.8.4, Video 0.6.0 and A-share 0.2.0 are domain-specialized children: each owns its own business identity/state/product rules and inherits common cognition/evolution/product-governance method without becoming a copy of the parent or another domain. The A-share child is production-verified; remaining candidate work is only retiring the parent-owned ashare:recommendation state in favor of one ashare:main domain router.",
+  "updated_at":"2026-10-15T04:13:00+08:00"
 }

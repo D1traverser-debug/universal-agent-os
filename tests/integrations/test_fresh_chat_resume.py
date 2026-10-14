@@ -37,6 +37,14 @@ def test_domain_level_video_continue_selects_parent_router_without_child_identit
     assert result.task_id == "video:main"
 
 
+def test_domain_level_ashare_continue_selects_parent_router_without_market_day_guess():
+    result = resolve_control_target(
+        ControlCommand(IntentType.CONTINUE, domain_hint="ashare"),
+        _candidates_from_index(),
+    )
+    assert result.task_id == "ashare:main"
+
+
 def test_aliases_are_hints_not_phrase_grammar():
     policy = _load_json("config/INTENT_RESOLUTION_POLICY.json")
     index = _load_json("state/TASK_INDEX.json")
@@ -59,6 +67,20 @@ def test_video_has_one_unambiguous_parent_router_and_child_resolution_stays_in_d
     assert "video:ai-self-media-commercialization" in router["aliases"]
     assert "child project" in router["semantic_summary"].lower()
     assert "opaque child reference" in router["semantic_summary"].lower()
+
+
+def test_ashare_has_one_unambiguous_parent_router_and_child_market_day_resolution_stays_in_domain():
+    index = _load_json("state/TASK_INDEX.json")
+    ashare_tasks = [item for item in index["tasks"] if item["domain_id"] == "ashare"]
+    defaults = [item for item in ashare_tasks if item["default_resume_within_domain"]]
+
+    assert [item["task_id"] for item in ashare_tasks] == ["ashare:main"]
+    assert [item["task_id"] for item in defaults] == ["ashare:main"]
+    router = ashare_tasks[0]
+    assert "ashare:recommendation" in router["aliases"]
+    summary = router["semantic_summary"].lower()
+    assert "current china trading day" in summary
+    assert "opaque child market-day reference" in summary
 
 
 def test_plain_chatgpt_fresh_chat_bootstrap_contract_is_explicit():
