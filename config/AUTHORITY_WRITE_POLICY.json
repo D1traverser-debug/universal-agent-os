@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.3",
-  "policy_version":"1.3.0",
+  "schema_version":"1.4",
+  "policy_version":"1.4.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T15:46:00Z",
+  "updated_at":"2026-10-14T16:31:00Z",
   "context_model":{
     "controller":"UAOS",
     "domain_format":"DOMAIN:<domain_id>",
@@ -15,14 +15,13 @@
     "rules":[
       "Every mutating ExecutionRequest must declare target_authority.",
       "ActionCoordinator or the host-equivalent decision layer must be bound to the selected authority_context.",
-      "Same-authority mutation is permitted only subject to owner rules, normal action/approval/concurrency controls and host enforcement.",
+      "Same-authority mutation is permitted subject to owner rules, normal action/approval/concurrency controls and the applicable repository workflow.",
       "A registered ancestor may mutate a descendant only when the hierarchy is known and the request carries a non-empty governance_basis.",
       "UAOS parent-governed descendant changes must read current domain binding/business authority, perform impact analysis and preserve domain-specific validation; governance_basis is lineage, not a bypass.",
       "DOMAIN:X -> UAOS direct authoritative mutation is prohibited.",
       "DOMAIN:X -> DOMAIN:Y direct authoritative mutation is prohibited.",
       "A child may issue a non-mutating parent upcall for diagnosis, replan, research, assurance or evolution guidance without surrendering its selected task authority.",
-      "Approval cannot override hierarchy or ownership restrictions.",
-      "A known production write path that bypasses the required policy-enforcement point blocks technical resolution of the affected mutation-control incident."
+      "Approval cannot override hierarchy or ownership restrictions."
     ]
   },
   "always_on_mutation_sentinel":{
@@ -32,50 +31,46 @@
       "SELECTED_AUTHORITY_CONTEXT",
       "TARGET_AUTHORITY_OR_RESOURCE",
       "MUTATING_VS_READ_ONLY",
-      "REQUIRED_POLICY_ENFORCEMENT_POINT_PRESENT",
+      "OWNER_APPROPRIATE_MUTATION_WORKFLOW",
       "TRIGGER_SIGNALS_REQUIRING_ADAPTIVE_DELIBERATION"
     ],
     "depth_rule":"LIGHTWEIGHT_ALWAYS_ON__ESCALATE_DELIBERATION_ONLY_WHEN_TRIGGERED"
   },
-  "host_enforcement":{
-    "principle":"REFERENCE_MONITOR_STYLE_COMPLETE_MEDIATION",
-    "policy_decision_layer":"UAOS_ACTION_COORDINATOR_OR_HOST_EQUIVALENT",
-    "policy_enforcement_requirement":"EVERY_REGISTERED_PRODUCTION_REPOSITORY_MUTATION_PATH_MUST_TRAVERSE_A_NON_BYPASSABLE_ENFORCEMENT_POINT_OR_BE_PHYSICALLY_UNABLE_TO_WRITE_PRODUCTION",
-    "chatgpt_github":{
-      "raw_connector":"OUTSIDE_PYTHON_ACTION_COORDINATOR",
-      "current_plugin_permission_observation":"APP_SPECIFIC_ALLOW_ALL_ACTIONS__NO_PREWRITE_CONFIRMATION",
-      "registered_production_repositories_source":"config/AGENT_REGISTRY.json plus UAOS controller repository",
-      "default_production_branch":"main",
-      "required_remote_enforcement":"ACTIVE_GITHUB_RULESET_OR_EQUIVALENT_PROTECTED_BRANCH_POLICY_PER_PRODUCTION_REPOSITORY",
-      "uaos_required_promotion_check":"promotion-gate",
-      "required_promotion_path":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_REQUIRED_CHECKS__PROTECTED_MERGE",
-      "direct_production_branch_mutation":"NOT_A_NORMAL_PRODUCTION_PATH",
-      "required_ruleset_properties":[
-        "TARGET_PRODUCTION_BRANCH",
-        "REQUIRE_PULL_REQUEST_BEFORE_MERGE",
-        "REQUIRE_OWNER_APPROPRIATE_STATUS_CHECKS_WHEN_AVAILABLE",
-        "BLOCK_FORCE_PUSH",
-        "BLOCK_BRANCH_DELETION",
-        "NO_CHATGPT_GITHUB_APP_BYPASS"
-      ],
-      "owner_preservation":"UAOS_REQUIRES_THE_COMMON_COMPLETE_MEDIATION_PROPERTY__EACH_DOMAIN_OWNS_ITS_REPOSITORY_SPECIFIC_CHECKS_RELEASE_AND_BUSINESS_VALIDATION"
-    },
-    "assurance_rule":"DECLARED_POLICY_IS_NOT_REMOTE_ENFORCEMENT_EVIDENCE__VERIFY_ACTUAL_HOST_STATE_FOR_EACH_REGISTERED_PRODUCTION_REPOSITORY"
-  },
-  "promotion_concurrency":{
-    "candidate_branch_updates":"CAS_OR_NORMAL_BRANCH_CONCURRENCY_CONTROLS_ALLOWED",
-    "production_branch":"MERGE_THROUGH_HOST_ENFORCEMENT_POINT__DIRECT_CAS_UPDATE_RETIRED_AS_NORMAL_PROMOTION_PATH",
-    "cas_semantics":"CAS_PREVENTS_STALE_OVERWRITE_BUT_IS_NOT_AN_AUTHORIZATION_OR_POLICY_ENFORCEMENT_BOUNDARY"
-  },
-  "resolution_semantics":{
-    "known_unmediated_production_bypass":"BLOCK_RESOLVED",
-    "system_wide_claim_requires":"NO_KNOWN_UNMEDIATED_PRODUCTION_PATH_ACROSS_UAOS_AND_REGISTERED_DOMAIN_REPOSITORIES_IN_SCOPE",
-    "allowed_intermediate_states":[
-      "REOPENED",
-      "LOGICALLY_MITIGATED__PHYSICAL_ENFORCEMENT_PENDING",
-      "BLOCKED_HOST_ENFORCEMENT"
+  "autonomous_maintenance_baseline":{
+    "goal":"SELF_CHECK__SELF_EXECUTE__VERIFY__REPORT_WITHOUT_PER_WRITE_USER_APPROVAL",
+    "normal_material_github_path":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_CHECKS__CONTROLLED_MERGE_OR_UPDATE__PRODUCTION_REREAD",
+    "required_properties":[
+      "candidate isolation for material architecture/governance changes",
+      "problem-response research and reflection per current deliberation policy",
+      "owner-appropriate reproducible validation",
+      "freshness/concurrency protection appropriate to the write path",
+      "production authority reread and post-promotion observation",
+      "user-visible report of changes and evidence"
     ],
-    "risk_acceptance":"EXPLICIT_USER_RISK_ACCEPTANCE_MAY_BE_RECORDED_BUT_IS_NOT_TECHNICAL_RESOLUTION"
+    "direct_production_write":"NOT_THE_NORMAL_PATH_FOR_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGES",
+    "user_confirmation":"NOT_REQUIRED_PER_WRITE_WHEN_HOST_PERMISSION_ALLOWS_AUTONOMOUS_ACTION"
   },
-  "branch_protection_semantics":"PRODUCTION_HOST_POLICY_ENFORCEMENT_POINT__NOT_A_SUBSTITUTE_FOR_AGENT_HIERARCHY_OR_DELIBERATION"
+  "optional_host_hardening":{
+    "classification":"DEFENSE_IN_DEPTH",
+    "mechanisms":["GITHUB_RULESET","BRANCH_PROTECTION","MANDATORY_REVIEW","EQUIVALENT_REMOTE_ENFORCEMENT"],
+    "default_requirement":"OPTIONAL_UNLESS_RISK_OR_EXPLICIT_REQUIREMENT_CALLS_FOR_NON_BYPASSABLE_ENFORCEMENT",
+    "selection_rule":"ADD_ONLY_WHEN_THE_EXTRA_ASSURANCE_JUSTIFIES_OPERATIONAL_FRICTION_AND_COMPLEXITY",
+    "assurance_rule":"ABSENCE_DOES_NOT_BLOCK_BASELINE_RELEASE_OR_AGENT_OPERATION"
+  },
+  "physical_complete_mediation_assurance":{
+    "claim_is_optional":true,
+    "when_claimed":"REMOTE_NON_BYPASSABLE_ENFORCEMENT_EVIDENCE_IS_MANDATORY",
+    "required_evidence":[
+      "active protection on the relevant production ref",
+      "required owner-appropriate status checks when part of the claim",
+      "no writer bypass inconsistent with the claimed guarantee"
+    ],
+    "without_evidence":"DO_NOT_CLAIM_PHYSICAL_COMPLETE_MEDIATION"
+  },
+  "concurrency_semantics":{
+    "candidate_branch_updates":"CAS_OR_NORMAL_BRANCH_CONCURRENCY_CONTROLS_ALLOWED",
+    "production_updates":"USE_CONTROLLED_MERGE_OR_OWNER_APPROPRIATE_FRESH_WRITE_PROTOCOL",
+    "cas_semantics":"CAS_PREVENTS_STALE_OVERWRITE_BUT_IS_NOT_AUTHORIZATION_OR_PHYSICAL_ENFORCEMENT"
+  },
+  "branch_protection_semantics":"OPTIONAL_DEFENSE_IN_DEPTH__NOT_A_SUBSTITUTE_FOR_AGENT_HIERARCHY_DELIBERATION_OR_VALIDATION"
 }
