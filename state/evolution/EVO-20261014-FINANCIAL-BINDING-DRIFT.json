@@ -1,9 +1,10 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "evolution_id":"EVO-20261014-FINANCIAL-BINDING-DRIFT",
-  "status":"PASSED",
+  "status":"RESOLVED",
   "trigger":"CHILD_INHERITANCE_AUDIT",
   "opened_at":"2026-10-14T10:55:00Z",
+  "resolved_at":"2026-10-14T11:17:00Z",
   "incidents":[
     {
       "incident_id":"INC-20261014-FIN-BINDING-POLICY-001",
@@ -17,34 +18,43 @@
     }
   ],
   "root_cause":"Two migration-era copies outlived their ownership boundary: BINDING_POLICY duplicated mutation semantics owned by AUTHORITY_WRITE_POLICY, and the parent repository retained a Financial business workflow package after external cutover.",
-  "proposal":{
-    "proposal_id":"CP-FINANCIAL-BINDING-DRIFT-001",
-    "state":"AUTHORIZED_FOR_PROMOTION",
-    "target_scope":"UAOS_PARENT_INTEGRATION_BOUNDARY",
+  "repair":{
     "changes":[
-      "Make BINDING_POLICY delegate mutation hierarchy exclusively to AUTHORITY_WRITE_POLICY while retaining binding/compatibility admission.",
-      "Retire the parent domains/financial_writing business package without removing the reusable Domain SDK.",
-      "Replace parent Financial workflow tests with external-authority uniqueness and external-binding E2E tests.",
-      "Synchronize the Financial router with child 0.8.2/profile 14 and its pure UAOS article binding validator."
+      "BINDING_POLICY now delegates mutation hierarchy exclusively to AUTHORITY_WRITE_POLICY and retains only binding/capability compatibility admission.",
+      "Parent domains/financial_writing business package retired; reusable Domain SDK retained.",
+      "Parent Financial tests now verify external business-authority uniqueness and AgentLinkRegistry/SystemMap binding rather than executing a duplicated Financial workflow.",
+      "Financial router synchronized to child 0.8.2/profile 14 and its pure UAOS article binding validator."
     ],
     "new_components":0,
     "new_state_surfaces":0,
-    "retired_current_surfaces":["domains/financial_writing/article_v1.json","domains/financial_writing/manifest.json","domains/financial_writing/policy.json"],
-    "rollback_plan":"Revert the 2.4.2 parent integration release and restore the prior router metadata only if post-promotion full CI or authoritative reread regresses. Do not restore duplicate Financial business authority as a long-term mechanism."
+    "retired_current_surfaces":["domains/financial_writing/article_v1.json","domains/financial_writing/manifest.json","domains/financial_writing/policy.json"]
   },
   "evaluation":{
-    "state":"PASSED",
     "initial_candidate_run":38553699541,
     "initial_result":"1_FAILED_179_PASSED__STALE_FINANCIAL_ZERO_COST_E2E_STILL_DEPENDED_ON_PARENT_PACKAGE",
-    "corrective_action":"Migrate that E2E to validate AgentLinkRegistry/SystemMap/external Financial binding rather than delete the test.",
-    "final_candidate_head":"31ae5d211a1cd61bf71b7f9e31232126ee5a3b03",
-    "final_ci_run":38554440824,
-    "final_ci":"PASS",
-    "financial_child_ci_run":38554338677,
-    "financial_child_ci":"PASS__109_TESTS__CONTRACT_STATIC_WHEEL_DOCX_RENDER",
-    "financial_child_promoted_main":"88f1b7b6c490e334908c9eddbf062bbd4648c034"
+    "corrective_action":"Migrate that E2E to validate external Financial binding rather than delete the test.",
+    "final_candidate_ci_run":38554440824,
+    "final_candidate_ci":"PASS",
+    "financial_child_candidate_ci_run":38554338677,
+    "financial_child_candidate_ci":"PASS__109_TESTS__CONTRACT_STATIC_WHEEL_DOCX_RENDER"
   },
-  "promotion":{"state":"AUTHORIZED_PENDING_MAIN_CAS","target_release":"2.4.2","expected_previous_main":"71c119a426f00d939213281074629ccf201da973"},
+  "promotion":{
+    "release":"2.4.2",
+    "release_commit":"4bfbbfd13d1856d0b8e204309d4a53402a9bffe1",
+    "previous_main":"71c119a426f00d939213281074629ccf201da973",
+    "method":"OBSERVED_HEAD_CAS"
+  },
+  "post_promotion_observation":{
+    "uaos_main_ci_run":38555334791,
+    "uaos_main_ci":"PASS",
+    "financial_child_release_commit":"16045dcc86832eacc21a512e680e53a5e3b6d476",
+    "financial_child_post_promotion_main":"88f1b7b6c490e334908c9eddbf062bbd4648c034",
+    "financial_child_main_ci_run":38554916033,
+    "financial_child_main_ci":"PASS",
+    "financial_child_closure_main":"937cdd6b6612e3bcacaa434fdba4511071ca8064",
+    "recommendation":"KEEP"
+  },
   "complexity":{"new_controller_components":0,"new_runtime_state_surfaces":0,"net_effect":"REMOVED_COMPETING_BUSINESS_AUTHORITY_AND_POLICY_DUPLICATION"},
-  "updated_at":"2026-10-14T11:12:00Z"
+  "terminal_disposition":"KEEP_UAOS_2_4_2_AND_FINANCIAL_0_8_2_BINDING",
+  "updated_at":"2026-10-14T11:17:00Z"
 }

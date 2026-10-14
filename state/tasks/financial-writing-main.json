@@ -17,13 +17,17 @@
     "capability_ref": ".uaos/CAPABILITIES.json",
     "execution_contract_ref": "config/EXECUTION_CONTRACT.json",
     "article_binding_validator": "financial_writing_agent.uaos_binding.validate_uaos_article_binding",
-    "promoted_main_commit": "88f1b7b6c490e334908c9eddbf062bbd4648c034"
+    "release_commit": "16045dcc86832eacc21a512e680e53a5e3b6d476",
+    "promotion_record_commit": "88f1b7b6c490e334908c9eddbf062bbd4648c034",
+    "current_main_commit": "937cdd6b6612e3bcacaa434fdba4511071ca8064",
+    "post_promotion_ci_run": 38554916033,
+    "post_promotion_ci_status": "PASS"
   },
   "binding_invariant": "UAOS_ARTICLE_TASK_ID_EQUALS_FINANCIAL_STATE_TASK_ID__UAOS_DOMAIN_BUSINESS_AUTHORITY_POINTS_TO_EXACT_STATE",
   "freshness_rule": "REREAD_EXACT_UAOS_ARTICLE_TASK_AND_EXACT_FINANCIAL_ARTICLE_STATE_BEFORE_EVERY_MATERIAL_ARTICLE_ACTION",
   "historical_resume_rule": "EXPLICIT_ONLY__ADOPT_OR_CREATE_EXACT_UAOS_ARTICLE_TASK_BEFORE_MUTATION__DO_NOT_REWRITE_HISTORICAL_RECEIPTS",
-  "controller_updated_at": "2026-10-14T11:12:00Z",
-  "progress_timestamp": "2026-10-14T11:12:00Z",
-  "progress_timestamp_semantics": "UAOS_FINANCIAL_ROUTER_BINDING_VERIFIED__NO_ACTIVE_ARTICLE_SELECTED",
+  "controller_updated_at": "2026-10-14T11:17:00Z",
+  "progress_timestamp": "2026-10-14T11:17:00Z",
+  "progress_timestamp_semantics": "UAOS_FINANCIAL_ROUTER_BINDING_VERIFIED__CHILD_0_8_2_POST_PROMOTION_CI_PASS__NO_ACTIVE_ARTICLE_SELECTED",
   "domain_business_state_is_controller": false
 }

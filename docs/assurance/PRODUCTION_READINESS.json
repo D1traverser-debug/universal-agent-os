@@ -16,9 +16,13 @@
     "parent_2_4_1_post_promotion_ci":{"run_id":38551611820,"status":"PASS"},
     "financial_binding_candidate_ci":{"run_id":38554440824,"status":"PASS","note":"parent full suite passes after retiring in-repo Financial business package and migrating Financial E2E to external binding"},
     "financial_child_candidate_ci":{"run_id":38554338677,"status":"PASS","pytest":"109 passed","wheel_smoke":"PASS","docx_render_smoke":"PASS"},
-    "financial_child_promoted_main":"88f1b7b6c490e334908c9eddbf062bbd4648c034",
+    "financial_child_release_commit":"16045dcc86832eacc21a512e680e53a5e3b6d476",
+    "financial_child_post_promotion_ci":{"run_id":38554916033,"main_commit":"88f1b7b6c490e334908c9eddbf062bbd4648c034","status":"PASS"},
+    "financial_child_current_main":"937cdd6b6612e3bcacaa434fdba4511071ca8064",
     "financial_child_package_version":"0.8.2",
-    "financial_child_capability_profile_version":14
+    "financial_child_capability_profile_version":14,
+    "uaos_2_4_2_release_commit":"4bfbbfd13d1856d0b8e204309d4a53402a9bffe1",
+    "uaos_2_4_2_post_promotion_ci":{"run_id":38555334791,"status":"PASS"}
   },
   "parent_core_open_work":[],
   "financial_integration_open_work":[],
@@ -51,6 +55,6 @@
     "live OpenAI provider evidence is optional/manual and was not rerun because provider integration code is unchanged",
     "Financial historical article receipts remain immutable; explicit resume adopts/creates the exact UAOS article identity instead of rewriting old receipts"
   ],
-  "readiness_semantics":"UAOS parent core remains healthy and Financial now has one external business authority with a mechanically validated UAOS article-task binding. BINDING_POLICY no longer duplicates mutation hierarchy owned by AUTHORITY_WRITE_POLICY. This does not claim host-level GitHub branch protection or every other child integration is complete.",
-  "updated_at":"2026-10-14T11:12:00Z"
+  "readiness_semantics":"UAOS parent core remains healthy and Financial now has one external business authority with a mechanically validated UAOS article-task binding. Both the Financial 0.8.2 production main and UAOS 2.4.2 production main passed post-promotion CI. BINDING_POLICY no longer duplicates mutation hierarchy owned by AUTHORITY_WRITE_POLICY.",
+  "updated_at":"2026-10-14T11:17:00Z"
 }
