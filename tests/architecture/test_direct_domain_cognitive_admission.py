@@ -41,6 +41,35 @@ def test_entrypoint_has_no_stale_financial_same_identity_or_gateway_contract():
     assert "selecting Financial Writing activates `DOMAIN:financial_writing` directly" in entry
 
 
+def test_bootstrap_pointer_does_not_reintroduce_parent_gateway_or_domain_policy_ownership():
+    pointer = (ROOT / "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md").read_text(encoding="utf-8")
+
+    assert "Resolve the current task through UAOS" not in pointer
+    assert "All task, routing, retrieval, approval, recovery and domain policy remains in UAOS" not in pointer
+    assert "activate that child directly as the current Agent" in pointer
+    assert "do not proxy normal child business turns through UAOS" in pointer
+
+
+def test_readiness_does_not_certify_retired_financial_same_id_binding():
+    readiness = _json("docs/assurance/PRODUCTION_READINESS.json")
+    serialized = json.dumps(readiness, ensure_ascii=False)
+
+    assert "Financial 0.8.2" not in serialized
+    assert "mechanically validated UAOS article-task binding" not in serialized
+    assert "exact UAOS article identity" not in serialized
+    assert "FINANCIAL_0_8_3" in serialized
+    assert "DISTINCT_PARENT_AND_FINANCIAL_IDENTITY_NAMESPACES" in serialized
+
+
+def test_current_requirements_include_direct_domain_and_cognitive_admission_delta():
+    current = _json("CURRENT_SYSTEM.json")
+    assert "docs/requirements/FROZEN_REQUIREMENTS_v1.5.md" in current["requirements"]
+    requirements = (ROOT / "docs/requirements/FROZEN_REQUIREMENTS_v1.5.md").read_text(encoding="utf-8")
+    assert "Registered child Agents are directly activatable work planes" in requirements
+    assert "Triggered deliberation is fail-closed admission for material change" in requirements
+    assert "Evolution closure is authority-wide, not file-local" in requirements
+
+
 def test_material_architecture_change_is_fail_closed_without_deliberation_evidence():
     signals = DeliberationSignals(
         user_correction=True,
