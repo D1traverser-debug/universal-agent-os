@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1",
   "evolution_id": "EVO-20261014-COGNITIVE-ADMISSION-DIRECT-DOMAIN",
-  "status": "EVALUATED_READY_FOR_PROMOTION",
+  "status": "RESOLVED",
   "trigger": [
     "REPEATED_USER_CORRECTION",
     "ARCHITECTURE_GAP",
@@ -40,7 +40,8 @@
     ],
     "INDEPENDENT_EXECUTION_EVIDENCE": [
       "GitHub hosted full CI run 38579600772 PASS",
-      "GitHub hosted live-integration run 38579600785 PASS for PostgreSQL/DBOS/crash-recovery/S3 protocol"
+      "GitHub hosted live-integration run 38579600785 PASS for PostgreSQL/DBOS/crash-recovery/S3 protocol",
+      "GitHub production main CI run 38579983855 PASS"
     ]
   },
   "external_architecture_evidence": [
@@ -57,16 +58,24 @@
       "misfit": "no OTP restart tree or process semantics are introduced"
     }
   ],
-  "candidate": {
+  "promotion": {
     "release": "UAOS 2.4.3",
-    "changes": [
-      "Freeze v1.5 direct-child-session, identity-boundary, cognitive-admission and authority-wide-closure requirements.",
-      "Correct ENTRYPOINT, session policy, common capabilities and fresh-chat pointer so selecting a registered child activates that child directly as current Agent/work plane.",
-      "Make adaptive deliberation a fail-closed material-change admission contract and add executable require_deliberation_admission evidence checks.",
-      "Require authority-wide contradiction scan before evolution closure.",
-      "Correct readiness from Financial 0.8.2/same-ID semantics to Financial 0.8.3/domain-owned identity semantics.",
-      "Add CI architecture regressions for parent-gateway, same-ID, stale bootstrap/readiness and deliberation-bypass failures."
-    ],
+    "release_commit": "895d1f17ff5d2fc56ad5f1ce57fc1c8ad89da0ad",
+    "promotion_method": "OBSERVED_HEAD_CAS",
+    "observed_main_head": "2fb7e0b2cb24d3206ecc7b2ae944870ee54909d1",
+    "candidate_tree": "75b8ec17c41325717c04f44b638ad0586e401583",
+    "post_promotion_ci_run": 38579983855,
+    "post_promotion_ci_status": "PASS"
+  },
+  "implemented_changes": [
+    "Frozen v1.5 direct-child-session, identity-boundary, cognitive-admission and authority-wide-closure requirements.",
+    "Corrected ENTRYPOINT, session policy, common capabilities and fresh-chat pointer so selecting a registered child activates that child directly as current Agent/work plane.",
+    "Made adaptive deliberation a fail-closed material-change admission contract and added executable require_deliberation_admission evidence checks.",
+    "Required authority-wide contradiction scan before evolution closure.",
+    "Corrected readiness from Financial 0.8.2/same-ID semantics to Financial 0.8.3/domain-owned identity semantics.",
+    "Added CI architecture regressions for parent-gateway, same-ID, stale bootstrap/readiness and deliberation-bypass failures."
+  ],
+  "complexity_delta": {
     "new_components": 0,
     "new_state_surfaces": 0,
     "reused_mechanisms": [
@@ -85,7 +94,7 @@
     ]
   },
   "authority_wide_scan": {
-    "status": "CLEAN_ON_CANDIDATE",
+    "status": "CLEAN_ON_PROMOTED_BASELINE",
     "surfaces": [
       "ENTRYPOINT.md",
       "CURRENT_SYSTEM.json",
@@ -102,7 +111,7 @@
     ]
   },
   "evaluation": {
-    "final_candidate_head": "76c4c1b140639420bdc8f5e72b632a1b5928fff2",
+    "final_runtime_candidate_head": "76c4c1b140639420bdc8f5e72b632a1b5928fff2",
     "full_ci_run": 38579600772,
     "full_ci_status": "PASS",
     "live_integration_run": 38579600785,
@@ -126,13 +135,14 @@
     "impact": "No child business authority or production runtime behavior was overwritten; the noop was removed and the evolution record is intended durable audit state.",
     "preventive_link": "The incident reinforces the existing host-hardening limitation: Python ActionCoordinator/deliberation gates cannot physically intercept raw native connector writes; policy/CI improve logical admission but GitHub rulesets or tool mediation are still required for complete physical enforcement."
   },
-  "acceptance": [
-    "registered child can be activated directly in a fresh chat without a persistent UAOS business proxy",
-    "no authoritative Financial same-ID or parent-created-article-identity rule remains",
-    "triggered material changes fail closed when required deliberation evidence is absent",
-    "authority-wide scan is required before RESOLVED",
-    "final candidate full CI and live integration pass",
-    "post-promotion main CI passes before status becomes RESOLVED"
-  ],
-  "updated_at": "2026-10-14T14:22:00Z"
+  "acceptance": {
+    "direct_registered_child_activation": "PASS",
+    "no_authoritative_financial_same_id_rule": "PASS",
+    "triggered_material_change_deliberation_fail_closed": "PASS",
+    "authority_wide_closure_scan_required": "PASS",
+    "candidate_full_ci": "PASS",
+    "candidate_live_integration": "PASS",
+    "post_promotion_main_ci": "PASS"
+  },
+  "updated_at": "2026-10-14T14:24:00Z"
 }

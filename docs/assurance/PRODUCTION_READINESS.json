@@ -1,6 +1,6 @@
 {
   "snapshot_date":"2026-10-14",
-  "status":"UAOS_2_4_3_CANDIDATE__DIRECT_DOMAIN_AND_COGNITIVE_ADMISSION_VERIFIED_PENDING_FINAL_PROMOTION_OBSERVATION",
+  "status":"PARENT_CORE_BASELINE_COMPLETE__DIRECT_DOMAIN_ACTIVATION_AND_COGNITIVE_ADMISSION_VERIFIED__FINANCIAL_0_8_3_EXTERNAL_BINDING_VERIFIED",
   "requirements_authority":[
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
@@ -25,8 +25,10 @@
     "financial_identity_semantics":"FINANCIAL_STATE_TASK_ID_IS_DOMAIN_OWNED_ARTICLE_IDENTITY__TASK_CONTRACT_IDENTITY_FREE__NO_PARENT_CHILD_ID_EQUALITY",
     "uaos_financial_identity_decoupling_main_ci":{"run_id":38569471592,"status":"PASS"},
     "uaos_financial_identity_decoupling_closure_ci":{"run_id":38569704289,"status":"PASS"},
-    "cognitive_direct_domain_candidate_ci":{"run_id":38578349417,"status":"PASS","note":"candidate architecture/gate tree passed before final requirements/readiness release-metadata alignment"},
-    "cognitive_direct_domain_candidate_live":{"run_id":38578349647,"status":"PASS","postgres_authority":"PASS","dbos_identity_idempotency":"PASS","maintenance_schedule":"PASS","crash_recovery":"PASS","s3_http_roundtrip":"PASS","openai_provider":"SKIPPED_BY_DESIGN"},
+    "uaos_2_4_3_release_commit":"895d1f17ff5d2fc56ad5f1ce57fc1c8ad89da0ad",
+    "cognitive_direct_domain_final_candidate_ci":{"run_id":38579600772,"status":"PASS"},
+    "cognitive_direct_domain_final_candidate_live":{"run_id":38579600785,"status":"PASS","postgres_authority":"PASS","dbos_identity_idempotency":"PASS","maintenance_schedule":"PASS","crash_recovery":"PASS","s3_http_roundtrip":"PASS","openai_provider":"SKIPPED_BY_DESIGN"},
+    "uaos_2_4_3_post_promotion_ci":{"run_id":38579983855,"status":"PASS"},
     "external_architecture_evidence":[
       "Kubernetes control-plane versus worker/workload separation: borrowed only the property that governance/control does not imply per-request workload proxying",
       "Erlang/OTP supervisor versus worker separation: borrowed only the property that parent supervision does not replace child execution ownership"
@@ -44,15 +46,10 @@
       "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
       "financial-writing-agent@main:UAOS_SKILL.md",
       "docs/assurance/PRODUCTION_READINESS.json"
-    ]
+    ],
+    "authority_wide_scan_status":"CLEAN_ON_PROMOTED_BASELINE"
   },
-  "parent_core_open_work":[
-    {
-      "id":"P1",
-      "item":"POST_PROMOTION_OBSERVATION_FOR_2_4_3_FINAL_TREE",
-      "status":"PENDING_UNTIL_PRODUCTION_MAIN_CI_AFTER_CAS_PROMOTION"
-    }
-  ],
+  "parent_core_open_work":[],
   "financial_integration_open_work":[],
   "deferred_work":[
     {
@@ -74,7 +71,7 @@
       "id":"H2",
       "item":"RAW_CHATGPT_GITHUB_CONNECTOR_PHYSICAL_SCOPE",
       "status":"HOST_LEVEL_LIMITATION",
-      "note":"Raw connector calls remain physically outside Python ActionCoordinator interception. UAOS 2.4.3 adds fail-closed host/session admission requirements and CI contradiction checks, but repository-scoped credentials/rulesets/tool mediation are still required for complete physical enforcement."
+      "note":"Raw connector calls remain physically outside Python ActionCoordinator interception. UAOS 2.4.3 adds fail-closed host/session admission requirements and CI contradiction checks, but repository-scoped credentials/rulesets/tool mediation are still required for complete physical enforcement. A direct-main noop write during this maintenance was immediately reverted and recorded in the evolution audit."
     }
   ],
   "known_limitations":[
@@ -85,6 +82,6 @@
     "raw native connector calls cannot be physically intercepted by the Python deliberation or ActionCoordinator gates",
     "Financial historical article receipts remain immutable and explicit historical resume uses the exact Financial-owned article reference without parent identity adoption"
   ],
-  "readiness_semantics":"UAOS 2.4.3 candidate treats UAOS as parent control/governance plane rather than a mandatory child-business gateway. Registered children may activate directly in fresh chats; domain business identity/workflow/state remain domain-owned. Triggered material architecture/governance changes fail closed until required deliberation evidence exists, and evolution closure requires an authority-wide contradiction scan. Financial 0.8.3 is the verified child baseline and no same-ID parent/Financial article binding remains authoritative.",
-  "updated_at":"2026-10-14T14:20:00Z"
+  "readiness_semantics":"UAOS 2.4.3 treats UAOS as parent control/governance plane rather than a mandatory child-business gateway. Registered children may activate directly in fresh chats; domain business identity/workflow/state remain domain-owned. Triggered material architecture/governance changes fail closed until required deliberation evidence exists, and evolution closure requires an authority-wide contradiction scan. Financial 0.8.3 is the verified Financial baseline and no same-ID parent/Financial article binding remains authoritative.",
+  "updated_at":"2026-10-14T14:24:00Z"
 }
