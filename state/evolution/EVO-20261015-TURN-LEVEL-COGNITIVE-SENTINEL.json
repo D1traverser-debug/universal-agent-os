@@ -1,7 +1,7 @@
 {
   "schema_version":"1.0",
   "evolution_id":"EVO-20261015-TURN-LEVEL-COGNITIVE-SENTINEL",
-  "status":"CANDIDATE_EVALUATION",
+  "status":"RESOLVED",
   "authority":"UAOS",
   "trigger":[
     "USER_CORRECTION",
@@ -16,10 +16,10 @@
     "MICRO_DIAGNOSIS":[
       "ENTRYPOINT.md production release marker 2.4.4 contradicted CURRENT_SYSTEM.json release 2.5.2",
       "the assistant explicitly classified the mismatch as a defect but then emitted Deliberation: NOT_TRIGGERED",
-      "tests/architecture/test_problem_research_floor.py validates assess_deliberation signals but does not validate selected-session progress-report consistency"
+      "tests/architecture/test_problem_research_floor.py validates assess_deliberation signals but did not validate selected-session progress-report consistency"
     ],
     "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT":[
-      "UAOS should continuously detect problem signals while keeping expensive research/reflection event-triggered rather than permanently running heavy self-debate",
+      "UAOS continuously detects problem signals while keeping expensive research/reflection event-triggered rather than permanently running heavy self-debate",
       "turn-level problem detection and pre-mutation authority admission are separate control responsibilities"
     ],
     "GOVERNING_ASSUMPTION_CHALLENGE":[
@@ -35,26 +35,34 @@
       "full heavy deliberation on every no-problem turn would violate the existing lightweight clean-path requirement and create control-plane bloat"
     ],
     "INDEPENDENT_VERIFICATION":[
-      "PENDING_GITHUB_HOSTED_CI_AND_POST_PROMOTION_REREAD"
+      "GitHub hosted candidate CI run 38638284709 PASS",
+      "GitHub hosted post-promotion main CI run 38638356191 PASS",
+      "production reread confirmed ENTRYPOINT release 2.5.2 and SESSION_INTERACTION_POLICY always-on selected-agent turn sentinel"
     ]
   },
-  "candidate":{
-    "branch":"fix/always-on-problem-detection-20261015",
-    "changes":[
-      "add always-on lightweight problem-detection sentinel to DELIBERATION_POLICY and SESSION_INTERACTION_POLICY",
-      "forbid progress reports from claiming NOT_TRIGGERED/NO_EVOLUTION_TRIGGER when the same turn reports a detected problem",
-      "synchronize ENTRYPOINT release metadata to CURRENT_SYSTEM 2.5.2 and document turn-level cognition",
-      "add regression tests for sentinel scope, report consistency and ENTRYPOINT/CURRENT_SYSTEM release synchronization",
-      "declare the turn-level problem-detection sentinel in CURRENT_SYSTEM without changing the UAOS release identity"
-    ]
+  "promotion":{
+    "pull_request":14,
+    "release":"UAOS 2.5.2",
+    "promotion_commit":"a398942884c230897f44c8ea9f516c9d9232829c",
+    "candidate_ci_run":38638284709,
+    "post_promotion_ci_run":38638356191,
+    "post_promotion_ci_status":"PASS"
   },
+  "implemented_changes":[
+    "Turn-level lightweight problem detection is now explicit on every selected-controller/domain assistant turn, including read-only authority inspection.",
+    "Heavy research/reflection remains event-triggered by detected problems; it is not a permanent debate loop.",
+    "The pre-mutation authority sentinel remains separately always-on before external or durable writes.",
+    "Progress reports cannot claim Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER while the same turn reports a detected problem unless it explicitly classifies the observation as non-problematic with a reason.",
+    "ENTRYPOINT release metadata now matches CURRENT_SYSTEM at 2.5.2.",
+    "Regression tests guard turn-level sentinel scope, progress consistency, and ENTRYPOINT/CURRENT_SYSTEM release synchronization."
+  ],
   "acceptance":{
-    "candidate_ci":"PENDING",
-    "entrypoint_release_sync":"PENDING_CI",
-    "turn_level_sentinel_contract":"PENDING_CI",
-    "progress_consistency_guard":"PENDING_CI",
-    "post_promotion_main_ci":"PENDING",
-    "production_reread":"PENDING"
+    "candidate_ci":"PASS__38638284709",
+    "entrypoint_release_sync":"PASS",
+    "turn_level_sentinel_contract":"PASS",
+    "progress_consistency_guard":"PASS",
+    "post_promotion_main_ci":"PASS__38638356191",
+    "production_reread":"PASS"
   },
-  "updated_at":"2026-10-15T05:06:35+08:00"
+  "updated_at":"2026-10-15T05:12:41+08:00"
 }
