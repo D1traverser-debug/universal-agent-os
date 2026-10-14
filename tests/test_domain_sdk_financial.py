@@ -47,3 +47,25 @@ def test_financial_binding_requires_current_common_capability_inheritance():
         "adaptive_deliberation_and_parent_guidance",
         "governed_self_evolution",
     }.issubset(ids)
+
+
+def test_financial_router_does_not_own_child_article_identity_or_implementation_details():
+    binding = _json("config/BINDING_POLICY.json")
+    router = _json("state/tasks/financial-writing-main.json")
+    index = _json("state/TASK_INDEX.json")
+    indexed = next(item for item in index["tasks"] if item["task_id"] == "financial-writing:main")
+
+    assert "DISTINCT_BY_DEFAULT" in binding["identity_boundary_rule"]
+    assert router["task_type"] == "article_workspace_router"
+    assert router["active_domain_state_ref"] is None
+    assert "DISTINCT_NAMESPACES" in router["identity_boundary"]
+    assert "OPAQUE_REFERENCE" in router["domain_reference_semantics"]
+    assert "same task_id" not in router["next_action"].lower()
+    assert "article_binding_validator" not in router
+    assert "package_version" not in json.dumps(router)
+    assert "capability_profile_version" not in json.dumps(router)
+    assert "release_commit" not in json.dumps(router)
+    assert "ci_run" not in json.dumps(router)
+    assert indexed["state_model"] == "UAOS_NATIVE"
+    assert indexed["task_type"] == "article_workspace_router"
+    assert "owns its own article identity/state" in indexed["semantic_summary"]
