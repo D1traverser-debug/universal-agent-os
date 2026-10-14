@@ -99,7 +99,7 @@ def run_self_change_drill(
 
     registry = CapabilityRegistry()
     register_local_workspace_capability(registry, root)
-    coordinator = ActionCoordinator(registry)
+    coordinator = ActionCoordinator(registry, authority_context="UAOS")
     now = datetime.now(UTC)
 
     promote = ExecutionRequest(
@@ -114,6 +114,7 @@ def run_self_change_drill(
         parameter_hash=_sha256(candidate),
         side_effect_class="WRITE",
         approval_required=True,
+        target_authority="UAOS",
     )
     promotion_grant = ApprovalGrant(
         f"approval:promote:{run_id}",
@@ -153,6 +154,7 @@ def run_self_change_drill(
         parameter_hash=_sha256(baseline),
         side_effect_class="WRITE",
         approval_required=True,
+        target_authority="UAOS",
     )
     rollback_grant = ApprovalGrant(
         f"approval:rollback:{run_id}",
