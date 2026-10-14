@@ -1,0 +1,81 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261015-ASHARE-SPECIALIZED-PRODUCT-IDENTITY",
+  "status":"EVALUATING_PARENT_ROUTER_COLLAPSE",
+  "trigger":[
+    "USER_REQUEST__HARDEN_ASHARE_RECOMMENDATION_SYSTEM",
+    "USER_CORRECTION__EACH_DOMAIN_MUST_BE_SPECIALIZED_FOR_ITS_OWN_PRODUCT",
+    "PARENT_OWNED_ASHARE_MARKET_DAY_IDENTITY_SEMANTICS_FOUND",
+    "ASHARE_MAIN_CI_STALE_CONTINUITY_AUDIT_FAILURE_FOUND"
+  ],
+  "scope":{
+    "parent":"D1traverser-debug/universal-agent-os",
+    "child":"D1traverser-debug/a-share-event-driven-agent",
+    "parent_target_release":"2.5.2",
+    "parent_common_contract":"1.6.0_UNCHANGED",
+    "child_release":"0.2.0"
+  },
+  "problem_diagnosis":[
+    "UAOS state still said current A-share work should create/locate a current market-day UAOS task even though the child runtime already owned TaskContract.task_id and MarketDayState.",
+    "The child had strong A-share-specific freeze/recall/execution/review/replay mechanisms, so applying a generic Video-style product topology would reduce specialization rather than improve it.",
+    "The child source model did not formally encode the requested Tonghuashun/Level-2 assurance priority for A-share microstructure/buyability and Xuangutong Dingpan five-pool business ownership.",
+    "The child main CI was red because its static audit still guarded deleted continuity-era authority files."
+  ],
+  "deliberation_evidence":{
+    "MICRO_DIAGNOSIS":[
+      "read UAOS A-share parent state/task index",
+      "read child Skill/adapter/manifest/capabilities/runtime authority/models/store/controller/engine/source contracts/policies/tests/CI",
+      "verified child already has a real market-day business identity and deterministic market-day state machine"
+    ],
+    "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT":[
+      "A-share product center is point-in-time recommendation/review/learning, not generic task orchestration",
+      "parent should route the domain; child should own per-day identity/state and A-share business decision graph"
+    ],
+    "GOVERNING_ASSUMPTION_CHALLENGE":[
+      "rejected: all domains should copy one multi-agent/subtask topology",
+      "rejected: UAOS must own current trading-day task identity",
+      "rejected: hosted-runtime promotion status determines business ownership",
+      "rejected: a single vendor should own all A-share facts",
+      "rejected: parallel analysis requires unbounded peer debate"
+    ],
+    "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH":[
+      "trade-strategy/execution research used to separate alpha opportunity from execution/buyability and require post-trade attribution",
+      "backtest/simulation research used to retain multi-regime frozen replay before durable strategy promotion",
+      "event-driven backtesting architecture used to preserve point-in-time event/state boundaries and minimize look-ahead leakage",
+      "behavior-not-implementation testing guidance used to repair stale architecture audit assumptions without weakening business invariants"
+    ]
+  },
+  "child_design":{
+    "business_identity_owner":"A_SHARE_EVENT_DRIVEN_AGENT__TaskContract.task_id",
+    "business_state_owner":"A_SHARE_EVENT_DRIVEN_AGENT__MarketDayState",
+    "source_lanes":["OFFICIAL_FACTS","TONGHUASHUN_LEVEL2","XUANGUTONG_DINGPAN","STRUCTURED_MARKET_FALLBACK","P01_P09_RESEARCH"],
+    "specialized_decision_chain":"POINT_IN_TIME_FREEZE__SOURCE_RECONCILIATION__EVENT_INDUSTRY_RESEARCH__MARKET_STRUCTURE__U0_U1_RECALL__THREE_U1_BOUNDED_CANDIDATE_VIEWS__COUNTEREVIDENCE__OWNER_ADJUDICATION__U3_OR_NO_TRADE__FROZEN_REVIEW__REPLAY_GATED_LEARNING",
+    "peer_chat":false,
+    "persistent_specialist_controller":false
+  },
+  "observed_child_evidence":{
+    "candidate_final_head":"2e187dd349eea39da0fc35901e9f3429b11ad75e",
+    "candidate_ci_run":38628786127,
+    "candidate_result":"PASS",
+    "production_main_commit":"1fb2cda4dba3a4dd1f6c6fe5a2a7fe1b3039d292",
+    "production_ci_run":38628981077,
+    "production_result":"PASS"
+  },
+  "parent_target":{
+    "single_router":"ashare:main",
+    "legacy_alias":"ashare:recommendation",
+    "child_ref_semantics":"OPTIONAL_OPAQUE_CHILD_MARKET_DAY_REFERENCE_ONLY",
+    "parent_business_state_mirror":false,
+    "common_contract_change":false
+  },
+  "acceptance_before_resolved":[
+    "parent task index contains exactly one A-share router",
+    "old state/tasks/ashare-recommendation.json is absent",
+    "parent router contains no per-day tickers/source pools/U0-U1-U3/business state",
+    "legacy user-facing aliases resolve to ashare:main",
+    "parent promotion-gate passes",
+    "parent main post-promotion CI passes",
+    "authoritative production reread confirms one parent router"
+  ],
+  "updated_at":"2026-10-15T04:12:00+08:00"
+}
