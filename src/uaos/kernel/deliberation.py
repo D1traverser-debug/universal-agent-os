@@ -61,8 +61,8 @@ class DeliberationEvidence:
 def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
     """Select evidence/method depth while leaving framing/questions dynamic.
 
-    This deliberately does not encode a finite question list or architecture catalog.
-    Unknown method/architecture gaps explicitly escalate to external research.
+    Every detected problem has a mandatory research/reflection floor. Risk signals may add
+    counterexample or independent-verification depth above that floor.
     """
 
     reasons: list[str] = []
@@ -94,26 +94,26 @@ def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
         reasons.append("CHANGE_PROPOSAL")
 
     required = bool(reasons)
-    macro = any((
+
+    # v1.7 problem-response floor: once there is evidence of an actual problem,
+    # research and reflective challenge are mandatory even when the problem is familiar.
+    problem_detected = any((
         signals.user_correction,
-        signals.repeated_failure_count >= 2,
+        signals.repeated_failure_count >= 1,
         signals.goal_progress_uncertain,
-        signals.scope_expanding,
-        signals.cross_subsystem,
         signals.complexity_increasing,
-        signals.architecture_gap,
-    ))
-    assumptions = any((
-        signals.user_correction,
-        signals.repeated_failure_count >= 2,
-        signals.goal_progress_uncertain,
-        signals.architecture_gap,
-    ))
-    external = any((
+        signals.conflicting_evidence,
         signals.unknown_failure_class,
         signals.knowledge_gap,
         signals.architecture_gap,
     ))
+
+    macro = problem_detected or any((
+        signals.scope_expanding,
+        signals.cross_subsystem,
+    ))
+    assumptions = problem_detected
+    external = problem_detected
     counterexample = any((
         signals.change_proposal,
         signals.user_correction,
