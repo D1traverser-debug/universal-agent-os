@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Mapping, Any
+from typing import Any, Mapping
 
 
 class DomainBindingDrift(RuntimeError):
@@ -27,7 +27,14 @@ class BindingPolicy:
             required_manifest_status=data["required_manifest_status"],
         )
 
-    def validate_domain_binding(self, *, registry_entry: Mapping[str, Any], adapter: Mapping[str, Any], manifest: Mapping[str, Any], skill_text: str) -> None:
+    def validate_domain_binding(
+        self,
+        *,
+        registry_entry: Mapping[str, Any],
+        adapter: Mapping[str, Any],
+        manifest: Mapping[str, Any],
+        skill_text: str,
+    ) -> None:
         errors: list[str] = []
         if adapter.get("controller") != self.controller:
             errors.append("adapter controller")
@@ -39,12 +46,16 @@ class BindingPolicy:
             errors.append("manifest status")
         if manifest.get("skill", {}).get("entrypoint") != registry_entry.get("skill_ref"):
             errors.append("skill entrypoint")
-        continuity = manifest.get("continuity", {})
-        if continuity.get("controller_ref") != self.controller_ref:
+        binding = manifest.get("binding", {})
+        if binding.get("controller_ref") != self.controller_ref:
             errors.append("manifest controller ref")
-        if continuity.get("uaos_adapter_ref") != registry_entry.get("uaos_adapter_ref"):
+        if binding.get("adapter_ref") != registry_entry.get("uaos_adapter_ref"):
             errors.append("manifest adapter ref")
+        if binding.get("capability_ref") != registry_entry.get("capability_ref"):
+            errors.append("manifest capability ref")
         if self.controller not in skill_text:
             errors.append("skill controller marker")
+        if any("continuity/" in str(registry_entry.get(field, "")) for field in ("skill_ref", "agent_manifest_ref", "capability_ref", "uaos_adapter_ref")):
+            errors.append("retired continuity namespace in active registry")
         if errors:
             raise DomainBindingDrift("domain binding drift: " + ", ".join(errors))

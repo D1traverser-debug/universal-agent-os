@@ -1,8 +1,9 @@
+import json
 from pathlib import Path
 
 import pytest
 
-from uaos.integrations import AgentLinkRegistry, MigrationDisposition
+from uaos.integrations import AgentLinkRegistry
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -11,37 +12,41 @@ def registry() -> AgentLinkRegistry:
     return AgentLinkRegistry.from_paths(ROOT / "config" / "AGENT_REGISTRY.json", ROOT / "state" / "TASK_INDEX.json")
 
 
-def test_all_four_business_agents_are_registered_to_uaos():
+def test_all_four_business_agents_use_current_uaos_binding_namespace():
     r = registry()
     assert {a.agent_id for a in r.agents} == {"financial_writing", "ashare", "novel", "video"}
-    assert all(a.new_task_mode == "UAOS_NATIVE" for a in r.agents)
+    for agent in r.agents:
+        assert agent.new_task_mode == "UAOS_NATIVE"
+        assert agent.skill_ref == "UAOS_SKILL.md"
+        assert agent.agent_manifest_ref == ".uaos/MANIFEST.json"
+        assert agent.capability_ref == ".uaos/CAPABILITIES.json"
+        assert agent.uaos_adapter_ref == ".uaos/ADAPTER.json"
+        assert "continuity/" not in json.dumps(agent.__dict__ if hasattr(agent, "__dict__") else {
+            "skill_ref": agent.skill_ref,
+            "agent_manifest_ref": agent.agent_manifest_ref,
+            "capability_ref": agent.capability_ref,
+            "uaos_adapter_ref": agent.uaos_adapter_ref,
+        })
 
 
-def test_active_registry_has_no_legacy_protocol_or_task_index_refs():
+def test_old_controller_is_not_an_agent_authority():
+    assert all(a.repository != "D1traverser-debug/universal-continuity-agent" for a in registry().agents)
+
+
+def test_aliases_resolve_current_agents_and_tasks():
     r = registry()
-    assert all(a.legacy_protocol_ref is None for a in r.agents)
-    assert all(a.task_index_ref is None for a in r.agents)
+    assert r.resolve_agent("NOVEL_OS").agent_id == "novel"
+    assert r.resolve_agent("A_SHARE_MARKET_AGENT").agent_id == "ashare"
+    assert r.resolve_task("小说系统").task_id == "FQ001_MINGRI_ORDER"
+    assert r.resolve_task("原创数字IP设计").task_id == "video:ai-self-media-commercialization"
 
 
-def test_active_tasks_are_uaos_native_and_have_state_refs():
+def test_video_default_is_current_digital_ip_not_old_program():
     r = registry()
-    assert r.tasks
-    assert all(t.migration_disposition is MigrationDisposition.UAOS_NATIVE for t in r.tasks)
-    assert all(t.state_ref for t in r.tasks)
-    assert all(not t.legacy_source_refs for t in r.tasks)
-
-
-def test_old_ashare_market_day_is_not_active_candidate():
-    r = registry()
-    with pytest.raises(LookupError):
-        r.resolve_task("ashare:2026-10-12")
-
-
-def test_video_current_project_is_default_and_old_program_is_explicit_only():
-    r = registry()
-    candidates = {t.task_id: t for t in r.tasks if t.domain_id == "video"}
-    assert candidates["video:ai-self-media-commercialization"].default_resume_within_domain is True
-    assert candidates["video-growth:main"].default_resume_within_domain is False
+    defaults = [task for task in r.tasks if task.domain_id == "video" and task.default_resume_within_domain]
+    assert [task.task_id for task in defaults] == ["video:ai-self-media-commercialization"]
+    old = r.resolve_task("video-growth:main")
+    assert old.default_resume_within_domain is False
 
 
 def test_unknown_agent_and_task_fail_closed():

@@ -8,14 +8,14 @@ For a fresh ChatGPT/session bootstrap load only:
 1. `ENTRYPOINT.md`;
 2. `CURRENT_SYSTEM.json`.
 
-Do not preload migration evidence, domain repositories, historical task files, or broad search results.
+Then use `config/SYSTEM_MAP.json` for exact current locations. Do not preload domain repositories, historical Git commits, migration material or broad search results.
 
 ## Intent before state
 
 Classify the request first:
 - `NEW_TASK`: create a new UAOS task; never inherit unfinished state merely because the domain matches.
 - `CONTINUE`: resolve an exact current UAOS task from `state/TASK_INDEX.json`; do not reconstruct task identity from search results or chat memory.
-- `REQUIREMENT_CHANGE`: update the requirement authority at the narrowest valid scope and invalidate only affected downstream work.
+- `REQUIREMENT_CHANGE`: update requirement authority at the narrowest valid scope and invalidate only affected downstream work.
 - `QUERY`: read only what the question requires.
 - `SYSTEM_MAINTENANCE`: operate on UAOS/system authority, not an ordinary business task.
 - `PAUSE/CANCEL`: persist a safe checkpoint when possible, then change lifecycle state.
@@ -33,9 +33,9 @@ There is one cross-domain controller: UAOS. Business repositories own domain cod
 
 Before material domain work:
 1. read `config/BINDING_POLICY.json`;
-2. read the selected Agent's exact `UAOS_SKILL`, `continuity/UAOS_MANIFEST.json`, `continuity/UAOS_ADAPTER.json`, and required capability profile;
-3. validate the binding with the current repository state;
-4. if controller/Skill/manifest/adapter binding drifts, block the affected domain execution until reconciled.
+2. from the selected registry entry read its exact root `UAOS_SKILL.md`, `.uaos/MANIFEST.json`, `.uaos/ADAPTER.json`, `.uaos/CAPABILITIES.json`, plus only the business authority required by the current action;
+3. validate the binding against current repository state;
+4. if controller/Skill/manifest/adapter/capability binding drifts, block the affected domain execution until reconciled.
 
 A repository declaration is a capability ceiling, not proof that the active session can execute it.
 
@@ -43,15 +43,11 @@ A repository declaration is a capability ceiling, not proof that the active sess
 
 All controller/domain repository retrieval obeys `config/RETRIEVAL_POLICY.json`.
 
-Normal execution must not use:
-- retired controller repositories;
-- old continuity protocols, task indexes, leases or resume metadata;
-- migration evidence under `docs/migration/`;
-- superseded domain Skill/manifest surfaces denied by the retrieval policy.
+Normal execution must not use retired controller repositories, old continuity protocols/task indexes/leases/resume metadata, superseded Skill/controller surfaces, or historical migration mechanisms.
 
-Historical evidence is a cold path. It may be accessed only for an explicit historical/forensic question and never overrides current authority.
+Historical evidence is a cold forensic path through Git history. It may be accessed only for an explicit historical/forensic question and never overrides current authority.
 
-Search presence is not authority. Retrieval must start from the current registry/task/Skill/manifest/adapter chain.
+Search presence is not authority. Retrieval starts from `config/SYSTEM_MAP.json` -> registry -> task -> current Skill/manifest/adapter chain.
 
 ## Continuation
 
@@ -59,9 +55,10 @@ Search presence is not authority. Retrieval must start from the current registry
 - each domain may have at most one default-resume task;
 - multiple non-default tasks are never merged;
 - time-sensitive work is revalidated against current time/business semantics before material execution;
-- current controller progress is stored under `state/tasks/`, while domain business progress remains in its declared domain authority.
+- current controller progress is stored under `state/tasks/`, while domain business progress remains in its declared domain authority;
+- before executing a continued domain task, reread the domain business authority named by the current task state; cached `next_action` is a pointer, not permission to ignore fresher business state.
 
-For the video domain, the current default project is the active original-digital-IP incubation task; the older video-growth program remains explicit-only.
+For the video domain, the current default project is the active original-digital-IP incubation task; the older video-growth program is explicit-only.
 
 ## Knowledge and learning
 
@@ -69,7 +66,7 @@ Only promoted/current knowledge is used by default. Raw evidence and candidates 
 
 ## Host model
 
-`config/HOST_PROFILES.json` defines the persistence adapter:
+`config/HOST_PROFILES.json` defines persistence adapters:
 - `CHATGPT_GITHUB`: controller JSON under `state/`; observed-HEAD CAS + authoritative reread; current tools/connectors are session capabilities.
 - `LOCAL`: SQLite CAS/checkpoint runtime + local artifact store.
 
@@ -87,4 +84,4 @@ A stale writer must re-read and rebase; never overwrite concurrent work.
 
 ## External custom instructions
 
-Account-level custom instructions are optional and non-authoritative. If used, they should contain only a stable pointer to this entrypoint; do not duplicate system policy there. Canonical pointer text is stored at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`.
+Account-level ChatGPT Custom Instructions are optional and non-authoritative. If used, keep only the stable pointer stored at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`. Do not duplicate UAOS policy there. A stale pointer to the retired controller is fail-safe because that repository's default branch is a tombstone redirect, but it should be replaced with the current pointer when convenient.
