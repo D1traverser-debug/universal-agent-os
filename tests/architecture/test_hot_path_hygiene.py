@@ -16,18 +16,19 @@ def test_registry_and_task_index_have_no_legacy_refs():
     for agent in registry["agents"]:
         assert "legacy_protocol_ref" not in agent
         assert "task_index_ref" not in agent
-        assert agent["agent_manifest_ref"] == "continuity/UAOS_MANIFEST.json"
+        assert agent["agent_manifest_ref"] == ".uaos/MANIFEST.json"
     for task in tasks["tasks"]:
         assert "legacy_source_refs" not in task
         assert task["state_model"] == "UAOS_NATIVE"
 
 
-def test_cutover_evidence_is_not_active_state():
+def test_retired_cutover_surfaces_are_absent_from_current_tree():
     assert not (ROOT / "state" / "CUTOVER_STATUS.json").exists()
-    assert (ROOT / "docs" / "migration" / "CUTOVER_EVIDENCE_2026-10-14.json").exists()
+    assert not (ROOT / "docs" / "migration").exists()
 
 
 def test_custom_instruction_doc_is_pointer_only():
     text = (ROOT / "docs" / "integration" / "CHATGPT_CUSTOM_INSTRUCTIONS.md").read_text(encoding="utf-8")
     assert "universal-agent-os@main:ENTRYPOINT.md" in text
-    assert "does not depend" in text
+    assert "bootstrap-only" in text
+    assert "non-authoritative" in text
