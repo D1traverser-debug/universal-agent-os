@@ -1,55 +1,64 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "evolution_id":"EVO-20261014-COMPLETE-MEDIATION-HOST-ENFORCEMENT",
   "status":"BLOCKED_HOST_ENFORCEMENT",
-  "trigger":["REPEATED_USER_CORRECTION","ARCHITECTURE_GAP","CONTROL_PLANE_GAP","KNOWN_BYPASS_AFTER_LOGICAL_CLOSURE"],
+  "trigger":["REPEATED_USER_CORRECTION","ARCHITECTURE_GAP","CONTROL_PLANE_GAP","KNOWN_BYPASS_AFTER_LOGICAL_CLOSURE","USER_REQUIREMENT_CHANGE__EVERY_PROBLEM_RESEARCH_AND_REFLECTION"],
   "incident":{
     "failure_class":"FC-REGISTERED-REPOSITORY-PRODUCTION-MUTATION-COMPLETE-MEDIATION-001",
-    "summary":"Logical authority/deliberation admission existed, but the raw ChatGPT GitHub connector remained outside Python ActionCoordinator and all five current registered production repositories had no ruleset. Direct production writes therefore remained physically possible outside the intended admission path."
+    "summary":"Logical authority/deliberation admission existed, but the raw ChatGPT GitHub connector remained outside Python ActionCoordinator and all five current registered production repositories had no ruleset. Direct production writes therefore remained physically possible outside the intended admission path. During repair, the user further clarified that any detected problem must always trigger research and reflective challenge, not only when the method or architecture is unfamiliar."
   },
   "root_cause":[
     "Policy decision and policy enforcement were conflated.",
     "Observed-HEAD CAS was treated as normal production promotion even though CAS is concurrency control rather than access control.",
     "Host control surfaces were initially classified as hardening/limitations instead of part of the production mutation invariant.",
-    "The failure was first scoped to UAOS main, but registry-wide inspection showed the same missing enforcement boundary on every current production repository."
+    "The failure was first scoped to UAOS main, but registry-wide inspection showed the same missing enforcement boundary on every current production repository.",
+    "The prior deliberation policy treated external research as conditional on knowledge/architecture uncertainty; that allowed a familiar-looking problem to bypass mandatory learning and assumption challenge."
   ],
   "deliberation_evidence":{
     "MICRO_DIAGNOSIS":[
       "direct-main noop connector write occurred despite logical mutation rules",
       "ChatGPT GitHub plugin permission observed as app-specific Allow all actions",
-      "rulesets endpoint returned [] for universal-agent-os, financial-writing-agent, a-share-event-driven-agent, novel-writing-agent and video-growth-agent"
+      "rulesets endpoint returned [] for universal-agent-os, financial-writing-agent, a-share-event-driven-agent, novel-writing-agent and video-growth-agent",
+      "policy inspection showed external research was previously required only for unknown failure/knowledge/architecture gaps rather than every detected problem"
     ],
-    "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT":["all registered production mutations must traverse owner-appropriate non-bypassable host policy-enforcement points"],
+    "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT":[
+      "all registered production mutations must traverse owner-appropriate non-bypassable host policy-enforcement points",
+      "problem handling must be a learning loop: every detected problem gets at least lightweight external research plus architecture/assumption reflection before repair selection"
+    ],
     "GOVERNING_ASSUMPTION_CHALLENGE":[
       "rejected: a correct model-side/Python admission gate is enough when another writer bypasses it",
       "rejected: CAS promotion provides authorization",
       "rejected: Custom Instructions can serve as a security boundary",
-      "rejected: protecting only the parent repository establishes system-wide mutation safety"
+      "rejected: protecting only the parent repository establishes system-wide mutation safety",
+      "rejected: familiar or apparently local problems may skip external research/reflection"
     ],
     "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH":[
       "NIST reference-monitor / complete-mediation property",
       "GitHub repository rulesets with required pull request and required status checks",
-      "OpenAI Custom Instructions cross-chat application semantics"
+      "OpenAI Custom Instructions cross-chat application semantics",
+      "Google SRE incident/postmortem guidance: learn from incidents, analyze root causes and broader system/process improvements rather than only immediate symptom repair"
     ],
     "COUNTEREXAMPLE_SEARCH":[
       "raw connector direct-production update is a concrete counterexample to complete mediation",
       "a prompt-only sentinel can be bypassed by a separate host write path",
       "ruleset bypass for the same writer would recreate the same failure",
-      "an unprotected child repository defeats a parent-only protection claim"
+      "an unprotected child repository defeats a parent-only protection claim",
+      "a familiar-looking local failure can still be caused by a repeated/systemic mechanism, so familiarity cannot waive research/reflection"
     ]
   },
   "candidate":{
     "release":"UAOS 2.4.4",
-    "architecture":"ALWAYS_ON_MUTATION_SENTINEL__ADAPTIVE_COGNITION__REGISTERED_REPOSITORY_HOST_PEP_COMPLETE_MEDIATION",
+    "architecture":"ALWAYS_ON_MUTATION_SENTINEL__EVERY_PROBLEM_RESEARCH_AND_REFLECTION_FLOOR__ADAPTIVE_DEPTH_COGNITION__REGISTERED_REPOSITORY_HOST_PEP_COMPLETE_MEDIATION",
     "normal_github_production_path":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_REQUIRED_CHECKS__PROTECTED_MERGE__REREAD",
     "retired_normal_path":"OBSERVED_HEAD_CAS_DIRECT_PRODUCTION_PROMOTION",
+    "problem_response_floor":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH"],
     "common_required_remote_properties":["target production branch","require pull request before merge","block force push","block branch deletion","no ChatGPT GitHub App bypass"],
     "uaos_required_status_check":"promotion-gate",
     "domain_check_rule":"reuse each domain owner's stable CI/release check when available",
     "complexity_delta":{"new_controller":0,"new_state_plane":0,"new_always_on_component":"lightweight mutation sentinel inside existing policies","new_host_enforcement":"GitHub rulesets; external enforcement rather than another UAOS controller"}
   },
   "current_host_evidence":{
-    "chatgpt_github_permission":"ALLOW_ALL_ACTIONS",
+    "chatgpt_github_permission":"ALLOW_ALL_ACTIONS__EXPLICIT_USER_AUTONOMY_PREFERENCE__NO_PER_WRITE_CONFIRMATION",
     "repositories":[
       {"repository":"D1traverser-debug/universal-agent-os","rulesets":[],"physically_mediated":false},
       {"repository":"D1traverser-debug/financial-writing-agent","rulesets":[],"physically_mediated":false},
@@ -62,12 +71,12 @@
   "acceptance":[
     "candidate full CI passes with promotion-gate status",
     "authority-wide contradiction scan finds no current direct-production normal-promotion rule",
-    "temporary ChatGPT GitHub permission is tightened away from unrestricted silent writes while repository enforcement is absent, or an equivalent host control is active",
     "every registered production repository in scope has active remote protection read back from GitHub",
     "UAOS protection requires promotion-gate; domain protections reuse owner-appropriate checks where available",
     "no ChatGPT GitHub App bypass exists on protected production refs",
+    "GitHub plugin may remain full-access for autonomous work because production refs are protected by non-bypassable repository enforcement rather than per-write user confirmation",
     "post-promotion production authority is reread and observed",
     "only then may this incident become RESOLVED"
   ],
-  "updated_at":"2026-10-14T15:53:00Z"
+  "updated_at":"2026-10-14T16:12:00Z"
 }
