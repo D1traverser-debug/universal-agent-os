@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "evolution_id": "EVO-20261014-LEGACY-REGRESSION-CLOSURE",
+  "status": "EVALUATING",
+  "trigger": "HOSTED_CI_RECOVERED_AND_FULL_SUITE_REGRESSION_DISCOVERY",
+  "opened_at": "2026-10-14T10:28:52Z",
+  "incidents": [
+    {
+      "incident_id": "INC-20261014-CI-ROOT-CAUSE-001",
+      "summary": "Hosted CI pre-allocation failures were caused by exhausted private-repository Actions minutes; repository visibility later changed to public and runner allocation recovered.",
+      "failure_class": "ACCOUNT_QUOTA_EXHAUSTION_MASKED_REPOSITORY_TEST_SIGNAL"
+    },
+    {
+      "incident_id": "INC-20261014-REGRESSION-DEBT-001",
+      "summary": "Recovered full CI exposed 7 failures: stale/contradictory hot-path tests, stale readiness assertions, two authority-migration omissions and deprecated Actions runtime versions.",
+      "failure_class": "PROMOTED_CHANGES_OUTRAN_FULL_SUITE_COMPATIBILITY"
+    }
+  ],
+  "root_cause": {
+    "primary": "Full repository CI was unavailable during prior promotions, so targeted evaluation passed while older full-suite contracts and callers drifted behind current authority semantics.",
+    "contributing": [
+      "Two cutover tests encoded mutually incompatible migration-directory expectations.",
+      "AuthorityScopeGate migration did not update the isolated self-change drill and one legacy multifault test caller.",
+      "Readiness regression test asserted a retired phase-11 schema/status literally instead of current assurance invariants.",
+      "Core workflows still used Actions versions that GitHub now runs through a Node 20 compatibility/deprecation path.",
+      "Observation-only commits unnecessarily triggered the same full CI workflow."
+    ]
+  },
+  "proposal": {
+    "proposal_id": "CP-LEGACY-REGRESSION-CLOSURE-001",
+    "state": "PROPOSED",
+    "target_scope": "UAOS_PARENT_CORE",
+    "changes": [
+      "Migrate the self-change drill and multifault caller to explicit UAOS authority metadata.",
+      "Replace stale literal/path assertions with current .uaos binding and retired-migration invariants.",
+      "Make readiness tests validate assurance semantics rather than a retired exact status schema.",
+      "Remove predecessor-controller literal from README hot path and refresh requirement-authority documentation.",
+      "Upgrade checkout/setup-python Actions to current v7 majors.",
+      "Add workflow concurrency cancellation and skip redundant full CI for observation/readiness/README-only pushes while retaining PR/manual verification."
+    ],
+    "new_components": 0,
+    "new_runtime_state_surfaces": 0,
+    "rollback_plan": "Do not promote candidate branch; main remains at observed pre-change HEAD until full PR evaluation passes."
+  },
+  "evaluation": {
+    "state": "PENDING",
+    "required": [
+      "full pytest suite passes on GitHub-hosted runner",
+      "live integration PR jobs pass for PostgreSQL/DBOS and object-store paths",
+      "openai-provider live job remains intentionally manual and is not required for this patch because provider integration code is unchanged",
+      "candidate tree contains no new controller plane or runtime component"
+    ],
+    "baseline_evidence": {
+      "recovered_hosted_job": 115804799509,
+      "baseline_result": "7 failed, 176 passed",
+      "runner_allocation": "RECOVERED_AFTER_PUBLIC_VISIBILITY",
+      "prior_quota_evidence": "2000/2000 private Actions minutes consumed"
+    }
+  },
+  "promotion": {
+    "state": "NOT_AUTHORIZED_UNTIL_EVALUATION_PASS",
+    "main_observed_head": "110cb899d63103cddcc019347476515a21d22bd2"
+  },
+  "updated_at": "2026-10-14T10:28:52Z"
+}
