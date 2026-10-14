@@ -1,5 +1,5 @@
 {
-  "schema_version":"1.3",
+  "schema_version":"1.4",
   "controller":{
     "repository":"D1traverser-debug/universal-agent-os",
     "entrypoint":"ENTRYPOINT.md",
@@ -14,7 +14,10 @@
     "authority_write_policy":"config/AUTHORITY_WRITE_POLICY.json",
     "deliberation_policy":"config/DELIBERATION_POLICY.json",
     "retrieval_policy":"config/RETRIEVAL_POLICY.json",
-    "binding_policy":"config/BINDING_POLICY.json"
+    "binding_policy":"config/BINDING_POLICY.json",
+    "host_profiles":"config/HOST_PROFILES.json",
+    "production_promotion_check":"promotion-gate",
+    "production_promotion_topology":"CANDIDATE_BRANCH__PULL_REQUEST__PROTECTED_MERGE"
   },
   "domains":{
     "financial_writing":{"repository":"D1traverser-debug/financial-writing-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_contract":"config/EXECUTION_CONTRACT.json","business_state":"workspaces/articles/{task_id}/STATE.json","rule_roots":["references","config","financial_writing_agent"]},
@@ -22,7 +25,7 @@
     "novel":{"repository":"D1traverser-debug/novel-writing-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_state":"projects/<task>/checkpoints/CURRENT_CHECKPOINT.json","canon_root":"projects/<task>/canon","rule_roots":["protocols","projects","research","config"]},
     "video":{"repository":"D1traverser-debug/video-growth-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_state":"projects/<project>/PROJECT_MANIFEST.json + project-local progress/decision artifacts","rule_roots":["video_growth_agent","projects","skills/video-growth-agent/references"]}
   },
-  "external_integration":{"chatgpt_custom_instructions":"BOOTSTRAP_POINTER_FOR_DETERMINISTIC_PLAIN_CHATGPT_FRESH_CHAT__NON_AUTHORITY","pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md","copilot_ref":".github/copilot-instructions.md"},
+  "external_integration":{"chatgpt_custom_instructions":"BOOTSTRAP_PLUS_LIGHTWEIGHT_MUTATION_SENTINEL__NON_AUTHORITY","pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md","copilot_ref":".github/copilot-instructions.md"},
   "retired_controller":{"repository":"D1traverser-debug/universal-continuity-agent","default_branch_role":"TOMBSTONE_REDIRECT_ONLY","executable_or_recovery_authority":false},
-  "updated_at":"2026-10-14T09:46:00Z"
+  "updated_at":"2026-10-14T15:42:00Z"
 }
