@@ -4,7 +4,7 @@ Status: `HARNESS_READY / LIVE_EVIDENCE_PENDING`
 
 This layer exists specifically to prevent unit tests, mocks, role labels or architecture prose from closing production blockers.
 
-## Local PostgreSQL/DBOS
+## PostgreSQL / DBOS
 
 With Docker/Compose available:
 
@@ -15,6 +15,7 @@ export UAOS_DATABASE_URL='postgresql://uaos:uaos-local-only@localhost:5432/uaos'
 export DBOS_SYSTEM_DATABASE_URL="$UAOS_DATABASE_URL"
 python scripts/live_verify.py postgres
 python scripts/live_verify.py dbos
+python scripts/live_verify.py maintenance
 ```
 
 For an actual process-crash recovery drill:
@@ -24,7 +25,7 @@ python scripts/dbos_crash_probe.py start   # intentionally exits 91
 python scripts/dbos_crash_probe.py recover # a new process must recover the same durable workflow
 ```
 
-The PostgreSQL probe applies every repository migration, verifies row-version CAS rejects a stale writer, and verifies the append-only ledger can round-trip a live event. The DBOS probe verifies durable workflow identity/idempotency. The crash probe verifies recovery in a fresh process.
+The maintenance probe proves that the configured DBOS installation can persist a schedule, bind it to a concurrency-one queue, trigger it, observe workflow execution and delete it. It does not self-certify that foreground work is absent. UAOS kernel `assess_idle_capacity` must derive that admission from authoritative runnable/resource state, and `assess_idle_maintenance` refuses an IDLE run without that proof.
 
 ## S3-compatible object store
 
@@ -49,14 +50,10 @@ export UAOS_OPENAI_PROBE_MODEL='<explicit API model id>'
 python scripts/live_verify.py openai
 ```
 
-The probe goes through `OpenAIAgentsExecutor`; it does not give the Agent side-effecting tools or authority-state access.
-
 ## Exit semantics
 
 - `PASS`: the real configured dependency executed the requested probe successfully.
 - `BLOCKED` (exit 2): required environment/credential/model was not configured; this is not a failure and not a pass.
 - `FAIL` (exit 1): the real dependency was configured and the live invariant failed.
 
-GitHub workflow `.github/workflows/live-integration.yml` runs PostgreSQL/DBOS, an explicit DBOS crash/recovery drill, and S3-compatible artifact integration when a hosted runner is available. OpenAI provider verification runs only on manual workflow dispatch and requires repository secret/variable configuration.
-
-Passing these harnesses does not close all production readiness blockers. The final production object store, four domain live E2Es, background maintenance and controlled self-change still need their own evidence.
+GitHub workflow `.github/workflows/live-integration.yml` runs PostgreSQL/DBOS, maintenance scheduling, an explicit DBOS crash/recovery drill, and S3-compatible artifact integration when a hosted runner is available. OpenAI provider verification runs only on manual workflow dispatch and requires repository secret/variable configuration.

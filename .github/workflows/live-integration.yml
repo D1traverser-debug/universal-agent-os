@@ -9,6 +9,8 @@ on:
       - 'src/uaos/runtime/**'
       - 'src/uaos/execution/**'
       - 'src/uaos/state/**'
+      - 'src/uaos/kernel/**'
+      - 'src/uaos/evolution/**'
       - 'scripts/live_verify.py'
       - 'scripts/dbos_crash_probe.py'
       - '.github/workflows/live-integration.yml'
@@ -50,6 +52,8 @@ jobs:
         run: python scripts/live_verify.py postgres
       - name: Live DBOS identity/idempotency probe
         run: python scripts/live_verify.py dbos
+      - name: Live DBOS maintenance schedule probe
+        run: python scripts/live_verify.py maintenance
       - name: Crash first DBOS process after durable start
         shell: bash
         run: |
@@ -76,10 +80,7 @@ jobs:
           python-version: '3.11'
       - name: Start MinIO
         run: |
-          docker run -d --name uaos-minio -p 9000:9000 \
-            -e MINIO_ROOT_USER=uaos-minio \
-            -e MINIO_ROOT_PASSWORD=uaos-minio-secret \
-            minio/minio:latest server /data
+          docker run -d --name uaos-minio -p 9000:9000 -e MINIO_ROOT_USER=uaos-minio -e MINIO_ROOT_PASSWORD=uaos-minio-secret minio/minio:latest server /data
           for i in $(seq 1 30); do
             if curl -fsS http://localhost:9000/minio/health/live >/dev/null; then exit 0; fi
             sleep 2

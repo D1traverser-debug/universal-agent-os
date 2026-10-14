@@ -15,3 +15,14 @@ def assess_maintenance(request: MaintenanceRequest) -> MaintenanceDecision:
     else:
         mode = "DIAGNOSE_AND_PROPOSE"
     return MaintenanceDecision(not reasons, mode, tuple(reasons))
+
+
+def assess_idle_maintenance(request: MaintenanceRequest, *, idle_admission_verified: bool) -> MaintenanceDecision:
+    """Require scheduling-authority proof before an IDLE maintenance run."""
+    if request.trigger != "IDLE":
+        raise ValueError("assess_idle_maintenance requires an IDLE maintenance request")
+    base = assess_maintenance(request)
+    reasons = list(base.reasons)
+    if not idle_admission_verified:
+        reasons.append("idle admission was not verified by scheduling authority")
+    return MaintenanceDecision(not reasons, base.mode, tuple(reasons))
