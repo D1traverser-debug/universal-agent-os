@@ -1,6 +1,6 @@
 {
   "snapshot_date":"2026-10-14",
-  "status":"UAOS_2_4_4_CANDIDATE__LOGICAL_COMPLETE_MEDIATION_DEFINED__PHYSICAL_HOST_ENFORCEMENT_PENDING",
+  "status":"UAOS_2_4_4_CANDIDATE__LOGICAL_COMPLETE_MEDIATION_DEFINED__REGISTERED_REPOSITORY_HOST_ENFORCEMENT_PENDING",
   "requirements_authority":[
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
@@ -34,26 +34,39 @@
       "OpenAI Custom Instructions: applied across chats, suitable for bootstrap/sentinel but not physical enforcement"
     ],
     "observed_host_state":{
-      "github_main_protected":false,
-      "github_rulesets":[],
       "chatgpt_github_plugin_permission":"APP_SPECIFIC_ALLOW_ALL_ACTIONS",
-      "raw_connector_can_write_without_uaos_python_interception":true
+      "raw_connector_can_write_without_uaos_python_interception":true,
+      "repositories":[
+        {"repository":"D1traverser-debug/universal-agent-os","production_branch":"main","rulesets":[],"physically_mediated":false},
+        {"repository":"D1traverser-debug/financial-writing-agent","production_branch":"main","rulesets":[],"physically_mediated":false},
+        {"repository":"D1traverser-debug/a-share-event-driven-agent","production_branch":"main","rulesets":[],"physically_mediated":false},
+        {"repository":"D1traverser-debug/novel-writing-agent","production_branch":"main","rulesets":[],"physically_mediated":false},
+        {"repository":"D1traverser-debug/video-growth-agent","production_branch":"main","rulesets":[],"physically_mediated":false}
+      ]
     }
   },
   "parent_core_open_work":[
     {
       "id":"P1",
-      "item":"PHYSICAL_COMPLETE_MEDIATION_FOR_GITHUB_PRODUCTION_MAIN",
+      "item":"PHYSICAL_COMPLETE_MEDIATION_FOR_REGISTERED_GITHUB_PRODUCTION_REPOSITORIES",
       "status":"BLOCKED_HOST_CONFIGURATION",
-      "required":{
-        "ruleset_target":"main",
+      "scope":[
+        "D1traverser-debug/universal-agent-os",
+        "D1traverser-debug/financial-writing-agent",
+        "D1traverser-debug/a-share-event-driven-agent",
+        "D1traverser-debug/novel-writing-agent",
+        "D1traverser-debug/video-growth-agent"
+      ],
+      "common_required_properties":{
+        "target_production_branch":true,
         "require_pull_request":true,
-        "required_status_check":"promotion-gate",
         "block_force_push":true,
         "block_branch_deletion":true,
         "chatgpt_github_app_bypass":false
       },
-      "closure_rule":"Remote ruleset must be read back as active and candidate PR must pass promotion-gate before 2.4.4 may be promoted."
+      "uaos_required_status_check":"promotion-gate",
+      "domain_status_check_rule":"reuse each domain owner's stable existing CI/release check when available; do not duplicate parent business validation",
+      "closure_rule":"Every registered production repository in scope must have active remote enforcement read back from GitHub before system-wide physical complete mediation may be RESOLVED."
     }
   ],
   "financial_integration_open_work":[],
@@ -71,13 +84,13 @@
       "item":"CHATGPT_GITHUB_CONNECTOR_PERMISSION",
       "current":"ALLOW_ALL_ACTIONS",
       "risk":"RAW_WRITES_DO_NOT_REQUIRE_PREWRITE_CONFIRMATION",
-      "role":"TEMPORARY_HOST_PERMISSION_CAN_REDUCE_RISK_BUT_DOES_NOT_REPLACE_REPOSITORY_RULESET"
+      "role":"TEMPORARY_PERMISSION_TIGHTENING_CAN_REDUCE_RISK_BUT_DOES_NOT_REPLACE_REPOSITORY_RULESETS"
     },
     {
       "id":"HC2",
-      "item":"GITHUB_MAIN_RULESET",
-      "current":"ABSENT",
-      "role":"REQUIRED_PRODUCTION_POLICY_ENFORCEMENT_POINT"
+      "item":"REGISTERED_REPOSITORY_PRODUCTION_RULESETS",
+      "current":"ABSENT_ON_ALL_5_CURRENT_PRODUCTION_REPOSITORIES",
+      "role":"REQUIRED_SYSTEM_WIDE_PRODUCTION_POLICY_ENFORCEMENT_BOUNDARY"
     }
   ],
   "known_limitations":[
@@ -85,9 +98,9 @@
     "hosted CI/live runs provide independent execution evidence, not independent semantic architecture judgment",
     "S3 CI evidence uses a standalone HTTP protocol emulator and does not certify any eventual production bucket/provider configuration",
     "live OpenAI provider evidence is optional/manual and was not rerun because provider integration code is unchanged",
-    "until the active GitHub ruleset is configured and read back, production complete mediation is not physically enforced",
+    "until active GitHub enforcement is configured and read back across every registered production repository in scope, system-wide complete mediation is not physically enforced",
     "Financial historical article receipts remain immutable and explicit historical resume uses the exact Financial-owned article reference without parent identity adoption"
   ],
-  "readiness_semantics":"UAOS 2.4.4 candidate separates always-on mutation sensing, adaptive cognition, policy decision, and physical policy enforcement. The repository policy now retires direct-main CAS as the normal production promotion path and requires candidate branch -> PR -> promotion-gate -> protected merge. Because main currently has no active ruleset, this incident is not RESOLVED and 2.4.4 is not production-promoted.",
-  "updated_at":"2026-10-14T15:38:00Z"
+  "readiness_semantics":"UAOS 2.4.4 candidate separates always-on mutation sensing, adaptive cognition, policy decision, and physical policy enforcement. The shared safety property applies to UAOS and all registered domain production repositories while preserving domain business ownership. Direct production-branch CAS is retired as the normal promotion path. Because all five current production repositories presently report no rulesets, the complete-mediation incident remains BLOCKED_HOST_CONFIGURATION and 2.4.4 is not production-promoted.",
+  "updated_at":"2026-10-14T15:51:00Z"
 }
