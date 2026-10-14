@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "evolution_id": "EVO-20261014-AUTHORITY-BOUNDARY",
+  "status": "DRAFT",
+  "trigger": "USER_CORRECTION",
+  "opened_at": "2026-10-14T08:44:50Z",
+  "incidents": [
+    {
+      "incident_id": "INC-20261014-AUTHORITY-001",
+      "summary": "An inherited child-Agent context has no mechanical execution-fabric gate preventing mutation of parent UAOS authority.",
+      "fingerprint": "AUTHORITY_SCOPE_NOT_ENFORCED_IN_EXECUTION_FABRIC",
+      "severity": "HIGH",
+      "evidence_refs": [
+        "src/uaos/execution/models.py",
+        "src/uaos/execution/approvals.py",
+        "src/uaos/execution/coordinator.py",
+        "docs/architecture/ARCHITECTURE_BLUEPRINT_v1.md#12-subsystem-model",
+        "docs/architecture/ARCHITECTURE_BLUEPRINT_v1.md#19-security-model"
+      ]
+    },
+    {
+      "incident_id": "INC-20261014-EVOLUTION-VISIBILITY-001",
+      "summary": "System maintenance could use evolution concepts without exposing a durable/user-visible lifecycle trace, making it indistinguishable from ad-hoc editing.",
+      "fingerprint": "EVOLUTION_TRACE_NOT_VISIBLE_OR_DURABLE_IN_CHATGPT_GITHUB_MAINTENANCE",
+      "severity": "MEDIUM",
+      "evidence_refs": [
+        "docs/adr/0010-governed-self-evolution.md",
+        "config/SESSION_INTERACTION_POLICY.json",
+        "src/uaos/evolution/models.py",
+        "src/uaos/evolution/catalog.py"
+      ]
+    }
+  ],
+  "failure_classes": [
+    {
+      "failure_class_id": "FC-AUTHORITY-OWNERSHIP-ENFORCEMENT-001",
+      "name": "Ownership exists in topology but is not enforced at authoritative mutation admission",
+      "root_layer": "EXECUTION_FABRIC",
+      "incident_ids": ["INC-20261014-AUTHORITY-001"],
+      "hypothesis": "Adding a fail-closed same-owner authority gate before ApprovalGate/executor dispatch will prevent child-to-parent and cross-domain mutation while preserving read access and explicit owner handoff."
+    },
+    {
+      "failure_class_id": "FC-EVOLUTION-OBSERVABILITY-001",
+      "name": "Governed evolution is implemented but not surfaced as maintenance state",
+      "root_layer": "SESSION_INTERACTION_AND_GITHUB_HOST_STATE",
+      "incident_ids": ["INC-20261014-EVOLUTION-VISIBILITY-001"],
+      "hypothesis": "Persisting the active evolution record and reporting its lifecycle state in inherited maintenance responses will make self-evolution auditable without duplicating the evolution controller."
+    }
+  ],
+  "proposal": {
+    "proposal_id": "CP-AUTHORITY-ISOLATION-AND-EVO-TRACE-001",
+    "title": "Enforce owner-scoped authoritative writes and expose governed evolution trace",
+    "state": "DRAFT",
+    "target_scope": "UAOS_COMMON_CONTROL_PLANE",
+    "failure_class_ids": [
+      "FC-AUTHORITY-OWNERSHIP-ENFORCEMENT-001",
+      "FC-EVOLUTION-OBSERVABILITY-001"
+    ],
+    "added_mechanisms": [
+      "Execution-fabric AuthorityScopeGate bound to the selected authority context",
+      "Explicit target_authority on mutating ExecutionRequest",
+      "Fail-closed same-owner mutation rule with cross-scope handoff/proposal semantics",
+      "Persistent ChatGPT_GITHUB evolution record",
+      "Evolution lifecycle field in inherited system-maintenance progress reporting"
+    ],
+    "replaced_mechanisms": [
+      "Permission/approval-only mutation admission",
+      "Implicit or invisible self-evolution usage during maintenance"
+    ],
+    "retired_mechanisms": [
+      "Treating Git main-branch protection as a substitute for parent/child authority isolation"
+    ],
+    "why_not_reuse": "ApprovalGate binds an exact action, target and parameter hash but has no selected-Agent/owner scope. Topology records owner/parent relationships but is not consulted by ActionCoordinator. Git branch protection is repository-level and cannot express the active inherited Agent authority context.",
+    "retirement_rationale": "The new gate reuses existing topology/ownership semantics and ActionCoordinator instead of adding a second permission system; branch protection remains optional defense-in-depth only.",
+    "rollback_plan": "Revert the authority-gate release commit and restore the prior ActionCoordinator/ExecutionRequest API; retain this incident record as evidence and mark the proposal ROLLED_BACK.",
+    "expected_benefit": "A child/domain Agent cannot authoritatively mutate UAOS or another domain through the UAOS execution path; system maintenance exposes whether governed evolution was triggered and its current lifecycle state.",
+    "new_failure_modes": [
+      "Legacy mutating callers without target_authority will fail closed until migrated",
+      "Direct host connector writes outside the UAOS execution path remain a host-level enforcement gap unless connector permissions are separately scoped"
+    ],
+    "required_scenarios": [
+      "UAOS context -> UAOS write: allow",
+      "video child context -> video write: allow",
+      "video child context -> UAOS write: block",
+      "video child context -> financial_writing write: block",
+      "UAOS context -> video direct business write: block and require owner handoff",
+      "read-only cross-scope access: allow under retrieval policy",
+      "mutating request missing authority metadata: fail closed",
+      "system-maintenance final report exposes evolution lifecycle state"
+    ],
+    "complexity_delta": {
+      "added_components": 1,
+      "removed_components": 0,
+      "added_state_surfaces": 1,
+      "removed_state_surfaces": 0,
+      "maintenance_cost_delta": 1
+    }
+  },
+  "evaluation": null,
+  "promotion": null,
+  "post_promotion_observation": null,
+  "updated_at": "2026-10-14T08:44:50Z"
+}
