@@ -2,7 +2,7 @@
 
 Status: `ACTIVE_PRIMARY_CONTROLLER`
 System release: `2.4.2`
-Authority updated at: `2026-10-14T11:12:00Z`
+Authority updated at: `2026-10-14T13:48:00Z`
 
 ## Minimal bootstrap
 
@@ -12,11 +12,13 @@ For a fresh ChatGPT/session bootstrap load only:
 
 Then use `config/SYSTEM_MAP.json` for exact current locations. Do not preload domain repositories, historical Git commits, migration material or broad search results.
 
+Bootstrap is a control-plane initialization step, not a requirement that the user first enter or remain inside a UAOS controller conversation. Once a registered domain is selected, that domain becomes the current Agent/work plane for normal business execution.
+
 ## Intent before state
 
 Classify the request semantically first:
-- `NEW_TASK`: create a new UAOS task; never inherit unfinished state merely because the domain matches.
-- `CONTINUE`: resolve an exact current UAOS task from `state/TASK_INDEX.json`; do not reconstruct task identity from search results or chat memory.
+- `NEW_TASK`: create identity/state at the owner that actually owns that task. UAOS may create controller/system task state or continuity metadata, but a registered domain creates and owns its own business-task identity/state unless that domain's current authority explicitly says otherwise. Never inherit unfinished state merely because the domain matches.
+- `CONTINUE`: resolve the selected controller/domain and exact resumable authority from current metadata; do not reconstruct business-task identity from search results or chat memory.
 - `REQUIREMENT_CHANGE`: update requirement authority at the narrowest valid scope and invalidate only affected downstream work.
 - `QUERY`: read only what the question requires.
 - `SYSTEM_MAINTENANCE`: operate on UAOS/system authority, not an ordinary business task.
@@ -41,18 +43,20 @@ For a generic inheritance request with no resolved target, present:
 
 Show enough current metadata to distinguish running/default, hold, and explicit-only projects. The menu is generated from current authority every time and never mutates aliases.
 
-Selecting `总控系统` establishes controller maintenance/query context and authority context `UAOS`; it does not create a fake business task. Selecting a domain task establishes `DOMAIN:<domain_id>`.
+Selecting `总控系统` establishes controller maintenance/query context and authority context `UAOS`; it does not create a fake business task. Selecting a registered domain establishes `DOMAIN:<domain_id>` and activates that domain as the current Agent for the conversation. The user does not need to first enter a UAOS controller chat, and normal child business turns do not traverse a live UAOS proxy.
 
 ## Current routing
 
-When routing or continuing, load:
+When resolving a controller/domain selection, load only the control-plane authority needed to resolve it:
 - `config/INTENT_RESOLUTION_POLICY.json`;
 - `config/SESSION_INTERACTION_POLICY.json`;
 - `config/AGENT_REGISTRY.json`;
 - `state/TASK_INDEX.json`;
-- the selected `state/tasks/<task>.json`.
+- the selected controller/router metadata when applicable.
 
-There is one cross-domain parent controller: UAOS. Business repositories own domain methods, fine-grained business state, Canon/media/data and artifacts for normal execution. They do not own cross-chat controller state or parent governance policy.
+There is one cross-domain parent controller: UAOS. Business repositories own domain methods, fine-grained business state, Canon/media/data and artifacts for normal execution. They do not own cross-chat parent-controller policy.
+
+UAOS is the control/governance plane, not a mandatory business gateway. After a domain is selected, normal business execution happens directly under that domain authority using its current business repository. Parent guidance/upcall is invoked only when escalation conditions actually require parent-level diagnosis, scope arbitration, cross-domain coordination or common-governance change.
 
 ## Hierarchical authority and mutation admission
 
@@ -69,7 +73,7 @@ The relationship is hierarchical, not symmetric peer isolation:
 - `DOMAIN:X -> UAOS`: direct authoritative mutation blocked;
 - `DOMAIN:X -> DOMAIN:Y`: direct authoritative mutation blocked.
 
-Parent governance is not permission to write a child blindly. UAOS must read the current child authority and preserve business-specific validation. A child can request parent guidance at any time without receiving parent write authority.
+Parent governance is not permission to write a child blindly and does not make UAOS the child's normal business executor. UAOS must read the current child authority and preserve business-specific validation. A child can request parent guidance at any time without receiving parent write authority or surrendering its own business-task ownership.
 
 `src/uaos/execution/authority.py` mechanically enforces same-owner and registered ancestor-to-descendant admission when the hierarchy map is bound. `config/AGENT_REGISTRY.json` exposes each domain's `parent_authority`; `AgentLinkRegistry.authority_parent_map()` supplies the mapping. Approval never overrides hierarchy.
 
@@ -88,7 +92,7 @@ All registered domains inherit `config/COMMON_CAPABILITIES.json`, including:
 - inherited-session progress reporting;
 - version/timestamp provenance.
 
-This is reuse, not duplication. Domain repositories keep business methods/state/learning/artifacts. They must not create a second controller, task index, continuation plane, requirement registry, evolution catalog, architecture-advisor plane or parent-guidance controller.
+This is reuse, not duplication and not mandatory per-turn proxying. Domain repositories keep business identity, methods, state, learning and artifacts. They must not create a second parent controller, cross-domain task index, continuation plane, global requirement registry, evolution catalog, architecture-advisor plane or parent-guidance controller.
 
 ## Adaptive deliberation and parent guidance
 
@@ -106,9 +110,11 @@ Use a micro -> macro -> micro loop: reproduce the concrete symptom, ask whether 
 
 Same-model self-critique/refinement/debate may generate candidates but is not automatically independent evidence. Do not run debate, architecture search or extra Agents as ritual. External patterns are candidate mechanisms: extract the relevant property, fit/misfit, costs/failure modes and minimum useful borrowing; popularity or names never become authority.
 
+For material architecture/governance changes, and for any material change after a trigger such as user correction, repeated failure or architecture gap, `config/DELIBERATION_POLICY.json` is a fail-closed admission gate: construct current signals, run `assess_deliberation`, satisfy every required escalation dimension before mutation/promotion, and do not report the incident resolved until an authority-wide contradiction scan and final-tree verification succeed.
+
 Delegated work may carry a bounded `GovernanceFrame` inside the existing `ContextPacket`: parent goal, local-goal linkage, non-goals, invariants, autonomy bounds, escalation conditions, stop conditions and verification expectations.
 
-A selected child may issue `ParentUpcall` with problem/evidence/unknowns/requested outcome. UAOS returns `ParentGuidance` without automatically replacing the selected child task authority. Parent guidance may diagnose, replan, request external research/verification or decide that a parent-governed descendant change is required.
+A selected child may issue `ParentUpcall` with problem/evidence/unknowns/requested outcome. UAOS returns `ParentGuidance` without replacing the selected child task authority. Parent guidance may diagnose, replan, request external research/verification or decide that a parent-governed descendant change is required.
 
 ## Domain execution admission
 
@@ -132,21 +138,21 @@ Normal execution must not use retired controller repositories, old continuity pr
 
 Historical evidence is a cold forensic path through Git history. It may be accessed only for an explicit historical/forensic question and never overrides current authority.
 
-Search presence is not authority. Retrieval starts from `config/SYSTEM_MAP.json` -> registry -> task -> current Skill/manifest/adapter chain.
+Search presence is not authority. Retrieval starts from `config/SYSTEM_MAP.json` -> registry -> selected domain/controller metadata -> current Skill/manifest/adapter chain.
 
 ## Continuation
 
-- exact current task id/project identity wins when the user clearly provides one;
+- exact current task/project identity wins when the user clearly provides one;
 - otherwise resolve intent/domain/task semantics before consulting aliases;
-- each domain may have at most one default-resume task;
-- a domain-level continuation selects that one default task without requiring a literal alias match;
+- each domain may have at most one default-resume selector entry;
+- a domain-level continuation selects that one default entry without requiring a literal alias match;
 - a target-less generic inheritance request opens the selector;
 - multiple non-default tasks are never merged;
 - time-sensitive work is revalidated against current time/business semantics before material execution;
-- current controller progress is stored under `state/tasks/`, while domain business progress remains in its declared domain authority;
-- before executing a continued domain task, reread the domain business authority named by the current task state; cached `next_action` is a pointer, not permission to ignore fresher business state.
+- current parent-controller progress is stored under `state/tasks/`, while domain business progress and identity remain in declared domain authority;
+- before executing a continued domain task, reread the domain business authority named or referenced by current controller metadata; cached `next_action` is a pointer, not permission to ignore fresher business state.
 
-For the Financial Writing domain, `financial-writing:main` is a router rather than an article task. A normal new article gets a new UAOS `task_type=article` identity and a Financial `STATE.json` with the same task id; explicit historical resume adopts/creates that exact UAOS article identity before material mutation and never rewrites historical receipts.
+For the Financial Writing domain, `financial-writing:main` is a UAOS selector/router entry, not an article task. In a fresh chat, selecting Financial Writing activates `DOMAIN:financial_writing` directly. A normal new article is created and identified by Financial Writing itself. UAOS may retain only an opaque Financial article/state reference when parent continuity actually needs one; it must not create a prerequisite parent article identity, require ID equality or proxy normal writing turns. Explicit historical resume resolves the exact Financial-owned article reference and never rewrites historical receipts.
 
 For the video domain, the current default project is the active original-digital-IP incubation task; the older video-growth program is explicit-only.
 
@@ -187,7 +193,9 @@ The Assurance layer already distinguishes declaration/structural/deterministic/s
 Governed self-evolution follows:
 `Incident -> Failure Class -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep / Rollback / Retire`.
 
-Before a material system proposal is promoted, apply adaptive deliberation when trigger signals exist. Repeated failure must challenge the governing abstraction instead of adding another local guarantee. A new mechanism states overlap, replacement/retirement, new failure modes, rollback and complexity delta.
+Before a material system proposal is promoted, adaptive deliberation is mandatory when trigger signals exist. Repeated failure must challenge the governing abstraction instead of adding another local guarantee. A new mechanism states overlap, replacement/retirement, new failure modes, rollback and complexity delta.
+
+Evolution closure is authority-wide, not file-local. Before reporting `RESOLVED`, scan every current top-level authority that can encode the changed semantic (including `ENTRYPOINT.md`, `CURRENT_SYSTEM.json`, relevant session/binding/authority policy, controller/router state and affected domain binding) and reconcile contradictions. Reproducible evaluation must run on the final candidate tree, followed by post-promotion observation on production authority.
 
 For `CHATGPT_GITHUB` maintenance, durable evolution records live under `state/evolution/`. Surface real lifecycle state; do not claim evolution merely because an edit resembles it.
 
@@ -203,7 +211,7 @@ Both hosts share controller semantics. They are persistence adapters, not separa
 
 UAOS core does not require account-level Custom Instructions. A completely fresh ordinary ChatGPT conversation still needs the host to inject the bootstrap or one stable account pointer to this repository.
 
-For deterministic fresh-chat use, use only the pointer at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`; it is bootstrap-only and non-authoritative.
+For deterministic fresh-chat use, use only the pointer at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`; it is bootstrap-only and non-authoritative. The bootstrap may present the current selector and load the selected domain directly; it must not force the user through a persistent UAOS controller conversation before using that registered child Agent.
 
 ## GitHub material writes
 
