@@ -1,5 +1,5 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261015-DOMAIN-INTERNAL-ORCHESTRATION-VIDEO-UNIFICATION",
   "status":"EVALUATING",
   "trigger":[
@@ -11,15 +11,15 @@
   "scope":{
     "parent":"D1traverser-debug/universal-agent-os",
     "reference_child":"D1traverser-debug/video-growth-agent",
-    "parent_candidate_release":"2.5.0",
-    "parent_common_contract_candidate":"1.6.0",
-    "child_target_release":"0.6.0"
+    "parent_candidate_release":"2.5.1",
+    "parent_common_contract":"1.6.0",
+    "child_release":"0.6.0"
   },
   "initial_findings":[
-    "Video Growth Agent already claims AI-video production, growth systems and original digital-IP incubation as one domain, while the ai-self-media-commercialization package is isolated as a future-import reference package despite already containing account positioning, monetization and advertiser strategy.",
-    "UAOS currently mirrors two Video business identities/cursors, video:ai-self-media-commercialization and video-growth:main, while the child repository separately owns projects/ai-self-media-commercialization and projects/pilot-002 business state.",
-    "The existing AgenticStudio supports coarse wave concurrency and review panels but readiness requires all lower-wave work to complete, so it cannot express explicit partial dependencies or general competitive/adjudication relations.",
-    "The existing specialist model correctly forbids peer chat and uses artifact handoffs; the missing abstraction is an explicit domain-owned work graph rather than more persistent agents."
+    "Video Growth Agent already claims AI-video production, growth systems and original digital-IP incubation as one domain, while the ai-self-media-commercialization package was isolated as a future-import reference package despite already containing account positioning, monetization and advertiser strategy.",
+    "UAOS mirrored two Video business identities/cursors, video:ai-self-media-commercialization and video-growth:main, while the child repository separately owned projects/ai-self-media-commercialization and projects/pilot-002 business state.",
+    "The previous AgenticStudio supported coarse wave concurrency and review panels but readiness required all lower-wave work to complete, so it could not express explicit partial dependencies or general competitive/adjudication relations.",
+    "The specialist model correctly forbade peer chat and used artifact handoffs; the missing abstraction was an explicit domain-owned work graph rather than more persistent agents."
   ],
   "deliberation_evidence":{
     "MICRO_DIAGNOSIS":[
@@ -39,9 +39,9 @@
       "rejected: UAOS should keep a mirrored task identity/state for every child Video project"
     ],
     "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH":[
-      "OpenAI agent orchestration guidance: manager-style orchestration is appropriate when one owner must preserve unified control while specialized agents/tools execute bounded tasks",
-      "OpenAI practical multi-agent guidance: split specialists for meaningful instruction/tool/policy differences rather than cosmetic roles",
-      "Anthropic multi-agent research architecture: orchestrator-worker decomposition enables parallel breadth/depth work when tasks are independently scoped, with explicit guardrails and synthesis"
+      "manager-style orchestration is appropriate when one owner must preserve unified control while specialized workers execute bounded tasks",
+      "specialists should be split for meaningful instruction/tool/policy/context differences rather than cosmetic roles",
+      "orchestrator-worker decomposition enables parallel breadth/depth work when tasks are independently scoped, with explicit guardrails and synthesis"
     ],
     "COUNTEREXAMPLE_SEARCH":[
       "a single global wave number over-serializes C when C depends on A but not on unfinished B",
@@ -53,13 +53,19 @@
   "candidate_design":{
     "parent_common_capability_contract":"1.6.0",
     "requirements_delta":"docs/requirements/FROZEN_REQUIREMENTS_v2.0.md",
-    "new_common_capability":"domain_internal_work_orchestration",
+    "common_capability":"domain_internal_work_orchestration",
     "child_business_owner":"VIDEO_GROWTH_AGENT",
     "child_program_workstreams":["MEDIA_GROWTH","ORIGINAL_DIGITAL_IP","COMMERCIALIZATION","PRODUCTION_SYSTEM"],
     "coordination_patterns":["SERIAL_DEPENDENCY","INDEPENDENT_PARALLEL","FAN_OUT_FAN_IN","CONSULTATIVE_ADVICE","COMPETITIVE_CANDIDATES","STRUCTURED_CRITIQUE_AND_REVISION","OWNER_ADJUDICATION","QUORUM_OR_PANEL_REVIEW"],
     "negotiation_model":"BOUNDED_ARTIFACT_ROUNDS_NOT_PEER_CHAT",
     "parent_video_end_state":"ONE_DOMAIN_ROUTER_WITH_OPTIONAL_OPAQUE_CHILD_REF__NO_PARENT_BUSINESS_PROJECT_CURSOR",
     "new_parent_microscheduler":false
+  },
+  "observed_evidence":{
+    "parent_common_release":{"release":"2.5.0","common_contract":"1.6.0","main_commit":"cae1e4490de0d07060bd0a852d1501515c89fdab","production_ci_run":38618870783,"result":"PASS"},
+    "video_candidate":{"release":"0.6.0","pr":11,"head":"b9562b267321db957e229bd248e68cea36a7cf75","candidate_ci_run":38620264083,"result":"PASS"},
+    "video_production":{"main_commit":"2f2e45eed9175499c86081d00c080e4e7cf9d11f","production_ci_run":38622448588,"result":"PASS","verified_steps":["system hygiene audit","pytest","installed CLI smoke"]},
+    "parent_router_candidate":{"branch":"maintenance/video-router-collapse-20261015","expected_end_state":"video:main only; old parent Video business mirrors physically absent","result":"PENDING_PARENT_CI"}
   },
   "promotion_order":[
     "validate and promote UAOS 2.5.0/common 1.6 first",
@@ -79,6 +85,6 @@
     "final UAOS Video state is a router only, not a duplicate business registry",
     "parent and child candidate and production CI pass"
   ],
-  "assurance":"EVALUATING__PARENT_COMMON_CONTRACT_CANDIDATE_IN_PROGRESS",
-  "updated_at":"2026-10-15T02:26:00+08:00"
+  "assurance":"CHILD_0_6_0_PRODUCTION_VERIFIED__PARENT_ROUTER_COLLAPSE_CANDIDATE_PENDING_CI",
+  "updated_at":"2026-10-15"
 }
