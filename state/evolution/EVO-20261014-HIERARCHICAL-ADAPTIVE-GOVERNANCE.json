@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "evolution_id": "EVO-20261014-HIERARCHICAL-ADAPTIVE-GOVERNANCE",
-  "status": "APPROVED_FOR_PROMOTION",
+  "status": "OBSERVING",
   "trigger": "USER_CORRECTION_AND_PARENT_ARCHITECTURE_AUDIT",
   "opened_at": "2026-10-14T09:43:41Z",
   "incidents": [
@@ -29,15 +29,15 @@
   "proposal": {
     "proposal_id":"CP-HIERARCHICAL-ADAPTIVE-GOVERNANCE-001",
     "title":"Restore hierarchical parent governance and add adaptive evidence-driven deliberation",
-    "state":"APPROVED",
+    "state":"PROMOTED",
     "target_scope":"UAOS_COMMON_CONTROL_PLANE",
     "failure_class_ids":["FC-ADAPTIVE-DELIBERATION-001","FC-HIERARCHICAL-AUTHORITY-002","FC-STRATEGIC-ALIGNMENT-001"],
     "added_mechanisms":["A bounded GovernanceFrame inside the existing ContextPacket","ParentUpcall/ParentGuidance contracts that preserve the child task context","A small Control-Kernel adaptive deliberation directive that escalates evidence/method depth from current risk signals rather than fixed questions","A DELIBERATION_POLICY describing dynamic framing, external method search, counterexample and independent-verification escalation","Hierarchy-aware AuthorityScopeGate permitting explicit ancestor-to-registered-descendant governance writes with governance basis","Architecture fitness/anti-bloat requirements and updated assurance lineage"],
     "replaced_mechanisms":["Same-owner-only mutation as the universal parent/child rule","Handoff/context-switch as the only way for a child to obtain parent system guidance","Implicit reliance on first-pass internal architecture framing"],
     "retired_mechanisms":["The v1.3 blanket prohibition on UAOS -> domain direct mutation"],
-    "why_not_reuse":"Existing Task/Requirement/Topology/Context/Assurance/Evolution layers are extended instead of adding a new supervisor subsystem. ContextPacket metadata lacked typed goal/invariant/escalation semantics, AuthorityScopeGate could not express ancestry, and evolution gates did not select epistemic escalation before a premature solution was promoted.",
+    "why_not_reuse":"Existing Task/Requirement/Topology/Context/Assurance/Evolution layers were extended instead of adding a new supervisor subsystem. ContextPacket metadata lacked typed goal/invariant/escalation semantics, AuthorityScopeGate could not express ancestry, and evolution gates did not select epistemic escalation before a premature solution was promoted.",
     "retirement_rationale":"The proposal removes an over-restrictive 2.3 rule and extends existing kernel contracts. It does not add a parallel controller, architecture-agent, debate-agent or verification-agent hierarchy.",
-    "rollback_plan":"Revert the release commit, restore same-owner-only gate and prior ContextPacket API, retain v1.4/evolution evidence with the proposal marked ROLLED_BACK, and re-evaluate the hierarchy/deliberation contract.",
+    "rollback_plan":"Revert release commit a59a13ff97edbc78ec6d1eed35541221bafa6a34, restore same-owner-only gate and prior ContextPacket API, retain v1.4/evolution evidence as rolled back, and re-evaluate the hierarchy/deliberation contract.",
     "expected_benefit":"UAOS can keep descendant work on the main track, children can obtain parent guidance without abandoning their task, and system changes are less likely to be driven by the first plausible framing or repeated local patch accumulation.",
     "new_failure_modes":["Parent governance could become over-centralized if governance_basis/domain-aware impact checks are treated as boilerplate rather than real evidence.","Deliberation could become expensive or recursive if triggers do not terminate after sufficient evidence.","External architecture research could become cargo-cult adoption if properties/fit/rejections are not recorded.","Same-model reflection could be mistaken for independent evidence unless assurance levels remain explicit."],
     "required_scenarios":["Low-risk familiar local work does not automatically trigger external architecture research or debate.","A material user correction triggers micro diagnosis, macro alignment and counterexample challenge before promotion.","An architecture/method gap requires external research beyond the current internal framing.","A high-risk or materially conflicting case requires independent-verification evidence when available, otherwise an explicit assurance ceiling.","Same-model self-critique alone cannot satisfy independent-review assurance.","A child can issue a parent upcall and receive guidance without changing its selected task authority.","Parent guidance can request replan/scope/evidence changes while preserving child business ownership.","UAOS can mutate a registered descendant when hierarchy and governance_basis are explicit.","UAOS descendant mutation without governance_basis fails closed.","Child -> UAOS authoritative mutation remains blocked.","Sibling-domain authoritative mutation remains blocked.","Delegated ContextPacket can carry bounded parent-goal linkage, non-goals, invariants, autonomy/escalation/stop and verification expectations.","A new mechanism is rejected or challenged when it has no overlap/retirement rationale."],
@@ -46,20 +46,22 @@
   "evaluation": {
     "evaluation_id":"EVAL-HIERARCHICAL-ADAPTIVE-GOVERNANCE-001",
     "proposal_id":"CP-HIERARCHICAL-ADAPTIVE-GOVERNANCE-001",
-    "state":"PASSED",
-    "scenario_count":13,
-    "passed_count":13,
-    "regression_failures":[],
+    "state":"PASSED","scenario_count":13,"passed_count":13,"regression_failures":[],
     "evidence_refs":["tests/execution/test_authority_scope.py","tests/test_hierarchical_deliberation.py","local isolated pytest: 13 passed in 0.04s","src/uaos/evolution/gates.py promotion assessment: approved=true, reasons=[]","src/uaos/assurance/gate.py independent-review semantics retained"],
     "assurance":"TARGETED_DETERMINISTIC_LOCAL_EVAL__HOSTED_FULL_REPOSITORY_CI_STILL_BLOCKED"
   },
   "promotion": {
-    "authorization":"APPROVED",
-    "reasons":[],
-    "action_route":"UAOS_CONTROLLER_GITHUB_CAS_RELEASE_COMMIT",
-    "owner_context":"UAOS",
-    "release_commit":null
+    "authorization":"APPROVED","reasons":[],"action_route":"UAOS_CONTROLLER_GITHUB_CAS_RELEASE_COMMIT","owner_context":"UAOS","release_commit":"a59a13ff97edbc78ec6d1eed35541221bafa6a34"
   },
-  "post_promotion_observation":null,
-  "updated_at":"2026-10-14T09:46:00Z"
+  "post_promotion_observation": {
+    "observation_id":"OBS-HIERARCHICAL-ADAPTIVE-GOVERNANCE-001",
+    "proposal_id":"CP-HIERARCHICAL-ADAPTIVE-GOVERNANCE-001",
+    "healthy":true,
+    "observed_at":"2026-10-14T09:56:35Z",
+    "evidence_refs":["CURRENT_SYSTEM.json reread: release 2.4.0 and requirements v1.0-v1.4","config/AUTHORITY_WRITE_POLICY.json reread: hierarchical fail-closed policy","config/DELIBERATION_POLICY.json reread: dynamic evidence/method escalation","src/uaos/execution/authority.py reread: registered-ancestry governance basis gate","src/uaos/contracts/context.py reread: GovernanceFrame + ParentUpcall + ParentGuidance","config/AGENT_REGISTRY.json reread: UAOS parent for all registered domains","docs/assurance/PRODUCTION_READINESS.json reread: v1.4 targeted assurance and open gaps","targeted deterministic evaluation: 13/13 passed"],
+    "open_assurance_gaps":["GitHub Actions run 38546027975 failed before runner allocation (runner_id=0, steps=[]), so hosted full-repository CI remains unverified","ParentUpcall and parent-governed descendant contracts require live child-runtime integration evidence before claiming end-to-end coverage","Raw ChatGPT GitHub connector calls remain outside Python ActionCoordinator interception; full physical repository enforcement requires host/repository-scoped controls"],
+    "recommendation":"KEEP_OBSERVING",
+    "assurance":"TARGETED_VERIFIED__HOSTED_FULL_CI_AND_LIVE_CHILD_INTEGRATION_OPEN"
+  },
+  "updated_at":"2026-10-14T09:56:35Z"
 }
