@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.2",
-  "policy_version":"1.2.0",
+  "schema_version":"1.3",
+  "policy_version":"1.3.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T15:20:00Z",
+  "updated_at":"2026-10-14T15:46:00Z",
   "context_model":{
     "controller":"UAOS",
     "domain_format":"DOMAIN:<domain_id>",
@@ -15,7 +15,7 @@
     "rules":[
       "Every mutating ExecutionRequest must declare target_authority.",
       "ActionCoordinator or the host-equivalent decision layer must be bound to the selected authority_context.",
-      "Same-authority mutation is permitted only subject to normal action/approval/concurrency controls and host enforcement.",
+      "Same-authority mutation is permitted only subject to owner rules, normal action/approval/concurrency controls and host enforcement.",
       "A registered ancestor may mutate a descendant only when the hierarchy is known and the request carries a non-empty governance_basis.",
       "UAOS parent-governed descendant changes must read current domain binding/business authority, perform impact analysis and preserve domain-specific validation; governance_basis is lineage, not a bypass.",
       "DOMAIN:X -> UAOS direct authoritative mutation is prohibited.",
@@ -40,33 +40,36 @@
   "host_enforcement":{
     "principle":"REFERENCE_MONITOR_STYLE_COMPLETE_MEDIATION",
     "policy_decision_layer":"UAOS_ACTION_COORDINATOR_OR_HOST_EQUIVALENT",
-    "policy_enforcement_requirement":"EVERY_PRODUCTION_MUTATION_PATH_MUST_TRAVERSE_A_NON_BYPASSABLE_ENFORCEMENT_POINT_OR_BE_PHYSICALLY_UNABLE_TO_WRITE_PRODUCTION",
+    "policy_enforcement_requirement":"EVERY_REGISTERED_PRODUCTION_REPOSITORY_MUTATION_PATH_MUST_TRAVERSE_A_NON_BYPASSABLE_ENFORCEMENT_POINT_OR_BE_PHYSICALLY_UNABLE_TO_WRITE_PRODUCTION",
     "chatgpt_github":{
       "raw_connector":"OUTSIDE_PYTHON_ACTION_COORDINATOR",
       "current_plugin_permission_observation":"APP_SPECIFIC_ALLOW_ALL_ACTIONS__NO_PREWRITE_CONFIRMATION",
-      "production_repository":"D1traverser-debug/universal-agent-os",
-      "production_branch":"main",
-      "required_remote_enforcement":"ACTIVE_GITHUB_RULESET",
-      "required_promotion_path":"CANDIDATE_BRANCH__PULL_REQUEST__PROMOTION_GATE__PROTECTED_MERGE",
-      "direct_main_mutation":"PROHIBITED_AFTER_RULESET_ACTIVATION",
+      "registered_production_repositories_source":"config/AGENT_REGISTRY.json plus UAOS controller repository",
+      "default_production_branch":"main",
+      "required_remote_enforcement":"ACTIVE_GITHUB_RULESET_OR_EQUIVALENT_PROTECTED_BRANCH_POLICY_PER_PRODUCTION_REPOSITORY",
+      "uaos_required_promotion_check":"promotion-gate",
+      "required_promotion_path":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_REQUIRED_CHECKS__PROTECTED_MERGE",
+      "direct_production_branch_mutation":"NOT_A_NORMAL_PRODUCTION_PATH",
       "required_ruleset_properties":[
-        "TARGET_MAIN",
+        "TARGET_PRODUCTION_BRANCH",
         "REQUIRE_PULL_REQUEST_BEFORE_MERGE",
-        "REQUIRE_STATUS_CHECK_PROMOTION_GATE",
+        "REQUIRE_OWNER_APPROPRIATE_STATUS_CHECKS_WHEN_AVAILABLE",
         "BLOCK_FORCE_PUSH",
         "BLOCK_BRANCH_DELETION",
         "NO_CHATGPT_GITHUB_APP_BYPASS"
-      ]
+      ],
+      "owner_preservation":"UAOS_REQUIRES_THE_COMMON_COMPLETE_MEDIATION_PROPERTY__EACH_DOMAIN_OWNS_ITS_REPOSITORY_SPECIFIC_CHECKS_RELEASE_AND_BUSINESS_VALIDATION"
     },
-    "assurance_rule":"DECLARED_POLICY_IS_NOT_REMOTE_ENFORCEMENT_EVIDENCE__VERIFY_ACTUAL_HOST_STATE"
+    "assurance_rule":"DECLARED_POLICY_IS_NOT_REMOTE_ENFORCEMENT_EVIDENCE__VERIFY_ACTUAL_HOST_STATE_FOR_EACH_REGISTERED_PRODUCTION_REPOSITORY"
   },
   "promotion_concurrency":{
     "candidate_branch_updates":"CAS_OR_NORMAL_BRANCH_CONCURRENCY_CONTROLS_ALLOWED",
-    "production_main":"MERGE_THROUGH_HOST_ENFORCEMENT_POINT__DIRECT_CAS_UPDATE_RETIRED_AS_NORMAL_PROMOTION_PATH",
+    "production_branch":"MERGE_THROUGH_HOST_ENFORCEMENT_POINT__DIRECT_CAS_UPDATE_RETIRED_AS_NORMAL_PROMOTION_PATH",
     "cas_semantics":"CAS_PREVENTS_STALE_OVERWRITE_BUT_IS_NOT_AN_AUTHORIZATION_OR_POLICY_ENFORCEMENT_BOUNDARY"
   },
   "resolution_semantics":{
     "known_unmediated_production_bypass":"BLOCK_RESOLVED",
+    "system_wide_claim_requires":"NO_KNOWN_UNMEDIATED_PRODUCTION_PATH_ACROSS_UAOS_AND_REGISTERED_DOMAIN_REPOSITORIES_IN_SCOPE",
     "allowed_intermediate_states":[
       "REOPENED",
       "LOGICALLY_MITIGATED__PHYSICAL_ENFORCEMENT_PENDING",
