@@ -3,7 +3,16 @@ name: ci
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'state/evolution/**'
+      - 'docs/assurance/**'
+      - 'README.md'
   pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: uaos-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -12,10 +21,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 2
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Install
