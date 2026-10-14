@@ -33,7 +33,7 @@ def test_old_controller_is_not_an_agent_authority():
     assert all(a.repository != "D1traverser-debug/universal-continuity-agent" for a in registry().agents)
 
 
-def test_aliases_resolve_current_agents_and_tasks():
+def test_aliases_resolve_current_agents_and_domain_routers():
     r = registry()
     assert r.resolve_agent("NOVEL_OS").agent_id == "novel"
     assert r.resolve_agent("A_SHARE_MARKET_AGENT").agent_id == "ashare"
@@ -41,6 +41,8 @@ def test_aliases_resolve_current_agents_and_tasks():
     assert r.resolve_task("原创数字IP设计").task_id == "video:main"
     assert r.resolve_task("video:ai-self-media-commercialization").task_id == "video:main"
     assert r.resolve_task("video-growth:main").task_id == "video:main"
+    assert r.resolve_task("荐股系统").task_id == "ashare:main"
+    assert r.resolve_task("ashare:recommendation").task_id == "ashare:main"
 
 
 def test_video_domain_has_one_default_parent_router_not_parent_business_projects():
@@ -52,6 +54,17 @@ def test_video_domain_has_one_default_parent_router_not_parent_business_projects
     assert [task.task_id for task in defaults] == ["video:main"]
     assert r.resolve_task("Pilot 002").task_id == "video:main"
     assert r.resolve_task("AI自媒体视频商业化与原创数字IP").task_id == "video:main"
+
+
+def test_ashare_domain_has_one_default_parent_router_not_market_day_business_tasks():
+    r = registry()
+    ashare_tasks = [task for task in r.tasks if task.domain_id == "ashare"]
+    defaults = [task for task in ashare_tasks if task.default_resume_within_domain]
+
+    assert [task.task_id for task in ashare_tasks] == ["ashare:main"]
+    assert [task.task_id for task in defaults] == ["ashare:main"]
+    assert r.resolve_task("A股荐股").task_id == "ashare:main"
+    assert r.resolve_task("盘前荐股").task_id == "ashare:main"
 
 
 def test_unknown_agent_and_task_fail_closed():
