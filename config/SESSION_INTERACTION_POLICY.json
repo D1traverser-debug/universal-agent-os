@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.3",
-  "policy_version":"1.3.0",
+  "schema_version":"1.4",
+  "policy_version":"1.4.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T13:48:00Z",
+  "updated_at":"2026-10-14T15:30:00Z",
   "bare_inheritance_selector":{
     "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option":{"option_id":"uaos:controller","display_name_zh":"总控系统","intent":"SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY","creates_business_task":false,"authority_context":"UAOS"},
@@ -41,11 +41,27 @@
     "hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS",
     "parent_upcall_rule":"A child may invoke UAOS guidance without replacing the selected child task authority; parent consultation is not a hidden child privilege escalation."
   },
+  "always_on_mutation_sentinel":{
+    "required":true,
+    "scope":"BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT",
+    "policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
+    "checks":[
+      "resolve selected authority context",
+      "resolve target authority/resource and whether it is production authority",
+      "classify read-only versus mutation",
+      "verify the proposed mutation path passes the required policy-enforcement point or cannot write production",
+      "collect trigger signals and invoke adaptive deliberation when required"
+    ],
+    "production_rule":"CHATGPT_GITHUB material production changes use candidate branch -> pull request -> required promotion check -> protected merge; direct-main mutation is not a normal production path.",
+    "depth_rule":"SENTINEL_ALWAYS_ON__DEEP_DELIBERATION_TRIGGERED_ONLY",
+    "failure_rule":"If the required production enforcement point is absent or unverifiable, do not claim physically enforced resolution."
+  },
   "adaptive_deliberation":{
     "policy_ref":"config/DELIBERATION_POLICY.json",
     "visibility":"REPORT_WHEN_MATERIALLY_TRIGGERED",
     "rule":"Report the actual escalation used (for example macro alignment, external research, counterexample or independent verification) rather than claiming generic self-reflection.",
-    "material_change_admission":"FAIL_CLOSED_PER_DELIBERATION_POLICY_BEFORE_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_MUTATION"
+    "material_change_admission":"FAIL_CLOSED_PER_DELIBERATION_POLICY_BEFORE_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_MUTATION",
+    "relationship_to_sentinel":"The mutation sentinel is always-on and lightweight; adaptive deliberation increases epistemic depth only when current signals require it."
   },
   "inherited_session_progress_report":{
     "scope":"EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
@@ -57,6 +73,6 @@
     "version_rule":"Report system/domain/task version identities that materially govern the current action. Schema version alone is not a release version.",
     "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id; otherwise report NO_EVOLUTION_TRIGGER.",
     "deliberation_rule":"When adaptive deliberation materially changed the path, report which escalation dimensions were used; do not expose private chain-of-thought or fabricate independent review.",
-    "assurance_rule":"If progress, authority scope, deliberation/evolution state or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
+    "assurance_rule":"If progress, authority scope, deliberation/evolution state, host-enforcement state or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
   }
 }
