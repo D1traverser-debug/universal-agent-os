@@ -1,37 +1,63 @@
 {
   "snapshot_date":"2026-10-14",
-  "status":"PARENT_CORE_BASELINE_COMPLETE__FINANCIAL_EXTERNAL_BINDING_VERIFIED",
+  "status":"UAOS_2_4_3_CANDIDATE__DIRECT_DOMAIN_AND_COGNITIVE_ADMISSION_VERIFIED_PENDING_FINAL_PROMOTION_OBSERVATION",
   "requirements_authority":[
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.2.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.3.md",
-    "docs/requirements/FROZEN_REQUIREMENTS_v1.4.md"
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.4.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.5.md"
   ],
-  "system_release_version":"2.4.2",
+  "system_release_version":"2.4.3",
   "mandatory_external_services":[],
   "local_integrated_test_status":"PASS",
   "verification":{
-    "phase0_18_prior_baseline":"PASS_RETAINED",
-    "parent_2_4_1_post_promotion_ci":{"run_id":38551611820,"status":"PASS"},
-    "financial_binding_candidate_ci":{"run_id":38554440824,"status":"PASS","note":"parent full suite passes after retiring in-repo Financial business package and migrating Financial E2E to external binding"},
-    "financial_child_candidate_ci":{"run_id":38554338677,"status":"PASS","pytest":"109 passed","wheel_smoke":"PASS","docx_render_smoke":"PASS"},
-    "financial_child_release_commit":"16045dcc86832eacc21a512e680e53a5e3b6d476",
-    "financial_child_post_promotion_ci":{"run_id":38554916033,"main_commit":"88f1b7b6c490e334908c9eddbf062bbd4648c034","status":"PASS"},
-    "financial_child_current_main":"937cdd6b6612e3bcacaa434fdba4511071ca8064",
-    "financial_child_package_version":"0.8.2",
-    "financial_child_capability_profile_version":14,
-    "uaos_2_4_2_release_commit":"4bfbbfd13d1856d0b8e204309d4a53402a9bffe1",
-    "uaos_2_4_2_post_promotion_ci":{"run_id":38555334791,"status":"PASS"}
+    "prior_parent_baseline":"PASS_RETAINED",
+    "financial_child_release":"0.8.3",
+    "financial_child_release_commit":"289e8d6fa1d27613e5fd3c5f9dceecfa9d89b954",
+    "financial_child_current_main":"0c1c0e1fc23301d5aa488026e66ab411663104c2",
+    "financial_child_candidate_ci":{"run_id":38567735219,"status":"PASS","pytest":"101 passed","contract_eval":"PASS","static_audit":"PASS","wheel_smoke":"PASS","docx_render_smoke":"PASS"},
+    "financial_child_post_promotion_ci":{"run_id":38568945008,"status":"PASS"},
+    "financial_child_closure_ci":{"run_id":38569198573,"status":"PASS"},
+    "financial_identity_semantics":"FINANCIAL_STATE_TASK_ID_IS_DOMAIN_OWNED_ARTICLE_IDENTITY__TASK_CONTRACT_IDENTITY_FREE__NO_PARENT_CHILD_ID_EQUALITY",
+    "uaos_financial_identity_decoupling_main_ci":{"run_id":38569471592,"status":"PASS"},
+    "uaos_financial_identity_decoupling_closure_ci":{"run_id":38569704289,"status":"PASS"},
+    "cognitive_direct_domain_candidate_ci":{"run_id":38578349417,"status":"PASS","note":"latest candidate head before final release-metadata alignment passed full repository CI"},
+    "cognitive_direct_domain_candidate_live":{"run_id":38578349647,"status":"PASS","postgres_authority":"PASS","dbos_identity_idempotency":"PASS","maintenance_schedule":"PASS","crash_recovery":"PASS","s3_http_roundtrip":"PASS","openai_provider":"SKIPPED_BY_DESIGN"},
+    "external_architecture_evidence":[
+      "Kubernetes control-plane versus worker/workload separation: borrowed only the property that governance/control does not imply per-request workload proxying",
+      "Erlang/OTP supervisor versus worker separation: borrowed only the property that parent supervision does not replace child execution ownership"
+    ],
+    "authority_wide_scan_surfaces":[
+      "ENTRYPOINT.md",
+      "CURRENT_SYSTEM.json",
+      "AGENTS.md",
+      "config/SESSION_INTERACTION_POLICY.json",
+      "config/BINDING_POLICY.json",
+      "config/DELIBERATION_POLICY.json",
+      "config/COMMON_CAPABILITIES.json",
+      "state/TASK_INDEX.json",
+      "state/tasks/financial-writing-main.json",
+      "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+      "financial-writing-agent@main:UAOS_SKILL.md",
+      "docs/assurance/PRODUCTION_READINESS.json"
+    ]
   },
-  "parent_core_open_work":[],
+  "parent_core_open_work":[
+    {
+      "id":"P1",
+      "item":"POST_PROMOTION_OBSERVATION_FOR_2_4_3_FINAL_TREE",
+      "status":"PENDING_UNTIL_PRODUCTION_MAIN_CI_AFTER_CAS_PROMOTION"
+    }
+  ],
   "financial_integration_open_work":[],
   "deferred_work":[
     {
       "id":"D1",
       "scope":"OTHER_OR_GENERIC_CHILD_INTEGRATION",
-      "item":"LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE_OUTSIDE_THE_VERIFIED_FINANCIAL_BINDING_PATH",
-      "reason":"Financial inheritance/binding is now explicitly verified; this deferred item no longer describes Financial usage."
+      "item":"LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE_OUTSIDE_THE_VERIFIED_FINANCIAL_ROUTING_PATH",
+      "reason":"Direct child-session topology is now governed generically; live end-to-end upcall evidence for every registered domain remains outside this Financial-focused verification."
     }
   ],
   "host_hardening":[
@@ -40,21 +66,23 @@
       "item":"GITHUB_MAIN_RULESET_OR_BRANCH_PROTECTION",
       "status":"NOT_CONFIGURED",
       "classification":"HOST_LEVEL_DEFENSE_IN_DEPTH",
-      "note":"Public outsiders do not receive repository write permission by default, but main is not protected against authorized writers/owner-level mistakes. Current connector exposes read but not ruleset/protection administration."
+      "note":"Public outsiders do not receive repository write permission by default, but main is not protected against authorized writers/owner-level mistakes. Current connector does not expose ruleset/protection administration."
     },
     {
       "id":"H2",
       "item":"RAW_CHATGPT_GITHUB_CONNECTOR_PHYSICAL_SCOPE",
       "status":"HOST_LEVEL_LIMITATION",
-      "note":"Raw connector calls are outside Python ActionCoordinator interception; UAOS policy and CAS govern intended use, while physical credential/ruleset enforcement belongs to the host/repository layer."
+      "note":"Raw connector calls remain physically outside Python ActionCoordinator interception. UAOS 2.4.3 adds fail-closed host/session admission requirements and CI contradiction checks, but repository-scoped credentials/rulesets/tool mediation are still required for complete physical enforcement."
     }
   ],
   "known_limitations":[
     "same-model self-critique, refinement or debate is candidate-generation evidence and is not independent verification by itself",
+    "hosted CI/live runs provide independent execution evidence, not independent semantic architecture judgment",
     "S3 CI evidence uses a standalone HTTP protocol emulator and does not certify any eventual production bucket/provider configuration",
     "live OpenAI provider evidence is optional/manual and was not rerun because provider integration code is unchanged",
-    "Financial historical article receipts remain immutable; explicit resume adopts/creates the exact UAOS article identity instead of rewriting old receipts"
+    "raw native connector calls cannot be physically intercepted by the Python deliberation or ActionCoordinator gates",
+    "Financial historical article receipts remain immutable and explicit historical resume uses the exact Financial-owned article reference without parent identity adoption"
   ],
-  "readiness_semantics":"UAOS parent core remains healthy and Financial now has one external business authority with a mechanically validated UAOS article-task binding. Both the Financial 0.8.2 production main and UAOS 2.4.2 production main passed post-promotion CI. BINDING_POLICY no longer duplicates mutation hierarchy owned by AUTHORITY_WRITE_POLICY.",
-  "updated_at":"2026-10-14T11:17:00Z"
+  "readiness_semantics":"UAOS 2.4.3 candidate treats UAOS as parent control/governance plane rather than a mandatory child-business gateway. Registered children may activate directly in fresh chats; domain business identity/workflow/state remain domain-owned. Triggered material architecture/governance changes fail closed until required deliberation evidence exists, and evolution closure requires an authority-wide contradiction scan. Financial 0.8.3 is the verified child baseline and no same-ID parent/Financial article binding remains authoritative.",
+  "updated_at":"2026-10-14T14:15:00Z"
 }
