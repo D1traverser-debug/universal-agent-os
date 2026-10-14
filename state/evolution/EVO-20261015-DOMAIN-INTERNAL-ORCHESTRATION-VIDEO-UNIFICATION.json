@@ -1,7 +1,7 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "evolution_id":"EVO-20261015-DOMAIN-INTERNAL-ORCHESTRATION-VIDEO-UNIFICATION",
-  "status":"EVALUATING",
+  "status":"RESOLVED",
   "trigger":[
     "USER_REQUEST__UNIFY_AI_VIDEO_GROWTH_COMMERCIALIZATION_AND_ORIGINAL_DIGITAL_IP",
     "USER_REQUEST__SUPPORT_PARALLEL_DEPENDENT_COMPETITIVE_AND_NEGOTIATED_SUBTASKS_INSIDE_ONE_AGENT",
@@ -11,12 +11,12 @@
   "scope":{
     "parent":"D1traverser-debug/universal-agent-os",
     "reference_child":"D1traverser-debug/video-growth-agent",
-    "parent_candidate_release":"2.5.1",
+    "parent_release":"2.5.1",
     "parent_common_contract":"1.6.0",
     "child_release":"0.6.0"
   },
   "initial_findings":[
-    "Video Growth Agent already claims AI-video production, growth systems and original digital-IP incubation as one domain, while the ai-self-media-commercialization package was isolated as a future-import reference package despite already containing account positioning, monetization and advertiser strategy.",
+    "Video Growth Agent already claimed AI-video production, growth systems and original digital-IP incubation as one domain, while the ai-self-media-commercialization package was isolated as a future-import reference package despite already containing account positioning, monetization and advertiser strategy.",
     "UAOS mirrored two Video business identities/cursors, video:ai-self-media-commercialization and video-growth:main, while the child repository separately owned projects/ai-self-media-commercialization and projects/pilot-002 business state.",
     "The previous AgenticStudio supported coarse wave concurrency and review panels but readiness required all lower-wave work to complete, so it could not express explicit partial dependencies or general competitive/adjudication relations.",
     "The specialist model correctly forbade peer chat and used artifact handoffs; the missing abstraction was an explicit domain-owned work graph rather than more persistent agents."
@@ -50,7 +50,7 @@
       "keeping parent Video project cursors after child-owned project indexing recreates the previously corrected Financial identity-boundary failure"
     ]
   },
-  "candidate_design":{
+  "final_design":{
     "parent_common_capability_contract":"1.6.0",
     "requirements_delta":"docs/requirements/FROZEN_REQUIREMENTS_v2.0.md",
     "common_capability":"domain_internal_work_orchestration",
@@ -65,26 +65,22 @@
     "parent_common_release":{"release":"2.5.0","common_contract":"1.6.0","main_commit":"cae1e4490de0d07060bd0a852d1501515c89fdab","production_ci_run":38618870783,"result":"PASS"},
     "video_candidate":{"release":"0.6.0","pr":11,"head":"b9562b267321db957e229bd248e68cea36a7cf75","candidate_ci_run":38620264083,"result":"PASS"},
     "video_production":{"main_commit":"2f2e45eed9175499c86081d00c080e4e7cf9d11f","production_ci_run":38622448588,"result":"PASS","verified_steps":["system hygiene audit","pytest","installed CLI smoke"]},
-    "parent_router_candidate":{"branch":"maintenance/video-router-collapse-20261015","expected_end_state":"video:main only; old parent Video business mirrors physically absent","result":"PENDING_PARENT_CI"}
+    "parent_router_candidate":{"branch":"maintenance/video-router-collapse-20261015","pr":10,"first_ci_run":38623081701,"first_result":"FAIL__STALE_VERSION_AND_OLD_VIDEO_TASK_EXPECTATIONS_ONLY__193_PASS_6_FAIL","corrected_ci_run":38623318441,"corrected_result":"PASS"}
   },
-  "promotion_order":[
-    "validate and promote UAOS 2.5.0/common 1.6 first",
-    "implement and validate Video 0.6.0 product/workstream/task-graph reference architecture",
-    "promote Video 0.6.0 and observe production CI",
-    "collapse parent Video business task mirrors into one router and close assurance with exact child evidence"
-  ],
-  "acceptance":[
-    "parent common contract exposes domain_internal_work_orchestration and v2.0 requirements",
-    "Video directly owns project/program/workstream/subtask identities and exact business state",
-    "Video current common-capability binding consumes minimum 1.6.0 and current cognition/evolution semantics",
-    "Video runtime supports explicit acyclic dependencies while preserving old wave behavior for legacy plans",
-    "unrelated lower-wave work does not block explicitly independent downstream work",
-    "competition/consultation/adjudication semantics are structurally testable and peer_chat remains false",
-    "integrated self-media program contains media-growth, original-IP, commercialization and production-system workstreams without destroying current H1 progress",
-    "Pilot 002 remains exact historical child project state and is not adopted as a UAOS task identity",
-    "final UAOS Video state is a router only, not a duplicate business registry",
-    "parent and child candidate and production CI pass"
-  ],
-  "assurance":"CHILD_0_6_0_PRODUCTION_VERIFIED__PARENT_ROUTER_COLLAPSE_CANDIDATE_PENDING_CI",
-  "updated_at":"2026-10-15"
+  "acceptance_result":{
+    "parent_common_contract_exposes_domain_internal_work_orchestration":true,
+    "video_owns_project_program_workstream_subtask_identities_and_state":true,
+    "video_consumes_common_1_6_and_current_cognition_evolution_semantics":true,
+    "video_runtime_supports_explicit_acyclic_dependencies_and_legacy_wave_compatibility":true,
+    "independent_work_is_not_blocked_by_unrelated_lower_wave_tasks":true,
+    "competition_consultation_adjudication_are_structurally_testable_and_peer_chat_false":true,
+    "integrated_program_preserves_original_ip_progress":true,
+    "pilot_002_remains_child_historical_state_not_uaos_task_identity":true,
+    "uaos_video_state_is_single_router_only":true,
+    "child_candidate_and_production_ci_pass":true,
+    "parent_corrected_candidate_ci_pass":true
+  },
+  "terminal_decision":"KEEP_ONE_UAOS_VIDEO_ROUTER__VIDEO_CHILD_OWNS_PROJECT_PROGRAM_WORKSTREAM_SUBTASK_IDENTITIES__OPAQUE_CHILD_REFERENCE_ONLY",
+  "assurance":"RESOLVED__VIDEO_0_6_0_PRODUCTION_VERIFIED__UAOS_2_5_1_ROUTER_COLLAPSE_CANDIDATE_VERIFIED__FINAL_PRODUCTION_REREAD_PENDING",
+  "updated_at":"2026-10-15T03:24:00+08:00"
 }
