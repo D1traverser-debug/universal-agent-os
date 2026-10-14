@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
-Status: `ACTIVE_PRIMARY_CONTROLLER`
-System release: `2.4.3`
-Authority updated at: `2026-10-14T14:15:00Z`
+Status: `CANDIDATE_COMPLETE_MEDIATION`
+System release: `2.4.4`
+Authority updated at: `2026-10-14T15:33:00Z`
 
 ## Minimal bootstrap
 
@@ -13,6 +13,8 @@ For a fresh ChatGPT/session bootstrap load only:
 Then use `config/SYSTEM_MAP.json` for exact current locations. Do not preload domain repositories, historical Git commits, migration material or broad search results.
 
 Bootstrap is a control-plane initialization step, not a requirement that the user first enter or remain inside a UAOS controller conversation. Once a registered domain is selected, that domain becomes the current Agent/work plane for normal business execution.
+
+Before any external or durable mutation, apply the always-on mutation sentinel from `config/AUTHORITY_WRITE_POLICY.json` and `config/SESSION_INTERACTION_POLICY.json`. This sentinel is lightweight and always active; deeper deliberation is triggered only when current risk/evidence signals require it.
 
 ## Intent before state
 
@@ -67,7 +69,7 @@ The selected controller/domain is a real authority context:
 - domain: `DOMAIN:<domain_id>`.
 
 The relationship is hierarchical, not symmetric peer isolation:
-- `UAOS -> UAOS`: allowed subject to normal action/approval/CAS rules;
+- `UAOS -> UAOS`: allowed subject to normal action/admission and host-enforcement rules;
 - `DOMAIN:X -> DOMAIN:X`: allowed subject to domain-owner rules;
 - `UAOS -> registered DOMAIN:X`: allowed only as an explicit parent-governed change with known ancestry, non-empty `governance_basis`, fresh domain binding/business authority, impact analysis and domain-aware verification;
 - `DOMAIN:X -> UAOS`: direct authoritative mutation blocked;
@@ -77,7 +79,7 @@ Parent governance is not permission to write a child blindly and does not make U
 
 `src/uaos/execution/authority.py` mechanically enforces same-owner and registered ancestor-to-descendant admission when the hierarchy map is bound. `config/AGENT_REGISTRY.json` exposes each domain's `parent_authority`; `AgentLinkRegistry.authority_parent_map()` supplies the mapping. Approval never overrides hierarchy.
 
-Git branch/ruleset protection is defense-in-depth, not the parent/child authority model. On `CHATGPT_GITHUB`, a raw native connector call is outside Python `ActionCoordinator`; UAOS policy still forbids out-of-policy bypass, while full physical enforcement additionally requires repository-scoped credentials/tool mediation and/or GitHub rulesets.
+For production mutation safety, logical authority admission and physical host enforcement are distinct layers. On `CHATGPT_GITHUB`, raw connector calls are outside Python `ActionCoordinator`, so production `main` requires a GitHub host enforcement point. The normal production path is candidate branch -> pull request -> required `promotion-gate` -> protected merge. CAS is concurrency control, not authorization or complete mediation.
 
 ## Common capability inheritance
 
@@ -98,6 +100,8 @@ This is reuse, not duplication and not mandatory per-turn proxying. Domain repos
 
 `config/DELIBERATION_POLICY.json` defines epistemic escalation. It is not a fixed self-question checklist.
 
+The always-on mutation sentinel answers a narrower question before any durable side effect: what authority/target is involved, is this a write, does the path pass the required enforcement point, and do current signals require deeper deliberation? It is not itself deep deliberation.
+
 Trigger signals decide when deeper deliberation is required; current evidence generates the actual questions, hypotheses, methods and search terms. The control path can escalate across:
 - concrete/micro diagnosis;
 - macro goal/topology alignment;
@@ -110,7 +114,7 @@ Use a micro -> macro -> micro loop: reproduce the concrete symptom, ask whether 
 
 Same-model self-critique/refinement/debate may generate candidates but is not automatically independent evidence. Do not run debate, architecture search or extra Agents as ritual. External patterns are candidate mechanisms: extract the relevant property, fit/misfit, costs/failure modes and minimum useful borrowing; popularity or names never become authority.
 
-For material architecture/governance changes, and for any material change after a trigger such as user correction, repeated failure or architecture gap, `config/DELIBERATION_POLICY.json` is a fail-closed admission gate: construct current signals, run `assess_deliberation`, satisfy every required escalation dimension before mutation/promotion, and do not report the incident resolved until an authority-wide contradiction scan and final-tree verification succeed.
+For material architecture/governance changes, and for any material change after a trigger such as user correction, repeated failure, architecture gap or control-plane gap, `config/DELIBERATION_POLICY.json` is a fail-closed admission gate: construct current signals, run `assess_deliberation`, satisfy every required escalation dimension before mutation/promotion, and do not report the incident resolved until an authority-wide contradiction scan plus host-control-surface scan and final-tree verification succeed.
 
 Delegated work may carry a bounded `GovernanceFrame` inside the existing `ContextPacket`: parent goal, local-goal linkage, non-goals, invariants, autonomy bounds, escalation conditions, stop conditions and verification expectations.
 
@@ -195,14 +199,14 @@ Governed self-evolution follows:
 
 Before a material system proposal is promoted, adaptive deliberation is mandatory when trigger signals exist. Repeated failure must challenge the governing abstraction instead of adding another local guarantee. A new mechanism states overlap, replacement/retirement, new failure modes, rollback and complexity delta.
 
-Evolution closure is authority-wide, not file-local. Before reporting `RESOLVED`, scan every current top-level authority that can encode the changed semantic (including `ENTRYPOINT.md`, `CURRENT_SYSTEM.json`, relevant session/binding/authority policy, controller/router state and affected domain binding) and reconcile contradictions. Reproducible evaluation must run on the final candidate tree, followed by post-promotion observation on production authority.
+Evolution closure is authority-wide and host-aware, not file-local. Before reporting `RESOLVED`, scan every current top-level authority that can encode the changed semantic and every relevant external control surface that can bypass it. A known unmediated production write path blocks technical resolution. Reproducible evaluation must run on the final candidate tree, followed by post-promotion observation on production authority.
 
 For `CHATGPT_GITHUB` maintenance, durable evolution records live under `state/evolution/`. Surface real lifecycle state; do not claim evolution merely because an edit resembles it.
 
 ## Host model
 
 `config/HOST_PROFILES.json` defines persistence adapters:
-- `CHATGPT_GITHUB`: controller JSON under `state/`; observed-HEAD CAS + authoritative reread; current tools/connectors are session capabilities.
+- `CHATGPT_GITHUB`: candidate branches/PRs for material production changes, required host promotion check, protected production merge, authoritative reread; current tools/connectors are session capabilities;
 - `LOCAL`: SQLite CAS/checkpoint runtime + local artifact store.
 
 Both hosts share controller semantics. They are persistence adapters, not separate business workflows.
@@ -211,22 +215,27 @@ Both hosts share controller semantics. They are persistence adapters, not separa
 
 UAOS core does not require account-level Custom Instructions. A completely fresh ordinary ChatGPT conversation still needs the host to inject the bootstrap or one stable account pointer to this repository.
 
-For deterministic fresh-chat use, use only the pointer at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`; it is bootstrap-only and non-authoritative. The bootstrap may present the current selector and load the selected domain directly; it must not force the user through a persistent UAOS controller conversation before using that registered child Agent.
+For deterministic fresh-chat use, use only the compact pointer at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`; it is bootstrap-only and non-authoritative. It may also keep the lightweight mutation sentinel active across chats. It must not contain a duplicate copy of UAOS policy and does not count as physical enforcement.
 
 ## GitHub material writes
 
 A mutation of UAOS parent authority requires selected authority context `UAOS`. A child context may not directly write parent UAOS authority; it uses a parent upcall/proposal.
 
-For a UAOS controller state mutation:
-1. reread current `main` HEAD;
-2. build one coherent tree/commit on that HEAD;
-3. update `main` with `expected_sha=<observed HEAD>` and no force;
-4. reread the exact written authority.
+For a material UAOS production change on `CHATGPT_GITHUB`:
+1. reread current production authority and host enforcement state;
+2. create/update a candidate branch, not `main`;
+3. build the coherent candidate and run the required deliberation/assurance evidence;
+4. open/update a pull request targeting `main`;
+5. require the stable `promotion-gate` check and any additional assurance required for the change;
+6. allow GitHub protected-branch/ruleset enforcement to mediate the production ref update;
+7. reread the exact production authority after merge and perform post-promotion observation.
 
-For a parent-governed descendant mutation, additionally read the descendant's current binding/business authority and preserve its validation/impact requirements before writing its repository. A stale writer must re-read and rebase; never overwrite concurrent work.
+Do not use raw direct-main connector writes as the normal promotion path. Observed-HEAD CAS remains valid where concurrency control is needed on a ref that is legitimately writable, but CAS does not establish authorization or complete mediation.
+
+For a parent-governed descendant mutation, additionally read the descendant's current binding/business authority and preserve its validation/impact requirements before writing its repository. A stale writer must re-read before continuing; never overwrite concurrent work.
 
 ## External custom instructions
 
-Account-level ChatGPT Custom Instructions must never contain a duplicate copy of UAOS policy. If used, keep only the stable bootstrap pointer stored at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`.
+Account-level ChatGPT Custom Instructions must never contain a duplicate copy of UAOS policy. If used, keep only the compact bootstrap + mutation-sentinel pointer stored at `docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md`.
 
 A stale pointer to the retired controller is fail-safe because that repository's default branch is a tombstone redirect, but it should be replaced with the current pointer before relying on deterministic fresh-chat bootstrap.
