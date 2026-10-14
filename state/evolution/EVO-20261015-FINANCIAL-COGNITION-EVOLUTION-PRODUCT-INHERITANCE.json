@@ -1,7 +1,7 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261015-FINANCIAL-COGNITION-EVOLUTION-PRODUCT-INHERITANCE",
-  "status":"EVALUATING",
+  "status":"RESOLVED",
   "trigger":[
     "USER_REQUEST__VERIFY_FINANCIAL_PERFECTLY_INHERITS_COGNITION_AND_EVOLUTION",
     "PRODUCT_REVIEW_REQUEST",
@@ -11,12 +11,12 @@
   "scope":{
     "parent":"D1traverser-debug/universal-agent-os",
     "child":"D1traverser-debug/financial-writing-agent",
-    "parent_candidate_release":"2.4.5",
-    "child_candidate_release":"0.8.4"
+    "parent_release":"2.4.5",
+    "child_release":"0.8.4"
   },
   "initial_findings":[
-    "Financial 0.8.3 declared adaptive deliberation and governed evolution inheritance, but the parent common-capability contract still contained pre-v1.7/v1.8 conditional-research and over-strong host-enforcement semantics.",
-    "Financial already had a real domain evolution substrate in owner_lifecycle.py and quality regression/eval surfaces, so the correct repair is inheritance alignment rather than another controller.",
+    "Financial 0.8.3 declared adaptive deliberation and governed evolution inheritance, but the parent common-capability contract still contained older conditional-research and over-strong host-enforcement semantics.",
+    "Financial already had a real domain evolution substrate in owner_lifecycle.py and quality regression/eval surfaces, so the correct repair was inheritance alignment rather than another controller.",
     "Financial maintenance guidance did not yet enforce the current every-problem research-and-reflection floor.",
     "Financial entry/architecture still contained routing/delegation language that could obscure direct child activation.",
     "Financial lacked a single current product requirements authority mapping user journeys/functions to owner surfaces and acceptance evidence."
@@ -24,30 +24,47 @@
   "deliberation_evidence":{
     "MICRO_DIAGNOSIS":[
       "read parent CURRENT_SYSTEM, COMMON_CAPABILITIES and BINDING_POLICY",
-      "read Financial CAPABILITIES, MANIFEST, ADAPTER, UAOS_SKILL, EXECUTION_CONTRACT, architecture, maintenance, policy, owner lifecycle, tests and CI"
+      "read Financial CAPABILITIES, MANIFEST, ADAPTER, UAOS_SKILL, EXECUTION_CONTRACT, architecture, maintenance, policy, owner lifecycle, tests, evals and CI",
+      "candidate CI failures were classified before repair: brittle prose assertion, stale exact manifest grader, and genuine three-way maintenance mirror drift",
+      "post-promotion reread found stale candidate/version labels in current Financial product authority and closure corrected them"
     ],
     "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT":[
-      "child must inherit parent cognition/evolution method while remaining a directly usable independent Financial work plane",
-      "parent product review should complete the child's product specification without moving Financial business ownership into UAOS"
+      "child inherits parent cognition/evolution method while remaining a directly usable independent Financial work plane",
+      "parent product review completes the child's product specification without moving Financial business ownership into UAOS",
+      "domain evolution stays with Financial while common/cross-domain evolution stays with UAOS"
     ],
     "GOVERNING_ASSUMPTION_CHALLENGE":[
       "rejected: capability ID declaration alone proves current semantic inheritance",
       "rejected: child needs a copied cognition/evolution controller",
       "rejected: parent-assisted product review makes parent the business-spec owner",
-      "rejected: every problem must become a durable global/domain rule"
+      "rejected: every problem must become a durable global/domain rule",
+      "rejected: a grader should freeze obsolete exact JSON shape rather than intended contract behavior",
+      "rejected: current production authority may retain candidate labels after promotion"
     ],
     "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH":[
-      "Anthropic agent eval guidance: eval-driven development stress-tests product requirement concreteness and reduces reactive regressions",
-      "OpenAI evaluation best practices: structured evals are required for variable AI behavior and iterative improvement",
-      "Google SRE incident/postmortem guidance: problems should drive root-cause and systemic learning rather than symptom-only repair"
+      "Anthropic agent evaluation guidance: use eval-driven development and make grader success conditions explicit from product requirements",
+      "OpenAI evaluation guidance: use structured repeatable evaluation for variable agent outputs, steps and workflow behavior",
+      "Google SRE incident/postmortem guidance: learn root causes and systemic improvements instead of symptom-only patches",
+      "evolutionary architecture fitness-function guidance: encode meaningful architectural properties as continuous sensors without brittle incidental implementation coupling",
+      "Google developer documentation guidance: distinguish actual current state from required/recommended state precisely"
     ],
     "COUNTEREXAMPLE_SEARCH":[
       "a child can list governed_self_evolution yet still run stale semantics if the parent common contract drifted",
-      "copying UAOS cognition code into Financial would create the exact duplicate-controller problem the architecture forbids",
-      "product documentation without test/eval mapping can look complete while remaining unverified"
+      "copying UAOS cognition code into Financial would recreate a duplicate-control-plane problem",
+      "product documentation without test/eval mapping can look complete while remaining unverified",
+      "exact string/dictionary graders can fail valid semantic expansion and therefore cannot be the sole contract boundary",
+      "one article or one user edit may be idiosyncratic and cannot justify automatic domain-wide rule promotion"
+    ],
+    "INDEPENDENT_EXECUTION_EVIDENCE":[
+      "UAOS hosted candidate CI 38608148631 PASS",
+      "UAOS production CI 38609119968 PASS",
+      "Financial final candidate full-chain CI 38609262769 PASS",
+      "Financial production full-chain CI 38609447053 PASS",
+      "Financial closure candidate full-chain CI 38609905349 PASS",
+      "Financial closure production full-chain CI 38610083693 PASS"
     ]
   },
-  "candidate_design":{
+  "implemented_design":{
     "parent_common_capability_contract":"1.5.0",
     "requirements_delta":"docs/requirements/FROZEN_REQUIREMENTS_v1.9.md",
     "new_common_capability":"product_requirements_and_architecture_governance",
@@ -61,25 +78,37 @@
     "domain_evolution_owner":"FINANCIAL_FOR_FINANCIAL_BUSINESS_RULES",
     "common_cross_domain_evolution_owner":"UAOS",
     "domain_product_authority":["docs/product_requirements.md","docs/architecture.md"],
+    "direct_domain_activation":true,
+    "mandatory_live_parent_business_proxy":false,
+    "parent_child_business_identity_equality_required":false,
     "new_controller":false
   },
-  "promotion_order":[
-    "validate both parent and Financial candidates",
-    "promote UAOS 2.4.5 common contract first",
-    "reread production parent common capability authority",
-    "promote Financial 0.8.4 and run production CI",
-    "close parent assurance with exact child production evidence"
-  ],
-  "acceptance":[
-    "parent full CI passes on final candidate",
-    "Financial full CI/contract/static/wheel/render checks pass on final candidate",
-    "direct child activation and distinct identity namespaces remain mechanically protected",
-    "Financial inheritance declares current common contract minimum and exact mandatory problem floor",
-    "Financial product requirements map functions to owner surfaces and acceptance evidence",
-    "Financial has no second cognition/evolution/controller plane",
-    "parent promoted before child so the declared minimum hosted contract is live",
-    "post-promotion CI/evidence passes for both parent and child"
-  ],
-  "assurance":"EVALUATING__NOT_YET_PROMOTED",
-  "updated_at":"2026-10-15T00:55:00+08:00"
+  "promotion_and_observation":{
+    "parent_candidate_head":"2493f3c7d430759a7ecac8801e24d6b9765ed4d2",
+    "parent_candidate_ci_run":38608148631,
+    "parent_release_commit":"55b18d9419fe96ef7051d1d7280273bfbd0d4c2b",
+    "parent_post_promotion_ci_run":38609119968,
+    "child_final_candidate_head":"fc5fd50a3a71a44b69f96c6e9c7e4b7ac229d3cf",
+    "child_final_candidate_ci_run":38609262769,
+    "child_release_commit":"6a4d6d8a1dc95444ced2a8c42f5f00d03da0ab3c",
+    "child_post_promotion_ci_run":38609447053,
+    "child_current_main_after_closure":"45658bd95128c38b07de8d561124ff6a7914bc33",
+    "child_closure_candidate_ci_run":38609905349,
+    "child_closure_production_ci_run":38610083693
+  },
+  "acceptance":{
+    "parent_current_common_contract_1_5":"PASS",
+    "every_problem_research_and_reflection_floor":"PASS",
+    "direct_child_activation_and_identity_boundary":"PASS",
+    "domain_vs_parent_evolution_ownership":"PASS",
+    "financial_product_requirements_and_architecture_domain_owned":"PASS",
+    "requirements_to_acceptance_evidence_map":"PASS",
+    "no_second_cognition_evolution_controller":"PASS",
+    "financial_original_workflow_recovery_packaging_and_docx_delivery_unchanged":"PASS",
+    "parent_promoted_before_child_dependency":"PASS",
+    "parent_and_child_post_promotion_observation":"PASS"
+  },
+  "terminal_decision":"KEEP_UAOS_2_4_5_COMMON_1_5_AND_FINANCIAL_0_8_4_PROFILE_16__CURRENT_COGNITION_EVOLUTION_PRODUCT_GOVERNANCE_INHERITANCE_VERIFIED",
+  "assurance":"PRODUCTION_VERIFIED_CONTRACTUAL_INHERITANCE__NO_KNOWN_INTERNALLY_REPRODUCIBLE_BLOCKER",
+  "updated_at":"2026-10-14T17:54:00Z"
 }
