@@ -21,8 +21,8 @@ def test_provider_outage_plus_ambiguous_fallback_fails_closed_to_reconciliation(
     reg=CapabilityRegistry(); now=time.time()
     reg.register(CapabilityObservation('primary',CapabilityHealth.UNAVAILABLE,now,('publish',),('write',),1.0,1.0,'provider'),NeverCalled())
     reg.register(CapabilityObservation('fallback',CapabilityHealth.AVAILABLE,now,('publish',),('write',),0.9,2.0,'provider'),UnknownExecutor())
-    request=ExecutionRequest('a1','publish','remote:item',{'x':1},required_permissions=('write',),parameter_hash='h',side_effect_class='WRITE',idempotency_key='idem')
-    result=ActionCoordinator(reg).execute(request)
+    request=ExecutionRequest('a1','publish','remote:item',{'x':1},required_permissions=('write',),parameter_hash='h',side_effect_class='WRITE',idempotency_key='idem',target_authority='UAOS')
+    result=ActionCoordinator(reg, authority_context='UAOS').execute(request)
     assert result.capability_id=='fallback'
     assert result.outcome.disposition is ExecutionDisposition.UNKNOWN
     action=ActionRecord('a1','w1','fallback','h','remote:item','WRITE',ActionStatus.UNKNOWN,'idem')

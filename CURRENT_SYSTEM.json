@@ -1,6 +1,6 @@
 {
   "schema_version":"2.4",
-  "system_release_version":"2.4.0",
+  "system_release_version":"2.4.1",
   "system":"UNIVERSAL_AGENT_OS",
   "status":"ACTIVE_PRIMARY_CONTROLLER",
   "repository":"D1traverser-debug/universal-agent-os",
@@ -29,5 +29,7 @@
   "controller_state_model":"UAOS_ONLY",
   "fresh_chat_bootstrap":{"core_requires_account_custom_instructions":false,"deterministic_plain_chatgpt_requires_bootstrap_pointer_unless_host_injects_entrypoint":true,"pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md"},
   "mandatory_external_services":[],
-  "updated_at":"2026-10-14T09:46:00Z"
+  "parent_core_assurance":"FULL_REPOSITORY_CI_PASS__POSTGRES_DBOS_LIVE_PASS__S3_PROTOCOL_HTTP_ROUNDTRIP_PASS",
+  "deferred_scope":["LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE"],
+  "updated_at":"2026-10-14T10:42:00Z"
 }

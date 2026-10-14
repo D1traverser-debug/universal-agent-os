@@ -15,6 +15,10 @@ on:
       - 'scripts/dbos_crash_probe.py'
       - '.github/workflows/live-integration.yml'
 
+concurrency:
+  group: uaos-live-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -40,8 +44,8 @@ jobs:
       DBOS_SYSTEM_DATABASE_URL: postgresql://uaos:uaos-ci@localhost:5432/uaos
       UAOS_DBOS_CRASH_WORKFLOW_ID: uaos-ci-crash-recovery-v1
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Install live dependencies
@@ -68,27 +72,27 @@ jobs:
   object-store:
     runs-on: ubuntu-latest
     env:
-      AWS_ACCESS_KEY_ID: uaos-minio
-      AWS_SECRET_ACCESS_KEY: uaos-minio-secret
+      AWS_ACCESS_KEY_ID: uaos-moto
+      AWS_SECRET_ACCESS_KEY: uaos-moto-secret
       AWS_DEFAULT_REGION: us-east-1
-      UAOS_OBJECT_STORE_URL: http://localhost:9000
+      UAOS_OBJECT_STORE_URL: http://127.0.0.1:9000
       UAOS_OBJECT_STORE_BUCKET: uaos-live
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
-      - name: Start MinIO
+      - name: Install live and S3-emulator dependencies
+        run: python -m pip install -e '.[dev,live]' 'moto[server]>=5.2,<6'
+      - name: Start S3-compatible HTTP emulator
         run: |
-          docker run -d --name uaos-minio -p 9000:9000 -e MINIO_ROOT_USER=uaos-minio -e MINIO_ROOT_PASSWORD=uaos-minio-secret minio/minio:latest server /data
+          moto_server -H 127.0.0.1 -p 9000 >/tmp/uaos-moto.log 2>&1 &
           for i in $(seq 1 30); do
-            if curl -fsS http://localhost:9000/minio/health/live >/dev/null; then exit 0; fi
-            sleep 2
+            if curl -fsS http://127.0.0.1:9000/ >/dev/null; then exit 0; fi
+            sleep 1
           done
-          docker logs uaos-minio
+          cat /tmp/uaos-moto.log
           exit 1
-      - name: Install live dependencies
-        run: python -m pip install -e '.[dev,live]'
       - name: S3-compatible artifact roundtrip
         run: python scripts/live_verify.py object-store
 
@@ -99,8 +103,8 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       UAOS_OPENAI_PROBE_MODEL: ${{ vars.UAOS_OPENAI_PROBE_MODEL }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Install live dependencies

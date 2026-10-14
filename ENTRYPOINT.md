@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `ACTIVE_PRIMARY_CONTROLLER`
-System release: `2.4.0`
-Authority updated at: `2026-10-14T09:46:00Z`
+System release: `2.4.1`
+Authority updated at: `2026-10-14T10:42:00Z`
 
 ## Minimal bootstrap
 
