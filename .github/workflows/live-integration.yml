@@ -15,6 +15,10 @@ on:
       - 'scripts/dbos_crash_probe.py'
       - '.github/workflows/live-integration.yml'
 
+concurrency:
+  group: uaos-live-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -40,8 +44,8 @@ jobs:
       DBOS_SYSTEM_DATABASE_URL: postgresql://uaos:uaos-ci@localhost:5432/uaos
       UAOS_DBOS_CRASH_WORKFLOW_ID: uaos-ci-crash-recovery-v1
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Install live dependencies
@@ -74,8 +78,8 @@ jobs:
       UAOS_OBJECT_STORE_URL: http://localhost:9000
       UAOS_OBJECT_STORE_BUCKET: uaos-live
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Start MinIO
@@ -99,8 +103,8 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       UAOS_OPENAI_PROBE_MODEL: ${{ vars.UAOS_OPENAI_PROBE_MODEL }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Install live dependencies
