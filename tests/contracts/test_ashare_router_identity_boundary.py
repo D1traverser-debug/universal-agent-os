@@ -44,13 +44,20 @@ def test_parent_system_map_points_to_child_business_identity_without_copying_bus
     assert "OPAQUE_CHILD_REF" in ashare["identity_semantics"]
 
 
-def test_current_system_records_verified_specialized_child_and_router_candidate():
+def test_current_system_records_current_verified_specialized_child_and_router():
     current = load("CURRENT_SYSTEM.json")
     assert tuple(map(int, current["system_release_version"].split("."))) >= (2, 5, 2)
     assert current["status"] == "ACTIVE_PRIMARY_CONTROLLER" or current["status"].startswith("CANDIDATE_")
+
+    child = current["ashare_child_production_verification"]
+    assert child["result"] == "PASS"
+    release_marker = f"ASHARE_{child['release'].replace('.', '_')}_PRODUCTION_VERIFIED"
+    profile_marker = f"PROFILE_{child['profile_version']}"
+
     assurance = current["ashare_binding_assurance"]
     for marker in (
-        "ASHARE_0_2_0_PRODUCTION_VERIFIED",
+        release_marker,
+        profile_marker,
         "CHILD_TASKCONTRACT_MARKET_DAY_IDENTITY",
         "TONGHUASHUN_LEVEL2_PREFERRED_MICROSTRUCTURE_LANE",
         "XUANGUTONG_FIVE_POOL_SEMANTICS",
