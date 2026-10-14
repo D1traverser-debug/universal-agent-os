@@ -6,32 +6,37 @@ Universal Agent OS is a clean-slate, requirement-driven control plane for durabl
 
 ## Current stage
 
-**Zero-cost local-first baseline is now the default. Domain cutover/E2E is still open.**
+**The zero-cost usable baseline is complete. Paid/cloud infrastructure is optional.**
 
-The core does not require PostgreSQL, DBOS, S3, OpenAI API or GitHub Actions. The default usable stack is Python + SQLite + local content-addressed files + whichever Agent/model/tool executor is already available in the host environment.
+The default core uses Python + SQLite + local content-addressed files + capabilities already available in the active host/session. Built-in tools, connected plugins, browser/search tools, local scripts and free/public APIs can be registered as session or local capabilities. Paid and unknown-cost capabilities are not auto-selected.
 
-Optional adapters may improve scale or guarantees, but they are not prerequisites for the controller to function.
+The same control loop now executes representative financial-writing, novel, video and A-share workflows. Legacy continuity state is selectively migrated rather than copied wholesale, and the self-change lifecycle has a real local promotion/rollback drill.
 
 ## Authority
 
 - Requirements v1.0: `docs/requirements/FROZEN_REQUIREMENTS_v1.0.md`
 - Zero-cost requirement delta v1.1: `docs/requirements/FROZEN_REQUIREMENTS_v1.1.md`
 - Local-first architecture: `docs/architecture/ARCHITECTURE_BLUEPRINT_v1.1.md`
-- Production/readiness boundary: `docs/assurance/PRODUCTION_READINESS.json`
+- Usable baseline definition: `docs/assurance/USABLE_BASELINE.md`
+- Current readiness: `docs/assurance/PRODUCTION_READINESS.json`
 
 ## Default local stack
 
 - `SQLiteVersionedRepository` + `SQLiteAppendOnlyLedger` for durable authority and CAS;
 - `SQLiteCheckpointRuntime` for cross-process workflow identity/checkpoints/control messages;
 - `LocalContentAddressedStore` for artifacts;
-- UAOS executor ports for current host/Agent/model/tool capabilities;
+- zero-cost-first host capability routing for current Agent/model/tool/plugin capabilities;
+- `LocalWorkflowRunner` for checkpoint-bound domain execution;
 - opportunistic maintenance when no always-on scheduler exists.
 
 PostgreSQL, DBOS, remote S3, OpenAI Agents SDK/API and hosted CI remain optional enhancement adapters.
 
-## Development
+## Local commands
 
 ```bash
 python -m pip install -e '.[dev]'
 pytest
+python scripts/uaos_status.py
+python scripts/migrate_legacy_cutover.py --db .uaos/uaos.db
+python scripts/self_change_drill.py
 ```

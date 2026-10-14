@@ -3,6 +3,7 @@
 from .approvals import ApprovalGate, ApprovalGrant, ApprovalRequired
 from .coordinator import ActionCoordinator, CoordinatedExecution
 from .host import HostCallableExecutor, HostCapabilitySpec, register_host_capability
+from .local_workspace import LocalWorkspaceExecutor, register_local_workspace_capability
 from .models import (
     CapabilityAvailability,
     CapabilityCostClass,
@@ -34,6 +35,7 @@ __all__ = [
     "ExecutionRequest",
     "HostCallableExecutor",
     "HostCapabilitySpec",
+    "LocalWorkspaceExecutor",
     "OpenAIAgentSpec",
     "OpenAIAgentsExecutor",
     "RegisteredCapability",
@@ -41,4 +43,5 @@ __all__ = [
     "RetryPolicy",
     "assess_retry",
     "register_host_capability",
+    "register_local_workspace_capability",
 ]
