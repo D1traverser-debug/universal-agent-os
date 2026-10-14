@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "evolution_id": "EVO-20261014-FINANCIAL-IDENTITY-DECOUPLING",
-  "status": "EVALUATING",
+  "status": "EVALUATED_PASS__PROMOTION_READY",
   "trigger": "USER_CHALLENGE_TO_PARENT_CHILD_TASK_ID_EQUALITY",
   "opened_at": "2026-10-14T12:58:00Z",
   "incident": {
@@ -13,13 +13,13 @@
     "Financial business workflow remains external and unique; the retired parent domains/financial_writing package stays removed.",
     "BINDING_POLICY continues to delegate mutation hierarchy to AUTHORITY_WRITE_POLICY instead of duplicating it."
   ],
-  "candidate": {
+  "repair": {
     "changes": [
-      "Make BINDING_POLICY state the generic default that parent controller identity and domain business identity are distinct namespaces.",
-      "Reduce financial-writing:main to a UAOS domain router with optional opaque child state reference only.",
-      "Remove child package/profile/validator/release/CI implementation details from parent router state.",
-      "Update task discovery metadata to describe delegation to the independent Financial owner.",
-      "Add regression tests preventing task-ID equality and child implementation-detail caching from returning."
+      "BINDING_POLICY now states that parent controller identity and domain business identity are distinct by default; correlation uses a domain-declared opaque reference.",
+      "financial-writing:main is a UAOS domain router with optional opaque child state reference only.",
+      "Child package/profile/validator/release/CI implementation details are removed from parent router state.",
+      "Task discovery metadata describes delegation to the independent Financial owner without adding a new UAOS state-model enum.",
+      "Regression tests prevent task-ID equality and child implementation-detail caching from returning."
     ],
     "new_components": 0,
     "new_state_surfaces": 0,
@@ -29,11 +29,18 @@
       "child package/profile/release/CI pins inside state/tasks/financial-writing-main.json"
     ]
   },
-  "child_evidence": {
-    "candidate_version": "0.8.3",
-    "candidate_pr": 23,
-    "candidate_ci_run": 38567735219,
-    "status": "PASS"
+  "evaluation": {
+    "initial_parent_ci_run": 38568402408,
+    "initial_result": "1_FAILED_180_PASSED__UNNECESSARY_NEW_STATE_MODEL_ENUM",
+    "corrective_action": "Keep existing UAOS_NATIVE state model and express router-only semantics in task_type/router state rather than adding a new global enum.",
+    "final_parent_candidate_ci_run": 38568752780,
+    "final_parent_candidate_ci": "PASS",
+    "financial_child_candidate_ci_run": 38567735219,
+    "financial_child_candidate_ci": "PASS__101_TESTS__CONTRACT_STATIC_WHEEL_DOCX_RENDER",
+    "financial_child_release": "0.8.3",
+    "financial_child_release_commit": "289e8d6fa1d27613e5fd3c5f9dceecfa9d89b954",
+    "financial_child_main_ci_run": 38568945008,
+    "financial_child_main_ci": "PASS"
   },
   "acceptance": [
     "full UAOS CI passes",
@@ -42,5 +49,5 @@
     "parent stores only registration metadata and optional opaque child reference",
     "generic binding policy preserves distinct identity namespaces by default"
   ],
-  "updated_at": "2026-10-14T13:00:00Z"
+  "updated_at": "2026-10-14T13:10:00Z"
 }
