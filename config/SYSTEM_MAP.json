@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "controller": {
     "repository": "D1traverser-debug/universal-agent-os",
     "entrypoint": "ENTRYPOINT.md",
@@ -8,9 +8,11 @@
     "agent_registry": "config/AGENT_REGISTRY.json",
     "task_index": "state/TASK_INDEX.json",
     "task_state_root": "state/tasks",
+    "evolution_state_root": "state/evolution",
     "intent_resolution_policy": "config/INTENT_RESOLUTION_POLICY.json",
     "session_interaction_policy": "config/SESSION_INTERACTION_POLICY.json",
     "common_capabilities": "config/COMMON_CAPABILITIES.json",
+    "authority_write_policy": "config/AUTHORITY_WRITE_POLICY.json",
     "retrieval_policy": "config/RETRIEVAL_POLICY.json",
     "binding_policy": "config/BINDING_POLICY.json"
   },
@@ -56,5 +58,5 @@
     "default_branch_role": "TOMBSTONE_REDIRECT_ONLY",
     "executable_or_recovery_authority": false
   },
-  "updated_at": "2026-10-14T08:21:28Z"
+  "updated_at": "2026-10-14T08:48:07Z"
 }

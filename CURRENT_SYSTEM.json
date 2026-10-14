@@ -1,6 +1,6 @@
 {
-  "schema_version": "2.2",
-  "system_release_version": "2.2.0",
+  "schema_version": "2.3",
+  "system_release_version": "2.3.0",
   "system": "UNIVERSAL_AGENT_OS",
   "status": "ACTIVE_PRIMARY_CONTROLLER",
   "repository": "D1traverser-debug/universal-agent-os",
@@ -10,7 +10,8 @@
   "requirements": [
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
-    "docs/requirements/FROZEN_REQUIREMENTS_v1.2.md"
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.2.md",
+    "docs/requirements/FROZEN_REQUIREMENTS_v1.3.md"
   ],
   "agent_registry": "config/AGENT_REGISTRY.json",
   "task_index": "state/TASK_INDEX.json",
@@ -20,7 +21,9 @@
   "intent_resolution_policy": "config/INTENT_RESOLUTION_POLICY.json",
   "session_interaction_policy": "config/SESSION_INTERACTION_POLICY.json",
   "common_capabilities": "config/COMMON_CAPABILITIES.json",
+  "authority_write_policy": "config/AUTHORITY_WRITE_POLICY.json",
   "controller_state_root": "state/tasks",
+  "evolution_state_root": "state/evolution",
   "controller_state_model": "UAOS_ONLY",
   "fresh_chat_bootstrap": {
     "core_requires_account_custom_instructions": false,
@@ -28,5 +31,5 @@
     "pointer_ref": "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md"
   },
   "mandatory_external_services": [],
-  "updated_at": "2026-10-14T08:21:28Z"
+  "updated_at": "2026-10-14T08:48:07Z"
 }

@@ -1,13 +1,18 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
+  "updated_at": "2026-10-14T08:48:07Z",
   "profiles": {
     "CHATGPT_GITHUB": {
       "state_authority": "GITHUB_JSON_CAS",
       "state_root": "state/tasks",
+      "evolution_state_root": "state/evolution",
       "mutation_protocol": "OBSERVED_HEAD_TREE_COMMIT_EXPECTED_SHA_REREAD",
       "capability_discovery": "CURRENT_SESSION",
       "retrieval_policy": "config/RETRIEVAL_POLICY.json",
       "binding_policy": "config/BINDING_POLICY.json",
+      "authority_write_policy": "config/AUTHORITY_WRITE_POLICY.json",
+      "uaos_action_coordinator_authority_enforcement": "MECHANICAL_FAIL_CLOSED",
+      "raw_github_connector_authority_enforcement": "HOST_SURFACE_NOT_PHYSICALLY_INTERCEPTABLE_BY_UAOS_CODE__POLICY_ONLY_UNLESS_REPOSITORY_CREDENTIALS_OR_RULESETS_ENFORCE_SCOPE",
       "background_execution": false,
       "maintenance_mode_without_background": "OPPORTUNISTIC_ON_NEXT_INVOCATION",
       "cost_policy": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
@@ -19,6 +24,7 @@
       "capability_discovery": "LOCAL_AND_CURRENT_HOST",
       "retrieval_policy": "config/RETRIEVAL_POLICY.json",
       "binding_policy": "config/BINDING_POLICY.json",
+      "authority_write_policy": "config/AUTHORITY_WRITE_POLICY.json",
       "background_execution": "ONLY_IF_A_FREE_OR_ALREADY_AVAILABLE_HOST_EXISTS",
       "cost_policy": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
     }

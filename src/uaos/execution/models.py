@@ -48,6 +48,7 @@ class ExecutionRequest:
     allow_paid: bool = False
     allow_unknown_cost: bool = False
     requires_background: bool = False
+    target_authority: str | None = None
 
 
 @dataclass(frozen=True, slots=True)

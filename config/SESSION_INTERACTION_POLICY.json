@@ -1,15 +1,16 @@
 {
-  "schema_version": "1.0",
-  "policy_version": "1.0.0",
+  "schema_version": "1.1",
+  "policy_version": "1.1.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-14T08:21:28Z",
+  "updated_at": "2026-10-14T08:48:07Z",
   "bare_inheritance_selector": {
     "trigger": "CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option": {
       "option_id": "uaos:controller",
       "display_name_zh": "总控系统",
       "intent": "SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY",
-      "creates_business_task": false
+      "creates_business_task": false,
+      "authority_context": "UAOS"
     },
     "task_source": "state/TASK_INDEX.json",
     "include_task_when": "resume_eligible == true",
@@ -31,8 +32,15 @@
       "The selector is derived from current authority on every invocation; it is not a hard-coded alias menu.",
       "Selecting an option does not create or mutate aliases.",
       "Explicit-only or HOLD tasks must be visibly labelled and never silently selected by a bare inheritance request.",
-      "Once an option is selected, continue with normal authority loading and freshness checks."
+      "Once an option is selected, continue with normal authority loading and freshness checks.",
+      "Selecting a domain task establishes authority_context=DOMAIN:<domain_id>; selecting controller establishes authority_context=UAOS."
     ]
+  },
+  "authority_context": {
+    "write_policy_ref": "config/AUTHORITY_WRITE_POLICY.json",
+    "controller_context": "UAOS",
+    "domain_context_format": "DOMAIN:<domain_id>",
+    "context_switch_rule": "OWNER_CHANGE_IS_AN_EXPLICIT_CONTROL_PLANE_TRANSITION__NEVER_A_HIDDEN_PRIVILEGE_ESCALATION"
   },
   "inherited_session_progress_report": {
     "scope": "EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
@@ -42,14 +50,17 @@
     "fields": [
       "current_agent",
       "current_scope_or_task",
+      "authority_context",
       "status",
       "current_stage",
       "next_action_or_blocker",
+      "evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER",
       "version_identity",
       "progress_timestamp"
     ],
     "timestamp_rule": "Use the timestamp of the freshest authoritative state actually used for the report; do not substitute the response clock when authority freshness is known.",
     "version_rule": "Report system/domain/task version identities that materially govern the current action. Schema version alone is not a release version.",
-    "assurance_rule": "If progress or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
+    "evolution_rule": "If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id; otherwise report NO_EVOLUTION_TRIGGER.",
+    "assurance_rule": "If progress, authority scope, evolution state or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
   }
 }

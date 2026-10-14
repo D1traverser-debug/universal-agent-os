@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `ACTIVE_PRIMARY_CONTROLLER`
-System release: `2.2.0`
-Authority updated at: `2026-10-14T08:21:28Z`
+System release: `2.3.0`
+Authority updated at: `2026-10-14T08:48:07Z`
 
 ## Minimal bootstrap
 
@@ -41,7 +41,7 @@ For a generic inheritance request with no resolved target, present:
 
 Show enough current metadata to distinguish running/default, hold, and explicit-only projects. The menu is generated from current authority every time and never mutates aliases.
 
-Selecting `总控系统` establishes controller maintenance/query context; it does not create a fake business task.
+Selecting `总控系统` establishes controller maintenance/query context and authority context `UAOS`; it does not create a fake business task. Selecting a domain task establishes `DOMAIN:<domain_id>`.
 
 ## Current routing
 
@@ -54,6 +54,27 @@ When routing or continuing, load:
 
 There is one cross-domain controller: UAOS. Business repositories own domain code, rules, fine-grained business state, Canon/media/data and artifacts. They do not own cross-chat controller state.
 
+## Authority ownership and mutation admission
+
+`config/AUTHORITY_WRITE_POLICY.json` is mandatory for authoritative mutation.
+
+The selected controller/domain is a real authority context, not merely a label:
+- controller: `UAOS`;
+- domain: `DOMAIN:<domain_id>`.
+
+Mutating execution is fail-closed and same-owner:
+- `UAOS -> UAOS`: allowed subject to action/approval/CAS rules;
+- `DOMAIN:X -> DOMAIN:X`: allowed subject to domain-owner rules;
+- `DOMAIN:X -> UAOS`: direct mutation blocked;
+- `DOMAIN:X -> DOMAIN:Y`: direct mutation blocked;
+- `UAOS -> DOMAIN:X` direct business mutation: blocked; dispatch/handoff into the domain owner instead.
+
+A cross-scope defect may be diagnosed and proposed from the current owner, but changing another authority requires an explicit owner/context transition. Approval never overrides ownership.
+
+`src/uaos/execution/authority.py` mechanically enforces this for UAOS `ActionCoordinator` mutations before approval/executor dispatch. Cross-scope reads remain governed by retrieval policy.
+
+Git branch/ruleset protection is defense-in-depth, not the parent/child authority model. On `CHATGPT_GITHUB`, a raw native connector call is a host surface outside Python `ActionCoordinator`; UAOS policy forbids bypassing the owner gate, but full physical interception of that raw connector additionally requires repository-scoped credentials/tool mediation and/or GitHub rulesets. Report this assurance boundary explicitly.
+
 ## Common capability inheritance
 
 All registered domains inherit the UAOS-hosted common capability contract at `config/COMMON_CAPABILITIES.json`.
@@ -63,6 +84,7 @@ The inherited layer includes:
 - cross-chat continuity and recovery;
 - capability handshake and graceful degradation;
 - assurance/evidence/completion governance;
+- owner-scoped authoritative mutation;
 - governed self-evolution;
 - inherited-session progress reporting;
 - version/timestamp provenance.
@@ -112,8 +134,10 @@ After a controller or task/project has been selected for the current conversatio
 Report:
 - current Agent/controller;
 - current task/project or maintenance scope;
+- selected authority context;
 - lifecycle status and current stage;
 - next action or blocker;
+- actual governed-evolution state when triggered, otherwise `NO_EVOLUTION_TRIGGER`;
 - governing version identity;
 - freshest authoritative progress/update timestamp.
 
@@ -137,6 +161,8 @@ Only promoted/current knowledge is used by default. Raw evidence and candidates 
 Governed self-evolution follows:
 `Incident -> Failure Class -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep / Rollback / Retire`.
 
+For `CHATGPT_GITHUB` system maintenance, active durable evolution records live under `state/evolution/`. A material user correction/failure that triggers evolution must record its real lifecycle state there and surface it in progress reporting. Do not claim evolution was used merely because a direct edit resembles the intended workflow.
+
 ## Host model
 
 `config/HOST_PROFILES.json` defines persistence adapters:
@@ -153,13 +179,15 @@ For deterministic fresh-chat use in ordinary ChatGPT, use the single pointer sto
 
 ## GitHub material writes
 
-For UAOS controller state:
+A UAOS controller write is valid only when the selected authority context is `UAOS`. A domain context may not directly write parent UAOS authority.
+
+For a valid UAOS controller state mutation:
 1. reread current `main` HEAD;
 2. build one coherent tree/commit on that HEAD;
 3. update `main` with `expected_sha=<observed HEAD>` and no force;
 4. reread the exact written authority.
 
-A stale writer must re-read and rebase; never overwrite concurrent work.
+A stale writer must re-read and rebase; never overwrite concurrent work. CAS protects concurrency, not owner authorization; owner authorization is separately governed by `config/AUTHORITY_WRITE_POLICY.json`.
 
 ## External custom instructions
 

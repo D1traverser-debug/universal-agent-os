@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "evolution_id": "EVO-20261014-AUTHORITY-BOUNDARY",
-  "status": "DRAFT",
+  "status": "PROMOTED",
   "trigger": "USER_CORRECTION",
   "opened_at": "2026-10-14T08:44:50Z",
   "incidents": [
@@ -50,7 +50,7 @@
   "proposal": {
     "proposal_id": "CP-AUTHORITY-ISOLATION-AND-EVO-TRACE-001",
     "title": "Enforce owner-scoped authoritative writes and expose governed evolution trace",
-    "state": "DRAFT",
+    "state": "PROMOTED",
     "target_scope": "UAOS_COMMON_CONTROL_PLANE",
     "failure_class_ids": [
       "FC-AUTHORITY-OWNERSHIP-ENFORCEMENT-001",
@@ -75,7 +75,7 @@
     "rollback_plan": "Revert the authority-gate release commit and restore the prior ActionCoordinator/ExecutionRequest API; retain this incident record as evidence and mark the proposal ROLLED_BACK.",
     "expected_benefit": "A child/domain Agent cannot authoritatively mutate UAOS or another domain through the UAOS execution path; system maintenance exposes whether governed evolution was triggered and its current lifecycle state.",
     "new_failure_modes": [
-      "Legacy mutating callers without target_authority will fail closed until migrated",
+      "Legacy mutating callers without target_authority fail closed until migrated",
       "Direct host connector writes outside the UAOS execution path remain a host-level enforcement gap unless connector permissions are separately scoped"
     ],
     "required_scenarios": [
@@ -96,8 +96,28 @@
       "maintenance_cost_delta": 1
     }
   },
-  "evaluation": null,
-  "promotion": null,
+  "evaluation": {
+    "evaluation_id": "EVAL-AUTHORITY-ISOLATION-001",
+    "proposal_id": "CP-AUTHORITY-ISOLATION-AND-EVO-TRACE-001",
+    "state": "PASSED",
+    "scenario_count": 8,
+    "passed_count": 8,
+    "regression_failures": [],
+    "evidence_refs": [
+      "tests/execution/test_authority_scope.py",
+      "tests/execution/test_execution_fabric.py",
+      "local isolated pytest: 8 passed in 0.05s",
+      "src/uaos/evolution/gates.py promotion assessment: approved=true, reasons=[]"
+    ],
+    "assurance": "TARGETED_DETERMINISTIC_LOCAL_EVAL__FULL_REPOSITORY_CI_STILL_HOST_BLOCKED"
+  },
+  "promotion": {
+    "authorization": "APPROVED",
+    "reasons": [],
+    "action_route": "UAOS_CONTROLLER_GITHUB_CAS_RELEASE_COMMIT",
+    "owner_context": "UAOS",
+    "host_scope_note": "Mechanical inside ActionCoordinator; raw ChatGPT GitHub connector remains outside Python interception and is explicitly lower-assurance."
+  },
   "post_promotion_observation": null,
-  "updated_at": "2026-10-14T08:44:50Z"
+  "updated_at": "2026-10-14T08:52:22Z"
 }

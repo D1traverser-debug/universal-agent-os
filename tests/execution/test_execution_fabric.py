@@ -47,8 +47,18 @@ def test_router_never_silently_downgrades_mandatory_floor():
 def test_side_effect_can_require_exact_action_approval():
     registry = CapabilityRegistry()
     registry.register(observation("writer", actions=("write",), permissions=("repo:write",)), Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED)))
-    request = ExecutionRequest("a1", "write", "repo:file", {}, required_permissions=("repo:write",), parameter_hash="p1", side_effect_class="WRITE", approval_required=True)
-    coordinator = ActionCoordinator(registry)
+    request = ExecutionRequest(
+        "a1",
+        "write",
+        "repo:file",
+        {},
+        required_permissions=("repo:write",),
+        parameter_hash="p1",
+        side_effect_class="WRITE",
+        approval_required=True,
+        target_authority="UAOS",
+    )
+    coordinator = ActionCoordinator(registry, authority_context="UAOS")
     with pytest.raises(ApprovalRequired):
         coordinator.execute(request)
     now = datetime.now(UTC)

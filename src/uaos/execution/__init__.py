@@ -1,6 +1,7 @@
 """Execution Fabric: capability discovery, routing, approval and adapters."""
 
 from .approvals import ApprovalGate, ApprovalGrant, ApprovalRequired
+from .authority import AuthorityScopeGate, AuthorityScopeViolation
 from .coordinator import ActionCoordinator, CoordinatedExecution
 from .host import HostCallableExecutor, HostCapabilitySpec, register_host_capability
 from .local_workspace import LocalWorkspaceExecutor, register_local_workspace_capability
@@ -22,6 +23,8 @@ __all__ = [
     "ApprovalGate",
     "ApprovalGrant",
     "ApprovalRequired",
+    "AuthorityScopeGate",
+    "AuthorityScopeViolation",
     "CapabilityAvailability",
     "CapabilityCostClass",
     "CapabilityHealth",

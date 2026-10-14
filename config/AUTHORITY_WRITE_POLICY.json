@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "policy_version": "1.0.0",
+  "authority": "UAOS",
+  "updated_at": "2026-10-14T08:48:07Z",
+  "context_model": {
+    "controller": "UAOS",
+    "domain_format": "DOMAIN:<domain_id>",
+    "source": "CURRENT_SELECTED_CONTROLLER_OR_TASK_DOMAIN"
+  },
+  "mutation_admission": {
+    "default": "FAIL_CLOSED",
+    "same_owner_required": true,
+    "non_mutating_side_effects": ["NONE", "READ"],
+    "rules": [
+      "Every mutating ExecutionRequest must declare target_authority.",
+      "ActionCoordinator must be bound to the selected authority_context.",
+      "A mutation is admitted only when authority_context == target_authority before approval and executor dispatch.",
+      "DOMAIN:X -> UAOS direct mutation is prohibited.",
+      "DOMAIN:X -> DOMAIN:Y direct mutation is prohibited.",
+      "UAOS -> DOMAIN:X direct business mutation is prohibited; dispatch/handoff into the domain owner instead.",
+      "Cross-scope change requests are proposals/handoffs, not direct authoritative writes."
+    ]
+  },
+  "host_enforcement": {
+    "UAOS_ACTION_COORDINATOR": "MECHANICAL_FAIL_CLOSED",
+    "CHATGPT_RAW_CONNECTOR": "POLICY_ENFORCED_BUT_NOT_PHYSICALLY_INTERCEPTABLE_BY_UAOS_CODE",
+    "full_host_level_enforcement_requires": [
+      "repository-scoped credentials or tool mediation by authority context",
+      "and/or repository rulesets/branch protections restricting the raw writer identity"
+    ]
+  },
+  "branch_protection_semantics": "DEFENSE_IN_DEPTH_ONLY__NOT_A_SUBSTITUTE_FOR_AGENT_AUTHORITY_ISOLATION"
+}

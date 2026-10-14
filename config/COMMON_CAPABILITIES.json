@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.0",
-  "contract_version": "1.0.0",
+  "schema_version": "1.1",
+  "contract_version": "1.1.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-14T08:21:28Z",
+  "updated_at": "2026-10-14T08:48:07Z",
   "inheritance_model": "UAOS_HOSTED_COMMON_CAPABILITIES__DOMAIN_BUSINESS_LOGIC_REMAINS_WITH_OWNER",
   "applies_to": "ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
   "capabilities": [
@@ -27,6 +27,18 @@
       "domain_role": "produce domain verification evidence without overstating assurance"
     },
     {
+      "capability_id": "owner_scoped_authoritative_mutation",
+      "owner": "UAOS",
+      "policy_ref": "config/AUTHORITY_WRITE_POLICY.json",
+      "domain_role": "mutate only authority owned by the active domain context; escalate cross-scope changes as proposals/handoffs",
+      "rules": [
+        "Mutating execution is same-owner and fail-closed.",
+        "A child/domain context cannot directly mutate UAOS or another domain.",
+        "UAOS cannot directly impersonate a domain owner for business mutation; it must hand off/dispatch into that owner context.",
+        "Approval cannot override authority ownership."
+      ]
+    },
+    {
       "capability_id": "governed_self_evolution",
       "owner": "UAOS_FOR_COMMON_OR_CROSS_DOMAIN_MECHANISMS__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_RULE_PROMOTION",
       "lifecycle": "Incident -> Failure Class -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep/Rollback/Retire",
@@ -35,13 +47,14 @@
         "Domain-local learning is evidence/candidate generation, not a second controller or unrestricted production rewriter.",
         "A candidate may mutate production only through the unique owning authority and normal action/side-effect controls.",
         "Cross-domain/common-capability changes are promoted by UAOS; domain-specific business rules remain owned and promoted by the domain owner under UAOS requirement/action lineage.",
-        "Repeated failures are repaired at the common failure class/root abstraction and require regression evidence before closure."
+        "Repeated failures are repaired at the common failure class/root abstraction and require regression evidence before closure.",
+        "Triggered evolution must expose a durable lifecycle state in inherited system-maintenance reporting."
       ]
     },
     {
       "capability_id": "inherited_session_progress_reporting",
       "owner": "UAOS",
-      "domain_role": "supply fresh current_stage, next_action/blocker and business update/version data"
+      "domain_role": "supply fresh current_stage, next_action/blocker, authority context, evolution state and business update/version data"
     },
     {
       "capability_id": "version_and_timestamp_provenance",
