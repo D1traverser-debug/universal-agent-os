@@ -62,7 +62,10 @@ def test_v19_keeps_problem_research_floor_and_adds_child_product_governance():
         "GOVERNING_ASSUMPTION_CHALLENGE",
         "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH",
     ]
-    assert "Familiarity is not a waiver" in "\n".join(cognition["rules"])
+    cognition_rules = "\n".join(cognition["rules"]).lower()
+    assert "familiarity is not a waiver" in cognition_rules
+    assert "problem size changes" in cognition_rules
+    assert "research must affect or validate" in cognition_rules
 
 
 def test_material_production_workflow_uses_candidate_validation_without_requiring_remote_ruleset():
