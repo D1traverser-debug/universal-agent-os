@@ -1,5 +1,5 @@
 {
-  "schema_version":"1.4",
+  "schema_version":"1.5",
   "controller":{
     "repository":"D1traverser-debug/universal-agent-os",
     "entrypoint":"ENTRYPOINT.md",
@@ -23,9 +23,9 @@
     "financial_writing":{"repository":"D1traverser-debug/financial-writing-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_contract":"config/EXECUTION_CONTRACT.json","business_state":"workspaces/articles/{task_id}/STATE.json","rule_roots":["references","config","financial_writing_agent"]},
     "ashare":{"repository":"D1traverser-debug/a-share-event-driven-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","runtime_authority":"config/RUNTIME_AUTHORITY.json","rule_roots":["references","config","ashare_event_agent"]},
     "novel":{"repository":"D1traverser-debug/novel-writing-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_state":"projects/<task>/checkpoints/CURRENT_CHECKPOINT.json","canon_root":"projects/<task>/canon","rule_roots":["protocols","projects","research","config"]},
-    "video":{"repository":"D1traverser-debug/video-growth-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_state":"projects/<project>/PROJECT_MANIFEST.json + project-local progress/decision artifacts","rule_roots":["video_growth_agent","projects","skills/video-growth-agent/references"]}
+    "video":{"repository":"D1traverser-debug/video-growth-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_state":"projects/PROJECT_INDEX.json -> exact child project/program state and project-local progress/decision artifacts","identity_semantics":"UAOS_ROUTER_AND_VIDEO_BUSINESS_IDS_ARE_DISTINCT__PARENT_MAY_RETAIN_OPAQUE_CHILD_REF_ONLY","rule_roots":["video_growth_agent","projects","skills/video-growth-agent/references"]}
   },
   "external_integration":{"chatgpt_custom_instructions":"BOOTSTRAP_PLUS_LIGHTWEIGHT_MUTATION_SENTINEL__NON_AUTHORITY","pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md","copilot_ref":".github/copilot-instructions.md"},
   "retired_controller":{"repository":"D1traverser-debug/universal-continuity-agent","default_branch_role":"TOMBSTONE_REDIRECT_ONLY","executable_or_recovery_authority":false},
-  "updated_at":"2026-10-14T15:42:00Z"
+  "updated_at":"2026-10-15"
 }
