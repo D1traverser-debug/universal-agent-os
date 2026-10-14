@@ -1,7 +1,7 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261015-ASHARE-SPECIALIZED-PRODUCT-IDENTITY",
-  "status":"EVALUATING_PARENT_ROUTER_COLLAPSE",
+  "status":"RESOLVED",
   "trigger":[
     "USER_REQUEST__HARDEN_ASHARE_RECOMMENDATION_SYSTEM",
     "USER_CORRECTION__EACH_DOMAIN_MUST_BE_SPECIALIZED_FOR_ITS_OWN_PRODUCT",
@@ -11,71 +11,77 @@
   "scope":{
     "parent":"D1traverser-debug/universal-agent-os",
     "child":"D1traverser-debug/a-share-event-driven-agent",
-    "parent_target_release":"2.5.2",
+    "parent_release":"2.5.2",
     "parent_common_contract":"1.6.0_UNCHANGED",
-    "child_release":"0.2.0"
+    "child_initial_specialized_release":"0.2.0",
+    "child_current_release":"0.3.0"
   },
   "problem_diagnosis":[
-    "UAOS state still said current A-share work should create/locate a current market-day UAOS task even though the child runtime already owned TaskContract.task_id and MarketDayState.",
-    "The child had strong A-share-specific freeze/recall/execution/review/replay mechanisms, so applying a generic Video-style product topology would reduce specialization rather than improve it.",
-    "The child source model did not formally encode the requested Tonghuashun/Level-2 assurance priority for A-share microstructure/buyability and Xuangutong Dingpan five-pool business ownership.",
-    "The child main CI was red because its static audit still guarded deleted continuity-era authority files."
+    "UAOS state still said current A-share work should create or locate a current market-day UAOS task even though the child runtime already owned TaskContract.task_id and MarketDayState.",
+    "The child had strong A-share-specific freeze, recall, execution, review and replay mechanisms, so applying a generic Video-style topology would reduce specialization rather than improve it.",
+    "The child source model needed explicit Tonghuashun/Level-2 assurance priority for A-share microstructure and Xuangutong Dingpan five-pool business ownership.",
+    "The initial child static audit still guarded retired continuity-era authority files.",
+    "A second product audit found that risk and buyability must be a downstream constraint and veto rather than a competing bullish vote, and that post-close evaluation must grade final selection and execution feasibility separately from recall."
   ],
   "deliberation_evidence":{
     "MICRO_DIAGNOSIS":[
-      "read UAOS A-share parent state/task index",
-      "read child Skill/adapter/manifest/capabilities/runtime authority/models/store/controller/engine/source contracts/policies/tests/CI",
-      "verified child already has a real market-day business identity and deterministic market-day state machine"
+      "read UAOS A-share parent state and task index",
+      "read child Skill, adapter, manifest, capabilities, runtime authority, models, store, controller, engine, source contracts, product requirements, orchestration, policies, tests and CI",
+      "verified child already has a real market-day business identity and deterministic market-day state machine",
+      "verified 0.3.0 production CI after opportunity-risk and review-quality hardening"
     ],
     "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT":[
-      "A-share product center is point-in-time recommendation/review/learning, not generic task orchestration",
-      "parent should route the domain; child should own per-day identity/state and A-share business decision graph"
+      "A-share product center is point-in-time recommendation, review and replay-governed learning, not generic task orchestration",
+      "parent routes the domain; child owns per-day identity, state and A-share decision graph",
+      "internal concurrency is used only where A-share research and data lanes are logically independent"
     ],
     "GOVERNING_ASSUMPTION_CHALLENGE":[
-      "rejected: all domains should copy one multi-agent/subtask topology",
+      "rejected: all domains should copy one multi-agent topology",
       "rejected: UAOS must own current trading-day task identity",
       "rejected: hosted-runtime promotion status determines business ownership",
       "rejected: a single vendor should own all A-share facts",
-      "rejected: parallel analysis requires unbounded peer debate"
+      "rejected: parallel analysis requires unbounded peer debate",
+      "rejected: risk and buyability are additional bullish votes",
+      "rejected: recall improvement alone proves recommendation quality improved"
     ],
     "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH":[
-      "trade-strategy/execution research used to separate alpha opportunity from execution/buyability and require post-trade attribution",
-      "backtest/simulation research used to retain multi-regime frozen replay before durable strategy promotion",
-      "event-driven backtesting architecture used to preserve point-in-time event/state boundaries and minimize look-ahead leakage",
-      "behavior-not-implementation testing guidance used to repair stale architecture audit assumptions without weakening business invariants"
+      "point-in-time event-driven research used to preserve time-frontier discipline and avoid look-ahead leakage",
+      "trade strategy and execution research used to separate alpha opportunity from liquidity, execution and downside constraints",
+      "multi-regime replay and time-series validation principles used to prevent single-day promotion",
+      "behavior-focused testing guidance used to repair stale architecture assertions without restoring retired ownership"
     ]
   },
-  "child_design":{
+  "final_design":{
     "business_identity_owner":"A_SHARE_EVENT_DRIVEN_AGENT__TaskContract.task_id",
     "business_state_owner":"A_SHARE_EVENT_DRIVEN_AGENT__MarketDayState",
+    "parent_role":"ONE_ASHARE_DOMAIN_ROUTER__COMMON_GOVERNANCE_ONLY",
     "source_lanes":["OFFICIAL_FACTS","TONGHUASHUN_LEVEL2","XUANGUTONG_DINGPAN","STRUCTURED_MARKET_FALLBACK","P01_P09_RESEARCH"],
-    "specialized_decision_chain":"POINT_IN_TIME_FREEZE__SOURCE_RECONCILIATION__EVENT_INDUSTRY_RESEARCH__MARKET_STRUCTURE__U0_U1_RECALL__THREE_U1_BOUNDED_CANDIDATE_VIEWS__COUNTEREVIDENCE__OWNER_ADJUDICATION__U3_OR_NO_TRADE__FROZEN_REVIEW__REPLAY_GATED_LEARNING",
-    "peer_chat":false,
-    "persistent_specialist_controller":false
-  },
-  "observed_child_evidence":{
-    "candidate_final_head":"2e187dd349eea39da0fc35901e9f3429b11ad75e",
-    "candidate_ci_run":38628786127,
-    "candidate_result":"PASS",
-    "production_main_commit":"1fb2cda4dba3a4dd1f6c6fe5a2a7fe1b3039d292",
-    "production_ci_run":38628981077,
-    "production_result":"PASS"
-  },
-  "parent_target":{
-    "single_router":"ashare:main",
-    "legacy_alias":"ashare:recommendation",
-    "child_ref_semantics":"OPTIONAL_OPAQUE_CHILD_MARKET_DAY_REFERENCE_ONLY",
+    "premarket_model":"POINT_IN_TIME_FREEZE__BROAD_U0_U1_RECALL__EVENT_INDUSTRY_AND_MARKET_STRUCTURE_OPPORTUNITY_VIEWS__BOUNDED_COUNTEREVIDENCE__ALL_U1_RISK_FEASIBILITY_GATE__HARD_VETO__AUTHORIZED_U3_OR_NO_TRADE",
+    "postclose_model":"IMMUTABLE_FROZEN_REVIEW__RECALL_QUALITY__FINAL_SELECTION_ACTIVATION_OUTCOME_QUALITY__EXECUTION_FEASIBILITY_QUALITY",
+    "learning_model":"EVERY_PROBLEM_RESEARCH_AND_REFLECTION__MULTI_REGIME_REPLAY__REGRESSION_CI_BEFORE_DURABLE_PROMOTION",
     "parent_business_state_mirror":false,
-    "common_contract_change":false
+    "persistent_peer_chat":false
   },
-  "acceptance_before_resolved":[
-    "parent task index contains exactly one A-share router",
-    "old state/tasks/ashare-recommendation.json is absent",
-    "parent router contains no per-day tickers/source pools/U0-U1-U3/business state",
-    "legacy user-facing aliases resolve to ashare:main",
-    "parent promotion-gate passes",
-    "parent main post-promotion CI passes",
-    "authoritative production reread confirms one parent router"
-  ],
-  "updated_at":"2026-10-15T04:12:00+08:00"
+  "observed_evidence":{
+    "child_0_2_production":{"main_commit":"1fb2cda4dba3a4dd1f6c6fe5a2a7fe1b3039d292","ci_run":38628981077,"result":"PASS"},
+    "parent_2_5_2_production":{"main_commit":"40726145488f72465a02f4768c5463e7aceebd2f","ci_run":38629993564,"result":"PASS"},
+    "child_0_3_candidate":{"head":"5e14d859235e51b5ebaba0287906d9adb0ec96ea","ci_run":38634289915,"result":"PASS"},
+    "child_0_3_production":{"main_commit":"ed83b2b6246605e9d236b0b184dddcb936553298","ci_run":38634603142,"result":"PASS"}
+  },
+  "acceptance_result":{
+    "parent_task_index_contains_exactly_one_ashare_router":true,
+    "old_parent_per_day_ashare_business_state_absent":true,
+    "parent_router_contains_no_per_day_tickers_source_pools_or_u0_u1_u3_business_state":true,
+    "legacy_aliases_route_to_ashare_main":true,
+    "child_owns_market_day_identity_and_state":true,
+    "point_in_time_freeze_and_fact_owner_source_lanes_preserved":true,
+    "opportunity_and_risk_execution_layers_are_separated":true,
+    "all_u1_candidates_receive_risk_assessment_and_hard_veto_is_not_outvotable":true,
+    "postclose_recall_selection_and_execution_quality_are_separate":true,
+    "replay_promotion_requires_multi_metric_multi_regime_evidence":true,
+    "parent_production_ci_pass":true,
+    "child_0_3_production_ci_pass":true
+  },
+  "terminal_decision":"KEEP_ONE_UAOS_ASHARE_ROUTER__ASHARE_CHILD_OWNS_MARKET_DAY_IDENTITY_STATE_AND_SPECIALIZED_DECISION_SYSTEM__0_3_0_PRODUCTION_VERIFIED",
+  "updated_at":"2026-10-15T04:52:00+08:00"
 }
