@@ -1,6 +1,6 @@
 {
   "snapshot_date":"2026-10-14",
-  "status":"UAOS_2_4_4_CANDIDATE__LOGICAL_COMPLETE_MEDIATION_DEFINED__REGISTERED_REPOSITORY_HOST_ENFORCEMENT_PENDING",
+  "status":"UAOS_2_4_4_CANDIDATE__PROMOTION_GATE_PASS__REGISTERED_REPOSITORY_HOST_ENFORCEMENT_PENDING",
   "requirements_authority":[
     "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
     "docs/requirements/FROZEN_REQUIREMENTS_v1.1.md",
@@ -12,7 +12,7 @@
   ],
   "system_release_version":"2.4.4",
   "mandatory_external_services":[],
-  "local_integrated_test_status":"PENDING_FINAL_CANDIDATE_EVALUATION",
+  "local_integrated_test_status":"PASS_ON_CANDIDATE_PROMOTION_GATE",
   "verification":{
     "phase0_18_prior_baseline":"PASS_RETAINED",
     "prior_parent_baseline":"PASS_RETAINED",
@@ -26,22 +26,22 @@
     "financial_identity_semantics":"FINANCIAL_STATE_TASK_ID_IS_DOMAIN_OWNED_ARTICLE_IDENTITY__TASK_CONTRACT_IDENTITY_FREE__NO_PARENT_CHILD_ID_EQUALITY",
     "uaos_2_4_3_release_commit":"895d1f17ff5d2fc56ad5f1ce57fc1c8ad89da0ad",
     "uaos_2_4_3_post_promotion_ci":{"run_id":38579983855,"status":"PASS"},
-    "cognitive_direct_domain_final_candidate_ci":{"run_id":38579600772,"status":"PASS"},
-    "cognitive_direct_domain_final_candidate_live":{"run_id":38579600785,"status":"PASS","postgres_authority":"PASS","dbos_identity_idempotency":"PASS","maintenance_schedule":"PASS","crash_recovery":"PASS","s3_http_roundtrip":"PASS","openai_provider":"SKIPPED_BY_DESIGN"},
+    "complete_mediation_candidate_ci":{"run_id":38592995915,"status":"PASS","required_check":"promotion-gate"},
     "complete_mediation_external_architecture_evidence":[
       "NIST reference-monitor property: complete mediation / always invoked, tamper resistance, verifiability",
       "GitHub rulesets: require pull requests and required status checks on protected refs",
       "OpenAI Custom Instructions: applied across chats, suitable for bootstrap/sentinel but not physical enforcement"
     ],
     "observed_host_state":{
-      "chatgpt_github_plugin_permission":"APP_SPECIFIC_ALLOW_ALL_ACTIONS",
-      "raw_connector_can_write_without_uaos_python_interception":true,
+      "chatgpt_github_plugin_permission":"ASK_BEFORE_WRITES",
+      "silent_raw_connector_write":"DISABLED_BY_HOST_PERMISSION",
+      "raw_connector_still_outside_uaos_python_interception":true,
       "repositories":[
-        {"repository":"D1traverser-debug/universal-agent-os","production_branch":"main","rulesets":[],"physically_mediated":false},
-        {"repository":"D1traverser-debug/financial-writing-agent","production_branch":"main","rulesets":[],"physically_mediated":false},
-        {"repository":"D1traverser-debug/a-share-event-driven-agent","production_branch":"main","rulesets":[],"physically_mediated":false},
-        {"repository":"D1traverser-debug/novel-writing-agent","production_branch":"main","rulesets":[],"physically_mediated":false},
-        {"repository":"D1traverser-debug/video-growth-agent","production_branch":"main","rulesets":[],"physically_mediated":false}
+        {"repository":"D1traverser-debug/universal-agent-os","production_branch":"main","rulesets":[],"physically_mediated":false,"required_check":"promotion-gate"},
+        {"repository":"D1traverser-debug/financial-writing-agent","production_branch":"main","rulesets":[],"physically_mediated":false,"existing_check":"test"},
+        {"repository":"D1traverser-debug/a-share-event-driven-agent","production_branch":"main","rulesets":[],"physically_mediated":false,"existing_check":"test"},
+        {"repository":"D1traverser-debug/novel-writing-agent","production_branch":"main","rulesets":[],"physically_mediated":false,"existing_check":"recovery-contract"},
+        {"repository":"D1traverser-debug/video-growth-agent","production_branch":"main","rulesets":[],"physically_mediated":false,"existing_check":"test"}
       ]
     }
   },
@@ -57,50 +57,25 @@
         "D1traverser-debug/novel-writing-agent",
         "D1traverser-debug/video-growth-agent"
       ],
-      "common_required_properties":{
-        "target_production_branch":true,
-        "require_pull_request":true,
-        "block_force_push":true,
-        "block_branch_deletion":true,
-        "chatgpt_github_app_bypass":false
-      },
-      "uaos_required_status_check":"promotion-gate",
-      "domain_status_check_rule":"reuse each domain owner's stable existing CI/release check when available; do not duplicate parent business validation",
+      "common_required_properties":{"target_production_branch":true,"require_pull_request":true,"block_force_push":true,"block_branch_deletion":true,"chatgpt_github_app_bypass":false},
+      "required_status_checks":{"universal-agent-os":"promotion-gate","financial-writing-agent":"test","a-share-event-driven-agent":"test","novel-writing-agent":"recovery-contract","video-growth-agent":"test"},
       "closure_rule":"Every registered production repository in scope must have active remote enforcement read back from GitHub before system-wide physical complete mediation may be RESOLVED."
     }
   ],
   "financial_integration_open_work":[],
   "deferred_work":[
-    {
-      "id":"D1",
-      "scope":"OTHER_OR_GENERIC_CHILD_INTEGRATION",
-      "item":"LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE_OUTSIDE_THE_VERIFIED_FINANCIAL_ROUTING_PATH",
-      "reason":"Direct child-session topology is governed generically; live end-to-end upcall evidence for every registered domain remains outside this Financial-focused verification."
-    }
+    {"id":"D1","scope":"OTHER_OR_GENERIC_CHILD_INTEGRATION","item":"LIVE_PARENT_UPCALL_AND_PARENT_GOVERNED_DESCENDANT_INTEGRATION_EVIDENCE_OUTSIDE_THE_VERIFIED_FINANCIAL_ROUTING_PATH","reason":"Direct child-session topology is governed generically; live end-to-end upcall evidence for every registered domain remains outside this Financial-focused verification."}
   ],
   "host_control_surface":[
-    {
-      "id":"HC1",
-      "item":"CHATGPT_GITHUB_CONNECTOR_PERMISSION",
-      "current":"ALLOW_ALL_ACTIONS",
-      "risk":"RAW_WRITES_DO_NOT_REQUIRE_PREWRITE_CONFIRMATION",
-      "role":"TEMPORARY_PERMISSION_TIGHTENING_CAN_REDUCE_RISK_BUT_DOES_NOT_REPLACE_REPOSITORY_RULESETS"
-    },
-    {
-      "id":"HC2",
-      "item":"REGISTERED_REPOSITORY_PRODUCTION_RULESETS",
-      "current":"ABSENT_ON_ALL_5_CURRENT_PRODUCTION_REPOSITORIES",
-      "role":"REQUIRED_SYSTEM_WIDE_PRODUCTION_POLICY_ENFORCEMENT_BOUNDARY"
-    }
+    {"id":"HC1","item":"CHATGPT_GITHUB_CONNECTOR_PERMISSION","current":"ASK_BEFORE_WRITES","role":"TEMPORARY_HUMAN_MEDIATION_WHILE_RULESETS_ARE_ABSENT__NOT_A_REPLACEMENT_FOR_REPOSITORY_RULESETS"},
+    {"id":"HC2","item":"REGISTERED_REPOSITORY_PRODUCTION_RULESETS","current":"ABSENT_ON_ALL_5_CURRENT_PRODUCTION_REPOSITORIES","role":"REQUIRED_SYSTEM_WIDE_PRODUCTION_POLICY_ENFORCEMENT_BOUNDARY"}
   ],
   "known_limitations":[
     "same-model self-critique, refinement or debate is candidate-generation evidence and is not independent verification by itself",
-    "hosted CI/live runs provide independent execution evidence, not independent semantic architecture judgment",
-    "S3 CI evidence uses a standalone HTTP protocol emulator and does not certify any eventual production bucket/provider configuration",
-    "live OpenAI provider evidence is optional/manual and was not rerun because provider integration code is unchanged",
-    "until active GitHub enforcement is configured and read back across every registered production repository in scope, system-wide complete mediation is not physically enforced",
-    "Financial historical article receipts remain immutable and explicit historical resume uses the exact Financial-owned article reference without parent identity adoption"
+    "hosted CI provides independent execution evidence, not independent semantic architecture judgment",
+    "raw connector remains outside Python ActionCoordinator even though writes now require host approval",
+    "until active GitHub enforcement is configured and read back across every registered production repository in scope, system-wide complete mediation is not physically enforced"
   ],
-  "readiness_semantics":"UAOS 2.4.4 candidate separates always-on mutation sensing, adaptive cognition, policy decision, and physical policy enforcement. The shared safety property applies to UAOS and all registered domain production repositories while preserving domain business ownership. Direct production-branch CAS is retired as the normal promotion path. Because all five current production repositories presently report no rulesets, the complete-mediation incident remains BLOCKED_HOST_CONFIGURATION and 2.4.4 is not production-promoted.",
-  "updated_at":"2026-10-14T15:51:00Z"
+  "readiness_semantics":"UAOS 2.4.4 candidate separates always-on mutation sensing, adaptive cognition, policy decision, and physical policy enforcement. Candidate promotion-gate passed. ChatGPT GitHub writes now require explicit approval, removing silent raw writes as a temporary control. Final architecture still requires active protected production refs across UAOS and all registered domains, so the incident remains BLOCKED_HOST_CONFIGURATION and PR #5 must not merge yet.",
+  "updated_at":"2026-10-14T15:56:00Z"
 }
