@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.3",
-  "policy_version":"1.3.0",
+  "schema_version":"1.4",
+  "policy_version":"1.4.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T16:06:00Z",
-  "purpose":"Select epistemic depth from current risk/evidence signals while enforcing a mandatory research-and-reflection floor for every detected problem and remaining downstream of the always-on mutation sentinel.",
+  "updated_at":"2026-10-14T16:34:00Z",
+  "purpose":"Select epistemic depth from current problem/risk signals, enforce a mandatory research-and-reflection floor for every detected problem, and keep optional host-hardening claims separate from the autonomous maintenance baseline.",
   "principles":[
     "The mutation sentinel is always-on and lightweight; adaptive deliberation is not a permanent heavy debate loop.",
     "Once a problem is detected, external research and reflective challenge are mandatory even when the problem appears familiar or local.",
@@ -13,27 +13,27 @@
     "Reflection must challenge at least one current assumption, boundary, abstraction, topology or causal explanation; repeating the preferred fix is insufficient.",
     "Same-model critique is candidate-generation evidence, not independent verification.",
     "Counterexample search and independent verification add depth according to risk; they do not decide whether baseline research/reflection starts.",
-    "Stop deliberating when evidence is sufficient for the risk level, contradictions are resolved or explicitly bounded, the mutation path is properly mediated, and the plan demonstrably advances the governing done-condition without unnecessary complexity."
+    "Stronger assurance is not automatically required; choose controls proportionally to the governing objective and risk.",
+    "Stop deliberating when evidence is sufficient for the risk level, contradictions are resolved or explicitly bounded, and the plan demonstrably advances the governing done-condition without unnecessary complexity."
   ],
   "representative_trigger_signals":["USER_CORRECTION","FAILURE","REPEATED_FAILURE","GOAL_PROGRESS_UNCERTAIN","SCOPE_EXPANSION","CROSS_SUBSYSTEM","COMPLEXITY_GROWTH","CONFLICTING_EVIDENCE","UNKNOWN_FAILURE_CLASS","KNOWLEDGE_GAP","ARCHITECTURE_GAP","CONTROL_PLANE_GAP","HIGH_RISK_CHANGE"],
   "trigger_semantics":"EXTENSIBLE__NOT_AN_EXHAUSTIVE_PROBLEM_ONTOLOGY",
   "problem_detection_floor":{
     "scope":"ANY_DETECTED_DEFECT_FAILURE_DEGRADATION_USER_CORRECTION_CONTRADICTION_OR_EVIDENCE_THAT_CURRENT_BEHAVIOR_IS_NOT_RELIABLY_SATISFYING_THE_GOVERNING_OBJECTIVE",
-    "always_required_dimensions":[
-      "MICRO_DIAGNOSIS",
-      "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT",
-      "GOVERNING_ASSUMPTION_CHALLENGE",
-      "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH"
-    ],
+    "always_required_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH"],
     "depth_rule":"LIGHTWEIGHT_FOR_SMALL_PROBLEMS__DEEPER_FOR_MATERIAL_OR_SYSTEMIC_PROBLEMS__NO_RESEARCH_OR_REFLECTION_WAIVER_FOR_FAMILIARITY"
   },
   "escalation_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH","COUNTEREXAMPLE_SEARCH","INDEPENDENT_VERIFICATION"],
-  "external_architecture_scout":{"default":"ON_WHEN_PROBLEM_DETECTED","minimum_output_contract":["relevant_external_fact_or_method","evidence_ref","how_it_changed_or_confirmed_the_diagnosis_or_repair"],"deeper_architecture_output_contract":["required_property","candidate_patterns","fit_and_misfit","cost_and_failure_modes","minimum_borrowable_mechanism","rejected_alternatives","evidence_refs"]},
+  "external_architecture_scout":{
+    "default":"ON_WHEN_PROBLEM_DETECTED",
+    "minimum_output_contract":["relevant_external_fact_or_method","evidence_ref","how_it_changed_or_confirmed_the_diagnosis_or_repair"],
+    "deeper_architecture_output_contract":["required_property","candidate_patterns","fit_and_misfit","cost_and_failure_modes","minimum_borrowable_mechanism","rejected_alternatives","evidence_refs"]
+  },
   "mutation_sentinel_contract":{
     "policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
     "session_ref":"config/SESSION_INTERACTION_POLICY.json",
     "always_on":true,
-    "responsibility":"Before any external/durable mutation, verify authority/target/mutation class and whether the proposed path is mediated by the required host enforcement point; then pass problem/risk signals to adaptive deliberation.",
+    "responsibility":"Before any external/durable mutation, verify authority/target/mutation class and owner-appropriate workflow; then pass problem/risk signals to adaptive deliberation.",
     "not_a_deliberation_dimension":"The sentinel is an admission precondition, not evidence that diagnosis/research/reflection/counterexample work has been completed."
   },
   "material_change_admission":{
@@ -50,12 +50,17 @@
     ],
     "closure_guard":[
       "scan all current top-level authorities that can encode the changed semantic, including ENTRYPOINT, CURRENT_SYSTEM, session/binding/authority policies, task/router state and affected domain bindings",
-      "scan actual host control surfaces relevant to the claimed invariant, including connector permissions and remote repository protection when mutation safety is in scope",
-      "resolve or explicitly bound every contradiction before reporting progress",
-      "do not report RESOLVED when a known active production write path can bypass the invariant being claimed",
+      "scan host control surfaces when the changed semantic or assurance claim depends on them",
+      "resolve or explicitly bound every contradiction before reporting RESOLVED",
+      "a known bypass blocks RESOLVED only when the claimed invariant itself requires non-bypassable physical enforcement",
+      "optional defense-in-depth controls must be reported as optional rather than promoted to baseline blockers",
       "run reproducible evaluation on the final candidate tree and post-promotion observation on production authority at the assurance level appropriate to the change"
-    ],
-    "host_note":"CHATGPT_GITHUB raw connector calls are outside the Python ActionCoordinator. Repository policy therefore requires a host enforcement point for production mutation. Custom Instructions and the model-side sentinel are useful bootstrap/decision aids but are not physical enforcement."
+    ]
   },
-  "anti_bloat":["Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem.","Every new mechanism must state overlap, replacement/retirement, or why extension is impossible.","Do not turn guidance principles into accumulating guarantee prose when an invariant can be encoded as a contract/test/fitness property."]
+  "anti_bloat":[
+    "Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem.",
+    "Every new mechanism must state overlap, replacement/retirement, or why extension is impossible.",
+    "Do not turn guidance principles into accumulating guarantee prose when an invariant can be encoded as a contract/test/fitness property.",
+    "Do not require a stronger assurance tier merely because it is available; require it only when the governing objective or risk demands it."
+  ]
 }
