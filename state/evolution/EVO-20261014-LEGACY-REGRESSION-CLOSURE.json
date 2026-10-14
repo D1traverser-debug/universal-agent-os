@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "evolution_id": "EVO-20261014-LEGACY-REGRESSION-CLOSURE",
-  "status": "EVALUATING",
+  "status": "EVALUATED",
   "trigger": "HOSTED_CI_RECOVERED_AND_FULL_SUITE_REGRESSION_DISCOVERY",
   "opened_at": "2026-10-14T10:28:52Z",
   "incidents": [
@@ -14,6 +14,11 @@
       "incident_id": "INC-20261014-REGRESSION-DEBT-001",
       "summary": "Recovered full CI exposed 7 failures: stale/contradictory hot-path tests, stale readiness assertions, two authority-migration omissions and deprecated Actions runtime versions.",
       "failure_class": "PROMOTED_CHANGES_OUTRAN_FULL_SUITE_COMPATIBILITY"
+    },
+    {
+      "incident_id": "INC-20261014-S3-TEST-INFRA-001",
+      "summary": "The object-store live probe depended on obsolete or unauthorized MinIO container distribution paths before the S3 adapter itself could execute.",
+      "failure_class": "PROTOCOL_TEST_COUPLED_TO_UNSTABLE_VENDOR_IMAGE_DISTRIBUTION"
     }
   ],
   "root_cause": {
@@ -23,12 +28,13 @@
       "AuthorityScopeGate migration did not update the isolated self-change drill and one legacy multifault test caller.",
       "Readiness regression test asserted a retired phase-11 schema/status literally instead of current assurance invariants.",
       "Core workflows still used Actions versions that GitHub now runs through a Node 20 compatibility/deprecation path.",
-      "Observation-only commits unnecessarily triggered the same full CI workflow."
+      "Observation-only commits unnecessarily triggered the same full CI workflow.",
+      "The S3 protocol probe was coupled to a specific MinIO image distribution path even though ADR-026 intentionally targets the S3 protocol rather than a vendor."
     ]
   },
   "proposal": {
     "proposal_id": "CP-LEGACY-REGRESSION-CLOSURE-001",
-    "state": "PROPOSED",
+    "state": "APPROVED_FOR_PROMOTION",
     "target_scope": "UAOS_PARENT_CORE",
     "changes": [
       "Migrate the self-change drill and multifault caller to explicit UAOS authority metadata.",
@@ -36,14 +42,15 @@
       "Make readiness tests validate assurance semantics rather than a retired exact status schema.",
       "Remove predecessor-controller literal from README hot path and refresh requirement-authority documentation.",
       "Upgrade checkout/setup-python Actions to current v7 majors.",
-      "Add workflow concurrency cancellation and skip redundant full CI for observation/readiness/README-only pushes while retaining PR/manual verification."
+      "Add workflow concurrency cancellation and skip redundant full CI for observation/readiness/README-only pushes while retaining PR/manual verification.",
+      "Exercise the S3 adapter through a registry-independent standalone HTTP S3 emulator while keeping production-provider assurance separate."
     ],
     "new_components": 0,
     "new_runtime_state_surfaces": 0,
-    "rollback_plan": "Do not promote candidate branch; main remains at observed pre-change HEAD until full PR evaluation passes."
+    "rollback_plan": "If post-promotion evidence regresses, revert the single promotion commit and retain this evaluation record."
   },
   "evaluation": {
-    "state": "PENDING",
+    "state": "PASSED",
     "required": [
       "full pytest suite passes on GitHub-hosted runner",
       "live integration PR jobs pass for PostgreSQL/DBOS and object-store paths",
@@ -55,11 +62,20 @@
       "baseline_result": "7 failed, 176 passed",
       "runner_allocation": "RECOVERED_AFTER_PUBLIC_VISIBILITY",
       "prior_quota_evidence": "2000/2000 private Actions minutes consumed"
+    },
+    "passing_evidence": {
+      "candidate_head": "e2b608b60f6854ba44928e84f4e7911ca7f978fc",
+      "full_ci_run": 38550933132,
+      "full_ci_result": "PASS",
+      "live_integration_run": 38550933043,
+      "postgres_dbos_job": "PASS including contract suite, CAS/ledger, DBOS identity/idempotency, maintenance schedule and crash/recovery",
+      "object_store_job": "PASS via standalone HTTP S3 emulator with content-addressed roundtrip and cleanup",
+      "openai_provider_job": "SKIPPED_BY_DESIGN_ON_PULL_REQUEST"
     }
   },
   "promotion": {
-    "state": "NOT_AUTHORIZED_UNTIL_EVALUATION_PASS",
+    "state": "AUTHORIZED_PENDING_MAIN_CAS",
     "main_observed_head": "110cb899d63103cddcc019347476515a21d22bd2"
   },
-  "updated_at": "2026-10-14T10:28:52Z"
+  "updated_at": "2026-10-14T10:38:00Z"
 }
