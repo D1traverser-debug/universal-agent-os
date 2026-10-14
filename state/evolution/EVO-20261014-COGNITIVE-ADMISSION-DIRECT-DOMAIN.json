@@ -1,12 +1,138 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "evolution_id": "EVO-20261014-COGNITIVE-ADMISSION-DIRECT-DOMAIN",
-  "status": "EVALUATING",
-  "trigger": ["REPEATED_USER_CORRECTION","ARCHITECTURE_GAP","GOVERNING_ASSUMPTION_FAILURE","AUTHORITY_CONTRADICTION_AFTER_PREMATURE_CLOSURE"],
-  "incident": {"failure_class":"FC-DELIBERATION-RUNTIME-ADMISSION-AND-DOMAIN-SESSION-TOPOLOGY-001","summary":"The deliberation selector existed and passed unit tests, but host/session maintenance could still promote a first-plausible architecture without first applying the selector. This allowed UAOS to be treated as a mandatory business gateway and left a stale same-task-id Financial rule in ENTRYPOINT after narrower router state was corrected."},
-  "root_cause": ["Deliberation was implemented as a pure selector but not made a fail-closed pre-mutation/pre-promotion host admission rule for material architecture/governance changes.","Closure verification was local to edited files/tests and did not require an authority-wide contradiction scan across ENTRYPOINT, session policy, task/router state and affected domain bindings.","The parent/child relationship was conflated with mandatory request routing; parent governance was incorrectly allowed to imply parent mediation of normal child business execution."],
-  "external_architecture_evidence": [{"source":"Kubernetes Cluster Architecture","property_borrowed":"control plane manages workload infrastructure while worker nodes run application workloads; management does not imply every workload request is proxied by the control plane","fit":"supports UAOS as governance/control plane with direct domain work-plane execution","misfit":"UAOS is conversational governance, not a Kubernetes scheduler; no process/network mechanics are copied"},{"source":"Erlang/OTP Supervisor Behaviour","property_borrowed":"supervisor starts/stops/monitors child processes while workers retain their own execution role","fit":"supports parent supervision/upcall without parent becoming the child's normal message proxy","misfit":"no OTP restart tree or process semantics are introduced"}],
-  "candidate": {"changes":["Correct ENTRYPOINT Financial continuation semantics so Financial owns article identity and UAOS retains only an optional opaque child reference.","Add explicit direct-domain-session activation semantics: selecting a domain in a fresh chat establishes that domain as the current Agent/work plane; UAOS is not a mandatory business gateway.","Make adaptive deliberation a fail-closed host admission rule before material architecture/governance mutation when trigger signals exist.","Require authority-wide contradiction scan before reporting an evolution incident RESOLVED.","Add CI regression tests covering direct child session topology and stale same-ID/gateway rules."],"new_components":0,"new_state_surfaces":0,"reused_mechanisms":["config/DELIBERATION_POLICY.json","config/SESSION_INTERACTION_POLICY.json","src/uaos/kernel/deliberation.py","existing CI architecture-invariant tests","existing evolution lifecycle"],"retired_assumptions":["PARENT_AUTHORITY_IMPLIES_MANDATORY_BUSINESS_GATEWAY","FINANCIAL_ARTICLE_ID_EQUALS_UAOS_ROUTER_OR_ARTICLE_ID","LOCAL_EDIT_VERIFICATION_IS_SUFFICIENT_FOR_EVOLUTION_CLOSURE"]},
-  "acceptance": ["ENTRYPOINT contains no same-ID Financial continuation rule","SESSION_INTERACTION_POLICY explicitly permits direct domain activation in a fresh chat without a live UAOS business proxy","DELIBERATION_POLICY fail-closes material architecture/governance mutation when required deliberation dimensions have not been satisfied","CI tests fail on reintroduction of mandatory parent gateway or parent/child business identity collapse","full UAOS CI passes","post-promotion main CI passes before status becomes RESOLVED"],
-  "updated_at": "2026-10-14T13:48:00Z"
+  "status": "EVALUATED_READY_FOR_PROMOTION",
+  "trigger": [
+    "REPEATED_USER_CORRECTION",
+    "ARCHITECTURE_GAP",
+    "GOVERNING_ASSUMPTION_FAILURE",
+    "AUTHORITY_CONTRADICTION_AFTER_PREMATURE_CLOSURE"
+  ],
+  "incident": {
+    "failure_class": "FC-DELIBERATION-RUNTIME-ADMISSION-AND-DOMAIN-SESSION-TOPOLOGY-001",
+    "summary": "The deliberation selector existed and passed unit tests, but host/session maintenance could still promote a first-plausible architecture without first applying the selector. This allowed UAOS to be treated as a mandatory business gateway and left stale same-task-id Financial semantics in ENTRYPOINT and later stale bootstrap/readiness authority after narrower files were corrected."
+  },
+  "root_cause": [
+    "Deliberation was implemented as a pure selector but not made a fail-closed pre-mutation/pre-promotion host admission rule for material architecture/governance changes.",
+    "Closure verification was local to edited files/tests and did not require an authority-wide contradiction scan across every current surface encoding the changed semantic.",
+    "The parent/child relationship was conflated with mandatory request routing; parent governance was incorrectly allowed to imply parent mediation of normal child business execution."
+  ],
+  "deliberation_evidence": {
+    "MICRO_DIAGNOSIS": [
+      "production ENTRYPOINT retained stale same-task-id Financial rule after prior closure",
+      "fresh-chat bootstrap pointer retained mandatory-UAOS-routing wording",
+      "readiness retained Financial 0.8.2/same-identity semantics"
+    ],
+    "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT": [
+      "registered child Agents must be independently usable work planes while UAOS remains the parent control/governance plane"
+    ],
+    "GOVERNING_ASSUMPTION_CHALLENGE": [
+      "rejected assumption: parent authority implies mandatory runtime/business gateway",
+      "rejected assumption: common capability inheritance implies parent ownership of child business identity/state"
+    ],
+    "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH": [
+      "Kubernetes control-plane versus worker/workload separation",
+      "Erlang/OTP supervisor versus child worker separation"
+    ],
+    "COUNTEREXAMPLE_SEARCH": [
+      "mandatory parent proxy creates single-point coupling and contradicts domain-owned business authority",
+      "parent-created shared business identity caused the observed Financial coupling and authority drift"
+    ],
+    "INDEPENDENT_EXECUTION_EVIDENCE": [
+      "GitHub hosted full CI run 38579600772 PASS",
+      "GitHub hosted live-integration run 38579600785 PASS for PostgreSQL/DBOS/crash-recovery/S3 protocol"
+    ]
+  },
+  "external_architecture_evidence": [
+    {
+      "source": "Kubernetes Cluster Architecture",
+      "property_borrowed": "control plane manages cluster/workload infrastructure while worker nodes run application workloads; management does not imply every application request is proxied by the control plane",
+      "fit": "supports UAOS as governance/control plane with direct domain work-plane execution",
+      "misfit": "UAOS is conversational governance, not a Kubernetes scheduler; no process/network mechanics are copied"
+    },
+    {
+      "source": "Erlang/OTP Supervisor Behaviour",
+      "property_borrowed": "supervisor starts/stops/monitors child processes while workers retain their own execution role",
+      "fit": "supports parent supervision/upcall without parent becoming the child's normal message proxy",
+      "misfit": "no OTP restart tree or process semantics are introduced"
+    }
+  ],
+  "candidate": {
+    "release": "UAOS 2.4.3",
+    "changes": [
+      "Freeze v1.5 direct-child-session, identity-boundary, cognitive-admission and authority-wide-closure requirements.",
+      "Correct ENTRYPOINT, session policy, common capabilities and fresh-chat pointer so selecting a registered child activates that child directly as current Agent/work plane.",
+      "Make adaptive deliberation a fail-closed material-change admission contract and add executable require_deliberation_admission evidence checks.",
+      "Require authority-wide contradiction scan before evolution closure.",
+      "Correct readiness from Financial 0.8.2/same-ID semantics to Financial 0.8.3/domain-owned identity semantics.",
+      "Add CI architecture regressions for parent-gateway, same-ID, stale bootstrap/readiness and deliberation-bypass failures."
+    ],
+    "new_components": 0,
+    "new_state_surfaces": 0,
+    "reused_mechanisms": [
+      "config/DELIBERATION_POLICY.json",
+      "config/SESSION_INTERACTION_POLICY.json",
+      "config/COMMON_CAPABILITIES.json",
+      "src/uaos/kernel/deliberation.py",
+      "existing CI architecture-invariant tests",
+      "existing evolution lifecycle"
+    ],
+    "retired_assumptions": [
+      "PARENT_AUTHORITY_IMPLIES_MANDATORY_BUSINESS_GATEWAY",
+      "FINANCIAL_ARTICLE_ID_EQUALS_UAOS_ROUTER_OR_ARTICLE_ID",
+      "COMMON_CAPABILITY_INHERITANCE_IMPLIES_PARENT_BUSINESS_PROXY",
+      "LOCAL_EDIT_VERIFICATION_IS_SUFFICIENT_FOR_EVOLUTION_CLOSURE"
+    ]
+  },
+  "authority_wide_scan": {
+    "status": "CLEAN_ON_CANDIDATE",
+    "surfaces": [
+      "ENTRYPOINT.md",
+      "CURRENT_SYSTEM.json",
+      "AGENTS.md",
+      "config/SESSION_INTERACTION_POLICY.json",
+      "config/BINDING_POLICY.json",
+      "config/DELIBERATION_POLICY.json",
+      "config/COMMON_CAPABILITIES.json",
+      "state/TASK_INDEX.json",
+      "state/tasks/financial-writing-main.json",
+      "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+      "docs/assurance/PRODUCTION_READINESS.json",
+      "financial-writing-agent@main:UAOS_SKILL.md"
+    ]
+  },
+  "evaluation": {
+    "final_candidate_head": "76c4c1b140639420bdc8f5e72b632a1b5928fff2",
+    "full_ci_run": 38579600772,
+    "full_ci_status": "PASS",
+    "live_integration_run": 38579600785,
+    "live_integration_status": "PASS",
+    "live_details": [
+      "PostgreSQL authority PASS",
+      "DBOS identity/idempotency PASS",
+      "maintenance schedule PASS",
+      "crash/recovery PASS",
+      "S3-compatible HTTP roundtrip PASS",
+      "OpenAI provider SKIPPED_BY_DESIGN"
+    ]
+  },
+  "maintenance_process_deviation": {
+    "observed": true,
+    "details": [
+      "A temporary noop file was accidentally written directly to main through the raw GitHub connector and immediately reverted.",
+      "The initial evolution record was also created directly on main before the candidate branch was established rather than through the intended CAS promotion path."
+    ],
+    "classification": "RAW_CHATGPT_GITHUB_CONNECTOR_PHYSICAL_SCOPE_LIMITATION_PLUS_OPERATOR_PROCESS_ERROR",
+    "impact": "No child business authority or production runtime behavior was overwritten; the noop was removed and the evolution record is intended durable audit state.",
+    "preventive_link": "The incident reinforces the existing host-hardening limitation: Python ActionCoordinator/deliberation gates cannot physically intercept raw native connector writes; policy/CI improve logical admission but GitHub rulesets or tool mediation are still required for complete physical enforcement."
+  },
+  "acceptance": [
+    "registered child can be activated directly in a fresh chat without a persistent UAOS business proxy",
+    "no authoritative Financial same-ID or parent-created-article-identity rule remains",
+    "triggered material changes fail closed when required deliberation evidence is absent",
+    "authority-wide scan is required before RESOLVED",
+    "final candidate full CI and live integration pass",
+    "post-promotion main CI passes before status becomes RESOLVED"
+  ],
+  "updated_at": "2026-10-14T14:22:00Z"
 }
