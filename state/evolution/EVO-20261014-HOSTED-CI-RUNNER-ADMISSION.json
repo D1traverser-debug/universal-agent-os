@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "evolution_id": "EVO-20261014-HOSTED-CI-RUNNER-ADMISSION",
+  "status": "BLOCKED_EXTERNAL",
+  "trigger": "REPEATED_FAILURE",
+  "opened_at": "2026-10-14T08:53:20Z",
+  "incidents": [
+    {
+      "incident_id": "INC-CI-UAOS-38538327341",
+      "scope": "D1traverser-debug/universal-agent-os",
+      "summary": "GitHub Actions job failed before runner allocation or any workflow step.",
+      "evidence": {
+        "run_id": 38538327341,
+        "job_id": 115766607317,
+        "runner_label": "ubuntu-latest",
+        "runner_id": 0,
+        "runner_name": "",
+        "steps": [],
+        "duration_seconds": 2
+      }
+    },
+    {
+      "incident_id": "INC-CI-FINANCIAL-38535584171",
+      "scope": "D1traverser-debug/financial-writing-agent",
+      "summary": "GitHub Actions job failed before runner allocation or any workflow step.",
+      "evidence": {
+        "run_id": 38535584171,
+        "job_id": 115757546354,
+        "runner_label": "ubuntu-latest",
+        "runner_id": 0,
+        "runner_name": "",
+        "steps": [],
+        "duration_seconds": 2
+      }
+    },
+    {
+      "incident_id": "INC-CI-VIDEO-38535665427",
+      "scope": "D1traverser-debug/video-growth-agent",
+      "summary": "GitHub Actions job failed before runner allocation or any workflow step.",
+      "evidence": {
+        "run_id": 38535665427,
+        "job_id": 115757804114,
+        "runner_label": "ubuntu-24.04",
+        "runner_id": 0,
+        "runner_name": "",
+        "steps": [],
+        "duration_seconds": 3
+      }
+    }
+  ],
+  "failure_class": {
+    "failure_class_id": "FC-GITHUB-HOSTED-RUNNER-PREALLOCATION-001",
+    "name": "GitHub-hosted Actions jobs fail before runner allocation",
+    "root_layer": "EXTERNAL_HOST_GITHUB_ACTIONS_CONTROL_PLANE_OR_ACCOUNT_ADMISSION",
+    "hypothesis": "The shared failure is upstream of repository workflow steps because it reproduces across three private repositories and two hosted runner labels with runner_id=0, empty runner_name and zero steps. Repository code/test failures are therefore not evidenced by these runs."
+  },
+  "research": {
+    "state": "COMPLETED_FOR_CURRENT_DIAGNOSIS",
+    "external_evidence": [
+      "GitHub Community #207926 (2026-09-15): hosted jobs across private repos fail before allocation with runner_id=0, empty runner_name and steps=[]",
+      "GitHub Community #208438 (2026-09-21): identical pre-runner failure signature in a private repository",
+      "GitHub Community #207125 (2026-09-08): zero-step/no-runner hosted failures; guidance classifies job-with-empty-steps as runner provisioning before checkout"
+    ],
+    "internal_alternatives_considered": [
+      "Change workflow commands/dependencies: REJECTED; no step starts",
+      "Switch ubuntu-latest to ubuntu-24.04: REJECTED as general fix; video already fails identically on ubuntu-24.04",
+      "Treat failed hosted CI as code regression evidence: REJECTED",
+      "Disable hosted CI requirement: REJECTED; would reduce assurance rather than fix the failure"
+    ]
+  },
+  "change_proposal": null,
+  "disposition": {
+    "internal_system_mutation": "NO_CHANGE_PROPOSAL",
+    "reason": "Current evidence points to an external host/account admission or runner-provisioning layer. Adding repository mechanisms would be speculative complexity and violates anti-bloat/root-cause governance.",
+    "next_actions": [
+      "Check GitHub account/repository Actions policy, usage/billing and hosted-runner eligibility through an admin-capable surface; current connector cannot read that endpoint.",
+      "Preserve run/job IDs and UTC timestamps for GitHub Support if account settings do not explain the failure.",
+      "Re-run hosted CI after the external condition changes; only a job with actual runner allocation/steps can provide hosted test evidence."
+    ]
+  },
+  "assurance": "FAILURE_CLASS_VERIFIED_FROM_THREE_REPOSITORY_JOB_METADATA__ROOT_CAUSE_EXTERNAL_LAYER_NOT_FULLY_VERIFIED",
+  "updated_at": "2026-10-14T08:53:20Z"
+}
