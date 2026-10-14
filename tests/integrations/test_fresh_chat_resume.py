@@ -29,12 +29,12 @@ def _candidates_from_index():
     )
 
 
-def test_domain_level_video_continue_selects_current_default_without_alias_match():
+def test_domain_level_video_continue_selects_parent_router_without_child_identity_guess():
     result = resolve_control_target(
         ControlCommand(IntentType.CONTINUE, domain_hint="video"),
         _candidates_from_index(),
     )
-    assert result.task_id == "video:ai-self-media-commercialization"
+    assert result.task_id == "video:main"
 
 
 def test_aliases_are_hints_not_phrase_grammar():
@@ -47,15 +47,18 @@ def test_aliases_are_hints_not_phrase_grammar():
     assert "resolution_note" in index
 
 
-def test_video_current_and_old_program_have_unambiguous_default_resume_roles():
+def test_video_has_one_unambiguous_parent_router_and_child_resolution_stays_in_domain():
     index = _load_json("state/TASK_INDEX.json")
     video_tasks = [item for item in index["tasks"] if item["domain_id"] == "video"]
     defaults = [item for item in video_tasks if item["default_resume_within_domain"]]
 
-    assert [item["task_id"] for item in defaults] == ["video:ai-self-media-commercialization"]
-    old = next(item for item in video_tasks if item["task_id"] == "video-growth:main")
-    assert old["default_resume_within_domain"] is False
-    assert "explicit" in old["semantic_summary"].lower()
+    assert [item["task_id"] for item in video_tasks] == ["video:main"]
+    assert [item["task_id"] for item in defaults] == ["video:main"]
+    router = video_tasks[0]
+    assert "video-growth:main" in router["aliases"]
+    assert "video:ai-self-media-commercialization" in router["aliases"]
+    assert "child project" in router["semantic_summary"].lower()
+    assert "opaque child reference" in router["semantic_summary"].lower()
 
 
 def test_plain_chatgpt_fresh_chat_bootstrap_contract_is_explicit():
