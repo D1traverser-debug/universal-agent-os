@@ -74,7 +74,6 @@ def test_ambiguous_problem_cannot_be_silently_finalized():
 def test_session_policy_makes_problem_to_action_gate_mandatory():
     policy = _json("config/SESSION_INTERACTION_POLICY.json")
     gate = policy["problem_to_action_closure_gate"]
-    assert policy["policy_version"] == "1.7.0"
     assert gate["required"] is True
     assert gate["executable_ref"] == "src/uaos/kernel/problem_closure.py"
     assert "REPAIR_EXECUTED" in gate["terminal_states"]

@@ -1,8 +1,8 @@
 {
   "schema_version":"1.7",
-  "policy_version":"1.7.0",
+  "policy_version":"1.7.1",
   "authority":"UAOS",
-  "updated_at":"2026-10-15T10:17:12+08:00",
+  "updated_at":"2026-10-15T17:46:50+08:00",
   "bare_inheritance_selector":{
     "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option":{"option_id":"uaos:controller","display_name_zh":"总控系统","intent":"SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY","creates_business_task":false,"authority_context":"UAOS"},
@@ -100,6 +100,8 @@
     "format":"COMPACT_AGENT_PROGRESS_BLOCK",
     "fields":["current_agent","current_scope_or_task","authority_context","status","current_stage","next_action_or_blocker","evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER","deliberation_state_when_triggered_or_NOT_TRIGGERED","version_identity","progress_timestamp"],
     "timestamp_rule":"Use the timestamp of the freshest authoritative state actually used for the report; do not substitute the response clock when authority freshness is known.",
+    "timestamp_timezone":"Asia/Shanghai",
+    "timestamp_timezone_rule":"Render progress_timestamp in Beijing time / China Standard Time (UTC+08:00) regardless of client, device, host or inferred local timezone. Preserve the authoritative instant by converting the freshest authoritative timestamp to +08:00; do not replace it with the response clock merely to obtain the requested timezone.",
     "version_rule":"Report system/domain/task version identities that materially govern the current action. Schema version alone is not a release version.",
     "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id. If a detected problem was evaluated but did not justify a durable evolution record, report EVALUATED_NO_DURABLE_EVOLUTION. Use NO_EVOLUTION_TRIGGER only when no problem/evolution trigger was detected in the current turn.",
     "deliberation_rule":"When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the trigger/research-control state without exposing private chain-of-thought or fabricating independent review.",
