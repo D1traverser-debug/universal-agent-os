@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "evolution_id": "EVO-20261015-CROSS-DOMAIN-OBSERVABLE-BEHAVIOR-CONTRACT",
-  "status": "CANDIDATE_EVALUATION",
+  "status": "RESOLVED",
   "authority": "UAOS",
-  "updated_at": "2026-10-15T09:49:01+08:00",
+  "updated_at": "2026-10-15T09:52:34+08:00",
   "trigger": [
     "FINANCIAL_PARENT_GUIDANCE_UPCALL",
     "DECLARATION_TO_OPERATION_GAP",
@@ -27,11 +27,11 @@
   "deliberation_evidence": {
     "MICRO_DIAGNOSIS": [
       "Financial recorded two separate incidents where correct policy/capability declarations did not make the required behavior happen in the live path: system-impact creation on corrective feedback and proactive evidence recovery before asking the user.",
-      "Current UAOS binding validates declaration/reference compatibility but does not itself prove that an inherited cognitive behavior is operational in a child session."
+      "Current UAOS binding validated declaration/reference compatibility but did not itself prove that an inherited cognitive behavior was operational in a child session."
     ],
     "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT": [
-      "UAOS should own common semantics and assurance boundaries while registered domains retain business execution, internal state, evidence format and task graphs.",
-      "The repair must improve observability without turning UAOS into a per-turn child proxy or microscheduler."
+      "UAOS owns common semantics and assurance boundaries while registered domains retain business execution, internal state, evidence format and task graphs.",
+      "The repair improves observability without turning UAOS into a per-turn child proxy or microscheduler."
     ],
     "GOVERNING_ASSUMPTION_CHALLENGE": [
       "rejected assumption: a capability ID plus compatible binding is sufficient evidence that the behavior executes",
@@ -44,32 +44,38 @@
     ],
     "COUNTEREXAMPLE_SEARCH": [
       "Video uses work orders, invocation paths, evidence contracts and attestation tiers, so a Financial article-journal probe would be structurally wrong.",
-      "A-share uses point-in-time freeze/replay and market-day evidence, so common assurance must allow replay evidence rather than prescribe one probe implementation.",
-      "Novel uses checkpoint/canon/project evidence and has a lighter capability declaration surface, so the parent must standardize the assurance outcome rather than one internal ledger."
+      "A-share uses point-in-time freeze/replay and market-day evidence, so common assurance allows replay evidence rather than prescribing one probe implementation.",
+      "Novel uses checkpoint/canon/project evidence and has a lighter capability declaration surface, so the parent standardizes the assurance outcome rather than one internal ledger."
     ],
     "INDEPENDENT_VERIFICATION": [
-      "PENDING_GITHUB_HOSTED_CI_AND_POST_PROMOTION_PRODUCTION_REREAD"
+      "GitHub hosted candidate CI run 38667908439 PASS",
+      "GitHub hosted post-promotion main CI run 38667941140 PASS",
+      "production reread confirmed config/COMMON_BEHAVIOR_ASSURANCE.json on main and current main head d8bd4164b537c6a0b1e9e775e936e8dc5d9f46a0"
     ]
   },
-  "candidate_scope": [
-    "config/COMMON_BEHAVIOR_ASSURANCE.json",
-    "config/BINDING_POLICY.json",
-    "CURRENT_SYSTEM.json",
-    "tests/architecture/test_common_behavior_assurance.py"
-  ],
-  "non_goals": [
-    "DO_NOT_COPY_FINANCIAL_BUSINESS_RULES_TO_UAOS",
-    "DO_NOT_STANDARDIZE_ONE_CHILD_JOURNAL_FILE_FORMAT",
-    "DO_NOT_REQUIRE_ONE_UNIVERSAL_RUNTIME_PROBE_IMPLEMENTATION",
-    "DO_NOT_CREATE_A_PARENT_MICROSCHEDULER_OR_LIVE_BUSINESS_PROXY",
-    "DO_NOT_TREAT_RECOVERY_AS_PERMISSION_TO_INVENT_USER_FACTS_PREFERENCES_APPROVAL_OR_AUTHORIZATION"
+  "promotion": {
+    "pull_request": 17,
+    "production_commit": "d8bd4164b537c6a0b1e9e775e936e8dc5d9f46a0",
+    "uaos_release": "2.5.2",
+    "common_behavior_assurance_contract": "1.0.0",
+    "candidate_ci_run": 38667908439,
+    "post_promotion_main_ci_run": 38667941140,
+    "post_promotion_main_ci_status": "PASS"
+  },
+  "implemented_changes": [
+    "Added config/COMMON_BEHAVIOR_ASSURANCE.json as the parent-owned observable-behavior contract.",
+    "Bound operational inherited-capability claims to owner-appropriate behavioral evidence; declarations alone are capped at DECLARED_ONLY/UNVERIFIED.",
+    "Added generic recover-before-user-escalation semantics without copying Financial's domain-specific evidence order.",
+    "Standardized one canonical owner-native child evolution-evidence entrypoint when applicable while leaving journal/replay/checkpoint/work-order formats domain-owned.",
+    "Kept VERSION_METADATA_DRIFT under the existing ENTRYPOINT/CURRENT_SYSTEM synchronization regression rather than creating a duplicate mechanism.",
+    "Kept UAOS out of child business microscheduling and did not mutate Financial, Video, A-share or Novel business authority."
   ],
   "acceptance": {
-    "candidate_ci": "PENDING",
-    "policy_generalizes_without_financial_shape_lock_in": "PENDING",
-    "binding_references_common_behavior_assurance": "PENDING",
-    "version_metadata_drift_remains_guarded_by_existing_regression": "PENDING",
-    "post_promotion_main_ci": "PENDING",
-    "production_reread": "PENDING"
+    "candidate_ci": "PASS__38667908439",
+    "policy_generalizes_without_financial_shape_lock_in": "PASS",
+    "binding_references_common_behavior_assurance": "PASS",
+    "version_metadata_drift_remains_guarded_by_existing_regression": "PASS",
+    "post_promotion_main_ci": "PASS__38667941140",
+    "production_reread": "PASS"
   }
 }
