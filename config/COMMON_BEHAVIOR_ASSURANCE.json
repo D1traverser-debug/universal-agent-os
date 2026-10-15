@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "contract_version": "1.0.0",
+  "authority": "UAOS",
+  "updated_at": "2026-10-15T09:49:01+08:00",
+  "scope": "ALL_REGISTERED_DOMAINS_IN_config/AGENT_REGISTRY.json",
+  "purpose": "Operationalize inherited common-capability behavior without making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
+  "source_parent_upcall": "D1traverser-debug/financial-writing-agent@main:evals/PARENT_GUIDANCE_HANDOFF.md",
+  "parent_decisions": {
+    "PROACTIVE_RESOLUTION_GAP": "PROMOTE_COMMON_OUTCOME_SEMANTICS__KEEP_DOMAIN_SPECIFIC_RECOVERY_ORDER_DOMAIN_OWNED",
+    "EVOLUTION_HISTORY_INTERFACE": "REQUIRE_ONE_CANONICAL_CHILD_EVOLUTION_EVIDENCE_ENTRYPOINT__DO_NOT_STANDARDIZE_A_SHARED_JOURNAL_STATE_MACHINE_OR_FILE_FORMAT",
+    "VERSION_METADATA_DRIFT": "RESOLVED_BY_EXISTING_PARENT_RELEASE_SYNC_INVARIANT_AND_REGRESSION_TEST",
+    "INHERITANCE_BEHAVIOR_VS_DECLARATION": "PROMOTE_COMMON_ASSURANCE_RULE__DECLARATION_ALONE_IS_NOT_OPERATIONAL_PROOF",
+    "DECLARATION_TO_OPERATION_GAP": "PROMOTE_AS_UMBRELLA_COMMON_FAILURE_CLASS__EXTEND_EXISTING_CONTROL_CONTEXT_ASSURANCE_EVOLUTION_CONTRACTS__DO_NOT_CREATE_PARALLEL_CONTROLLER"
+  },
+  "recover_before_user_escalation": {
+    "rule": "Before externalizing a plausibly recoverable dependency to the user, a selected Agent must attempt proportionate recovery from legally and currently available authority, durable state/artifacts, relevant conversation or connected context, and appropriate external evidence when those sources can materially reduce the uncertainty.",
+    "provisional_rule": "If evidence is incomplete but safe progress remains possible, use a bounded provisional candidate with explicit uncertainty and validation conditions instead of manufacturing certainty or blocking by default.",
+    "user_escalation_is_required_or_preferred_when": [
+      "the missing information is a fact, identity, authorization, approval or preference that cannot be safely inferred",
+      "available evidence yields materially different outcomes with no defensible default",
+      "the requested action is safety-sensitive, permission-sensitive or otherwise requires explicit user choice",
+      "required evidence or capability is genuinely unavailable",
+      "the user explicitly requested confirmation or choice"
+    ],
+    "forbidden": [
+      "FABRICATE_USER_PREFERENCE_OR_HISTORY",
+      "FABRICATE_APPROVAL_OR_AUTHORIZATION",
+      "TREAT_IMPERFECT_BUT_USABLE_EVIDENCE_AS_AN_AUTOMATIC_USER_BLOCKER",
+      "FORCE_FINANCIAL_WRITINGS_EXACT_RECOVERY_ORDER_ON_OTHER_DOMAINS"
+    ]
+  },
+  "observable_inheritance_assurance": {
+    "principle": "DECLARED_COMMON_CAPABILITY_IS_NOT_OPERATIONAL_BEHAVIOR_PROOF",
+    "default_assurance_when_only_declared": "DECLARED_ONLY",
+    "operational_claim_requires": [
+      "owner-appropriate invocation path, probe, replay, receipt, trace or equivalent observable behavior evidence",
+      "evidence bound to the capability behavior being claimed rather than only to the existence of a configuration or document",
+      "current-enough evidence for the claim scope",
+      "an assurance label that does not exceed the evidence"
+    ],
+    "domain_specific_realization": "Each domain chooses evidence appropriate to its execution model: for example work-order/attestation evidence, market-day freeze/replay evidence, checkpoint/canon evidence, article owner-lifecycle evidence, or another owner-native mechanism.",
+    "no_uniform_probe_implementation": true,
+    "failure_semantics": "If operational evidence is absent, stale or contradictory, downgrade the capability claim to DECLARED_ONLY/UNVERIFIED or block the affected operation when the capability is a hard prerequisite; do not infer executability from declaration alone."
+  },
+  "canonical_child_evolution_evidence_interface": {
+    "decision": "MINIMAL_CANONICAL_ENTRYPOINT_ONLY",
+    "required_when": [
+      "a child has durable domain evolution history used for current decisions",
+      "a child has open parent-guidance/common-capability items",
+      "a child makes a material domain-evolution promotion claim"
+    ],
+    "minimum_logical_fields": [
+      "owner/domain identity",
+      "version or revision plus updated timestamp",
+      "current open problem/evolution references",
+      "recent resolved/promoted/retired references relevant to current authority",
+      "open parent-guidance references",
+      "references to deeper owner-native evidence"
+    ],
+    "format_rule": "The child may expose JSON, Markdown, replay state, work-order ledger, checkpoint index or another owner-native representation. UAOS standardizes discoverability and minimum semantics, not the child internal journal implementation.",
+    "ownership_rule": "The canonical entrypoint and all domain evolution evidence remain child-owned. UAOS consumes references and owns only common/cross-domain promotion decisions."
+  },
+  "adoption_and_compatibility": {
+    "existing_child_business_execution": "NOT_REVOKED_BY_THIS_CONTRACT_ALONE",
+    "immediate_parent_assurance_rule": "UAOS must not call a common capability operational merely because a child capability file declares inheritance.",
+    "next_material_domain_maintenance": "Registered children should expose or reconcile an owner-native canonical evolution evidence entrypoint when the interface requirement applies, and should identify owner-appropriate behavioral evidence for material inherited-capability claims.",
+    "no_parent_microscheduler": true,
+    "no_parent_business_state_mirroring": true
+  },
+  "generalization_evidence": {
+    "financial": "Repeated declaration-to-operation failures in Financial showed that correct policy text did not guarantee system-impact creation or proactive recovery.",
+    "video_counterexample": "Video already distinguishes declared, harness-wired, session-executable, chat-bridged and attested-isolated assurance and binds many capabilities to invocation/evidence contracts.",
+    "ashare_counterexample": "A-share operational evidence is naturally point-in-time and replay/freeze based rather than article-journal based.",
+    "novel_counterexample": "Novel uses checkpoint/canon and project evidence, so a Financial-shaped journal or probe implementation would overfit the common contract.",
+    "external_method_refs": [
+      "Kubernetes liveness/readiness/startup probes: observe runtime behavior rather than treating configuration as health proof",
+      "Pact code-first contract testing: executable interactions verify behavior against a declared contract"
+    ]
+  }
+}
