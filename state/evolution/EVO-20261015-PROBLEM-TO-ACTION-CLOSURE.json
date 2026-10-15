@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "evolution_id": "EVO-20261015-PROBLEM-TO-ACTION-CLOSURE",
   "status": "RESOLVED",
   "authority": "UAOS",
@@ -117,21 +117,32 @@
       "production_ci_run": 38672892065,
       "production_ci_number": 1041,
       "result": "PASS"
+    },
+    {
+      "event": "UAOS_FINANCIAL_0_9_2_PARENT_OBSERVATION_REFRESH",
+      "pull_request": 22,
+      "production_commit": "218afb0e255c08be99d632e490c7bcd85afb4a96",
+      "production_ci_run": 38673205917,
+      "production_ci_number": 137,
+      "result": "PASS",
+      "semantics": "Event-scoped proof that CURRENT_SYSTEM observed Financial 0.9.2/Profile17/final child main and closed this evolution; later UAOS commits do not invalidate this observation event."
     }
   ],
   "promotion": {
     "uaos_release": "2.5.2",
     "common_behavior_assurance": "1.2.0",
     "session_interaction_policy": "1.7.0",
-    "parent_production_commit": "2948c9817809aab6cf8625933734c768aa256996",
-    "parent_production_ci_run": 38671592866,
+    "parent_core_production_commit": "2948c9817809aab6cf8625933734c768aa256996",
+    "parent_core_production_ci_run": 38671592866,
     "financial_release": "0.9.2",
     "financial_profile_version": 17,
     "financial_release_commit": "12c8f1cd4087641228882b5d937bd8ba80760ec3",
     "financial_release_production_ci_run": 38672024075,
     "financial_final_main_commit": "dae4c3602b2157ecfbb8215fd3e2fa0d7f963619",
     "financial_final_main_production_ci_run": 38672892065,
-    "financial_assurance": "EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_ARTICLE_OBSERVATION_OPEN"
+    "financial_assurance": "EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_ARTICLE_OBSERVATION_OPEN",
+    "parent_observation_refresh_commit": "218afb0e255c08be99d632e490c7bcd85afb4a96",
+    "parent_observation_refresh_ci_run": 38673205917
   },
   "assurance_boundary": "The repair is executable-policy and trajectory verified. UAOS baseline still does not claim physical interception of every natural-language host response, and Financial does not claim LIVE_OUTCOME_VERIFIED until real article use validates the behavior.",
   "remaining_observation": [
@@ -142,14 +153,14 @@
   "acceptance": {
     "parent_candidate_ci": "PASS__38671352550",
     "parent_live_integration": "PASS__38671352527",
-    "parent_production_main_ci": "PASS__38671592866",
-    "parent_production_reread": "PASS__COMMON_BEHAVIOR_1_2__SESSION_POLICY_1_7__PROBLEM_CLOSURE_KERNEL",
+    "parent_core_production_main_ci": "PASS__38671592866",
+    "parent_core_production_reread": "PASS__COMMON_BEHAVIOR_1_2__SESSION_POLICY_1_7__PROBLEM_CLOSURE_KERNEL",
     "financial_owner_native_adoption": "PASS__FINANCIAL_0_9_2__PROFILE_17",
     "financial_behavior_trajectory": "PASS__MISSING_CANONICAL_VOICE_SAMPLE_CONTINUES_WITH_PROVISIONAL_CANDIDATE",
     "financial_release_production_ci": "PASS__38672024075__CI_1037",
     "financial_journal_closure_ci": "PASS__38672571329__CI_1039",
     "financial_final_main_ci": "PASS__38672892065__CI_1041",
-    "financial_parent_observation_refresh": "CANDIDATE_THIS_RECORD_AND_CURRENT_SYSTEM",
+    "financial_parent_observation_refresh": "PASS__COMMIT_218afb0e255c08be99d632e490c7bcd85afb4a96__CI_38673205917",
     "host_physical_complete_mediation": "NOT_CLAIMED",
     "live_article_outcome": "OBSERVATION_OPEN"
   }
