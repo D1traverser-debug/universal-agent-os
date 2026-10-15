@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "evolution_id": "EVO-20261015-DOMAIN-HEALTH-ESCALATION-GOVERNANCE",
+  "status": "CANDIDATE_REPAIR_IMPLEMENTED__PROMOTION_VERIFICATION_PENDING",
+  "authority": "UAOS",
+  "updated_at": "2026-10-15T23:23:00+08:00",
+  "trigger": [
+    "USER_REPORTED_REPEATED_CHILD_INHERITANCE_GAPS",
+    "USER_REPORTED_NEED_TO_REMIND_CHILDREN_ABOUT_COGNITION_AND_EVOLUTION",
+    "USER_IDENTIFIED_MULTI_CHILD_PARENT_GUIDANCE_BLOCKING_RISK",
+    "USER_REQUESTED_MORE_PROACTIVE_PROBLEM_DISCOVERY",
+    "PARENT_CHILD_CURRENTNESS_DRIFT_DISCOVERED_DURING_AUDIT"
+  ],
+  "failure_classes": [
+    "FC-PARENT-CHILD-FRESHNESS-SNAPSHOT-MASQUERADING-AS-CURRENT-001",
+    "FC-INHERITED-BEHAVIOR-DECLARATION-WITHOUT-UNIFORM-OPERATIONAL-PROOF-002",
+    "FC-PARENT-GUIDANCE-SINGLE-QUEUE-BLOCKING-RISK-003",
+    "FC-PROACTIVE-UNKNOWN-FAILURE-DISCOVERY-GAP-004"
+  ],
+  "micro_diagnosis": [
+    "Financial child current authority is 1.0.1/profile18 at 46e9c46c while parent CURRENT_SYSTEM previously asserted 0.9.2/profile17 as current verification.",
+    "Video child current authority is 0.8.0/profile9 at 02d39d8e while parent CURRENT_SYSTEM previously asserted 0.7.0/profile8 as current verification.",
+    "Parent regression tests literally asserted those old snapshots, allowing green CI to certify an internally consistent but stale parent observation.",
+    "A-share current CAPABILITIES/MANIFEST reference common capabilities but do not currently bind COMMON_BEHAVIOR_ASSURANCE 1.2 or expose sibling-equivalent owner-native repair/escalation admission.",
+    "Existing parent guidance had no explicit multi-upcall bulkhead/triage contract, so a naive serialized queue could make one hard child issue block unrelated help requests."
+  ],
+  "macro_goal_and_topology_alignment": [
+    "UAOS remains the cross-domain control/governance plane while children remain direct business work planes.",
+    "The repair must strengthen inheritance observability and parent guidance without turning UAOS into a per-turn proxy, child-state mirror or business microscheduler.",
+    "Reliability target is fewer defects, bounded blast radius, earlier detection, faster recovery and better learning; zero future defects is not a supportable architecture claim for probabilistic Agents and changing external environments."
+  ],
+  "governing_assumption_challenge": [
+    "Rejected: a manifest/common-capability pointer proves inherited behavior is operational.",
+    "Rejected: a green parent regression suite proves child currentness when tests freeze historical releases.",
+    "Rejected: all child upcalls should enter one global FIFO queue.",
+    "Rejected: excellent architecture should eliminate the need for simulation, fault injection or live observation.",
+    "Rejected: a popular external Skill should be installed because popularity implies quality."
+  ],
+  "external_research": [
+    {
+      "source": "AWS Well-Architected REL10 bulkhead/fault isolation",
+      "ref": "https://docs.aws.amazon.com/wellarchitected/latest/framework/rel-10.html",
+      "impact": "Supported domain/upcall fault boundaries so one blocked case does not impair unrelated domains."
+    },
+    {
+      "source": "AWS Well-Architected REL08 resiliency testing",
+      "ref": "https://docs.aws.amazon.com/wellarchitected/2025-02-25/framework/rel_tracking_change_management_resiliency_testing.html",
+      "impact": "Supported deliberate failure/recovery experiments to expose unanticipated weaknesses and avoid known-issue-only governance."
+    },
+    {
+      "source": "Google SRE postmortem analysis",
+      "ref": "https://sre.google/workbook/postmortem-analysis/",
+      "impact": "Supported structured causal history and aggregation across incidents to identify systemic/common failure classes."
+    },
+    {
+      "source": "SkillsMP catalog and candidate Skills",
+      "ref": "https://skillsmp.com/",
+      "impact": "Supported using external Skills as reviewable method candidates; SkillsMP itself states public indexing is not quality/safety certification. Candidate patterns inspected included agent-introspection-debugging, agent-native-architecture and verification-loop."
+    }
+  ],
+  "counterexamples_and_tradeoffs": [
+    "A new central supervisor queue was rejected because it duplicates existing scheduling/control and creates another bottleneck.",
+    "Copying parent cognition implementation into each child was rejected because it increases divergence and confuses common-method ownership with domain business ownership.",
+    "Blocking every child when a common cause is merely suspected was rejected because it amplifies blast radius; cluster evidence first and widen blocking only when a hard shared dependency is established.",
+    "Static policy checks alone were rejected as sufficient for unknown failures; scenario/replay/failure injection/live observation remain distinct assurance layers."
+  ],
+  "implemented_candidate": [
+    "docs/requirements/FROZEN_REQUIREMENTS_v2.1.md",
+    "config/DOMAIN_HEALTH_ESCALATION_POLICY.json",
+    "state/DOMAIN_HEALTH_INDEX.json",
+    "src/uaos/kernel/domain_health.py",
+    "config/BINDING_POLICY.json schema 1.7 proactive health/freshness/upcall rules",
+    "config/SYSTEM_MAP.json schema 1.8 registration",
+    "CURRENT_SYSTEM.json schema 2.26 current child observation semantics and A-share health gap",
+    "docs/architecture/DOMAIN_HEALTH_ESCALATION_GOVERNANCE.md CURRENT_AGENT dogfood scenarios",
+    "tests/architecture/test_domain_health_escalation.py",
+    "tests/architecture/test_domain_health_escalation_policy.py",
+    "stale Financial/Video parent observation tests rewritten to validate current observations rather than frozen old versions"
+  ],
+  "external_skill_disposition": {
+    "agent_introspection_debugging": "BORROW_PATTERN_ONLY__capture_diagnose_contained_recovery_structured_report__already_overlaps_UAOS_problem_response_so_no_blind_install",
+    "agent_native_architecture": "BORROW_PATTERN_ONLY__explicit_contracts_agent_operability_and_real_task_validation__largely_overlaps_current architecture experience policy",
+    "verification_loop": "BORROW_PATTERN_ONLY__tight_change_verify_loop__already_overlaps candidate CI/promotion gate",
+    "catalog_policy": "DISCOVERY_ONLY__SOURCE_AND_EVALUATION_REQUIRED_BEFORE_PROMOTION"
+  },
+  "architecture_experience_evidence_ref": "docs/architecture/DOMAIN_HEALTH_ESCALATION_GOVERNANCE.md",
+  "verification": {
+    "candidate_branch": "arch/domain-health-escalation-governance-20261015",
+    "pull_request": null,
+    "candidate_ci": "PENDING",
+    "production_merge": "PENDING",
+    "production_reread": "PENDING"
+  },
+  "open_followup": [
+    "A-share owner-native COMMON_BEHAVIOR_ASSURANCE adoption remains a concrete child-domain repair after parent policy promotion; it requires parent-governed descendant mutation with fresh A-share validation.",
+    "Live unknown failure classes remain observation scope; proactive probes improve discovery but cannot prove exhaustive future coverage."
+  ]
+}
