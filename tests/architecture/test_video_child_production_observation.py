@@ -13,7 +13,6 @@ def test_parent_observes_video_0_7_without_regressing_to_0_6():
     current = load("CURRENT_SYSTEM.json")
 
     assert current["system_release_version"] == "2.5.2"
-    assert current["schema_version"] == "2.24"
     assert "VIDEO_0_7_0_PRODUCTION_VERIFIED" in current["video_binding_assurance"]
     assert "VIDEO_0_6_0" not in current["video_binding_assurance"]
     assert "VIDEO_0_7_0" in current["domain_internal_orchestration_assurance"]

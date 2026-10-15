@@ -121,20 +121,24 @@ def test_novel_parent_observation_is_current_and_owner_native():
     current = _json("CURRENT_SYSTEM.json")
     verification = current["novel_child_production_verification"]
 
-    assert current["novel_binding_assurance"].startswith("NOVEL_PROFILE_4_PRODUCTION_VERIFIED")
+    assert current["novel_binding_assurance"].startswith("NOVEL_PROFILE_5_PRODUCTION_VERIFIED")
     assert "COMMON_BEHAVIOR_1_2" in current["novel_binding_assurance"]
-    assert "OWNER_NATIVE_RECOVERY_AND_PROBLEM_CLOSURE_ADMISSION" in current["novel_binding_assurance"]
-    assert verification["profile_version"] == 4
-    assert verification["active_rulebook_version"] == "2.4-github"
+    assert "CLAIM_CONDITIONED_MULTIDIMENSIONAL_LEARNING" in current["novel_binding_assurance"]
+    assert "ZERO_BASED_STORY_RESELECTION" in current["novel_binding_assurance"]
+    assert verification["profile_version"] == 5
+    assert verification["active_rulebook_version"] == "2.5-github"
+    assert verification["masterwork_protocol_version"] == "2.1"
+    assert verification["product_architecture_version"] == "1.0"
     assert verification["common_behavior_assurance_min"] == "1.2.0"
-    assert verification["mechanism_main_commit"] == "7cc56fbdca5139c2b61d0a16823d963693e9094c"
-    assert verification["mechanism_production_ci_number"] == 289
-    assert verification["final_main_commit"] == "fc0108383d6a8f5c8318ce6c4440c9115680ee60"
-    assert verification["final_main_production_ci_number"] == 291
+    assert verification["architecture_main_commit"] == "e0ec355f476830f77033ada08912d6c58f0bafe4"
+    assert verification["architecture_production_ci_number"] == 306
+    assert verification["final_main_commit"] == "77bcd48580be186588de2823dd2727a45dcf4251"
+    assert verification["final_main_production_ci_number"] == 309
     assert verification["result"] == "PASS"
-    assert verification["assurance"] == "EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_LITERARY_OUTCOME_OPEN"
-    assert "AUTHORITY_AND_BEHAVIOR_GUARD" in verification["verified_chain"]
+    assert verification["assurance"] == "EXECUTABLE_LEARNING_TO_PLANNING_ARCHITECTURE_AND_TRAJECTORY_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
+    assert "LEARNING_TO_PLANNING_SYSTEM_GUARD" in verification["verified_chain"]
     assert "NEXT_LINE_3914" in verification["business_cursor_preserved"]
+    assert "HISTORICAL_FQ001_NO_INCUMBENT_PRIVILEGE" in verification["business_cursor_preserved"]
 
 
 def test_version_metadata_drift_remains_mechanically_guarded():
