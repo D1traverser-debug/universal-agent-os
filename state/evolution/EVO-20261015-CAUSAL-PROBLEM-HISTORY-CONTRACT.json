@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "evolution_id": "EVO-20261015-CAUSAL-PROBLEM-HISTORY-CONTRACT",
-  "status": "CANDIDATE_EVALUATION",
+  "status": "RESOLVED",
   "authority": "UAOS",
-  "updated_at": "2026-10-15T09:58:13+08:00",
+  "updated_at": "2026-10-15T10:02:57+08:00",
   "trigger": [
     "FINANCIAL_PROBLEM_EVOLUTION_JOURNAL_REVIEW",
     "EVOLUTION_HISTORY_INTERFACE_REFINEMENT",
@@ -35,14 +35,39 @@
     "impact": "No repository mutation occurred because GitHub rejected the requests.",
     "diagnosis": "The mutation sequence lacked an explicit branch-existence admission before file writes.",
     "repair": "Create the candidate branch first and continue only after branch creation succeeds.",
-    "lesson": "Material GitHub maintenance should verify candidate isolation exists before any file mutation request."
+    "lesson": "Material GitHub maintenance should verify candidate isolation exists before any file mutation request.",
+    "promotion_decision": "RECORDED_AS_PROCESS_EVIDENCE__NO_SEPARATE_GLOBAL_MECHANISM_PROMOTED_IN_THIS_CHANGE"
   },
-  "candidate_decision": "PROMOTE_CAUSAL_HISTORY_PRESERVATION_FOR_EVOLUTION_RELEVANT_OR_MATERIAL_PROBLEMS__KEEP_FORMAT_AND_COMPRESSION_DOMAIN_OWNED",
-  "candidate_scope": [
-    "config/COMMON_BEHAVIOR_ASSURANCE.json",
-    "config/BINDING_POLICY.json",
-    "CURRENT_SYSTEM.json",
-    "tests/architecture/test_common_behavior_assurance.py"
+  "additional_parent_drift_found": {
+    "symptom": "CURRENT_SYSTEM financial_binding_assurance still named Financial 0.8.4 while the current child production release was 0.9.1.",
+    "classification": "CURRENT_PARENT_OBSERVATION_DRIFT__NOT_HISTORICAL_PROVENANCE",
+    "evidence": [
+      "Financial pyproject.toml release 0.9.1",
+      "Financial main commit 3090a50d6be938947b1073310d5e290cd67cafbc",
+      "Financial production CI run 38642636689 / #1033 PASS",
+      "Financial MANIFEST/ADAPTER/CAPABILITIES/UAOS_SKILL reread: controller binding current, profile 16, common capability min 1.5 compatible with UAOS common 1.6"
+    ],
+    "repair": "Refresh UAOS CURRENT_SYSTEM current Financial binding assurance and add explicit financial_child_production_verification evidence."
+  },
+  "decision": "PROMOTE_CAUSAL_HISTORY_PRESERVATION_FOR_EVOLUTION_RELEVANT_OR_MATERIAL_PROBLEMS__KEEP_FORMAT_AND_COMPRESSION_DOMAIN_OWNED",
+  "promotion": {
+    "pull_request": 19,
+    "production_commit": "c755ea2015396245a1891b38c4c6508cf7f43455",
+    "uaos_release": "2.5.2",
+    "common_behavior_assurance_contract": "1.1.0",
+    "candidate_ci_run": 38668849865,
+    "candidate_ci_status": "PASS",
+    "post_promotion_main_ci_run": 38668896720,
+    "post_promotion_main_ci_status": "PASS",
+    "production_reread": "PASS__COMMON_BEHAVIOR_ASSURANCE_1_1_AND_FINANCIAL_0_9_1_PARENT_OBSERVATION_CONFIRMED"
+  },
+  "implemented_changes": [
+    "Common Behavior Assurance now requires owner-native causal history for evolution-relevant/material problems rather than only a canonical current-status index.",
+    "The causal envelope includes symptom/impact, diagnosis, material failed or rejected paths, selected repair, verification/result and remaining follow-up as applicable.",
+    "Small local defects may use compact records; no heavyweight universal postmortem requirement was created.",
+    "Journal/replay/checkpoint/work-order/file format remains domain-owned; UAOS does not mirror child business state or force Financial's Markdown shape on siblings.",
+    "UAOS current Financial parent observation was refreshed from 0.8.4 to verified Financial 0.9.1/profile16 with production CI #1033 evidence.",
+    "The three rejected pre-branch create-file attempts remain preserved as process history rather than being omitted from the final success narrative."
   ],
   "non_goals": [
     "DO_NOT_REQUIRE_ONE_SHARED_MARKDOWN_JOURNAL",
@@ -52,11 +77,12 @@
     "DO_NOT_RECORD_SECRETS_OR_UNNECESSARY_USER_SENSITIVE_DATA"
   ],
   "acceptance": {
-    "candidate_ci": "PENDING",
-    "causal_history_semantics_present": "PENDING",
-    "small_defect_compression_boundary_present": "PENDING",
-    "domain_owned_format_preserved": "PENDING",
-    "post_promotion_main_ci": "PENDING",
-    "production_reread": "PENDING"
+    "candidate_ci": "PASS__38668849865",
+    "causal_history_semantics_present": "PASS",
+    "small_defect_compression_boundary_present": "PASS",
+    "domain_owned_format_preserved": "PASS",
+    "financial_parent_observation_refreshed": "PASS__FINANCIAL_0_9_1__CI_1033",
+    "post_promotion_main_ci": "PASS__38668896720",
+    "production_reread": "PASS"
   }
 }
