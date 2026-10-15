@@ -1,0 +1,55 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261015-ARCHITECTURE-EXPERIENCE-EVALUATION",
+  "status":"CANDIDATE_EVALUATION",
+  "authority":"UAOS",
+  "updated_at":"2026-10-15T17:27:00+08:00",
+  "trigger":[
+    "USER_CORRECTION",
+    "ARCHITECTURE_AS_DESCRIPTION_GAP",
+    "EXAMPLE_LITERALIZATION_FAILURE"
+  ],
+  "failure_class":"FC-ARCHITECTURE-DESCRIBED-WITHOUT-LIVED-SCENARIO-EVALUATION-001",
+  "symptom":"The user used spatial framing and sequential construction as examples of complementary ways to understand a system. The Agent prematurely converted the example into a proposed new sequential architecture layer instead of first deriving the underlying need: architecture must be understandable and operable by the acting Agent across real task journeys.",
+  "user_impact":"Architecture work could become a literal accumulation of user-mentioned mechanisms rather than a derived system that satisfies the governing goal, and static structural correctness could hide sequencing, discoverability, recovery or handoff defects.",
+  "micro_diagnosis":[
+    "Current UAOS has strong structural/topological authority and a documented task lifecycle, but material architecture evaluation does not mechanically require the acting Agent to dogfood representative journeys.",
+    "Existing deliberation challenges assumptions and requires external research, but it does not explicitly prevent an illustrative user mechanism from being promoted directly to an architecture requirement.",
+    "Prior maintenance produced concrete sequence failures such as attempting closure operations before branch existence, stale parent observations after child evolution, and stale tests after lifecycle closure; these defects are not explained by missing component maps alone."
+  ],
+  "macro_goal_and_topology_alignment":[
+    "UAOS should remain a deterministic control plane around probabilistic executors, but architecture fitness must include whether an Agent can correctly inhabit and operate that control plane over time.",
+    "The repair extends existing architecture/deliberation/assurance semantics rather than creating a second controller or replacing structural architecture with process diagrams."
+  ],
+  "governing_assumption_challenge":[
+    "rejected assumption: a complete module/authority map is sufficient architecture evidence",
+    "rejected assumption: a user-mentioned representation should become a required architecture layer",
+    "rejected assumption: one notation can prove structural, temporal, cognitive and causal properties at once",
+    "rejected assumption: green unit tests alone prove the architecture is usable in realistic task sequences"
+  ],
+  "external_research":[
+    "ISO/IEC/IEEE 42010: architecture viewpoints frame stakeholder concerns; representation should be concern-driven rather than universal.",
+    "SEI ATAM: scenario-based architecture evaluation exposes risks, sensitivities and tradeoffs by walking high-priority scenarios through an architecture.",
+    "Cognitive walkthrough methods: evaluate a task step by step from the actor's perspective, checking whether the right goal/action/progress is discoverable."
+  ],
+  "rejected_or_refined_paths":[
+    "REJECTED__ADD_A_UNIVERSAL_SEQUENCE_LAYER_BECAUSE_THE_USER_MENTIONED_SEQUENCE",
+    "REJECTED__REQUIRE_STATIC_AND_TEMPORAL_DIAGRAMS_FOR_EVERY_CHANGE",
+    "SELECTED__CONCERN_DRIVEN_REPRESENTATION_PLUS_SCENARIO_WALKTHROUGH_PLUS_CURRENT_AGENT_DOGFOOD"
+  ],
+  "implemented_candidate":[
+    "config/ARCHITECTURE_EXPERIENCE_POLICY.json",
+    "src/uaos/kernel/architecture_experience.py",
+    "docs/architecture/ARCHITECTURE_EXPERIENCE_EVALUATION.md",
+    "AGENTS.md architecture experience evaluation instructions",
+    "config/SYSTEM_MAP.json architecture_experience_policy registration",
+    "tests/architecture/test_architecture_experience_admission.py",
+    "tests/architecture/test_architecture_experience_policy.py"
+  ],
+  "acceptance_pending":[
+    "candidate promotion-gate PASS",
+    "production merge and main CI PASS",
+    "production reread confirms policy/runtime/instructions",
+    "future architecture work produces scenario/dogfood evidence rather than literalizing examples"
+  ]
+}
