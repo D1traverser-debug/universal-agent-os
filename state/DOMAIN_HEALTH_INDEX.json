@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "authority": "UAOS",
   "role": "PARENT_HEALTH_OBSERVATION_CACHE__NOT_CHILD_BUSINESS_AUTHORITY",
-  "updated_at": "2026-10-15T23:18:00+08:00",
+  "updated_at": "2026-10-15T23:40:00+08:00",
   "policy_ref": "config/DOMAIN_HEALTH_ESCALATION_POLICY.json",
   "rules": [
     "Current child authority always wins over this cache.",
@@ -19,34 +19,18 @@
       "production_ci": {"run_id": 38704551621, "run_number": 1151, "conclusion": "success"},
       "common_behavior_assurance": "OWNER_NATIVE_EXECUTABLE_EVIDENCE_PRESENT",
       "canonical_evolution_entrypoint": "OWNER_NATIVE__SEE_CHILD_CURRENT_AUTHORITY",
-      "findings": [
-        {
-          "type": "PARENT_CHILD_REVISION_DRIFT",
-          "severity": "HIGH",
-          "detail": "CURRENT_SYSTEM historical Financial verification still names 0.9.2/profile17 and must not be treated as the current child head."
-        }
-      ]
+      "findings": []
     },
     "ashare": {
       "repository": "D1traverser-debug/a-share-event-driven-agent",
-      "observed_main_commit": "87a302cdd5633885bc2594a3cb32547c6ea274f6",
+      "observed_main_commit": "d16e9f917849b77c5de3d096567e28517858eee3",
       "observed_release": "0.3.0",
-      "observed_profile_version": 5,
-      "observed_capability_updated_at": "2026-10-15T04:24:00+08:00",
-      "common_behavior_assurance": "DECLARED_COMMON_COGNITION_WITHOUT_CURRENT_COMMON_BEHAVIOR_BINDING_OR_OWNER_NATIVE_REPAIR_ESCALATION_EVIDENCE",
-      "findings": [
-        {
-          "type": "COMMON_BEHAVIOR_BINDING_MISSING",
-          "severity": "HIGH",
-          "detail": "A-share CAPABILITIES/MANIFEST do not currently bind COMMON_BEHAVIOR_ASSURANCE 1.2 while sibling domains expose owner-native repair/escalation admission."
-        },
-        {
-          "type": "DECLARED_WITHOUT_OPERATIONAL_EVIDENCE",
-          "severity": "MEDIUM",
-          "capabilities": ["recover_before_user_escalation", "problem_to_action_closure"],
-          "detail": "Current A-share authority states problem-response cognition but does not expose equivalent owner-native operational admission for these common behaviors."
-        }
-      ]
+      "observed_profile_version": 6,
+      "observed_capability_updated_at": "2026-10-15T23:35:00+08:00",
+      "production_ci": {"run_id": 38758419784, "run_number": 167, "conclusion": "success"},
+      "common_behavior_assurance": "OWNER_NATIVE_RECOVERY_REPAIR_OR_BLOCK_AND_STRUCTURED_PARENT_GUIDANCE_EVIDENCE_PRESENT",
+      "canonical_evolution_entrypoint": "audits/EVOLUTION_INDEX.json",
+      "findings": []
     },
     "novel": {
       "repository": "D1traverser-debug/novel-writing-agent",
@@ -66,18 +50,10 @@
       "production_ci": {"run_id": 38754630773, "run_number": 656, "conclusion": "success"},
       "common_behavior_assurance": "OWNER_NATIVE_RECOVERY_RECEIPT__ESCALATION_ADMISSION__REPAIR_OR_BLOCK_CLOSURE",
       "canonical_evolution_entrypoint": "audits/EVOLUTION_INDEX.json",
-      "findings": [
-        {
-          "type": "PARENT_CHILD_REVISION_DRIFT",
-          "severity": "HIGH",
-          "detail": "CURRENT_SYSTEM historical Video verification still names 0.7.0/profile8 and must not be treated as the current child head."
-        }
-      ]
+      "findings": []
     }
   },
   "open_common_findings": [
-    "FC-PARENT-CHILD-FRESHNESS-SNAPSHOT-MASQUERADING-AS-CURRENT-001",
-    "FC-INHERITED-BEHAVIOR-DECLARATION-WITHOUT-UNIFORM-OPERATIONAL-PROOF-002",
     "FC-PARENT-GUIDANCE-SINGLE-QUEUE-BLOCKING-RISK-003",
     "FC-PROACTIVE-UNKNOWN-FAILURE-DISCOVERY-GAP-004"
   ]
