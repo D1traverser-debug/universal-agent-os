@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "authority": "UAOS",
+  "role": "PARENT_HEALTH_OBSERVATION_CACHE__NOT_CHILD_BUSINESS_AUTHORITY",
+  "updated_at": "2026-10-15T23:18:00+08:00",
+  "policy_ref": "config/DOMAIN_HEALTH_ESCALATION_POLICY.json",
+  "rules": [
+    "Current child authority always wins over this cache.",
+    "A mismatch between this cache or CURRENT_SYSTEM historical verification and current child authority is a health finding requiring reconciliation.",
+    "Open findings block only affected hard prerequisites unless a verified common invariant requires broader blocking."
+  ],
+  "domains": {
+    "financial_writing": {
+      "repository": "D1traverser-debug/financial-writing-agent",
+      "observed_main_commit": "46e9c46c2789172abb1db0342c8e594dfae1cbf7",
+      "observed_release": "1.0.1",
+      "observed_profile_version": 18,
+      "observed_capability_updated_at": "2026-10-15T15:12:59+08:00",
+      "production_ci": {"run_id": 38704551621, "run_number": 1151, "conclusion": "success"},
+      "common_behavior_assurance": "OWNER_NATIVE_EXECUTABLE_EVIDENCE_PRESENT",
+      "canonical_evolution_entrypoint": "OWNER_NATIVE__SEE_CHILD_CURRENT_AUTHORITY",
+      "findings": [
+        {
+          "type": "PARENT_CHILD_REVISION_DRIFT",
+          "severity": "HIGH",
+          "detail": "CURRENT_SYSTEM historical Financial verification still names 0.9.2/profile17 and must not be treated as the current child head."
+        }
+      ]
+    },
+    "ashare": {
+      "repository": "D1traverser-debug/a-share-event-driven-agent",
+      "observed_main_commit": "87a302cdd5633885bc2594a3cb32547c6ea274f6",
+      "observed_release": "0.3.0",
+      "observed_profile_version": 5,
+      "observed_capability_updated_at": "2026-10-15T04:24:00+08:00",
+      "common_behavior_assurance": "DECLARED_COMMON_COGNITION_WITHOUT_CURRENT_COMMON_BEHAVIOR_BINDING_OR_OWNER_NATIVE_REPAIR_ESCALATION_EVIDENCE",
+      "findings": [
+        {
+          "type": "COMMON_BEHAVIOR_BINDING_MISSING",
+          "severity": "HIGH",
+          "detail": "A-share CAPABILITIES/MANIFEST do not currently bind COMMON_BEHAVIOR_ASSURANCE 1.2 while sibling domains expose owner-native repair/escalation admission."
+        },
+        {
+          "type": "DECLARED_WITHOUT_OPERATIONAL_EVIDENCE",
+          "severity": "MEDIUM",
+          "capabilities": ["recover_before_user_escalation", "problem_to_action_closure"],
+          "detail": "Current A-share authority states problem-response cognition but does not expose equivalent owner-native operational admission for these common behaviors."
+        }
+      ]
+    },
+    "novel": {
+      "repository": "D1traverser-debug/novel-writing-agent",
+      "observed_main_commit": "77bcd48580be186588de2823dd2727a45dcf4251",
+      "observed_profile_version": 5,
+      "observed_capability_updated_at": "2026-10-15T15:44:58+08:00",
+      "common_behavior_assurance": "OWNER_NATIVE_EXECUTABLE_ADMISSION_AND_TRAJECTORY_EVIDENCE",
+      "canonical_evolution_entrypoint": "audits/EVOLUTION_INDEX.json",
+      "findings": []
+    },
+    "video": {
+      "repository": "D1traverser-debug/video-growth-agent",
+      "observed_main_commit": "02d39d8e3609c6d988009f4bc5a7f5d0378128ec",
+      "observed_release": "0.8.0",
+      "observed_profile_version": 9,
+      "observed_capability_updated_at": "2026-10-15T18:57:42+08:00",
+      "production_ci": {"run_id": 38754630773, "run_number": 656, "conclusion": "success"},
+      "common_behavior_assurance": "OWNER_NATIVE_RECOVERY_RECEIPT__ESCALATION_ADMISSION__REPAIR_OR_BLOCK_CLOSURE",
+      "canonical_evolution_entrypoint": "audits/EVOLUTION_INDEX.json",
+      "findings": [
+        {
+          "type": "PARENT_CHILD_REVISION_DRIFT",
+          "severity": "HIGH",
+          "detail": "CURRENT_SYSTEM historical Video verification still names 0.7.0/profile8 and must not be treated as the current child head."
+        }
+      ]
+    }
+  },
+  "open_common_findings": [
+    "FC-PARENT-CHILD-FRESHNESS-SNAPSHOT-MASQUERADING-AS-CURRENT-001",
+    "FC-INHERITED-BEHAVIOR-DECLARATION-WITHOUT-UNIFORM-OPERATIONAL-PROOF-002",
+    "FC-PARENT-GUIDANCE-SINGLE-QUEUE-BLOCKING-RISK-003",
+    "FC-PROACTIVE-UNKNOWN-FAILURE-DISCOVERY-GAP-004"
+  ]
+}
