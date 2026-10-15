@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "evolution_id": "EVO-20261015-PROBLEM-TO-ACTION-CLOSURE",
-  "status": "CANDIDATE_EVALUATION",
+  "status": "RESOLVED",
   "authority": "UAOS",
-  "updated_at": "2026-10-15T10:17:12+08:00",
+  "updated_at": "2026-10-15T10:48:56+08:00",
   "trigger": [
     "USER_CORRECTION",
     "UAOS_SELF_APPLICATION_FAILURE",
@@ -11,7 +11,7 @@
   ],
   "failure_class": "FC-PROBLEM-DETECTED-BUT-REPAIR-DEFERRED-AS-RECOMMENDATION-001",
   "diagnosis": {
-    "micro": "UAOS correctly diagnosed that Financial proactive-resolution was mostly rule/static-test evidence, then ended the audit by recommending a future executable bridge instead of executing the currently available governed repair.",
+    "micro": "UAOS correctly diagnosed that Financial proactive-resolution was mostly rule/static-test evidence, then initially ended the audit by recommending a future executable bridge instead of executing the currently available governed repair.",
     "macro": "Problem detection, deliberation, recovery-before-user-escalation and observable-inheritance assurance were present, but there was no terminal admission rule requiring a detected repairable problem to move from cognition into current action.",
     "assumption_challenged": "A strong diagnosis plus a concrete recommendation is sufficient problem closure when the acting Agent already has authority and tools to repair the defect."
   },
@@ -30,24 +30,127 @@
     },
     {
       "mechanism": "EXECUTABLE_REPAIR_OR_BLOCK_ADMISSION_WITH_OWNER_NATIVE_DOMAIN_REALIZATION",
-      "failure_mode": "Still cannot claim host-level physical complete mediation, but it makes valid terminal states executable/testable and lets domains attach stronger receipts/probes."
+      "failure_mode": "Does not physically intercept every natural-language host response, but it makes valid terminal states executable/testable and lets domains attach stronger receipts/probes without transferring business ownership to UAOS."
     }
   ],
   "selected_mechanism": "EXECUTABLE_REPAIR_OR_BLOCK_ADMISSION_WITH_OWNER_NATIVE_DOMAIN_REALIZATION",
-  "candidate_changes": [
-    "Add src/uaos/kernel/problem_closure.py with executable closure decisions and finalization admission.",
-    "Add SESSION_INTERACTION_POLICY 1.7 turn-level problem-to-action closure gate.",
-    "Promote COMMON_BEHAVIOR_ASSURANCE 1.2 with repair-or-block terminal semantics.",
-    "Bind registered-domain adoption to owner-native execution evidence rather than declaration-only claims.",
-    "Apply the new parent rule immediately to Financial via a separate child-owned candidate branch."
+  "implemented_parent_changes": [
+    "Added src/uaos/kernel/problem_closure.py with CLEAN_NO_PROBLEM, REPAIR_NOW, REPAIR_EXECUTED, BLOCKED_WITH_REASON and NO_CHANGE_WITH_EVIDENCE decisions plus finalization admission.",
+    "SESSION_INTERACTION_POLICY 1.7 requires the problem-to-action closure gate before final response/maintenance closure.",
+    "COMMON_BEHAVIOR_ASSURANCE 1.2 promotes PROBLEM_TO_ACTION_CLOSURE_GAP common semantics and preserves the host-level physical-enforcement limitation.",
+    "BINDING_POLICY requires registered-domain operational adoption to use owner-native execution evidence where supported.",
+    "ENTRYPOINT and CURRENT_SYSTEM expose repair-or-block semantics and forbid recommendation-only closure for currently repairable problems."
   ],
-  "assurance_boundary": "Executable policy and regression tests do not equal host-level physical interception of every natural-language response; physical complete mediation remains unclaimed.",
+  "implemented_financial_realization": [
+    "Financial 0.9.2 / profile17 added financial_writing_agent/proactive_resolution.py with owner-state recovery attempts and financial_owner_proactive_resolution_admission execution receipts.",
+    "require_user_escalation_admission denies externalization when no recovery attempt exists or when a safe RESOLVED/PROVISIONAL path exists; non-explicit escalation requires an unsafe UNRESOLVED attempt with concrete blockers/unknowns.",
+    "The behavior trajectory reproduces the original voice failure: no canonical approved full article -> inspect durable corrections/edited outputs/current context -> create a medium-confidence provisional voice candidate -> continue rather than ask the user.",
+    "Financial maintenance mirrors, static audit, contract eval, capability profile, Skill and causal Journal/Index/Handoff were updated without adding a second controller.",
+    "Financial machine evidence was made event-scoped so current UAOS parent observation remains parent-owned external evidence rather than a self-invalidating child latest/pending field."
+  ],
+  "repair_history": [
+    {
+      "event": "UAOS_CANDIDATE_CI_132_FAILED",
+      "run": 38670568513,
+      "cause": "Old regression assertions still hard-coded Common Behavior Assurance 1.1 after the 1.2 candidate.",
+      "repair": "Advance stale consumers; do not weaken the new contract."
+    },
+    {
+      "event": "UAOS_CANDIDATE_CI_133_FAILED",
+      "run": 38671185371,
+      "cause": "A newly added test overfit exact prose 'must be attempted' while the policy used semantically equivalent 'must attempt the repair'.",
+      "repair": "Assert behavior-bearing semantics rather than forcing production wording."
+    },
+    {
+      "event": "UAOS_CANDIDATE_FINAL_PASS",
+      "ci_run": 38671352550,
+      "live_integration_run": 38671352527,
+      "result": "PASS"
+    },
+    {
+      "event": "UAOS_PARENT_PROMOTION",
+      "pull_request": 21,
+      "production_commit": "2948c9817809aab6cf8625933734c768aa256996",
+      "production_ci_run": 38671592866,
+      "production_ci_number": 135,
+      "result": "PASS"
+    },
+    {
+      "event": "FINANCIAL_CANDIDATE_CI_1034_FAILED",
+      "run": 38671705373,
+      "cause": "Two old tests still expected Financial 0.9.1/Profile16 and UAOS_SKILL exceeded the existing 8KB startup budget by 276 bytes.",
+      "repair": "Advance stale version/profile assertions and compress the Skill while keeping detail in progressive references/code; do not relax the startup budget."
+    },
+    {
+      "event": "FINANCIAL_CANDIDATE_FINAL_PASS",
+      "run": 38671917900,
+      "ci_number": 1036,
+      "result": "PASS"
+    },
+    {
+      "event": "FINANCIAL_0_9_2_PROMOTION",
+      "pull_request": 31,
+      "production_commit": "12c8f1cd4087641228882b5d937bd8ba80760ec3",
+      "production_ci_run": 38672024075,
+      "production_ci_number": 1037,
+      "result": "PASS"
+    },
+    {
+      "event": "FINANCIAL_JOURNAL_CLOSURE",
+      "pull_request": 32,
+      "candidate_ci_run": 38672403194,
+      "candidate_ci_number": 1038,
+      "production_commit": "771fff3c670e2fef19bc170d6f392055ed72da48",
+      "production_ci_run": 38672571329,
+      "production_ci_number": 1039,
+      "result": "PASS"
+    },
+    {
+      "event": "FINANCIAL_PARENT_OBSERVATION_SELF_REFERENCE_RECURRENCE",
+      "classification": "RECURRENCE_OF_P-20261015-14_SELF_REFERENTIAL_RECEIPT_DRIFT",
+      "symptom": "The current child index encoded PARENT_OBSERVATION_REFRESH_PENDING even though parent-current observation is UAOS-owned and would change immediately after the parent refresh.",
+      "repair": "Remove the moving parent-current status from the child machine index; keep event-specific child promotion receipts and make current parent observation explicitly UAOS-owned external evidence.",
+      "pull_request": 33,
+      "candidate_ci_run": 38672783677,
+      "candidate_ci_number": 1040,
+      "production_commit": "dae4c3602b2157ecfbb8215fd3e2fa0d7f963619",
+      "production_ci_run": 38672892065,
+      "production_ci_number": 1041,
+      "result": "PASS"
+    }
+  ],
+  "promotion": {
+    "uaos_release": "2.5.2",
+    "common_behavior_assurance": "1.2.0",
+    "session_interaction_policy": "1.7.0",
+    "parent_production_commit": "2948c9817809aab6cf8625933734c768aa256996",
+    "parent_production_ci_run": 38671592866,
+    "financial_release": "0.9.2",
+    "financial_profile_version": 17,
+    "financial_release_commit": "12c8f1cd4087641228882b5d937bd8ba80760ec3",
+    "financial_release_production_ci_run": 38672024075,
+    "financial_final_main_commit": "dae4c3602b2157ecfbb8215fd3e2fa0d7f963619",
+    "financial_final_main_production_ci_run": 38672892065,
+    "financial_assurance": "EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_ARTICLE_OBSERVATION_OPEN"
+  },
+  "assurance_boundary": "The repair is executable-policy and trajectory verified. UAOS baseline still does not claim physical interception of every natural-language host response, and Financial does not claim LIVE_OUTCOME_VERIFIED until real article use validates the behavior.",
+  "remaining_observation": [
+    "Validate Financial proactive-resolution receipts/escalation admission on real article work, especially provisional voice inference.",
+    "Refine or roll back if live use causes unsupported user-preference inference, unnecessary durable logging, or avoidable user escalation.",
+    "Other domains adopt owner-native evidence only when their execution topology supports the common behavior; do not copy Financial's Python/state shape mechanically."
+  ],
   "acceptance": {
-    "candidate_ci": "PENDING",
-    "kernel_admission_tests": "PENDING",
-    "policy_consistency_tests": "PENDING",
-    "production_main_ci": "PENDING",
-    "production_reread": "PENDING",
-    "financial_owner_native_adoption": "PENDING"
+    "parent_candidate_ci": "PASS__38671352550",
+    "parent_live_integration": "PASS__38671352527",
+    "parent_production_main_ci": "PASS__38671592866",
+    "parent_production_reread": "PASS__COMMON_BEHAVIOR_1_2__SESSION_POLICY_1_7__PROBLEM_CLOSURE_KERNEL",
+    "financial_owner_native_adoption": "PASS__FINANCIAL_0_9_2__PROFILE_17",
+    "financial_behavior_trajectory": "PASS__MISSING_CANONICAL_VOICE_SAMPLE_CONTINUES_WITH_PROVISIONAL_CANDIDATE",
+    "financial_release_production_ci": "PASS__38672024075__CI_1037",
+    "financial_journal_closure_ci": "PASS__38672571329__CI_1039",
+    "financial_final_main_ci": "PASS__38672892065__CI_1041",
+    "financial_parent_observation_refresh": "CANDIDATE_THIS_RECORD_AND_CURRENT_SYSTEM",
+    "host_physical_complete_mediation": "NOT_CLAIMED",
+    "live_article_outcome": "OBSERVATION_OPEN"
   }
 }
