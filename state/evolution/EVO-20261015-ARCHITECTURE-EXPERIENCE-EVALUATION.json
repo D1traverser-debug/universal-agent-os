@@ -13,8 +13,8 @@
   "symptom":"The user used spatial framing and sequential construction as examples of complementary ways to understand a system. The Agent prematurely converted the example into a proposed new sequential architecture layer instead of first deriving the underlying need: architecture must be understandable and operable by the acting Agent across real task journeys.",
   "user_impact":"Architecture work could become a literal accumulation of user-mentioned mechanisms rather than a derived system that satisfies the governing goal, and static structural correctness could hide sequencing, discoverability, recovery or handoff defects.",
   "micro_diagnosis":[
-    "Current UAOS has strong structural/topological authority and a documented task lifecycle, but material architecture evaluation does not mechanically require the acting Agent to dogfood representative journeys.",
-    "Existing deliberation challenges assumptions and requires external research, but it does not explicitly prevent an illustrative user mechanism from being promoted directly to an architecture requirement.",
+    "Current UAOS has strong structural/topological authority and a documented task lifecycle, but material architecture evaluation did not mechanically require the acting Agent to dogfood representative journeys.",
+    "Existing deliberation challenged assumptions and required external research, but did not explicitly prevent an illustrative user mechanism from being promoted directly to an architecture requirement.",
     "Prior maintenance produced concrete sequence failures such as attempting closure operations before branch existence, stale parent observations after child evolution, and stale tests after lifecycle closure; these defects are not explained by missing component maps alone."
   ],
   "macro_goal_and_topology_alignment":[
@@ -37,8 +37,78 @@
     "REJECTED__REQUIRE_STATIC_AND_TEMPORAL_DIAGRAMS_FOR_EVERY_CHANGE",
     "SELECTED__CONCERN_DRIVEN_REPRESENTATION_PLUS_SCENARIO_WALKTHROUGH_PLUS_CURRENT_AGENT_DOGFOOD"
   ],
+  "architecture_experience_evaluation":{
+    "input_signals":[
+      {"id":"goal","kind":"GOAL_OR_OUTCOME","meaning":"the system architecture must be deeply understood and usable by the acting Agent across real work, not merely described"},
+      {"id":"spatial_example","kind":"EXAMPLE","meaning":"spatial framing may help concept understanding","promoted_to_requirement":false},
+      {"id":"sequence_example","kind":"EXAMPLE","meaning":"sequential construction may preserve operational detail","promoted_to_requirement":false},
+      {"id":"correction","kind":"OBSERVATION","meaning":"the Agent was over-literalizing examples into designs","promoted_to_requirement":false}
+    ],
+    "concerns":[
+      {"id":"goal_fidelity","type":"COGNITIVE_USE","question":"Can the Agent distinguish governing goal from illustrative mechanism?"},
+      {"id":"authority_operability","type":"STRUCTURAL","question":"Can the Agent find the current authority/state without reconstructing it from memory?"},
+      {"id":"operation_order","type":"TEMPORAL_BEHAVIORAL","question":"Can the Agent discover the valid order of branch/write/PR/check/merge/reread and recovery after rejected operations?"},
+      {"id":"evolution_closure","type":"CAUSAL_DECISION","question":"Can the Agent distinguish candidate success from production closure and stale parent/consumer state?"}
+    ],
+    "representations":[
+      {"kind":"AUTHORITY_MAP","evidence_ref":"config/SYSTEM_MAP.json","covers":["authority_operability"]},
+      {"kind":"LIFECYCLE","evidence_ref":"ENTRYPOINT.md#GitHub-material-writes","covers":["operation_order"]},
+      {"kind":"COGNITIVE_WALKTHROUGH","evidence_ref":"docs/architecture/ARCHITECTURE_EXPERIENCE_EVALUATION.md","covers":["goal_fidelity","authority_operability","operation_order"]},
+      {"kind":"CAUSAL_GRAPH_OR_DECISION_RECORD","evidence_ref":"state/evolution/EVO-20261015-ARCHITECTURE-EXPERIENCE-EVALUATION.json","covers":["evolution_closure"]}
+    ],
+    "scenarios":[
+      {
+        "id":"S1_USER_GOAL_PLUS_EXAMPLE",
+        "class":"CURRENT_AGENT_DOGFOOD",
+        "governing_outcome":"derive architecture from the user's real objective rather than literalizing an example",
+        "walkthrough":[
+          "classify spatial/sequence wording as examples, not requirements",
+          "recover the deeper need: Agent comprehension plus operational fidelity",
+          "generate competing evaluation mechanisms",
+          "select concern-driven views plus scenario walkthrough after external comparison"
+        ],
+        "progress_signal":"the candidate does not require a universal sequence layer and explicitly preserves examples as nonbinding",
+        "failure_risk":"keyword anchoring converts the latest user phrase into a new subsystem",
+        "recovery":"return to governing outcome and challenge whether the proposed mechanism is necessary"
+      },
+      {
+        "id":"S2_MATERIAL_ARCHITECTURE_MUTATION",
+        "class":"FAILURE_AND_RECOVERY",
+        "governing_outcome":"perform a material architecture repair without sequencing mistakes or premature production claims",
+        "walkthrough":[
+          "reread main authority",
+          "complete problem research/reflection",
+          "create candidate branch before writes",
+          "write coherent candidate",
+          "run tests and scenario admission",
+          "open PR and require promotion gate",
+          "merge only after checks",
+          "reread production and close evolution only with production evidence"
+        ],
+        "progress_signal":"each step has observable Git/CI/authority evidence and production is not inferred from candidate state",
+        "failure_risk":"write/PR before branch existence, candidate success reported as production, or closure metadata left stale",
+        "recovery":"use current branch/PR/main evidence to resume from the last verified state rather than repeating assumed steps"
+      },
+      {
+        "id":"S3_INTERRUPTED_SESSION_RESUME",
+        "class":"RESUME_AFTER_INTERRUPTION",
+        "governing_outcome":"resume architecture maintenance without reconstructing hidden chain of thought",
+        "walkthrough":[
+          "resolve selected UAOS authority",
+          "reread current branch/PR/main state",
+          "read evolution evidence and pending acceptance items",
+          "continue from the first unverified lifecycle boundary"
+        ],
+        "progress_signal":"resume decision is derived from durable evidence, not conversational memory",
+        "failure_risk":"duplicate or reorder mutations because the Agent remembers an outdated local sequence",
+        "recovery":"current authority and CI state override remembered sequence"
+      }
+    ],
+    "candidate_result":"PASS__CONCERN_DRIVEN_MULTI_VIEW__CURRENT_AGENT_DOGFOOD_PRESENT__PRODUCTION_VERIFICATION_PENDING"
+  },
   "implemented_candidate":[
     "config/ARCHITECTURE_EXPERIENCE_POLICY.json",
+    "config/DELIBERATION_POLICY.json 1.6.0 architecture experience binding",
     "src/uaos/kernel/architecture_experience.py",
     "docs/architecture/ARCHITECTURE_EXPERIENCE_EVALUATION.md",
     "AGENTS.md architecture experience evaluation instructions",
