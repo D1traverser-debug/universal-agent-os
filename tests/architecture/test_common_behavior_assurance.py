@@ -104,11 +104,16 @@ def test_financial_parent_observation_is_current_and_evidence_bounded():
     current = _json("CURRENT_SYSTEM.json")
     verification = current["financial_child_production_verification"]
 
-    assert current["financial_binding_assurance"].startswith("FINANCIAL_0_9_1_PRODUCTION_VERIFIED")
-    assert verification["release"] == "0.9.1"
-    assert verification["profile_version"] == 16
-    assert verification["main_commit"] == "3090a50d6be938947b1073310d5e290cd67cafbc"
-    assert verification["production_ci_number"] == 1033
+    assert current["financial_binding_assurance"].startswith("FINANCIAL_0_9_2_PRODUCTION_VERIFIED")
+    assert "EXECUTABLE_PROACTIVE_RESOLUTION_ADMISSION" in current["financial_binding_assurance"]
+    assert verification["release"] == "0.9.2"
+    assert verification["profile_version"] == 17
+    assert verification["common_behavior_assurance_min"] == "1.2.0"
+    assert verification["release_main_commit"] == "12c8f1cd4087641228882b5d937bd8ba80760ec3"
+    assert verification["release_production_ci_number"] == 1037
+    assert verification["final_main_commit"] == "dae4c3602b2157ecfbb8215fd3e2fa0d7f963619"
+    assert verification["final_main_production_ci_number"] == 1041
+    assert verification["assurance"] == "EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_ARTICLE_OBSERVATION_OPEN"
     assert verification["result"] == "PASS"
 
 
