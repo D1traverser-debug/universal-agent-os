@@ -9,6 +9,7 @@ from uaos.kernel import (
     RootScopeAdmissionError,
     RootScopeAssessment,
     architecture_reassessment_required,
+    durable_problem_record_required,
     require_root_scope_admission,
 )
 
@@ -55,11 +56,13 @@ def test_local_problem_can_be_admitted_after_evidence_tested_root_scope():
     )
     assert receipt.selected_layer is ProblemLayer.LOCAL_IMPLEMENTATION
     assert receipt.hypothesis_count == 1
+    assert receipt.durable_problem_record_required is False
 
 
 def test_repeated_or_cross_subsystem_problem_requires_architecture_reassessment():
     signals = DeliberationSignals(repeated_failure_count=2, cross_subsystem=True)
     assert architecture_reassessment_required(signals) is True
+    assert durable_problem_record_required(signals) is True
     with pytest.raises(RootScopeAdmissionError, match="at least two layers"):
         require_root_scope_admission(
             signals,
@@ -91,7 +94,25 @@ def test_systemic_problem_can_select_local_cause_only_after_upstream_alternative
     )
     assert receipt.selected_layer is ProblemLayer.LOCAL_IMPLEMENTATION
     assert receipt.architecture_reassessment_performed is True
+    assert receipt.durable_problem_record_required is True
     assert ProblemLayer.CONTROL_PLANE in receipt.compared_layers
+
+
+def test_material_problem_is_not_allowed_to_skip_upstream_review_or_durable_record():
+    signals = DeliberationSignals(material_problem=True)
+    assert architecture_reassessment_required(signals) is True
+    assert durable_problem_record_required(signals) is True
+    with pytest.raises(RootScopeAdmissionError, match="at least two layers"):
+        require_root_scope_admission(
+            signals,
+            _evidence(independent=True),
+            RootScopeAssessment(
+                hypotheses=(
+                    _hypothesis("local", ProblemLayer.LOCAL_IMPLEMENTATION, HypothesisDisposition.SELECTED),
+                ),
+                selected_hypothesis_id="local",
+            ),
+        )
 
 
 def test_user_or_external_claim_cannot_be_promoted_directly_to_root_cause():
