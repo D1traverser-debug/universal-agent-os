@@ -36,16 +36,29 @@ def test_policy_requires_active_discovery_bulkheading_and_bounded_skill_intake()
     assert "PROMOTE_WITHOUT_EVALUATION_EVIDENCE" in forbidden
 
 
-def test_health_index_is_explicitly_non_authoritative_and_exposes_current_drift_findings():
+def test_health_index_is_non_authoritative_and_tracks_current_repaired_children():
     health = _json("state/DOMAIN_HEALTH_INDEX.json")
     assert health["role"] == "PARENT_HEALTH_OBSERVATION_CACHE__NOT_CHILD_BUSINESS_AUTHORITY"
     assert health["domains"]["financial_writing"]["observed_release"] == "1.0.1"
     assert health["domains"]["financial_writing"]["observed_profile_version"] == 18
+    assert health["domains"]["financial_writing"]["findings"] == []
     assert health["domains"]["video"]["observed_release"] == "0.8.0"
     assert health["domains"]["video"]["observed_profile_version"] == 9
-    ashare_findings = {item["type"] for item in health["domains"]["ashare"]["findings"]}
-    assert "COMMON_BEHAVIOR_BINDING_MISSING" in ashare_findings
-    assert "DECLARED_WITHOUT_OPERATIONAL_EVIDENCE" in ashare_findings
+    assert health["domains"]["video"]["findings"] == []
+
+    ashare = health["domains"]["ashare"]
+    assert ashare["observed_release"] == "0.3.0"
+    assert ashare["observed_profile_version"] == 6
+    assert ashare["production_ci"]["conclusion"] == "success"
+    assert "OWNER_NATIVE" in ashare["common_behavior_assurance"]
+    assert ashare["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
+    assert ashare["findings"] == []
+
+    open_common = set(health["open_common_findings"])
+    assert "FC-PARENT-CHILD-FRESHNESS-SNAPSHOT-MASQUERADING-AS-CURRENT-001" not in open_common
+    assert "FC-INHERITED-BEHAVIOR-DECLARATION-WITHOUT-UNIFORM-OPERATIONAL-PROOF-002" not in open_common
+    assert "FC-PARENT-GUIDANCE-SINGLE-QUEUE-BLOCKING-RISK-003" in open_common
+    assert "FC-PROACTIVE-UNKNOWN-FAILURE-DISCOVERY-GAP-004" in open_common
 
 
 def test_requirements_define_operational_inheritance_active_discovery_and_skill_candidate_semantics():
