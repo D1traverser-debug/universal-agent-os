@@ -48,7 +48,9 @@ def test_problem_to_action_closure_forbids_recommendation_only_when_repair_is_av
     closure = policy["problem_to_action_closure"]
     assert closure["executable_ref"] == "src/uaos/kernel/problem_closure.py"
     assert closure["terminal_states"] == ["REPAIR_EXECUTED", "BLOCKED_WITH_REASON", "NO_CHANGE_WITH_EVIDENCE"]
-    assert "must be attempted before finalizing" in closure["repair_now_rule"]
+    repair_rule = closure["repair_now_rule"].lower()
+    assert "must attempt the repair" in repair_rule
+    assert "before finalizing" in repair_rule
     assert "physical interception" in closure["assurance_boundary"]
 
 
