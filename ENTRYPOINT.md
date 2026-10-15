@@ -2,7 +2,7 @@
 
 Status: `CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE`
 System release: `2.5.2`
-Authority updated at: `2026-10-15T05:06:35+08:00`
+Authority updated at: `2026-10-15T10:17:12+08:00`
 
 ## Minimal bootstrap
 
@@ -72,6 +72,8 @@ Parent governance does not make UAOS the child's normal business executor. A chi
 
 All registered domains inherit `config/COMMON_CAPABILITIES.json`, including intent/requirement governance, continuity/recovery, capability handshake, assurance/completion governance, hierarchical authority, adaptive deliberation/parent guidance, governed evolution, progress reporting and version/timestamp provenance.
 
+`config/COMMON_BEHAVIOR_ASSURANCE.json` owns cross-domain behavioral assurance: recovery before avoidable user escalation, declaration-vs-operation evidence, owner-native evolution evidence, causal problem history and problem-to-action closure.
+
 This is reuse, not mandatory per-turn proxying. Domain repositories must not create a second parent controller, global task index, global requirement registry, evolution catalog or parent-guidance control plane.
 
 ## Problem response and adaptive deliberation
@@ -92,9 +94,11 @@ Familiarity is not a waiver. Small problems may use a short research/reflection 
 
 Use micro -> macro -> micro: reproduce the symptom, challenge the governing abstraction, consult relevant external evidence, then return to the smallest correct repair and verify it.
 
+After deliberation identifies a real problem, apply the **problem-to-action closure gate** from `config/SESSION_INTERACTION_POLICY.json` and `src/uaos/kernel/problem_closure.py`. If an owner-authorized repair path is currently available, required tools/capabilities exist, and no missing user fact/approval/authorization/safety-sensitive choice blocks action, the repair must be attempted before finalizing. A recommendation for future repair is not a valid terminal state in that case. Valid terminal dispositions are verified repair, a concrete blocker/required user choice, or evidence-backed no-change.
+
 Same-model critique/refinement/debate is candidate generation, not independent verification. External architecture names never become authority merely because they are popular.
 
-For material architecture/governance changes, `require_deliberation_admission` or its host-equivalent fails closed until required evidence dimensions are present.
+For material architecture/governance changes, `require_deliberation_admission` or its host-equivalent fails closed until required evidence dimensions are present. `require_problem_finalization_admission` or its host-equivalent fails closed when a repairable problem is being finalized as recommendation-only.
 
 ## Domain execution admission
 
@@ -133,6 +137,8 @@ After a controller/task/project is selected, every final assistant response ends
 
 If the response itself reports a detected defect, contradiction, drift, failure, user correction or unreliable-goal signal, it must not simultaneously report `Deliberation: NOT_TRIGGERED` or `Evolution: NO_EVOLUTION_TRIGGER` unless the observation is explicitly classified as non-problematic with a reason.
 
+If the response reports a confirmed problem for which an authorized repair is available now, it must not end with recommendation-only next steps. It must report the repair attempt/verification, a real blocker or required user choice, or an evidence-backed no-change disposition.
+
 Do not expose private chain-of-thought. Deliberation reporting describes the evidence/control escalation used, not hidden reasoning text.
 
 ## Knowledge, verification and evolution
@@ -162,11 +168,12 @@ For a material UAOS change on `CHATGPT_GITHUB`:
 1. reread current production authority;
 2. create/update an isolated candidate branch;
 3. if a problem is involved, complete the mandatory research/reflection floor;
-4. build the coherent candidate and run required assurance;
-5. open/update a pull request targeting `main`;
-6. require `promotion-gate` plus any additional evidence warranted by the change;
-7. perform a controlled merge/update;
-8. reread production authority and observe post-promotion behavior.
+4. apply problem-to-action closure: execute an available authorized repair rather than ending at recommendation-only;
+5. build the coherent candidate and run required assurance;
+6. open/update a pull request targeting `main`;
+7. require `promotion-gate` plus any additional evidence warranted by the change;
+8. perform a controlled merge/update;
+9. reread production authority and observe post-promotion behavior.
 
 Direct `main` mutation is not the normal path for material architecture/governance changes. CAS/stale-head checks remain useful for concurrency integrity where appropriate, but do not establish authorization.
 
