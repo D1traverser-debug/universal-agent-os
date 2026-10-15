@@ -42,6 +42,7 @@ class DeliberationSignals:
     architecture_gap: bool = False
     high_risk: bool = False
     change_proposal: bool = False
+    material_problem: bool = False
 
     def __post_init__(self) -> None:
         if self.repeated_failure_count < 0:
@@ -111,6 +112,7 @@ class RootScopeReceipt:
     hypothesis_count: int
     compared_layers: tuple[ProblemLayer, ...]
     architecture_reassessment_performed: bool
+    durable_problem_record_required: bool
     evidence_refs: tuple[str, ...]
 
 
@@ -144,6 +146,8 @@ def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
         reasons.append("HIGH_RISK")
     if signals.change_proposal:
         reasons.append("CHANGE_PROPOSAL")
+    if signals.material_problem:
+        reasons.append("MATERIAL_PROBLEM")
 
     required = bool(reasons)
     problem_detected = any((
@@ -155,6 +159,7 @@ def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
         signals.unknown_failure_class,
         signals.knowledge_gap,
         signals.architecture_gap,
+        signals.material_problem,
     ))
 
     macro = problem_detected or any((signals.scope_expanding, signals.cross_subsystem))
@@ -166,11 +171,13 @@ def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
         signals.repeated_failure_count >= 1,
         signals.conflicting_evidence,
         signals.high_risk,
+        signals.material_problem,
     ))
     independent = any((
         signals.high_risk,
         signals.conflicting_evidence,
         signals.cross_subsystem,
+        signals.material_problem,
     ))
 
     return DeliberationDirective(
@@ -227,11 +234,28 @@ def architecture_reassessment_required(signals: DeliberationSignals) -> bool:
     """Return whether the current failure pattern must explicitly test architecture/upstream scope."""
 
     return any((
+        signals.material_problem,
         signals.architecture_gap,
         signals.cross_subsystem,
         signals.complexity_increasing,
         signals.repeated_failure_count >= 2,
         signals.scope_expanding,
+    ))
+
+
+def durable_problem_record_required(signals: DeliberationSignals) -> bool:
+    """Derive durable causal-evidence need from problem/risk signals, not caller preference."""
+
+    return any((
+        signals.material_problem,
+        signals.repeated_failure_count >= 2,
+        signals.cross_subsystem,
+        signals.complexity_increasing,
+        signals.conflicting_evidence,
+        signals.unknown_failure_class,
+        signals.architecture_gap,
+        signals.scope_expanding,
+        signals.high_risk,
     ))
 
 
@@ -305,5 +329,6 @@ def require_root_scope_admission(
         hypothesis_count=len(assessment.hypotheses),
         compared_layers=compared_layers,
         architecture_reassessment_performed=bool(assessment.architecture_reassessment_refs),
+        durable_problem_record_required=durable_problem_record_required(signals),
         evidence_refs=evidence_refs,
     )
