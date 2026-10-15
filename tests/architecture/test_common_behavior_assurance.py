@@ -92,28 +92,31 @@ def test_binding_and_current_system_reference_common_behavior_assurance():
     assert "MUST_ATTEMPT_THE_REPAIR_BEFORE_FINALIZING" in binding["problem_action_closure_rule"]
     assert "ONE_CANONICAL_OWNER_NATIVE_EVIDENCE_ENTRYPOINT" in binding["evolution_evidence_interface_rule"]
     assert "EVOLUTION_RELEVANT_OR_MATERIAL_DETECTED_PROBLEM" in binding["causal_problem_history_rule"]
+    assert binding["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
 
     assert current["common_behavior_assurance"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
+    assert current["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
+    assert current["domain_health_index"] == "state/DOMAIN_HEALTH_INDEX.json"
     assert "COMMON_BEHAVIOR_ASSURANCE_1_2" in current["common_behavior_assurance_contract"]
     assert "CAUSAL_PROBLEM_HISTORY" in current["common_behavior_assurance_contract"]
     assert "PROBLEM_TO_ACTION_CLOSURE" in current["common_behavior_assurance_contract"]
     assert "RECOMMENDATION_ONLY_FORBIDDEN" in current["problem_action_closure_assurance"]
 
 
-def test_financial_parent_observation_is_current_and_evidence_bounded():
+def test_financial_parent_observation_tracks_current_child_without_treating_old_release_as_current():
     current = _json("CURRENT_SYSTEM.json")
+    health = _json("state/DOMAIN_HEALTH_INDEX.json")
     verification = current["financial_child_production_verification"]
 
-    assert current["financial_binding_assurance"].startswith("FINANCIAL_0_9_2_PRODUCTION_VERIFIED")
-    assert "EXECUTABLE_PROACTIVE_RESOLUTION_ADMISSION" in current["financial_binding_assurance"]
-    assert verification["release"] == "0.9.2"
-    assert verification["profile_version"] == 17
+    assert current["financial_binding_assurance"].startswith("CURRENT_CHILD_OBSERVATION_IN_state/DOMAIN_HEALTH_INDEX.json")
+    assert verification["observation_role"] == "CURRENT_CHILD_HEAD_OBSERVATION__NOT_IMMUTABLE_RELEASE_CERTIFICATE"
+    assert verification["release"] == "1.0.1"
+    assert verification["profile_version"] == 18
     assert verification["common_behavior_assurance_min"] == "1.2.0"
-    assert verification["release_main_commit"] == "12c8f1cd4087641228882b5d937bd8ba80760ec3"
-    assert verification["release_production_ci_number"] == 1037
-    assert verification["final_main_commit"] == "dae4c3602b2157ecfbb8215fd3e2fa0d7f963619"
-    assert verification["final_main_production_ci_number"] == 1041
-    assert verification["assurance"] == "EXECUTABLE_POLICY_AND_TRAJECTORY_VERIFIED__LIVE_ARTICLE_OBSERVATION_OPEN"
+    assert verification["current_main_commit"] == "46e9c46c2789172abb1db0342c8e594dfae1cbf7"
+    assert verification["current_production_ci_number"] == 1151
+    assert "historical" in verification["historical_verified_release_ref"].lower()
+    assert health["domains"]["financial_writing"]["observed_main_commit"] == verification["current_main_commit"]
     assert verification["result"] == "PASS"
 
 

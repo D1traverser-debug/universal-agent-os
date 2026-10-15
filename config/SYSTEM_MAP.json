@@ -1,5 +1,5 @@
 {
-  "schema_version":"1.7",
+  "schema_version":"1.8",
   "controller":{
     "repository":"D1traverser-debug/universal-agent-os",
     "entrypoint":"ENTRYPOINT.md",
@@ -11,9 +11,12 @@
     "intent_resolution_policy":"config/INTENT_RESOLUTION_POLICY.json",
     "session_interaction_policy":"config/SESSION_INTERACTION_POLICY.json",
     "common_capabilities":"config/COMMON_CAPABILITIES.json",
+    "common_behavior_assurance":"config/COMMON_BEHAVIOR_ASSURANCE.json",
     "authority_write_policy":"config/AUTHORITY_WRITE_POLICY.json",
     "deliberation_policy":"config/DELIBERATION_POLICY.json",
     "architecture_experience_policy":"config/ARCHITECTURE_EXPERIENCE_POLICY.json",
+    "domain_health_escalation_policy":"config/DOMAIN_HEALTH_ESCALATION_POLICY.json",
+    "domain_health_index":"state/DOMAIN_HEALTH_INDEX.json",
     "retrieval_policy":"config/RETRIEVAL_POLICY.json",
     "binding_policy":"config/BINDING_POLICY.json",
     "host_profiles":"config/HOST_PROFILES.json",
@@ -28,5 +31,5 @@
   },
   "external_integration":{"chatgpt_custom_instructions":"BOOTSTRAP_PLUS_LIGHTWEIGHT_MUTATION_SENTINEL__NON_AUTHORITY","pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md","copilot_ref":".github/copilot-instructions.md"},
   "retired_controller":{"repository":"D1traverser-debug/universal-continuity-agent","default_branch_role":"TOMBSTONE_REDIRECT_ONLY","executable_or_recovery_authority":false},
-  "updated_at":"2026-10-15"
+  "updated_at":"2026-10-15T23:18:00+08:00"
 }

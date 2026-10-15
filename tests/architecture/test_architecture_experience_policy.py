@@ -10,8 +10,9 @@ def load_json(path: str):
 
 def test_system_map_registers_architecture_experience_policy():
     system_map = load_json("config/SYSTEM_MAP.json")
-    assert system_map["schema_version"] == "1.7"
+    assert system_map["schema_version"] == "1.8"
     assert system_map["controller"]["architecture_experience_policy"] == "config/ARCHITECTURE_EXPERIENCE_POLICY.json"
+    assert system_map["controller"]["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
 
 
 def test_policy_rejects_literalizing_user_examples_and_requires_dogfood():

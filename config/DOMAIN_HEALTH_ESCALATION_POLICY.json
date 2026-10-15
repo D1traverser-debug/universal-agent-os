@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "policy_version": "1.0.0",
+  "authority": "UAOS",
+  "updated_at": "2026-10-15T23:15:00+08:00",
+  "purpose": "Make child inheritance operationally observable, discover parent/child drift before user correction, and bulkhead multiple child upcalls so one blocked investigation does not stall unrelated domains.",
+  "requirements_ref": "docs/requirements/FROZEN_REQUIREMENTS_v2.1.md",
+  "ownership": {
+    "parent": "UAOS owns cross-domain health discovery, common failure-class clustering, parent-guidance triage and common/cross-domain promotion decisions.",
+    "child": "Each domain owns business diagnosis, business state, owner-native recovery/evolution evidence and domain-specific repair/promotion.",
+    "boundary": "This policy does not create a second controller, parent business state mirror or parent microscheduler."
+  },
+  "proactive_discovery": {
+    "required": true,
+    "checks": [
+      "PARENT_CHILD_AUTHORITY_FRESHNESS",
+      "COMMON_BEHAVIOR_BINDING_PRESENCE_WHEN_REQUIRED",
+      "INHERITED_BEHAVIOR_OPERATIONAL_EVIDENCE",
+      "BINDING_AND_AUTHORITY_CONTRADICTIONS",
+      "OPEN_MATERIAL_EVOLUTION_OR_PARENT_GUIDANCE_REFERENCES",
+      "MATERIAL_CHANGE_FAILURE_RECOVERY_SCENARIOS",
+      "REPEATED_OR_CROSS_DOMAIN_FAILURE_CLASS_CLUSTERING"
+    ],
+    "activation": [
+      "BEFORE_MATERIAL_DOMAIN_EXECUTION",
+      "BEFORE_PARENT_GOVERNED_DESCENDANT_MUTATION",
+      "AFTER_CHILD_RELEASE_OR_PROFILE_CHANGE_WHEN_OBSERVED",
+      "WHEN_A_CHILD_UPCALL_IS_RECEIVED",
+      "DURING_UAOS_MAINTENANCE_OR_HEALTH_AUDIT"
+    ],
+    "unknown_unknowns_rule": "Static checks and scenario analysis find only a subset of failures. Material reliability claims also require owner-appropriate replay, failure/recovery experiments or live observation proportional to risk.",
+    "assurance_rule": "Do not report a domain or common behavior as CURRENT_VERIFIED solely because a cached parent snapshot or configuration declaration is internally consistent."
+  },
+  "health_findings": {
+    "types": [
+      "PARENT_CHILD_REVISION_DRIFT",
+      "COMMON_BEHAVIOR_BINDING_MISSING",
+      "DECLARED_WITHOUT_OPERATIONAL_EVIDENCE",
+      "CANONICAL_EVOLUTION_INTERFACE_MISSING",
+      "AUTHORITY_CONTRADICTION",
+      "OPEN_PARENT_GUIDANCE",
+      "REPEATED_FAILURE_CLASS",
+      "CROSS_DOMAIN_FAILURE_CLUSTER",
+      "SCENARIO_OR_RECOVERY_GAP"
+    ],
+    "severity": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+    "freshness_semantics": "A parent observation is a cache. Current child authority wins; mismatch creates a health finding rather than silently redefining child state."
+  },
+  "parent_upcall_envelope": {
+    "required_fields_for_material_upcall": [
+      "escalation_id",
+      "domain_id",
+      "domain_revision",
+      "problem_ref",
+      "severity",
+      "impact",
+      "blocking_scope",
+      "suspected_layer",
+      "evidence_refs",
+      "local_recovery_attempts",
+      "requested_parent_help",
+      "can_continue_unaffected_work"
+    ],
+    "suspected_layers": [
+      "DOMAIN_BUSINESS",
+      "DOMAIN_ARCHITECTURE",
+      "COMMON_CAPABILITY",
+      "HOST",
+      "UNKNOWN"
+    ],
+    "rule": "Upcall requests parent diagnosis/guidance without transferring child business identity, workflow or state."
+  },
+  "triage_and_bulkheading": {
+    "principle": "MULTIPLE_UPCALLS_COEXIST__NONCONFLICTING_PARENT_WORK_MAY_PROGRESS_CONCURRENTLY",
+    "priority_dimensions": ["severity", "blast_radius", "user_or_business_impact", "urgency", "cross_domain_commonality"],
+    "serialization_rule": "Serialize only items that conflict on a declared shared resource/authority or have a causal dependency. A blocked item does not create a global FIFO lock.",
+    "child_continuation_rule": "If a child explicitly reports can_continue_unaffected_work=true and no common hard invariant is violated, unrelated child work remains eligible.",
+    "suspected_common_failure_rule": "Suspected common cause triggers clustering and diagnosis, not automatic global blocking. Escalate blocking scope only with evidence of a hard shared dependency or unsafe common invariant.",
+    "scheduler_reuse": "Reuse src/uaos/kernel/scheduling.py select_non_conflicting semantics; do not create a second parent scheduler."
+  },
+  "cross_domain_clustering": {
+    "minimum_cluster_size": 2,
+    "key_semantics": "Prefer explicit failure_class; otherwise use capability_id plus normalized suspected_layer only as a provisional cluster key.",
+    "promotion_rule": "A cluster is evidence for common diagnosis. Common rule promotion still requires current deliberation, scope analysis, reproducible evaluation and owner-appropriate verification."
+  },
+  "external_skill_intake": {
+    "catalog_role": "DISCOVERY_ONLY",
+    "review_steps": [
+      "inspect source repository, SKILL.md and material companion files",
+      "map the candidate to a concrete need, failure class or capability gap",
+      "inspect scripts, tool/permission implications and authority boundary",
+      "compare against existing UAOS/domain mechanisms to avoid duplicate control planes",
+      "run bounded scenario/replay/regression/adversarial evaluation appropriate to the claim",
+      "promote the minimum useful mechanism at UAOS scope only if it is genuinely common; otherwise keep it child-owned"
+    ],
+    "forbidden": [
+      "TREAT_POPULARITY_OR_STARS_AS_CERTIFICATION",
+      "BLIND_COPY_OR_INSTALL_AS_AUTHORITY",
+      "IMPORT_A_PARALLEL_CONTROLLER_OR_HIDDEN_RUNTIME",
+      "PROMOTE_WITHOUT_EVALUATION_EVIDENCE"
+    ]
+  },
+  "completion_reporting": {
+    "required_distinctions": [
+      "STRUCTURALLY_VERIFIED",
+      "BEHAVIORALLY_OR_REPLAY_VERIFIED",
+      "CURRENT_LIVE_OBSERVED",
+      "OPEN_OR_UNVERIFIED"
+    ],
+    "rule": "Green CI, a complete document or a declared binding does not justify an unqualified 'done' claim for live operational behavior."
+  },
+  "terminal_states": [
+    "REPAIR_EXECUTED_AND_VERIFIED",
+    "GUIDANCE_RETURNED_TO_CHILD",
+    "BLOCKED_WITH_REASON",
+    "NO_CHANGE_WITH_EVIDENCE"
+  ],
+  "executable_refs": [
+    "src/uaos/kernel/domain_health.py",
+    "src/uaos/kernel/scheduling.py"
+  ]
+}
