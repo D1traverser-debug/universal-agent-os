@@ -18,6 +18,14 @@ class ProblemClosureDecision(str, Enum):
     NO_CHANGE_WITH_EVIDENCE = "NO_CHANGE_WITH_EVIDENCE"
 
 
+class EvolutionDisposition(str, Enum):
+    LOCAL_LEARNING_ONLY = "LOCAL_LEARNING_ONLY"
+    NO_DURABLE_EVOLUTION_WITH_EVIDENCE = "NO_DURABLE_EVOLUTION_WITH_EVIDENCE"
+    DURABLE_EVOLUTION_CANDIDATE = "DURABLE_EVOLUTION_CANDIDATE"
+    DURABLE_EVOLUTION_UPDATED = "DURABLE_EVOLUTION_UPDATED"
+    PARENT_OR_COMMON_UPCALL = "PARENT_OR_COMMON_UPCALL"
+
+
 @dataclass(frozen=True, slots=True)
 class ProblemClosureSignals:
     problem_detected: bool
@@ -29,7 +37,7 @@ class ProblemClosureSignals:
     hard_blocker: str | None = None
     no_change_reason: str | None = None
     root_scope_receipt: RootScopeReceipt | None = None
-    evolution_disposition: str | None = None
+    evolution_disposition: EvolutionDisposition | None = None
     problem_record_required: bool = False
     problem_record_ref: str | None = None
 
@@ -38,16 +46,26 @@ def _present(value: str | None) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
+def _durable_record_required(signals: ProblemClosureSignals) -> bool:
+    receipt_requires = bool(
+        signals.root_scope_receipt
+        and signals.root_scope_receipt.durable_problem_record_required
+    )
+    # Backward-compatible callers may request stronger evidence, but cannot weaken
+    # the requirement already derived by root-scope admission.
+    return receipt_requires or signals.problem_record_required
+
+
 def _require_cognition_and_learning(signals: ProblemClosureSignals) -> None:
     if signals.root_scope_receipt is None:
         raise ProblemClosureError(
             "problem action blocked: root-scope cognitive admission is missing"
         )
-    if not _present(signals.evolution_disposition):
+    if not isinstance(signals.evolution_disposition, EvolutionDisposition):
         raise ProblemClosureError(
-            "problem action blocked: evolution/learning disposition is missing"
+            "problem action blocked: a valid evolution/learning disposition is missing"
         )
-    if signals.problem_record_required and not _present(signals.problem_record_ref):
+    if _durable_record_required(signals) and not _present(signals.problem_record_ref):
         raise ProblemClosureError(
             "problem action blocked: material/evolution-relevant problem requires durable problem evidence"
         )
@@ -66,7 +84,7 @@ def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDeci
         return ProblemClosureDecision.CLEAN_NO_PROBLEM
 
     if signals.user_choice_required or _present(signals.hard_blocker):
-        if signals.problem_record_required and not _present(signals.problem_record_ref):
+        if _durable_record_required(signals) and not _present(signals.problem_record_ref):
             raise ProblemClosureError(
                 "material blocked problem requires durable problem evidence before handoff"
             )
