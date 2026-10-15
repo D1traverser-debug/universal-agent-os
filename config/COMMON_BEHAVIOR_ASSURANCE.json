@@ -1,17 +1,18 @@
 {
-  "schema_version": "1.1",
-  "contract_version": "1.1.0",
+  "schema_version": "1.2",
+  "contract_version": "1.2.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-15T09:58:13+08:00",
+  "updated_at": "2026-10-15T10:17:12+08:00",
   "scope": "ALL_REGISTERED_DOMAINS_IN_config/AGENT_REGISTRY.json",
-  "purpose": "Operationalize inherited common-capability behavior and durable learning evidence without making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
+  "purpose": "Operationalize inherited common-capability behavior, durable learning evidence and problem-to-action closure without making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
   "source_parent_upcall": "D1traverser-debug/financial-writing-agent@main:evals/PARENT_GUIDANCE_HANDOFF.md",
   "parent_decisions": {
     "PROACTIVE_RESOLUTION_GAP": "PROMOTE_COMMON_OUTCOME_SEMANTICS__KEEP_DOMAIN_SPECIFIC_RECOVERY_ORDER_DOMAIN_OWNED",
     "EVOLUTION_HISTORY_INTERFACE": "REQUIRE_ONE_CANONICAL_CHILD_EVOLUTION_EVIDENCE_ENTRYPOINT_AND_CAUSAL_HISTORY_FOR_EVOLUTION_RELEVANT_OR_MATERIAL_PROBLEMS__DO_NOT_STANDARDIZE_A_SHARED_JOURNAL_STATE_MACHINE_OR_FILE_FORMAT",
     "VERSION_METADATA_DRIFT": "RESOLVED_BY_EXISTING_PARENT_RELEASE_SYNC_INVARIANT_AND_REGRESSION_TEST",
     "INHERITANCE_BEHAVIOR_VS_DECLARATION": "PROMOTE_COMMON_ASSURANCE_RULE__DECLARATION_ALONE_IS_NOT_OPERATIONAL_PROOF",
-    "DECLARATION_TO_OPERATION_GAP": "PROMOTE_AS_UMBRELLA_COMMON_FAILURE_CLASS__EXTEND_EXISTING_CONTROL_CONTEXT_ASSURANCE_EVOLUTION_CONTRACTS__DO_NOT_CREATE_PARALLEL_CONTROLLER"
+    "DECLARATION_TO_OPERATION_GAP": "PROMOTE_AS_UMBRELLA_COMMON_FAILURE_CLASS__EXTEND_EXISTING_CONTROL_CONTEXT_ASSURANCE_EVOLUTION_CONTRACTS__DO_NOT_CREATE_PARALLEL_CONTROLLER",
+    "PROBLEM_TO_ACTION_CLOSURE_GAP": "PROMOTE_COMMON_REPAIR_OR_BLOCK_TERMINAL_SEMANTICS__RECOMMENDATION_ONLY_IS_NOT_A_VALID_TERMINAL_WHEN_AUTHORIZED_REPAIR_IS_AVAILABLE"
   },
   "recover_before_user_escalation": {
     "rule": "Before externalizing a plausibly recoverable dependency to the user, a selected Agent must attempt proportionate recovery from legally and currently available authority, durable state/artifacts, relevant conversation or connected context, and appropriate external evidence when those sources can materially reduce the uncertainty.",
@@ -29,6 +30,25 @@
       "TREAT_IMPERFECT_BUT_USABLE_EVIDENCE_AS_AN_AUTOMATIC_USER_BLOCKER",
       "FORCE_FINANCIAL_WRITINGS_EXACT_RECOVERY_ORDER_ON_OTHER_DOMAINS"
     ]
+  },
+  "problem_to_action_closure": {
+    "principle": "DETECTED_PROBLEM_MUST_END_IN_REPAIR_EXECUTED_BLOCKED_WITH_REASON_OR_NO_CHANGE_WITH_EVIDENCE__NOT_RECOMMENDATION_ONLY_WHEN_REPAIR_IS_AVAILABLE",
+    "executable_ref": "src/uaos/kernel/problem_closure.py",
+    "terminal_states": [
+      "REPAIR_EXECUTED",
+      "BLOCKED_WITH_REASON",
+      "NO_CHANGE_WITH_EVIDENCE"
+    ],
+    "repair_now_rule": "If a current legal repair path exists, the selected Agent has authority/capability to use it, and no explicit user choice is required, the turn must attempt the repair before finalizing.",
+    "blocker_rule": "If repair cannot proceed, preserve the concrete blocker, missing permission/capability/evidence or required user choice; do not disguise a convenience stop as a blocker.",
+    "no_change_rule": "No-change is valid only when diagnosis/counterexample/evidence supports preserving current behavior; familiarity, inertia or lack of initiative is not evidence.",
+    "recommendation_only_forbidden_when": [
+      "the problem is confirmed",
+      "the repair path is available now",
+      "the acting authority permits the repair",
+      "the repair does not require an unprovided user fact, approval, authorization or safety-sensitive choice"
+    ],
+    "assurance_boundary": "The kernel admission is executable and regression-testable but does not claim physical interception of every natural-language host response. Domains should add owner-native admission/receipt evidence where their execution topology supports it."
   },
   "observable_inheritance_assurance": {
     "principle": "DECLARED_COMMON_CAPABILITY_IS_NOT_OPERATIONAL_BEHAVIOR_PROOF",
@@ -85,18 +105,19 @@
   "adoption_and_compatibility": {
     "existing_child_business_execution": "NOT_REVOKED_BY_THIS_CONTRACT_ALONE",
     "immediate_parent_assurance_rule": "UAOS must not call a common capability operational merely because a child capability file declares inheritance.",
-    "next_material_domain_maintenance": "Registered children should expose or reconcile an owner-native canonical evolution evidence entrypoint when the interface requirement applies, identify owner-appropriate behavioral evidence for material inherited-capability claims, and preserve causal history for evolution-relevant/material problems without copying Financial's journal implementation.",
+    "next_material_domain_maintenance": "Registered children should expose or reconcile an owner-native canonical evolution evidence entrypoint when the interface requirement applies, identify owner-appropriate behavioral evidence for material inherited-capability claims, preserve causal history for evolution-relevant/material problems, and add an owner-native repair-or-block admission when a declared common behavior otherwise remains recommendation-only.",
     "no_parent_microscheduler": true,
     "no_parent_business_state_mirroring": true
   },
   "generalization_evidence": {
-    "financial": "Financial's Problem & Evolution Journal preserved not only final fixes but user-visible symptoms, incorrect assumptions, rejected repairs, CI propagation failures, meta-overproduction and self-referential receipt drift; that richer causal record enabled the parent to distinguish reusable semantics from domain-specific implementation.",
+    "financial": "Financial's Problem & Evolution Journal preserved not only final fixes but user-visible symptoms, incorrect assumptions, rejected repairs, CI propagation failures, meta-overproduction and self-referential receipt drift. A later audit then showed proactive-resolution remained largely declarative/static-test evidence, proving that problem detection and policy text still needed a repair-or-block execution bridge.",
+    "uaos_self_application": "UAOS itself diagnosed the Financial execution gap and initially stopped at a recommendation for future Financial maintenance despite having authority and tooling to perform the governed repair. This is the same declaration-to-operation failure class at the parent layer.",
     "video_counterexample": "Video already distinguishes declared, harness-wired, session-executable, chat-bridged and attested-isolated assurance and binds many capabilities to invocation/evidence contracts; its causal history may be represented by work-order/decision evidence rather than an article journal.",
     "ashare_counterexample": "A-share operational and evolution evidence is naturally point-in-time and replay/freeze based rather than article-journal based.",
     "novel_counterexample": "Novel uses checkpoint/canon and project evidence, so a Financial-shaped journal or probe implementation would overfit the common contract.",
     "external_method_refs": [
-      "Kubernetes liveness/readiness/startup probes: observe runtime behavior rather than treating configuration as health proof",
-      "Pact code-first contract testing: executable interactions verify behavior against a declared contract",
+      "Kubernetes admission controllers: policy becomes effective by intercepting an operation before persistence rather than existing only as configuration text",
+      "Pact contract tests: executable interactions verify behavior against a declared contract",
       "Google SRE postmortems: preserve incident unfolding, impact, response, causes and follow-up so failures become reusable learning",
       "Architecture Decision Records: preserve decision context, considered alternatives, rationale and consequences for future maintainers"
     ]
