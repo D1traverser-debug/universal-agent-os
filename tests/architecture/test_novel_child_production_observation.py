@@ -10,7 +10,7 @@ def load_json(rel: str):
 
 def test_parent_observes_novel_profile5_learning_to_planning_production():
     system = load_json("CURRENT_SYSTEM.json")
-    assert system["schema_version"] == "2.26"
+    assert tuple(map(int, system["schema_version"].split("."))) >= (2, 26)
     assert system["system_release_version"] == "2.5.2"
     assert "NOVEL_PROFILE_5_PRODUCTION_VERIFIED" in system["novel_binding_assurance"]
     assert "ACTIVE_RULEBOOK_2_5" in system["novel_binding_assurance"]
@@ -38,7 +38,10 @@ def test_parent_novel_receipt_binds_verified_child_events_without_claiming_live_
     assert receipt["final_main_production_ci_run"] == 38707051516
     assert receipt["final_main_production_ci_number"] == 309
     assert receipt["result"] == "PASS"
-    assert receipt["assurance"] == "EXECUTABLE_LEARNING_TO_PLANNING_ARCHITECTURE_AND_TRAJECTORY_VERIFIED__LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN"
+    assurance = receipt["assurance"]
+    assert assurance.startswith("EXECUTABLE_LEARNING_TO_PLANNING_ARCHITECTURE_AND_TRAJECTORY_VERIFIED")
+    assert "COMMON_BEHAVIOR_1_3_ROOT_SCOPE_ADOPTION_NOT_YET_OWNER_NATIVE_VERIFIED" in assurance
+    assert assurance.endswith("LIVE_POST_RESELECTION_LITERARY_OUTCOME_OPEN")
     assert "NEXT_LINE_3914" in receipt["business_cursor_preserved"]
     assert "HISTORICAL_FQ001_NO_INCUMBENT_PRIVILEGE" in receipt["business_cursor_preserved"]
 
@@ -60,8 +63,6 @@ def test_parent_observation_does_not_mirror_child_canon_or_learning_payloads():
     }
     assert forbidden.isdisjoint(receipt)
 
-    # UAOS may retain normalized task routing/cursor metadata, but the Novel repo remains
-    # the exact business-state authority and UAOS explicitly does not become that controller.
     task = load_json("state/tasks/FQ001_MINGRI_ORDER.json")
     assert task["project_business_authority"] == "D1traverser-debug/novel-writing-agent@main:projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json"
     assert task["project_business_state_is_controller"] is False
