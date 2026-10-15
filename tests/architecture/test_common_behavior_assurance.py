@@ -18,6 +18,7 @@ def test_financial_parent_guidance_is_resolved_as_common_outcomes_not_financial_
     assert decisions["INHERITANCE_BEHAVIOR_VS_DECLARATION"].startswith("PROMOTE_COMMON_ASSURANCE_RULE")
     assert decisions["DECLARATION_TO_OPERATION_GAP"].startswith("PROMOTE_AS_UMBRELLA_COMMON_FAILURE_CLASS")
 
+    assert policy["contract_version"] == "1.1.0"
     assert policy["observable_inheritance_assurance"]["no_uniform_probe_implementation"] is True
     assert policy["adoption_and_compatibility"]["no_parent_microscheduler"] is True
     assert "FORCE_FINANCIAL_WRITINGS_EXACT_RECOVERY_ORDER_ON_OTHER_DOMAINS" in policy["recover_before_user_escalation"]["forbidden"]
@@ -45,11 +46,28 @@ def test_child_evolution_interface_standardizes_discoverability_not_internal_sta
     policy = _json("config/COMMON_BEHAVIOR_ASSURANCE.json")
     interface = policy["canonical_child_evolution_evidence_interface"]
 
-    assert interface["decision"] == "MINIMAL_CANONICAL_ENTRYPOINT_ONLY"
+    assert interface["decision"] == "MINIMAL_CANONICAL_ENTRYPOINT_PLUS_OWNER_NATIVE_CAUSAL_HISTORY"
     assert "owner/domain identity" in interface["minimum_logical_fields"]
     assert "open parent-guidance references" in interface["minimum_logical_fields"]
     assert "owner-native representation" in interface["format_rule"]
     assert "child-owned" in interface["ownership_rule"]
+
+
+def test_causal_problem_history_preserves_learning_without_forcing_heavyweight_logs():
+    policy = _json("config/COMMON_BEHAVIOR_ASSURANCE.json")
+    history = policy["causal_problem_history_preservation"]
+
+    assert "EVOLUTION_RELEVANT_OR_MATERIAL_DETECTED_PROBLEM" in history["scope"]
+    semantics = "\n".join(history["minimum_semantics_when_applicable"]).lower()
+    assert "symptom" in semantics
+    assert "micro diagnosis" in semantics
+    assert "macro goal/topology" in semantics
+    assert "rejected paths" in semantics
+    assert "verification" in semantics
+    assert "remaining unknowns" in semantics
+    assert "small local defects" in history["compression_rule"].lower()
+    assert "must not be silently rewritten out of history" in history["failed_path_rule"].lower()
+    assert "not a universal journal file" in history["format_and_storage_rule"].lower()
 
 
 def test_binding_and_current_system_reference_common_behavior_assurance():
@@ -60,9 +78,23 @@ def test_binding_and_current_system_reference_common_behavior_assurance():
     assert "DECLARATION_OF_COMMON_CAPABILITY_INHERITANCE_IS_NOT_OPERATIONAL_PROOF" in binding["operational_behavior_assurance_rule"]
     assert "PROPORTIONATE_LAWFUL_RECOVERY" in binding["recover_before_user_escalation_rule"]
     assert "ONE_CANONICAL_OWNER_NATIVE_EVIDENCE_ENTRYPOINT" in binding["evolution_evidence_interface_rule"]
+    assert "EVOLUTION_RELEVANT_OR_MATERIAL_DETECTED_PROBLEM" in binding["causal_problem_history_rule"]
 
     assert current["common_behavior_assurance"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
-    assert "DECLARATION_NOT_OPERATIONAL_PROOF" in current["common_behavior_assurance_contract"]
+    assert "COMMON_BEHAVIOR_ASSURANCE_1_1" in current["common_behavior_assurance_contract"]
+    assert "CAUSAL_PROBLEM_HISTORY" in current["common_behavior_assurance_contract"]
+
+
+def test_financial_parent_observation_is_current_and_evidence_bounded():
+    current = _json("CURRENT_SYSTEM.json")
+    verification = current["financial_child_production_verification"]
+
+    assert current["financial_binding_assurance"].startswith("FINANCIAL_0_9_1_PRODUCTION_VERIFIED")
+    assert verification["release"] == "0.9.1"
+    assert verification["profile_version"] == 16
+    assert verification["main_commit"] == "3090a50d6be938947b1073310d5e290cd67cafbc"
+    assert verification["production_ci_number"] == 1033
+    assert verification["result"] == "PASS"
 
 
 def test_version_metadata_drift_remains_mechanically_guarded():
