@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "evolution_id": "EVO-20261015-CAUSAL-PROBLEM-HISTORY-CONTRACT",
+  "status": "CANDIDATE_EVALUATION",
+  "authority": "UAOS",
+  "updated_at": "2026-10-15T09:58:13+08:00",
+  "trigger": [
+    "FINANCIAL_PROBLEM_EVOLUTION_JOURNAL_REVIEW",
+    "EVOLUTION_HISTORY_INTERFACE_REFINEMENT",
+    "USER_REQUIREMENT_TO_PRESERVE_PROBLEM_AND_REPAIR_PROCESS"
+  ],
+  "failure_class": "FC-EVOLUTION-EVIDENCE-FINAL-STATE-WITHOUT-CAUSAL-HISTORY-001",
+  "diagnosis": {
+    "micro": "The first parent adjudication required a canonical child evolution-evidence entrypoint but did not explicitly require durable preservation of the causal path for evolution-relevant/material problems.",
+    "macro": "A parent controller cannot reliably guide future repair/generalization if child evidence collapses a problem into only current status and final fix; however UAOS must not prescribe one journal format or log every trivial event.",
+    "assumption_challenged": "Discoverability of open/resolved references alone is sufficient evolution evidence for later learning and parent guidance."
+  },
+  "source_evidence": [
+    "D1traverser-debug/financial-writing-agent@main:evals/PROBLEM_EVOLUTION_JOURNAL.md",
+    "D1traverser-debug/financial-writing-agent@main:evals/PROBLEM_EVOLUTION_JOURNAL_INDEX.json",
+    "D1traverser-debug/financial-writing-agent@main:evals/PARENT_GUIDANCE_HANDOFF.md"
+  ],
+  "external_method_evidence": [
+    "Google SRE postmortem practice preserves how an incident unfolded, impact, response, root causes and follow-up so failures become reusable learning rather than only closed tickets.",
+    "Architecture Decision Record practice preserves context, considered alternatives, rationale and consequences so later maintainers can understand why a decision was made."
+  ],
+  "counterexamples_and_scope_bounds": [
+    "A-share may encode causal evidence in replay/freeze and market-day records rather than a prose journal.",
+    "Video may encode it in work-order, decision receipt, invocation and attestation evidence.",
+    "Novel may encode it in checkpoint/canon/project records.",
+    "Small local defects may use a compact record; forcing full postmortems for every typo or harmless transient error would create maintenance noise and meta-overproduction."
+  ],
+  "maintenance_execution_incident": {
+    "observed": "Three create-file attempts were issued before the candidate branch existed; GitHub returned 404 each time.",
+    "impact": "No repository mutation occurred because GitHub rejected the requests.",
+    "diagnosis": "The mutation sequence lacked an explicit branch-existence admission before file writes.",
+    "repair": "Create the candidate branch first and continue only after branch creation succeeds.",
+    "lesson": "Material GitHub maintenance should verify candidate isolation exists before any file mutation request."
+  },
+  "candidate_decision": "PROMOTE_CAUSAL_HISTORY_PRESERVATION_FOR_EVOLUTION_RELEVANT_OR_MATERIAL_PROBLEMS__KEEP_FORMAT_AND_COMPRESSION_DOMAIN_OWNED",
+  "candidate_scope": [
+    "config/COMMON_BEHAVIOR_ASSURANCE.json",
+    "config/BINDING_POLICY.json",
+    "CURRENT_SYSTEM.json",
+    "tests/architecture/test_common_behavior_assurance.py"
+  ],
+  "non_goals": [
+    "DO_NOT_REQUIRE_ONE_SHARED_MARKDOWN_JOURNAL",
+    "DO_NOT_REQUIRE_FULL_POSTMORTEMS_FOR_TRIVIAL_LOCAL_DEFECTS",
+    "DO_NOT_MOVE_CHILD_EVOLUTION_OWNERSHIP_TO_UAOS",
+    "DO_NOT_DUPLICATE_CHILD_REPLAY_CHECKPOINT_WORK_ORDER_OR_ARTICLE_STATE",
+    "DO_NOT_RECORD_SECRETS_OR_UNNECESSARY_USER_SENSITIVE_DATA"
+  ],
+  "acceptance": {
+    "candidate_ci": "PENDING",
+    "causal_history_semantics_present": "PENDING",
+    "small_defect_compression_boundary_present": "PENDING",
+    "domain_owned_format_preserved": "PENDING",
+    "post_promotion_main_ci": "PENDING",
+    "production_reread": "PENDING"
+  }
+}
