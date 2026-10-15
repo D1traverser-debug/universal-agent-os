@@ -17,8 +17,9 @@ def test_financial_parent_guidance_is_resolved_as_common_outcomes_not_financial_
     assert decisions["VERSION_METADATA_DRIFT"].startswith("RESOLVED_BY_EXISTING_PARENT_RELEASE_SYNC_INVARIANT")
     assert decisions["INHERITANCE_BEHAVIOR_VS_DECLARATION"].startswith("PROMOTE_COMMON_ASSURANCE_RULE")
     assert decisions["DECLARATION_TO_OPERATION_GAP"].startswith("PROMOTE_AS_UMBRELLA_COMMON_FAILURE_CLASS")
+    assert "RECOMMENDATION_ONLY" in decisions["PROBLEM_TO_ACTION_CLOSURE_GAP"]
 
-    assert policy["contract_version"] == "1.1.0"
+    assert policy["contract_version"] == "1.2.0"
     assert policy["observable_inheritance_assurance"]["no_uniform_probe_implementation"] is True
     assert policy["adoption_and_compatibility"]["no_parent_microscheduler"] is True
     assert "FORCE_FINANCIAL_WRITINGS_EXACT_RECOVERY_ORDER_ON_OTHER_DOMAINS" in policy["recover_before_user_escalation"]["forbidden"]
@@ -40,6 +41,15 @@ def test_declaration_is_not_operational_proof_and_user_escalation_has_safe_bound
     assert "authorization" in escalation
     assert "materially different outcomes" in escalation
     assert "genuinely unavailable" in escalation
+
+
+def test_problem_to_action_closure_forbids_recommendation_only_when_repair_is_available():
+    policy = _json("config/COMMON_BEHAVIOR_ASSURANCE.json")
+    closure = policy["problem_to_action_closure"]
+    assert closure["executable_ref"] == "src/uaos/kernel/problem_closure.py"
+    assert closure["terminal_states"] == ["REPAIR_EXECUTED", "BLOCKED_WITH_REASON", "NO_CHANGE_WITH_EVIDENCE"]
+    assert "must be attempted before finalizing" in closure["repair_now_rule"]
+    assert "physical interception" in closure["assurance_boundary"]
 
 
 def test_child_evolution_interface_standardizes_discoverability_not_internal_state_machine():
@@ -77,12 +87,15 @@ def test_binding_and_current_system_reference_common_behavior_assurance():
     assert binding["common_behavior_assurance_policy"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
     assert "DECLARATION_OF_COMMON_CAPABILITY_INHERITANCE_IS_NOT_OPERATIONAL_PROOF" in binding["operational_behavior_assurance_rule"]
     assert "PROPORTIONATE_LAWFUL_RECOVERY" in binding["recover_before_user_escalation_rule"]
+    assert "MUST_ATTEMPT_THE_REPAIR_BEFORE_FINALIZING" in binding["problem_action_closure_rule"]
     assert "ONE_CANONICAL_OWNER_NATIVE_EVIDENCE_ENTRYPOINT" in binding["evolution_evidence_interface_rule"]
     assert "EVOLUTION_RELEVANT_OR_MATERIAL_DETECTED_PROBLEM" in binding["causal_problem_history_rule"]
 
     assert current["common_behavior_assurance"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
-    assert "COMMON_BEHAVIOR_ASSURANCE_1_1" in current["common_behavior_assurance_contract"]
+    assert "COMMON_BEHAVIOR_ASSURANCE_1_2" in current["common_behavior_assurance_contract"]
     assert "CAUSAL_PROBLEM_HISTORY" in current["common_behavior_assurance_contract"]
+    assert "PROBLEM_TO_ACTION_CLOSURE" in current["common_behavior_assurance_contract"]
+    assert "RECOMMENDATION_ONLY_FORBIDDEN" in current["problem_action_closure_assurance"]
 
 
 def test_financial_parent_observation_is_current_and_evidence_bounded():
