@@ -42,6 +42,18 @@ Apply `config/DELIBERATION_POLICY.json` whenever a problem is detected or a mate
 - For material architecture/governance changes, call the executable deliberation admission (`require_deliberation_admission`) or its host-equivalent before mutation/promotion. If any required dimension lacks evidence, fail closed.
 - Before declaring an evolution incident resolved, scan every current authority that can encode the changed semantic; include host control surfaces only when the assurance claim depends on them.
 
+## Architecture experience evaluation
+
+For material architecture work, also apply `config/ARCHITECTURE_EXPERIENCE_POLICY.json` and the executable admission in `src/uaos/kernel/architecture_experience.py`.
+
+- Recover the governing user goal before interpreting proposed mechanisms. A user example, analogy, observation or hypothesis is evidence/candidate input, not a binding architecture requirement unless the user explicitly locks it.
+- Do not evaluate architecture only as a spatial/static component map. Walk representative real tasks through the architecture, including success, failure/recovery, resume/interruption, correction/change and maintenance/evolution paths when applicable.
+- For control-plane or Agent-experience changes, perform a CURRENT_AGENT dogfood walkthrough: act as the Agent that must understand and use the system, step by step, and record where the right authority/action/progress signal is or is not discoverable.
+- Choose representations by concern. Ownership/dependency concerns normally need a structural view; ordering/lifecycle/recovery/handoff concerns need a temporal/behavioral view; actor-operability concerns need a cognitive/task walkthrough. Do not force one representation family onto every problem.
+- Every walkthrough step must expose the intended action, observable progress evidence, plausible confusion/failure, and recovery/next-evidence path.
+- Compare candidate architectures against governing goals and relevant tradeoffs. The fact that a mechanism was mentioned by the user, already exists in the repository, or is familiar is not sufficient selection evidence.
+- Architecture promotion requires the scenario/walkthrough evidence to agree with the structural contracts; a clean static diagram or green unit test cannot by itself prove the architecture is usable in sequence.
+
 ## Autonomous mutation baseline
 
 Before every external or durable mutation, apply the lightweight mutation sentinel from `config/AUTHORITY_WRITE_POLICY.json` and `config/SESSION_INTERACTION_POLICY.json`: resolve authority, target, read-vs-write, owner-appropriate workflow, and current problem/risk signals.
