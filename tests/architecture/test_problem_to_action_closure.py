@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 from uaos.kernel import (
+    EvolutionDisposition,
     ProblemClosureDecision,
     ProblemClosureError,
     ProblemClosureSignals,
@@ -20,13 +21,14 @@ def _json(path: str):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
-def _receipt() -> RootScopeReceipt:
+def _receipt(*, durable: bool = True) -> RootScopeReceipt:
     return RootScopeReceipt(
         selected_hypothesis_id="root",
         selected_layer=ProblemLayer.CONTROL_PLANE,
         hypothesis_count=2,
         compared_layers=(ProblemLayer.CONTROL_PLANE, ProblemLayer.LOCAL_IMPLEMENTATION),
         architecture_reassessment_performed=True,
+        durable_problem_record_required=durable,
         evidence_refs=("evidence://root-scope",),
     )
 
@@ -35,8 +37,7 @@ def _admitted(**overrides) -> ProblemClosureSignals:
     values = dict(
         problem_detected=True,
         root_scope_receipt=_receipt(),
-        evolution_disposition="DURABLE_FAILURE_CLASS_UPDATED",
-        problem_record_required=True,
+        evolution_disposition=EvolutionDisposition.DURABLE_EVOLUTION_UPDATED,
         problem_record_ref="state/evolution/EVO-PROBLEM.json",
     )
     values.update(overrides)
@@ -64,6 +65,18 @@ def test_authorized_feasible_repair_is_blocked_until_root_scope_and_evolution_ar
         require_problem_finalization_admission(signals)
 
 
+def test_arbitrary_string_cannot_impersonate_evolution_disposition():
+    signals = ProblemClosureSignals(
+        problem_detected=True,
+        repair_path_available=True,
+        repair_authorized=True,
+        root_scope_receipt=_receipt(durable=False),
+        evolution_disposition="DURABLE_FAILURE_CLASS_UPDATED",  # type: ignore[arg-type]
+    )
+    with pytest.raises(ProblemClosureError, match="valid evolution/learning disposition"):
+        assess_problem_closure(signals)
+
+
 def test_repair_attempt_before_cognitive_admission_is_rejected_even_if_it_later_looks_successful():
     with pytest.raises(ProblemClosureError, match="root-scope cognitive admission"):
         assess_problem_closure(
@@ -85,13 +98,26 @@ def test_verified_repair_is_an_admissible_terminal_state_after_cognitive_and_evo
     assert require_problem_finalization_admission(signals) is ProblemClosureDecision.REPAIR_EXECUTED
 
 
-def test_material_problem_requires_durable_record_before_action():
+def test_root_scope_derived_durable_requirement_cannot_be_downgraded_by_caller():
     signals = ProblemClosureSignals(
         problem_detected=True,
         repair_path_available=True,
         repair_authorized=True,
-        root_scope_receipt=_receipt(),
-        evolution_disposition="DURABLE_FAILURE_CLASS_UPDATED",
+        root_scope_receipt=_receipt(durable=True),
+        evolution_disposition=EvolutionDisposition.DURABLE_EVOLUTION_CANDIDATE,
+        problem_record_required=False,
+    )
+    with pytest.raises(ProblemClosureError, match="durable problem evidence"):
+        assess_problem_closure(signals)
+
+
+def test_caller_may_request_stronger_durable_record_for_otherwise_local_problem():
+    signals = ProblemClosureSignals(
+        problem_detected=True,
+        repair_path_available=True,
+        repair_authorized=True,
+        root_scope_receipt=_receipt(durable=False),
+        evolution_disposition=EvolutionDisposition.LOCAL_LEARNING_ONLY,
         problem_record_required=True,
     )
     with pytest.raises(ProblemClosureError, match="durable problem evidence"):
