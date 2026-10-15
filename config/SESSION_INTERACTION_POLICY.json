@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.6",
-  "policy_version":"1.6.0",
+  "schema_version":"1.7",
+  "policy_version":"1.7.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-15T05:06:35+08:00",
+  "updated_at":"2026-10-15T10:17:12+08:00",
   "bare_inheritance_selector":{
     "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option":{"option_id":"uaos:controller","display_name_zh":"总控系统","intent":"SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY","creates_business_task":false,"authority_context":"UAOS"},
@@ -53,6 +53,24 @@
     ],
     "anti_bloat":"The detector is always-on and lightweight; external research, reflection, counterexample search and independent verification are activated only at the depth required by current signals."
   },
+  "problem_to_action_closure_gate":{
+    "required":true,
+    "scope":"EVERY_DETECTED_PROBLEM_BEFORE_FINAL_RESPONSE_HANDOFF_OR_MAINTENANCE_CLOSURE",
+    "executable_ref":"src/uaos/kernel/problem_closure.py",
+    "common_contract_ref":"config/COMMON_BEHAVIOR_ASSURANCE.json",
+    "terminal_states":["REPAIR_EXECUTED","BLOCKED_WITH_REASON","NO_CHANGE_WITH_EVIDENCE"],
+    "rule":"After the problem-response floor identifies a real problem, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state.",
+    "repair_now_conditions":[
+      "a concrete repair path is currently available",
+      "the selected authority or owner-authorized workflow permits the repair",
+      "the required tools/capabilities are available",
+      "no explicit user fact, approval, authorization or safety-sensitive choice is required"
+    ],
+    "blocker_rule":"When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or a desire to defer work is not a blocker.",
+    "no_change_rule":"When no change is selected, preserve the evidence/counterexample/rationale that makes current behavior the preferred outcome.",
+    "response_consistency_rule":"A final response that reports a confirmed repairable problem and only recommends future repair violates this gate unless it also reports a verified blocker that prevents current execution.",
+    "assurance_boundary":"This policy and kernel gate are executable/regression-testable but do not claim host-level physical interception of every natural-language response."
+  },
   "always_on_mutation_sentinel":{
     "required":true,
     "scope":"BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT",
@@ -73,7 +91,7 @@
     "visibility":"REPORT_WHEN_MATERIALLY_TRIGGERED",
     "rule":"Every detected problem requires at least lightweight external research plus macro/topology and governing-assumption reflection; request risk-sensitive counterexample and independent-verification depth when required.",
     "material_change_admission":"FAIL_CLOSED_PER_DELIBERATION_POLICY_BEFORE_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_MUTATION",
-    "relationship_to_sentinels":"The problem-detection sentinel runs on every selected-agent turn; the mutation sentinel runs before external/durable writes. Problem/risk signals select the required epistemic depth."
+    "relationship_to_sentinels":"The problem-detection sentinel runs on every selected-agent turn; the problem-to-action closure gate decides whether current repair must execute before finalization; the mutation sentinel runs before external/durable writes. Problem/risk signals select the required epistemic depth."
   },
   "inherited_session_progress_report":{
     "scope":"EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
@@ -86,6 +104,7 @@
     "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id. If a detected problem was evaluated but did not justify a durable evolution record, report EVALUATED_NO_DURABLE_EVOLUTION. Use NO_EVOLUTION_TRIGGER only when no problem/evolution trigger was detected in the current turn.",
     "deliberation_rule":"When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the trigger/research-control state without exposing private chain-of-thought or fabricating independent review.",
     "consistency_rule":"A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless it clearly states that the observation is not classified as a problem and why.",
+    "action_closure_rule":"A response that reports a confirmed problem with an available authorized repair path cannot end in recommendation-only language. It must report repair execution/verification, a real blocker/user-choice dependency, or an evidence-backed no-change disposition.",
     "assurance_rule":"If progress, authority scope, deliberation/evolution state, assurance level or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
   }
 }
