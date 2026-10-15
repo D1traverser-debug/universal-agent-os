@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.2",
-  "contract_version": "1.2.0",
+  "schema_version": "1.3",
+  "contract_version": "1.3.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-15T10:17:12+08:00",
+  "updated_at": "2026-10-16T00:52:39+08:00",
   "scope": "ALL_REGISTERED_DOMAINS_IN_config/AGENT_REGISTRY.json",
-  "purpose": "Operationalize inherited common-capability behavior, durable learning evidence and problem-to-action closure without making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
+  "purpose": "Operationalize inherited common-capability behavior, durable learning evidence and an evidence-gated problem cognition -> evolution -> action transaction without making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
   "source_parent_upcall": "D1traverser-debug/financial-writing-agent@main:evals/PARENT_GUIDANCE_HANDOFF.md",
   "parent_decisions": {
     "PROACTIVE_RESOLUTION_GAP": "PROMOTE_COMMON_OUTCOME_SEMANTICS__KEEP_DOMAIN_SPECIFIC_RECOVERY_ORDER_DOMAIN_OWNED",
@@ -12,7 +12,8 @@
     "VERSION_METADATA_DRIFT": "RESOLVED_BY_EXISTING_PARENT_RELEASE_SYNC_INVARIANT_AND_REGRESSION_TEST",
     "INHERITANCE_BEHAVIOR_VS_DECLARATION": "PROMOTE_COMMON_ASSURANCE_RULE__DECLARATION_ALONE_IS_NOT_OPERATIONAL_PROOF",
     "DECLARATION_TO_OPERATION_GAP": "PROMOTE_AS_UMBRELLA_COMMON_FAILURE_CLASS__EXTEND_EXISTING_CONTROL_CONTEXT_ASSURANCE_EVOLUTION_CONTRACTS__DO_NOT_CREATE_PARALLEL_CONTROLLER",
-    "PROBLEM_TO_ACTION_CLOSURE_GAP": "PROMOTE_COMMON_REPAIR_OR_BLOCK_TERMINAL_SEMANTICS__RECOMMENDATION_ONLY_IS_NOT_A_VALID_TERMINAL_WHEN_AUTHORIZED_REPAIR_IS_AVAILABLE"
+    "PROBLEM_TO_ACTION_CLOSURE_GAP": "PROMOTE_COMMON_REPAIR_OR_BLOCK_TERMINAL_SEMANTICS__RECOMMENDATION_ONLY_IS_NOT_A_VALID_TERMINAL_WHEN_AUTHORIZED_REPAIR_IS_AVAILABLE",
+    "PREMATURE_REPAIR_BEFORE_ROOT_SCOPE": "REQUIRE_EVIDENCE_TESTED_ROOT_SCOPE_AND_EVOLUTION_DISPOSITION_BEFORE_REPAIR_OR_NO_CHANGE__USER_OR_EXTERNAL_FRAMING_IS_EVIDENCE_NOT_ROOT_CAUSE_AUTHORITY"
   },
   "recover_before_user_escalation": {
     "rule": "Before externalizing a plausibly recoverable dependency to the user, a selected Agent must attempt proportionate recovery from legally and currently available authority, durable state/artifacts, relevant conversation or connected context, and appropriate external evidence when those sources can materially reduce the uncertainty.",
@@ -31,24 +32,48 @@
       "FORCE_FINANCIAL_WRITINGS_EXACT_RECOVERY_ORDER_ON_OTHER_DOMAINS"
     ]
   },
+  "problem_cognition_action_transaction": {
+    "principle": "A_REPAIRABLE_SYMPTOM_IS_NOT_YET_AN_ADMITTED_ROOT_CAUSE",
+    "ordered_stages": [
+      "DETECT",
+      "RECORD_WHEN_MATERIAL_OR_EVOLUTION_RELEVANT",
+      "DELIBERATE_AND_CHALLENGE",
+      "COMPETING_HYPOTHESES_AND_FALSIFICATION",
+      "ROOT_SCOPE_ADMISSION",
+      "EVOLUTION_DISPOSITION",
+      "REPAIR_REDESIGN_OR_NO_CHANGE",
+      "VERIFY",
+      "POST_PROMOTION_OR_LIVE_OBSERVATION"
+    ],
+    "root_scope_executable_ref": "src/uaos/kernel/deliberation.py",
+    "action_executable_ref": "src/uaos/kernel/problem_closure.py",
+    "rules": [
+      "A user correction, user theory, external Skill, popular architecture method, first plausible explanation or first available edit is evidence/candidate input, not root-cause authority.",
+      "Before repair/no-change, require an evidence-tested selected problem layer and hypothesis.",
+      "Repeated, cross-subsystem, architecture-gap, scope-expanding or complexity-growth problems must compare hypotheses across at least two layers, test at least one architecture/upstream hypothesis, and preserve evidence for a rejected alternative.",
+      "A local root cause may still be selected for a systemic-looking symptom, but only after upstream alternatives are actually tested and bounded.",
+      "Every admitted problem must receive an evolution/learning disposition before action; material or evolution-relevant problems require durable causal evidence.",
+      "Finding an authorized repair path does not waive cognition admission."
+    ],
+    "root_layers": [
+      "LOCAL_IMPLEMENTATION",
+      "DOMAIN_WORKFLOW",
+      "DOMAIN_ARCHITECTURE",
+      "COMMON_CAPABILITY",
+      "CONTROL_PLANE",
+      "HOST",
+      "REQUIREMENT_OR_GOAL"
+    ]
+  },
   "problem_to_action_closure": {
-    "principle": "DETECTED_PROBLEM_MUST_END_IN_REPAIR_EXECUTED_BLOCKED_WITH_REASON_OR_NO_CHANGE_WITH_EVIDENCE__NOT_RECOMMENDATION_ONLY_WHEN_REPAIR_IS_AVAILABLE",
+    "principle": "AFTER_COGNITIVE_AND_EVOLUTION_ADMISSION__DETECTED_PROBLEM_MUST_END_IN_REPAIR_EXECUTED_BLOCKED_WITH_REASON_OR_NO_CHANGE_WITH_EVIDENCE__NOT_RECOMMENDATION_ONLY_WHEN_REPAIR_IS_AVAILABLE",
     "executable_ref": "src/uaos/kernel/problem_closure.py",
-    "terminal_states": [
-      "REPAIR_EXECUTED",
-      "BLOCKED_WITH_REASON",
-      "NO_CHANGE_WITH_EVIDENCE"
-    ],
-    "repair_now_rule": "If a current legal repair path exists, the selected Agent has authority/capability to use it, and no explicit user choice is required, the turn must attempt the repair before finalizing.",
+    "terminal_states": ["REPAIR_EXECUTED", "BLOCKED_WITH_REASON", "NO_CHANGE_WITH_EVIDENCE"],
+    "repair_now_rule": "If root-scope cognition is admitted, evolution disposition is recorded, a current legal repair path exists, the selected Agent has authority/capability to use it, and no explicit user choice is required, the turn must attempt the repair before finalizing.",
+    "premature_action_rule": "Do not execute or retroactively justify a repair before root-scope admission merely because the edit is easy, familiar, requested, or authorized.",
     "blocker_rule": "If repair cannot proceed, preserve the concrete blocker, missing permission/capability/evidence or required user choice; do not disguise a convenience stop as a blocker.",
-    "no_change_rule": "No-change is valid only when diagnosis/counterexample/evidence supports preserving current behavior; familiarity, inertia or lack of initiative is not evidence.",
-    "recommendation_only_forbidden_when": [
-      "the problem is confirmed",
-      "the repair path is available now",
-      "the acting authority permits the repair",
-      "the repair does not require an unprovided user fact, approval, authorization or safety-sensitive choice"
-    ],
-    "assurance_boundary": "The kernel admission is executable and regression-testable but does not claim physical interception of every natural-language host response. Domains should add owner-native admission/receipt evidence where their execution topology supports it."
+    "no_change_rule": "No-change is valid only after cognition admission and when diagnosis/counterexample/evidence supports preserving current behavior.",
+    "assurance_boundary": "The kernel admissions are executable and regression-testable but do not claim physical interception of every natural-language host response. Domains should add owner-native admission/receipt evidence where their execution topology supports it."
   },
   "observable_inheritance_assurance": {
     "principle": "DECLARED_COMMON_CAPABILITY_IS_NOT_OPERATIONAL_BEHAVIOR_PROOF",
@@ -59,9 +84,9 @@
       "current-enough evidence for the claim scope",
       "an assurance label that does not exceed the evidence"
     ],
-    "domain_specific_realization": "Each domain chooses evidence appropriate to its execution model: for example work-order/attestation evidence, market-day freeze/replay evidence, checkpoint/canon evidence, article owner-lifecycle evidence, or another owner-native mechanism.",
+    "domain_specific_realization": "Each domain chooses evidence appropriate to its execution model.",
     "no_uniform_probe_implementation": true,
-    "failure_semantics": "If operational evidence is absent, stale or contradictory, downgrade the capability claim to DECLARED_ONLY/UNVERIFIED or block the affected operation when the capability is a hard prerequisite; do not infer executability from declaration alone."
+    "failure_semantics": "If operational evidence is absent, stale or contradictory, downgrade the capability claim to DECLARED_ONLY/UNVERIFIED or block the affected operation when the capability is a hard prerequisite."
   },
   "canonical_child_evolution_evidence_interface": {
     "decision": "MINIMAL_CANONICAL_ENTRYPOINT_PLUS_OWNER_NATIVE_CAUSAL_HISTORY",
@@ -83,21 +108,23 @@
   },
   "causal_problem_history_preservation": {
     "scope": "EVERY_EVOLUTION_RELEVANT_OR_MATERIAL_DETECTED_PROBLEM; SMALL_LOCAL_DEFECTS_MAY_USE_A_COMPACT_RECORD",
-    "purpose": "Preserve enough causal and decision evidence for later domain learning, parent guidance, regression design and repeat-failure detection instead of retaining only a final status or fix.",
+    "purpose": "Preserve enough causal and decision evidence for later learning, parent guidance, regression design and repeat-failure detection instead of retaining only a final status or fix.",
     "minimum_semantics_when_applicable": [
       "observed symptom or trigger and user/system consequence",
       "detection source and relevant authority/context",
       "micro diagnosis",
       "macro goal/topology alignment",
+      "competing hypotheses and their problem layers",
+      "falsification/rejection evidence for material alternatives",
+      "selected root-scope receipt",
       "governing assumption challenged when material",
       "research or method evidence when the problem-response floor requires it",
-      "attempted alternatives, rejected paths or failed repairs that materially influenced the decision",
       "selected action or repair",
       "verification/evaluation evidence and assurance boundary",
       "result/status plus remaining unknowns, observation items or rollback conditions",
       "parent-upcall/common-capability impact when applicable"
     ],
-    "compression_rule": "Small local defects may record only the fields needed to preserve cause, action, verification and outcome. Do not force heavyweight postmortems for harmless typos, transient tool errors or other low-learning-value events unless repetition or impact makes them evolution-relevant.",
+    "compression_rule": "Small local defects may record only the fields needed to preserve cause, action, verification and outcome.",
     "failed_path_rule": "Material failed repairs and rejected approaches must not be silently rewritten out of history when they explain the final decision or expose a repeatable failure class.",
     "privacy_and_context_rule": "Record only evidence needed for learning and authority; do not persist secrets, unnecessary personal data, or large conversation copies when compact references or summaries are sufficient.",
     "format_and_storage_rule": "Domains choose the representation and storage model that fits their execution topology. UAOS requires durable causal semantics and discoverability, not a universal journal file, timeline schema or prose template."
@@ -105,21 +132,19 @@
   "adoption_and_compatibility": {
     "existing_child_business_execution": "NOT_REVOKED_BY_THIS_CONTRACT_ALONE",
     "immediate_parent_assurance_rule": "UAOS must not call a common capability operational merely because a child capability file declares inheritance.",
-    "next_material_domain_maintenance": "Registered children should expose or reconcile an owner-native canonical evolution evidence entrypoint when the interface requirement applies, identify owner-appropriate behavioral evidence for material inherited-capability claims, preserve causal history for evolution-relevant/material problems, and add an owner-native repair-or-block admission when a declared common behavior otherwise remains recommendation-only.",
+    "next_material_domain_maintenance": "Registered children should bind or reconcile the 1.3 problem cognition/action transaction using owner-native receipts/replay/evidence without adopting a second controller or common journal implementation.",
     "no_parent_microscheduler": true,
     "no_parent_business_state_mirroring": true
   },
   "generalization_evidence": {
-    "financial": "Financial's Problem & Evolution Journal preserved not only final fixes but user-visible symptoms, incorrect assumptions, rejected repairs, CI propagation failures, meta-overproduction and self-referential receipt drift. A later audit then showed proactive-resolution remained largely declarative/static-test evidence, proving that problem detection and policy text still needed a repair-or-block execution bridge.",
-    "uaos_self_application": "UAOS itself diagnosed the Financial execution gap and initially stopped at a recommendation for future Financial maintenance despite having authority and tooling to perform the governed repair. This is the same declaration-to-operation failure class at the parent layer.",
-    "video_counterexample": "Video already distinguishes declared, harness-wired, session-executable, chat-bridged and attested-isolated assurance and binds many capabilities to invocation/evidence contracts; its causal history may be represented by work-order/decision evidence rather than an article journal.",
-    "ashare_counterexample": "A-share operational and evolution evidence is naturally point-in-time and replay/freeze based rather than article-journal based.",
-    "novel_counterexample": "Novel uses checkpoint/canon and project evidence, so a Financial-shaped journal or probe implementation would overfit the common contract.",
-    "external_method_refs": [
-      "Kubernetes admission controllers: policy becomes effective by intercepting an operation before persistence rather than existing only as configuration text",
-      "Pact contract tests: executable interactions verify behavior against a declared contract",
-      "Google SRE postmortems: preserve incident unfolding, impact, response, causes and follow-up so failures become reusable learning",
-      "Architecture Decision Records: preserve decision context, considered alternatives, rationale and consequences for future maintainers"
-    ]
+    "uaos_repeat_failure": "UAOS repeatedly moved from user correction or a newly found implementation defect directly into repair planning, even though current policy already required macro/topology and assumption challenge. This showed that prose-level deliberation and repair-now closure were not mechanically ordered.",
+    "external_method_survey": [
+      "Systematic debugging contributes root-cause-before-fix discipline but is too implementation-centric to own architecture/governance diagnosis.",
+      "Hypothesis falsification contributes active disconfirmation of candidate causes.",
+      "Agent eval/observability contributes incident-to-regression learning and assurance boundaries.",
+      "SRE/chaos contributes operational and unknown-failure discovery but is not required on every small problem.",
+      "Architecture review/ADR contributes cross-layer tradeoff and revisit discipline but does not replace live diagnosis."
+    ],
+    "design_choice": "BORROW_MINIMUM_MECHANISMS__DO_NOT_INSTALL_OR_COPY_ONE_EXTERNAL_SKILL_AS_AUTHORITY"
   }
 }
