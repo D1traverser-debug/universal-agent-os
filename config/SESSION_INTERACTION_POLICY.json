@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.7",
-  "policy_version":"1.7.2",
+  "schema_version":"1.8",
+  "policy_version":"1.8.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-15T17:57:03+08:00",
+  "updated_at":"2026-10-16T00:52:39+08:00",
   "bare_inheritance_selector":{
     "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option":{"option_id":"uaos:controller","display_name_zh":"总控系统","intent":"SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY","creates_business_task":false,"authority_context":"UAOS"},
@@ -49,9 +49,34 @@
       "classify the current user message for correction/failure/contradiction/uncertainty or other problem signals",
       "classify newly read authority/evidence for defects, drift, knowledge gaps or control-plane gaps",
       "before reporting NOT_TRIGGERED, verify that no current problem signal was observed",
-      "when a problem is detected, construct current deliberation signals and execute the required research/reflection floor before selecting or promoting a repair"
+      "when a problem is detected, enter the problem cognition/action transaction before selecting or executing a repair"
     ],
-    "anti_bloat":"The detector is always-on and lightweight; external research, reflection, counterexample search and independent verification are activated only at the depth required by current signals."
+    "anti_bloat":"The detector is always-on and lightweight; deeper evidence collection is activated only at the depth required by current signals."
+  },
+  "problem_cognition_action_transaction":{
+    "required":true,
+    "scope":"EVERY_DETECTED_PROBLEM_BEFORE_REPAIR_NO_CHANGE_OR_MATERIAL_CLOSURE",
+    "common_contract_ref":"config/COMMON_BEHAVIOR_ASSURANCE.json",
+    "root_scope_executable_ref":"src/uaos/kernel/deliberation.py",
+    "action_executable_ref":"src/uaos/kernel/problem_closure.py",
+    "ordered_stages":[
+      "DETECT",
+      "RECORD_WHEN_MATERIAL_OR_EVOLUTION_RELEVANT",
+      "DELIBERATION_ADMISSION",
+      "COMPETING_HYPOTHESES_AND_FALSIFICATION",
+      "ROOT_SCOPE_ADMISSION",
+      "EVOLUTION_DISPOSITION",
+      "ACTION_ADMISSION",
+      "VERIFY",
+      "OBSERVE"
+    ],
+    "rules":[
+      "Do not treat the user's latest framing, an external Skill/method, the first plausible cause, or the first available edit as root-cause authority.",
+      "For repeated/cross-subsystem/architecture-gap/complexity-growth/scope-expansion signals, compare hypotheses across at least two problem layers and explicitly test architecture/upstream involvement.",
+      "A repair path being available or authorized does not permit bypassing root-scope admission.",
+      "Assess every admitted problem for learning/evolution impact before action; material/evolution-relevant problems require durable causal evidence.",
+      "If root scope remains unresolved, continue investigation or report a real blocker; do not patch the most convenient layer."
+    ]
   },
   "problem_to_action_closure_gate":{
     "required":true,
@@ -59,17 +84,21 @@
     "executable_ref":"src/uaos/kernel/problem_closure.py",
     "common_contract_ref":"config/COMMON_BEHAVIOR_ASSURANCE.json",
     "terminal_states":["REPAIR_EXECUTED","BLOCKED_WITH_REASON","NO_CHANGE_WITH_EVIDENCE"],
-    "rule":"After the problem-response floor identifies a real problem, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state.",
+    "rule":"Only after root-scope cognitive admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state.",
     "repair_now_conditions":[
+      "a root-scope receipt exists from the current problem evidence",
+      "an evolution/learning disposition exists",
+      "durable problem evidence exists when material/evolution-relevant",
       "a concrete repair path is currently available",
       "the selected authority or owner-authorized workflow permits the repair",
       "the required tools/capabilities are available",
       "no explicit user fact, approval, authorization or safety-sensitive choice is required"
     ],
-    "blocker_rule":"When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or a desire to defer work is not a blocker.",
-    "no_change_rule":"When no change is selected, preserve the evidence/counterexample/rationale that makes current behavior the preferred outcome.",
-    "response_consistency_rule":"A final response that reports a confirmed repairable problem and only recommends future repair violates this gate unless it also reports a verified blocker that prevents current execution.",
-    "assurance_boundary":"This policy and kernel gate are executable/regression-testable but do not claim host-level physical interception of every natural-language response."
+    "premature_action_rule":"A repair attempted before root-scope admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence.",
+    "blocker_rule":"When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or unresolved root scope disguised as certainty is not a valid repair claim.",
+    "no_change_rule":"When no change is selected, preserve the root-scope receipt and evidence/counterexample/rationale that makes current behavior the preferred outcome.",
+    "response_consistency_rule":"A final response that reports a confirmed repairable problem and only recommends future repair violates this gate unless it reports a verified blocker. A response also violates this gate if it reports repair execution without prior cognition/evolution admission.",
+    "assurance_boundary":"This policy and kernel gates are executable/regression-testable but do not claim host-level physical interception of every natural-language response."
   },
   "always_on_mutation_sentinel":{
     "required":true,
@@ -80,18 +109,18 @@
       "resolve target authority/resource and whether it is production authority",
       "classify read-only versus mutation",
       "verify the proposed mutation follows the owner-appropriate repository workflow",
-      "collect problem/risk signals and invoke adaptive deliberation when required"
+      "verify any detected problem has passed the required cognition/action stages before repair mutation"
     ],
-    "production_rule":"CHATGPT_GITHUB material production changes normally use candidate branch -> pull request -> owner-appropriate checks -> controlled merge/update -> production reread. GitHub rulesets/branch protection are optional defense-in-depth unless a non-bypassable guarantee is explicitly required.",
+    "production_rule":"CHATGPT_GITHUB material production changes normally use candidate branch -> pull request -> owner-appropriate checks -> controlled merge/update -> production reread.",
     "depth_rule":"SENTINEL_ALWAYS_ON__DEEP_DELIBERATION_TRIGGERED_ONLY",
     "failure_rule":"Do not claim physical non-bypassability unless remote enforcement is actually verified; absence of that optional assurance does not by itself block normal autonomous maintenance."
   },
   "adaptive_deliberation":{
     "policy_ref":"config/DELIBERATION_POLICY.json",
     "visibility":"REPORT_WHEN_MATERIALLY_TRIGGERED",
-    "rule":"Every detected problem requires at least lightweight external research plus macro/topology and governing-assumption reflection; request risk-sensitive counterexample and independent-verification depth when required.",
+    "rule":"Every detected problem requires at least lightweight external research plus macro/topology and governing-assumption reflection; current evidence must then pass root-scope admission before action.",
     "material_change_admission":"FAIL_CLOSED_PER_DELIBERATION_POLICY_BEFORE_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_MUTATION",
-    "relationship_to_sentinels":"The problem-detection sentinel runs on every selected-agent turn; the problem-to-action closure gate decides whether current repair must execute before finalization; the mutation sentinel runs before external/durable writes. Problem/risk signals select the required epistemic depth."
+    "relationship_to_sentinels":"Detection enters cognition; deliberation selects required evidence depth; root-scope admission determines the justified problem layer; evolution disposition determines learning scope; problem closure decides whether repair/no-change/block is admissible; mutation sentinel guards side effects."
   },
   "inherited_session_progress_report":{
     "scope":"EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
@@ -102,12 +131,12 @@
     "timestamp_rule":"Use the timestamp of the freshest authoritative state actually used for the report; do not substitute the response clock when authority freshness is known.",
     "timestamp_timezone":"Asia/Shanghai",
     "timestamp_display_format":"YYYY-MM-DD HH:mm:ss（北京时间）",
-    "timestamp_timezone_rule":"Render the user-visible progress_timestamp in Beijing time using the human-readable format YYYY-MM-DD HH:mm:ss（北京时间）. Do not show ISO-8601 separators such as T or a numeric UTC offset such as +08:00 in the user-visible field. Preserve the authoritative instant by converting the freshest authoritative timestamp to Asia/Shanghai; do not replace it with the response clock merely to obtain the requested timezone or display format.",
+    "timestamp_timezone_rule":"Render the user-visible progress_timestamp in Beijing time using the human-readable format YYYY-MM-DD HH:mm:ss（北京时间）. Preserve the authoritative instant.",
     "version_rule":"Report system/domain/task version identities that materially govern the current action. Schema version alone is not a release version.",
-    "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id. If a detected problem was evaluated but did not justify a durable evolution record, report EVALUATED_NO_DURABLE_EVOLUTION. Use NO_EVOLUTION_TRIGGER only when no problem/evolution trigger was detected in the current turn.",
-    "deliberation_rule":"When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the trigger/research-control state without exposing private chain-of-thought or fabricating independent review.",
-    "consistency_rule":"A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless it clearly states that the observation is not classified as a problem and why.",
-    "action_closure_rule":"A response that reports a confirmed problem with an available authorized repair path cannot end in recommendation-only language. It must report repair execution/verification, a real blocker/user-choice dependency, or an evidence-backed no-change disposition.",
-    "assurance_rule":"If progress, authority scope, deliberation/evolution state, assurance level or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
+    "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id. If evaluated without durable promotion, report EVALUATED_NO_DURABLE_EVOLUTION.",
+    "deliberation_rule":"When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the evidence/control escalation used without exposing private chain-of-thought.",
+    "consistency_rule":"A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless explicitly classified non-problematic.",
+    "action_closure_rule":"A response that reports repair/no-change must be consistent with a root-scope admission and evolution disposition; a cognitively admitted authorized repair cannot stop at recommendation-only.",
+    "assurance_rule":"If progress, authority scope, cognition/evolution state, assurance level or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
   }
 }
