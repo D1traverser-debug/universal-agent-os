@@ -23,6 +23,18 @@ def test_policy_rejects_literalizing_user_examples_and_requires_dogfood():
     assert "Do not require every representation family" in policy["view_selection_rule"]
 
 
+def test_deliberation_policy_makes_experience_evaluation_part_of_material_architecture_admission():
+    deliberation = load_json("config/DELIBERATION_POLICY.json")
+    assert deliberation["policy_version"] == "1.6.0"
+    admission = deliberation["architecture_experience_admission"]
+    assert admission["policy_ref"] == "config/ARCHITECTURE_EXPERIENCE_POLICY.json"
+    assert admission["executable_ref"] == "src/uaos/kernel/architecture_experience.py"
+    assert "CURRENT_AGENT_DOGFOOD_REQUIRED" in admission["dogfood_rule"]
+    before = "\n".join(deliberation["material_change_admission"]["before_mutation"])
+    assert "require_architecture_experience_admission" in before
+    assert "separate explicit requirements/goals from examples or hypotheses" in before
+
+
 def test_repo_instructions_require_concern_driven_walkthrough_before_architecture_promotion():
     instructions = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
     assert "## Architecture experience evaluation" in instructions
