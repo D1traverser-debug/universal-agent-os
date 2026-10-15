@@ -1,5 +1,5 @@
 {
-  "schema_version":"1.6",
+  "schema_version":"1.7",
   "controller":{
     "repository":"D1traverser-debug/universal-agent-os",
     "entrypoint":"ENTRYPOINT.md",
@@ -13,6 +13,7 @@
     "common_capabilities":"config/COMMON_CAPABILITIES.json",
     "authority_write_policy":"config/AUTHORITY_WRITE_POLICY.json",
     "deliberation_policy":"config/DELIBERATION_POLICY.json",
+    "architecture_experience_policy":"config/ARCHITECTURE_EXPERIENCE_POLICY.json",
     "retrieval_policy":"config/RETRIEVAL_POLICY.json",
     "binding_policy":"config/BINDING_POLICY.json",
     "host_profiles":"config/HOST_PROFILES.json",

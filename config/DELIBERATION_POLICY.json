@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.5",
-  "policy_version":"1.5.0",
+  "schema_version":"1.6",
+  "policy_version":"1.6.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-15T05:06:35+08:00",
-  "purpose":"Keep lightweight problem detection continuously active, select epistemic depth from current problem/risk signals, enforce a mandatory research-and-reflection floor for every detected problem, and keep optional host-hardening claims separate from the autonomous maintenance baseline.",
+  "updated_at":"2026-10-15T17:27:00+08:00",
+  "purpose":"Keep lightweight problem detection continuously active, select epistemic depth from current problem/risk signals, enforce a mandatory research-and-reflection floor for every detected problem, and require lived scenario evaluation for material architecture changes while keeping optional host-hardening claims separate from the autonomous maintenance baseline.",
   "principles":[
     "Lightweight problem detection is always-on for every assistant turn after authority selection; adaptive deliberation is not a permanent heavy debate loop.",
     "The mutation sentinel is separately always-on before external or durable mutation attempts.",
@@ -12,6 +12,8 @@
     "Move micro -> macro -> micro: reproduce the concrete symptom, challenge goal/assumption/topology, consult relevant external evidence, then return to the smallest correct change and concrete verification.",
     "Research must affect diagnosis or repair choice; ceremonial browsing does not satisfy admission.",
     "Reflection must challenge at least one current assumption, boundary, abstraction, topology or causal explanation; repeating the preferred fix is insufficient.",
+    "User examples and analogies are candidate evidence unless explicitly locked as requirements; do not literalize them into architecture by default.",
+    "Material architecture fitness includes lived scenario operability, not structural description alone.",
     "Same-model critique is candidate-generation evidence, not independent verification.",
     "Counterexample search and independent verification add depth according to risk; they do not decide whether baseline research/reflection starts.",
     "Stronger assurance is not automatically required; choose controls proportionally to the governing objective and risk.",
@@ -53,6 +55,8 @@
       "construct current DeliberationSignals from observed evidence rather than from the preferred solution",
       "run assess_deliberation(signals)",
       "when a problem is detected, satisfy micro diagnosis, macro/topology alignment, governing-assumption challenge and external research before choosing/promoting the repair",
+      "for material architecture changes, apply config/ARCHITECTURE_EXPERIENCE_POLICY.json and require_architecture_experience_admission before promotion; separate explicit requirements/goals from examples or hypotheses, walk representative scenarios, and use concern-appropriate representations",
+      "for material control-plane or Agent-experience changes, include a CURRENT_AGENT dogfood walkthrough rather than relying only on structural description",
       "satisfy every additional escalation dimension marked required before promoting the proposed architecture/governance mutation",
       "when counterexample_search_required is true, test at least one plausible alternative or failure counterexample",
       "do not call a same-model critique independent verification"
@@ -60,11 +64,21 @@
     "closure_guard":[
       "scan all current top-level authorities that can encode the changed semantic, including ENTRYPOINT, CURRENT_SYSTEM, session/binding/authority policies, task/router state and affected domain bindings",
       "scan host control surfaces when the changed semantic or assurance claim depends on them",
+      "for architecture changes, confirm structural contracts and scenario/walkthrough behavior do not contradict each other",
       "resolve or explicitly bound every contradiction before reporting RESOLVED",
       "a known bypass blocks RESOLVED only when the claimed invariant itself requires non-bypassable physical enforcement",
       "optional defense-in-depth controls must be reported as optional rather than promoted to baseline blockers",
       "run reproducible evaluation on the final candidate tree and post-promotion observation on production authority at the assurance level appropriate to the change"
     ]
+  },
+  "architecture_experience_admission":{
+    "policy_ref":"config/ARCHITECTURE_EXPERIENCE_POLICY.json",
+    "executable_ref":"src/uaos/kernel/architecture_experience.py",
+    "scope":"MATERIAL_ARCHITECTURE_CHANGE__PLUS_CONTROL_PLANE_OR_AGENT_EXPERIENCE_CHANGE",
+    "core_rule":"ARCHITECTURE_MUST_BE_EVALUATED_AS_USED__NOT_ONLY_AS_DESCRIBED",
+    "example_rule":"USER_EXAMPLE_ANALOGY_OBSERVATION_OR_HYPOTHESIS_IS_NONBINDING_UNLESS_EXPLICITLY_PROMOTED_AS_REQUIREMENT",
+    "view_rule":"REPRESENTATION_SELECTION_IS_CONCERN_DRIVEN__NO_UNIVERSAL_SPATIAL_OR_TEMPORAL_NOTATION",
+    "dogfood_rule":"CURRENT_AGENT_DOGFOOD_REQUIRED_FOR_MATERIAL_CONTROL_PLANE_OR_AGENT_EXPERIENCE_CHANGE"
   },
   "anti_bloat":[
     "Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem.",
