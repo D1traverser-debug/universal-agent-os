@@ -1,6 +1,6 @@
 # Architecture Experience Evaluation
 
-Status: CANDIDATE
+Status: PRODUCTION
 Authority: UAOS
 
 ## Why this exists
