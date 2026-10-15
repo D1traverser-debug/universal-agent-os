@@ -10,7 +10,7 @@ def load_json(rel: str):
 
 def test_parent_observes_novel_profile5_learning_to_planning_production():
     system = load_json("CURRENT_SYSTEM.json")
-    assert system["schema_version"] == "2.25"
+    assert system["schema_version"] == "2.26"
     assert system["system_release_version"] == "2.5.2"
     assert "NOVEL_PROFILE_5_PRODUCTION_VERIFIED" in system["novel_binding_assurance"]
     assert "ACTIVE_RULEBOOK_2_5" in system["novel_binding_assurance"]
