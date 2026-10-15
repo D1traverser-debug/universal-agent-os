@@ -3,9 +3,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
+from .deliberation import RootScopeReceipt
+
 
 class ProblemClosureError(RuntimeError):
-    """Raised when a detected problem is being finalized without an admissible closure."""
+    """Raised when a detected problem is being acted on/finalized without an admissible closure."""
 
 
 class ProblemClosureDecision(str, Enum):
@@ -26,52 +28,77 @@ class ProblemClosureSignals:
     user_choice_required: bool = False
     hard_blocker: str | None = None
     no_change_reason: str | None = None
+    root_scope_receipt: RootScopeReceipt | None = None
+    evolution_disposition: str | None = None
+    problem_record_required: bool = False
+    problem_record_ref: str | None = None
 
 
 def _present(value: str | None) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
+def _require_cognition_and_learning(signals: ProblemClosureSignals) -> None:
+    if signals.root_scope_receipt is None:
+        raise ProblemClosureError(
+            "problem action blocked: root-scope cognitive admission is missing"
+        )
+    if not _present(signals.evolution_disposition):
+        raise ProblemClosureError(
+            "problem action blocked: evolution/learning disposition is missing"
+        )
+    if signals.problem_record_required and not _present(signals.problem_record_ref):
+        raise ProblemClosureError(
+            "problem action blocked: material/evolution-relevant problem requires durable problem evidence"
+        )
+
+
 def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDecision:
     """Classify the next admissible action for a detected problem.
 
-    This is deliberately small: deliberation decides *what* repair is justified;
-    this gate prevents the controller from stopping at recommendation-only when an
-    authorized repair path is available. It does not claim host-level physical
-    mediation of natural-language output.
+    Finding a feasible edit is not cognitive admission. A repair/no-change decision may
+    execute only after deliberation has produced an evidence-tested root-scope receipt and
+    the problem has been assessed for durable learning/evolution. Obvious external blockers
+    may still be surfaced without pretending the root cause has been established.
     """
 
     if not signals.problem_detected:
         return ProblemClosureDecision.CLEAN_NO_PROBLEM
 
-    if signals.repair_attempted and signals.repair_verified:
-        return ProblemClosureDecision.REPAIR_EXECUTED
-
     if signals.user_choice_required or _present(signals.hard_blocker):
+        if signals.problem_record_required and not _present(signals.problem_record_ref):
+            raise ProblemClosureError(
+                "material blocked problem requires durable problem evidence before handoff"
+            )
         return ProblemClosureDecision.BLOCKED_WITH_REASON
 
+    if signals.repair_attempted:
+        _require_cognition_and_learning(signals)
+        if signals.repair_verified:
+            return ProblemClosureDecision.REPAIR_EXECUTED
+        raise ProblemClosureError(
+            "repair was attempted but not verified; preserve failure evidence or convert to an explicit blocker/no-change disposition"
+        )
+
     if _present(signals.no_change_reason):
+        _require_cognition_and_learning(signals)
         return ProblemClosureDecision.NO_CHANGE_WITH_EVIDENCE
 
     if signals.repair_path_available and signals.repair_authorized:
+        _require_cognition_and_learning(signals)
         return ProblemClosureDecision.REPAIR_NOW
 
-    if signals.repair_attempted:
-        raise ProblemClosureError(
-            "repair was attempted but neither verified nor converted into an explicit blocker/no-change disposition"
-        )
-
     raise ProblemClosureError(
-        "detected problem has no admissible terminal disposition: provide an authorized repair path, explicit blocker/user-choice requirement, or evidence-backed no-change reason"
+        "detected problem has no admissible terminal disposition: establish root scope and learning disposition, then provide an authorized repair path, explicit blocker/user-choice requirement, or evidence-backed no-change reason"
     )
 
 
 def require_problem_finalization_admission(signals: ProblemClosureSignals) -> ProblemClosureDecision:
-    """Reject recommendation-only finalization when repair can be executed now."""
+    """Reject recommendation-only finalization when a cognitively admitted repair can run now."""
 
     decision = assess_problem_closure(signals)
     if decision is ProblemClosureDecision.REPAIR_NOW:
         raise ProblemClosureError(
-            "recommendation-only finalization is forbidden: an authorized repair path is available and must be attempted before closing the turn"
+            "recommendation-only finalization is forbidden: an authorized cognitively-admitted repair path is available and must be attempted before closing the turn"
         )
     return decision

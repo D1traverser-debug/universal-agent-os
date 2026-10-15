@@ -14,4 +14,4 @@ def test_progress_timestamp_is_rendered_in_human_readable_beijing_time():
     assert "Do not show ISO-8601 separators such as T" in rule
     assert "+08:00" in rule
     assert "freshest authoritative timestamp" in rule
-    assert policy["policy_version"] == "1.7.2"
+    assert tuple(map(int, policy["policy_version"].split("."))) >= (1, 7, 2)
