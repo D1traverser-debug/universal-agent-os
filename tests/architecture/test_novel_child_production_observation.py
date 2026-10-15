@@ -60,8 +60,9 @@ def test_parent_observation_does_not_mirror_child_canon_or_learning_payloads():
     }
     assert forbidden.isdisjoint(receipt)
 
-    # UAOS may keep routing/checkpoint metadata for its registered task, but child
-    # learning/canon/business truth remains referenced, not reimplemented here.
+    # UAOS may retain normalized task routing/cursor metadata, but the Novel repo remains
+    # the exact business-state authority and UAOS explicitly does not become that controller.
     task = load_json("state/tasks/FQ001_MINGRI_ORDER.json")
-    assert task["business_authority"] == "D1traverser-debug/novel-writing-agent@main"
-    assert task["active_domain_state_ref"] == "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json"
+    assert task["project_business_authority"] == "D1traverser-debug/novel-writing-agent@main:projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json"
+    assert task["project_business_state_is_controller"] is False
+    assert task["progress_timestamp_semantics"] == "UAOS_TASK_STATE_NORMALIZED_ONLY__BUSINESS_CHECKPOINT_MUST_BE_REREAD_BEFORE_RESUME"
