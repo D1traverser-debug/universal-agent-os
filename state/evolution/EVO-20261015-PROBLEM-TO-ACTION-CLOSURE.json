@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "evolution_id": "EVO-20261015-PROBLEM-TO-ACTION-CLOSURE",
+  "status": "CANDIDATE_EVALUATION",
+  "authority": "UAOS",
+  "updated_at": "2026-10-15T10:17:12+08:00",
+  "trigger": [
+    "USER_CORRECTION",
+    "UAOS_SELF_APPLICATION_FAILURE",
+    "FINANCIAL_DECLARATION_TO_OPERATION_GAP"
+  ],
+  "failure_class": "FC-PROBLEM-DETECTED-BUT-REPAIR-DEFERRED-AS-RECOMMENDATION-001",
+  "diagnosis": {
+    "micro": "UAOS correctly diagnosed that Financial proactive-resolution was mostly rule/static-test evidence, then ended the audit by recommending a future executable bridge instead of executing the currently available governed repair.",
+    "macro": "Problem detection, deliberation, recovery-before-user-escalation and observable-inheritance assurance were present, but there was no terminal admission rule requiring a detected repairable problem to move from cognition into current action.",
+    "assumption_challenged": "A strong diagnosis plus a concrete recommendation is sufficient problem closure when the acting Agent already has authority and tools to repair the defect."
+  },
+  "external_method_evidence": [
+    "Kubernetes admission controllers make policy effective by intercepting an operation before persistence instead of relying on policy text alone.",
+    "Pact contract testing verifies executable interactions against a contract rather than treating the declaration itself as behavioral proof."
+  ],
+  "alternatives": [
+    {
+      "mechanism": "ADD_MORE_PROMPT_OR_POLICY_WORDING_ONLY",
+      "failure_mode": "Repeats the declaration-to-operation defect; the Agent can still stop at recommendation-only."
+    },
+    {
+      "mechanism": "ALWAYS_AUTO_MUTATE_WHEN_ANY_PROBLEM_IS_FOUND",
+      "failure_mode": "Overreaches authority, user-choice and safety boundaries and would make read-only diagnosis unsafe."
+    },
+    {
+      "mechanism": "EXECUTABLE_REPAIR_OR_BLOCK_ADMISSION_WITH_OWNER_NATIVE_DOMAIN_REALIZATION",
+      "failure_mode": "Still cannot claim host-level physical complete mediation, but it makes valid terminal states executable/testable and lets domains attach stronger receipts/probes."
+    }
+  ],
+  "selected_mechanism": "EXECUTABLE_REPAIR_OR_BLOCK_ADMISSION_WITH_OWNER_NATIVE_DOMAIN_REALIZATION",
+  "candidate_changes": [
+    "Add src/uaos/kernel/problem_closure.py with executable closure decisions and finalization admission.",
+    "Add SESSION_INTERACTION_POLICY 1.7 turn-level problem-to-action closure gate.",
+    "Promote COMMON_BEHAVIOR_ASSURANCE 1.2 with repair-or-block terminal semantics.",
+    "Bind registered-domain adoption to owner-native execution evidence rather than declaration-only claims.",
+    "Apply the new parent rule immediately to Financial via a separate child-owned candidate branch."
+  ],
+  "assurance_boundary": "Executable policy and regression tests do not equal host-level physical interception of every natural-language response; physical complete mediation remains unclaimed.",
+  "acceptance": {
+    "candidate_ci": "PENDING",
+    "kernel_admission_tests": "PENDING",
+    "policy_consistency_tests": "PENDING",
+    "production_main_ci": "PENDING",
+    "production_reread": "PENDING",
+    "financial_owner_native_adoption": "PENDING"
+  }
+}
