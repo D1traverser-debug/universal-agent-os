@@ -1,21 +1,21 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261016-PROBLEM-COGNITION-ACTION-TRANSACTION",
-  "status":"CANDIDATE_IMPLEMENTED_AWAITING_CI",
+  "status":"PARENT_PRODUCTION_BASELINE_HARDENING_CANDIDATE",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T00:52:39+08:00",
+  "updated_at":"2026-10-16T06:11:00+08:00",
   "trigger":["USER_CORRECTION","REPEATED_FAILURE","ARCHITECTURE_GAP","CONTROL_PLANE_GAP","PREMATURE_REPAIR"],
   "failure_class":"FC-PREMATURE-PROBLEM-FRAMING-AND-REPAIR-BEFORE-ROOT-SCOPE-001",
   "symptom":"Across several controller turns, UAOS accepted the latest user framing or a newly discovered implementation defect as the active root problem and moved toward repair before the existing deliberation, architecture challenge and evolution mechanisms had established the correct problem layer. The same failure repeated even after policy text already required micro->macro->micro reasoning.",
   "user_impact":"The user had to repeatedly force UAOS to challenge architecture/upstream assumptions, enter cognition/evolution handling, and avoid local patching. This creates unnecessary repairs, governance bloat and low confidence that the controller can discover problems independently.",
   "micro_diagnosis":[
-    "src/uaos/kernel/problem_closure.py treated repair_path_available + repair_authorized as sufficient to produce REPAIR_NOW; it had no root-scope or evolution-admission evidence fields.",
-    "src/uaos/kernel/deliberation.py enforced evidence dimensions but did not emit an evidence-tested problem-layer/root-hypothesis receipt consumed by action admission.",
+    "src/uaos/kernel/problem_closure.py originally treated repair_path_available + repair_authorized as sufficient to produce REPAIR_NOW; it had no root-scope or evolution-admission evidence fields.",
+    "src/uaos/kernel/deliberation.py originally enforced evidence dimensions but did not emit an evidence-tested problem-layer/root-hypothesis receipt consumed by action admission.",
     "Evolution lifecycle existed separately, so a repair could be selected without a mechanically prior learning/evolution disposition.",
     "Existing policy prose already required macro/topology and governing-assumption challenge, proving the defect was ordering/integration rather than simply missing guidance text."
   ],
   "macro_goal_and_topology_alignment":[
-    "UAOS should remain one parent control plane; this repair must not introduce a second architecture advisor, second controller, global child journal or parallel scheduler.",
+    "UAOS remains one parent control plane; this repair does not introduce a second architecture advisor, second controller, global child journal or parallel scheduler.",
     "The owning abstraction is the common Problem -> Cognition -> Evolution -> Action control chain shared by UAOS and registered domains.",
     "Authority, domain business ownership, runtime persistence and child internal evidence formats remain unchanged."
   ],
@@ -36,7 +36,7 @@
       "id":"H3_PROBLEM_COGNITION_EVOLUTION_ACTION_ORDER_IS_NOT_MECHANICALLY_COUPLED",
       "layer":"CONTROL_PLANE",
       "disposition":"SELECTED",
-      "evidence":"Deliberation, problem closure and evolution are separate executable mechanisms; repair closure can be reached without a root-scope receipt or evolution disposition. This exactly reproduces the observed premature-action behavior."
+      "evidence":"Deliberation, problem closure and evolution were separate executable mechanisms; repair closure could be reached without a root-scope receipt or evolution disposition. This reproduced the observed premature-action behavior."
     },
     {
       "id":"H4_WHOLE_UAOS_ARCHITECTURE_MUST_BE_REBUILT",
@@ -79,15 +79,43 @@
   ],
   "selected_architecture":"EXTEND_EXISTING_DELIBERATION_WITH_ROOT_SCOPE_ADMISSION__MAKE_PROBLEM_CLOSURE_REQUIRE_ROOT_SCOPE_RECEIPT_AND_EVOLUTION_DISPOSITION__PRESERVE_OWNER_NATIVE_DURABLE_CAUSAL_EVIDENCE__NO_SECOND_CONTROL_PLANE",
   "architecture_reassessment_result":"BOUNDED_CONTROL_CHAIN_REDESIGN_REQUIRED__WHOLE_UAOS_REBUILD_NOT_JUSTIFIED_BY_CURRENT_EVIDENCE",
-  "implemented_candidate_changes":[
-    "src/uaos/kernel/deliberation.py: ProblemLayer + competing hypothesis model + RootScopeAssessment/Receipt + require_root_scope_admission",
-    "src/uaos/kernel/problem_closure.py: repair/no-change blocked without root-scope receipt and evolution disposition; material problems require durable problem ref",
-    "config/COMMON_BEHAVIOR_ASSURANCE.json 1.3.0 problem cognition/action transaction",
-    "config/DELIBERATION_POLICY.json 1.7.0 root-scope admission",
-    "config/SESSION_INTERACTION_POLICY.json 1.8.0 ordered transaction",
-    "config/BINDING_POLICY.json 1.8 inherited cognition/action rule",
-    "docs/requirements/FROZEN_REQUIREMENTS_v2.2.md",
-    "tests/architecture/test_problem_cognition_admission.py plus updated problem/action and common-behavior tests"
+  "parent_baseline_promotion":{
+    "pull_request":33,
+    "candidate_head":"937bb5a710e564deb1a149ac930b80378abe1488",
+    "candidate_ci_run":38774131488,
+    "candidate_ci_status":"PASS",
+    "candidate_live_integration_run":38774131568,
+    "candidate_live_integration_status":"PASS",
+    "production_commit":"8b2fbe69531d72f3872126a26cb2f724db74fe24",
+    "production_ci_run":38774320851,
+    "production_ci_status":"PASS"
+  },
+  "post_promotion_findings":[
+    {
+      "finding_id":"PF-001-DURABLE-RECORD-SELF-ATTESTATION",
+      "severity":"MATERIAL",
+      "finding":"ProblemClosureSignals still allowed the caller to set problem_record_required=false even when the root-scope risk pattern itself should make durable causal evidence mandatory.",
+      "repair":"Derive durable_problem_record_required in root-scope admission from material/systemic/risk signals; closure may accept a caller request for stronger evidence but cannot accept a downgrade."
+    },
+    {
+      "finding_id":"PF-002-UNTYPED-EVOLUTION-DISPOSITION",
+      "severity":"MATERIAL",
+      "finding":"evolution_disposition accepted any non-empty string, so a caller could syntactically claim learning/evolution without a governed disposition.",
+      "repair":"Replace free-form string acceptance with EvolutionDisposition enum admission."
+    },
+    {
+      "finding_id":"PF-003-EVOLUTION-RECORD-CLOSURE-DRIFT",
+      "severity":"MATERIAL",
+      "finding":"This evolution record remained CANDIDATE_IMPLEMENTED_AWAITING_CI after PR #33 had merged and candidate/live/production CI had passed.",
+      "repair":"Treat evolution-state freshness as closure evidence; this record now contains actual PR/CI/production evidence and will be finalized after hardening promotion."
+    }
+  ],
+  "hardening_candidate_changes":[
+    "DeliberationSignals gains material_problem and root-scope derives durable_problem_record_required rather than trusting caller preference.",
+    "Material problems join architecture/upstream reassessment and independent-verification depth.",
+    "Problem closure requires a typed EvolutionDisposition; arbitrary strings are rejected.",
+    "A caller may request stronger durable evidence but cannot weaken a durable requirement emitted by RootScopeReceipt.",
+    "Regression tests attack durable-record downgrade and free-form evolution-disposition bypasses."
   ],
   "required_scenarios":[
     "USER_SAYS_ARCHITECTURE_IS_THE_PROBLEM__SYSTEM_MUST_TEST_NOT_OBEY",
@@ -95,14 +123,16 @@
     "LOCAL_BUG_IS_REPAIRABLE__REPAIR_BLOCKED_UNTIL_ROOT_SCOPE",
     "REPEATED_FAILURE_CROSSES_SUBSYSTEMS__UPSTREAM_HYPOTHESIS_REQUIRED",
     "SYSTEMIC_LOOKING_FAILURE_HAS_LOCAL_ROOT__LOCAL_SELECTION_ALLOWED_AFTER_UPSTREAM_REJECTION",
-    "MATERIAL_PROBLEM_REQUIRES_DURABLE_EVOLUTION_EVIDENCE",
+    "MATERIAL_PROBLEM_REQUIRES_ARCHITECTURE_REASSESSMENT_AND_DURABLE_EVIDENCE",
+    "CALLER_CANNOT_DOWNGRADE_DURABLE_RECORD_REQUIREMENT",
+    "ARBITRARY_STRING_CANNOT_IMPERSONATE_EVOLUTION_DISPOSITION",
     "AUTHORIZED_REPAIR_AFTER_ADMISSION_CANNOT_STOP_AT_RECOMMENDATION_ONLY"
   ],
   "remaining_work":[
-    "sync ENTRYPOINT/CURRENT_SYSTEM release authority",
-    "run candidate CI and architecture scenario tests",
-    "promote parent only after checks",
-    "then reconcile each registered child with COMMON_BEHAVIOR_ASSURANCE 1.3 using owner-native evidence rather than declaration-only inheritance",
+    "run hardening candidate CI and live integration",
+    "promote hardening only after checks and production reread",
+    "finalize this evolution record with hardening PR/CI/production evidence",
+    "reconcile each registered child with COMMON_BEHAVIOR_ASSURANCE 1.3 using owner-native evidence rather than declaration-only inheritance",
     "refresh domain health after child adoption and preserve any remaining unverified live behavior"
   ]
 }
