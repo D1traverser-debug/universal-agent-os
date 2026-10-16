@@ -45,7 +45,7 @@ For a detected problem/knowledge gap use the five hot-path primitives:
 
 `src/uaos/kernel/deliberation.py#require_root_scope_admission` remains a legacy compatibility API. A precomputed `RootScopeReceipt` is not sufficient proof for controlled problem finalization; `src/uaos/runtime/finalization.py` recomputes cognition admission from the complete `CognitionCase`. `src/uaos/kernel/problem_closure.py` owns terminal action admission and requires concrete verification evidence for CognitionCase repairs plus validation evidence for systemic/material repairs.
 
-For broad external capability learning, source-usage research or unknown-gap audits, apply the outside-in discovery admission in `src/uaos/kernel/problem_space.py`: model the source's own organization axes first, then use multiple lenses such as role/occupation, task/activity, workflow/handoff, category/taxonomy, creator/repository portfolio or adjacent domain. A known-keyword-only survey is not broad discovery. A role or taxonomy is a lens, not a literal new Agent/team/architecture requirement.
+For broad external capability learning, source-usage research or unknown-gap audits, apply the outside-in discovery admission in `src/uaos/kernel/problem_space.py`: model the source's own organization axes first, then use multiple lenses such as role/occupation, task/activity, workflow/handoff, category/taxonomy, creator/repository portfolio or adjacent domain. A known-keyword-only survey is not broad discovery. A role or taxonomy is a lens, not a literal new Agent/team/architecture requirement. A material latent gap worth changing must continue into the canonical governed-evolution transaction rather than terminate at discovery.
 
 ## Architecture experience evaluation
 
@@ -77,7 +77,13 @@ For parent-governed descendant writes, reread that descendant's current binding/
 
 ## Evolution and anti-bloat
 
-Repair the unique owning abstraction. Prefer extending/replacing/removing superseded mechanisms over layering parallel ones. A repeated failure requires failure-class/causal treatment and regression evidence before closure.
+`config/EVOLUTION_POLICY.json` and `src/uaos/evolution/transaction.py#EvolutionTransaction` are the sole common governed-evolution transaction owners. Incident/failure-class learning, proactively discovered capability gaps and evaluated/canonical knowledge all converge on the same transaction rather than maintaining separate lifecycle paths.
+
+A material transaction preserves: governing outcome; admitted origin/discovery evidence; raw evidence; professional method/tool evidence; bounded alternatives and tradeoffs; reproducible evaluation; external/independent judge evidence; owner-scoped promotion/execution evidence; and post-promotion observation. Proactive capability-gap evolution also requires novelty/unknown-signal probes. A stretch target may widen search only with feasibility evidence; repeating an ambitious target to the model is not proof of feasibility.
+
+Repair the unique owning abstraction. Prefer extending/replacing/removing superseded mechanisms over layering parallel ones. A repeated failure requires failure-class/causal treatment and regression evidence before closure. A latent capability gap does not need to be disguised as an incident merely to enter evolution.
+
+`src/uaos/evolution/opportunistic.py`, `maintenance.py`, `gates.py` and `lifecycle.py` remain reusable helper/compatibility mechanisms only. They must not be manually stitched into a second end-to-end lifecycle beside `EvolutionTransaction`. The controlled self-change drill must dogfood the canonical transaction.
 
 A proposed new mechanism must state existing overlap, why extension is insufficient, what it replaces/retires (or why nothing can be retired), new failure modes, rollback and complexity delta. Do not convert every incident into another guarantee sentence when an executable contract, state machine, fitness check or deletion is the correct fix.
 
