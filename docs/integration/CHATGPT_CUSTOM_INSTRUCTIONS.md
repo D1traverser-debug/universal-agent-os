@@ -1,6 +1,6 @@
 # ChatGPT Fresh-Chat Bootstrap Pointer
 
-UAOS repository authority remains the source of truth. ChatGPT Custom Instructions are bootstrap-only: they are a compact cross-chat pointer, not a policy authority or application-level execution gate.
+UAOS repository authority remains the source of truth. ChatGPT Custom Instructions are bootstrap-only and non-authoritative: they are a compact cross-chat pointer, not a policy authority or application-level execution gate.
 
 ## Recommended Custom Instructions
 
