@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.8",
-  "policy_version":"1.8.0",
+  "schema_version":"1.9",
+  "policy_version":"1.9.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T10:09:00+08:00",
-  "purpose":"Own one canonical cognition contract: keep problem framing provisional, expand the problem space when needed, falsify competing frames, admit root scope and learning disposition before action, and verify the smallest justified change.",
+  "updated_at":"2026-10-16T15:12:00+08:00",
+  "purpose":"Own one canonical cognition contract: keep framing provisional, adapt search depth to evidence and risk, falsify competing frames, admit root scope and learning disposition before action, and verify the smallest justified change.",
   "cognition_kernel":{
     "canonical":true,
     "hot_path":[
@@ -15,26 +15,48 @@
     ],
     "stage_semantics":{
       "FRAME_AS_HYPOTHESIS":"User wording, the Agent's first interpretation, external authorities, existing code and the first plausible repair are provisional frames, not root-cause authority.",
-      "EXPAND_PROBLEM_SPACE_WHEN_NEEDED":"Before narrowing, test whether the issue is local, workflow/interface, architecture/common-control, requirement/goal, or an unknown/latent capability gap. Broad external capability learning must model the source itself and use multiple outside-in lenses rather than known-keyword search only.",
-      "FALSIFY_COMPETING_FRAMES":"Seek evidence that would make the preferred frame wrong; material/systemic cases preserve at least one rejected alternative and test upstream/architecture involvement.",
+      "EXPAND_PROBLEM_SPACE_WHEN_NEEDED":"Use adaptive bounded search. Small one-off local defects may remain compact; corrections/change proposals compare alternatives; repeated/systemic/material/high-risk or unknown cases use structured multi-hypothesis and multi-action search. Broad external capability learning models the source itself and uses multiple outside-in lenses rather than known-keyword search only.",
+      "FALSIFY_COMPETING_FRAMES":"Seek evidence that would make the preferred frame wrong. Same-model self-questioning is candidate-search evidence, not independent verification. Material/systemic cases preserve at least one rejected alternative and test upstream/architecture involvement.",
       "COMMIT_ROOT_SCOPE_AND_LEARNING_DISPOSITION":"Only after evidence selects/bounds the problem layer may the system choose root scope, evolution disposition and durable-record requirement.",
-      "ACT_AND_VERIFY":"Execute the smallest authorized repair/redesign/no-change/block consistent with the admitted scope and verify against the governing objective."
+      "ACT_AND_VERIFY":"Execute the smallest authorized repair/redesign/no-change/block consistent with admitted scope and verify against the governing objective."
     },
     "anti_bloat":"The five stages are the hot-path cognitive primitives. Other policies may activate them or constrain ownership/assurance, but must not duplicate a separate cognition state machine."
+  },
+  "cognitive_search_modes":{
+    "executable_ref":"src/uaos/kernel/deliberation.py",
+    "LIGHTWEIGHT":{
+      "use_when":"ONE_OFF_LOCAL_OR_FAMILIAR_PROBLEM_WITHOUT_SYSTEMIC_OR_KNOWLEDGE_UNCERTAINTY_SIGNAL",
+      "minimum":"one evidence-tested hypothesis; compact diagnosis and verification",
+      "external_research":"NOT_MANDATORY_UNLESS_CURRENT_KNOWLEDGE_IS_INSUFFICIENT",
+      "boundedness":"max 3 hypotheses; one deliberation round"
+    },
+    "CONTRASTIVE":{
+      "use_when":"USER_CORRECTION_OR_CHANGE_PROPOSAL_OR_GOAL_PROGRESS_UNCERTAIN_WITHOUT_STRUCTURED_ESCALATION_SIGNAL",
+      "minimum":"at least two competing hypotheses and two action candidates with explicit tradeoff evidence",
+      "external_research":"CONDITIONAL_ON_KNOWLEDGE_OR_SYSTEMIC_SIGNAL",
+      "boundedness":"max 5 hypotheses; max 2 deliberation rounds"
+    },
+    "STRUCTURED":{
+      "use_when":"REPEATED_OR_CROSS_SUBSYSTEM_OR_COMPLEXITY_GROWTH_OR_CONFLICTING_EVIDENCE_OR_UNKNOWN_KNOWLEDGE_ARCHITECTURE_HIGH_RISK_MATERIAL_SIGNAL",
+      "minimum":"at least two hypotheses, at least three action candidates, explicit NO_CHANGE baseline, falsification, and upstream/architecture reassessment when systemic",
+      "external_research":"REQUIRED",
+      "boundedness":"max 7 hypotheses; max 3 deliberation rounds"
+    },
+    "self_dialogue_boundary":"DIVERGE_ATTACK_CONVERGE is an internal candidate-search method inside EXPAND/FALSIFY, not a second controller or proof of independence. Independent verification must come from owner evidence, deterministic tests, external tools/sources, a separate execution path/model when warranted, or human approval where required."
   },
   "principles":[
     "Lightweight problem detection is always-on for every assistant turn after authority selection; adaptive deliberation is not a permanent heavy debate loop.",
     "The mutation sentinel is separately always-on before external or durable mutation attempts.",
-    "Once a problem is detected, external research and reflective challenge are mandatory even when the problem appears familiar or local.",
-    "Move micro -> macro -> micro inside the canonical cognition kernel: reproduce the symptom, challenge goal/assumption/topology, generate competing hypotheses, falsify alternatives, admit the root scope, then return to the smallest justified change.",
+    "Research depth follows uncertainty and risk. A one-off local defect does not require ceremonial web research when current evidence is sufficient; repeated/systemic/material/high-risk/unknown or knowledge-gap cases do require external research.",
+    "Move micro -> macro -> micro inside the canonical cognition kernel: reproduce the symptom, challenge goal/assumption/topology, generate enough competing hypotheses for the selected search mode, falsify alternatives, admit root scope, then return to the smallest justified change.",
     "The first plausible cause or first available repair is not root-cause evidence.",
     "User corrections, user theories and external methods/Skills are evidence inputs, not automatic root-cause authority.",
     "Repeated/cross-subsystem/architecture-gap/complexity-growth/scope-expansion signals require explicit architecture/upstream hypothesis testing before action.",
     "Research must affect diagnosis or repair choice; ceremonial browsing does not satisfy admission.",
     "Same-model critique is candidate-generation evidence, not independent verification.",
     "Counterexample search and independent verification add depth according to risk.",
-    "Material architecture fitness includes lived scenario operability, not structural description alone.",
-    "Stop deliberating when root scope is evidence-admitted for the risk level, contradictions are resolved or bounded, and the selected action demonstrably advances the governing objective without unnecessary complexity."
+    "Material architecture fitness includes lived scenario operability and competing-candidate tradeoff evidence, not structural description alone.",
+    "Stop deliberating when root scope is evidence-admitted for the risk level, contradictions are resolved or bounded, the bounded search contract is satisfied, and the selected action demonstrably advances the governing objective without unnecessary complexity."
   ],
   "representative_trigger_signals":["USER_CORRECTION","FAILURE","REPEATED_FAILURE","GOAL_PROGRESS_UNCERTAIN","SCOPE_EXPANSION","CROSS_SUBSYSTEM","COMPLEXITY_GROWTH","CONFLICTING_EVIDENCE","UNKNOWN_FAILURE_CLASS","KNOWLEDGE_GAP","ARCHITECTURE_GAP","CONTROL_PLANE_GAP","HIGH_RISK_CHANGE"],
   "trigger_semantics":"EXTENSIBLE__NOT_AN_EXHAUSTIVE_PROBLEM_ONTOLOGY",
@@ -43,13 +65,14 @@
     "scope":"EVERY_ASSISTANT_TURN_AFTER_AUTHORITY_SELECTION__INCLUDING_READ_ONLY_TURNS_AND_AUTHORITY_INSPECTION",
     "responsibility":"Before declaring deliberation NOT_TRIGGERED, classify current user/evidence signals for defects, degradation, correction, contradiction, uncertainty, knowledge gaps, architecture/control-plane gaps or other unreliable-goal signals.",
     "clear_path":"NO_PROBLEM_DETECTED__KEEP_NORMAL_WORK_LIGHTWEIGHT",
-    "triggered_path":"ENTER_CANONICAL_COGNITION_KERNEL__SATISFY_REQUIRED_EVIDENCE__RUN_ROOT_SCOPE_ADMISSION__THEN_ALLOW_EVOLUTION_AND_ACTION_DECISIONS",
+    "triggered_path":"ENTER_CANONICAL_COGNITION_KERNEL__SELECT_ADAPTIVE_SEARCH_MODE__SATISFY_REQUIRED_EVIDENCE__RUN_ROOT_SCOPE_ADMISSION__THEN_ALLOW_EVOLUTION_AND_ACTION_DECISIONS",
     "anti_bloat":"Always-on means always-on detection, not permanent heavy research or debate when no problem is detected."
   },
   "problem_detection_floor":{
     "scope":"ANY_DETECTED_DEFECT_FAILURE_DEGRADATION_USER_CORRECTION_CONTRADICTION_OR_EVIDENCE_THAT_CURRENT_BEHAVIOR_IS_NOT_RELIABLY_SATISFYING_THE_GOVERNING_OBJECTIVE",
-    "always_required_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH"],
-    "depth_rule":"LIGHTWEIGHT_FOR_SMALL_PROBLEMS__DEEPER_FOR_MATERIAL_OR_SYSTEMIC_PROBLEMS__NO_RESEARCH_OR_REFLECTION_WAIVER_FOR_FAMILIARITY"
+    "always_required_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE"],
+    "conditionally_required_dimensions":{"EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH":"REPEATED_SYSTEMIC_MATERIAL_HIGH_RISK_UNKNOWN_KNOWLEDGE_GAP_ARCHITECTURE_GAP_OR_CONFLICTING_EVIDENCE"},
+    "depth_rule":"COMPACT_FOR_SMALL_LOCAL_DEFECTS__CONTRASTIVE_FOR_CORRECTIONS_OR_CHANGE_PROPOSALS__STRUCTURED_FOR_SYSTEMIC_MATERIAL_OR_UNKNOWN_PROBLEMS__NO_CEREMONIAL_RESEARCH"
   },
   "outside_in_capability_discovery":{
     "trigger":"BROAD_EXTERNAL_CAPABILITY_LEARNING__SOURCE_USAGE_RESEARCH__UNKNOWN_OR_LATENT_CAPABILITY_AUDIT",
@@ -63,20 +86,15 @@
   "escalation_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH","COUNTEREXAMPLE_SEARCH","INDEPENDENT_VERIFICATION"],
   "root_scope_admission":{
     "executable_ref":"src/uaos/kernel/deliberation.py",
-    "purpose":"Prevent premature repair by requiring the selected problem layer/root hypothesis to be evidence-tested before repair/no-change.",
+    "purpose":"Prevent premature repair by requiring the selected problem layer/root hypothesis and the risk-appropriate candidate search to be evidence-tested before repair/no-change.",
     "problem_layers":["LOCAL_IMPLEMENTATION","DOMAIN_WORKFLOW","DOMAIN_ARCHITECTURE","COMMON_CAPABILITY","CONTROL_PLANE","HOST","REQUIREMENT_OR_GOAL"],
     "baseline_rule":"Every repair/no-change requires one selected evidence-tested root hypothesis; a repair path is not a substitute for root-scope evidence.",
     "systemic_trigger":"REPEATED_FAILURE_OR_CROSS_SUBSYSTEM_OR_ARCHITECTURE_GAP_OR_COMPLEXITY_GROWTH_OR_SCOPE_EXPANSION",
-    "systemic_requirements":[
-      "compare at least two hypotheses across at least two problem layers",
-      "include at least one architecture/upstream hypothesis",
-      "preserve evidence for at least one rejected alternative",
-      "preserve architecture reassessment evidence even when the final selected root cause is local"
-    ],
+    "systemic_requirements":["compare at least two hypotheses across at least two problem layers","include at least one architecture/upstream hypothesis","preserve evidence for at least one rejected alternative","preserve architecture reassessment evidence even when the final selected root cause is local","compare at least three action candidates including an explicit NO_CHANGE baseline"],
     "anti_anchoring":"A user statement, external authority, popular Skill, existing implementation or first plausible theory may seed a hypothesis but cannot be directly promoted to selected root cause without test/falsification evidence."
   },
   "external_architecture_scout":{
-    "default":"ON_WHEN_PROBLEM_DETECTED",
+    "default":"ON_WHEN_STRUCTURED_SEARCH_OR_CURRENT_KNOWLEDGE_IS_INSUFFICIENT",
     "minimum_output_contract":["relevant_external_fact_or_method","evidence_ref","how_it_changed_or_confirmed_the_diagnosis_or_repair"],
     "deeper_architecture_output_contract":["required_property","candidate_patterns","fit_and_misfit","cost_and_failure_modes","minimum_borrowable_mechanism","rejected_alternatives","evidence_refs"],
     "authority_rule":"External sources inform hypotheses and candidate mechanisms; they do not become UAOS authority by reputation, popularity or publication alone."
@@ -84,23 +102,8 @@
   "material_change_admission":{
     "scope":"MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGE_AND_ANY_MATERIAL_CHANGE_AFTER_A_TRIGGER_SIGNAL",
     "fail_closed":true,
-    "before_mutation":[
-      "pass the mutation sentinel for the proposed side-effect path",
-      "enter the canonical cognition kernel from observed evidence rather than the preferred solution",
-      "satisfy all required deliberation evidence dimensions",
-      "pass root-scope admission; for systemic triggers explicitly test architecture/upstream alternatives",
-      "record an evolution/learning disposition and durable causal evidence when material/evolution-relevant",
-      "for material architecture changes apply config/ARCHITECTURE_EXPERIENCE_POLICY.json and current-agent dogfood",
-      "when counterexample_search_required is true test a plausible alternative/failure counterexample",
-      "do not call same-model critique independent verification"
-    ],
-    "closure_guard":[
-      "scan all current top-level authorities that can encode the changed semantic",
-      "scan host control surfaces when the assurance claim depends on them",
-      "for architecture changes confirm structural contracts and scenario/walkthrough behavior agree",
-      "resolve or explicitly bound every contradiction before reporting RESOLVED",
-      "run reproducible evaluation on the final candidate tree and post-promotion observation on production authority"
-    ]
+    "before_mutation":["pass the mutation sentinel for the proposed side-effect path","enter the canonical cognition kernel from observed evidence rather than the preferred solution","satisfy all required deliberation evidence dimensions and bounded search requirements","pass root-scope admission; for systemic triggers explicitly test architecture/upstream alternatives","record an evolution/learning disposition and durable causal evidence when material/evolution-relevant","for material architecture changes apply config/ARCHITECTURE_EXPERIENCE_POLICY.json and current-agent dogfood","when counterexample_search_required is true test a plausible alternative/failure counterexample","do not call same-model critique independent verification"],
+    "closure_guard":["scan all current top-level authorities that can encode the changed semantic","scan host control surfaces when the assurance claim depends on them","for architecture changes confirm structural contracts and scenario/walkthrough behavior agree","resolve or explicitly bound every contradiction before reporting RESOLVED","run reproducible evaluation on the final candidate tree and post-promotion observation on production authority"]
   },
   "architecture_experience_admission":{
     "policy_ref":"config/ARCHITECTURE_EXPERIENCE_POLICY.json",
@@ -111,12 +114,5 @@
     "view_rule":"REPRESENTATION_SELECTION_IS_CONCERN_DRIVEN__NO_UNIVERSAL_SPATIAL_OR_TEMPORAL_NOTATION",
     "dogfood_rule":"CURRENT_AGENT_DOGFOOD_REQUIRED_FOR_MATERIAL_CONTROL_PLANE_OR_AGENT_EXPERIENCE_CHANGE"
   },
-  "anti_bloat":[
-    "Keep one canonical cognition state machine in this policy; activation/assurance policies reference it instead of copying it.",
-    "Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem.",
-    "Do not add a second controller or parallel problem journal to enforce this transaction.",
-    "Every new mechanism must state overlap, replacement/retirement, or why extension is impossible.",
-    "Prefer executable admission/fitness properties over accumulating guarantee prose.",
-    "Do not require a stronger assurance tier merely because it is available."
-  ]
+  "anti_bloat":["Keep one canonical cognition state machine in this policy; activation/assurance policies reference it instead of copying it.","Use bounded search modes rather than permanent multi-Agent debate or unbounded self-dialogue.","Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem.","Do not add a second controller or parallel problem journal to enforce this transaction.","Every new mechanism must state overlap, replacement/retirement, or why extension is impossible.","Prefer executable admission/fitness properties over accumulating guarantee prose.","Do not require a stronger assurance tier merely because it is available."]
 }
