@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "observation_id": "OBS-20261016-CONVERSATIONAL-ADHERENCE-RECLASSIFICATION-001",
+  "authority": "UAOS",
+  "observed_at": "2026-10-16T11:37:31+08:00",
+  "related_evolution": "EVO-20261016-CONVERSATIONAL-ADHERENCE-OBSERVABILITY",
+  "trigger": [
+    "USER_CORRECTION",
+    "REPEATED_NO_OP_CONTINUATION_HANDOFF",
+    "MEASUREMENT_BLIND_SPOT"
+  ],
+  "user_observation": "The user had to repeatedly send `next` only to make the assistant continue its own adherence observation workflow.",
+  "root_scope_assessment": {
+    "selected": [
+      "EXECUTION_PROTOCOL_ERROR__THE_AGENT_TREATED_THE_USER_AS_A_MANUAL_CLOCK_FOR_AN_ONGOING_OBSERVATION",
+      "OBSERVABILITY_GAP__THE_EVALUATOR_COULD_MARK_FORMAT_AND_STATE_CONSISTENT_OUTPUT_AS_PASS_WHILE_MISSING_AN_UNNECESSARY_CONTINUATION_HANDOFF"
+    ],
+    "not_selected": [
+      "SESSION_1_9_LACKS_CURRENT_WORK_CYCLE_CLOSURE__REJECTED_BECAUSE_THE_EXISTING_POLICY_ALREADY_REQUIRES_FEASIBLE_AUTHORIZED_REPAIR_TO_ADVANCE_IN_THE_CURRENT_WORK_CYCLE_AND_REJECTS_RECOMMENDATION_ONLY_AS_TERMINAL",
+      "HOST_LEVEL_INTERCEPTION_IS_REQUIRED__NOT_ESTABLISHED_BY_THIS_FAILURE"
+    ]
+  },
+  "production_observability_repair": {
+    "pull_request": 45,
+    "production_commit": "7956fb4e876049266cc9d9c90b9273fefeadd591",
+    "candidate_ci_number": 202,
+    "candidate_ci_status": "PASS",
+    "production_ci_number": 203,
+    "production_ci_status": "PASS",
+    "new_violation": "UNNECESSARY_USER_CONTINUATION_HANDOFF",
+    "evaluator_ref": "src/uaos/observability/session_adherence.py"
+  },
+  "reclassification": [
+    {
+      "source": "OBS-20261016-CONVERSATIONAL-ADHERENCE-ROLLING-001",
+      "sample_id": "R1_POST_BASELINE_CONTINUATION",
+      "previous_result": "PASS",
+      "corrected_result": "FAIL",
+      "violation": "UNNECESSARY_USER_CONTINUATION_HANDOFF",
+      "reason": "The next-action field deferred sampling to a later turn even though no new user fact, approval, authorization, or safety-sensitive choice was required."
+    },
+    {
+      "source": "OBS-20261016-CONVERSATIONAL-ADHERENCE-ROLLING-002",
+      "sample_id": "R2_POST_BASELINE_NEXT_CONTINUATION",
+      "previous_result": "PASS",
+      "corrected_result": "FAIL",
+      "violation": "UNNECESSARY_USER_CONTINUATION_HANDOFF",
+      "reason": "The next-action field explicitly deferred classification to the next turn, making a no-op user continuation act as the workflow clock."
+    }
+  ],
+  "corrected_cumulative_summary": {
+    "sample_count": 5,
+    "pass_count": 2,
+    "fail_count": 3,
+    "missing_report_count": 1,
+    "problem_state_contradiction_count": 0,
+    "unnecessary_continuation_handoff_count": 2,
+    "raw_adherence_rate": 0.4,
+    "interpretation": "Descriptive only. The prior 0.8 figure was incomplete because it measured report presence/state consistency but omitted user-clock handoff failures."
+  },
+  "sampling_protocol_correction": {
+    "rule": "Do not require or solicit no-op user continuation messages solely to generate adherence samples.",
+    "foreground_work": "Complete all currently actionable diagnosis, repair, validation, reclassification, and repository work in the same work cycle.",
+    "live_sampling": "Collect future conversational samples only from organically meaningful user turns or naturally occurring task progress.",
+    "automated_sampling": "Use replay/scenario tests for repeatable evaluator coverage; do not convert the user into a test harness.",
+    "future_user_input": "A future turn is a valid blocker only when a real user fact, approval, authorization, preference, or safety-sensitive choice is actually required."
+  },
+  "architecture_disposition": "NO_NEW_CONTROLLER__NO_SESSION_POLICY_CHANGE__OBSERVABILITY_REPAIR_AND_PROTOCOL_CORRECTION_ONLY",
+  "status": "RECLASSIFIED__USER_CLOCK_DEPENDENCY_REMOVED_FROM_SAMPLING_PROTOCOL__STABILITY_NOT_PROVEN"
+}
