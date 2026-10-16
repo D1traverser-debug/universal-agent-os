@@ -1,9 +1,9 @@
 {
-  "schema_version":"2.0",
-  "policy_version":"2.0.0",
+  "schema_version":"2.1",
+  "policy_version":"2.1.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T20:59:52+08:00",
-  "purpose":"Own one canonical cognition contract: keep user/model/external framing provisional, adapt search depth to evidence and risk, model multiple contributing causes when supported, select a bounded intervention separately from causal explanation, trace governing outcomes to mechanisms and V&V, and verify the smallest justified change.",
+  "updated_at":"2026-10-16T23:10:00+08:00",
+  "purpose":"Own one canonical cognition contract: keep user/model/external framing provisional, adapt search depth to evidence and risk, model multiple contributing causes when supported, select a bounded intervention separately from causal explanation, trace governing outcomes to mechanisms and V&V, verify the smallest justified change, and require an evidence-complete deep-task profile when a task explicitly demands depth beyond ordinary execution.",
   "cognition_kernel":{
     "canonical":true,
     "hot_path":[
@@ -20,7 +20,7 @@
       "COMMIT_CAUSAL_MODEL_INTERVENTION_AND_LEARNING":"After evidence bounds the case, admit one or more supported contributing causes, reject/bound alternatives, then select exactly one current intervention/no-change candidate. Causal explanation and intervention ownership are distinct. Commit learning/evolution and durable-record requirements at the same boundary.",
       "ACT_VERIFY_VALIDATE_AND_OBSERVE":"Execute the selected authorized intervention, verify compliance with its requirement/contract, validate suitability against the governing outcome using realistic scenario/runtime evidence when material/systemic, and preserve post-promotion observation. An admitted authorized repair cannot end as recommendation-only."
     },
-    "anti_bloat":"The five stages are the hot-path cognitive primitives. Other policies may activate or constrain them, but must not duplicate a second cognition state machine. Legacy RootScope APIs may remain for compatibility but are not sufficient proof for controlled finalization."
+    "anti_bloat":"The five stages are the hot-path cognitive primitives. Other profiles may activate or constrain them, but must not duplicate a second cognition state machine. Legacy RootScope APIs may remain for compatibility but are not sufficient proof for controlled finalization."
   },
   "cognition_case_transaction":{
     "executable_ref":"src/uaos/kernel/cognition_case.py#require_cognition_case_admission",
@@ -39,6 +39,28 @@
     "external_authority_rule":"An external method or famous architecture may shape the search/evaluation method but cannot by itself prove the current system's causal factor; current-system repository/tool/test/runtime/scenario evidence is required for supported causal conclusions.",
     "receipt_integrity_rule":"Controlled finalization recomputes CognitionCase admission from the full case. A caller-supplied legacy RootScopeReceipt or user-visible progress label cannot substitute for the case.",
     "v_and_v_rule":"Verification asks whether the selected implementation satisfies its governing requirement/contract. Validation asks whether the resulting behavior is suitable for the governing outcome in realistic use/scenario conditions. A boolean repair_verified claim is not sufficient on the CognitionCase path."
+  },
+  "deep_task_execution_profile":{
+    "profile_ref":"config/DEEP_TASK_EXECUTION_PROFILE.json",
+    "executable_ref":"src/uaos/kernel/deep_task.py#require_deep_task_admission",
+    "controlled_finalization_ref":"src/uaos/runtime/finalization.py#admit_final_response",
+    "relationship_to_cognition_kernel":"EVIDENCE_ADMISSION_PROFILE_ONLY__NO_SECOND_ORDERED_COGNITION_STATE_MACHINE",
+    "activation":"EXPLICIT_USER_DEPTH_REQUEST_OR_HOST_CLASSIFIED_MATERIAL_HIGH_UNCERTAINTY_UNKNOWN_KNOWLEDGE_ARCHITECTURE_OR_REPEATED_SYSTEMIC_TASK_WHERE_ORDINARY_STRUCTURED_EVIDENCE_IS_INSUFFICIENT",
+    "required_dimensions":[
+      "governing outcome rather than surface task only",
+      "externally grounded professional-practice gap analysis",
+      "primary/raw materials rather than only digested summaries",
+      "concrete professional methods/tools",
+      "active search for unknown signals, hidden constraints or capability gaps",
+      "at least two competing alternatives with explicit falsification conditions and actual falsification/red-team evidence",
+      "stretch target only when useful and only with feasibility evidence",
+      "independent judge evidence outside same-model confidence",
+      "holdout/replay/realistic-runtime/production validation evidence",
+      "explicit acceptance criteria"
+    ],
+    "completion_rule":"When FinalizationContext.deep_task_required is true and no real user-input blocker exists, controlled finalization requires an admitted DeepTaskCase before claiming completion.",
+    "problem_case_binding":"If the deep task is also a detected problem case, its governing outcome and evidence identities must remain consistent with the canonical CognitionCase rather than creating a parallel diagnosis.",
+    "display_rule":"The A-H structure is a user-facing report format only when requested or materially useful; evidence depth is mandatory, output verbosity is not."
   },
   "cognitive_search_modes":{
     "executable_ref":"src/uaos/kernel/deliberation.py",
@@ -66,6 +88,7 @@
     "Lightweight problem detection is always-on for every assistant turn after authority selection; adaptive deliberation is not a permanent heavy debate loop.",
     "The mutation sentinel is separately always-on before external or durable mutation attempts.",
     "Research depth follows uncertainty and risk. A one-off local defect does not require ceremonial web research when current evidence is sufficient; repeated/systemic/material/high-risk/unknown or knowledge-gap cases do require external research.",
+    "An explicit user request for a deeper rather than larger task activates the deep-task execution profile; depth is proven by evidence directness, professional methods, falsification and independent validation rather than answer length.",
     "Move observed outcome -> wider causal/solution space -> falsification -> bounded causal/intervention commitment -> V&V. Do not encode a preference for local or upstream causes.",
     "The first plausible cause, the user's latest theory, an external authority, the easiest edit or a full-rebuild request is not causal proof.",
     "Repeated/cross-subsystem/architecture-gap/complexity-growth/scope-expansion signals require explicit architecture/upstream hypothesis testing before action, but upstream hypotheses may be rejected when evidence supports a local cause.",
@@ -142,5 +165,5 @@
     "view_rule":"REPRESENTATION_SELECTION_IS_CONCERN_DRIVEN__NO_UNIVERSAL_SPATIAL_OR_TEMPORAL_NOTATION",
     "dogfood_rule":"CURRENT_AGENT_DOGFOOD_REQUIRED_FOR_MATERIAL_CONTROL_PLANE_OR_AGENT_EXPERIENCE_CHANGE"
   },
-  "anti_bloat":["Keep one canonical cognition transaction; search-depth helpers and legacy compatibility APIs do not own competing stage semantics.","Use bounded search modes rather than permanent multi-Agent debate or unbounded self-dialogue.","Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem unless the existing abstraction is itself the evidenced defect.","Do not add a second controller or parallel problem journal to enforce this transaction.","Every new mechanism must state overlap, replacement/retirement, or why extension is impossible.","Prefer executable admission/fitness properties over accumulating guarantee prose.","Do not require a stronger assurance tier merely because it is available."]
+  "anti_bloat":["Keep one canonical cognition transaction; search-depth helpers, execution profiles and legacy compatibility APIs do not own competing stage semantics.","Use bounded search modes rather than permanent multi-Agent debate or unbounded self-dialogue.","Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem unless the existing abstraction is itself the evidenced defect.","Do not add a second controller or parallel problem journal to enforce this transaction.","Every new mechanism must state overlap, replacement/retirement, or why extension is impossible.","Prefer executable admission/fitness properties over accumulating guarantee prose.","Do not require a stronger assurance tier merely because it is available."]
 }
