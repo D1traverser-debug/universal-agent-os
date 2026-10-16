@@ -3,7 +3,7 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-16T22:55:00+08:00",
+  "updated_at":"2026-10-16T23:15:43+08:00",
   "controller_tasks":[
     {
       "task_id":"uaos:maintenance:deep-task-execution-protocol-20261016",
@@ -13,8 +13,8 @@
       "status":"RUNNING",
       "resume_eligible":true,
       "default_resume":true,
-      "semantic_summary":"Adopt the user-provided deep-task protocol as an executable UAOS admission for explicit depth requests/materially deep work: governing outcome, professional-practice gaps, primary/raw evidence, methods/tools, unknown discovery, competing alternatives/falsification, feasibility-bounded stretch targets, independent judge, holdout/replay/production validation and acceptance criteria, without creating a second cognition state machine.",
-      "current_stage":"ARCHITECTURE_AND_EXECUTABLE_ADMISSION_IMPLEMENTATION_ACTIVE",
+      "semantic_summary":"Candidate UAOS 2.8.0 turns the user-provided deeper-not-bigger protocol into a controlled deep-task evidence admission under the existing DELIBERATION_POLICY: governing outcome, externally grounded professional-practice gap, raw materials, concrete methods/tools, unknown discovery, competing alternatives/falsification, feasibility-bounded stretch target when used, independent judge, holdout/replay/production validation and acceptance criteria; no second cognition state machine.",
+      "current_stage":"CANDIDATE_DEEP_TASK_EXECUTION_PROFILE_FROZEN__FINAL_CHECKS_PENDING",
       "state_ref":"state/tasks/uaos-deep-task-execution-protocol-20261016.json"
     },
     {
