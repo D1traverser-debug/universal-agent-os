@@ -1,0 +1,72 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261016-FRESH-CHAT-INHERITANCE-HARDENING",
+  "authority":"UAOS",
+  "recorded_at":"2026-10-16T16:19:38+08:00",
+  "status":"CANDIDATE_IMPLEMENTED__PARENT_PROMOTION_AND_CHILD_RECONCILIATION_OPEN",
+  "trigger_signals":[
+    "USER_REQUESTED_FULL_REPOSITORY_TRAVERSAL_FROM_FRESH_CHAT_INHERITANCE",
+    "FRESH_CHAT_PERFECT_EXECUTION_CLAIM_CHALLENGED",
+    "CROSS_OWNER_COGNITION_SEMANTIC_CONTRADICTION",
+    "DECLARED_CAPABILITY_HANDSHAKE_NOT_EXECUTED",
+    "VOLATILE_CHILD_SNAPSHOT_DUPLICATION_IN_DERIVED_PROJECTION"
+  ],
+  "observed_problem":"A repository-wide fresh-chat audit disproved any claim that a new native ChatGPT conversation could be called perfectly inherited from repository evidence. The parent canonical DELIBERATION_POLICY allowed risk-adaptive research while COMMON_CAPABILITIES still froze the older every-problem-research rule; the executable binding validator ignored child CAPABILITIES despite BINDING_POLICY declaring those checks; CURRENT_SYSTEM duplicated volatile child head/profile/CI observations and had already become stale relative to at least Financial. Child capability profiles also carried stale copied cognition semantics.",
+  "failure_classes":[
+    {
+      "failure_class":"FC-FRESH-CHAT-CAPABILITY-HANDSHAKE-DECLARED-BUT-NOT-EXECUTED-011",
+      "root_layer":"CONTROL_PLANE",
+      "evidence":["config/BINDING_POLICY.json declared capability checks","src/uaos/integrations/binding.py previously accepted no capabilities/common-capabilities arguments","tests/integrations/test_binding_policy.py previously froze only adapter/manifest/skill validation"]
+    },
+    {
+      "failure_class":"FC-CANONICAL-COGNITION-SEMANTIC-COPY-DRIFT-012",
+      "root_layer":"COMMON_CAPABILITY",
+      "evidence":["config/DELIBERATION_POLICY.json 1.9 makes LIGHTWEIGHT research conditional","config/COMMON_CAPABILITIES.json still required research/reflection for every detected problem","Financial/A-share/Video capability profiles retained copied old cognition rules"]
+    },
+    {
+      "failure_class":"FC-DERIVED-PROJECTION-VOLATILE-CHILD-SNAPSHOT-DUPLICATION-013",
+      "root_layer":"CONTROL_PLANE",
+      "evidence":["CURRENT_SYSTEM declared itself derived but duplicated per-child commit/profile/CI observations","Financial current child main had advanced beyond the parent snapshot","tests froze duplicated snapshots as parent contracts even though DOMAIN_HEALTH_INDEX says current child authority wins"]
+    }
+  ],
+  "competing_root_hypotheses":[
+    {
+      "id":"H1_NATIVE_CHATGPT_HOST_LIMITATION_ONLY",
+      "disposition":"REJECTED_AS_SOLE_CAUSE",
+      "reason":"Native host mediation remains a real assurance boundary, but repository-internal binding and semantic contradictions were reproducible before host behavior is considered."
+    },
+    {
+      "id":"H2_ONLY_STALE_CHILD_CAPABILITY_FILES",
+      "disposition":"REJECTED_AS_TOO_NARROW",
+      "reason":"The parent COMMON_CAPABILITIES owner also carried stale cognition semantics and the parent executable binding gate did not inspect capabilities."
+    },
+    {
+      "id":"H3_FRESH_CHAT_INHERITANCE_AUTHORITY_AND_BINDING_COHERENCE_GAP",
+      "disposition":"SELECTED",
+      "reason":"Canonical cognition ownership changed without semantic-copy retirement, capability inheritance was declared but not mechanically validated, and derived parent projection retained volatile child current-state mirrors."
+    },
+    {
+      "id":"H4_WHOLE_UAOS_TOPOLOGY_INVALID",
+      "disposition":"NOT_SELECTED",
+      "reason":"Selector routing, direct-domain ownership, parent/child authority hierarchy, runtime finalization and existing control boundaries remain independently coherent; current evidence supports a bounded inheritance/control-plane refactor rather than a whole-system rewrite."
+    }
+  ],
+  "selected_parent_changes":[
+    "Make executable BindingPolicy validate manifest, adapter, skill, capabilities, common capability contract floors, required common capability IDs and current deliberation-policy inheritance.",
+    "Reject child capability profiles that copy/freeze a parent cognition algorithm instead of referencing the canonical DELIBERATION_POLICY owner.",
+    "Remove the stale fixed research floor from COMMON_CAPABILITIES and delegate risk-adaptive search semantics to DELIBERATION_POLICY.",
+    "Compact CURRENT_SYSTEM into an owner/pointer/bounded-assurance projection and remove per-child current commit/profile/CI copies.",
+    "Add semantic cross-owner reconciliation tests in addition to timestamp freshness.",
+    "Expand fresh-chat integration tests from router selection to the complete parent-side binding handshake for every registered domain."
+  ],
+  "first_candidate_ci":{
+    "pull_request":55,
+    "run_number":228,
+    "conclusion":"FAIL",
+    "finding":"Eight regressions were old tests that froze per-child CURRENT_SYSTEM mirrors or the retired every-problem-research floor; new executable binding logic itself was not the failure source."
+  },
+  "repair_disposition":"DO_NOT_RESTORE_SHADOW_SNAPSHOTS_OR_FIXED_RESEARCH_FLOOR__UPDATE_TESTS_TO_CANONICAL_OWNER_AND_HEALTH_CACHE_SEMANTICS__THEN_RERUN_FULL_SUITE",
+  "child_reconciliation_plan":"After parent promotion, update each registered child owner-natively so CAPABILITIES references current COMMON_CAPABILITIES and DELIBERATION_POLICY without copying the parent cognition algorithm; run child CI and production reread; then refresh DOMAIN_HEALTH_INDEX cache from current child authority.",
+  "assurance_boundary":"Repository traversal and CI can prove the repository-controlled bootstrap, selector, binding and owner-reference contracts. They cannot prove a native ChatGPT new conversation always receives or obeys the bootstrap pointer, because CHATGPT_GITHUB has no verified repository-controlled pre-send/bootstrap hook. Do not claim perfect fresh-chat execution on native ChatGPT from repository evidence alone.",
+  "status_after_parent_and_children":"TO_BE_UPDATED_AFTER_PRODUCTION_RECONCILIATION"
+}
