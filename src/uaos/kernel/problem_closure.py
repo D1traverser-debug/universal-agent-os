@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
+from .cognition_case import CognitionCaseReceipt
 from .deliberation import RootScopeReceipt
 
 
@@ -36,10 +37,15 @@ class ProblemClosureSignals:
     user_choice_required: bool = False
     hard_blocker: str | None = None
     no_change_reason: str | None = None
+    # Legacy compatibility only. New controlled finalization derives a CognitionCaseReceipt
+    # from the full evidence-traced CognitionCase and does not trust this receipt by itself.
     root_scope_receipt: RootScopeReceipt | None = None
+    cognition_case_receipt: CognitionCaseReceipt | None = None
     evolution_disposition: EvolutionDisposition | None = None
     problem_record_required: bool = False
     problem_record_ref: str | None = None
+    verification_evidence_refs: tuple[str, ...] = ()
+    validation_evidence_refs: tuple[str, ...] = ()
 
 
 def _present(value: str | None) -> bool:
@@ -48,18 +54,18 @@ def _present(value: str | None) -> bool:
 
 def _durable_record_required(signals: ProblemClosureSignals) -> bool:
     receipt_requires = bool(
-        signals.root_scope_receipt
-        and signals.root_scope_receipt.durable_problem_record_required
+        (signals.cognition_case_receipt and signals.cognition_case_receipt.durable_problem_record_required)
+        or (signals.root_scope_receipt and signals.root_scope_receipt.durable_problem_record_required)
     )
     # Backward-compatible callers may request stronger evidence, but cannot weaken
-    # the requirement already derived by root-scope admission.
+    # the requirement already derived by cognition admission.
     return receipt_requires or signals.problem_record_required
 
 
 def _require_cognition_and_learning(signals: ProblemClosureSignals) -> None:
-    if signals.root_scope_receipt is None:
+    if signals.cognition_case_receipt is None and signals.root_scope_receipt is None:
         raise ProblemClosureError(
-            "problem action blocked: root-scope cognitive admission is missing"
+            "problem action blocked: evidence-traced cognition admission is missing"
         )
     if not isinstance(signals.evolution_disposition, EvolutionDisposition):
         raise ProblemClosureError(
@@ -71,13 +77,31 @@ def _require_cognition_and_learning(signals: ProblemClosureSignals) -> None:
         )
 
 
+def _require_execution_evidence(signals: ProblemClosureSignals) -> None:
+    """Require concrete V&V evidence for repairs governed by the new cognition case path."""
+
+    receipt = signals.cognition_case_receipt
+    if receipt is None:
+        return
+    if not signals.verification_evidence_refs:
+        raise ProblemClosureError(
+            "repair verification cannot be a boolean-only claim; verification evidence is required"
+        )
+    if receipt.systemic and not signals.validation_evidence_refs:
+        raise ProblemClosureError(
+            "systemic/material repair requires validation evidence in addition to verification"
+        )
+
+
 def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDecision:
     """Classify the next admissible action for a detected problem.
 
     Finding a feasible edit is not cognitive admission. A repair/no-change decision may
-    execute only after deliberation has produced an evidence-tested root-scope receipt and
-    the problem has been assessed for durable learning/evolution. Obvious external blockers
-    may still be surfaced without pretending the root cause has been established.
+    execute only after an evidence-tested causal/intervention admission and a governed
+    learning/evolution disposition. New cognition-case repairs also bind completion to
+    concrete verification evidence, and systemic/material repairs to validation evidence.
+    Obvious external blockers may still be surfaced without pretending causality has been
+    established.
     """
 
     if not signals.problem_detected:
@@ -93,6 +117,7 @@ def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDeci
     if signals.repair_attempted:
         _require_cognition_and_learning(signals)
         if signals.repair_verified:
+            _require_execution_evidence(signals)
             return ProblemClosureDecision.REPAIR_EXECUTED
         raise ProblemClosureError(
             "repair was attempted but not verified; preserve failure evidence or convert to an explicit blocker/no-change disposition"
@@ -107,7 +132,7 @@ def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDeci
         return ProblemClosureDecision.REPAIR_NOW
 
     raise ProblemClosureError(
-        "detected problem has no admissible terminal disposition: establish root scope and learning disposition, then provide an authorized repair path, explicit blocker/user-choice requirement, or evidence-backed no-change reason"
+        "detected problem has no admissible terminal disposition: establish causal/intervention scope and learning disposition, then provide an authorized repair path, explicit blocker/user-choice requirement, or evidence-backed no-change reason"
     )
 
 
