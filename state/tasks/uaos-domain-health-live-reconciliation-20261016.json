@@ -1,13 +1,14 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "task_id":"uaos:maintenance:domain-health-live-reconciliation-20261016",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
-  "status":"RUNNING",
-  "current_stage":"CANDIDATE_IMPLEMENTED__PROMOTION_VERIFICATION_PENDING",
+  "status":"COMPLETE",
+  "current_stage":"PRODUCTION_LIVE_AUDIT_VERIFIED_CLOSED",
   "governing_goal":"Make parent domain-health freshness proactively observable from current child authority, reconcile the already-stale parent health cache and stale promotion evidence, and prevent recurrence without creating a second health/control plane or auto-mutating production authority.",
   "incident":"During a post-closure UAOS health audit, all four DOMAIN_HEALTH_INDEX observed_main_commit values were behind current child main. The same parent cache had previously required manual reconciliation in PR #32, proving that one-off refreshes do not satisfy the proactive freshness objective. The 2026-10-15 domain-health evolution record also still described PR/CI/merge as pending even though PR #31 and #32 were promoted. FC-PARENT-GUIDANCE-SINGLE-QUEUE-BLOCKING-RISK-003 remains intentionally open only as live multi-upcall concurrency observation; its implemented bulkhead is not treated as a current defect.",
   "root_scope":"PARENT_HEALTH_OBSERVATION_ACQUISITION_AND_POST_PROMOTION_RECONCILIATION_LIFECYCLE_GAP",
+  "selected_repair":"Reuse AGENT_REGISTRY + DOMAIN_HEALTH_INDEX + assess_domain_health; add a read-only GitHub child-main acquisition integration, a machine-readable audit runner, a six-hour/manual/relevant-PR/main-push workflow, and fail-closed topology/revision-drift tests. Reconcile parent cache through governed candidate promotion while keeping scheduled observation read-only.",
   "observed_child_revisions":{
     "financial_writing":"8122c184fac7f84a29e3420269952cb3975b7b41",
     "ashare":"3182b36027f9f82bd0d4bb6483aeadb0d8f23dce",
@@ -20,19 +21,19 @@
     "novel":{"run_id":38887119580,"run_number":329,"commit":"f8bc5cacb9125b0cc7ebac658140fda77e6cd75f","conclusion":"success"},
     "video":{"run_id":38887137169,"run_number":713,"commit":"4632634e5133961b3280dcfc5bc211712c3a1c83","conclusion":"success"}
   },
+  "parent_promotion_evidence":{
+    "pull_request":60,
+    "candidate_head":"2e7a223c1efafde2fdaf786e94f267c759a7d5ff",
+    "candidate_ci":{"run_id":38899419971,"run_number":257,"conclusion":"success"},
+    "candidate_domain_health_live_audit":{"run_id":38899420163,"run_number":3,"conclusion":"success"},
+    "production_commit":"1ebd923e44d215f650d3d0656e6fe7a09e829cfe",
+    "production_ci":{"run_id":38899688588,"run_number":258,"conclusion":"success"},
+    "production_domain_health_live_audit":{"run_id":38899688356,"run_number":4,"conclusion":"success","completed_at":"2026-10-16T12:19:31Z"},
+    "production_reread":"PASS__DOMAIN_HEALTH_INDEX_1_2_AND_READ_ONLY_RECURRING_LIVE_AUDIT_PRESENT__FOUR_CHILD_HEADS_MATCH_CACHE"
+  },
   "rejected_alternatives":["NO_CHANGE_AND_TREAT_STALE_CACHE_AS_HARMLESS","MANUALLY_REFRESH_FOUR_REVISIONS_ONLY","SCHEDULED_JOB_THAT_DIRECTLY_MUTATES_PRODUCTION_HEALTH_AUTHORITY"],
-  "selected_repair":"Reuse AGENT_REGISTRY + DOMAIN_HEALTH_INDEX + assess_domain_health; add a read-only GitHub child-main acquisition integration, a machine-readable audit runner, a six-hour/manual/relevant-PR workflow, and fail-closed topology/revision-drift tests. Reconcile parent cache through this candidate but keep future production reconciliation behind governed PR/CI.",
-  "candidate_surfaces":[
-    "src/uaos/integrations/domain_health_live.py",
-    "scripts/domain_health_audit.py",
-    ".github/workflows/domain-health-live-audit.yml",
-    "tests/integrations/test_domain_health_live.py",
-    "state/DOMAIN_HEALTH_INDEX.json",
-    "state/evolution/EVO-20261015-DOMAIN-HEALTH-ESCALATION-GOVERNANCE.json",
-    "state/evolution/EVO-20261016-DOMAIN-HEALTH-LIVE-RECONCILIATION.json"
-  ],
+  "completion_disposition":"KEEP",
   "evolution_ref":"state/evolution/EVO-20261016-DOMAIN-HEALTH-LIVE-RECONCILIATION.json",
-  "candidate_branch":"maintenance/domain-health-live-reconciliation-20261016",
-  "next_action":"Open parent PR; require full CI plus the new live domain-health audit; repair any candidate failures; merge only on green evidence; reread production and then mark this controller task non-resumable COMPLETE.",
-  "progress_timestamp":"2026-10-16T20:00:00+08:00"
+  "next_action":"NONE__RETURN_TO_UAOS_CONTROLLER_ROOT_ON_NEXT_GENERIC_CONTROLLER_SELECTION",
+  "progress_timestamp":"2026-10-16T20:19:34+08:00"
 }
