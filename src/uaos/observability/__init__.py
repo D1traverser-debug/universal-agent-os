@@ -1,6 +1,8 @@
 """UAOS observability helpers."""
 
 from .session_adherence import (
+    POLICY_REQUIRED_PROGRESS_FIELDS,
+    POLICY_TO_CANONICAL_FIELD,
     REQUIRED_PROGRESS_FIELDS,
     SessionAdherenceResult,
     SessionAdherenceSummary,
@@ -12,6 +14,8 @@ from .session_adherence import (
 )
 
 __all__ = [
+    "POLICY_REQUIRED_PROGRESS_FIELDS",
+    "POLICY_TO_CANONICAL_FIELD",
     "REQUIRED_PROGRESS_FIELDS",
     "SessionAdherenceResult",
     "SessionAdherenceSummary",
