@@ -1,0 +1,112 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261016-CONTROL-PLANE-COHERENCE-REFACTOR",
+  "authority":"UAOS",
+  "recorded_at":"2026-10-16T15:38:43+08:00",
+  "status":"CANDIDATE_IMPLEMENTED__PROMOTION_EVIDENCE_PENDING_FINAL_HEAD",
+  "trigger_signals":[
+    "USER_CHALLENGE_TO_LOCAL_ONLY_REFACTOR",
+    "CURRENT_SYSTEM_PROJECTION_DRIFT_AFTER_FINALIZATION_GATE_PROMOTION",
+    "PROBLEM_RESEARCH_DEPTH_OVERGOVERNANCE",
+    "INCIDENT_ONLY_EVOLUTION_ORIGIN_GAP"
+  ],
+  "observed_problem":"A proposed cognition-only patch was selected before proving the rest of the UAOS control plane was sound. Full-scope review showed that the existing domain/runtime topology remained usable, but the control plane had three coupled coherence defects: stale derived bootstrap/status projections could lag semantic owners; every detected problem forced external research regardless of risk; and ChangeProposal required a FailureClass even when an evaluated knowledge item, not an incident, was the legitimate source of improvement.",
+  "failure_classes":[
+    {
+      "failure_class":"FC-DERIVED-AUTHORITY-PROJECTION-DRIFT-007",
+      "root_layer":"CONTROL_PLANE",
+      "evidence":["CURRENT_SYSTEM.json lagged the already-promoted runtime finalization/OpenAI Agents guardrail semantics until this refactor","ENTRYPOINT.md defines CURRENT_SYSTEM as part of minimal bootstrap"]
+    },
+    {
+      "failure_class":"FC-PROBLEM-DELIBERATION-DEPTH-NOT-ADAPTIVE-008",
+      "root_layer":"COMMON_CAPABILITY",
+      "evidence":["config/DELIBERATION_POLICY.json previously required EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH for every detected problem","tests/architecture/test_problem_research_floor.py previously froze that behavior"]
+    },
+    {
+      "failure_class":"FC-EVOLUTION-INCIDENT-ONLY-ORIGIN-GAP-009",
+      "root_layer":"CONTROL_PLANE",
+      "evidence":["src/uaos/evolution/models.py previously required non-empty failure_class_ids for every ChangeProposal","UAOS already has an independent RAW_EVIDENCE -> CANDIDATE -> EVALUATED -> CANONICAL knowledge lifecycle"]
+    }
+  ],
+  "competing_root_hypotheses":[
+    {
+      "id":"H1_COGNITION_ONLY",
+      "disposition":"REJECTED_AS_TOO_NARROW",
+      "reason":"Adaptive search would reduce premature convergence but would not prevent stale bootstrap projections or allow legitimate knowledge-origin evolution."
+    },
+    {
+      "id":"H2_WHOLE_UAOS_TOPOLOGY_INVALID",
+      "disposition":"REJECTED_AS_TOO_BROAD",
+      "reason":"Registered-domain ownership, authority hierarchy, runtime/storage and finalization-gate mechanisms are independently represented and tested; current evidence does not justify replacing those subsystems."
+    },
+    {
+      "id":"H3_CONTROL_PLANE_COHERENCE_GAPS",
+      "disposition":"SELECTED",
+      "reason":"The observed defects share a control-plane cause: semantic ownership, risk-adaptive admission and learning-to-evolution origin semantics were not sufficiently coherent even though the underlying domain/runtime topology remained valid."
+    },
+    {
+      "id":"H4_NATIVE_CHATGPT_HOST_ENFORCEMENT_IS_ROOT_CAUSE",
+      "disposition":"BOUNDED_NOT_SELECTED",
+      "reason":"Native ChatGPT complete mediation remains unverified, but the three selected defects are reproducible inside repository authority and exist independently of host interception."
+    }
+  ],
+  "architecture_candidates":[
+    {
+      "id":"NO_CHANGE",
+      "disposition":"REJECTED",
+      "reason":"Leaves reproduced projection drift, fixed research depth and incident-only proposal origins intact."
+    },
+    {
+      "id":"PROMPT_OR_SOP_ONLY_PATCH",
+      "disposition":"REJECTED",
+      "reason":"Cannot mechanically fail stale projections, enforce bounded candidate counts or gate knowledge-origin promotion."
+    },
+    {
+      "id":"SECOND_MULTI_AGENT_DEBATE_CONTROLLER",
+      "disposition":"REJECTED",
+      "reason":"Duplicates the control plane, increases latency/token cost and does not itself provide independent verification."
+    },
+    {
+      "id":"BOUNDED_CONTROL_PLANE_COHERENCE_REFACTOR",
+      "disposition":"SELECTED",
+      "reason":"Extends existing cognition, architecture-experience, knowledge and evolution abstractions without replacing domain ownership or creating a second controller."
+    }
+  ],
+  "selected_changes":[
+    "Add config/AUTHORITY_PROJECTION_POLICY.json and make CURRENT_SYSTEM a derived operational projection with CI freshness checks against semantic owners.",
+    "Upgrade canonical cognition to LIGHTWEIGHT / CONTRASTIVE / STRUCTURED bounded search modes while preserving the five existing hot-path primitives.",
+    "Require competing action candidates and NO_CHANGE baseline for structured/systemic cognition; same-model self-dialogue remains candidate generation, not independent verification.",
+    "Require bounded competing architecture candidates plus NO_CHANGE baseline for material control-plane/agent-experience changes.",
+    "Allow ChangeProposal origin from admitted EVALUATED/CANONICAL KnowledgeItem without fabricating a FailureClass; retain the same evaluation, complexity, promotion and post-promotion gates.",
+    "Reconcile CURRENT_SYSTEM and SYSTEM_MAP with the already-promoted finalization gate/OpenAI Agents SDK output-guardrail boundary while explicitly keeping native ChatGPT pre-send mediation unverified."
+  ],
+  "preserved_boundaries":[
+    "DIRECT_REGISTERED_DOMAIN_OWNERSHIP",
+    "UAOS_PARENT_AUTHORITY_HIERARCHY",
+    "DOMAIN_BUSINESS_STATE_OWNERSHIP",
+    "RUNTIME_AND_STORAGE_TOPOLOGY",
+    "FINALIZATION_GATE_AND_OPENAI_AGENTS_SDK_GUARDRAIL",
+    "SINGLE_CANONICAL_FIVE_PRIMITIVE_COGNITION_KERNEL"
+  ],
+  "complexity_disposition":{
+    "new_controller":false,
+    "new_runtime_state_surface":false,
+    "new_policy_surface":"config/AUTHORITY_PROJECTION_POLICY.json",
+    "new_permanent_agent_roles":false,
+    "reason":"One owner/projection contract is added to remove shadow-authority ambiguity; other changes extend existing executable abstractions."
+  },
+  "candidate_evidence":{
+    "pull_request":51,
+    "initial_candidate_ci":{"run_number":216,"conclusion":"FAIL","finding":"six cross-suite regressions exposed exact-version freezes and an unsynchronized structured-admission fixture"},
+    "repair_disposition":"KEEP_NEW_GATES__UPDATE_EVOLVING_VERSION_TESTS_TO_FLOORS__UPDATE_SHARED_ADMISSION_FIXTURE__ADD_PROJECTION_AND_KNOWLEDGE_ORIGIN_REGRESSION_TESTS",
+    "repaired_candidate_ci":{"run_number":221,"conclusion":"PASS","head":"20099710c2329cff4685d9756ca85b89103cc1b0"},
+    "final_head_evidence":"TO_BE_VERIFIED_AFTER_THIS_RECORD_COMMIT"
+  },
+  "assurance_boundary":"Candidate structural/regression evidence can prove repository-level contracts and promotion behavior. It does not prove native ChatGPT physically intercepts every natural-language response, nor does it prove future live reasoning quality is perfect. Those claims remain bounded to their verified host/runtime surfaces.",
+  "post_promotion_observation":[
+    "Watch for projection freshness failures when semantic owners change.",
+    "Watch whether LIGHTWEIGHT mode avoids ceremonial research without allowing premature root-scope claims.",
+    "Watch whether CONTRASTIVE/STRUCTURED bounded search improves architecture decisions without creating excessive token/latency cost.",
+    "Watch knowledge-origin proposals for overgeneralization or attempts to bypass evidence maturity."
+  ]
+}
