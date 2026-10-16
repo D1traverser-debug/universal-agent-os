@@ -1,0 +1,23 @@
+{
+  "schema_version":"1.0",
+  "task_id":"uaos:maintenance:cognition-architecture-reassessment-20261016",
+  "authority_context":"UAOS",
+  "task_type":"controller_maintenance",
+  "status":"RUNNING",
+  "current_stage":"SYSTEMIC_REASSESSMENT__COMPETING_ARCHITECTURE_CANDIDATES_ACTIVE",
+  "governing_goal":"Determine why repeated assistant corrections still collapse into user-anchored conclusions or explanation-only stopping, and redesign the UAOS cognition/action path only to the extent justified by evidence. The repair may be local enforcement, policy/runtime restructuring, or full cognition-kernel replacement; no layer or solution is presumed in advance.",
+  "incident":"Repeated user corrections exposed the same behavioral pattern across consecutive turns: the assistant mirrored the user's latest framing as if it were the selected diagnosis, explained the correction, and stopped instead of independently expanding hypotheses, testing competing layers, learning externally when warranted, and carrying the admitted repair through verification. Existing policy already states hypothesis-first, micro-to-macro-to-micro and upstream/architecture testing, so prose presence alone has not guaranteed execution.",
+  "root_scope":"UNRESOLVED__MUST_COMPARE_POLICY_DESIGN_RUNTIME_ENFORCEMENT_EVALUATION_AND_HOST_EXECUTION",
+  "candidate_hypotheses":[
+    "H1_POLICY_IS_SUBSTANTIVELY_SOUND_BUT_EXECUTION_ENFORCEMENT_IS_TOO_WEAK",
+    "H2_COGNITION_KERNEL_DESIGN_ITSELF_OVERCOMPRESSES_DISTINCT_ENGINEERING_ACTIVITIES_AND_SHOULD_BE_RESTRUCTURED",
+    "H3_FINALIZATION_AND_TESTS_VALIDATE_REPORTING_OR_SHAPE_MORE_THAN_EVIDENCE_TO_ACTION_BEHAVIOR",
+    "H4_HOST_MODEL_LIMITS_PREVENT_FULL_ENFORCEMENT_BUT_CONTROLLED_RUNTIME_CAN_STILL_BE_HARDENED",
+    "H5_FULL_REBUILD_WOULD_ADD_COMPLEXITY_WITHOUT_FIXING_THE_ACTUAL_EXECUTION_GAP"
+  ],
+  "required_external_learning":["systems engineering requirements-to-V&V traceability","incident/postmortem systemic learning","architecture tradeoff/scenario evaluation","system-theoretic causal/control analysis"],
+  "required_internal_audit":["config/DELIBERATION_POLICY.json","src/uaos/kernel/deliberation.py","src/uaos/kernel/problem_closure.py","config/ARCHITECTURE_EXPERIENCE_POLICY.json","src/uaos/kernel/architecture_experience.py","src/uaos/runtime/finalization.py","relevant tests and common behavior assurance"],
+  "candidate_branch":"maintenance/cognition-architecture-reassessment-20261016",
+  "next_action":"Audit executable cognition/finalization/test surfaces and external engineering methods; compare preserve-and-harden versus kernel redesign versus full replacement; implement the smallest architecture that closes the reproduced failure class; run scenario and regression evidence before promotion.",
+  "progress_timestamp":"2026-10-16T20:45:49+08:00"
+}
