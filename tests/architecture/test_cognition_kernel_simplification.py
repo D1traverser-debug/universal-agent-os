@@ -69,7 +69,8 @@ def test_outside_in_discovery_is_conditional_not_a_per_turn_ritual():
     policy = _json("config/DELIBERATION_POLICY.json")
     discovery = policy["outside_in_capability_discovery"]
     assert "BROAD_EXTERNAL_CAPABILITY_LEARNING" in discovery["trigger"]
-    assert "KNOWN_NEED" in discovery["known_need_exception"]
+    assert "established need/failure class" in discovery["known_need_exception"].lower()
+    assert "lightweight" in discovery["known_need_exception"].lower()
     assert discovery["executable_ref"] == "src/uaos/kernel/problem_space.py"
     assert "at least two distinct outside-in lenses" in discovery["broad_discovery_floor"]
     assert "not an instruction to create a matching Agent" in discovery["nonliteral_rule"]
