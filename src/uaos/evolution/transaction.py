@@ -149,11 +149,11 @@ def admit_proposal(
     elif tx.origin.kind is EvolutionOriginKind.CAPABILITY_GAP:
         if tx.discovery_receipt is None:
             raise EvolutionTransactionError("capability-gap proposal requires admitted discovery")
-        if not any(
-            candidate in proposal.hypothesis or candidate in proposal.title
-            for candidate in tx.discovery_receipt.latent_gap_candidates
-        ):
-            raise EvolutionTransactionError("proposal is not traceable to a discovered latent capability gap")
+        if not proposal.capability_gap_ids:
+            raise EvolutionTransactionError("capability-gap evolution requires capability_gap_ids")
+        discovered = set(tx.discovery_receipt.latent_gap_candidates)
+        if not set(proposal.capability_gap_ids).issubset(discovered):
+            raise EvolutionTransactionError("proposal capability gaps are not traceable to admitted discovery")
 
     if proposal.state is not ProposalState.DRAFT:
         raise EvolutionTransactionError("canonical evolution proposal must enter transaction as DRAFT")
