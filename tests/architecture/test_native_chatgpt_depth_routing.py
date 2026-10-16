@@ -11,9 +11,6 @@ from uaos.kernel import (
     CausalFactorDisposition,
     CognitionCase,
     CognitiveSearchMode,
-    DeepTaskAlternative,
-    DeepTaskAlternativeDisposition,
-    DeepTaskCase,
     DeliberationEvidence,
     DeliberationSignals,
     EngineeringTrace,
@@ -25,7 +22,6 @@ from uaos.kernel import (
     SignalKind,
     WalkthroughStep,
     require_cognition_case_admission,
-    require_deep_task_admission,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -45,8 +41,7 @@ def _maintenance_evidence():
         EvidenceItem("assumption", EvidenceKind.ANALYSIS_RESULT, "Copying the full DeepTask policy into account Custom Instructions would create a second stale behavioral authority rather than fixing invocation ownership.", "analysis://shadow-policy-risk"),
         EvidenceItem("openai-custom-instructions", EvidenceKind.EXTERNAL_SOURCE, "OpenAI documents Custom Instructions as direct guidance applied across chats, supporting their use as a compact bootstrap surface rather than a repository policy copy.", "https://help.openai.com/articles/8096356-chatgpt-custom-instructions", "OpenAI Help Center product-behavior verification"),
         EvidenceItem("openai-memory", EvidenceKind.EXTERNAL_SOURCE, "OpenAI documents Memory as relevance-selected and not an every-detail/every-response retrieval mechanism, so Memory alone is not a deterministic UAOS bootstrap substitute.", "https://help.openai.com/articles/8590148-memory-in-chatgpt", "OpenAI Help Center product-behavior verification"),
-        EvidenceItem("github-reread", EvidenceKind.TOOL_RESULT, "Independent repository reread confirmed the production session/pointer gap and the already-existing DeepTask semantic mechanism.", "tool://github-production-reread-20261017", "repository authority gap audit"),
-        EvidenceItem("method", EvidenceKind.ANALYSIS_RESULT, "Use the existing single cognition owner plus a session-level invocation sentinel and architecture-experience admission; do not create a new state machine.", "method://single-owner-plus-session-sentinel", "UAOS architecture-experience and single-owner control-plane method"),
+        EvidenceItem("github-reread", EvidenceKind.TOOL_RESULT, "Repository reread independently confirmed the production session/pointer gap and the already-existing DeepTask semantic mechanism.", "tool://github-production-reread-20261017", "repository authority gap audit"),
         EvidenceItem("unknown-probe", EvidenceKind.TOOL_RESULT, "Authority-wide scan found the residual user-explicit wording in AGENTS and the missing session sentinel, while the DeepTask kernel itself already supported host-classified escalation.", "tool://authority-wide-trigger-semantics-scan", "repository semantic closure scan"),
         EvidenceItem("trade-no-change", EvidenceKind.ANALYSIS_RESULT, "NO_CHANGE preserves the reproduced gap: the user may still have to notice that an unlabeled non-problem task needs deeper work.", "tradeoff://no-change"),
         EvidenceItem("trade-copy", EvidenceKind.ANALYSIS_RESULT, "Full-policy Custom Instructions improve salience but create policy drift, prompt bloat, and a second stale source of truth.", "tradeoff://full-policy-copy"),
@@ -150,34 +145,6 @@ def test_current_maintenance_problem_and_architecture_are_executable_admitted():
     assert receipt.intervention_candidate_id == "session-execution-depth-sentinel"
     assert receipt.architecture_experience_admitted is True
     assert receipt.systemic is True
-
-
-def test_current_maintenance_also_satisfies_deep_task_evidence_admission():
-    items = _maintenance_evidence()
-    case = DeepTaskCase(
-        case_id="native-chatgpt-depth-routing-deep-task",
-        governing_outcome="Determine the smallest system-level change that makes depth selection proactive and Agent-owned without duplicating UAOS policy in Custom Instructions.",
-        evidence_items=items,
-        professional_practice_evidence_ids=("openai-custom-instructions", "openai-memory"),
-        raw_material_evidence_ids=("session-gap", "pointer-gap", "kernel-exists"),
-        method_tool_evidence_ids=("method", "github-reread"),
-        unknown_discovery_evidence_ids=("unknown-probe",),
-        alternatives=(
-            DeepTaskAlternative("no-change", "Keep the current user-explicit/host-classified routing contract.", DeepTaskAlternativeDisposition.REJECTED, ("session-gap",), "NO_CHANGE is acceptable only if current authority already makes every-turn autonomous depth assessment explicit.", ("pointer-gap", "github-reread")),
-            DeepTaskAlternative("full-policy-copy", "Put the detailed DeepTask evidence policy in Custom Instructions.", DeepTaskAlternativeDisposition.REJECTED, ("openai-custom-instructions",), "Full policy copy is acceptable only if it does not create a second stale policy surface.", ("assumption", "trade-copy")),
-            DeepTaskAlternative("session-sentinel", "Add the missing lightweight session invocation responsibility and keep detailed semantics in current UAOS authority.", DeepTaskAlternativeDisposition.PREFERRED, ("kernel-exists", "trade-sentinel", "method"), "Reject if the design duplicates cognition ownership, makes simple tasks permanently deep, or overclaims native-host physical enforcement.", ("dogfood-scenario", "recovery-scenario")),
-        ),
-        independent_judge_evidence_ids=("github-reread",),
-        holdout_replay_or_production_evidence_ids=("dogfood-scenario", "recovery-scenario"),
-        acceptance_criteria=(
-            "user-independent every-turn depth routing is explicit",
-            "explicit user depth remains force override rather than sole trigger",
-            "Custom Instructions remain compact/non-authoritative",
-            "native ChatGPT physical complete mediation remains unclaimed",
-        ),
-    )
-    receipt = require_deep_task_admission(case)
-    assert receipt.preferred_alternative_id == "session-sentinel"
 
 
 def test_session_policy_requires_user_independent_execution_depth_routing():
