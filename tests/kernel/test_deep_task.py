@@ -5,8 +5,10 @@ from uaos.kernel import (
     DeepTaskAlternative,
     DeepTaskAlternativeDisposition,
     DeepTaskCase,
+    DeepTaskSignals,
     EvidenceItem,
     EvidenceKind,
+    assess_deep_task_requirement,
     require_deep_task_admission,
 )
 
@@ -65,6 +67,26 @@ def _case(**overrides):
     return DeepTaskCase(**values)
 
 
+def test_explicit_user_depth_signal_always_requires_deep_profile():
+    result = assess_deep_task_requirement(DeepTaskSignals(explicit_user_depth_request=True))
+    assert result.required
+    assert "EXPLICIT_USER_DEPTH_REQUEST" in result.reason_codes
+
+
+def test_material_signals_do_not_escalate_without_evidence_that_structured_floor_is_insufficient():
+    result = assess_deep_task_requirement(
+        DeepTaskSignals(material_high_uncertainty=True, unknown_knowledge=True)
+    )
+    assert not result.required
+    escalated = assess_deep_task_requirement(
+        DeepTaskSignals(
+            unknown_knowledge=True,
+            ordinary_structured_evidence_insufficient=True,
+        )
+    )
+    assert escalated.required
+
+
 def test_deep_task_admits_evidence_depth_without_new_cognition_state_machine():
     receipt = require_deep_task_admission(_case())
     assert receipt.preferred_alternative_id == "extend-existing"
@@ -97,9 +119,11 @@ def test_method_tool_dimension_requires_named_method_ref():
         )
 
 
-def test_independent_judge_cannot_be_same_model_analysis():
+def test_independent_judge_cannot_be_same_model_analysis_or_static_repository_fact():
     with pytest.raises(DeepTaskAdmissionError, match="independent-judge"):
         require_deep_task_admission(_case(independent_judge_evidence_ids=("alt-a",)))
+    with pytest.raises(DeepTaskAdmissionError, match="independent-judge"):
+        require_deep_task_admission(_case(independent_judge_evidence_ids=("raw",)))
 
 
 def test_stretch_target_requires_feasibility_evidence():
