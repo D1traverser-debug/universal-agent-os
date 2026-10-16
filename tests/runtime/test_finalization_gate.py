@@ -1,13 +1,26 @@
 import pytest
 
-from uaos.kernel.deliberation import ProblemLayer, RootScopeReceipt
-from uaos.kernel.problem_closure import EvolutionDisposition, ProblemClosureDecision, ProblemClosureSignals
+from uaos.kernel import (
+    ActionCandidate,
+    CausalFactor,
+    CausalFactorDisposition,
+    CognitionCase,
+    DeliberationEvidence,
+    DeliberationSignals,
+    EngineeringTrace,
+    EvidenceItem,
+    EvidenceKind,
+    EvolutionDisposition,
+    ProblemClosureSignals,
+    ProblemLayer,
+    RootScopeReceipt,
+)
 from uaos.runtime import FinalizationBlocked, FinalizationContext, admit_final_response
 
 
 def _report(*, problem: bool = False, next_action: str = "none") -> str:
     evolution = "DURABLE_EVOLUTION_UPDATED__EVO-X" if problem else "NO_EVOLUTION_TRIGGER"
-    deliberation = "TRIGGERED__ROOT_SCOPE_ADMITTED" if problem else "NOT_TRIGGERED"
+    deliberation = "TRIGGERED__CAUSAL_INTERVENTION_ADMITTED" if problem else "NOT_TRIGGERED"
     return f"""Completed.
 
 当前 Agent：UAOS
@@ -23,7 +36,7 @@ Deliberation：{deliberation}
 """
 
 
-def _receipt(*, durable: bool = True) -> RootScopeReceipt:
+def _legacy_receipt(*, durable: bool = True) -> RootScopeReceipt:
     return RootScopeReceipt(
         selected_hypothesis_id="H-selected",
         selected_layer=ProblemLayer.COMMON_CAPABILITY,
@@ -35,12 +48,68 @@ def _receipt(*, durable: bool = True) -> RootScopeReceipt:
     )
 
 
+def _cognition_case() -> CognitionCase:
+    items = (
+        EvidenceItem("goal", EvidenceKind.USER_CLAIM, "Fix the detected problem without mirroring user framing.", "conversation://goal"),
+        EvidenceItem("micro", EvidenceKind.REPOSITORY_FACT, "Local implementation fact.", "repo://micro"),
+        EvidenceItem("macro", EvidenceKind.ANALYSIS_RESULT, "Macro alignment checked.", "analysis://macro"),
+        EvidenceItem("assumption", EvidenceKind.ANALYSIS_RESULT, "Governing assumption challenged.", "analysis://assumption"),
+        EvidenceItem("counter", EvidenceKind.TEST_RESULT, "Competing explanation was probed.", "test://counter"),
+        EvidenceItem("action-local", EvidenceKind.ANALYSIS_RESULT, "Local repair candidate evidence.", "analysis://action-local"),
+        EvidenceItem("action-no", EvidenceKind.ANALYSIS_RESULT, "No-change candidate evidence.", "analysis://action-no"),
+        EvidenceItem("trade-local", EvidenceKind.ANALYSIS_RESULT, "Local repair tradeoff.", "analysis://trade-local"),
+        EvidenceItem("trade-no", EvidenceKind.ANALYSIS_RESULT, "No-change tradeoff.", "analysis://trade-no"),
+        EvidenceItem("verify", EvidenceKind.TEST_RESULT, "Repair passed its deterministic verification.", "test://verify"),
+    )
+    evidence = DeliberationEvidence({
+        "MICRO_DIAGNOSIS": ("micro",),
+        "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT": ("macro",),
+        "GOVERNING_ASSUMPTION_CHALLENGE": ("assumption",),
+        "COUNTEREXAMPLE_SEARCH": ("counter",),
+    })
+    return CognitionCase(
+        case_id="runtime-finalization-case",
+        signals=DeliberationSignals(user_correction=True),
+        evidence=evidence,
+        evidence_items=items,
+        causal_factors=(
+            CausalFactor(
+                "local-factor",
+                ProblemLayer.LOCAL_IMPLEMENTATION,
+                "A local implementation defect contributes to the observed failure.",
+                CausalFactorDisposition.SUPPORTED,
+                ("micro",),
+                ("counter",),
+            ),
+            CausalFactor(
+                "control-factor",
+                ProblemLayer.CONTROL_PLANE,
+                "The control plane is the primary cause.",
+                CausalFactorDisposition.REJECTED,
+                ("macro",),
+                ("assumption",),
+            ),
+        ),
+        action_candidates=(
+            ActionCandidate("local-repair", ProblemLayer.LOCAL_IMPLEMENTATION, "Repair the local defect.", ("action-local",), ("trade-local",)),
+            ActionCandidate("no-change", ProblemLayer.CONTROL_PLANE, "Do not change the system.", ("action-no",), ("trade-no",), True),
+        ),
+        selected_action_candidate_id="local-repair",
+        engineering_trace=EngineeringTrace(
+            governing_outcome="Correct the reproduced behavior without adopting the user's causal theory as authority.",
+            requirement_or_goal_evidence_ids=("goal",),
+            mechanism_candidate_id="local-repair",
+            verification_methods=("deterministic regression test",),
+        ),
+    )
+
+
 def test_clean_selected_turn_can_finalize_when_no_work_remains():
     receipt = admit_final_response(
         _report(),
         FinalizationContext(context_selected=True),
     )
-    assert receipt.closure_decision is ProblemClosureDecision.CLEAN_NO_PROBLEM
+    assert receipt.closure_decision.value == "CLEAN_NO_PROBLEM"
     assert receipt.adherence.passed
 
 
@@ -56,34 +125,35 @@ def test_runtime_blocks_finalization_while_actionable_work_remains():
     assert "ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT" in exc.value.reasons
 
 
-def test_problem_turn_requires_verified_terminal_closure_and_cognition_evidence():
+def test_problem_turn_recomputes_cognition_case_and_requires_verified_terminal_closure():
     closure = ProblemClosureSignals(
         problem_detected=True,
         repair_attempted=True,
         repair_verified=True,
-        root_scope_receipt=_receipt(durable=True),
         evolution_disposition=EvolutionDisposition.DURABLE_EVOLUTION_UPDATED,
-        problem_record_ref="state/evolution/EVO-X.json",
+        verification_evidence_refs=("verify",),
     )
     receipt = admit_final_response(
         _report(problem=True),
         FinalizationContext(
             context_selected=True,
             problem_signal_observed=True,
+            cognition_case=_cognition_case(),
             closure_signals=closure,
         ),
     )
-    assert receipt.closure_decision is ProblemClosureDecision.REPAIR_EXECUTED
+    assert receipt.closure_decision.value == "REPAIR_EXECUTED"
     assert receipt.adherence.passed
 
 
-def test_problem_turn_cannot_finalize_on_self_report_without_root_scope_receipt():
+def test_precomputed_root_scope_receipt_cannot_substitute_for_full_cognition_case():
     closure = ProblemClosureSignals(
         problem_detected=True,
         repair_attempted=True,
         repair_verified=True,
-        evolution_disposition=EvolutionDisposition.DURABLE_EVOLUTION_UPDATED,
-        problem_record_ref="state/evolution/EVO-X.json",
+        root_scope_receipt=_legacy_receipt(durable=False),
+        evolution_disposition=EvolutionDisposition.NO_DURABLE_EVOLUTION_WITH_EVIDENCE,
+        verification_evidence_refs=("verify",),
     )
     with pytest.raises(FinalizationBlocked) as exc:
         admit_final_response(
@@ -94,15 +164,14 @@ def test_problem_turn_cannot_finalize_on_self_report_without_root_scope_receipt(
                 closure_signals=closure,
             ),
         )
-    assert any("root-scope cognitive admission is missing" in reason for reason in exc.value.reasons)
+    assert "MISSING_EVIDENCE_TRACED_COGNITION_CASE" in exc.value.reasons
 
 
-def test_repairable_problem_cannot_finalize_before_repair_attempt():
+def test_boolean_repair_verified_claim_without_verification_evidence_is_blocked():
     closure = ProblemClosureSignals(
         problem_detected=True,
-        repair_path_available=True,
-        repair_authorized=True,
-        root_scope_receipt=_receipt(durable=False),
+        repair_attempted=True,
+        repair_verified=True,
         evolution_disposition=EvolutionDisposition.NO_DURABLE_EVOLUTION_WITH_EVIDENCE,
     )
     with pytest.raises(FinalizationBlocked) as exc:
@@ -111,26 +180,47 @@ def test_repairable_problem_cannot_finalize_before_repair_attempt():
             FinalizationContext(
                 context_selected=True,
                 problem_signal_observed=True,
+                cognition_case=_cognition_case(),
+                closure_signals=closure,
+            ),
+        )
+    assert any("verification evidence" in reason for reason in exc.value.reasons)
+
+
+def test_repairable_problem_cannot_finalize_before_repair_attempt():
+    closure = ProblemClosureSignals(
+        problem_detected=True,
+        repair_path_available=True,
+        repair_authorized=True,
+        evolution_disposition=EvolutionDisposition.NO_DURABLE_EVOLUTION_WITH_EVIDENCE,
+    )
+    with pytest.raises(FinalizationBlocked) as exc:
+        admit_final_response(
+            _report(problem=True),
+            FinalizationContext(
+                context_selected=True,
+                problem_signal_observed=True,
+                cognition_case=_cognition_case(),
                 closure_signals=closure,
             ),
         )
     assert any("recommendation-only finalization is forbidden" in reason for reason in exc.value.reasons)
 
 
-def test_real_user_choice_can_be_a_terminal_blocker_without_fake_cognition_receipt():
+def test_real_user_choice_can_be_a_terminal_blocker_without_fake_cognition_case():
     closure = ProblemClosureSignals(
         problem_detected=True,
         user_choice_required=True,
     )
     response = _report(
         problem=True,
-        next_action="下一轮等待用户提供真正缺失的授权范围",
+        next_action="等待用户提供真正缺失的授权范围",
     ).replace(
         "Evolution：DURABLE_EVOLUTION_UPDATED__EVO-X",
         "Evolution：PENDING__BLOCKED_BY_USER_FACT",
     ).replace(
-        "Deliberation：TRIGGERED__ROOT_SCOPE_ADMITTED",
-        "Deliberation：TRIGGERED__BLOCKED_BEFORE_ROOT_SCOPE",
+        "Deliberation：TRIGGERED__CAUSAL_INTERVENTION_ADMITTED",
+        "Deliberation：TRIGGERED__BLOCKED_BEFORE_CAUSAL_ADMISSION",
     )
     receipt = admit_final_response(
         response,
@@ -141,5 +231,5 @@ def test_real_user_choice_can_be_a_terminal_blocker_without_fake_cognition_recei
             closure_signals=closure,
         ),
     )
-    assert receipt.closure_decision is ProblemClosureDecision.BLOCKED_WITH_REASON
+    assert receipt.closure_decision.value == "BLOCKED_WITH_REASON"
     assert receipt.adherence.passed
