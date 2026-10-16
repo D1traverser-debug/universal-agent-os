@@ -16,15 +16,26 @@ from uaos.execution import (
 )
 from uaos.state import SQLiteAppendOnlyLedger
 
-from .gates import assess_promotion
-from .lifecycle import post_promotion_recommendation, transition_proposal
 from .models import (
     ChangeProposal,
     ComplexityBudget,
     ComplexityDelta,
     EvaluationResult,
     PostPromotionObservation,
-    ProposalState,
+)
+from .transaction import (
+    EvolutionDepthTrace,
+    EvolutionOrigin,
+    EvolutionOriginKind,
+    EvolutionTransaction,
+    admit_discovery,
+    admit_evaluation,
+    admit_proposal,
+    authorize,
+    observe,
+    record_promotion,
+    record_rollback,
+    retire,
 )
 
 
@@ -34,7 +45,7 @@ class SelfChangeDrillResult:
     candidate_hash: str
     restored_hash: str
     recommendation: str
-    final_state: ProposalState
+    final_state: object
     ledger_events: int
 
 
@@ -45,11 +56,11 @@ def _sha256(text: str) -> str:
 def run_self_change_drill(
     root: str | Path, *, run_id: str | None = None
 ) -> SelfChangeDrillResult:
-    """Exercise evaluation -> approval -> promotion -> observation -> rollback.
+    """Exercise the canonical evolution transaction through promotion and rollback.
 
     The drill mutates only an isolated local workspace. It intentionally injects
-    a post-promotion regression so the rollback path must execute and restore the
-    exact baseline hash.
+    a post-promotion regression so the transaction must observe, recommend rollback,
+    execute restoration and retire without bypassing the same evolution state owner.
     """
 
     root = Path(root)
@@ -61,10 +72,27 @@ def run_self_change_drill(
     target = root / "policy.txt"
     target.write_text(baseline, encoding="utf-8")
 
+    tx = EvolutionTransaction(
+        transaction_id=f"evolution-transaction:{run_id}",
+        origin=EvolutionOrigin(
+            EvolutionOriginKind.INCIDENT,
+            (f"failure:self-change-drill:{run_id}",),
+            ("drill:baseline",),
+        ),
+        depth_trace=EvolutionDepthTrace(
+            governing_outcome="prove that a self-change is evaluated, promoted, observed and rolled back through one governed transaction",
+            raw_evidence_refs=("drill:baseline",),
+            professional_method_refs=("method:controlled-self-change-drill",),
+            external_judge_refs=("drill:evaluation",),
+            novelty_probe_refs=(),
+        ),
+    )
+    tx = admit_discovery(tx, None)
+
     proposal = ChangeProposal(
         proposal_id=proposal_id,
         title="Controlled local self-change drill",
-        failure_class_ids=("failure:self-change-drill",),
+        failure_class_ids=(f"failure:self-change-drill:{run_id}",),
         hypothesis="a candidate can be promoted and rolled back without escaping the governed action path",
         target_scope="local-drill-workspace",
         added_mechanisms=(),
@@ -79,7 +107,7 @@ def run_self_change_drill(
         complexity_delta=ComplexityDelta(),
         evidence_refs=("drill:baseline",),
     )
-    proposal = transition_proposal(proposal, ProposalState.EVALUATED)
+    tx = admit_proposal(tx, proposal)
     evaluation = EvaluationResult(
         evaluation_id=f"eval:{run_id}",
         proposal_id=proposal_id,
@@ -90,12 +118,8 @@ def run_self_change_drill(
         passed=True,
         evidence_refs=("drill:evaluation",),
     )
-    authorization = assess_promotion(
-        proposal, (evaluation,), budget=ComplexityBudget()
-    )
-    if not authorization.approved:
-        raise RuntimeError(authorization.reasons)
-    proposal = transition_proposal(proposal, ProposalState.APPROVED)
+    tx = admit_evaluation(tx, (evaluation,), budget=ComplexityBudget())
+    tx = authorize(tx)
 
     registry = CapabilityRegistry()
     register_local_workspace_capability(registry, root)
@@ -128,7 +152,7 @@ def run_self_change_drill(
     ).outcome
     if promoted_outcome.disposition is not ExecutionDisposition.CONFIRMED:
         raise RuntimeError(promoted_outcome.error)
-    proposal = transition_proposal(proposal, ProposalState.PROMOTED)
+    tx = record_promotion(tx, execution_evidence_refs=(f"execution:promote:{run_id}",))
 
     observation = PostPromotionObservation(
         f"obs:{run_id}",
@@ -138,8 +162,8 @@ def run_self_change_drill(
         ("drill:observation",),
         (f"regression:{run_id}",),
     )
-    recommendation = post_promotion_recommendation(proposal, (observation,))
-    if recommendation != "ROLLBACK":
+    tx = observe(tx, (observation,))
+    if tx.recommendation != "ROLLBACK":
         raise RuntimeError("drill failed to request rollback")
 
     rollback = ExecutionRequest(
@@ -169,16 +193,18 @@ def run_self_change_drill(
     if rollback_outcome.disposition is not ExecutionDisposition.CONFIRMED:
         raise RuntimeError(rollback_outcome.error)
 
-    proposal = transition_proposal(proposal, ProposalState.ROLLED_BACK)
-    proposal = transition_proposal(proposal, ProposalState.RETIRED)
+    tx = record_rollback(tx, rollback_evidence_refs=(f"execution:rollback:{run_id}",))
+    tx = retire(tx)
     if target.read_text(encoding="utf-8") != baseline:
         raise RuntimeError("rollback did not restore baseline")
 
     ledger = SQLiteAppendOnlyLedger(root / "drill.db")
     for index, event_type in enumerate(
         (
+            "DISCOVERED",
+            "PROPOSED",
             "EVALUATED",
-            "APPROVED",
+            "AUTHORIZED",
             "PROMOTED",
             "REGRESSION_OBSERVED",
             "ROLLED_BACK",
@@ -188,17 +214,19 @@ def run_self_change_drill(
     ):
         ledger.append(
             event_id=f"{proposal_id}:{index}",
-            aggregate_type="change_proposal",
-            aggregate_id=proposal_id,
+            aggregate_type="evolution_transaction",
+            aggregate_id=tx.transaction_id,
             event_type=event_type,
-            payload={"run_id": run_id},
+            payload={"run_id": run_id, "proposal_id": proposal_id},
         )
 
+    if tx.proposal is None:
+        raise RuntimeError("transaction lost proposal state")
     return SelfChangeDrillResult(
         proposal_id,
         _sha256(candidate),
         _sha256(baseline),
-        recommendation,
-        proposal.state,
-        len(ledger.events_for("change_proposal", proposal_id)),
+        tx.recommendation or "UNKNOWN",
+        tx.proposal.state,
+        len(ledger.events_for("evolution_transaction", tx.transaction_id)),
     )
