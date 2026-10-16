@@ -1,0 +1,73 @@
+{
+  "schema_version":"1.0",
+  "profile_version":"1.0.0",
+  "authority":"UAOS",
+  "status":"CANDIDATE_EXECUTION_PROFILE",
+  "owner_policy":"config/DELIBERATION_POLICY.json",
+  "purpose":"Turn requests for a deeper task into evidence depth rather than output length, role-play, extra agents, extra documents or architecture bloat. This profile constrains the existing canonical cognition kernel; it does not define a second cognition state machine.",
+  "executable_admission":"src/uaos/kernel/deep_task.py#require_deep_task_admission",
+  "controlled_finalization":"src/uaos/runtime/finalization.py#admit_final_response",
+  "activation":{
+    "required_when":[
+      "the user explicitly asks for a deeper/deep version or explicitly invokes this protocol",
+      "a host/controller classifies a material task as high-uncertainty and requiring professional-method discovery plus independent validation",
+      "a material unknown-knowledge, architecture/control-plane, or repeated-systemic problem cannot be responsibly resolved by the ordinary structured evidence floor alone"
+    ],
+    "not_required_for":[
+      "routine factual queries",
+      "small local defects with sufficient current evidence",
+      "formatting/rewrite tasks where no research or decision uncertainty exists",
+      "ceremonial expansion merely to make an answer look sophisticated"
+    ],
+    "host_signal":"FinalizationContext.deep_task_required",
+    "boundary":"Native ChatGPT paths that do not invoke the repository finalization gate cannot be claimed as physically fail-closed."
+  },
+  "depth_dimensions":[
+    {
+      "id":"A_GOVERNING_OUTCOME",
+      "requirement":"Recover the real outcome, distinguish the surface task from the underlying purpose/constraints/failure meaning, and do not preselect a problem layer."
+    },
+    {
+      "id":"B_PROFESSIONAL_PRACTICE_GAP",
+      "requirement":"Identify what top practitioners would investigate, measure, model, challenge or validate that the request did not explicitly ask for. At least one external professional-method source is required; same-model expertise claims alone are insufficient."
+    },
+    {
+      "id":"C_PRIMARY_OR_RAW_MATERIAL",
+      "requirement":"Prefer original logs, raw data, source code, traces, real samples, failed cases, historical versions, user behavior, experiment outputs or original interface results over digested summaries."
+    },
+    {
+      "id":"D_METHODS_AND_TOOLS",
+      "requirement":"Bind conclusions to concrete professional methods/tools/models/databases/tests/simulators or evaluation frameworks; role-play or vocabulary changes are not substitutes."
+    },
+    {
+      "id":"E_UNKNOWN_DISCOVERY",
+      "requirement":"Search beyond the current hypothesis for latent variables, early signals, abnormal samples, uncovered scenarios, hidden constraints and capability gaps."
+    },
+    {
+      "id":"F_COMPETING_ALTERNATIVES_AND_FALSIFICATION",
+      "requirement":"Maintain at least two competing alternatives, state what evidence would make each wrong, and preserve actual falsification/red-team evidence before selecting a current preference."
+    },
+    {
+      "id":"G_STRETCH_WITH_FEASIBILITY",
+      "requirement":"A stretch target is optional. If used, treat it as a search constraint only and require benchmark/engineering/physical/experimental feasibility evidence before calling it achievable."
+    },
+    {
+      "id":"H_INDEPENDENT_JUDGE_AND_VALIDATION",
+      "requirement":"Use evidence outside same-model self-confidence: automatic tests, independent evaluator/tool, holdout data, replay, realistic runtime, benchmark or production observation. Require explicit acceptance criteria."
+    }
+  ],
+  "execution_principles":[
+    "Depth is measured by evidence directness, professional method quality, falsifiability, discovery of previously unmodeled factors and independence of validation; not by answer length or number of modules.",
+    "Do not create extra Agents, roles, documents, workflows or architecture layers unless their distinct tool/policy/context/output contract is itself evidence-justified.",
+    "The existing DELIBERATION_POLICY remains the sole cognition-stage authority. DeepTaskCase is an evidence admission profile, not another ordered reasoning workflow.",
+    "For problem cases, DeepTaskCase evidence and governing outcome must be consistent with the canonical CognitionCase rather than forming a parallel diagnosis.",
+    "If the evidence shows the existing task is already sufficiently deep, record the evidence-backed no-expansion conclusion instead of manufacturing extra work.",
+    "When the user requests an A-H report, render those dimensions explicitly; otherwise the protocol may operate internally and the user-facing answer should remain proportional to the task."
+  ],
+  "independent_method_basis":[
+    "NASA Systems Engineering Handbook: requirements verification matrix and validation planning",
+    "NIST AI RMF/TEVV: independent assessors, documented test sets/metrics/tools, deployment-like evaluation and production monitoring",
+    "SEI ATAM: business drivers, scenarios, risks, sensitivity points and tradeoffs for architecture evaluation",
+    "User-provided height/breadth/depth protocol treated as a candidate execution method and translated into evidence-based admission rather than literal role-play"
+  ]
+}
