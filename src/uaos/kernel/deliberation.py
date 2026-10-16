@@ -22,6 +22,12 @@ class HypothesisDisposition(str, Enum):
     REJECTED = "REJECTED"
 
 
+class CognitiveSearchMode(str, Enum):
+    LIGHTWEIGHT = "LIGHTWEIGHT"
+    CONTRASTIVE = "CONTRASTIVE"
+    STRUCTURED = "STRUCTURED"
+
+
 class RootScopeAdmissionError(RuntimeError):
     pass
 
@@ -58,6 +64,12 @@ class DeliberationDirective:
     external_research_required: bool
     counterexample_search_required: bool
     independent_verification_required: bool
+    search_mode: CognitiveSearchMode
+    min_hypotheses: int
+    min_action_candidates: int
+    no_change_baseline_required: bool
+    max_hypotheses: int
+    max_deliberation_rounds: int
     reason_codes: tuple[str, ...]
 
 
@@ -98,11 +110,30 @@ class ProblemHypothesis:
 
 
 @dataclass(frozen=True, slots=True)
+class ActionCandidate:
+    candidate_id: str
+    target_layer: ProblemLayer
+    statement: str
+    evidence_refs: tuple[str, ...]
+    tradeoff_refs: tuple[str, ...]
+    no_change_baseline: bool = False
+
+    def __post_init__(self) -> None:
+        if not self.candidate_id.strip() or not self.statement.strip():
+            raise ValueError("action candidate identity and statement are required")
+        if self.target_layer is ProblemLayer.UNKNOWN:
+            raise ValueError("action candidate target layer must be explicit")
+        if not self.evidence_refs or not self.tradeoff_refs:
+            raise ValueError("action candidate requires evidence and tradeoff references")
+
+
+@dataclass(frozen=True, slots=True)
 class RootScopeAssessment:
     hypotheses: tuple[ProblemHypothesis, ...]
     selected_hypothesis_id: str
     architecture_reassessment_refs: tuple[str, ...] = ()
     direct_user_or_external_claim_promoted_without_test: bool = False
+    action_candidates: tuple[ActionCandidate, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -114,10 +145,35 @@ class RootScopeReceipt:
     architecture_reassessment_performed: bool
     durable_problem_record_required: bool
     evidence_refs: tuple[str, ...]
+    search_mode: CognitiveSearchMode = CognitiveSearchMode.LIGHTWEIGHT
+    action_candidate_count: int = 0
+
+
+def _structured_search_required(signals: DeliberationSignals) -> bool:
+    return any((
+        signals.repeated_failure_count >= 2,
+        signals.scope_expanding,
+        signals.cross_subsystem,
+        signals.complexity_increasing,
+        signals.conflicting_evidence,
+        signals.unknown_failure_class,
+        signals.knowledge_gap,
+        signals.architecture_gap,
+        signals.high_risk,
+        signals.material_problem,
+    ))
+
+
+def _contrastive_search_required(signals: DeliberationSignals) -> bool:
+    return any((
+        signals.user_correction,
+        signals.change_proposal,
+        signals.goal_progress_uncertain,
+    ))
 
 
 def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
-    """Select evidence/method depth while leaving framing/questions dynamic."""
+    """Select bounded evidence/search depth while leaving framing/questions dynamic."""
 
     reasons: list[str] = []
     if signals.user_correction:
@@ -162,9 +218,27 @@ def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
         signals.material_problem,
     ))
 
+    if _structured_search_required(signals):
+        search_mode = CognitiveSearchMode.STRUCTURED
+    elif _contrastive_search_required(signals):
+        search_mode = CognitiveSearchMode.CONTRASTIVE
+    else:
+        search_mode = CognitiveSearchMode.LIGHTWEIGHT
+
     macro = problem_detected or any((signals.scope_expanding, signals.cross_subsystem))
     assumptions = problem_detected
-    external = problem_detected
+    # External research is evidence-driven, not a ritual for every one-off local defect.
+    external = any((
+        signals.repeated_failure_count >= 2,
+        signals.scope_expanding,
+        signals.cross_subsystem,
+        signals.conflicting_evidence,
+        signals.unknown_failure_class,
+        signals.knowledge_gap,
+        signals.architecture_gap,
+        signals.high_risk,
+        signals.material_problem,
+    ))
     counterexample = any((
         signals.change_proposal,
         signals.user_correction,
@@ -180,6 +254,23 @@ def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
         signals.material_problem,
     ))
 
+    min_hypotheses = 1
+    min_action_candidates = 0
+    no_change_baseline_required = False
+    max_hypotheses = 3
+    max_rounds = 1
+    if search_mode is CognitiveSearchMode.CONTRASTIVE:
+        min_hypotheses = 2
+        min_action_candidates = 2
+        max_hypotheses = 5
+        max_rounds = 2
+    elif search_mode is CognitiveSearchMode.STRUCTURED:
+        min_hypotheses = 2
+        min_action_candidates = 3
+        no_change_baseline_required = True
+        max_hypotheses = 7
+        max_rounds = 3
+
     return DeliberationDirective(
         required=required,
         micro_diagnosis_required=required,
@@ -188,6 +279,12 @@ def assess_deliberation(signals: DeliberationSignals) -> DeliberationDirective:
         external_research_required=external,
         counterexample_search_required=counterexample,
         independent_verification_required=independent,
+        search_mode=search_mode,
+        min_hypotheses=min_hypotheses,
+        min_action_candidates=min_action_candidates,
+        no_change_baseline_required=no_change_baseline_required,
+        max_hypotheses=max_hypotheses,
+        max_deliberation_rounds=max_rounds,
         reason_codes=tuple(reasons),
     )
 
@@ -264,14 +361,9 @@ def require_root_scope_admission(
     evidence: DeliberationEvidence,
     assessment: RootScopeAssessment,
 ) -> RootScopeReceipt:
-    """Admit action only after the problem layer is evidence-tested rather than assumed.
+    """Admit action only after bounded hypothesis/action search and evidence-tested root scope."""
 
-    The user's framing, an external method, and the first repairable symptom are evidence,
-    not authority. Material/systemic problems must compare competing hypotheses across
-    layers and explicitly test whether the architecture/control plane is implicated.
-    """
-
-    require_deliberation_admission(signals, evidence)
+    directive = require_deliberation_admission(signals, evidence)
 
     if assessment.direct_user_or_external_claim_promoted_without_test:
         raise RootScopeAdmissionError(
@@ -281,6 +373,14 @@ def require_root_scope_admission(
         raise RootScopeAdmissionError("root-scope admission requires hypotheses")
     if len({item.hypothesis_id for item in assessment.hypotheses}) != len(assessment.hypotheses):
         raise RootScopeAdmissionError("hypothesis identifiers must be unique")
+    if len(assessment.hypotheses) < directive.min_hypotheses:
+        raise RootScopeAdmissionError(
+            f"{directive.search_mode.value.lower()} cognition requires at least {directive.min_hypotheses} hypotheses"
+        )
+    if len(assessment.hypotheses) > directive.max_hypotheses:
+        raise RootScopeAdmissionError(
+            f"bounded cognition permits at most {directive.max_hypotheses} hypotheses for this mode"
+        )
 
     selected = [
         item for item in assessment.hypotheses
@@ -290,6 +390,18 @@ def require_root_scope_admission(
         raise RootScopeAdmissionError("exactly one selected hypothesis must match selected_hypothesis_id")
     if sum(item.disposition is HypothesisDisposition.SELECTED for item in assessment.hypotheses) != 1:
         raise RootScopeAdmissionError("exactly one hypothesis may be SELECTED")
+
+    if directive.min_action_candidates:
+        if len(assessment.action_candidates) < directive.min_action_candidates:
+            raise RootScopeAdmissionError(
+                f"{directive.search_mode.value.lower()} cognition requires at least {directive.min_action_candidates} action candidates"
+            )
+        if len({item.candidate_id for item in assessment.action_candidates}) != len(assessment.action_candidates):
+            raise RootScopeAdmissionError("action candidate identifiers must be unique")
+    if directive.no_change_baseline_required and not any(
+        item.no_change_baseline for item in assessment.action_candidates
+    ):
+        raise RootScopeAdmissionError("structured cognition requires an explicit NO_CHANGE baseline candidate")
 
     systemic = architecture_reassessment_required(signals)
     compared_layers = tuple(sorted({item.layer for item in assessment.hypotheses}, key=lambda x: x.value))
@@ -322,6 +434,8 @@ def require_root_scope_admission(
         *selected[0].supporting_evidence_refs,
         *selected[0].falsification_or_rejection_refs,
         *assessment.architecture_reassessment_refs,
+        *(ref for candidate in assessment.action_candidates for ref in candidate.evidence_refs),
+        *(ref for candidate in assessment.action_candidates for ref in candidate.tradeoff_refs),
     }))
     return RootScopeReceipt(
         selected_hypothesis_id=selected[0].hypothesis_id,
@@ -331,4 +445,6 @@ def require_root_scope_admission(
         architecture_reassessment_performed=bool(assessment.architecture_reassessment_refs),
         durable_problem_record_required=durable_problem_record_required(signals),
         evidence_refs=evidence_refs,
+        search_mode=directive.search_mode,
+        action_candidate_count=len(assessment.action_candidates),
     )
