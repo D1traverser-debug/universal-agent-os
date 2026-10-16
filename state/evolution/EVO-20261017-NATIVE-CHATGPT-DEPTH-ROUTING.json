@@ -2,41 +2,52 @@
   "schema_version":"1.2",
   "evolution_id":"EVO-20261017-NATIVE-CHATGPT-DEPTH-ROUTING",
   "authority":"UAOS",
-  "status":"EVALUATED__CANDIDATE_PENDING",
-  "updated_at":"2026-10-17T00:52:07+08:00",
+  "status":"PROMOTED__PRODUCTION_REREAD_VERIFIED",
+  "updated_at":"2026-10-17T01:13:27+08:00",
   "trigger":["USER_CORRECTION","CAPABILITY_GAP","HOST_BOOTSTRAP_GAP","DEEP_TASK_TRIGGER_INVOCATION_GAP"],
   "failure_class":"FC-NATIVE-CHATGPT-DEPTH-ROUTING-USER-DEPENDENT-015",
   "governing_outcome":"In native ChatGPT sessions, the Agent—not the user—must carry the routine responsibility to assess the required execution depth on every selected-context turn, proactively escalating to current UAOS DeepTask/cognition/evolution mechanisms when warranted, while simple tasks remain lightweight and repository authority remains singular.",
   "raw_evidence":[
-    "config/SESSION_INTERACTION_POLICY.json currently defines always-on problem detection but no equally explicit every-turn non-problem execution-depth sentinel.",
-    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md currently activates canonical cognition for problems/corrections/knowledge gaps but does not explicitly require independent DeepTask semantic assessment on every request.",
-    "src/uaos/kernel/deep_task.py already defines semantic DeepTaskSignals and non-explicit material escalation; the kernel therefore exposes the required mechanism but the native ChatGPT session/bootstrap path does not explicitly own invocation responsibility.",
-    "CURRENT_SYSTEM.json explicitly records NATIVE_CHATGPT_PRE_SEND_AND_PRE_TOOL_MEDIATION_REMAINS_UNVERIFIED, so the repair must improve behavioral invocation without making a physical non-bypassability claim."
+    "Pre-change SESSION_INTERACTION_POLICY defined always-on problem detection but no equally explicit every-turn non-problem execution-depth sentinel.",
+    "Pre-change CHATGPT_CUSTOM_INSTRUCTIONS activated canonical cognition for problems/corrections/knowledge gaps but did not explicitly assign independent DeepTask semantic assessment on every request.",
+    "src/uaos/kernel/deep_task.py already defined semantic DeepTaskSignals and non-explicit material escalation, proving the missing mechanism was invocation responsibility rather than a missing DeepTask kernel.",
+    "CURRENT_SYSTEM.json explicitly preserved NATIVE_CHATGPT_PRE_SEND_AND_PRE_TOOL_MEDIATION_REMAINS_UNVERIFIED, constraining the repair to behavioral invocation assurance rather than a false physical guarantee."
   ],
   "professional_method_evidence":[
-    "OpenAI Help Center states Custom Instructions are direct guidance applied across chats; this supports using them as a persistent compact bootstrap/activation pointer.",
-    "OpenAI Help Center states Memory selects relevant context rather than searching/using every historical detail on every response; this supports not relying on Memory alone for the control-plane bootstrap.",
-    "UAOS's existing single-owner cognition architecture requires session/host surfaces to activate canonical mechanisms rather than copy their detailed semantics."
+    "OpenAI Help Center documents Custom Instructions as direct guidance applied across chats, supporting a persistent compact bootstrap pointer.",
+    "OpenAI Help Center documents Memory as relevance-selected rather than a guaranteed every-detail/every-response retrieval mechanism, so Memory alone is not a deterministic bootstrap substitute.",
+    "UAOS single-owner cognition architecture requires session/host surfaces to activate canonical mechanisms rather than copy their detailed semantics."
   ],
   "architecture_candidates":[
-    {"id":"NO_CHANGE","disposition":"REJECTED","falsification":"Would only be acceptable if current native-session bootstrap already required independent every-turn non-problem depth classification; repository evidence shows it does not."},
-    {"id":"CUSTOM_INSTRUCTIONS_FULL_POLICY_COPY","disposition":"REJECTED","falsification":"Would only be acceptable if duplication could not drift from repository authority; the repository explicitly treats Custom Instructions as non-authoritative bootstrap-only."},
-    {"id":"NEW_CLASSIFIER_OR_SECOND_COGNITION_OWNER","disposition":"REJECTED","falsification":"Would only be necessary if DeepTask semantic activation did not already exist; src/uaos/kernel/deep_task.py already provides it."},
-    {"id":"SESSION_EXECUTION_DEPTH_SENTINEL_PLUS_COMPACT_BOOTSTRAP_POINTER","disposition":"PREFERRED","falsification":"Reject if it requires duplicating DeepTask semantics, increases simple-task cost materially, or cannot preserve the native-host assurance boundary."}
+    {"id":"NO_CHANGE","disposition":"REJECTED","falsification":"Would only be acceptable if native-session authority already required independent every-turn non-problem depth classification; repository evidence showed it did not."},
+    {"id":"CUSTOM_INSTRUCTIONS_FULL_POLICY_COPY","disposition":"REJECTED","falsification":"Would only be acceptable if duplication could not drift from repository authority; bootstrap-only invariants and Codex review showed this would create a stale second source."},
+    {"id":"NEW_CLASSIFIER_OR_SECOND_COGNITION_OWNER","disposition":"REJECTED","falsification":"Would only be necessary if DeepTask semantic activation did not already exist; src/uaos/kernel/deep_task.py already provided it."},
+    {"id":"SESSION_EXECUTION_DEPTH_SENTINEL_PLUS_COMPACT_BOOTSTRAP_POINTER","disposition":"PREFERRED","falsification":"Reject if it duplicated cognition ownership, made simple tasks permanently deep, violated existing bootstrap/no-op invariants, exceeded account instruction limits, or overclaimed native-host physical enforcement. Candidate tests and independent review found none of those conditions after repair."}
   ],
-  "selected_architecture":"ADD_SESSION_LEVEL_ALWAYS_ON_LIGHTWEIGHT_EXECUTION_DEPTH_SENTINEL__SELF_DERIVE_CURRENT_DEEP_TASK_SEMANTIC_SIGNALS__EXPLICIT_USER_DEPTH_IS_FORCE_OVERRIDE_NOT_PRIMARY_CLASSIFIER__CUSTOM_INSTRUCTIONS_ONLY_BOOTSTRAP_AND_ACTIVATION_POINTER__NO_SECOND_COGNITION_OWNER",
-  "independent_judge_plan":[
-    "Repository contract tests will require the session policy to state every-turn self-classification and the Custom Instructions pointer to state user-independent depth assessment.",
-    "Tests will also reject detailed A-H duplication in the Custom Instructions pointer and retain explicit native-host non-bypassability limits.",
-    "PR CI/promotion-gate will be the independent repository judge before production promotion."
+  "selected_architecture":"ADD_SESSION_LEVEL_ALWAYS_ON_LIGHTWEIGHT_EXECUTION_DEPTH_SENTINEL__SELF_DERIVE_CURRENT_DEEP_TASK_SEMANTIC_SIGNALS__EXPLICIT_USER_DEPTH_IS_FORCE_OVERRIDE_NOT_PRIMARY_CLASSIFIER__CUSTOM_INSTRUCTIONS_BOOTSTRAP_ONLY_WITH_SELF_CLASSIFICATION_ACTIVATION__NO_SECOND_COGNITION_OWNER",
+  "independent_judge_evidence":[
+    "PR #69 promotion-gate CI #342 succeeded on candidate head 8cb96043f85883640d304ea0e5d1c1526c6c33a8.",
+    "Codex rereview on the same candidate head completed with has_any_findings=false and has_unresolved_findings=false.",
+    "Earlier Codex review findings materially changed the candidate: existing bootstrap/no-op/enforcement contracts were restored, a premature self-judged DeepTask admission regression was removed, and the pointer was reduced to the 1500-character all-plan floor with a mechanical budget test."
+  ],
+  "promotion_evidence":[
+    "PR #69 merged to main as 276d8044028658c49fef788235ff3aefee6bc3f2.",
+    "Production push CI #343 succeeded for the merge commit."
+  ],
+  "post_promotion_observation":[
+    "Production reread confirmed config/SESSION_INTERACTION_POLICY.json policy 2.2.0 includes always_on_execution_depth_sentinel with user-independent semantic assessment, mandatory explicit-depth override, lightweight clear path, triggered DeepTask path and dynamic reclassification.",
+    "Production reread confirmed docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md contains the single compact bootstrap-only pointer and does not copy the DeepTask evidence profile.",
+    "Production reread confirmed CURRENT_SYSTEM.json projects the same self-classification behavior and still states native ChatGPT physical complete mediation is not claimed."
   ],
   "acceptance_criteria":[
-    "Every selected-context request is independently assessed for execution depth, even when the user does not label the task.",
-    "Explicit deeper-not-larger wording remains a mandatory override but is not the sole trigger.",
-    "Problem detection and execution-depth routing stay separate lightweight sentinels feeding the same canonical cognition/deep-task authority.",
-    "Custom Instructions stay compact and non-authoritative.",
-    "No physical complete-mediation claim is added for native ChatGPT.",
-    "Candidate CI and production reread pass."
+    "Every selected-context request is independently assessed for execution depth, even when the user does not label the task — VERIFIED.",
+    "Explicit deeper-not-larger wording remains a mandatory override but is not the sole trigger — VERIFIED.",
+    "Problem detection and execution-depth routing remain separate lightweight sentinels feeding the same canonical cognition/deep-task authority — VERIFIED.",
+    "Custom Instructions remain compact, bootstrap-only and non-authoritative — VERIFIED.",
+    "The canonical pointer fits the 1500-character current all-plan floor — VERIFIED BY CONTRACT TEST AND CI.",
+    "No physical complete-mediation claim is added for native ChatGPT — VERIFIED.",
+    "Candidate CI, independent review, production CI and production reread passed — VERIFIED."
   ],
-  "next_action":"Implement and test the preferred architecture on the candidate branch, then promote only if checks and production reread succeed."
+  "known_boundary":"Native ChatGPT still has no verified repository-controlled non-bypassable semantic-signal injector or pre-send/pre-tool hook. This evolution establishes the strongest truthful behavioral/session assurance available without a controlled Host, not a physical guarantee.",
+  "next_action":"Observe real use. Any future missed escalation is new runtime evidence for this failure class or a successor; do not infer perfect native-host enforcement from this promotion."
 }
