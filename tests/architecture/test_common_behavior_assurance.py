@@ -22,9 +22,10 @@ def test_financial_parent_guidance_is_resolved_as_common_outcomes_not_financial_
     assert decisions["INHERITANCE_BEHAVIOR_VS_DECLARATION"].startswith("PROMOTE_COMMON_ASSURANCE_RULE")
     assert decisions["DECLARATION_TO_OPERATION_GAP"].startswith("PROMOTE_AS_UMBRELLA_COMMON_FAILURE_CLASS")
     assert "RECOMMENDATION_ONLY" in decisions["PROBLEM_TO_ACTION_CLOSURE_GAP"]
-    assert "ROOT_SCOPE" in decisions["PREMATURE_REPAIR_BEFORE_ROOT_SCOPE"]
+    assert "CAUSAL_INTERVENTION_1_4" in decisions["PREMATURE_REPAIR_BEFORE_ROOT_SCOPE"]
+    assert "MULTIPLE_EVIDENCE_SUPPORTED_CONTRIBUTING_CAUSES" in decisions["SINGULAR_ROOT_CAUSE_COMPRESSION"]
 
-    assert _version_tuple(policy["contract_version"]) >= (1, 3, 0)
+    assert _version_tuple(policy["contract_version"]) >= (1, 4, 0)
     assert policy["observable_inheritance_assurance"]["no_uniform_probe_implementation"] is True
     assert policy["adoption_and_compatibility"]["no_parent_microscheduler"] is True
     assert "FORCE_FINANCIAL_WRITINGS_EXACT_RECOVERY_ORDER_ON_OTHER_DOMAINS" in policy["recover_before_user_escalation"]["forbidden"]
@@ -34,15 +35,18 @@ def test_common_behavior_keeps_cognition_invariants_without_duplicating_the_stat
     policy = _json("config/COMMON_BEHAVIOR_ASSURANCE.json")
     transaction = policy["problem_cognition_action_transaction"]
     assert transaction["canonical_cognition_policy_ref"] == "config/DELIBERATION_POLICY.json#cognition_kernel"
+    assert transaction["parent_cognition_case_executable_ref"] == "src/uaos/kernel/cognition_case.py#require_cognition_case_admission"
     assert "ordered_stages" not in transaction
     assert "rules" not in transaction
     invariants = "\n".join(transaction["required_cross_domain_invariants"]).lower()
     assert "user/external/first-fix" in invariants
-    assert "root scope precedes repair" in invariants
+    assert "multiple contributing causes" in invariants
+    assert "causal explanation is separated from intervention selection" in invariants
     assert "evolution/learning disposition" in invariants
-    assert "durable causal evidence" in invariants
+    assert "durable causal and decision evidence" in invariants
+    assert "verification/validation trace" in invariants
     assert "recommendation-only" in invariants
-    assert "do not copy a second parent cognition state machine" in transaction["owner_native_rule"].lower()
+    assert "do not copy the parent's cognitioncase data structure" in transaction["owner_native_rule"].lower()
 
 
 def test_declaration_is_not_operational_proof_and_user_escalation_has_safe_boundary():
@@ -69,11 +73,11 @@ def test_problem_to_action_closure_is_downstream_of_cognitive_admission():
     assert closure["executable_ref"] == "src/uaos/kernel/problem_closure.py"
     assert closure["terminal_states"] == ["REPAIR_EXECUTED", "BLOCKED_WITH_REASON", "NO_CHANGE_WITH_EVIDENCE"]
     repair_rule = closure["repair_now_rule"].lower()
-    assert "root-scope cognition" in repair_rule
+    assert "causal/intervention cognition" in repair_rule
     assert "evolution disposition" in repair_rule
     assert "must attempt the repair" in repair_rule
     assert "before finalizing" in repair_rule
-    assert "before root-scope admission" in closure["premature_action_rule"].lower()
+    assert "before causal/intervention admission" in closure["premature_action_rule"].lower()
 
 
 def test_child_evolution_interface_standardizes_discoverability_not_internal_state_machine():
@@ -87,7 +91,7 @@ def test_child_evolution_interface_standardizes_discoverability_not_internal_sta
     assert "child-owned" in interface["ownership_rule"]
 
 
-def test_causal_problem_history_preserves_root_scope_and_learning_without_forcing_heavy_logs():
+def test_causal_problem_history_preserves_multi_factor_causality_and_vv_without_forcing_heavy_logs():
     policy = _json("config/COMMON_BEHAVIOR_ASSURANCE.json")
     history = policy["causal_problem_history_preservation"]
 
@@ -96,9 +100,11 @@ def test_causal_problem_history_preserves_root_scope_and_learning_without_forcin
     assert "symptom" in semantics
     assert "micro diagnosis" in semantics
     assert "macro goal/topology" in semantics
-    assert "competing hypotheses" in semantics
-    assert "root-scope receipt" in semantics
-    assert "verification" in semantics
+    assert "competing causal factors" in semantics
+    assert "supported contributing causes" in semantics
+    assert "selected bounded intervention/no-change" in semantics
+    assert "verification evidence" in semantics
+    assert "validation evidence" in semantics
     assert "remaining unknowns" in semantics
     assert "small local defects" in history["compression_rule"].lower()
     assert "must not be silently rewritten out of history" in history["failed_path_rule"].lower()
@@ -111,8 +117,8 @@ def test_binding_and_current_system_reference_common_behavior_assurance():
     assert binding["common_behavior_assurance_policy"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
     assert "DECLARATION_OF_COMMON_CAPABILITY_INHERITANCE_IS_NOT_OPERATIONAL_PROOF" in binding["operational_behavior_assurance_rule"]
     assert "PROPORTIONATE_LAWFUL_RECOVERY" in binding["recover_before_user_escalation_rule"]
-    assert "ROOT_SCOPE_ADMISSION" in binding["problem_cognition_action_rule"]
-    assert "ONLY_AFTER_ROOT_SCOPE_ADMISSION" in binding["problem_action_closure_rule"]
+    assert "CANONICAL_CAUSAL_INTERVENTION_ADMISSION" in binding["problem_cognition_action_rule"]
+    assert "TERMINAL_REPAIR_OR_NO_CHANGE_MUST_MATCH_THE_ADMITTED_INTERVENTION" in binding["problem_action_closure_rule"]
     assert "ONE_CANONICAL_OWNER_NATIVE_EVIDENCE_ENTRYPOINT" in binding["evolution_evidence_interface_rule"]
     assert "EVOLUTION_RELEVANT_OR_MATERIAL_DETECTED_PROBLEM" in binding["causal_problem_history_rule"]
     assert binding["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
@@ -121,8 +127,8 @@ def test_binding_and_current_system_reference_common_behavior_assurance():
     assert owners["common_behavior_assurance"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
     assert owners["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
     assert owners["domain_health_index"] == "state/DOMAIN_HEALTH_INDEX.json"
-    assert "COMMON_BEHAVIOR_1_3" in current["assurance"]["parent_core"]
-    assert "ROOT_SCOPE_ADMISSION" in current["assurance"]["problem_action_closure"]
+    assert "COMMON_BEHAVIOR_1_4" in current["assurance"]["parent_core"]
+    assert "CAUSAL_INTERVENTION" in current["assurance"]["problem_action_closure"]
 
 
 def test_child_observations_live_only_in_parent_health_cache_not_current_system():
