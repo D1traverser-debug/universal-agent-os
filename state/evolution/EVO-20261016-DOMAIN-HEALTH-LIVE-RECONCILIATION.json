@@ -28,9 +28,10 @@
     "EVO-20261015-DOMAIN-HEALTH-ESCALATION-GOVERNANCE was reconciled to its real PR #31/#32 production history rather than left promotion-pending."
   ],
   "verification_history":[
-    {"stage":"FIRST_CANDIDATE","head":"039cae795c518443ee6e60a8e1b26378e2f7347f","domain_health_live_audit":{"run_id":38899160275,"run_number":1,"conclusion":"success"},"full_ci":{"run_id":38899159909,"run_number":255,"conclusion":"failure","finding":"Legacy fresh-chat regression incorrectly asserted every current controller task must be COMPLETE, conflicting with reusable persisted controller maintenance semantics."},"repair":"Updated the regression to require completed tasks be nonresumable while allowing exactly one active resumable default controller task; resolver semantics were not weakened."},
+    {"stage":"FIRST_CANDIDATE","head":"039cae795c518443ee6e60a8e1b26378e2f7347f","domain_health_live_audit":{"run_id":38899160275,"run_number":1,"conclusion":"success"},"full_ci":{"run_id":38899159909,"run_number":255,"conclusion":"failure","finding":"Legacy fresh-chat regression incorrectly asserted every current controller task must be COMPLETE, conflicting with reusable persisted controller maintenance semantics."},"repair":"Updated the regression to require completed tasks be nonresumable while allowing an active resumable default controller task; resolver semantics were not weakened."},
     {"stage":"POST_TEST_REPAIR","head":"2a5e5a3b841d4bff071b988d6a2649fef678eb6d","full_ci":{"run_id":38899314053,"run_number":256,"conclusion":"success"},"domain_health_live_audit":{"run_id":38899313583,"run_number":2,"conclusion":"success"}},
-    {"stage":"FINAL_CANDIDATE_WITH_MAIN_PUSH_OBSERVATION","head":"2e7a223c1efafde2fdaf786e94f267c759a7d5ff","full_ci":{"run_id":38899419971,"run_number":257,"conclusion":"success"},"domain_health_live_audit":{"run_id":38899420163,"run_number":3,"conclusion":"success"}}
+    {"stage":"FINAL_CANDIDATE_WITH_MAIN_PUSH_OBSERVATION","head":"2e7a223c1efafde2fdaf786e94f267c759a7d5ff","full_ci":{"run_id":38899419971,"run_number":257,"conclusion":"success"},"domain_health_live_audit":{"run_id":38899420163,"run_number":3,"conclusion":"success"}},
+    {"stage":"CLOSURE_REGRESSION_HARDENING","finding":"The post-repair regression still assumed there must always be exactly one active default controller task, which would make normal task completion fail CI.","repair":"Made the durable invariant lifecycle-neutral: completed tasks are nonresumable, current index allows zero or one active default, zero returns controller root and one resumes it."}
   ],
   "promotion":{
     "status":"PROMOTED_AND_OBSERVED",
@@ -49,7 +50,7 @@
     "topology_drift_fail_closed":"PASS",
     "full_repository_regression":"PASS__CI_257_CANDIDATE_AND_CI_258_PRODUCTION",
     "production_live_observation":"PASS__DOMAIN_HEALTH_LIVE_AUDIT_4",
-    "controller_maintenance_closure":"PENDING_CLOSURE_PR_PROMOTION"
+    "controller_maintenance_closure":"PASS__CLOSURE_CANDIDATE_MARKS_TASK_COMPLETE_NONRESUMABLE_AND_REGRESSION_ALLOWS_ZERO_OR_ONE_ACTIVE_DEFAULT__FINAL_PRODUCTION_REREAD_REQUIRED"
   },
   "remaining_observation":[
     "FC-PARENT-GUIDANCE-SINGLE-QUEUE-BLOCKING-RISK-003 remains live multi-upcall concurrency observation; non-conflicting triage is implemented but real concurrent parent-guidance traffic is not claimed as fully observed.",
