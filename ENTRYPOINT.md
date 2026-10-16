@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE`
-System release: `2.5.2`
-Authority updated at: `2026-10-16T17:37:00+08:00`
+System release: `2.5.3`
+Authority updated at: `2026-10-16T18:26:30+08:00`
 
 ## Minimal bootstrap
 
