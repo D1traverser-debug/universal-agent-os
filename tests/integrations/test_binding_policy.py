@@ -56,6 +56,27 @@ def test_consistent_binding_passes():
     validate(*base_objects())
 
 
+def test_owner_native_work_plane_status_and_established_parent_aliases_pass():
+    registry, adapter, manifest, capabilities, skill = base_objects()
+    adapter = {
+        "parent_control_plane": POLICY.controller,
+        "status": "DIRECT_DOMAIN_WORK_PLANE_ACTIVE",
+        "binding_status": POLICY.required_adapter_status,
+    }
+    manifest = {
+        "parent_control_plane": POLICY.controller,
+        "status": "DIRECT_DOMAIN_WORK_PLANE_ACTIVE",
+        "binding_status": POLICY.required_manifest_status,
+        "skill": {"entrypoint": registry["skill_ref"]},
+        "binding": {
+            "parent_system_ref": POLICY.controller_ref,
+            "adapter_ref": registry["uaos_adapter_ref"],
+            "capability_ref": registry["capability_ref"],
+        },
+    }
+    validate(registry, adapter, manifest, capabilities, skill)
+
+
 @pytest.mark.parametrize(
     "target",
     [
