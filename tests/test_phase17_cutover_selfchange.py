@@ -45,5 +45,5 @@ def test_controlled_self_change_really_rolls_back_and_retires(tmp_path):
     result = run_self_change_drill(tmp_path / "drill", run_id="test")
     assert result.recommendation == "ROLLBACK"
     assert result.final_state is ProposalState.RETIRED
-    assert result.ledger_events == 6
+    assert result.ledger_events == 8
     assert (tmp_path / "drill" / "policy.txt").read_text(encoding="utf-8") == "mode=stable\n"
