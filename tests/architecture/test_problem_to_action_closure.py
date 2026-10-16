@@ -182,5 +182,5 @@ def test_binding_and_current_system_expose_cognitive_action_contract():
     binding = _json("config/BINDING_POLICY.json")
     current = _json("CURRENT_SYSTEM.json")
     assert "ROOT_SCOPE_ADMISSION" in binding["problem_cognition_action_rule"]
-    assert "COMMON_BEHAVIOR_ASSURANCE_1_3" in current["common_behavior_assurance_contract"]
-    assert "ROOT_SCOPE_ADMISSION" in current["problem_action_closure_assurance"]
+    assert current["owners"]["common_behavior_assurance"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
+    assert "ROOT_SCOPE_ADMISSION" in current["assurance"]["problem_action_closure"]
