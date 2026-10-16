@@ -19,6 +19,7 @@ def test_deep_task_profile_is_owned_by_canonical_deliberation_not_a_second_state
     assert deep["profile_ref"] == "config/DEEP_TASK_EXECUTION_PROFILE.json"
     assert deep["relationship_to_cognition_kernel"] == "EVIDENCE_ADMISSION_PROFILE_ONLY__NO_SECOND_ORDERED_COGNITION_STATE_MACHINE"
     assert system_map["controller"]["deep_task_execution_profile"] == "config/DEEP_TASK_EXECUTION_PROFILE.json"
+    assert profile["executable_trigger"] == "src/uaos/kernel/deep_task.py#assess_deep_task_requirement"
     assert profile["executable_admission"] == "src/uaos/kernel/deep_task.py#require_deep_task_admission"
     assert profile["controlled_finalization"] == "src/uaos/runtime/finalization.py#admit_final_response"
 
@@ -38,6 +39,8 @@ def test_profile_covers_all_user_requested_depth_dimensions():
     }
     activation = " ".join(profile["activation"]["required_when"]).lower()
     assert "explicitly asks for a deeper" in activation
+    assert "deeptasksignals" in profile["activation"]["semantic_signal_contract"].lower()
+    assert "without language-specific keyword matching" in profile["activation"]["semantic_signal_contract"].lower()
     principles = " ".join(profile["execution_principles"]).lower()
     assert "not by answer length" in principles
     assert "second cognition state machine" in principles
