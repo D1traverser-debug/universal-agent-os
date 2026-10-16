@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "evolution_id": "EVO-20261016-EVIDENCE-BOUND-COGNITION-CLAIMS",
+  "authority": "UAOS",
+  "failure_class": "FC-SELF-REPORTED-COGNITION-WITHOUT-ADMISSION-EVIDENCE-007",
+  "status": "CANDIDATE_REPAIR__PRODUCTION_NOT_YET_PROMOTED",
+  "trigger": [
+    "USER_CORRECTION",
+    "REPEATED_FAILURE",
+    "ASSURANCE_GAP"
+  ],
+  "problem": "A final response can report Deliberation=TRIGGERED and an evolution state while the session adherence evaluator verifies only report text, not whether root-scope cognition admission, evolution disposition, and any required durable problem evidence actually exist.",
+  "cognition_evidence": {
+    "canonical_policy_ref": "config/DELIBERATION_POLICY.json#cognition_kernel",
+    "root_scope_executable_ref": "src/uaos/kernel/deliberation.py#require_root_scope_admission",
+    "evolution_closure_ref": "src/uaos/kernel/problem_closure.py",
+    "external_method_refs": [
+      "Google SRE Emergency Response: processes and rollback procedures must be tested rather than assumed",
+      "Google SRE Production Services Best Practices: automatically validate operational decisions and fix the environment rather than relying on people/process claims"
+    ]
+  },
+  "competing_hypotheses": [
+    {
+      "id": "H1_LOCAL_RESPONSE_OMISSION_ONLY",
+      "layer": "LOCAL_IMPLEMENTATION",
+      "disposition": "REJECTED_AS_COMPLETE_EXPLANATION",
+      "support": "The immediately prior answer explained concepts without fresh evidence of cognition execution.",
+      "falsification": "Repeated user corrections plus the evaluator implementation show a reusable path where report labels can pass without admission evidence."
+    },
+    {
+      "id": "H2_OBSERVABILITY_ASSURANCE_BINDING_GAP",
+      "layer": "COMMON_CAPABILITY",
+      "disposition": "SELECTED",
+      "support": "session_adherence.py parses report labels and state contradictions but, before this candidate, has no RootScopeReceipt or EvolutionDisposition evidence binding.",
+      "falsification": "The kernel already exposes typed RootScopeReceipt and EvolutionDisposition, so the gap can be closed without a second cognition controller or new SOP."
+    },
+    {
+      "id": "H3_SESSION_POLICY_MISSING_COGNITION_RULE",
+      "layer": "CONTROL_PLANE",
+      "disposition": "REJECTED",
+      "support": "Repeated live failures could suggest the policy never required cognition before problem closure.",
+      "falsification": "Session 1.9 already requires the canonical cognition transaction and root-scope/evolution admission before problem closure."
+    },
+    {
+      "id": "H4_HOST_PHYSICAL_INTERCEPTION_REQUIRED",
+      "layer": "HOST",
+      "disposition": "NOT_SELECTED__INSUFFICIENT_EVIDENCE",
+      "support": "Host-level interception could provide stronger non-bypassability.",
+      "falsification": "The observed false-positive can be explained and detected at the assurance layer without proving host interception is necessary."
+    }
+  ],
+  "root_scope": {
+    "selected_hypothesis": "H2_OBSERVABILITY_ASSURANCE_BINDING_GAP",
+    "selected_layer": "COMMON_CAPABILITY",
+    "architecture_reassessment_performed": true,
+    "durable_problem_record_required": true
+  },
+  "evolution_disposition": "DURABLE_EVOLUTION_CANDIDATE",
+  "candidate_change": {
+    "scope": "src/uaos/observability/session_adherence.py plus architecture tests",
+    "mechanism": "When cognition admission is required, report text cannot self-prove execution. The evaluator separately requires a typed RootScopeReceipt, a typed EvolutionDisposition, and a problem_record_ref when the receipt requires durable evidence.",
+    "anti_bloat": "No Session policy expansion, no new controller, no duplicated cognition state machine, no extra mandatory user-facing report field."
+  },
+  "known_execution_slips_during_repair": [
+    "Two rejected writes were attempted against nonexistent branches; GitHub rejected both and no repository mutation occurred.",
+    "A direct update_file mutation was blocked by connector safety checks; the candidate was then written atomically through Git blob/tree/commit/ref operations."
+  ],
+  "verification_required": [
+    "candidate CI",
+    "tests proving report text alone cannot satisfy cognition/evolution evidence",
+    "tests proving typed admitted evidence passes",
+    "tests proving required durable problem record cannot be omitted",
+    "production CI after merge",
+    "production reread"
+  ]
+}
