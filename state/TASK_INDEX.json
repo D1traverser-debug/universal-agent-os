@@ -3,8 +3,20 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-16T21:36:21+08:00",
+  "updated_at":"2026-10-16T22:04:22+08:00",
   "controller_tasks":[
+    {
+      "task_id":"uaos:maintenance:proactive-capability-evolution-audit-20261016",
+      "authority_context":"UAOS",
+      "task_type":"controller_maintenance",
+      "display_name_zh":"总控维护｜主动能力缺口发现与无事故进化链审计",
+      "status":"RUNNING",
+      "resume_eligible":true,
+      "default_resume":true,
+      "semantic_summary":"Audit and, if required, implement the proactive no-incident learning path: capability-gap discovery -> external learning -> evaluated candidate -> dogfood/eval -> governed promotion, without treating user framing or method prose as sufficient execution evidence.",
+      "current_stage":"AUDIT_ACTIVE__PROACTIVE_LEARNING_TRIGGER_AND_EXECUTION_CHAIN_UNDER_REVIEW",
+      "state_ref":"state/tasks/uaos-proactive-capability-evolution-audit-20261016.json"
+    },
     {
       "task_id":"uaos:maintenance:cognition-architecture-reassessment-20261016",
       "authority_context":"UAOS",
