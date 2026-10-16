@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.0",
-  "policy_version":"1.0.0",
+  "schema_version":"1.1",
+  "policy_version":"1.1.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-15T17:27:00+08:00",
-  "purpose":"Require material architecture work to be evaluated from lived execution scenarios and concern-appropriate representations before promotion, so architecture is not reduced to static description or to literal implementation of user examples.",
+  "updated_at":"2026-10-16T15:12:00+08:00",
+  "purpose":"Require material architecture work to be evaluated from lived execution scenarios, concern-appropriate representations and bounded competing candidates before promotion, so architecture is not reduced to static description or literal implementation of user examples.",
   "principles":[
     "USER_EXAMPLES_ARE_EVIDENCE_OR_CANDIDATE_HINTS_UNLESS_EXPLICITLY_STATED_AS_REQUIREMENTS",
     "ARCHITECTURE_IS_EVALUATED_BY_SCENARIOS_OF_REAL_USE_FAILURE_RECOVERY_AND_EVOLUTION_NOT_BY_DOCUMENT_COMPLETENESS_ALONE",
@@ -12,6 +12,7 @@
     "ORDERING_LIFECYCLE_RECOVERY_OR_HANDOFF_CONCERNS_REQUIRE_TEMPORAL_OR_BEHAVIORAL_EVIDENCE_WHEN_MATERIAL",
     "CURRENT_AGENT_DOGFOODING_IS_REQUIRED_FOR_MATERIAL_CONTROL_PLANE_OR_AGENT_EXPERIENCE_CHANGES",
     "SCENARIO_WALKTHROUGH_MUST_RECORD_EXPECTED_PROGRESS_SIGNALS_FAILURE_POINTS_AND_RECOVERY_PATHS",
+    "MATERIAL_CONTROL_PLANE_OR_AGENT_EXPERIENCE_CHANGES_REQUIRE_BOUNDED_COMPETING_ARCHITECTURE_CANDIDATES_AND_AN_EXPLICIT_NO_CHANGE_BASELINE",
     "ARCHITECTURE_CANDIDATES_ARE_COMPARED_AGAINST_GOVERNING_GOALS_AND_TRADEOFFS_BEFORE_SELECTION"
   ],
   "input_interpretation":{
@@ -19,22 +20,22 @@
     "promotion_rule":"An EXAMPLE, OBSERVATION or HYPOTHESIS must not become a binding architecture requirement merely because the user mentioned it. First recover the governing goal and test alternatives.",
     "ambiguity_rule":"When wording supplies both a goal and an illustrative mechanism, preserve the goal as authority and treat the mechanism as a candidate unless the user explicitly locks it."
   },
-  "scenario_classes":[
-    "PRIMARY_SUCCESS_PATH",
-    "FAILURE_AND_RECOVERY",
-    "RESUME_AFTER_INTERRUPTION",
-    "REQUIREMENT_CHANGE_OR_USER_CORRECTION",
-    "CROSS_DOMAIN_OR_HANDOFF_WHEN_APPLICABLE",
-    "MAINTENANCE_AND_EVOLUTION_WHEN_APPLICABLE",
-    "CURRENT_AGENT_DOGFOOD"
-  ],
+  "scenario_classes":["PRIMARY_SUCCESS_PATH","FAILURE_AND_RECOVERY","RESUME_AFTER_INTERRUPTION","REQUIREMENT_CHANGE_OR_USER_CORRECTION","CROSS_DOMAIN_OR_HANDOFF_WHEN_APPLICABLE","MAINTENANCE_AND_EVOLUTION_WHEN_APPLICABLE","CURRENT_AGENT_DOGFOOD"],
   "representation_families":{
     "STRUCTURAL":["AUTHORITY_MAP","CONTEXT_MAP","COMPONENT_VIEW","DEPENDENCY_GRAPH","DATA_OR_ARTIFACT_GRAPH"],
     "TEMPORAL_BEHAVIORAL":["SEQUENCE","STATE_MACHINE","EVENT_TRACE","LIFECYCLE","TIMELINE"],
     "CAUSAL_DECISION":["CAUSAL_GRAPH","DECISION_TABLE","TRADEOFF_MATRIX","QUALITY_ATTRIBUTE_SCENARIO"],
     "COGNITIVE_USE":["COGNITIVE_WALKTHROUGH","TASK_JOURNEY","RECOVERY_WALKTHROUGH"]
   },
-  "view_selection_rule":"Choose views from the actual concerns. Do not require every representation family on every change. A material concern about ownership/dependency needs structural evidence; a material concern about ordering/lifecycle/recovery/handoff needs temporal or behavioral evidence; a material usability/agent-operability concern needs a walkthrough or equivalent task journey.",
+  "view_selection_rule":"Choose views from actual concerns. Do not require every representation family on every change. Structural concerns need structural evidence; ordering/lifecycle/recovery/handoff concerns need temporal or behavioral evidence; agent-operability concerns need a walkthrough or equivalent task journey.",
+  "candidate_comparison":{
+    "scope":"MATERIAL_CONTROL_PLANE_OR_AGENT_EXPERIENCE_CHANGE",
+    "minimum_candidates":2,
+    "maximum_candidates":5,
+    "no_change_baseline_required":true,
+    "candidate_contract":["mechanism_summary","covered_concerns","tradeoff_evidence_refs"],
+    "anti_bloat":"Candidates are bounded comparison artifacts, not permanent Architect/Critic/Governor agents and not an unbounded debate loop."
+  },
   "walkthrough_questions":[
     "Does the acting Agent know the governing outcome at this step rather than merely a local mechanism?",
     "Can it discover the correct current authority/state/evidence without reconstructing from memory?",
