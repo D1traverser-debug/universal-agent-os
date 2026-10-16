@@ -1,0 +1,46 @@
+name: domain-health-live-audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'state/DOMAIN_HEALTH_INDEX.json'
+      - 'config/AGENT_REGISTRY.json'
+      - 'src/uaos/integrations/domain_health_live.py'
+      - 'src/uaos/kernel/domain_health.py'
+      - 'scripts/domain_health_audit.py'
+      - '.github/workflows/domain-health-live-audit.yml'
+  pull_request:
+    paths:
+      - 'state/DOMAIN_HEALTH_INDEX.json'
+      - 'config/AGENT_REGISTRY.json'
+      - 'src/uaos/integrations/domain_health_live.py'
+      - 'src/uaos/kernel/domain_health.py'
+      - 'scripts/domain_health_audit.py'
+      - '.github/workflows/domain-health-live-audit.yml'
+
+concurrency:
+  group: uaos-domain-health-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  live-child-revision-audit:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Install UAOS
+        run: python -m pip install -e .
+      - name: Compare registered child main revisions with parent health cache
+        run: python scripts/domain_health_audit.py --json

@@ -3,8 +3,20 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-16T18:36:00+08:00",
+  "updated_at":"2026-10-16T20:00:00+08:00",
   "controller_tasks":[
+    {
+      "task_id":"uaos:maintenance:domain-health-live-reconciliation-20261016",
+      "authority_context":"UAOS",
+      "task_type":"controller_maintenance",
+      "display_name_zh":"总控维护｜域健康实时巡检与生产后收口",
+      "status":"RUNNING",
+      "resume_eligible":true,
+      "default_resume":true,
+      "semantic_summary":"Repair recurrent parent health-observation drift by adding a read-only live acquisition/audit path over current registered child authority, reconciling stale health/evolution evidence through governed promotion, and keeping detection separate from production mutation.",
+      "current_stage":"ROOT_SCOPE_ADMITTED__LIVE_AUDIT_DESIGN_ACTIVE",
+      "state_ref":"state/tasks/uaos-domain-health-live-reconciliation-20261016.json"
+    },
     {
       "task_id":"uaos:maintenance:five-repo-semantic-continuity-closure-20261016",
       "authority_context":"UAOS",
