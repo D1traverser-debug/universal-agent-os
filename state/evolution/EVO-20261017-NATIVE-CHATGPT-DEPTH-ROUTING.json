@@ -1,0 +1,42 @@
+{
+  "schema_version":"1.2",
+  "evolution_id":"EVO-20261017-NATIVE-CHATGPT-DEPTH-ROUTING",
+  "authority":"UAOS",
+  "status":"EVALUATED__CANDIDATE_PENDING",
+  "updated_at":"2026-10-17T00:52:07+08:00",
+  "trigger":["USER_CORRECTION","CAPABILITY_GAP","HOST_BOOTSTRAP_GAP","DEEP_TASK_TRIGGER_INVOCATION_GAP"],
+  "failure_class":"FC-NATIVE-CHATGPT-DEPTH-ROUTING-USER-DEPENDENT-015",
+  "governing_outcome":"In native ChatGPT sessions, the Agent—not the user—must carry the routine responsibility to assess the required execution depth on every selected-context turn, proactively escalating to current UAOS DeepTask/cognition/evolution mechanisms when warranted, while simple tasks remain lightweight and repository authority remains singular.",
+  "raw_evidence":[
+    "config/SESSION_INTERACTION_POLICY.json currently defines always-on problem detection but no equally explicit every-turn non-problem execution-depth sentinel.",
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md currently activates canonical cognition for problems/corrections/knowledge gaps but does not explicitly require independent DeepTask semantic assessment on every request.",
+    "src/uaos/kernel/deep_task.py already defines semantic DeepTaskSignals and non-explicit material escalation; the kernel therefore exposes the required mechanism but the native ChatGPT session/bootstrap path does not explicitly own invocation responsibility.",
+    "CURRENT_SYSTEM.json explicitly records NATIVE_CHATGPT_PRE_SEND_AND_PRE_TOOL_MEDIATION_REMAINS_UNVERIFIED, so the repair must improve behavioral invocation without making a physical non-bypassability claim."
+  ],
+  "professional_method_evidence":[
+    "OpenAI Help Center states Custom Instructions are direct guidance applied across chats; this supports using them as a persistent compact bootstrap/activation pointer.",
+    "OpenAI Help Center states Memory selects relevant context rather than searching/using every historical detail on every response; this supports not relying on Memory alone for the control-plane bootstrap.",
+    "UAOS's existing single-owner cognition architecture requires session/host surfaces to activate canonical mechanisms rather than copy their detailed semantics."
+  ],
+  "architecture_candidates":[
+    {"id":"NO_CHANGE","disposition":"REJECTED","falsification":"Would only be acceptable if current native-session bootstrap already required independent every-turn non-problem depth classification; repository evidence shows it does not."},
+    {"id":"CUSTOM_INSTRUCTIONS_FULL_POLICY_COPY","disposition":"REJECTED","falsification":"Would only be acceptable if duplication could not drift from repository authority; the repository explicitly treats Custom Instructions as non-authoritative bootstrap-only."},
+    {"id":"NEW_CLASSIFIER_OR_SECOND_COGNITION_OWNER","disposition":"REJECTED","falsification":"Would only be necessary if DeepTask semantic activation did not already exist; src/uaos/kernel/deep_task.py already provides it."},
+    {"id":"SESSION_EXECUTION_DEPTH_SENTINEL_PLUS_COMPACT_BOOTSTRAP_POINTER","disposition":"PREFERRED","falsification":"Reject if it requires duplicating DeepTask semantics, increases simple-task cost materially, or cannot preserve the native-host assurance boundary."}
+  ],
+  "selected_architecture":"ADD_SESSION_LEVEL_ALWAYS_ON_LIGHTWEIGHT_EXECUTION_DEPTH_SENTINEL__SELF_DERIVE_CURRENT_DEEP_TASK_SEMANTIC_SIGNALS__EXPLICIT_USER_DEPTH_IS_FORCE_OVERRIDE_NOT_PRIMARY_CLASSIFIER__CUSTOM_INSTRUCTIONS_ONLY_BOOTSTRAP_AND_ACTIVATION_POINTER__NO_SECOND_COGNITION_OWNER",
+  "independent_judge_plan":[
+    "Repository contract tests will require the session policy to state every-turn self-classification and the Custom Instructions pointer to state user-independent depth assessment.",
+    "Tests will also reject detailed A-H duplication in the Custom Instructions pointer and retain explicit native-host non-bypassability limits.",
+    "PR CI/promotion-gate will be the independent repository judge before production promotion."
+  ],
+  "acceptance_criteria":[
+    "Every selected-context request is independently assessed for execution depth, even when the user does not label the task.",
+    "Explicit deeper-not-larger wording remains a mandatory override but is not the sole trigger.",
+    "Problem detection and execution-depth routing stay separate lightweight sentinels feeding the same canonical cognition/deep-task authority.",
+    "Custom Instructions stay compact and non-authoritative.",
+    "No physical complete-mediation claim is added for native ChatGPT.",
+    "Candidate CI and production reread pass."
+  ],
+  "next_action":"Implement and test the preferred architecture on the candidate branch, then promote only if checks and production reread succeed."
+}
