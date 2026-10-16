@@ -1,31 +1,51 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "task_id":"uaos:maintenance:deep-task-execution-protocol-20261016",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
   "status":"RUNNING",
-  "current_stage":"ARCHITECTURE_AND_EXECUTABLE_ADMISSION_IMPLEMENTATION_ACTIVE",
+  "current_stage":"CANDIDATE_DEEP_TASK_EXECUTION_PROFILE_FROZEN__FINAL_CHECKS_PENDING",
   "governing_goal":"Adopt the user-provided deep-task protocol as an actual UAOS execution contract for explicit depth requests and materially deep tasks, without creating a second cognition state machine. A deep task must be grounded in governing outcome, professional-practice gaps, primary/raw evidence, concrete methods/tools, unknown-signal search, competing alternatives and falsification, feasibility-bounded stretch targets, independent judge evidence, holdout/replay/production validation and explicit acceptance criteria before controlled finalization may claim completion.",
   "trigger":"USER_CORRECTION__PREVIOUS_ASSISTANT_CLAIMED_THE_PROTOCOL_WAS_ADOPTED_BEFORE_SYSTEM_LEVEL_ADOPTION_EXISTED",
   "failure_class":"FC-DEEP-TASK-PROTOCOL-VERBAL-ACCEPTANCE-WITHOUT-EXECUTABLE-ADOPTION-014",
   "starting_evidence":[
-    "DELIBERATION_POLICY 2.0 already covers governing outcome, competing hypotheses, falsification, external research, independent verification and V&V, but it has no one deep-task admission that requires the full evidence bundle for an explicit depth request.",
-    "EVOLUTION_POLICY 2.0 carries raw evidence/professional methods/novelty/external judge only for governed evolution, not for arbitrary deep research, design or decision tasks.",
-    "CognitionCase currently validates typed evidence, causal alternatives, intervention tradeoffs and V&V for problem cases, but a non-problem deep task can still finalize without proving the user-provided depth dimensions.",
-    "The previous assistant response described the protocol as accepted for material tasks without first persisting or enforcing that adoption."
+    "DELIBERATION_POLICY 2.0 already covered governing outcome, competing hypotheses, falsification, external research, independent verification and V&V, but no single deep-task admission required the full evidence bundle for an explicit depth request.",
+    "EVOLUTION_POLICY 2.0 carried raw evidence/professional methods/novelty/external judge only for governed evolution, not for arbitrary deep research, design or decision tasks.",
+    "CognitionCase validated typed evidence, causal alternatives, intervention tradeoffs and V&V for problem cases, but a non-problem deep task could finalize without proving the user-provided depth dimensions.",
+    "The assistant described the protocol as adopted before any repository authority, executable admission or runtime finalization gate had changed."
   ],
   "external_method_basis":[
-    "NASA Systems Engineering Handbook: requirements should be traceable to defined verification/validation methods and plans.",
-    "NIST AI RMF/TEVV: testing should document test sets, metrics and tools, involve independent assessors, resemble deployment conditions and continue in production.",
-    "SEI ATAM: architecture should be evaluated against business drivers, scenarios, risks, sensitivity points and tradeoffs rather than familiarity or structural description alone."
+    "NASA Systems Engineering Handbook: requirements-to-verification/validation traceability and planned verification methods.",
+    "NIST AI RMF/TEVV: documented test sets/metrics/tools, independent assessors, deployment-like evaluation and ongoing production monitoring.",
+    "SEI ATAM: business-driver/scenario/risk/tradeoff evaluation rather than architecture-by-familiarity."
   ],
   "architecture_candidates":[
-    {"id":"NO_CHANGE","disposition":"REJECTED","reason":"Would preserve a gap between verbal deep-task intent and executable completion admission."},
-    {"id":"NEW_STANDALONE_DEEP_TASK_STATE_MACHINE","disposition":"REJECTED_AS_DUPLICATIVE","reason":"Would compete with the canonical cognition kernel and violate the anti-bloat/one-cognition-owner rule."},
+    {"id":"NO_CHANGE","disposition":"REJECTED","reason":"Would preserve a demonstrated gap between verbal deep-task intent and executable completion admission."},
+    {"id":"NEW_STANDALONE_DEEP_TASK_STATE_MACHINE","disposition":"REJECTED_AS_DUPLICATIVE","reason":"Would compete with the canonical cognition kernel and create a second workflow that can drift."},
     {"id":"EVOLUTION_ONLY_EXTENSION","disposition":"REJECTED_AS_TOO_NARROW","reason":"Deep tasks include research/design/decision work that may not trigger governed evolution."},
-    {"id":"DELIBERATION_PROFILE_PLUS_FINALIZATION_ADMISSION","disposition":"SELECTED","reason":"Keeps the existing cognition kernel as owner, adds a reusable deep-task evidence case/admission, and lets controlled finalization fail closed when deep-task execution is explicitly required."}
+    {"id":"DELIBERATION_PROFILE_PLUS_FINALIZATION_ADMISSION","disposition":"SELECTED","reason":"Keeps the existing cognition kernel as owner, adds a reusable evidence admission and lets controlled finalization fail closed only when deep-task execution is required."}
   ],
+  "candidate_implementation":[
+    "config/DEEP_TASK_EXECUTION_PROFILE.json defines the A-H evidence dimensions as a profile owned by DELIBERATION_POLICY, not as a second state machine.",
+    "src/uaos/kernel/deep_task.py adds DeepTaskCase and require_deep_task_admission for governing outcome, external professional-practice evidence, raw material, methods/tools, unknown discovery, alternatives/falsification, independent judge, holdout/replay/production validation, acceptance criteria and feasibility-bounded stretch targets.",
+    "src/uaos/runtime/finalization.py adds deep_task_required/deep_task_case and fail-closes controlled finalization when required evidence is missing; problem deep tasks must remain outcome/evidence-consistent with CognitionCase.",
+    "DELIBERATION_POLICY candidate 2.1.0 remains the sole cognition-stage owner and activates the profile for explicit deeper-not-larger requests or qualified material high-uncertainty tasks.",
+    "COMMON_CAPABILITIES keeps contract 1.7.0 and inherits the profile through adaptive_deliberation_and_parent_guidance without copying a new cognition algorithm.",
+    "SYSTEM_MAP 2.1, ENTRYPOINT candidate 2.8.0, AGENTS instructions and CURRENT_SYSTEM candidate 2.8.0 point to the same profile/admission/finalization surfaces.",
+    "tests/kernel/test_deep_task.py, tests/runtime/test_deep_task_finalization.py and tests/kernel/test_deep_task_policy_contract.py cover negative and positive admission paths."
+  ],
+  "ci_history":[
+    {
+      "run_number":313,
+      "result":"FAILED_3__370_PASSED_1_SKIPPED",
+      "classification":"AUTHORITY_PROJECTION_AND_CONTRACT_WORDING_CLOSURE_ONLY",
+      "repair":"Updated CURRENT_SYSTEM to candidate UAOS 2.8.0, preserved the existing other-policies single-cognition invariant, and made the no-second-cognition-state-machine profile rule explicit."
+    }
+  ],
+  "evolution_ref":"state/evolution/EVO-20261016-DEEP-TASK-EXECUTION-PROTOCOL.json",
   "candidate_branch":"maintenance/deep-task-execution-protocol-20261016",
-  "next_action":"Implement a reusable DeepTaskCase admission, wire it into controlled finalization, update DELIBERATION_POLICY/common capability authority and add regressions that block completion when any required deep-task evidence dimension is missing.",
-  "progress_timestamp":"2026-10-16T22:55:00+08:00"
+  "pull_request":67,
+  "final_checks":{"status":"PENDING_ON_FINAL_AUTHORITY_CLOSED_HEAD","required":["promotion-gate CI","live-integration","PR diff/review scan"]},
+  "next_action":"Do not expand the candidate design unless final-head checks reveal a real defect. Require green final CI/live integration, review PR #67, then controlled-merge, reread main, require production CI and close task/evolution only after production verification.",
+  "progress_timestamp":"2026-10-16T23:15:43+08:00"
 }
