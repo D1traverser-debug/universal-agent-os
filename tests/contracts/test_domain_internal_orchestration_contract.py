@@ -15,7 +15,7 @@ def _version_tuple(value: str) -> tuple[int, ...]:
 
 def test_common_contract_declares_domain_internal_orchestration():
     common = load("config/COMMON_CAPABILITIES.json")
-    assert common["contract_version"] == "1.6.0"
+    assert _version_tuple(common["contract_version"]) >= (1, 7, 0)
     capabilities = {item["capability_id"]: item for item in common["capabilities"]}
     orchestration = capabilities["domain_internal_work_orchestration"]
     assert "DOMAIN_OWNER_FOR_INTERNAL_TASK_GRAPH_BUSINESS_STATE_AND_DECISIONS" in orchestration["owner"]
@@ -34,6 +34,19 @@ def test_common_contract_declares_domain_internal_orchestration():
     assert "unbounded peer chat" in rules
     assert "adjudicator" in rules
     assert "uaos" in rules and "must not mirror" in rules
+
+
+def test_common_contract_routes_governed_evolution_through_one_transaction():
+    common = load("config/COMMON_CAPABILITIES.json")
+    capabilities = {item["capability_id"]: item for item in common["capabilities"]}
+    evolution = capabilities["governed_self_evolution"]
+    assert evolution["policy_ref"] == "config/EVOLUTION_POLICY.json"
+    assert "EvolutionTransaction" in evolution["canonical_executable_ref"]
+    lifecycle = evolution["lifecycle"]
+    assert "CAPABILITY_GAP" in lifecycle
+    rules = " ".join(evolution["rules"])
+    assert "one canonical EvolutionTransaction" in rules
+    assert "external/independent judge" in rules
 
 
 def test_v2_requirements_are_current_and_preserve_child_business_identity():
