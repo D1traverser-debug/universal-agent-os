@@ -1,14 +1,32 @@
 {
-  "schema_version":"1.7",
-  "policy_version":"1.7.0",
+  "schema_version":"1.8",
+  "policy_version":"1.8.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T00:52:39+08:00",
-  "purpose":"Keep lightweight problem detection continuously active, select epistemic depth from current problem/risk signals, require evidence-tested root-scope admission before repair/no-change, and require lived scenario evaluation for material architecture changes.",
+  "updated_at":"2026-10-16T10:09:00+08:00",
+  "purpose":"Own one canonical cognition contract: keep problem framing provisional, expand the problem space when needed, falsify competing frames, admit root scope and learning disposition before action, and verify the smallest justified change.",
+  "cognition_kernel":{
+    "canonical":true,
+    "hot_path":[
+      "FRAME_AS_HYPOTHESIS",
+      "EXPAND_PROBLEM_SPACE_WHEN_NEEDED",
+      "FALSIFY_COMPETING_FRAMES",
+      "COMMIT_ROOT_SCOPE_AND_LEARNING_DISPOSITION",
+      "ACT_AND_VERIFY"
+    ],
+    "stage_semantics":{
+      "FRAME_AS_HYPOTHESIS":"User wording, the Agent's first interpretation, external authorities, existing code and the first plausible repair are provisional frames, not root-cause authority.",
+      "EXPAND_PROBLEM_SPACE_WHEN_NEEDED":"Before narrowing, test whether the issue is local, workflow/interface, architecture/common-control, requirement/goal, or an unknown/latent capability gap. Broad external capability learning must model the source itself and use multiple outside-in lenses rather than known-keyword search only.",
+      "FALSIFY_COMPETING_FRAMES":"Seek evidence that would make the preferred frame wrong; material/systemic cases preserve at least one rejected alternative and test upstream/architecture involvement.",
+      "COMMIT_ROOT_SCOPE_AND_LEARNING_DISPOSITION":"Only after evidence selects/bounds the problem layer may the system choose root scope, evolution disposition and durable-record requirement.",
+      "ACT_AND_VERIFY":"Execute the smallest authorized repair/redesign/no-change/block consistent with the admitted scope and verify against the governing objective."
+    },
+    "anti_bloat":"The five stages are the hot-path cognitive primitives. Other policies may activate them or constrain ownership/assurance, but must not duplicate a separate cognition state machine."
+  },
   "principles":[
     "Lightweight problem detection is always-on for every assistant turn after authority selection; adaptive deliberation is not a permanent heavy debate loop.",
     "The mutation sentinel is separately always-on before external or durable mutation attempts.",
     "Once a problem is detected, external research and reflective challenge are mandatory even when the problem appears familiar or local.",
-    "Move micro -> macro -> micro: reproduce the symptom, challenge goal/assumption/topology, generate competing hypotheses, falsify alternatives, admit the root scope, then return to the smallest justified change.",
+    "Move micro -> macro -> micro inside the canonical cognition kernel: reproduce the symptom, challenge goal/assumption/topology, generate competing hypotheses, falsify alternatives, admit the root scope, then return to the smallest justified change.",
     "The first plausible cause or first available repair is not root-cause evidence.",
     "User corrections, user theories and external methods/Skills are evidence inputs, not automatic root-cause authority.",
     "Repeated/cross-subsystem/architecture-gap/complexity-growth/scope-expansion signals require explicit architecture/upstream hypothesis testing before action.",
@@ -25,13 +43,22 @@
     "scope":"EVERY_ASSISTANT_TURN_AFTER_AUTHORITY_SELECTION__INCLUDING_READ_ONLY_TURNS_AND_AUTHORITY_INSPECTION",
     "responsibility":"Before declaring deliberation NOT_TRIGGERED, classify current user/evidence signals for defects, degradation, correction, contradiction, uncertainty, knowledge gaps, architecture/control-plane gaps or other unreliable-goal signals.",
     "clear_path":"NO_PROBLEM_DETECTED__KEEP_NORMAL_WORK_LIGHTWEIGHT",
-    "triggered_path":"CONSTRUCT_CURRENT_DELIBERATION_SIGNALS__SATISFY_REQUIRED_EVIDENCE__RUN_ROOT_SCOPE_ADMISSION__THEN_ALLOW_EVOLUTION_AND_ACTION_DECISIONS",
+    "triggered_path":"ENTER_CANONICAL_COGNITION_KERNEL__SATISFY_REQUIRED_EVIDENCE__RUN_ROOT_SCOPE_ADMISSION__THEN_ALLOW_EVOLUTION_AND_ACTION_DECISIONS",
     "anti_bloat":"Always-on means always-on detection, not permanent heavy research or debate when no problem is detected."
   },
   "problem_detection_floor":{
     "scope":"ANY_DETECTED_DEFECT_FAILURE_DEGRADATION_USER_CORRECTION_CONTRADICTION_OR_EVIDENCE_THAT_CURRENT_BEHAVIOR_IS_NOT_RELIABLY_SATISFYING_THE_GOVERNING_OBJECTIVE",
     "always_required_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH"],
     "depth_rule":"LIGHTWEIGHT_FOR_SMALL_PROBLEMS__DEEPER_FOR_MATERIAL_OR_SYSTEMIC_PROBLEMS__NO_RESEARCH_OR_REFLECTION_WAIVER_FOR_FAMILIARITY"
+  },
+  "outside_in_capability_discovery":{
+    "trigger":"BROAD_EXTERNAL_CAPABILITY_LEARNING__SOURCE_USAGE_RESEARCH__UNKNOWN_OR_LATENT_CAPABILITY_AUDIT",
+    "executable_ref":"src/uaos/kernel/problem_space.py",
+    "source_first_rule":"Before querying for specific Skills, model how the source itself organizes knowledge and what discovery axes it exposes.",
+    "lens_examples":["ROLE_OR_OCCUPATION","TASK_OR_ACTIVITY","WORKFLOW_OR_HANDOFF","CATEGORY_OR_TAXONOMY","CREATOR_OR_PORTFOLIO","REPOSITORY_OR_PORTFOLIO","ADJACENT_DOMAIN"],
+    "broad_discovery_floor":"Use at least two distinct outside-in lenses and produce evidence-grounded latent capability-gap candidates. A known-need/keyword-only survey is not broad discovery.",
+    "nonliteral_rule":"A role, occupation, taxonomy or creator portfolio is a discovery lens, not an instruction to create a matching Agent, architecture layer or organization chart.",
+    "known_need_exception":"A narrow lookup for an already established need/failure class may remain lightweight and does not require the broad discovery floor."
   },
   "escalation_dimensions":["MICRO_DIAGNOSIS","MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT","GOVERNING_ASSUMPTION_CHALLENGE","EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH","COUNTEREXAMPLE_SEARCH","INDEPENDENT_VERIFICATION"],
   "root_scope_admission":{
@@ -59,7 +86,7 @@
     "fail_closed":true,
     "before_mutation":[
       "pass the mutation sentinel for the proposed side-effect path",
-      "construct DeliberationSignals from observed evidence rather than the preferred solution",
+      "enter the canonical cognition kernel from observed evidence rather than the preferred solution",
       "satisfy all required deliberation evidence dimensions",
       "pass root-scope admission; for systemic triggers explicitly test architecture/upstream alternatives",
       "record an evolution/learning disposition and durable causal evidence when material/evolution-relevant",
@@ -85,6 +112,7 @@
     "dogfood_rule":"CURRENT_AGENT_DOGFOOD_REQUIRED_FOR_MATERIAL_CONTROL_PLANE_OR_AGENT_EXPERIENCE_CHANGE"
   },
   "anti_bloat":[
+    "Keep one canonical cognition state machine in this policy; activation/assurance policies reference it instead of copying it.",
     "Extend existing Control Kernel/Context/Assurance/Evolution before adding a subsystem.",
     "Do not add a second controller or parallel problem journal to enforce this transaction.",
     "Every new mechanism must state overlap, replacement/retirement, or why extension is impossible.",
