@@ -1,5 +1,5 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "task_id":"uaos:maintenance:proactive-capability-evolution-audit-20261016",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
@@ -16,8 +16,8 @@
     "H1__NO_GAP__AN_EXISTING_EXECUTOR_OR_TRIGGER_EXISTS_ELSEWHERE_AND_ONLY_NEEDS_DISCOVERY",
     "H2__TRIGGER_GAP__METHOD_AND_EVOLUTION_EXIST_BUT_NO_PROACTIVE_CADENCE_OR_EVENT_TRIGGER_EXISTS",
     "H3__EXECUTION_GAP__A_TRIGGER_EXISTS_BUT_NO_EVIDENCE_TRACED_SOURCE_TO_GAP_TO_EVAL_PIPELINE_EXISTS",
-    "H4__ASSURANCE_GAP__DISCOVERY_CAN_RUN_BUT_CANNOT_PROVE_GENERALIZATION_OR PROMOTION_READINESS",
-    "H5__BROADER_EVOLUTION_ARCHITECTURE_GAP__THE_CURRENT GOVERNED_SELF_EVOLUTION CONTRACT_IS INCIDENT_CENTRIC_OR TOO WEAK FOR OPPORTUNITY_DRIVEN LEARNING"
+    "H4__ASSURANCE_GAP__DISCOVERY_CAN_RUN_BUT_CANNOT_PROVE_GENERALIZATION_OR_PROMOTION_READINESS",
+    "H5__BROADER_EVOLUTION_ARCHITECTURE_GAP__THE_CURRENT_GOVERNED_SELF_EVOLUTION_CONTRACT_IS_INCIDENT_CENTRIC_OR_TOO_WEAK_FOR_OPPORTUNITY_DRIVEN_LEARNING"
   ],
   "external_method_benchmarks":[
     "NIST AI RMF ongoing monitoring and periodic review",
@@ -25,6 +25,14 @@
     "NASA Technical Assessment continuous technical measures/trend feedback",
     "SEI ATAM scenario/tradeoff architecture evaluation"
   ],
-  "next_action":"Complete authority-wide scan for proactive learning triggers/executors/evals, compare mature continuous-improvement methods, then select and implement a bounded intervention with a current-state report.",
-  "progress_timestamp":"2026-10-16T21:36:21+08:00"
+  "execution_incident":{
+    "failure_class":"FC-MAINTENANCE-BOOTSTRAP-DIRECT-MAIN-WRITE-010",
+    "observation":"The initial durable task-state file was created directly on main before candidate isolation, despite the current UAOS normal material maintenance topology requiring candidate branch -> PR -> checks -> controlled merge/update -> production reread.",
+    "classification":"EXECUTION_DISCIPLINE_VIOLATION__NOT_EVIDENCE_THAT_DIRECT_MAIN_IS_AUTHORIZED",
+    "immediate_repair":"A dedicated candidate branch was created from current main; TASK_INDEX registration and all further audit mutations are being performed on that branch. The direct-main event remains recorded rather than hidden.",
+    "follow_up":"Include this failure in the audit of whether control-plane policy is mechanically enforced versus merely described."
+  },
+  "candidate_branch":"maintenance/proactive-capability-evolution-audit-20261016",
+  "next_action":"Complete authority-wide scan for proactive learning triggers/executors/evals, compare mature continuous-improvement methods, then select and implement a bounded intervention. Preserve the direct-main bootstrap violation as evidence in the control-enforcement assessment.",
+  "progress_timestamp":"2026-10-16T22:04:22+08:00"
 }
