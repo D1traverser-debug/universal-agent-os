@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "evolution_id": "EVO-20261016-FINALIZATION-GATE-HOST-ENFORCEMENT",
+  "authority": "UAOS",
+  "failure_class": "FC-GOVERNANCE-KNOWLEDGE-NOT-IN-MANDATORY-FINALIZATION-PATH-008",
+  "status": "CANDIDATE_REPAIR__PRODUCTION_NOT_YET_PROMOTED",
+  "trigger": [
+    "USER_CORRECTION",
+    "REPEATED_LIVE_ADHERENCE_FAILURE",
+    "CONTROL_PATH_GAP",
+    "COMPLEXITY_GROWTH"
+  ],
+  "problem": "UAOS already owns cognition, root-scope, evolution and problem-closure semantics, but ChatGPT conversational execution and UAOS-managed runtimes did not share one finalization seam that composes those owners and prevents a candidate final response from being emitted while actionable work or required evidence remains.",
+  "competing_hypotheses": [
+    {
+      "id": "H1_KNOWLEDGE_OR_ARCHITECTURE_INCOMPETENCE_IS_PRIMARY",
+      "layer": "REQUIREMENT_OR_GOAL",
+      "disposition": "REJECTED_AS_PRIMARY",
+      "support": "Repeated mistakes can look like insufficient architecture/SOP knowledge.",
+      "falsification": "The repository already contains a single canonical cognition kernel, executable root-scope admission, typed evolution disposition and fail-closed problem closure; the repeated escapes occurred after those mechanisms existed."
+    },
+    {
+      "id": "H2_SOP_AND_GOVERNANCE_BLOAT_IS_PRIMARY",
+      "layer": "CONTROL_PLANE",
+      "disposition": "CONTRIBUTING_NOT_PRIMARY",
+      "support": "Rolling observations, records and repeated continuation turns created visible governance overhead and at times made the user a workflow clock.",
+      "falsification": "Reducing prose alone would not make a final response fail closed when executable work or evidence is still missing."
+    },
+    {
+      "id": "H3_FINALIZATION_ENFORCEMENT_SEAM_IS_MISSING",
+      "layer": "COMMON_CAPABILITY",
+      "disposition": "SELECTED",
+      "support": "Cognition, problem closure and session adherence are separately executable, but before this candidate no runtime function composed them into one pre-emit admission decision and no OpenAI Agents adapter attached that decision as an output guardrail.",
+      "falsification": "The selected repair reuses the existing owners instead of creating a new cognition or control plane, so it can be tested directly."
+    },
+    {
+      "id": "H4_CUSTOM_INSTRUCTIONS_CAN_BE_THE_HARD_GATE",
+      "layer": "HOST",
+      "disposition": "REJECTED",
+      "support": "Custom Instructions apply across ChatGPT conversations and are useful for stable bootstrap behavior.",
+      "falsification": "OpenAI documents Custom Instructions as instructions supplied to ChatGPT and states there is no Custom Instructions API; this does not establish an application-controlled pre-send validator."
+    },
+    {
+      "id": "H5_CONTROLLED_AGENT_RUNTIME_CAN_ENFORCE_OUTPUT_ADMISSION",
+      "layer": "HOST",
+      "disposition": "SELECTED_AS_ENFORCEMENT_MECHANISM_FOR_CONTROLLED_HOSTS",
+      "support": "OpenAI Agents SDK output guardrails run on final agent output and a triggered tripwire raises OutputGuardrailTripwireTriggered, allowing a controlled application path to halt final output.",
+      "falsification": "The guarantee applies only to runs that actually attach the guardrail and must not be projected onto the ChatGPT product host."
+    }
+  ],
+  "root_scope": {
+    "selected_hypothesis": "H3_FINALIZATION_ENFORCEMENT_SEAM_IS_MISSING",
+    "selected_layer": "COMMON_CAPABILITY",
+    "architecture_reassessment_performed": true,
+    "durable_problem_record_required": true
+  },
+  "external_evidence": [
+    "OpenAI Help Center: Custom Instructions apply across chats, are user-editable instructions, and have no Custom Instructions API.",
+    "OpenAI Agents SDK: output guardrails validate final agent output; a triggered tripwire halts the run with OutputGuardrailTripwireTriggered."
+  ],
+  "evolution_disposition": "DURABLE_EVOLUTION_CANDIDATE",
+  "candidate_change": {
+    "runtime_gate": "src/uaos/runtime/finalization.py",
+    "openai_agents_adapter": "src/uaos/execution/openai_agents.py#build_uaos_output_guardrail",
+    "host_profiles": "config/HOST_PROFILES.json",
+    "chatgpt_bootstrap": "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "mechanism": "Compose existing problem closure and session adherence at a single runtime finalization seam; block finalization when actionable work remains without user input, problem closure is not terminal, cognition/evolution evidence is missing, or final report consistency fails. Controlled OpenAI Agents runs may attach the same gate as a blocking output guardrail.",
+    "anti_bloat": "No second cognition state machine, no second controller, no new progress-report field, and no duplicated full policy in Custom Instructions."
+  },
+  "assurance_boundary": "This candidate can make UAOS-controlled runtime paths fail closed. It does not claim that the ChatGPT product host invokes repository Python before every native chat response.",
+  "verification_required": [
+    "candidate architecture/unit CI",
+    "actionable-work premature-finalization rejection",
+    "problem closure plus cognition/evolution evidence admission",
+    "real user-choice blocker admission",
+    "OpenAI Agents output-guardrail wiring",
+    "host-profile claim tests",
+    "production CI and reread"
+  ]
+}

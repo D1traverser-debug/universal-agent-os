@@ -1,10 +1,22 @@
-from types import SimpleNamespace
-from uaos.execution import ExecutionDisposition, ExecutionRequest, OpenAIAgentSpec, OpenAIAgentsExecutor
+import sys
+from types import ModuleType, SimpleNamespace
+
+from uaos.execution import (
+    ExecutionDisposition,
+    ExecutionRequest,
+    OpenAIAgentSpec,
+    OpenAIAgentsExecutor,
+    build_uaos_output_guardrail,
+)
+from uaos.runtime import FinalizationContext
 
 
 class Agent:
+    last_kwargs = None
+
     def __init__(self, **kwargs):
         self.kwargs = kwargs
+        Agent.last_kwargs = kwargs
 
 
 class Runner:
@@ -20,11 +32,96 @@ class FailingRunner:
         raise TimeoutError("lost")
 
 
+class FakeGuardrailFunctionOutput:
+    def __init__(self, *, output_info, tripwire_triggered):
+        self.output_info = output_info
+        self.tripwire_triggered = tripwire_triggered
+
+
+class FakeOutputGuardrail:
+    def __init__(self, guardrail_function, name):
+        self.guardrail_function = guardrail_function
+        self.name = name
+
+    def get_name(self):
+        return self.name
+
+
+def _install_fake_agents_module(monkeypatch):
+    module = ModuleType("agents")
+    module.GuardrailFunctionOutput = FakeGuardrailFunctionOutput
+
+    def output_guardrail(*, name=None):
+        def decorate(fn):
+            return FakeOutputGuardrail(fn, name or fn.__name__)
+        return decorate
+
+    module.output_guardrail = output_guardrail
+    monkeypatch.setitem(sys.modules, "agents", module)
+
+
+def _clean_progress_report():
+    return """Completed.
+
+当前 Agent：UAOS
+当前范围或任务：OpenAI guardrail test
+Authority：UAOS
+状态：DONE
+当前阶段：FINALIZATION
+下一动作或阻塞：none
+Evolution：NO_EVOLUTION_TRIGGER
+Deliberation：NOT_TRIGGERED
+版本：UAOS test
+进度时间：2026-10-16 14:07:00（北京时间）
+"""
+
+
 def test_openai_adapter_returns_bounded_run_output():
     executor = OpenAIAgentsExecutor(agent_spec=OpenAIAgentSpec("Researcher", "research carefully", "gpt-x"), agent_factory=Agent, runner=Runner)
     result = executor.execute(ExecutionRequest("a", "research", "topic", "input"))
     assert result.disposition is ExecutionDisposition.CONFIRMED
     assert result.output == "done:input"
+
+
+def test_openai_adapter_forwards_output_guardrails_to_agent():
+    guardrail = object()
+    executor = OpenAIAgentsExecutor(
+        agent_spec=OpenAIAgentSpec(
+            "Researcher",
+            "research carefully",
+            "gpt-x",
+            output_guardrails=(guardrail,),
+        ),
+        agent_factory=Agent,
+        runner=Runner,
+    )
+    result = executor.execute(ExecutionRequest("a", "research", "topic", "input"))
+    assert result.disposition is ExecutionDisposition.CONFIRMED
+    assert Agent.last_kwargs["output_guardrails"] == [guardrail]
+
+
+def test_uaos_output_guardrail_builder_admits_clean_final_output(monkeypatch):
+    _install_fake_agents_module(monkeypatch)
+    guardrail = build_uaos_output_guardrail(
+        lambda _run_context, _agent, _output: FinalizationContext(context_selected=True)
+    )
+    outcome = guardrail.guardrail_function(None, None, _clean_progress_report())
+    assert guardrail.get_name() == "uaos_finalization_gate"
+    assert outcome.tripwire_triggered is False
+    assert outcome.output_info["uaos_finalization"] == "ADMITTED"
+
+
+def test_uaos_output_guardrail_builder_trips_when_actionable_work_remains(monkeypatch):
+    _install_fake_agents_module(monkeypatch)
+    guardrail = build_uaos_output_guardrail(
+        lambda _run_context, _agent, _output: FinalizationContext(
+            context_selected=True,
+            work_remaining_without_user_input=True,
+        )
+    )
+    outcome = guardrail.guardrail_function(None, None, _clean_progress_report())
+    assert outcome.tripwire_triggered is True
+    assert "ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT" in outcome.output_info["uaos_finalization_blocked"]
 
 
 def test_model_failure_is_known_failure_for_read_work():
