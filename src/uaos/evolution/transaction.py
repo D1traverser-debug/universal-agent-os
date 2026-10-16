@@ -92,8 +92,10 @@ class EvolutionTransaction:
     proposal: ChangeProposal | None = None
     evaluations: tuple[EvaluationResult, ...] = ()
     authorization: PromotionAuthorization | None = None
+    execution_evidence_refs: tuple[str, ...] = ()
     observations: tuple[PostPromotionObservation, ...] = ()
     recommendation: str | None = None
+    rollback_evidence_refs: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if not self.transaction_id.strip():
@@ -119,6 +121,9 @@ def admit_discovery(
             raise EvolutionTransactionError("capability-gap evolution requires latent gap candidates")
         if not tx.depth_trace.novelty_probe_refs:
             raise EvolutionTransactionError("proactive capability-gap evolution requires novelty/unknown-signal probes")
+        discovery_evidence = set(receipt.evidence_refs) | set(tx.origin.evidence_refs)
+        if not discovery_evidence.intersection(tx.depth_trace.raw_evidence_refs):
+            raise EvolutionTransactionError("capability-gap discovery is not bound to declared raw evidence")
     return replace(tx, discovery_receipt=receipt, stage=EvolutionTransactionStage.DISCOVERED)
 
 
@@ -157,6 +162,11 @@ def admit_proposal(
 
     if proposal.state is not ProposalState.DRAFT:
         raise EvolutionTransactionError("canonical evolution proposal must enter transaction as DRAFT")
+    source_evidence = set(tx.origin.evidence_refs)
+    if tx.discovery_receipt is not None:
+        source_evidence.update(tx.discovery_receipt.evidence_refs)
+    if not source_evidence.intersection(proposal.evidence_refs):
+        raise EvolutionTransactionError("proposal is not evidence-linked to its admitted origin/discovery")
     return replace(tx, proposal=proposal, stage=EvolutionTransactionStage.PROPOSED)
 
 
@@ -170,6 +180,9 @@ def admit_evaluation(
     _require_stage(tx, EvolutionTransactionStage.PROPOSED)
     if tx.proposal is None:
         raise EvolutionTransactionError("missing proposal")
+    judge_evidence = {ref for evaluation in evaluations for ref in evaluation.evidence_refs}
+    if not judge_evidence.intersection(tx.depth_trace.external_judge_refs):
+        raise EvolutionTransactionError("evaluation does not include any declared external/independent judge evidence")
     evaluated_proposal = transition_proposal(tx.proposal, ProposalState.EVALUATED)
     authorization = assess_promotion(
         evaluated_proposal,
@@ -208,6 +221,7 @@ def record_promotion(tx: EvolutionTransaction, *, execution_evidence_refs: tuple
     return replace(
         tx,
         proposal=transition_proposal(tx.proposal, ProposalState.PROMOTED),
+        execution_evidence_refs=tuple(dict.fromkeys(execution_evidence_refs)),
         stage=EvolutionTransactionStage.PROMOTED,
     )
 
@@ -231,11 +245,12 @@ def record_rollback(tx: EvolutionTransaction, *, rollback_evidence_refs: tuple[s
     _require_stage(tx, EvolutionTransactionStage.OBSERVED)
     if tx.proposal is None or tx.recommendation != "ROLLBACK":
         raise EvolutionTransactionError("rollback requires an observed regression recommendation")
-    if not rollback_evidence_refs:
+    if not rollback_evidence_refs or not all(ref.strip() for ref in rollback_evidence_refs):
         raise EvolutionTransactionError("rollback requires evidence")
     return replace(
         tx,
         proposal=transition_proposal(tx.proposal, ProposalState.ROLLED_BACK),
+        rollback_evidence_refs=tuple(dict.fromkeys(rollback_evidence_refs)),
         stage=EvolutionTransactionStage.ROLLED_BACK,
     )
 
