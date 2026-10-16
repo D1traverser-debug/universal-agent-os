@@ -45,6 +45,18 @@ def _candidates_from_index():
     return tuple(domain_candidates + controller_candidates)
 
 
+def _running_controller_candidate(task_id: str = "uaos:maintenance:synthetic", *, default_resume: bool = True):
+    return TaskCandidate(
+        task_id=task_id,
+        owner_domain="UAOS",
+        task_type="controller_maintenance",
+        status=TaskStatus.RUNNING,
+        updated_at=NOW,
+        resume_eligible=True,
+        default_resume=default_resume,
+    )
+
+
 def test_domain_level_video_continue_selects_parent_router_without_child_identity_guess():
     result = resolve_control_target(
         ControlCommand(IntentType.CONTINUE, domain_hint="video"),
@@ -61,14 +73,29 @@ def test_domain_level_ashare_continue_selects_parent_router_without_market_day_g
     assert result.task_id == "ashare:main"
 
 
-def test_selecting_controller_resumes_current_default_controller_maintenance_task():
+def test_selecting_controller_resumes_one_default_running_controller_maintenance_task():
+    domain_only = tuple(candidate for candidate in _candidates_from_index() if candidate.owner_domain != "UAOS")
+    maintenance = _running_controller_candidate()
     result = resolve_control_target(
         ControlCommand(IntentType.SYSTEM_MAINTENANCE),
-        _candidates_from_index(),
+        domain_only + (maintenance,),
     )
     assert result.mode == "MAINTENANCE"
     assert result.scope == "UAOS"
-    assert result.task_id == "uaos:maintenance:five-repo-semantic-continuity-closure-20261016"
+    assert result.task_id == maintenance.task_id
+
+
+def test_completed_controller_maintenance_in_current_index_is_not_resumed():
+    controller_candidates = [candidate for candidate in _candidates_from_index() if candidate.owner_domain == "UAOS"]
+    assert controller_candidates
+    assert all(candidate.status is TaskStatus.COMPLETE for candidate in controller_candidates)
+    assert all(candidate.resume_eligible is False for candidate in controller_candidates)
+    assert all(candidate.default_resume is False for candidate in controller_candidates)
+
+    result = resolve_control_target(ControlCommand(IntentType.SYSTEM_MAINTENANCE), _candidates_from_index())
+    assert result.mode == "MAINTENANCE"
+    assert result.task_id is None
+    assert result.scope == "GLOBAL"
 
 
 def test_controller_maintenance_without_persisted_task_remains_at_controller_root():
@@ -80,19 +107,13 @@ def test_controller_maintenance_without_persisted_task_remains_at_controller_roo
 
 
 def test_multiple_default_controller_tasks_fail_closed():
-    maintenance = TaskCandidate(
-        task_id="uaos:maintenance:other",
-        owner_domain="UAOS",
-        task_type="controller_maintenance",
-        status=TaskStatus.RUNNING,
-        updated_at=NOW,
-        resume_eligible=True,
-        default_resume=True,
-    )
+    domain_only = tuple(candidate for candidate in _candidates_from_index() if candidate.owner_domain != "UAOS")
+    first = _running_controller_candidate("uaos:maintenance:first")
+    second = _running_controller_candidate("uaos:maintenance:second")
     with pytest.raises(AmbiguousControlTarget):
         resolve_control_target(
             ControlCommand(IntentType.SYSTEM_MAINTENANCE),
-            _candidates_from_index() + (maintenance,),
+            domain_only + (first, second),
         )
 
 
