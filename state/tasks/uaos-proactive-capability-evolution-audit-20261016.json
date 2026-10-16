@@ -1,11 +1,11 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "task_id":"uaos:maintenance:proactive-capability-evolution-audit-20261016",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
   "status":"RUNNING",
-  "current_stage":"AUDIT_ACTIVE__PROACTIVE_LEARNING_TRIGGER_AND_EXECUTION_CHAIN_UNDER_REVIEW",
-  "governing_goal":"Determine whether UAOS can discover and evaluate capability gaps without waiting for incidents, and implement the smallest justified architecture that closes any trigger/executor/evidence/promotion gap while preserving governed evolution.",
+  "current_stage":"AUDIT_ACTIVE__PROACTIVE_LEARNING_AND_HOST_ENFORCEMENT_GAPS_UNDER_REVIEW",
+  "governing_goal":"Determine whether UAOS can discover and evaluate capability gaps without waiting for incidents, and implement the smallest justified architecture that closes any trigger/executor/evidence/promotion gap while preserving governed evolution. Also distinguish repository-enforced controls from native-host paths that are only policy-visible but not physically mediated.",
   "starting_observations":[
     "UAOS 2.6.0 already defines outside-in capability discovery and governed self-evolution.",
     "Current GitHub workflows include CI, live integration and domain-health audit but no visible scheduled capability-gap/learning audit.",
@@ -17,7 +17,8 @@
     "H2__TRIGGER_GAP__METHOD_AND_EVOLUTION_EXIST_BUT_NO_PROACTIVE_CADENCE_OR_EVENT_TRIGGER_EXISTS",
     "H3__EXECUTION_GAP__A_TRIGGER_EXISTS_BUT_NO_EVIDENCE_TRACED_SOURCE_TO_GAP_TO_EVAL_PIPELINE_EXISTS",
     "H4__ASSURANCE_GAP__DISCOVERY_CAN_RUN_BUT_CANNOT_PROVE_GENERALIZATION_OR_PROMOTION_READINESS",
-    "H5__BROADER_EVOLUTION_ARCHITECTURE_GAP__THE_CURRENT_GOVERNED_SELF_EVOLUTION_CONTRACT_IS_INCIDENT_CENTRIC_OR_TOO_WEAK_FOR_OPPORTUNITY_DRIVEN_LEARNING"
+    "H5__BROADER_EVOLUTION_ARCHITECTURE_GAP__THE_CURRENT_GOVERNED_SELF_EVOLUTION_CONTRACT_IS_INCIDENT_CENTRIC_OR_TOO_WEAK_FOR_OPPORTUNITY_DRIVEN_LEARNING",
+    "H6__HOST_MEDIATION_GAP__REPOSITORY_FINALIZATION_AND_MUTATION_SENTINELS_EXIST_BUT_NATIVE_CHATGPT_TOOL_AND_RESPONSE_PATHS_DO_NOT_PHYSICALLY_INVOKE_THEM"
   ],
   "external_method_benchmarks":[
     "NIST AI RMF ongoing monitoring and periodic review",
@@ -25,14 +26,22 @@
     "NASA Technical Assessment continuous technical measures/trend feedback",
     "SEI ATAM scenario/tradeoff architecture evaluation"
   ],
-  "execution_incident":{
-    "failure_class":"FC-MAINTENANCE-BOOTSTRAP-DIRECT-MAIN-WRITE-010",
-    "observation":"The initial durable task-state file was created directly on main before candidate isolation, despite the current UAOS normal material maintenance topology requiring candidate branch -> PR -> checks -> controlled merge/update -> production reread.",
-    "classification":"EXECUTION_DISCIPLINE_VIOLATION__NOT_EVIDENCE_THAT_DIRECT_MAIN_IS_AUTHORIZED",
-    "immediate_repair":"A dedicated candidate branch was created from current main; TASK_INDEX registration and all further audit mutations are being performed on that branch. The direct-main event remains recorded rather than hidden.",
-    "follow_up":"Include this failure in the audit of whether control-plane policy is mechanically enforced versus merely described."
-  },
+  "execution_incidents":[
+    {
+      "failure_class":"FC-MAINTENANCE-BOOTSTRAP-DIRECT-MAIN-WRITE-010",
+      "observation":"The initial durable task-state file was created directly on main before candidate isolation, despite the current UAOS normal material maintenance topology requiring candidate branch -> PR -> checks -> controlled merge/update -> production reread.",
+      "classification":"EXECUTION_DISCIPLINE_VIOLATION__CURRENT_NATIVE_TOOL_PATH_DID_NOT_MECHANICALLY_APPLY_REPOSITORY_MUTATION_SENTINEL",
+      "immediate_repair":"A dedicated candidate branch was created from current main; TASK_INDEX registration and all further audit mutations are being performed on that branch. The direct-main event remains recorded rather than hidden."
+    },
+    {
+      "failure_class":"FC-INHERITED-PROGRESS-REPORT-NATIVE-HOST-MEDIATION-011",
+      "observation":"During the selected UAOS maintenance session, final replies drifted from the mandatory inherited-session progress block until the user corrected the omission.",
+      "repository_evidence":"config/SESSION_INTERACTION_POLICY.json requires the block on every selected-context final response; src/uaos/runtime/finalization.py invokes evaluate_session_progress_response; src/uaos/observability/session_adherence.py fail-closes with MISSING_PROGRESS_REPORT when the gate is invoked.",
+      "classification":"LIVE_NATIVE_HOST_MEDIATION_GAP__NOT_MISSING_PROGRESS_POLICY_OR_CONTROLLED_RUNTIME_CHECK",
+      "implication":"The live failure is evidence that this native ChatGPT response path is outside verified repository-controlled pre-send mediation. Do not claim that additional policy prose alone can make the requirement non-bypassable."
+    }
+  ],
   "candidate_branch":"maintenance/proactive-capability-evolution-audit-20261016",
-  "next_action":"Complete authority-wide scan for proactive learning triggers/executors/evals, compare mature continuous-improvement methods, then select and implement a bounded intervention. Preserve the direct-main bootstrap violation as evidence in the control-enforcement assessment.",
-  "progress_timestamp":"2026-10-16T22:04:22+08:00"
+  "next_action":"Complete authority-wide scan for proactive learning triggers/executors/evals and separate fixable repository gaps from native-host enforcement limits. Select and implement only interventions that are actually enforceable at the owning layer; preserve host limitations as explicit assurance boundaries rather than pretending policy text is physical enforcement.",
+  "progress_timestamp":"2026-10-16T22:09:00+08:00"
 }
