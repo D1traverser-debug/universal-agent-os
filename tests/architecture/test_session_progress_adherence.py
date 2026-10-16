@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 
 from uaos.observability.session_adherence import (
+    POLICY_REQUIRED_PROGRESS_FIELDS,
+    POLICY_TO_CANONICAL_FIELD,
     REQUIRED_PROGRESS_FIELDS,
     SessionAdherenceViolation,
     SessionProgressExpectation,
@@ -40,7 +42,9 @@ Deliberation：{deliberation}
 
 def test_evaluator_required_fields_match_session_policy_contract():
     report = _policy()["inherited_session_progress_report"]
-    assert tuple(report["fields"]) == REQUIRED_PROGRESS_FIELDS
+    assert tuple(report["fields"]) == POLICY_REQUIRED_PROGRESS_FIELDS
+    assert set(POLICY_TO_CANONICAL_FIELD) == set(POLICY_REQUIRED_PROGRESS_FIELDS)
+    assert tuple(POLICY_TO_CANONICAL_FIELD[field] for field in report["fields"]) == REQUIRED_PROGRESS_FIELDS
 
 
 def test_missing_progress_report_is_observable_failure():
