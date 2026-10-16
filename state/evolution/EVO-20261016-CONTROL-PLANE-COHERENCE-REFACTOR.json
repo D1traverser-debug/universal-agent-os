@@ -1,9 +1,10 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261016-CONTROL-PLANE-COHERENCE-REFACTOR",
   "authority":"UAOS",
   "recorded_at":"2026-10-16T15:38:43+08:00",
-  "status":"CANDIDATE_IMPLEMENTED__PROMOTION_EVIDENCE_PENDING_FINAL_HEAD",
+  "production_verified_at":"2026-10-16T15:41:29+08:00",
+  "status":"PRODUCTION_PROMOTED__STRUCTURAL_REGRESSION_AND_LIVE_INTEGRATION_VERIFIED__NATIVE_CHATGPT_ADHERENCE_OBSERVATION_OPEN",
   "trigger_signals":[
     "USER_CHALLENGE_TO_LOCAL_ONLY_REFACTOR",
     "CURRENT_SYSTEM_PROJECTION_DRIFT_AFTER_FINALIZATION_GATE_PROMOTION",
@@ -95,18 +96,25 @@
     "new_permanent_agent_roles":false,
     "reason":"One owner/projection contract is added to remove shadow-authority ambiguity; other changes extend existing executable abstractions."
   },
-  "candidate_evidence":{
+  "promotion_evidence":{
     "pull_request":51,
     "initial_candidate_ci":{"run_number":216,"conclusion":"FAIL","finding":"six cross-suite regressions exposed exact-version freezes and an unsynchronized structured-admission fixture"},
     "repair_disposition":"KEEP_NEW_GATES__UPDATE_EVOLVING_VERSION_TESTS_TO_FLOORS__UPDATE_SHARED_ADMISSION_FIXTURE__ADD_PROJECTION_AND_KNOWLEDGE_ORIGIN_REGRESSION_TESTS",
-    "repaired_candidate_ci":{"run_number":221,"conclusion":"PASS","head":"20099710c2329cff4685d9756ca85b89103cc1b0"},
-    "final_head_evidence":"TO_BE_VERIFIED_AFTER_THIS_RECORD_COMMIT"
+    "intermediate_candidate_ci":{"run_number":221,"conclusion":"PASS","head":"20099710c2329cff4685d9756ca85b89103cc1b0"},
+    "final_candidate_head":"ead615dde38acba54bec618e39862edb05d4541e",
+    "final_candidate_ci":{"run_number":222,"run_id":38868683590,"conclusion":"PASS"},
+    "final_candidate_live_integration":{"run_number":68,"run_id":38868683887,"conclusion":"PASS","openai_provider":"SKIPPED_BY_WORKFLOW_DEFAULT"},
+    "production_main_commit":"94e4111f56b414441a6741a8a3c46955213969ed",
+    "production_merge_signature":"VERIFIED",
+    "production_ci":{"run_number":223,"run_id":38868796872,"conclusion":"PASS"},
+    "production_reread_required":true
   },
-  "assurance_boundary":"Candidate structural/regression evidence can prove repository-level contracts and promotion behavior. It does not prove native ChatGPT physically intercepts every natural-language response, nor does it prove future live reasoning quality is perfect. Those claims remain bounded to their verified host/runtime surfaces.",
+  "assurance_boundary":"Repository-level control-plane contracts, regression behavior, live PostgreSQL/DBOS/object-store integration and production promotion are verified. Native ChatGPT does not expose a repository-controlled physical pre-send hook in this evidence set, so perfect per-response natural-language adherence and complete mediation are not claimed.",
   "post_promotion_observation":[
     "Watch for projection freshness failures when semantic owners change.",
     "Watch whether LIGHTWEIGHT mode avoids ceremonial research without allowing premature root-scope claims.",
     "Watch whether CONTRASTIVE/STRUCTURED bounded search improves architecture decisions without creating excessive token/latency cost.",
-    "Watch knowledge-origin proposals for overgeneralization or attempts to bypass evidence maturity."
+    "Watch knowledge-origin proposals for overgeneralization or attempts to bypass evidence maturity.",
+    "Continue natural conversational adherence observation without turning the user into a no-op test clock."
   ]
 }
