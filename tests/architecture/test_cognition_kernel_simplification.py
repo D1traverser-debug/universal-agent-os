@@ -32,12 +32,14 @@ def test_deliberation_policy_is_the_single_cognition_stage_authority():
     assert "other policies" in kernel["anti_bloat"].lower()
 
 
-def test_session_and_common_behavior_reference_kernel_instead_of_copying_stage_machine():
+def test_session_common_and_current_system_reference_kernel_instead_of_copying_stage_machine():
     session = _json("config/SESSION_INTERACTION_POLICY.json")
     common = _json("config/COMMON_BEHAVIOR_ASSURANCE.json")
+    current = _json("CURRENT_SYSTEM.json")
 
     session_tx = session["problem_cognition_action_transaction"]
     common_tx = common["problem_cognition_action_transaction"]
+    bootstrap_tx = current["fresh_chat_bootstrap"]["problem_cognition_action_transaction"]
 
     assert session_tx["canonical_cognition_policy_ref"] == "config/DELIBERATION_POLICY.json#cognition_kernel"
     assert common_tx["canonical_cognition_policy_ref"] == "config/DELIBERATION_POLICY.json#cognition_kernel"
@@ -45,6 +47,9 @@ def test_session_and_common_behavior_reference_kernel_instead_of_copying_stage_m
     assert "rules" not in session_tx
     assert "ordered_stages" not in common_tx
     assert "rules" not in common_tx
+    assert "CANONICAL_COGNITION_KERNEL" in bootstrap_tx
+    assert "DETECT__DELIBERATE" not in bootstrap_tx
+    assert "SOURCE_FIRST_MULTI_LENS_OUTSIDE_IN_DISCOVERY" in current["capability_discovery_assurance"]
     assert common["contract_version"] == "1.3.0"
 
 
