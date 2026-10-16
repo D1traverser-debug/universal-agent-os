@@ -1,0 +1,35 @@
+{
+  "schema_version":"1.0",
+  "task_id":"uaos:maintenance:five-repo-semantic-continuity-closure-20261016",
+  "authority_context":"UAOS",
+  "task_type":"controller_maintenance",
+  "status":"RUNNING",
+  "current_stage":"CANDIDATE_REPAIR_AND_REGRESSION_ACTIVE",
+  "governing_goal":"Complete a one-time five-repository semantic audit and repair against current main authority, removing stale parent-cognition copies, preventing recurrence at the binding gate, and making interrupted controller maintenance resumable from durable authority rather than chat memory.",
+  "scope_repositories":[
+    "D1traverser-debug/universal-agent-os",
+    "D1traverser-debug/financial-writing-agent",
+    "D1traverser-debug/a-share-event-driven-agent",
+    "D1traverser-debug/novel-writing-agent",
+    "D1traverser-debug/video-growth-agent"
+  ],
+  "governance_basis":"UAOS parent maintenance may repair parent authority and govern registered descendants when fresh child authority/binding are reread, impact is bounded, and domain-aware validation is preserved. This task changes only hosted-cognition binding prose/conformance in children; business identity/state/workflows remain child-owned.",
+  "incident":"After a fresh-chat bare inheritance, selecting 总控系统 restored authority_context=UAOS but not the already-running five-repository maintenance scope. The assistant incorrectly reported that UAOS was waiting for a new instruction. Subsequent audit also found Financial, A-share and Video active Skills still carried stale universal parent cognition/research-floor prose despite CAPABILITIES declaring pointer-only current UAOS cognition with local_overrides=NONE.",
+  "root_scope":"CONTROL_PLANE__CONTROLLER_MAINTENANCE_CONTINUITY_PLUS_BINDING_CONFORMANCE_GAP_WITH_CHILD_SKILL_MANIFESTATIONS",
+  "rejected_alternatives":[
+    "NO_CHANGE_AND_RELY_ON_CHAT_MEMORY__REJECTED_BY_REAL_RESUME_FAILURE_AND_RETRIEVAL_POLICY",
+    "PATCH_CHILD_SKILL_TEXT_ONLY__REJECTED_BECAUSE_PARENT_BINDING_VALIDATOR_WOULD_ALLOW_RECURRENCE",
+    "CREATE_SECOND_CONTROLLER_OR_CONTINUITY_INDEX__REJECTED_AS_DUPLICATIVE_AND_FORBIDDEN"
+  ],
+  "selected_repair":"Reuse state/TASK_INDEX.json plus state/tasks for controller maintenance identity; let SYSTEM_MAINTENANCE resolve persisted UAOS candidates; make the controller selector resume one unambiguous default controller task; require adaptive child Skills to point at current config/DELIBERATION_POLICY.json and reject the confirmed stale universal cognition-floor failure class.",
+  "candidate_branches":{
+    "universal-agent-os":"architecture/five-repo-semantic-continuity-closure-20261016",
+    "financial-writing-agent":"architecture/uaos-pointer-only-cognition-20261016",
+    "a-share-event-driven-agent":"architecture/uaos-pointer-only-cognition-20261016",
+    "novel-writing-agent":"architecture/uaos-pointer-only-cognition-20261016",
+    "video-growth-agent":"architecture/uaos-pointer-only-cognition-20261016"
+  },
+  "next_action":"Finish controller selector/policy and regression tests, run local focused tests, open five PRs, run owner-appropriate CI, merge children then parent after fresh binding reread, verify production, and close this controller task/evolution evidence.",
+  "evolution_ref":"state/evolution/EVO-20261016-FIVE-REPO-SEMANTIC-CONTINUITY-CLOSURE.json",
+  "progress_timestamp":"2026-10-16T17:37:00+08:00"
+}
