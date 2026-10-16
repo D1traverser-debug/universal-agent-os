@@ -44,23 +44,16 @@ def test_parent_system_map_points_to_child_business_identity_without_copying_bus
     assert "OPAQUE_CHILD_REF" in ashare["identity_semantics"]
 
 
-def test_current_system_records_current_verified_specialized_child_and_router():
+def test_current_system_routes_ashare_freshness_to_domain_health_cache_instead_of_copying_child_snapshot():
     current = load("CURRENT_SYSTEM.json")
+    health = load("state/DOMAIN_HEALTH_INDEX.json")
     assert tuple(map(int, current["system_release_version"].split("."))) >= (2, 5, 2)
     assert current["status"] == "ACTIVE_PRIMARY_CONTROLLER" or current["status"].startswith("CANDIDATE_")
-
-    child = current["ashare_child_production_verification"]
-    assert child["result"] == "PASS"
-    release_marker = f"ASHARE_{child['release'].replace('.', '_')}_PRODUCTION_VERIFIED"
-    profile_marker = f"PROFILE_{child['profile_version']}"
-
-    assurance = current["ashare_binding_assurance"]
-    for marker in (
-        release_marker,
-        profile_marker,
-        "CHILD_TASKCONTRACT_MARKET_DAY_IDENTITY",
-        "TONGHUASHUN_LEVEL2_PREFERRED_MICROSTRUCTURE_LANE",
-        "XUANGUTONG_FIVE_POOL_SEMANTICS",
-        "REPLAY_GATED_DOMAIN_EVOLUTION",
-    ):
-        assert marker in assurance
+    assert current["child_observation"]["source"] == "state/DOMAIN_HEALTH_INDEX.json"
+    assert "ashare_child_production_verification" not in current
+    assert "ashare_binding_assurance" not in current
+    observed = health["domains"]["ashare"]
+    assert observed["repository"] == "D1traverser-debug/a-share-event-driven-agent"
+    assert observed["observed_release"] == "0.3.0"
+    assert observed["observed_profile_version"] >= 7
+    assert observed["production_ci"]["conclusion"] == "success"
