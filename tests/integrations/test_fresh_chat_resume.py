@@ -85,17 +85,26 @@ def test_selecting_controller_resumes_one_default_running_controller_maintenance
     assert result.task_id == maintenance.task_id
 
 
-def test_completed_controller_maintenance_in_current_index_is_not_resumed():
+def test_current_controller_index_keeps_completed_tasks_nonresumable_and_resumes_only_active_default():
     controller_candidates = [candidate for candidate in _candidates_from_index() if candidate.owner_domain == "UAOS"]
     assert controller_candidates
-    assert all(candidate.status is TaskStatus.COMPLETE for candidate in controller_candidates)
-    assert all(candidate.resume_eligible is False for candidate in controller_candidates)
-    assert all(candidate.default_resume is False for candidate in controller_candidates)
+
+    completed = [candidate for candidate in controller_candidates if candidate.status is TaskStatus.COMPLETE]
+    assert completed
+    assert all(candidate.resume_eligible is False for candidate in completed)
+    assert all(candidate.default_resume is False for candidate in completed)
+
+    active_defaults = [
+        candidate
+        for candidate in controller_candidates
+        if candidate.status is TaskStatus.RUNNING and candidate.resume_eligible and candidate.default_resume
+    ]
+    assert len(active_defaults) == 1
 
     result = resolve_control_target(ControlCommand(IntentType.SYSTEM_MAINTENANCE), _candidates_from_index())
     assert result.mode == "MAINTENANCE"
-    assert result.task_id is None
-    assert result.scope == "GLOBAL"
+    assert result.scope == "UAOS"
+    assert result.task_id == active_defaults[0].task_id
 
 
 def test_controller_maintenance_without_persisted_task_remains_at_controller_root():
