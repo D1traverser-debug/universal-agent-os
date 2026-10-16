@@ -1,10 +1,10 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261016-DEEP-TASK-EXECUTION-PROTOCOL",
   "authority":"UAOS",
   "status":"CANDIDATE_IMPLEMENTED__AWAITING_FINAL_GREEN_CHECKS_AND_PROMOTION",
-  "updated_at":"2026-10-16T23:15:43+08:00",
-  "trigger":["USER_CORRECTION","VERBAL_ACCEPTANCE_WITHOUT_EXECUTABLE_ADOPTION","DEEP_TASK_CAPABILITY_GAP","CONTROLLED_FINALIZATION_GAP"],
+  "updated_at":"2026-10-16T23:26:23+08:00",
+  "trigger":["USER_CORRECTION","VERBAL_ACCEPTANCE_WITHOUT_EXECUTABLE_ADOPTION","DEEP_TASK_CAPABILITY_GAP","CONTROLLED_FINALIZATION_GAP","TRIGGER_DERIVATION_GAP"],
   "failure_class":"FC-DEEP-TASK-PROTOCOL-VERBAL-ACCEPTANCE-WITHOUT-EXECUTABLE-ADOPTION-014",
   "governing_outcome":"When the user asks for a deeper rather than larger task, UAOS should deepen evidence quality, professional method use, unknown discovery, falsification and independent validation, and a controlled runtime should not claim completion until that depth is evidenced. Ordinary tasks should not inherit this cost, and the protocol must not create a second cognition state machine.",
   "supported_contributing_causes":[
@@ -22,13 +22,18 @@
       "id":"CF-DEEP-003-VERBAL-ADOPTION-OVERCLAIM",
       "layer":"HOST",
       "evidence":"The assistant told the user the protocol had become its default deep-task execution framework before any repository authority, executable admission or runtime gate had been changed."
+    },
+    {
+      "id":"CF-DEEP-004-NAKED-REQUIREMENT-BOOLEAN",
+      "layer":"CONTROL_PLANE",
+      "evidence":"The first candidate finalization design accepted a caller-supplied deep_task_required boolean but had no typed semantic trigger derivation, leaving a rule-to-execution gap similar to earlier self-attestation failures."
     }
   ],
   "architecture_candidates":[
     {"id":"NO_CHANGE","disposition":"REJECTED","reason":"Preserves the demonstrated gap between verbal intent and executable completion admission."},
     {"id":"NEW_STANDALONE_DEEP_TASK_STATE_MACHINE","disposition":"REJECTED_AS_DUPLICATIVE","reason":"Would compete with DELIBERATION_POLICY as the sole cognition-stage authority and create another workflow to drift."},
     {"id":"EVOLUTION_ONLY_EXTENSION","disposition":"REJECTED_AS_TOO_NARROW","reason":"Many deep tasks are research/design/decision tasks that do not trigger governed self-evolution."},
-    {"id":"DELIBERATION_PROFILE_PLUS_FINALIZATION_ADMISSION","disposition":"SELECTED","reason":"Adds evidence depth to the current canonical cognition/finalization architecture without duplicating stage semantics or imposing deep-task cost on ordinary work."}
+    {"id":"DELIBERATION_PROFILE_PLUS_SEMANTIC_TRIGGER_PLUS_FINALIZATION_ADMISSION","disposition":"SELECTED","reason":"Adds evidence depth and typed trigger derivation to the current canonical cognition/finalization architecture without duplicating stage semantics or imposing deep-task cost on ordinary work."}
   ],
   "method_evidence":[
     "NASA Systems Engineering Handbook supports requirements-to-verification/validation traceability and planned verification methods rather than post-hoc confidence.",
@@ -36,10 +41,11 @@
     "SEI ATAM supports business-driver/scenario/risk/tradeoff evaluation rather than architecture-by-familiarity.",
     "The user-provided deeper-not-bigger protocol supplies the specific professional-practice, raw-material, methods/tools, unknown-discovery, stretch-feasibility and independent-judge dimensions; these are translated into evidence admission rather than role-play or mandatory verbose reporting."
   ],
-  "selected_architecture":"ONE_CANONICAL_DELIBERATION_OWNER__DEEP_TASK_AS_EVIDENCE_ADMISSION_PROFILE__DeepTaskCase__CONTROLLED_FINALIZATION_FAIL_CLOSED_WHEN_REQUIRED__NO_SECOND_COGNITION_STATE_MACHINE",
+  "selected_architecture":"ONE_CANONICAL_DELIBERATION_OWNER__DeepTaskSignals_TO_assess_deep_task_requirement__DEEP_TASK_AS_EVIDENCE_ADMISSION_PROFILE__DeepTaskCase__CONTROLLED_FINALIZATION_RECOMPUTES_TRIGGER_AND_FAILS_CLOSED_WHEN_REQUIRED__NO_SECOND_COGNITION_STATE_MACHINE",
   "implementation":{
     "profile":"config/DEEP_TASK_EXECUTION_PROFILE.json",
     "owner_policy":"config/DELIBERATION_POLICY.json@candidate-2.1.0",
+    "trigger":"src/uaos/kernel/deep_task.py#DeepTaskSignals+assess_deep_task_requirement",
     "admission":"src/uaos/kernel/deep_task.py#require_deep_task_admission",
     "finalization":"src/uaos/runtime/finalization.py#admit_final_response",
     "common_capability":"config/COMMON_CAPABILITIES.json@1.7.0-compatible-extension",
@@ -47,6 +53,12 @@
     "bootstrap":"ENTRYPOINT.md@candidate-UAOS-2.8.0",
     "projection":"CURRENT_SYSTEM.json@candidate-2.8.0",
     "repo_instructions":"AGENTS.md"
+  },
+  "trigger_semantics":{
+    "explicit_user_depth_request":"ALWAYS_REQUIRES_DEEP_PROFILE",
+    "non_explicit_material_escalation":"REQUIRES_ordinary_structured_evidence_insufficient_PLUS_ONE_OF_material_high_uncertainty_unknown_knowledge_architecture_or_control_plane_repeated_systemic",
+    "language_rule":"SEMANTIC_SIGNALS__NO_LANGUAGE_SPECIFIC_KEYWORD_MATCHER",
+    "compatibility_rule":"deep_task_required=true may force the profile, but false cannot cancel a true semantic trigger"
   },
   "admission_dimensions":[
     "GOVERNING_OUTCOME",
@@ -56,17 +68,18 @@
     "UNKNOWN_SIGNAL_OR_HIDDEN_CONSTRAINT_DISCOVERY",
     "COMPETING_ALTERNATIVES_WITH_FALSIFICATION_CONDITIONS_AND_EVIDENCE",
     "OPTIONAL_STRETCH_TARGET_WITH_FEASIBILITY_EVIDENCE",
-    "INDEPENDENT_JUDGE_OUTSIDE_SAME_MODEL_CONFIDENCE",
+    "INDEPENDENT_JUDGE_OUTSIDE_SAME_MODEL_CONFIDENCE_AND_STATIC_REPOSITORY_ASSERTION",
     "HOLDOUT_REPLAY_REALISTIC_RUNTIME_OR_PRODUCTION_VALIDATION",
     "EXPLICIT_ACCEPTANCE_CRITERIA"
   ],
   "regression_scenarios":[
+    "EXPLICIT_SEMANTIC_DEPTH_SIGNAL_CANNOT_BE_CANCELLED_BY_FALSE_COMPATIBILITY_BOOLEAN",
     "EXPLICIT_DEEP_TASK_CANNOT_FINALIZE_WITHOUT_DEEP_TASK_CASE",
     "PROFESSIONAL_PRACTICE_CANNOT_BE_PROVEN_BY_SAME_MODEL_ANALYSIS_ONLY",
     "RAW_MATERIAL_CANNOT_BE_REPLACED_BY_DIGESTED_ANALYSIS",
     "METHOD_TOOL_EVIDENCE_MUST_NAME_A_CONCRETE_METHOD_REF",
     "DEEP_TASK_REQUIRES_AT_LEAST_TWO_COMPETING_ALTERNATIVES_AND_EXPLICIT_FALSIFICATION_EVIDENCE",
-    "INDEPENDENT_JUDGE_CANNOT_BE_SAME_MODEL_ANALYSIS",
+    "INDEPENDENT_JUDGE_CANNOT_BE_SAME_MODEL_ANALYSIS_OR_STATIC_REPOSITORY_FACT",
     "STRETCH_TARGET_REQUIRES_FEASIBILITY_EVIDENCE",
     "HOLDOUT_REPLAY_OR_PRODUCTION_VALIDATION_IS_REQUIRED",
     "DEEP_TASK_CASE_CANNOT_BE_SMUGGLED_INTO_A_NON_DEEP_TURN",
@@ -78,12 +91,13 @@
       "run_number":313,
       "result":"FAILED_3__370_PASSED_1_SKIPPED",
       "classification":"AUTHORITY_PROJECTION_AND_CONTRACT_WORDING_CLOSURE_ONLY",
-      "findings":[
-        "CURRENT_SYSTEM candidate projection was older than updated DELIBERATION_POLICY and COMMON_CAPABILITIES owners.",
-        "An existing cognition-owner regression expected the literal invariant that other policies may constrain but not replace the cognition kernel.",
-        "The new profile contract test required an explicit no-second-cognition-state-machine principle."
-      ],
       "repair":"Updated candidate CURRENT_SYSTEM to UAOS 2.8.0, preserved the existing other-policies invariant while allowing profiles, and made the no-second-cognition-state-machine rule explicit in the profile."
+    },
+    {
+      "run_number":328,
+      "result":"SUCCESS",
+      "classification":"INTERMEDIATE_GREEN_BEFORE_TRIGGER_DERIVATION_HARDENING",
+      "use":"Evidence that the authority-closed admission architecture was coherent before the typed semantic trigger refinement; not the final promotion check."
     }
   ],
   "promotion":{
@@ -95,6 +109,6 @@
     "production_commit":null,
     "production_reread":null
   },
-  "assurance_boundary":"Controlled runtimes that set deep_task_required and invoke admit_final_response can mechanically fail closed on missing deep-task evidence. Native ChatGPT has no verified repository-controlled pre-send or pre-tool hook, so UAOS must not claim physically non-bypassable enforcement there.",
-  "next_action":"Freeze the authority-closed candidate, require green final-head CI and live integration, review PR #67, promote through controlled merge, reread production, run production CI, then close task/evolution state as production verified."
+  "assurance_boundary":"Controlled runtimes that supply current DeepTaskSignals or explicitly force deep_task_required and invoke admit_final_response can mechanically fail closed on missing deep-task evidence. Native ChatGPT has no verified repository-controlled pre-send or pre-tool hook and no repository-guaranteed semantic-signal injector, so UAOS must not claim physically non-bypassable enforcement there.",
+  "next_action":"Freeze the trigger-hardened authority-closed candidate, require green final-head CI and live integration, review PR #67, promote through controlled merge, reread production, run production CI, then close task/evolution state as production verified."
 }
