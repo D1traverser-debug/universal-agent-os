@@ -106,13 +106,13 @@ def test_every_registered_domain_has_one_resumable_parent_route():
     assert registry_domains == resumable_domains
 
 
-def test_fresh_chat_domain_binding_contract_covers_all_registered_domains_not_only_router_selection():
-    """Exercise the complete parent-side inheritance contract after selection.
+def test_fresh_chat_binding_validator_schema_contract_covers_all_registered_domains():
+    """Exercise the parent validator with synthetic contract-conformant payloads.
 
-    Remote child bytes are owner state and are live-audited separately.  This test
-    proves that every registry entry can traverse the same executable handshake:
-    registry -> manifest/adapter/skill pointers -> capabilities -> current common
-    capability authority -> canonical deliberation owner.
+    This is intentionally NOT evidence that current remote child ``main`` bytes were
+    fetched or validated. Remote child authority is live-audited separately during
+    promotion/runtime. The regression proves only that every registry entry can use
+    the same executable semantic handshake when given conformant owner payloads.
     """
 
     registry = _load_json("config/AGENT_REGISTRY.json")["agents"]
