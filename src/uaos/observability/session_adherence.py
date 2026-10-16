@@ -64,25 +64,44 @@ _FIELD_ALIASES: Mapping[str, tuple[str, ...]] = {
 }
 
 
+_NO_OP_CONTINUATION_MARKERS: tuple[str, ...] = (
+    "下一轮",
+    "下轮",
+    "下一条",
+    "回复 next",
+    "回复next",
+    "发 next",
+    "发next",
+    "send next",
+    "reply next",
+    "next turn",
+    "next message",
+)
+
+
 class SessionAdherenceViolation(str, Enum):
     MISSING_PROGRESS_REPORT = "MISSING_PROGRESS_REPORT"
     MISSING_REQUIRED_FIELD = "MISSING_REQUIRED_FIELD"
     PROBLEM_SIGNAL_REPORTED_NOT_TRIGGERED = "PROBLEM_SIGNAL_REPORTED_NOT_TRIGGERED"
     PROBLEM_SIGNAL_REPORTED_NO_EVOLUTION_TRIGGER = "PROBLEM_SIGNAL_REPORTED_NO_EVOLUTION_TRIGGER"
     EMPTY_REQUIRED_FIELD = "EMPTY_REQUIRED_FIELD"
+    UNNECESSARY_USER_CONTINUATION_HANDOFF = "UNNECESSARY_USER_CONTINUATION_HANDOFF"
 
 
 @dataclass(frozen=True, slots=True)
 class SessionProgressExpectation:
     """Observable expectations for one final assistant response.
 
-    This evaluator does not infer whether a problem existed. The caller supplies that
-    fact from the selected session/controller evidence. That keeps observation separate
-    from diagnosis and prevents the evaluator from inventing hidden chain-of-thought.
+    This evaluator does not infer whether a problem existed or whether user input is
+    genuinely required. The caller supplies those facts from selected session/controller
+    evidence. That keeps observation separate from diagnosis and prevents the evaluator
+    from inventing hidden chain-of-thought or blockers.
     """
 
     context_selected: bool
     problem_signal_observed: bool = False
+    user_input_required: bool = False
+    no_op_continuation_disallowed: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -105,6 +124,7 @@ class SessionAdherenceSummary:
     fail_count: int
     missing_report_count: int
     problem_state_contradiction_count: int
+    unnecessary_continuation_handoff_count: int
 
     @property
     def adherence_rate(self) -> float:
@@ -115,6 +135,11 @@ class SessionAdherenceSummary:
 
 def _normalize_key(value: str) -> str:
     return " ".join(value.strip().lower().replace("_", " ").split())
+
+
+def _contains_no_op_continuation_handoff(value: str) -> bool:
+    normalized = value.strip().lower()
+    return any(marker in normalized for marker in _NO_OP_CONTINUATION_MARKERS)
 
 
 def extract_progress_fields(response: str) -> dict[str, str]:
@@ -180,6 +205,17 @@ def evaluate_session_progress_response(
                 SessionAdherenceViolation.PROBLEM_SIGNAL_REPORTED_NO_EVOLUTION_TRIGGER
             )
 
+    if (
+        expectation.no_op_continuation_disallowed
+        and not expectation.user_input_required
+        and _contains_no_op_continuation_handoff(
+            fields.get("next_action_or_blocker", "")
+        )
+    ):
+        violations.append(
+            SessionAdherenceViolation.UNNECESSARY_USER_CONTINUATION_HANDOFF
+        )
+
     return SessionAdherenceResult(
         report_required=True,
         fields=fields,
@@ -208,6 +244,11 @@ def summarize_session_adherence(
         ),
         problem_state_contradiction_count=sum(
             bool(contradiction_types.intersection(result.violations))
+            for result in required
+        ),
+        unnecessary_continuation_handoff_count=sum(
+            SessionAdherenceViolation.UNNECESSARY_USER_CONTINUATION_HANDOFF
+            in result.violations
             for result in required
         ),
     )

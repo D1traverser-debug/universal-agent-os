@@ -18,7 +18,7 @@ def _policy():
     return json.loads((ROOT / "config/SESSION_INTERACTION_POLICY.json").read_text(encoding="utf-8"))
 
 
-def _good_report(*, problem: bool) -> str:
+def _good_report(*, problem: bool, next_action: str = "continue scenario replay") -> str:
     evolution = (
         "EVALUATED_NO_DURABLE_EVOLUTION"
         if problem
@@ -32,7 +32,7 @@ def _good_report(*, problem: bool) -> str:
 Authority：UAOS
 状态：OBSERVING
 当前阶段：LIVE_DOGFOOD
-下一动作：continue scenario replay
+下一动作：{next_action}
 Evolution：{evolution}
 Deliberation：{deliberation}
 版本：UAOS 2.5.2 / Session 1.9.0
@@ -83,6 +83,40 @@ def test_problem_signal_with_triggered_deliberation_and_evaluated_evolution_pass
     assert result.passed
 
 
+def test_no_op_next_turn_handoff_is_observable_failure_when_user_input_is_not_required():
+    result = evaluate_session_progress_response(
+        _good_report(
+            problem=False,
+            next_action="本条完成后，下一轮继续记录一个 completed sample",
+        ),
+        SessionProgressExpectation(
+            context_selected=True,
+            no_op_continuation_disallowed=True,
+            user_input_required=False,
+        ),
+    )
+    assert not result.passed
+    assert (
+        SessionAdherenceViolation.UNNECESSARY_USER_CONTINUATION_HANDOFF
+        in result.violations
+    )
+
+
+def test_real_user_input_requirement_allows_future_turn_handoff():
+    result = evaluate_session_progress_response(
+        _good_report(
+            problem=False,
+            next_action="下一轮等待用户提供缺失的授权范围",
+        ),
+        SessionProgressExpectation(
+            context_selected=True,
+            no_op_continuation_disallowed=True,
+            user_input_required=True,
+        ),
+    )
+    assert result.passed
+
+
 def test_unselected_context_does_not_invent_a_progress_requirement():
     result = evaluate_session_progress_response(
         "Simple standalone answer.",
@@ -92,7 +126,7 @@ def test_unselected_context_does_not_invent_a_progress_requirement():
     assert result.report_required is False
 
 
-def test_multi_turn_summary_measures_missing_reports_and_state_contradictions():
+def test_multi_turn_summary_measures_missing_reports_state_contradictions_and_handoffs():
     samples = [
         (_good_report(problem=False), SessionProgressExpectation(context_selected=True)),
         (
@@ -107,12 +141,27 @@ def test_multi_turn_summary_measures_missing_reports_and_state_contradictions():
             _good_report(problem=True),
             SessionProgressExpectation(context_selected=True, problem_signal_observed=True),
         ),
+        (
+            _good_report(problem=False, next_action="下一轮继续采样"),
+            SessionProgressExpectation(
+                context_selected=True,
+                no_op_continuation_disallowed=True,
+                user_input_required=False,
+            ),
+        ),
     ]
     summary = summarize_session_adherence(samples)
-    assert summary.sample_count == 4
-    assert summary.required_report_count == 4
+    assert summary.sample_count == 5
+    assert summary.required_report_count == 5
     assert summary.pass_count == 2
-    assert summary.fail_count == 2
+    assert summary.fail_count == 3
     assert summary.missing_report_count == 1
     assert summary.problem_state_contradiction_count == 1
-    assert summary.adherence_rate == 0.5
+    assert summary.unnecessary_continuation_handoff_count == 1
+    assert summary.adherence_rate == 0.4
+
+
+def test_existing_session_policy_already_forbids_repairable_work_from_stopping_at_future_recommendation():
+    closure = _policy()["problem_to_action_closure_gate"]
+    assert "current work cycle" in closure["rule"]
+    assert "Recommendation-only is not a terminal state" in closure["rule"]
