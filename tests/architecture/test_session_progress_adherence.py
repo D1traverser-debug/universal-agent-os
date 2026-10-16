@@ -42,8 +42,8 @@ Authority：UAOS
 下一动作：{next_action}
 Evolution：{evolution}
 Deliberation：{deliberation}
-版本：UAOS 2.5.2 / Session 1.9.0
-进度时间：2026-10-16 10:45:00（北京时间）
+版本：UAOS 2.6.0 / Session 2.1.0
+进度时间：2026-10-16 21:06:00（北京时间）
 """
 
 
@@ -274,10 +274,10 @@ def test_multi_turn_summary_measures_evidence_gaps_and_handoffs():
     assert summary.adherence_rate == 2 / 6
 
 
-def test_existing_session_policy_already_requires_cognition_before_problem_closure():
+def test_session_policy_requires_causal_intervention_before_problem_closure():
     transaction = _policy()["problem_cognition_action_transaction"]
     closure = _policy()["problem_to_action_closure_gate"]
     assert transaction["required"] is True
-    assert "root-scope" in closure["rule"]
+    assert "causal/intervention admission" in closure["rule"]
     assert "evolution disposition" in closure["rule"]
     assert "current work cycle" in closure["rule"]

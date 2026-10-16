@@ -49,8 +49,8 @@ def test_clean_turn_stays_lightweight():
     assert decision is ProblemClosureDecision.CLEAN_NO_PROBLEM
 
 
-def test_authorized_feasible_repair_is_blocked_until_root_scope_and_evolution_are_admitted():
-    with pytest.raises(ProblemClosureError, match="root-scope cognitive admission"):
+def test_authorized_feasible_repair_is_blocked_until_cognition_and_evolution_are_admitted():
+    with pytest.raises(ProblemClosureError, match="evidence-traced cognition admission"):
         assess_problem_closure(
             ProblemClosureSignals(
                 problem_detected=True,
@@ -78,7 +78,7 @@ def test_arbitrary_string_cannot_impersonate_evolution_disposition():
 
 
 def test_repair_attempt_before_cognitive_admission_is_rejected_even_if_it_later_looks_successful():
-    with pytest.raises(ProblemClosureError, match="root-scope cognitive admission"):
+    with pytest.raises(ProblemClosureError, match="evidence-traced cognition admission"):
         assess_problem_closure(
             ProblemClosureSignals(
                 problem_detected=True,
@@ -88,7 +88,7 @@ def test_repair_attempt_before_cognitive_admission_is_rejected_even_if_it_later_
         )
 
 
-def test_verified_repair_is_an_admissible_terminal_state_after_cognitive_and_evolution_admission():
+def test_verified_legacy_repair_remains_admissible_during_compatibility_window():
     signals = _admitted(
         repair_path_available=True,
         repair_authorized=True,
@@ -98,7 +98,7 @@ def test_verified_repair_is_an_admissible_terminal_state_after_cognitive_and_evo
     assert require_problem_finalization_admission(signals) is ProblemClosureDecision.REPAIR_EXECUTED
 
 
-def test_root_scope_derived_durable_requirement_cannot_be_downgraded_by_caller():
+def test_root_scope_derived_durable_requirement_cannot_be_downgraded_by_legacy_caller():
     signals = ProblemClosureSignals(
         problem_detected=True,
         repair_path_available=True,
@@ -124,7 +124,7 @@ def test_caller_may_request_stronger_durable_record_for_otherwise_local_problem(
         assess_problem_closure(signals)
 
 
-def test_real_blocker_or_required_user_choice_allows_escalation_without_fake_root_cause_claim():
+def test_real_blocker_or_required_user_choice_allows_escalation_without_fake_causal_claim():
     blocked = ProblemClosureSignals(
         problem_detected=True,
         repair_path_available=True,
@@ -137,7 +137,7 @@ def test_real_blocker_or_required_user_choice_allows_escalation_without_fake_roo
     assert require_problem_finalization_admission(choice) is ProblemClosureDecision.BLOCKED_WITH_REASON
 
 
-def test_no_change_requires_explicit_evidence_backed_reason_plus_cognitive_admission():
+def test_legacy_no_change_requires_explicit_evidence_backed_reason_plus_cognitive_admission():
     no_change = _admitted(
         no_change_reason="counterexample search shows the apparent defect is expected behavior under the governing contract",
     )
@@ -157,11 +157,12 @@ def test_session_policy_makes_problem_cognition_and_action_gate_mandatory():
     assert gate["required"] is True
     assert gate["executable_ref"] == "src/uaos/kernel/problem_closure.py"
     assert cognition["required"] is True
-    assert cognition["root_scope_executable_ref"] == "src/uaos/kernel/deliberation.py"
+    assert cognition["cognition_case_executable_ref"] == "src/uaos/kernel/cognition_case.py#require_cognition_case_admission"
+    assert cognition["legacy_root_scope_ref"] == "src/uaos/kernel/deliberation.py#require_root_scope_admission"
     assert cognition["canonical_cognition_policy_ref"] == "config/DELIBERATION_POLICY.json#cognition_kernel"
     assert "ordered_stages" not in cognition
-    assert "root_scope_admission" in deliberation
-    assert "COMMIT_ROOT_SCOPE_AND_LEARNING_DISPOSITION" in deliberation["cognition_kernel"]["hot_path"]
+    assert "causal_intervention_admission" in deliberation
+    assert "COMMIT_CAUSAL_MODEL_INTERVENTION_AND_LEARNING" in deliberation["cognition_kernel"]["hot_path"]
     assert "REPAIR_EXECUTED" in gate["terminal_states"]
     assert "recommendation-only" in gate["rule"].lower()
 
@@ -170,17 +171,18 @@ def test_common_behavior_contract_requires_cognition_before_repair_or_block():
     policy = _json("config/COMMON_BEHAVIOR_ASSURANCE.json")
     closure = policy["problem_to_action_closure"]
     cognition = policy["problem_cognition_action_transaction"]
-    assert policy["contract_version"] == "1.3.0"
+    assert policy["contract_version"] == "1.4.0"
     assert closure["executable_ref"] == "src/uaos/kernel/problem_closure.py"
-    assert cognition["root_scope_executable_ref"] == "src/uaos/kernel/deliberation.py"
+    assert cognition["parent_cognition_case_executable_ref"] == "src/uaos/kernel/cognition_case.py#require_cognition_case_admission"
+    assert cognition["legacy_root_scope_ref"] == "src/uaos/kernel/deliberation.py#require_root_scope_admission"
     assert cognition["canonical_cognition_policy_ref"] == "config/DELIBERATION_POLICY.json#cognition_kernel"
     assert "REPAIR_EXECUTED" in closure["terminal_states"]
-    assert "PREMATURE_REPAIR_BEFORE_ROOT_SCOPE" in policy["parent_decisions"]
+    assert "SINGULAR_ROOT_CAUSE_COMPRESSION" in policy["parent_decisions"]
 
 
 def test_binding_and_current_system_expose_cognitive_action_contract():
     binding = _json("config/BINDING_POLICY.json")
     current = _json("CURRENT_SYSTEM.json")
-    assert "ROOT_SCOPE_ADMISSION" in binding["problem_cognition_action_rule"]
+    assert "CANONICAL_CAUSAL_INTERVENTION_ADMISSION" in binding["problem_cognition_action_rule"]
     assert current["owners"]["common_behavior_assurance"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
-    assert "ROOT_SCOPE_ADMISSION" in current["assurance"]["problem_action_closure"]
+    assert "CAUSAL_INTERVENTION" in current["assurance"]["problem_action_closure"]

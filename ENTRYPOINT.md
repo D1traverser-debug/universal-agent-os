@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE`
-System release: `2.5.3`
-Authority updated at: `2026-10-16T18:26:30+08:00`
+System release: `2.6.0`
+Authority updated at: `2026-10-16T20:59:52+08:00`
 
 ## Minimal bootstrap
 
@@ -84,13 +84,17 @@ This is reuse, not mandatory per-turn proxying. Domain repositories must not cre
 
 After authority selection, keep problem detection lightweight and always on. If no problem/knowledge gap is detected, continue normal work. If one is detected, use only these five primitives:
 
-1. `FRAME_AS_HYPOTHESIS` — treat the user's explanation, the Agent's first interpretation, external experts/Skills, existing code and the first convenient repair as hypotheses rather than authority.
-2. `EXPAND_PROBLEM_SPACE_WHEN_NEEDED` — before narrowing, test local implementation, workflow/interface, architecture/common-control, requirement/goal and unknown/latent-capability possibilities appropriate to the case.
-3. `FALSIFY_COMPETING_FRAMES` — ask what evidence would make the preferred explanation wrong; material/systemic cases must preserve an evidence-rejected alternative and test upstream/architecture involvement.
-4. `COMMIT_ROOT_SCOPE_AND_LEARNING_DISPOSITION` — only after evidence bounds/selects the layer may the Agent commit root scope, evolution disposition and durable-record need.
-5. `ACT_AND_VERIFY` — execute the smallest authorized repair/redesign/no-change/block and verify it against the governing objective. A cognitively admitted authorized repair cannot end as recommendation-only.
+1. `FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES` — recover the governing outcome and observed facts first. Treat the user's explanation, the Agent's first interpretation, external experts/Skills, existing code and the first convenient repair as hypotheses/candidates rather than causal authority.
+2. `EXPAND_CAUSAL_SOLUTION_AND_EVIDENCE_SPACE` — expand plausible causal factors and intervention candidates across local implementation, workflow/interface, architecture/common-control, host, requirement/goal and unknown/latent-capability possibilities. Do not prefer local or upstream causes by default.
+3. `FALSIFY_TRACE_AND_COMPARE` — ask what evidence would make preferred factors/actions wrong, bind claims to evidence provenance, compare tradeoffs, and obtain external/independent evidence when the selected search mode requires it.
+4. `COMMIT_CAUSAL_MODEL_INTERVENTION_AND_LEARNING` — admit one or more evidence-supported contributing causes, reject or bound alternatives, then select exactly one bounded current intervention/no-change candidate plus evolution/learning disposition. Causal explanation and intervention ownership are separate decisions.
+5. `ACT_VERIFY_VALIDATE_AND_OBSERVE` — execute the selected authorized intervention, verify requirement/contract compliance, validate material/systemic behavior against the governing outcome in realistic scenario/runtime conditions, then observe production. A cognitively admitted authorized repair cannot end as recommendation-only.
 
-The detailed evidence depth, root-scope gate and architecture-experience rules remain in `config/DELIBERATION_POLICY.json`, `src/uaos/kernel/deliberation.py`, `config/ARCHITECTURE_EXPERIENCE_POLICY.json` and `src/uaos/kernel/problem_closure.py`.
+`src/uaos/kernel/cognition_case.py#require_cognition_case_admission` is the canonical executable problem transaction for controlled finalization. It binds raw `DeliberationSignals`, required evidence dimensions, typed evidence provenance, multi-causal factors, bounded intervention candidates and an `EngineeringTrace` from governing outcome/requirement evidence to mechanism and V&V plans.
+
+A user statement, including “the upper layer is the problem” or “even rebuild it”, may seed a causal factor or architecture candidate but cannot by itself support the causal conclusion or selection. External methods guide search/evaluation but do not become current-system causal proof by reputation.
+
+`src/uaos/kernel/deliberation.py#require_root_scope_admission` is legacy compatibility only. For controlled problem finalization, `src/uaos/runtime/finalization.py` must receive the full `CognitionCase` and recompute admission; a caller-supplied `RootScopeReceipt`, user-visible progress label or boolean `repair_verified` claim is insufficient. CognitionCase repairs require concrete verification evidence; systemic/material repairs also require validation evidence.
 
 ### Outside-in capability discovery
 
@@ -173,9 +177,9 @@ A mutation of UAOS parent authority requires selected authority context `UAOS`. 
 For a material UAOS change on `CHATGPT_GITHUB`:
 1. reread current production authority;
 2. create/update an isolated candidate branch;
-3. if a problem is involved, complete the canonical cognition kernel and required evidence depth;
+3. if a problem is involved, build and admit the canonical evidence-traced `CognitionCase` rather than trusting a preferred cause/solution;
 4. apply problem-to-action closure: execute an available authorized repair rather than ending at recommendation-only;
-5. build the coherent candidate and run required assurance;
+5. build the coherent candidate and run required verification plus material/systemic scenario validation;
 6. open/update a pull request targeting `main`;
 7. require `promotion-gate` plus any additional evidence warranted by the change;
 8. perform a controlled merge/update;

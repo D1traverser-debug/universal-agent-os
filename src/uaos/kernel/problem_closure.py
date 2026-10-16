@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
+from .cognition_case import CognitionCaseReceipt
 from .deliberation import RootScopeReceipt
 
 
@@ -36,10 +37,16 @@ class ProblemClosureSignals:
     user_choice_required: bool = False
     hard_blocker: str | None = None
     no_change_reason: str | None = None
+    # Legacy compatibility only. Controlled finalization recomputes CognitionCaseReceipt
+    # from the complete CognitionCase and does not trust this legacy receipt by itself.
     root_scope_receipt: RootScopeReceipt | None = None
+    cognition_case_receipt: CognitionCaseReceipt | None = None
     evolution_disposition: EvolutionDisposition | None = None
     problem_record_required: bool = False
     problem_record_ref: str | None = None
+    terminal_action_candidate_id: str | None = None
+    verification_evidence_refs: tuple[str, ...] = ()
+    validation_evidence_refs: tuple[str, ...] = ()
 
 
 def _present(value: str | None) -> bool:
@@ -48,18 +55,16 @@ def _present(value: str | None) -> bool:
 
 def _durable_record_required(signals: ProblemClosureSignals) -> bool:
     receipt_requires = bool(
-        signals.root_scope_receipt
-        and signals.root_scope_receipt.durable_problem_record_required
+        (signals.cognition_case_receipt and signals.cognition_case_receipt.durable_problem_record_required)
+        or (signals.root_scope_receipt and signals.root_scope_receipt.durable_problem_record_required)
     )
-    # Backward-compatible callers may request stronger evidence, but cannot weaken
-    # the requirement already derived by root-scope admission.
     return receipt_requires or signals.problem_record_required
 
 
 def _require_cognition_and_learning(signals: ProblemClosureSignals) -> None:
-    if signals.root_scope_receipt is None:
+    if signals.cognition_case_receipt is None and signals.root_scope_receipt is None:
         raise ProblemClosureError(
-            "problem action blocked: root-scope cognitive admission is missing"
+            "problem action blocked: evidence-traced cognition admission is missing"
         )
     if not isinstance(signals.evolution_disposition, EvolutionDisposition):
         raise ProblemClosureError(
@@ -71,14 +76,44 @@ def _require_cognition_and_learning(signals: ProblemClosureSignals) -> None:
         )
 
 
-def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDecision:
-    """Classify the next admissible action for a detected problem.
+def _require_intervention_alignment(signals: ProblemClosureSignals, *, no_change: bool) -> None:
+    receipt = signals.cognition_case_receipt
+    if receipt is None:
+        return
+    if not _present(signals.terminal_action_candidate_id):
+        raise ProblemClosureError(
+            "terminal closure must identify the action candidate actually executed or preserved"
+        )
+    if signals.terminal_action_candidate_id != receipt.intervention_candidate_id:
+        raise ProblemClosureError(
+            "terminal action does not match the intervention admitted by the cognition case"
+        )
+    if no_change and not receipt.intervention_no_change_baseline:
+        raise ProblemClosureError(
+            "NO_CHANGE closure is invalid because the admitted intervention is an executable change"
+        )
+    if not no_change and receipt.intervention_no_change_baseline:
+        raise ProblemClosureError(
+            "repair closure is invalid because the admitted intervention is NO_CHANGE"
+        )
 
-    Finding a feasible edit is not cognitive admission. A repair/no-change decision may
-    execute only after deliberation has produced an evidence-tested root-scope receipt and
-    the problem has been assessed for durable learning/evolution. Obvious external blockers
-    may still be surfaced without pretending the root cause has been established.
-    """
+
+def _require_execution_evidence(signals: ProblemClosureSignals) -> None:
+    receipt = signals.cognition_case_receipt
+    if receipt is None:
+        return
+    if not signals.verification_evidence_refs:
+        raise ProblemClosureError(
+            "repair verification cannot be a boolean-only claim; verification evidence is required"
+        )
+    if receipt.systemic and not signals.validation_evidence_refs:
+        raise ProblemClosureError(
+            "systemic/material repair requires validation evidence in addition to verification"
+        )
+
+
+def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDecision:
+    """Classify the next admissible terminal action for a detected problem."""
 
     if not signals.problem_detected:
         return ProblemClosureDecision.CLEAN_NO_PROBLEM
@@ -90,9 +125,16 @@ def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDeci
             )
         return ProblemClosureDecision.BLOCKED_WITH_REASON
 
+    if signals.repair_verified and not signals.repair_attempted:
+        raise ProblemClosureError(
+            "repair cannot be verified without an execution attempt"
+        )
+
     if signals.repair_attempted:
         _require_cognition_and_learning(signals)
+        _require_intervention_alignment(signals, no_change=False)
         if signals.repair_verified:
+            _require_execution_evidence(signals)
             return ProblemClosureDecision.REPAIR_EXECUTED
         raise ProblemClosureError(
             "repair was attempted but not verified; preserve failure evidence or convert to an explicit blocker/no-change disposition"
@@ -100,19 +142,27 @@ def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDeci
 
     if _present(signals.no_change_reason):
         _require_cognition_and_learning(signals)
+        _require_intervention_alignment(signals, no_change=True)
         return ProblemClosureDecision.NO_CHANGE_WITH_EVIDENCE
 
     if signals.repair_path_available and signals.repair_authorized:
         _require_cognition_and_learning(signals)
+        if (
+            signals.cognition_case_receipt is not None
+            and signals.cognition_case_receipt.intervention_no_change_baseline
+        ):
+            raise ProblemClosureError(
+                "admitted intervention is NO_CHANGE; repair execution cannot be selected implicitly"
+            )
         return ProblemClosureDecision.REPAIR_NOW
 
     raise ProblemClosureError(
-        "detected problem has no admissible terminal disposition: establish root scope and learning disposition, then provide an authorized repair path, explicit blocker/user-choice requirement, or evidence-backed no-change reason"
+        "detected problem has no admissible terminal disposition: establish causal/intervention scope and learning disposition, then provide an authorized repair path, explicit blocker/user-choice requirement, or evidence-backed no-change reason"
     )
 
 
 def require_problem_finalization_admission(signals: ProblemClosureSignals) -> ProblemClosureDecision:
-    """Reject recommendation-only finalization when a cognitively admitted repair can run now."""
+    """Reject recommendation-only finalization when an admitted repair can run now."""
 
     decision = assess_problem_closure(signals)
     if decision is ProblemClosureDecision.REPAIR_NOW:

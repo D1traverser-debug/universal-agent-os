@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.4",
-  "contract_version": "1.3.0",
+  "schema_version": "1.5",
+  "contract_version": "1.4.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-16T10:09:00+08:00",
+  "updated_at": "2026-10-16T20:59:52+08:00",
   "scope": "ALL_REGISTERED_DOMAINS_IN_config/AGENT_REGISTRY.json",
-  "purpose": "Operationalize inherited common-capability outcomes, durable learning evidence and problem-to-action assurance without duplicating the canonical cognition state machine or making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
+  "purpose": "Operationalize inherited common-capability outcomes, evidence-traced multi-causal problem handling, durable learning evidence and problem-to-action assurance without duplicating the canonical cognition state machine or making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
   "source_parent_upcall": "D1traverser-debug/financial-writing-agent@main:evals/PARENT_GUIDANCE_HANDOFF.md",
   "parent_decisions": {
     "PROACTIVE_RESOLUTION_GAP": "PROMOTE_COMMON_OUTCOME_SEMANTICS__KEEP_DOMAIN_SPECIFIC_RECOVERY_ORDER_DOMAIN_OWNED",
@@ -13,7 +13,10 @@
     "INHERITANCE_BEHAVIOR_VS_DECLARATION": "PROMOTE_COMMON_ASSURANCE_RULE__DECLARATION_ALONE_IS_NOT_OPERATIONAL_PROOF",
     "DECLARATION_TO_OPERATION_GAP": "PROMOTE_AS_UMBRELLA_COMMON_FAILURE_CLASS__EXTEND_EXISTING_CONTROL_CONTEXT_ASSURANCE_EVOLUTION_CONTRACTS__DO_NOT_CREATE_PARALLEL_CONTROLLER",
     "PROBLEM_TO_ACTION_CLOSURE_GAP": "PROMOTE_COMMON_REPAIR_OR_BLOCK_TERMINAL_SEMANTICS__RECOMMENDATION_ONLY_IS_NOT_A_VALID_TERMINAL_WHEN_AUTHORIZED_REPAIR_IS_AVAILABLE",
-    "PREMATURE_REPAIR_BEFORE_ROOT_SCOPE": "REQUIRE_EVIDENCE_TESTED_ROOT_SCOPE_AND_EVOLUTION_DISPOSITION_BEFORE_REPAIR_OR_NO_CHANGE__USER_OR_EXTERNAL_FRAMING_IS_EVIDENCE_NOT_ROOT_CAUSE_AUTHORITY"
+    "PREMATURE_REPAIR_BEFORE_ROOT_SCOPE": "SUPERSEDED_BY_CAUSAL_INTERVENTION_1_4__USER_OR_EXTERNAL_FRAMING_IS_EVIDENCE_NOT_CAUSAL_AUTHORITY__DO_NOT_PREFER_LOCAL_OR_UPSTREAM",
+    "SINGULAR_ROOT_CAUSE_COMPRESSION": "ALLOW_MULTIPLE_EVIDENCE_SUPPORTED_CONTRIBUTING_CAUSES__SELECT_ONE_BOUNDED_INTERVENTION_SEPARATELY",
+    "COGNITION_RECEIPT_SELF_ATTESTATION": "CONTROLLED_PARENT_FINALIZATION_RECOMPUTES_FULL_COGNITION_CASE__CHILDREN_USE_OWNER_NATIVE_EQUIVALENT_EVIDENCE_BINDING",
+    "REPAIR_VERIFICATION_SELF_ATTESTATION": "MATERIAL_OR_SYSTEMIC_REPAIRS_REQUIRE_CONCRETE_VERIFICATION_AND_VALIDATION_EVIDENCE__BOOLEAN_SUCCESS_CLAIM_IS_NOT_OPERATIONAL_PROOF"
   },
   "recover_before_user_escalation": {
     "rule": "Before externalizing a plausibly recoverable dependency to the user, a selected Agent must attempt proportionate recovery from legally and currently available authority, durable state/artifacts, relevant conversation or connected context, and appropriate external evidence when those sources can materially reduce the uncertainty.",
@@ -33,28 +36,33 @@
     ]
   },
   "problem_cognition_action_transaction": {
-    "principle": "A_REPAIRABLE_SYMPTOM_IS_NOT_YET_AN_ADMITTED_ROOT_CAUSE",
+    "principle": "A_REPAIRABLE_SYMPTOM_OR_PLAUSIBLE_CAUSE_IS_NOT_YET_AN_ADMITTED_CAUSAL_MODEL",
     "canonical_cognition_policy_ref": "config/DELIBERATION_POLICY.json#cognition_kernel",
-    "root_scope_executable_ref": "src/uaos/kernel/deliberation.py",
+    "parent_cognition_case_executable_ref": "src/uaos/kernel/cognition_case.py#require_cognition_case_admission",
+    "legacy_root_scope_ref": "src/uaos/kernel/deliberation.py#require_root_scope_admission",
     "action_executable_ref": "src/uaos/kernel/problem_closure.py",
     "required_cross_domain_invariants": [
-      "user/external/first-fix framing is hypothesis input rather than root-cause authority",
-      "evidence-tested root scope precedes repair or no-change",
+      "user/external/first-fix framing is hypothesis/candidate input rather than causal authority",
+      "problem search does not prefer local implementation or upstream architecture by default",
+      "multiple contributing causes may remain supported when evidence warrants; domains must not force complex/systemic causality into exactly one universal root cause",
+      "causal explanation is separated from intervention selection; one bounded current intervention/no-change decision is selected for clear ownership and verification",
       "every admitted problem receives an evolution/learning disposition before action",
-      "material or evolution-relevant problems preserve durable causal evidence",
-      "an available authorized repair path cannot terminate as recommendation-only after admission"
+      "material or evolution-relevant problems preserve durable causal and decision evidence",
+      "material/systemic changes preserve governing outcome/requirement -> mechanism -> verification/validation trace",
+      "an available authorized repair path cannot terminate as recommendation-only after admission",
+      "repair completion is backed by concrete owner-native verification evidence; material/systemic behavior also has realistic validation evidence"
     ],
-    "owner_native_rule": "Domains realize these invariants with their own receipts/replay/evidence and do not copy a second parent cognition state machine."
+    "owner_native_rule": "Domains realize these invariants with their own envelopes/receipts/replays/evidence and do not copy the parent's CognitionCase data structure or a second parent cognition state machine."
   },
   "problem_to_action_closure": {
-    "principle": "AFTER_COGNITIVE_AND_EVOLUTION_ADMISSION__DETECTED_PROBLEM_MUST_END_IN_REPAIR_EXECUTED_BLOCKED_WITH_REASON_OR_NO_CHANGE_WITH_EVIDENCE__NOT_RECOMMENDATION_ONLY_WHEN_REPAIR_IS_AVAILABLE",
+    "principle": "AFTER_CAUSAL_INTERVENTION_AND_EVOLUTION_ADMISSION__DETECTED_PROBLEM_MUST_END_IN_REPAIR_EXECUTED_BLOCKED_WITH_REASON_OR_NO_CHANGE_WITH_EVIDENCE__NOT_RECOMMENDATION_ONLY_WHEN_REPAIR_IS_AVAILABLE",
     "executable_ref": "src/uaos/kernel/problem_closure.py",
     "terminal_states": ["REPAIR_EXECUTED", "BLOCKED_WITH_REASON", "NO_CHANGE_WITH_EVIDENCE"],
-    "repair_now_rule": "If canonical root-scope cognition is admitted, evolution disposition is recorded, a current legal repair path exists, the selected Agent has authority/capability to use it, and no explicit user choice is required, the turn must attempt the repair before finalizing.",
-    "premature_action_rule": "Do not execute or retroactively justify a repair before root-scope admission merely because the edit is easy, familiar, requested, or authorized.",
+    "repair_now_rule": "If canonical causal/intervention cognition is admitted, evolution disposition is recorded, a current legal repair path exists, the selected Agent has authority/capability to use it, and no explicit user choice is required, the turn must attempt the repair before finalizing.",
+    "premature_action_rule": "Do not execute or retroactively justify a repair before causal/intervention admission merely because the edit is easy, familiar, requested, authorized or matches the user's current theory.",
     "blocker_rule": "If repair cannot proceed, preserve the concrete blocker, missing permission/capability/evidence or required user choice; do not disguise a convenience stop as a blocker.",
-    "no_change_rule": "No-change is valid only after cognition admission and when diagnosis/counterexample/evidence supports preserving current behavior.",
-    "assurance_boundary": "The kernel admissions are executable and regression-testable but do not claim physical interception of every natural-language host response. Domains should add owner-native admission/receipt evidence where their execution topology supports it."
+    "no_change_rule": "No-change is valid only after cognition admission and when causal/counterexample/tradeoff evidence supports preserving current behavior.",
+    "assurance_boundary": "Parent controlled-runtime gates are executable and regression-testable. Domains provide owner-native equivalent evidence appropriate to their execution topology. Native ChatGPT physical pre-send interception is not claimed."
   },
   "observable_inheritance_assurance": {
     "principle": "DECLARED_COMMON_CAPABILITY_IS_NOT_OPERATIONAL_BEHAVIOR_PROOF",
@@ -89,43 +97,44 @@
   },
   "causal_problem_history_preservation": {
     "scope": "EVERY_EVOLUTION_RELEVANT_OR_MATERIAL_DETECTED_PROBLEM; SMALL_LOCAL_DEFECTS_MAY_USE_A_COMPACT_RECORD",
-    "purpose": "Preserve enough causal and decision evidence for later learning, parent guidance, regression design and repeat-failure detection instead of retaining only a final status or fix.",
+    "purpose": "Preserve enough causal, intervention and V&V evidence for later learning, parent guidance, regression design and repeat-failure detection instead of retaining only a final status or fix.",
     "minimum_semantics_when_applicable": [
-      "observed symptom or trigger and user/system consequence",
+      "governing outcome/requirement and observed symptom or trigger",
       "detection source and relevant authority/context",
       "micro diagnosis",
       "macro goal/topology alignment",
-      "competing hypotheses and their problem layers",
-      "falsification/rejection evidence for material alternatives",
-      "selected root-scope receipt",
+      "competing causal factors and their problem layers",
+      "supporting and falsification/rejection evidence for material factors",
+      "supported contributing causes without forcing artificial singularity",
+      "selected bounded intervention/no-change candidate plus tradeoff evidence",
       "governing assumption challenged when material",
       "research or method evidence when the problem-response floor requires it",
-      "selected action or repair",
-      "verification/evaluation evidence and assurance boundary",
+      "verification evidence for implemented requirement/contract compliance",
+      "validation evidence for material/systemic suitability in realistic scenario/runtime conditions",
       "result/status plus remaining unknowns, observation items or rollback conditions",
       "parent-upcall/common-capability impact when applicable"
     ],
-    "compression_rule": "Small local defects may record only the fields needed to preserve cause, action, verification and outcome.",
+    "compression_rule": "Small local defects may record only the fields needed to preserve cause, intervention, verification and outcome.",
     "failed_path_rule": "Material failed repairs and rejected approaches must not be silently rewritten out of history when they explain the final decision or expose a repeatable failure class.",
     "privacy_and_context_rule": "Record only evidence needed for learning and authority; do not persist secrets, unnecessary personal data, or large conversation copies when compact references or summaries are sufficient.",
-    "format_and_storage_rule": "Domains choose the representation and storage model that fits their execution topology. UAOS requires durable causal semantics and discoverability, not a universal journal file, timeline schema or prose template."
+    "format_and_storage_rule": "Domains choose the representation and storage model that fits their execution topology. UAOS requires durable causal/intervention/V&V semantics and discoverability, not a universal journal file, timeline schema or prose template."
   },
   "adoption_and_compatibility": {
     "existing_child_business_execution": "NOT_REVOKED_BY_THIS_CONTRACT_ALONE",
-    "immediate_parent_assurance_rule": "UAOS must not call a common capability operational merely because a child capability file declares inheritance.",
-    "next_material_domain_maintenance": "Registered children keep their owner-native Common Behavior 1.3 realization; this representation cleanup does not require them to adopt another cognition state machine.",
+    "immediate_parent_assurance_rule": "UAOS must not call Common Behavior 1.4 operational for a child merely because its capability file points at current parent cognition. Owner-native 1.4 adoption evidence is required.",
+    "next_material_domain_maintenance": "Registered children must realize Common Behavior 1.4 owner-natively before parent health may record 1.4 operational assurance for that child.",
+    "legacy_1_3_rule": "A child still on Common Behavior 1.3 remains usable only to the extent its current binding/minimum contract permits, but parent must not overstate 1.4 behavior until owner-native adoption is verified.",
     "no_parent_microscheduler": true,
     "no_parent_business_state_mirroring": true
   },
   "generalization_evidence": {
-    "uaos_repeat_failure": "UAOS repeatedly moved from user correction or a newly found implementation defect directly into repair planning, even though current policy already required macro/topology and assumption challenge. This showed that prose-level deliberation and repair-now closure were not mechanically ordered.",
+    "uaos_repeat_failure": "UAOS repeatedly mirrored the user's latest causal framing or stopped at explanation despite policy text already requiring hypothesis-first reasoning, macro/topology challenge and root-scope admission. Repository audit showed controlled finalization consumed a caller-supplied RootScopeReceipt, while legacy root-scope admission forced exactly one selected hypothesis. The live failure therefore exposed both evidence-chain enforcement and singular-causality modeling gaps.",
     "external_method_survey": [
-      "Systematic debugging contributes root-cause-before-fix discipline but is too implementation-centric to own architecture/governance diagnosis.",
-      "Hypothesis falsification contributes active disconfirmation of candidate causes.",
-      "Agent eval/observability contributes incident-to-regression learning and assurance boundaries.",
-      "SRE/chaos contributes operational and unknown-failure discovery but is not required on every small problem.",
-      "Architecture review/ADR contributes cross-layer tradeoff and revisit discipline but does not replace live diagnosis."
+      "NASA systems engineering contributes bidirectional requirement traceability and distinct verification versus validation planning/evidence.",
+      "SEI ATAM contributes business-driver/quality-attribute scenario evaluation, architectural risks and tradeoff comparison rather than architecture-by-familiarity.",
+      "Google SRE contributes systemic recurrence learning, multiple root-cause/contributing categories, concrete preventive actions and environment/process hardening rather than repeated human reminders.",
+      "MIT CAST/STAMP contributes explicit warning against root-cause seduction and oversimplification of causality, supporting multi-factor causal modeling without assuming one layer is always primary."
     ],
-    "design_choice": "ONE_CANONICAL_COGNITION_KERNEL__COMMON_BEHAVIOR_OWNS_ONLY_CROSS_DOMAIN_OUTCOME_INVARIANTS"
+    "design_choice": "ONE_CANONICAL_COGNITION_KERNEL__MULTI_CAUSAL_OWNER_NATIVE_REALIZATION__ONE_BOUNDED_INTERVENTION__EVIDENCE_TRACED_V_AND_V__NO_SECOND_CONTROLLER"
   }
 }

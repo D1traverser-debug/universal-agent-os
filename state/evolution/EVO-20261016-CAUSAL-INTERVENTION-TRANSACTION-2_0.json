@@ -1,0 +1,99 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261016-CAUSAL-INTERVENTION-TRANSACTION-2_0",
+  "authority":"UAOS",
+  "status":"CANDIDATE_IMPLEMENTED__AWAITING_GREEN_CI_AND_PROMOTION",
+  "updated_at":"2026-10-16T21:06:00+08:00",
+  "trigger":["USER_CORRECTION","REPEATED_FAILURE","ARCHITECTURE_GAP","ASSURANCE_GAP","PREMATURE_CAUSAL_COMMITMENT","EXPLANATION_ONLY_STOP"],
+  "failure_class":"FC-USER-ANCHORING-SINGULAR-CAUSAL-COMPRESSION-AND-SELF-ATTESTED-CLOSURE-009",
+  "observed_failure":"Across repeated live turns, the assistant could convert the user's latest framing into a causal conclusion, oscillate between local and upstream explanations, or explain the correction and stop despite existing hypothesis-first/root-scope policy and available authorized repair work.",
+  "governing_outcome":"The acting Agent must independently derive an evidence-bounded causal model, preserve multiple contributing causes when warranted, select exactly one current intervention/no-change decision separately from causality, execute the admitted intervention when authorized, and bind verification/validation evidence to the methods planned before action.",
+  "supported_contributing_causes":[
+    {
+      "id":"CF-001-RECEIPT-SELF-ATTESTATION",
+      "layer":"COMMON_CAPABILITY",
+      "evidence":"Controlled finalization accepted a precomputed RootScopeReceipt and could not prove the receipt was derived from the raw signals/evidence/assessment for the current user correction."
+    },
+    {
+      "id":"CF-002-SINGULAR-ROOT-COMPRESSION",
+      "layer":"CONTROL_PLANE",
+      "evidence":"Legacy require_root_scope_admission mechanically required exactly one SELECTED hypothesis, compressing multi-factor/systemic explanations into one root layer."
+    },
+    {
+      "id":"CF-003-ASSURANCE-SHAPE-BIAS",
+      "layer":"COMMON_CAPABILITY",
+      "evidence":"Several prior tests manually constructed receipts, FinalizationContext objects or scenario artifacts, proving component contracts existed but not that a real user-correction trajectory was evidence-to-action complete."
+    }
+  ],
+  "rejected_or_bounded_alternatives":[
+    {
+      "id":"ALT-USER-SAYS-UPSTREAM",
+      "disposition":"REJECTED_AS_CAUSAL_AUTHORITY",
+      "evidence":"A user correction is a valid trigger and hypothesis source but is not independent current-system causal evidence."
+    },
+    {
+      "id":"ALT-FULL-UAOS-REBUILD",
+      "disposition":"REJECTED_FOR_CURRENT_SCOPE",
+      "evidence":"The reproduced gap is concentrated in cognition/finalization semantics; unrelated authority ownership, continuity, domain health and mutation topology retain independent production evidence. Replacing them would widen the failure surface without evidence of necessity."
+    },
+    {
+      "id":"ALT-MORE-POLICY-PROSE",
+      "disposition":"REJECTED",
+      "evidence":"Equivalent hypothesis-first, macro challenge and premature-repair guidance existed before recurrence, so additional prose alone does not close the execution path."
+    }
+  ],
+  "external_method_evidence":[
+    "NASA systems engineering: preserve governing requirement/objective traceability through verification and validation rather than equating implementation completion with fitness for use.",
+    "SEI ATAM: architecture decisions are evaluated through business drivers, scenarios, risks and tradeoffs rather than familiarity or a single structural view.",
+    "Google SRE incident learning: repeated failures require systemic contributing-cause analysis and concrete corrective/preventive actions rather than repeated human reminders.",
+    "MIT CAST/STAMP: avoid root-cause seduction and oversimplification of causality for complex socio-technical/system failures."
+  ],
+  "architecture_candidates":[
+    {"id":"NO_CHANGE","disposition":"REJECTED","reason":"Preserves the reproduced live failure class."},
+    {"id":"RECEIPT_ONLY_HARDENING","disposition":"REJECTED_AS_INCOMPLETE","reason":"Improves provenance but leaves singular-root causal compression and intervention/result mismatch open."},
+    {"id":"WHOLE_UAOS_REBUILD","disposition":"REJECTED_FOR_CURRENT_SCOPE","reason":"Insufficient evidence that unrelated controller subsystems require replacement."},
+    {"id":"REBUILD_COGNITION_TRANSACTION","disposition":"SELECTED","reason":"Directly closes both reproduced contributors while preserving unrelated proven control-plane mechanisms."}
+  ],
+  "selected_architecture":"EVIDENCE_TRACED_COGNITION_CASE__MULTIPLE_SUPPORTED_CAUSAL_FACTORS__ONE_BOUNDED_INTERVENTION__ENGINEERING_TRACE__EXECUTABLE_ARCHITECTURE_EXPERIENCE_FOR_ARCHITECTURE_ACTIONS__TERMINAL_INTERVENTION_BINDING__METHOD_BOUND_VERIFICATION_AND_SYSTEMIC_VALIDATION",
+  "implementation":{
+    "cognition_case":"src/uaos/kernel/cognition_case.py",
+    "problem_closure":"src/uaos/kernel/problem_closure.py",
+    "finalization":"src/uaos/runtime/finalization.py",
+    "session_adherence":"src/uaos/observability/session_adherence.py",
+    "architecture_experience":"src/uaos/kernel/architecture_experience.py",
+    "legacy_root_scope":"src/uaos/kernel/deliberation.py#require_root_scope_admission__COMPATIBILITY_ONLY",
+    "policies":["config/DELIBERATION_POLICY.json","config/SESSION_INTERACTION_POLICY.json","config/COMMON_BEHAVIOR_ASSURANCE.json","config/BINDING_POLICY.json"],
+    "release_candidate":"UAOS 2.6.0 / Common Behavior 1.4.0"
+  },
+  "review_findings_closed_in_candidate":[
+    "Selected intervention and terminal repair/no-change disposition are mechanically bound by candidate ID and no-change semantics.",
+    "Verification/validation evidence carries method_ref and controlled finalization requires coverage of the exact predeclared methods.",
+    "Architecture/control interventions must supply raw ArchitectureExperienceCase data and pass require_architecture_experience_admission, including CURRENT_AGENT dogfood, concern-driven representations, competing candidates and FAILURE_AND_RECOVERY scenario.",
+    "The selected intervention requires substantive current-system evidence/tradeoff evidence; USER_CLAIM alone cannot select rebuild or another action."
+  ],
+  "regression_scenarios":[
+    "USER_SAYS_UPSTREAM__MUST_REMAIN_HYPOTHESIS_UNTIL_CURRENT_SYSTEM_EVIDENCE_SUPPORTS_IT",
+    "USER_SAYS_REBUILD_EVERYTHING__CANNOT_SELECT_ARCHITECTURE_WITH_USER_CLAIM_ONLY",
+    "MULTIPLE_CONTRIBUTING_CAUSES__DO_NOT_FORCE_ONE_UNIVERSAL_ROOT",
+    "SELECTED_NO_CHANGE__CANNOT_FINALIZE_AS_REPAIR_EXECUTED",
+    "SELECTED_REPAIR__CANNOT_FINALIZE_AS_NO_CHANGE",
+    "UNRELATED_GREEN_TEST__CANNOT_SATISFY_PLANNED_VERIFICATION_METHOD",
+    "ARCHITECTURE_INTERVENTION__CANNOT_SKIP_ARCHITECTURE_EXPERIENCE_ADMISSION",
+    "CONTROLLED_FINALIZATION__CANNOT_ACCEPT_PRECOMPUTED_ROOT_SCOPE_RECEIPT_AS_SUFFICIENT_COGNITION_PROOF"
+  ],
+  "promotion":{
+    "pull_request":62,
+    "candidate_branch":"maintenance/cognition-architecture-reassessment-20261016",
+    "candidate_ci":"PENDING_LATEST_HEAD",
+    "candidate_live_integration":"PENDING_LATEST_HEAD",
+    "production_commit":null,
+    "production_reread":null
+  },
+  "assurance_boundary":"The redesign can be enforced in UAOS-controlled runtimes that invoke the finalization gate and in compatible Agents SDK output-guardrail paths. Native ChatGPT still has no verified repository-controlled pre-send hook, so this release must not claim physical complete mediation of every native-chat answer.",
+  "remaining_scope":[
+    "Run full candidate CI and live integration on the final candidate head.",
+    "Resolve any remaining regression or authority-projection failure without weakening the new invariants.",
+    "Promote through controlled merge only after green checks, then reread production authority and observe the real correction sequence post-promotion.",
+    "Registered child domains remain on their owner-native current behavior assurance until each independently adopts and verifies Common Behavior 1.4; parent must not overstate child adoption."
+  ]
+}

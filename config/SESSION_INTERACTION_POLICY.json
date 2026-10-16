@@ -1,8 +1,8 @@
 {
-  "schema_version":"2.0",
-  "policy_version":"2.0.0",
+  "schema_version":"2.1",
+  "policy_version":"2.1.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T17:37:00+08:00",
+  "updated_at":"2026-10-16T20:59:52+08:00",
   "bare_inheritance_selector":{
     "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option":{
@@ -72,7 +72,7 @@
       "classify the current user message for correction/failure/contradiction/uncertainty or other problem signals",
       "classify newly read authority/evidence for defects, drift, knowledge gaps or control-plane gaps",
       "before reporting NOT_TRIGGERED, verify that no current problem signal was observed",
-      "when a problem is detected, activate the canonical cognition kernel before selecting or executing a repair"
+      "when a problem is detected, activate the canonical cognition case before selecting or executing a repair"
     ],
     "anti_bloat":"The detector is always-on and lightweight; deeper evidence collection is activated only at the depth required by current signals."
   },
@@ -81,10 +81,14 @@
     "scope":"EVERY_DETECTED_PROBLEM_BEFORE_REPAIR_NO_CHANGE_OR_MATERIAL_CLOSURE",
     "canonical_cognition_policy_ref":"config/DELIBERATION_POLICY.json#cognition_kernel",
     "common_assurance_ref":"config/COMMON_BEHAVIOR_ASSURANCE.json",
-    "root_scope_executable_ref":"src/uaos/kernel/deliberation.py",
+    "cognition_case_executable_ref":"src/uaos/kernel/cognition_case.py#require_cognition_case_admission",
+    "legacy_root_scope_ref":"src/uaos/kernel/deliberation.py#require_root_scope_admission",
     "outside_in_discovery_executable_ref":"src/uaos/kernel/problem_space.py",
     "action_executable_ref":"src/uaos/kernel/problem_closure.py",
-    "session_role":"ACTIVATE_THE_CANONICAL_KERNEL_AND_REPORT_ITS_EVIDENCE_STATE__DO_NOT_MAINTAIN_A_SECOND_ORDERED_COGNITION_STATE_MACHINE_HERE"
+    "finalization_executable_ref":"src/uaos/runtime/finalization.py#admit_final_response",
+    "session_role":"ACTIVATE_THE_CANONICAL_KERNEL_AND_REPORT_EVIDENCE_STATE__DO_NOT_MAINTAIN_A_SECOND_ORDERED_COGNITION_STATE_MACHINE_HERE",
+    "causality_rule":"ALLOW_MULTIPLE_EVIDENCE_SUPPORTED_CONTRIBUTING_CAUSES__DO_NOT_PREFER_LOCAL_OR_UPSTREAM_BY_DEFAULT__SELECT_ONE_BOUNDED_INTERVENTION_SEPARATELY",
+    "receipt_rule":"CONTROLLED_FINALIZATION_RECOMPUTES_COGNITION_CASE_ADMISSION__LEGACY_PRECOMPUTED_ROOT_SCOPE_RECEIPT_IS_NOT_SUFFICIENT"
   },
   "problem_to_action_closure_gate":{
     "required":true,
@@ -92,9 +96,11 @@
     "executable_ref":"src/uaos/kernel/problem_closure.py",
     "common_contract_ref":"config/COMMON_BEHAVIOR_ASSURANCE.json",
     "terminal_states":["REPAIR_EXECUTED","BLOCKED_WITH_REASON","NO_CHANGE_WITH_EVIDENCE"],
-    "rule":"Only after canonical cognition/root-scope admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state.",
+    "rule":"Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state.",
     "repair_now_conditions":[
-      "a root-scope receipt exists from the current problem evidence",
+      "a CognitionCase admission exists from current raw signals/evidence in controlled paths",
+      "supported causal factors are not justified solely by user framing or external method authority",
+      "one bounded intervention/no-change candidate is selected separately from causal explanation",
       "an evolution/learning disposition exists",
       "durable problem evidence exists when material/evolution-relevant",
       "a concrete repair path is currently available",
@@ -102,10 +108,11 @@
       "the required tools/capabilities are available",
       "no explicit user fact, approval, authorization or safety-sensitive choice is required"
     ],
-    "premature_action_rule":"A repair attempted before root-scope admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence.",
-    "blocker_rule":"When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or unresolved root scope disguised as certainty is not a valid repair claim.",
-    "no_change_rule":"When no change is selected, preserve the root-scope receipt and evidence/counterexample/rationale that makes current behavior the preferred outcome.",
-    "response_consistency_rule":"A final response that reports a confirmed repairable problem and only recommends future repair violates this gate unless it reports a verified blocker. A response also violates this gate if it reports repair execution without prior cognition/evolution admission.",
+    "verification_rule":"On the CognitionCase path, repair_verified=true is insufficient without concrete verification_evidence_refs bound to typed evidence. Systemic/material repairs also require validation_evidence_refs.",
+    "premature_action_rule":"A repair attempted before causal/intervention admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence.",
+    "blocker_rule":"When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or unresolved causality disguised as certainty is not a valid repair claim.",
+    "no_change_rule":"When no change is selected, preserve the admitted causal model, selected NO_CHANGE intervention and evidence/counterexample/tradeoff rationale.",
+    "response_consistency_rule":"A final response that reports a confirmed repairable problem and only recommends future repair violates this gate unless it reports a verified blocker. A response also violates this gate if it reports repair execution without prior cognition/evolution admission and required V&V evidence.",
     "assurance_boundary":"This policy and kernel gates are executable/regression-testable but do not claim host-level physical interception of every natural-language response."
   },
   "always_on_mutation_sentinel":{
@@ -143,7 +150,7 @@
     "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id. If evaluated without durable promotion, report EVALUATED_NO_DURABLE_EVOLUTION. Use NO_EVOLUTION_TRIGGER only when no problem/evolution trigger was detected in the current turn.",
     "deliberation_rule":"When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the evidence/control escalation used without exposing private chain-of-thought.",
     "consistency_rule":"A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless the observation is explicitly classified as non-problematic with a reason.",
-    "action_closure_rule":"A response that reports repair/no-change must be consistent with a root-scope admission and evolution disposition; a cognitively admitted authorized repair cannot stop at recommendation-only.",
+    "action_closure_rule":"A response that reports repair/no-change must be consistent with admitted causal/intervention evidence and evolution disposition; a cognitively admitted authorized repair cannot stop at recommendation-only.",
     "assurance_rule":"If progress, authority scope, cognition/evolution state, assurance level or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
   }
 }
