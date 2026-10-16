@@ -1,23 +1,35 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "task_id":"uaos:maintenance:cognition-architecture-reassessment-20261016",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
   "status":"RUNNING",
-  "current_stage":"SYSTEMIC_REASSESSMENT__COMPETING_ARCHITECTURE_CANDIDATES_ACTIVE",
-  "governing_goal":"Determine why repeated assistant corrections still collapse into user-anchored conclusions or explanation-only stopping, and redesign the UAOS cognition/action path only to the extent justified by evidence. The repair may be local enforcement, policy/runtime restructuring, or full cognition-kernel replacement; no layer or solution is presumed in advance.",
-  "incident":"Repeated user corrections exposed the same behavioral pattern across consecutive turns: the assistant mirrored the user's latest framing as if it were the selected diagnosis, explained the correction, and stopped instead of independently expanding hypotheses, testing competing layers, learning externally when warranted, and carrying the admitted repair through verification. Existing policy already states hypothesis-first, micro-to-macro-to-micro and upstream/architecture testing, so prose presence alone has not guaranteed execution.",
-  "root_scope":"UNRESOLVED__MUST_COMPARE_POLICY_DESIGN_RUNTIME_ENFORCEMENT_EVALUATION_AND_HOST_EXECUTION",
-  "candidate_hypotheses":[
-    "H1_POLICY_IS_SUBSTANTIVELY_SOUND_BUT_EXECUTION_ENFORCEMENT_IS_TOO_WEAK",
-    "H2_COGNITION_KERNEL_DESIGN_ITSELF_OVERCOMPRESSES_DISTINCT_ENGINEERING_ACTIVITIES_AND_SHOULD_BE_RESTRUCTURED",
-    "H3_FINALIZATION_AND_TESTS_VALIDATE_REPORTING_OR_SHAPE_MORE_THAN_EVIDENCE_TO_ACTION_BEHAVIOR",
-    "H4_HOST_MODEL_LIMITS_PREVENT_FULL_ENFORCEMENT_BUT_CONTROLLED_RUNTIME_CAN_STILL_BE_HARDENED",
-    "H5_FULL_REBUILD_WOULD_ADD_COMPLEXITY_WITHOUT_FIXING_THE_ACTUAL_EXECUTION_GAP"
+  "current_stage":"CAUSAL_INTERVENTION_TRANSACTION_REBUILT__P1_REVIEW_CLOSED_IN_CODE__CANDIDATE_CI_RUNNING",
+  "governing_goal":"Prevent repeated user-anchored causal conclusions and explanation-only stopping by making problem evidence, causal modeling, architecture evaluation, bounded intervention selection, execution and V&V one evidence-traced transaction without presuming local, upstream or full-rebuild causality.",
+  "incident":"Repeated live user corrections showed that policy-level hypothesis-first and root-scope rules did not reliably govern real execution. Repository audit found two independent structural contributors: controlled finalization trusted a precomputed cognition receipt instead of re-deriving the decision from raw evidence, and the legacy root-scope model forced complex/systemic cases into exactly one selected hypothesis. Tests often constructed compliant receipts/contexts manually, so component presence could pass without proving an end-to-end user-correction -> evidence -> causal model -> intervention -> V&V path.",
+  "supported_contributing_causes":[
+    "COGNITION_RECEIPT_SELF_ATTESTATION_AT_FINALIZATION_BOUNDARY",
+    "SINGULAR_ROOT_CAUSE_COMPRESSION_IN_LEGACY_ROOT_SCOPE_MODEL",
+    "ASSURANCE_TESTS_OVERWEIGHTED_COMPONENT_SHAPE_AND_CALLER_CONSTRUCTED_RECEIPTS"
   ],
-  "required_external_learning":["systems engineering requirements-to-V&V traceability","incident/postmortem systemic learning","architecture tradeoff/scenario evaluation","system-theoretic causal/control analysis"],
-  "required_internal_audit":["config/DELIBERATION_POLICY.json","src/uaos/kernel/deliberation.py","src/uaos/kernel/problem_closure.py","config/ARCHITECTURE_EXPERIENCE_POLICY.json","src/uaos/kernel/architecture_experience.py","src/uaos/runtime/finalization.py","relevant tests and common behavior assurance"],
+  "rejected_or_bounded_alternatives":[
+    "USER_ASSERTION_THAT_UPSTREAM_IS_THE_CAUSE__REJECTED_AS_CAUSAL_AUTHORITY",
+    "WHOLE_UAOS_REBUILD__REJECTED_FOR_CURRENT_SCOPE_BECAUSE_AUTHORITY_CONTINUITY_DOMAIN_HEALTH_AND_OTHER_UNRELATED_CONTROL_SURFACES_HAVE_INDEPENDENT_PRODUCTION_EVIDENCE",
+    "MORE_POLICY_PROSE_ONLY__REJECTED_BECAUSE_EQUIVALENT_GUIDANCE_ALREADY_EXISTED_BEFORE_RECURRENCE"
+  ],
+  "selected_intervention":"REBUILD_COGNITION_TRANSACTION_ONLY__EVIDENCE_TRACED_MULTI_CAUSAL_MODEL__ONE_BOUNDED_INTERVENTION__EXECUTABLE_ARCHITECTURE_EXPERIENCE_FOR_ARCHITECTURE_ACTIONS__TERMINAL_CANDIDATE_BINDING__METHOD_BOUND_VERIFICATION_AND_SYSTEMIC_VALIDATION",
+  "review_hardening":[
+    "P1 terminal repair/no-change must match the admitted intervention candidate",
+    "P1 V&V evidence must bind to the exact planned method rather than only an allowed evidence type",
+    "P1 architecture/control interventions must pass executable architecture-experience admission including CURRENT_AGENT dogfood and failure/recovery scenario",
+    "P1 selected interventions require substantive current-system evidence and cannot be supported only by a user claim such as rebuild everything"
+  ],
+  "external_learning":["NASA-style governing requirement to verification/validation traceability","ATAM-style scenario and tradeoff architecture evaluation","SRE-style recurrent incident learning with contributing causes and concrete corrective action","CAST/STAMP-style avoidance of simplistic single-root causal narratives"],
   "candidate_branch":"maintenance/cognition-architecture-reassessment-20261016",
-  "next_action":"Audit executable cognition/finalization/test surfaces and external engineering methods; compare preserve-and-harden versus kernel redesign versus full replacement; implement the smallest architecture that closes the reproduced failure class; run scenario and regression evidence before promotion.",
-  "progress_timestamp":"2026-10-16T20:45:49+08:00"
+  "pull_request":62,
+  "candidate_head":"271c18c65e4dca5ccfda588fb6812910f9bbb9e9",
+  "candidate_ci":{"run_number":280,"status":"IN_PROGRESS"},
+  "candidate_live_integration":{"run_number":95,"status":"IN_PROGRESS"},
+  "next_action":"Consume candidate CI/live results; repair any remaining real regressions; then update durable evolution evidence and promote only after all required checks pass.",
+  "progress_timestamp":"2026-10-16T21:06:00+08:00"
 }
