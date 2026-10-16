@@ -17,6 +17,58 @@ class DeepTaskAlternativeDisposition(str, Enum):
 
 
 @dataclass(frozen=True, slots=True)
+class DeepTaskSignals:
+    """Semantic trigger signals supplied by a compatible host before finalization."""
+
+    explicit_user_depth_request: bool = False
+    material_high_uncertainty: bool = False
+    unknown_knowledge: bool = False
+    architecture_or_control_plane: bool = False
+    repeated_systemic: bool = False
+    ordinary_structured_evidence_insufficient: bool = False
+
+
+@dataclass(frozen=True, slots=True)
+class DeepTaskRequirement:
+    required: bool
+    reason_codes: tuple[str, ...]
+
+
+def assess_deep_task_requirement(signals: DeepTaskSignals) -> DeepTaskRequirement:
+    """Derive deep-task activation from semantic signals, not wording heuristics."""
+
+    reasons: list[str] = []
+    if signals.explicit_user_depth_request:
+        reasons.append("EXPLICIT_USER_DEPTH_REQUEST")
+    if signals.material_high_uncertainty:
+        reasons.append("MATERIAL_HIGH_UNCERTAINTY")
+    if signals.unknown_knowledge:
+        reasons.append("UNKNOWN_KNOWLEDGE")
+    if signals.architecture_or_control_plane:
+        reasons.append("ARCHITECTURE_OR_CONTROL_PLANE")
+    if signals.repeated_systemic:
+        reasons.append("REPEATED_SYSTEMIC")
+    if signals.ordinary_structured_evidence_insufficient:
+        reasons.append("ORDINARY_STRUCTURED_EVIDENCE_INSUFFICIENT")
+
+    escalated_material = bool(
+        signals.ordinary_structured_evidence_insufficient
+        and any(
+            (
+                signals.material_high_uncertainty,
+                signals.unknown_knowledge,
+                signals.architecture_or_control_plane,
+                signals.repeated_systemic,
+            )
+        )
+    )
+    return DeepTaskRequirement(
+        required=bool(signals.explicit_user_depth_request or escalated_material),
+        reason_codes=tuple(reasons),
+    )
+
+
+@dataclass(frozen=True, slots=True)
 class DeepTaskAlternative:
     alternative_id: str
     statement: str
@@ -109,7 +161,6 @@ _FALSIFICATION_ALLOWED = {
     EvidenceKind.ANALYSIS_RESULT,
 }
 _INDEPENDENT_JUDGE_ALLOWED = {
-    EvidenceKind.REPOSITORY_FACT,
     EvidenceKind.TOOL_RESULT,
     EvidenceKind.TEST_RESULT,
     EvidenceKind.RUNTIME_OBSERVATION,
