@@ -3,18 +3,18 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-16T17:37:00+08:00",
+  "updated_at":"2026-10-16T18:32:56+08:00",
   "controller_tasks":[
     {
       "task_id":"uaos:maintenance:five-repo-semantic-continuity-closure-20261016",
       "authority_context":"UAOS",
       "task_type":"controller_maintenance",
       "display_name_zh":"总控维护｜五仓语义与连续性收口",
-      "status":"RUNNING",
-      "resume_eligible":true,
-      "default_resume":true,
-      "semantic_summary":"Post-merge five-repository semantic audit and repair: remove stale duplicated parent cognition semantics from child Skills, close the parent binding conformance gap, and make resumable controller maintenance discoverable after interruption without relying on chat memory.",
-      "current_stage":"CANDIDATE_REPAIR_AND_REGRESSION_ACTIVE",
+      "status":"COMPLETE",
+      "resume_eligible":false,
+      "default_resume":false,
+      "semantic_summary":"Completed five-repository semantic audit and repair: child hosted cognition is pointer-only, parent binding rejects the confirmed stale Skill-level cognition-floor failure class, and material controller maintenance resumes from durable UAOS state rather than chat memory.",
+      "current_stage":"COMPLETE__PRODUCTION_VERIFIED",
       "state_ref":"state/tasks/uaos-five-repo-semantic-continuity-closure-20261016.json"
     }
   ],
