@@ -1,8 +1,8 @@
 {
-  "schema_version":"2.1",
-  "policy_version":"2.1.0",
+  "schema_version":"2.2",
+  "policy_version":"2.2.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T20:59:52+08:00",
+  "updated_at":"2026-10-17T00:52:07+08:00",
   "bare_inheritance_selector":{
     "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option":{
@@ -76,6 +76,25 @@
     ],
     "anti_bloat":"The detector is always-on and lightweight; deeper evidence collection is activated only at the depth required by current signals."
   },
+  "always_on_execution_depth_sentinel":{
+    "required":true,
+    "scope":"EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_NON_PROBLEM_RESEARCH_DESIGN_DECISION_AND_READ_ONLY_TURNS",
+    "policy_ref":"config/DELIBERATION_POLICY.json#deep_task_execution_profile",
+    "signal_type_ref":"src/uaos/kernel/deep_task.py#DeepTaskSignals",
+    "assessment_ref":"src/uaos/kernel/deep_task.py#assess_deep_task_requirement",
+    "responsibility":"The selected Agent/session independently assesses the current request and newly acquired evidence for the execution depth required to satisfy the governing outcome. The user is not responsible for labeling a task as complex, systemic, architectural, uncertain, or deep.",
+    "checks":[
+      "derive current semantic evidence for explicit_user_depth_request, material_high_uncertainty, unknown_knowledge, architecture_or_control_plane, repeated_systemic and ordinary_structured_evidence_insufficient rather than relying on keyword aliases",
+      "treat an explicit user request for deeper analysis as a mandatory force signal, not as the only path into Deep Task",
+      "when ordinary STRUCTURED execution remains sufficient, keep the task lightweight and do not manufacture Deep Task ceremony",
+      "when assess_deep_task_requirement requires the profile, activate the current repository Deep Task evidence admission without waiting for the user to diagnose the task type or ask for a better solution",
+      "if new evidence discovered during execution changes the depth classification, re-evaluate before material completion rather than freezing the initial classification"
+    ],
+    "clear_path":"ORDINARY_EXECUTION_DEPTH__CONTINUE_WITH_THE_MINIMUM_SUFFICIENT_CURRENT_SEARCH_MODE",
+    "triggered_path":"ACTIVATE_CURRENT_DELIBERATION_AND_DEEP_TASK_EVIDENCE_PROFILE__NO_SECOND_COGNITION_STATE_MACHINE",
+    "anti_bloat":"Always-on means always-on lightweight depth routing, not permanent deep research. Simple/familiar/low-uncertainty tasks remain lightweight.",
+    "native_chatgpt_boundary":"This is a behavioral session responsibility. Native ChatGPT still has no verified repository-controlled non-bypassable semantic-signal injector or pre-send/pre-tool hook."
+  },
   "problem_cognition_action_transaction":{
     "required":true,
     "scope":"EVERY_DETECTED_PROBLEM_BEFORE_REPAIR_NO_CHANGE_OR_MATERIAL_CLOSURE",
@@ -134,6 +153,7 @@
     "canonical_policy_ref":"config/DELIBERATION_POLICY.json",
     "visibility":"REPORT_WHEN_MATERIALLY_TRIGGERED",
     "session_role":"ACTIVATE_AND_REPORT_THE_CANONICAL_COGNITION_KERNEL__DO_NOT_RESTATE_ITS_STAGE_SEMANTICS",
+    "execution_depth_routing_ref":"always_on_execution_depth_sentinel",
     "material_change_admission":"FAIL_CLOSED_PER_DELIBERATION_POLICY_BEFORE_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_MUTATION"
   },
   "inherited_session_progress_report":{
