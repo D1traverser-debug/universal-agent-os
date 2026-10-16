@@ -6,6 +6,7 @@ from uaos.kernel.cognition_case import (
     CognitionCase,
     CognitionCaseAdmissionError,
     EvidenceKind,
+    EvidenceItem,
     require_cognition_case_admission,
 )
 from uaos.kernel.problem_closure import (
@@ -31,14 +32,7 @@ class FinalizationBlocked(RuntimeError):
 
 @dataclass(frozen=True, slots=True)
 class FinalizationContext:
-    """Evidence supplied by the runtime before a response may be finalized.
-
-    For a detected problem that is not blocked before cognition, controlled runtimes
-    must supply the complete evidence-traced CognitionCase. The finalization seam
-    recomputes admission from that case; callers cannot satisfy cognition by handing
-    the gate a precomputed receipt. `work_remaining_without_user_input` remains a
-    runtime fact, not a phrase inferred from the response.
-    """
+    """Evidence supplied by the runtime before a response may be finalized."""
 
     context_selected: bool
     problem_signal_observed: bool = False
@@ -56,6 +50,39 @@ class FinalizationReceipt:
 
 def _blocked_before_cognition(signals: ProblemClosureSignals) -> bool:
     return bool(signals.user_choice_required or (signals.hard_blocker and signals.hard_blocker.strip()))
+
+
+def _validate_method_evidence(
+    *,
+    refs: tuple[str, ...],
+    evidence_by_id: dict[str, EvidenceItem],
+    allowed_kinds: set[EvidenceKind],
+    planned_methods: tuple[str, ...],
+    label: str,
+    require_complete_coverage: bool,
+) -> None:
+    observed_methods: set[str] = set()
+    for ref in refs:
+        item = evidence_by_id.get(ref)
+        if item is None:
+            raise FinalizationBlocked(f"UNKNOWN_{label.upper()}_EVIDENCE:{ref}")
+        if item.kind not in allowed_kinds:
+            raise FinalizationBlocked(
+                f"INVALID_{label.upper()}_EVIDENCE_KIND:{ref}:{item.kind.value}"
+            )
+        if item.method_ref is None:
+            raise FinalizationBlocked(f"UNBOUND_{label.upper()}_EVIDENCE_METHOD:{ref}")
+        if item.method_ref not in planned_methods:
+            raise FinalizationBlocked(
+                f"UNPLANNED_{label.upper()}_EVIDENCE_METHOD:{ref}:{item.method_ref}"
+            )
+        observed_methods.add(item.method_ref)
+    if require_complete_coverage:
+        missing = tuple(method for method in planned_methods if method not in observed_methods)
+        if missing:
+            raise FinalizationBlocked(
+                f"MISSING_{label.upper()}_METHOD_EVIDENCE:" + ",".join(missing)
+            )
 
 
 def _bind_and_validate_cognition_case(
@@ -83,18 +110,26 @@ def _bind_and_validate_cognition_case(
         EvidenceKind.TOOL_RESULT,
     }
 
-    for ref in closure.verification_evidence_refs:
-        item = evidence_by_id.get(ref)
-        if item is None:
-            raise FinalizationBlocked(f"UNKNOWN_VERIFICATION_EVIDENCE:{ref}")
-        if item.kind not in verification_kinds:
-            raise FinalizationBlocked(f"INVALID_VERIFICATION_EVIDENCE_KIND:{ref}:{item.kind.value}")
-    for ref in closure.validation_evidence_refs:
-        item = evidence_by_id.get(ref)
-        if item is None:
-            raise FinalizationBlocked(f"UNKNOWN_VALIDATION_EVIDENCE:{ref}")
-        if item.kind not in validation_kinds:
-            raise FinalizationBlocked(f"INVALID_VALIDATION_EVIDENCE_KIND:{ref}:{item.kind.value}")
+    _validate_method_evidence(
+        refs=closure.verification_evidence_refs,
+        evidence_by_id=evidence_by_id,
+        allowed_kinds=verification_kinds,
+        planned_methods=receipt.verification_methods,
+        label="verification",
+        require_complete_coverage=bool(closure.repair_attempted and closure.repair_verified),
+    )
+    _validate_method_evidence(
+        refs=closure.validation_evidence_refs,
+        evidence_by_id=evidence_by_id,
+        allowed_kinds=validation_kinds,
+        planned_methods=receipt.validation_methods,
+        label="validation",
+        require_complete_coverage=bool(
+            closure.repair_attempted
+            and closure.repair_verified
+            and receipt.systemic
+        ),
+    )
 
     return replace(closure, cognition_case_receipt=receipt)
 
@@ -102,11 +137,10 @@ def _bind_and_validate_cognition_case(
 def admit_final_response(response: str, context: FinalizationContext) -> FinalizationReceipt:
     """Fail closed when an actionable response is being finalized prematurely.
 
-    This is the controlled-runtime enforcement seam. It recomputes cognition admission
-    from the full problem case, composes that receipt with problem closure, and then
-    checks user-visible session adherence. The assurance applies only to hosts that
-    actually invoke this gate; native product hosts without a verified pre-send hook
-    remain outside physical complete mediation.
+    Controlled runtimes recompute cognition admission from the full case, bind terminal
+    closure to the admitted intervention, and require V&V evidence to identify the exact
+    methods planned before execution. Native hosts that do not invoke this gate remain
+    outside the physical complete-mediation claim.
     """
 
     if context.work_remaining_without_user_input and not context.user_input_required:
