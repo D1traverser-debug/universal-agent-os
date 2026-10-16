@@ -8,6 +8,10 @@ def _json(path: str):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def _version_tuple(value: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in value.split("."))
+
+
 def test_system_map_registers_domain_health_control_surface():
     system_map = _json("config/SYSTEM_MAP.json")
     assert system_map["schema_version"] == "1.8"
@@ -39,21 +43,46 @@ def test_policy_requires_active_discovery_bulkheading_and_bounded_skill_intake()
 
 def test_health_index_is_non_authoritative_and_tracks_current_repaired_children():
     health = _json("state/DOMAIN_HEALTH_INDEX.json")
+    current = _json("CURRENT_SYSTEM.json")
     assert health["role"] == "PARENT_HEALTH_OBSERVATION_CACHE__NOT_CHILD_BUSINESS_AUTHORITY"
-    assert health["domains"]["financial_writing"]["observed_release"] == "1.0.1"
-    assert health["domains"]["financial_writing"]["observed_profile_version"] == 18
-    assert health["domains"]["financial_writing"]["findings"] == []
-    assert health["domains"]["video"]["observed_release"] == "0.8.0"
-    assert health["domains"]["video"]["observed_profile_version"] == 9
-    assert health["domains"]["video"]["findings"] == []
 
-    ashare = health["domains"]["ashare"]
-    assert ashare["observed_release"] == "0.3.0"
-    assert ashare["observed_profile_version"] == 6
-    assert ashare["production_ci"]["conclusion"] == "success"
-    assert "OWNER_NATIVE" in ashare["common_behavior_assurance"]
-    assert ashare["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
-    assert ashare["findings"] == []
+    expected_floors = {
+        "financial_writing": 19,
+        "ashare": 7,
+        "novel": 6,
+        "video": 10,
+    }
+    current_receipts = {
+        "financial_writing": current["financial_child_production_verification"],
+        "ashare": current["ashare_child_production_verification"],
+        "novel": current["novel_child_production_verification"],
+        "video": current["video_child_production_verification"],
+    }
+    for domain_id, profile_floor in expected_floors.items():
+        observed = health["domains"][domain_id]
+        receipt = current_receipts[domain_id]
+        assert observed["observed_profile_version"] >= profile_floor
+        assert observed["observed_profile_version"] == receipt["profile_version"]
+        assert observed["observed_main_commit"] in {
+            receipt.get("current_main_commit"),
+            receipt.get("final_main_commit"),
+        }
+        assert _version_tuple(observed["common_behavior_assurance_min"]) >= (1, 3, 0)
+        assert observed["production_ci"]["conclusion"] == "success"
+        assert "OWNER_NATIVE" in observed["common_behavior_assurance"]
+        assert observed["findings"] == []
+
+    assert health["domains"]["financial_writing"]["observed_release"] == "1.0.1"
+    assert health["domains"]["ashare"]["observed_release"] == "0.3.0"
+    assert health["domains"]["video"]["observed_release"] == "0.8.0"
+    assert health["domains"]["financial_writing"]["canonical_evolution_entrypoint"] == "evals/EVOLUTION_INDEX.json"
+    assert health["domains"]["ashare"]["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
+    assert health["domains"]["novel"]["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
+    assert health["domains"]["video"]["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
+
+    learning = {row["failure_class"]: row for row in health["cross_domain_learnings"]}
+    freeze = learning["FC-EVOLVING-CAPABILITY-MINIMUM-ENCODED-AS-EXACT-CURRENT-VERSION-005"]
+    assert "compatibility-floor" in freeze["selected_rule"].lower()
 
     open_common = set(health["open_common_findings"])
     assert "FC-PARENT-CHILD-FRESHNESS-SNAPSHOT-MASQUERADING-AS-CURRENT-001" not in open_common
