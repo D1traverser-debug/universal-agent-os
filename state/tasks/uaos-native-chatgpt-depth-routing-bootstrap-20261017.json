@@ -3,14 +3,14 @@
   "task_id":"uaos:maintenance:native-chatgpt-depth-routing-bootstrap-20261017",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
-  "status":"RUNNING",
-  "current_stage":"EVIDENCE_ADMITTED__CANDIDATE_IMPLEMENTATION",
+  "status":"COMPLETE",
+  "current_stage":"PRODUCTION_VERIFIED_CLOSED",
   "governing_goal":"Make native ChatGPT sessions proactively and independently route every selected-context request to the appropriate UAOS execution depth without requiring the user to classify the task, while keeping Custom Instructions bootstrap-only and preserving the explicit boundary that native ChatGPT is not a repository-controlled non-bypassable runtime.",
   "failure_class":"FC-NATIVE-CHATGPT-DEPTH-ROUTING-USER-DEPENDENT-015",
   "observed_gap":[
-    "The current session policy makes lightweight problem detection always-on, but does not define an equally explicit every-turn execution-depth routing responsibility for non-problem research/design/decision work.",
-    "The current ChatGPT Custom Instructions pointer tells the model to activate cognition on problems/corrections/knowledge gaps, but does not explicitly require independent DeepTask semantic assessment for every request.",
-    "DeepTaskSignals and assess_deep_task_requirement already support semantic non-explicit escalation, so the missing layer is host/session invocation responsibility rather than a new DeepTask state machine."
+    "Production session policy made lightweight problem detection always-on but lacked an equally explicit every-turn execution-depth routing responsibility for non-problem research/design/decision work.",
+    "The production ChatGPT Custom Instructions pointer activated cognition for problems/corrections/knowledge gaps but did not explicitly assign independent execution-depth assessment to the acting session on every request.",
+    "DeepTaskSignals and assess_deep_task_requirement already supported semantic non-explicit escalation, so the missing layer was host/session invocation responsibility rather than a new DeepTask state machine."
   ],
   "architecture_candidates":[
     {"id":"NO_CHANGE","disposition":"REJECTED","reason":"Leaves the user responsible for noticing when a non-problem task needs deeper execution."},
@@ -19,26 +19,40 @@
     {"id":"SESSION_EXECUTION_DEPTH_SENTINEL_PLUS_COMPACT_BOOTSTRAP_POINTER","disposition":"PREFERRED","reason":"Adds the missing every-turn invocation responsibility at the session/host layer while leaving DeepTask semantics and evidence admission in their existing canonical owners."}
   ],
   "external_method_evidence":[
-    "OpenAI Help Center: Custom Instructions are direct guidance that is applied across chats, making them suitable for a compact bootstrap/activation pointer rather than duplicated policy authority.",
-    "OpenAI Help Center: Memory uses relevant context rather than every historical detail on every response, so Memory alone is not an adequate deterministic bootstrap substitute.",
+    "OpenAI Help Center: Custom Instructions are direct guidance applied across chats, supporting a compact persistent bootstrap pointer rather than a duplicated policy authority.",
+    "OpenAI Help Center: Memory is relevance-selected rather than a guaranteed every-detail/every-response rule carrier, so Memory alone is not a deterministic bootstrap substitute.",
     "Existing UAOS architecture principle: policy ownership remains singular; session/host surfaces activate and report canonical cognition rather than redefining it."
   ],
   "selected_architecture":"SESSION_EXECUTION_DEPTH_SENTINEL_PLUS_COMPACT_BOOTSTRAP_POINTER",
-  "planned_changes":[
-    "Add an always-on lightweight execution-depth sentinel to config/SESSION_INTERACTION_POLICY.json that independently derives DeepTask semantic signals on every selected-context turn and treats explicit user depth as an override rather than the only trigger.",
-    "Update docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md so the recommended pointer requires independent task-depth assessment and proactive UAOS escalation without copying DeepTask evidence dimensions.",
-    "Update HOST_PROFILES.json and CURRENT_SYSTEM.json to describe the native ChatGPT self-classification path accurately while retaining the no-verified-pre-send/no-guaranteed-signal-injector boundary.",
-    "Add contract tests that reject user-dependent-only depth routing and reject policy duplication in the Custom Instructions pointer."
+  "implemented_changes":[
+    "config/SESSION_INTERACTION_POLICY.json policy 2.2.0 now contains always_on_execution_depth_sentinel for every selected-context turn, separate from problem detection.",
+    "The sentinel assigns task-depth classification to the selected Agent/session, treats explicit user depth language as a mandatory force signal rather than the only trigger, keeps ordinary work lightweight, and re-evaluates when new evidence changes the depth profile.",
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md now carries one compact bootstrap-only non-authoritative pointer that assigns self-classification responsibility without copying the DeepTask evidence profile.",
+    "The canonical Custom Instructions pointer is mechanically constrained to <=1500 characters so one version works across current ChatGPT plan limits rather than maintaining drifting tier variants.",
+    "HOST_PROFILES.json, CURRENT_SYSTEM.json and AGENTS.md now project the same behavioral self-classification responsibility while explicitly retaining the native ChatGPT no-verified-pre-send/pre-tool/non-bypassable-signal-injector boundary.",
+    "Regression coverage includes CURRENT_AGENT dogfood, depth-miss recovery/reclassification, bootstrap-only authority invariants, no-op workflow-clock preservation, and the Custom Instructions character budget."
+  ],
+  "independent_evaluation_evidence":[
+    "PR #69 promotion-gate CI #342 succeeded on candidate head 8cb96043f85883640d304ea0e5d1c1526c6c33a8.",
+    "Codex rereview completed on the same candidate head with has_any_findings=false and has_unresolved_findings=false after earlier P1/P2 findings were repaired rather than bypassed.",
+    "Earlier Codex findings forced preservation of bootstrap-only authority/no-op workflow invariants, removal of a premature self-judged DeepTask admission claim, and reduction of the canonical pointer to the current all-plan character budget."
+  ],
+  "promotion_and_production_evidence":[
+    "PR #69 merged to main as 276d8044028658c49fef788235ff3aefee6bc3f2.",
+    "Production push CI #343 completed successfully for the merge commit.",
+    "Production reread confirmed SESSION_INTERACTION_POLICY 2.2.0 contains always_on_execution_depth_sentinel and retains the native-chatgpt behavioral-only assurance boundary.",
+    "Production reread confirmed CHATGPT_CUSTOM_INSTRUCTIONS.md contains the final compact bootstrap-only pointer and CURRENT_SYSTEM.json projects self-classified semantic DeepTask routing while preserving physical complete-mediation limits."
   ],
   "acceptance_criteria":[
-    "Every selected-context turn has an explicit lightweight execution-depth routing responsibility independent of problem detection.",
-    "User wording is not required to identify complexity/systemic/architecture/depth; explicit depth language only forces escalation.",
-    "DeepTask semantics remain owned by DELIBERATION_POLICY and src/uaos/kernel/deep_task.py; no second cognition state machine is created.",
-    "Custom Instructions remain compact bootstrap/activation guidance and do not duplicate the A-H evidence profile.",
-    "Native ChatGPT physical complete mediation remains explicitly unclaimed.",
-    "Repository tests and promotion checks pass before production merge."
+    "Every selected-context turn has an explicit lightweight execution-depth routing responsibility independent of problem detection — VERIFIED.",
+    "User wording is not required to identify complexity/systemic/architecture/depth; explicit depth language only forces escalation — VERIFIED.",
+    "DeepTask semantics remain owned by DELIBERATION_POLICY and src/uaos/kernel/deep_task.py; no second cognition state machine exists — VERIFIED.",
+    "Custom Instructions remain compact bootstrap-only guidance and do not duplicate the A-H evidence profile — VERIFIED.",
+    "One canonical pointer fits the current 1500-character all-plan floor and is regression tested — VERIFIED.",
+    "Native ChatGPT physical complete mediation remains explicitly unclaimed — VERIFIED.",
+    "Candidate CI, independent rereview, production CI and production reread pass — VERIFIED."
   ],
   "evolution_ref":"state/evolution/EVO-20261017-NATIVE-CHATGPT-DEPTH-ROUTING.json",
-  "next_action":"Implement candidate policy/bootstrap changes, add contract tests, open PR, run owner-appropriate checks, then promote and reread production if green.",
-  "progress_timestamp":"2026-10-17T00:52:07+08:00"
+  "next_action":"Real-use observation only. If native ChatGPT still misses execution-depth escalation, treat the observed miss as new runtime evidence; do not weaken the known boundary that repository policy cannot physically guarantee native ChatGPT pre-send/pre-tool mediation or signal injection.",
+  "progress_timestamp":"2026-10-17T01:13:27+08:00"
 }
