@@ -1,58 +1,65 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261016-FIVE-REPO-SEMANTIC-CONTINUITY-CLOSURE",
-  "status":"CANDIDATE",
+  "status":"RESOLVED",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T17:37:00+08:00",
+  "updated_at":"2026-10-16T18:36:00+08:00",
   "trigger":["USER_CORRECTION","CONTROLLER_RESUME_FAILURE","CROSS_REPOSITORY_BINDING_DRIFT"],
   "failure_class":"FC-CONTROLLER-MAINTENANCE-RESUME-AND-CHILD-COGNITION-CONFORMANCE-001",
   "symptom":"After bare inheritance the user selected 总控系统 expecting continuation of an in-flight five-repository maintenance audit, but only authority_context=UAOS was restored and the assistant incorrectly reported that no current maintenance task existed. Audit then found Financial, A-share and Video active Skills still carried a stale universal parent cognition/external-research floor while their capability profiles declared current hosted cognition with local_overrides=NONE.",
-  "user_impact":"Interrupted controller work can be silently lost or reconstructed from chat memory, and child Agents can execute stale copied parent cognition semantics even when the binding profile claims pointer-only inheritance.",
+  "user_impact":"Interrupted controller work could be silently lost or reconstructed from chat memory, and child Agents could execute stale copied parent cognition semantics even when the binding profile claimed pointer-only inheritance.",
   "competing_hypotheses":[
-    {"id":"H1_CHAT_MEMORY_ONLY","disposition":"REJECTED","evidence":"UAOS explicitly forbids chat memory as task authority and ENTRYPOINT states parent-controller progress belongs under state/tasks; no durable controller task existed for the interrupted work."},
-    {"id":"H2_CHILD_TEXT_ONLY","disposition":"REJECTED_AS_ROOT","evidence":"Three child Skills manifested stale prose, but src/uaos/integrations/binding.py only inspected CAPABILITIES for duplicated cognition and only checked the Skill for a controller marker, allowing the contradiction to pass."},
-    {"id":"H3_CONTROL_PLANE_CONTRACT_GAP","disposition":"SELECTED","evidence":"SYSTEM_MAINTENANCE returned MAINTENANCE/GLOBAL before candidate resolution, SESSION selector selected UAOS without resolving persisted controller work, TASK_INDEX had no controller-task lane, and the binding gate did not cover active Skill cognition copies."}
+    {"id":"H1_CHAT_MEMORY_ONLY","disposition":"REJECTED","evidence":"UAOS forbids chat memory as task authority and parent-controller progress belongs under state/tasks; the interrupted work had no durable controller task identity before repair."},
+    {"id":"H2_CHILD_TEXT_ONLY","disposition":"REJECTED_AS_ROOT","evidence":"Three child Skills manifested stale prose, but the parent binding validator permitted the contradiction by checking copied cognition only in CAPABILITIES and only a controller marker in the Skill."},
+    {"id":"H3_CONTROL_PLANE_CONTRACT_GAP","disposition":"SELECTED","evidence":"SYSTEM_MAINTENANCE bypassed resumable candidate resolution, the selector did not resolve controller work, TASK_INDEX had no controller-task lane, and the binding gate did not cover active Skill cognition copies."}
   ],
   "architecture_candidates":[
-    {"id":"NO_CHANGE","result":"REJECTED","tradeoff":"Lowest code churn but repeats the observed resume failure and violates durable-authority goals."},
-    {"id":"CHILD_TEXT_PATCH_ONLY","result":"REJECTED","tradeoff":"Removes current symptoms but preserves recurrence at the parent binding gate and does not repair controller resume."},
+    {"id":"NO_CHANGE","result":"REJECTED","tradeoff":"Would repeat the observed resume failure and violate durable-authority goals."},
+    {"id":"CHILD_TEXT_PATCH_ONLY","result":"REJECTED","tradeoff":"Would remove current symptoms but preserve recurrence at the parent binding gate and leave controller resume broken."},
     {"id":"REUSE_EXISTING_TASK_INDEX_PLUS_BINDING_CONFORMANCE","result":"SELECTED","tradeoff":"Adds one controller_tasks lane to the existing index/state root and a narrow Skill-level conformance guard; no second controller, task index, lease or resume protocol."}
-  ],
-  "external_method_evidence":[
-    "Policy-as-code practice favors a single policy owner plus executable validation at integration boundaries rather than copied policy prose in consumers.",
-    "Scenario/cognitive-walkthrough evaluation supports testing resume and recovery paths from the acting Agent perspective rather than proving architecture from static component maps alone."
   ],
   "current_agent_dogfood":[
     {"step":"fresh chat bootstrap","expected":"derive selector from current authority","observed":"PASS"},
-    {"step":"select 总控系统","expected":"restore UAOS and any single default resumable controller maintenance scope","observed_before_repair":"FAIL__restored only authority_context and lost in-flight scope"},
-    {"step":"recover exact work","expected":"reread durable controller state instead of chat memory","observed_before_repair":"FAIL__required user correction and reconstruction"},
-    {"step":"candidate repair","expected":"persist controller task in existing TASK_INDEX/state/tasks and make SYSTEM_MAINTENANCE resolve it","observed_candidate":"IMPLEMENTED_PENDING_FULL_CI"}
+    {"step":"select 总控系统 before repair","expected":"restore UAOS and the single default resumable controller maintenance scope","observed":"FAIL__restored only authority_context and lost in-flight scope"},
+    {"step":"recover exact work before repair","expected":"reread durable controller state instead of chat memory","observed":"FAIL__required user correction and reconstruction"},
+    {"step":"persist controller maintenance","expected":"reuse TASK_INDEX/state/tasks and avoid a second continuity plane","observed":"PASS__controller task persisted during work"},
+    {"step":"candidate resume regression","expected":"one default controller task resumes; complete task does not; multiple defaults fail closed","observed":"PASS"},
+    {"step":"post-promotion closure","expected":"completed task remains historical evidence but exits default/resume eligibility","observed":"PASS__closure candidate marks COMPLETE/resume_eligible=false/default_resume=false"}
   ],
   "cross_repository_findings":[
-    {"repository":"financial-writing-agent","finding":"active UAOS_SKILL froze universal problem/external-research prose while CAPABILITIES declared CURRENT_UAOS_DELIBERATION_POLICY with local_overrides=NONE","repair":"pointer-only parent cognition section; preserve Financial owner-native gates"},
-    {"repository":"a-share-event-driven-agent","finding":"active UAOS_SKILL froze universal problem/external-research prose while CAPABILITIES declared pointer-only hosted cognition","repair":"pointer-only parent cognition section; preserve A-share owner-native gates"},
-    {"repository":"novel-writing-agent","finding":"no equivalent stale universal floor found; explicit pointer was missing","repair":"add explicit current DELIBERATION_POLICY pointer as control/conformance normalization"},
-    {"repository":"video-growth-agent","finding":"active UAOS_SKILL froze current-problem-response-floor and every-problem research language while CAPABILITIES declared pointer-only hosted cognition","repair":"pointer-only parent cognition section; preserve Video owner-native gates"},
-    {"repository":"universal-agent-os","finding":"binding validator and controller-maintenance resume path did not enforce the claimed semantics","repair":"Skill conformance guard plus persisted controller maintenance resolution and regression tests"}
+    {"repository":"financial-writing-agent","finding":"active UAOS_SKILL froze universal problem/external-research prose while CAPABILITIES declared CURRENT_UAOS_DELIBERATION_POLICY with local_overrides=NONE","repair":"pointer-only parent cognition section plus owner-local static-audit conformance update; Financial business gates preserved","production":"PR_44_MERGED_OWNER_CI_PASS"},
+    {"repository":"a-share-event-driven-agent","finding":"active UAOS_SKILL froze universal problem/external-research prose while CAPABILITIES declared pointer-only hosted cognition","repair":"pointer-only parent cognition section; A-share owner-native gates preserved","production":"PR_15_MERGED_OWNER_CI_PASS"},
+    {"repository":"novel-writing-agent","finding":"no equivalent stale universal floor found; explicit parent policy pointer was missing","repair":"explicit current DELIBERATION_POLICY pointer added as conformance normalization","production":"PR_9_MERGED_OWNER_CI_PASS"},
+    {"repository":"video-growth-agent","finding":"active UAOS_SKILL froze current-problem-response-floor/every-problem research language while CAPABILITIES declared pointer-only hosted cognition","repair":"pointer-only parent cognition section; Video owner-native gates preserved","production":"PR_21_MERGED_OWNER_CI_PASS"},
+    {"repository":"universal-agent-os","finding":"binding validator and controller-maintenance resume path did not enforce the claimed semantics","repair":"Skill conformance guard plus persisted controller maintenance resolution and regression tests","production":"PR_57_MERGED_PROMOTION_GATE_AND_LIVE_INTEGRATION_PASS"}
   ],
   "local_verification":{
     "workspace":"/mnt/data/uaos-five-repo-audit",
     "focused_regression":"PASS",
-    "assertions":[
-      "stale Financial/A-share/Video cognition copies rejected",
-      "pointer-only Financial/A-share/Novel/Video cognition accepted",
-      "single default controller maintenance resumes",
-      "completed controller maintenance does not resume",
-      "multiple default controller maintenance tasks fail closed"
-    ]
+    "assertions":["stale Financial/A-share/Video cognition copies rejected","pointer-only Financial/A-share/Novel/Video cognition accepted","single default controller maintenance resumes","completed controller maintenance does not resume","multiple default controller maintenance tasks fail closed"]
   },
-  "candidate_branches":{
-    "universal-agent-os":"architecture/five-repo-semantic-continuity-closure-20261016",
-    "financial-writing-agent":"architecture/uaos-pointer-only-cognition-20261016",
-    "a-share-event-driven-agent":"architecture/uaos-pointer-only-cognition-20261016",
-    "novel-writing-agent":"architecture/uaos-pointer-only-cognition-20261016",
-    "video-growth-agent":"architecture/uaos-pointer-only-cognition-20261016"
+  "promotion":{
+    "status":"PROMOTED_AND_OBSERVED",
+    "child_pull_requests":[44,15,9,21],
+    "parent_pull_request":57,
+    "parent_candidate_head":"47b539cb3decd2d84ae056fdd2cd8cef5e2160e8",
+    "candidate_ci_number":250,
+    "candidate_promotion_gate":"PASS",
+    "candidate_live_integration_number":75,
+    "candidate_live_integration":"PASS",
+    "production_commit":"ead50c388bc28873e014f512aff6d5fb412aa622",
+    "production_reread":"PASS__CURRENT_SYSTEM_2_5_3_AND_NEW_CONTROLLER_CONTINUITY_BINDING_SEMANTICS_CONFIRMED"
   },
-  "promotion":{"status":"PENDING_PULL_REQUEST_AND_OWNER_APPROPRIATE_CI"},
-  "remaining_observation":"The Skill semantic guard is deliberately narrow to the confirmed stale universal-cognition failure class; it does not claim general natural-language equivalence detection. Native ChatGPT pre-send/physical complete mediation remains outside the verified assurance boundary."
+  "post_promotion_disposition":"KEEP",
+  "acceptance":{
+    "child_pointer_only_cognition_production_reread":"PASS",
+    "binding_skill_level_failure_class_guard":"PASS",
+    "controller_maintenance_persisted_resume_path":"PASS",
+    "no_second_continuity_plane":"PASS",
+    "candidate_promotion_gate":"PASS__CI_250",
+    "candidate_live_integration":"PASS__75",
+    "production_reread":"PASS__UAOS_2_5_3",
+    "completed_controller_task_removed_from_resume_default":"PASS__CLOSURE_CANDIDATE"
+  },
+  "remaining_observation":"The Skill semantic guard is deliberately narrow to the confirmed stale universal-cognition failure class and does not claim general natural-language semantic-equivalence detection. Native ChatGPT pre-send/physical complete mediation remains outside the verified assurance boundary."
 }
