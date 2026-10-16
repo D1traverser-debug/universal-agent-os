@@ -1,9 +1,9 @@
 {
   "schema_version":"1.0",
   "evolution_id":"EVO-20261016-COGNITION-SIMPLIFICATION-OUTSIDE-IN-DISCOVERY",
-  "status":"CANDIDATE_IMPLEMENTED__AWAITING_CI_AND_PRODUCTION_DOGFOOD",
+  "status":"CANDIDATE_IMPLEMENTED__FIRST_CI_FAILURE_CLASSIFIED_AND_REPAIRED__REVALIDATION_REQUIRED",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T10:09:00+08:00",
+  "updated_at":"2026-10-16T10:36:00+08:00",
   "trigger":["USER_CORRECTION","REPEATED_FAILURE","CONTROL_PLANE_GAP","KNOWLEDGE_GAP","COMPLEXITY_GROWTH"],
   "related_prior_evolution":"EVO-20261016-PROBLEM-COGNITION-ACTION-TRANSACTION",
   "failure_class":"FC-PREMATURE-PROBLEM-SPACE-NARROWING-AND-COGNITION-HOT-PATH-DUPLICATION-006",
@@ -73,6 +73,21 @@
     "removed_or_retired":["SESSION_INTERACTION duplicate ordered cognition stages/rules","COMMON_BEHAVIOR duplicate ordered cognition stages/rules","verbose duplicated cognition hot-path prose in ENTRYPOINT/AGENTS"],
     "unchanged":["root-scope executable gate","problem-closure executable gate","architecture-experience gate","child Common Behavior 1.3 owner-native implementations","authority/routing/runtime topology"]
   },
+  "candidate_validation_attempts":[
+    {
+      "pull_request":38,
+      "candidate_head":"58b16a481cec74cee1556f4b81eee397ff12dac7",
+      "ci_run":38841100154,
+      "ci_number":185,
+      "result":"FAIL__3_OF_275_TESTS",
+      "classification":[
+        "NEW_TEST_BUG__known_need_exception assertion incorrectly froze an uppercase token instead of the semantic exception",
+        "RETIRED_REPRESENTATION_FREEZE__session closure test required SESSION_INTERACTION to own ordered_stages even though the candidate intentionally moves stage ownership to the canonical deliberation kernel",
+        "WORDING_FREEZE__turn-level sentinel test required one exact hyphenated phrase although the candidate still states that problem detection is lightweight and always on after authority selection"
+      ],
+      "repair":"Correct the new test; update the session test to verify canonical-kernel reference plus retained root-scope/action gates; verify sentinel semantics rather than one obsolete phrase. Do not restore the duplicate state machine."
+    }
+  ],
   "required_scenarios":[
     "USER_PROPOSES_A_CAUSE__AGENT_MUST_HOLD_IT_AS_HYPOTHESIS_NOT_AUTHORITY",
     "AGENT_FINDS_FIRST_PLAUSIBLE_CAUSE__MUST_TEST_A_DISCONFIRMING_FRAME_BEFORE_MATERIAL_ACTION",
@@ -96,8 +111,8 @@
     "tests/architecture/test_cognition_kernel_simplification.py"
   ],
   "remaining_work":[
-    "run the complete UAOS promotion gate on the candidate",
-    "inspect any failures for genuine behavior regressions versus tests that freeze the retired duplicate representation",
+    "rerun the complete UAOS promotion gate and live integration on the repaired candidate head",
+    "inspect any further failures for genuine behavior regressions versus retired-representation or wording freezes",
     "if promoted, reread production authority and keep live conversational dogfood open; CI cannot prove every natural-language turn follows the kernel"
   ]
 }
