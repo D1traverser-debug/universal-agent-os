@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.2",
+  "schema_version":"1.3",
   "evolution_id":"EVO-20261016-PROBLEM-COGNITION-ACTION-TRANSACTION",
-  "status":"PARENT_PRODUCTION_HARDENED__CHILD_ADOPTION_OPEN",
+  "status":"ALL_REGISTERED_CHILD_ADOPTIONS_PRODUCTION_VERIFIED__PARENT_OBSERVATION_RECONCILIATION_CANDIDATE",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T06:17:23+08:00",
+  "updated_at":"2026-10-16T08:55:00+08:00",
   "trigger":["USER_CORRECTION","REPEATED_FAILURE","ARCHITECTURE_GAP","CONTROL_PLANE_GAP","PREMATURE_REPAIR"],
   "failure_class":"FC-PREMATURE-PROBLEM-FRAMING-AND-REPAIR-BEFORE-ROOT-SCOPE-001",
   "symptom":"Across several controller turns, UAOS accepted the latest user framing or a newly discovered implementation defect as the active root problem and moved toward repair before the existing deliberation, architecture challenge and evolution mechanisms had established the correct problem layer. The same failure repeated even after policy text already required micro->macro->micro reasoning.",
@@ -77,7 +77,7 @@
       "reject":"assuming Skill/package eval mechanics alone govern whole-system cognition"
     }
   ],
-  "selected_architecture":"EXTEND_EXISTING_DELIBERATION_WITH_ROOT_SCOPE_ADMISSION__MAKE_PROBLEM_CLOSURE_REQUIRE_ROOT_SCOPE_RECEIPT_AND_TYPED_EVOLUTION_DISPOSITION__DERIVE_DURABLE_CAUSAL_EVIDENCE_REQUIREMENT_FROM_ROOT_SCOPE_SIGNALS__NO_SECOND_CONTROL_PLANE",
+  "selected_architecture":"EXTEND_EXISTING_DELIBERATION_WITH_ROOT_SCOPE_ADMISSION__MAKE_PROBLEM_CLOSURE_REQUIRE_ROOT_SCOPE_RECEIPT_AND_TYPED_EVOLUTION_DISPOSITION__DERIVE_DURABLE_CAUSAL_EVIDENCE_REQUIREMENT_FROM_ROOT_SCOPE_SIGNALS__REGISTERED_CHILDREN_REALIZE_THE_SAME_OBSERVABLE_BEHAVIOR_OWNER_NATIVELY__NO_SECOND_CONTROL_PLANE",
   "architecture_reassessment_result":"BOUNDED_CONTROL_CHAIN_REDESIGN_REQUIRED__WHOLE_UAOS_REBUILD_NOT_JUSTIFIED_BY_CURRENT_EVIDENCE",
   "parent_baseline_promotion":{
     "pull_request":33,
@@ -108,6 +108,15 @@
       "severity":"MATERIAL",
       "finding":"This evolution record remained CANDIDATE_IMPLEMENTED_AWAITING_CI after PR #33 had merged and candidate/live/production CI had passed.",
       "repair":"Evolution-state freshness is now included in the same closure evidence; this record carries actual baseline and hardening promotion evidence."
+    },
+    {
+      "finding_id":"PF-004-CROSS-DOMAIN-CAPABILITY-VERSION-FREEZE",
+      "severity":"MATERIAL_CROSS_DOMAIN",
+      "failure_class":"FC-EVOLVING-CAPABILITY-MINIMUM-ENCODED-AS-EXACT-CURRENT-VERSION-005",
+      "finding":"During owner-native 1.3 adoption, A-share, Novel, Video and Financial each exposed one or more guards/tests that encoded an evolving capability profile or minimum common-behavior contract as an exact permanent value, producing false-negative CI after legitimate upgrades.",
+      "root_scope":"COMMON_TEST_AND_CONTRACT_SEMANTICS__NOT_FOUR_INDEPENDENT_BUSINESS_DEFECTS",
+      "repair":"Child adoption paths now use compatibility-floor semantics where the governing field is a minimum/evolving capability profile. Exact equality remains required for immutable runtime releases, historical evidence identities and owner-defined business cursors where exactness is intentional.",
+      "parent_rule":"DO_NOT_GENERALIZE_TO_ALL_VERSION_FIELDS__CLASSIFY_FIELD_SEMANTICS_FIRST"
     }
   ],
   "hardening_promotion":{
@@ -122,14 +131,57 @@
     "production_ci_status":"PASS",
     "production_reread":"PASS__TYPED_EVOLUTION_DISPOSITION_AND_ROOT_SCOPE_DERIVED_DURABLE_EVIDENCE_PRESENT_ON_MAIN"
   },
+  "child_adoption_evidence":{
+    "financial_writing":{
+      "owner_native_design":"SINGLE_DECISION_ENVELOPE_ROOT_SCOPE_MODEL_PLUS_THIN_EVIDENCE_GROUNDED_ACTION_GATE",
+      "profile_version":19,
+      "common_behavior_assurance_min":"1.3.0",
+      "current_main_commit":"1ea0d7cbd126a3267aeef63400d02f07ff01c6af",
+      "closure_push_ci_run":38831837910,
+      "closure_push_ci_number":1202,
+      "evolution_ref":"D1traverser-debug/financial-writing-agent@main:evals/EVOLUTION_INDEX.json",
+      "status":"PRODUCTION_CI_VERIFIED__LIVE_ARTICLE_OBSERVATION_OPEN"
+    },
+    "ashare":{
+      "owner_native_design":"EXISTING_BEHAVIOR_ASSURANCE_EXTENDED_WITH_ROOT_SCOPE_AND_TYPED_EVOLUTION",
+      "profile_version":7,
+      "common_behavior_assurance_min":"1.3.0",
+      "current_main_commit":"c40fbe52cc3aeab2cb8f08a45bb33049e6cebde0",
+      "closure_push_ci_run":38831596335,
+      "closure_push_ci_number":174,
+      "evolution_ref":"D1traverser-debug/a-share-event-driven-agent@main:audits/EVOLUTION_INDEX.json",
+      "status":"PRODUCTION_CI_VERIFIED__LIVE_MARKET_DAY_OBSERVATION_OPEN"
+    },
+    "novel":{
+      "owner_native_design":"ROOT_SCOPE_OWNER_ADMISSION_PLUS_EXISTING_MATERIAL_DELIBERATION_GATE_PLUS_TYPED_EVOLUTION",
+      "profile_version":6,
+      "common_behavior_assurance_min":"1.3.0",
+      "current_main_commit":"61f465ff36686bf61a0917a5a2061b09f0d9d60f",
+      "closure_push_ci_run":38831606755,
+      "closure_push_ci_number":323,
+      "evolution_ref":"D1traverser-debug/novel-writing-agent@main:audits/EVOLUTION_INDEX.json",
+      "status":"PRODUCTION_CI_VERIFIED__LIVE_LITERARY_AND_COMMERCIAL_OBSERVATION_OPEN"
+    },
+    "video":{
+      "owner_native_design":"EXISTING_OWNER_BEHAVIOR_ADMISSION_EXTENDED_WITH_ROOT_SCOPE_TYPED_EVOLUTION_AND_CURRENT_AGENT_DOGFOOD_FOR_SYSTEMIC_MATERIAL_PROBLEMS",
+      "profile_version":10,
+      "common_behavior_assurance_min":"1.3.0",
+      "current_main_commit":"fa2aac50cdb93e66720c2f6fc8b18a43c37ff661",
+      "closure_push_ci_run":38832021414,
+      "closure_push_ci_number":699,
+      "evolution_ref":"D1traverser-debug/video-growth-agent@main:audits/EVOLUTION_INDEX.json",
+      "status":"PRODUCTION_CI_VERIFIED__LIVE_MEDIA_BUSINESS_OBSERVATION_OPEN"
+    }
+  },
   "verified_properties":[
-    "A repairable symptom cannot reach REPAIR_NOW without a root-scope receipt.",
+    "A repairable symptom cannot reach REPAIR_NOW without a root-scope receipt in the UAOS parent contract.",
     "User framing or an external method cannot be promoted directly to root cause without falsification evidence.",
     "Repeated/cross-subsystem/material/architecture-risk problems require cross-layer competing hypotheses and explicit upstream/architecture reassessment.",
     "Durable causal-evidence requirement is derived by root-scope admission and cannot be downgraded by the closure caller.",
     "Arbitrary strings cannot impersonate an evolution/learning disposition.",
     "An admitted authorized repair still cannot end at recommendation-only.",
-    "Small single local problems remain eligible for lightweight single-layer root-scope handling and do not automatically require a durable record."
+    "Small single local problems remain eligible for lightweight single-layer root-scope handling and do not automatically require a durable record.",
+    "All four registered child domains now provide owner-native production-CI evidence for Common Behavior Assurance 1.3 while retaining domain business ownership and domain-specific architectures."
   ],
   "required_scenarios":[
     "USER_SAYS_ARCHITECTURE_IS_THE_PROBLEM__SYSTEM_MUST_TEST_NOT_OBEY",
@@ -140,11 +192,11 @@
     "MATERIAL_PROBLEM_REQUIRES_ARCHITECTURE_REASSESSMENT_AND_DURABLE_EVIDENCE",
     "CALLER_CANNOT_DOWNGRADE_DURABLE_RECORD_REQUIREMENT",
     "ARBITRARY_STRING_CANNOT_IMPERSONATE_EVOLUTION_DISPOSITION",
-    "AUTHORIZED_REPAIR_AFTER_ADMISSION_CANNOT_STOP_AT_RECOMMENDATION_ONLY"
+    "AUTHORIZED_REPAIR_AFTER_ADMISSION_CANNOT_STOP_AT_RECOMMENDATION_ONLY",
+    "CHILD_PROFILE_OR_MINIMUM_CONTRACT_UPGRADE__COMPATIBILITY_FLOOR_MUST_NOT_BE_FROZEN_AS_EXACT_OLD_VALUE"
   ],
   "remaining_work":[
-    "reconcile each registered child with COMMON_BEHAVIOR_ASSURANCE 1.3 using owner-native evidence rather than declaration-only inheritance",
-    "refresh domain health after child adoption",
+    "promote this parent observation reconciliation candidate and reread production state",
     "continue live observation for parent-upcall concurrency and unknown failure classes; these remain observation scope rather than proof of current defect"
   ]
 }
