@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from uaos.kernel import (
+    ArchitectureCandidate,
     ArchitectureConcern,
     ArchitectureScenario,
     InputSignal,
@@ -30,6 +31,7 @@ def test_deliberation_policy_is_the_single_cognition_stage_authority():
         "ACT_AND_VERIFY",
     ]
     assert "other policies" in kernel["anti_bloat"].lower()
+    assert policy["cognitive_search_modes"]["STRUCTURED"]["boundedness"]
 
 
 def test_session_common_and_current_system_reference_kernel_instead_of_copying_stage_machine():
@@ -83,46 +85,11 @@ def test_outside_in_discovery_is_conditional_not_a_per_turn_ritual():
 
 def test_current_agent_dogfood_can_follow_the_five_stage_hot_path_without_a_second_state_machine():
     steps = (
-        WalkthroughStep(
-            "frame",
-            "CURRENT_AGENT",
-            "hold the user's proposed cause and the Agent's first cause as hypotheses",
-            "at least two candidate frames remain distinguishable",
-            "latest wording could become premature authority",
-            "reread the canonical cognition kernel and preserve both frames",
-        ),
-        WalkthroughStep(
-            "expand",
-            "CURRENT_AGENT",
-            "expand across local, handoff, architecture/goal and latent-capability possibilities",
-            "the problem space includes plausible nonlocal alternatives when evidence warrants them",
-            "search could remain trapped inside a known keyword/need",
-            "model the external source and use outside-in lenses when the task is broad discovery",
-        ),
-        WalkthroughStep(
-            "falsify",
-            "CURRENT_AGENT",
-            "look for evidence that would make the preferred frame wrong",
-            "at least one material alternative is rejected or bounded by evidence",
-            "same-model confidence could masquerade as verification",
-            "use external/owner evidence and keep assurance bounded",
-        ),
-        WalkthroughStep(
-            "commit",
-            "CURRENT_AGENT",
-            "commit root scope and learning disposition only after evidence",
-            "root-scope receipt and evolution disposition exist before action",
-            "an easy edit could be mistaken for diagnosis",
-            "block action admission until root scope is admitted",
-        ),
-        WalkthroughStep(
-            "act",
-            "CURRENT_AGENT",
-            "perform the smallest authorized change and verify the governing objective",
-            "verification evidence supports repair/no-change/block",
-            "green tests could be overstated as live behavior proof",
-            "report the assurance ceiling and keep live observation open when needed",
-        ),
+        WalkthroughStep("frame", "CURRENT_AGENT", "hold first causes as hypotheses", "candidate frames remain distinguishable", "premature authority", "preserve alternatives"),
+        WalkthroughStep("expand", "CURRENT_AGENT", "expand plausible local and upstream causes", "risk-appropriate alternatives exist", "search too narrow", "use adaptive search mode"),
+        WalkthroughStep("falsify", "CURRENT_AGENT", "attack the preferred frame", "material alternative is rejected or bounded", "same-model confidence", "use external/owner evidence"),
+        WalkthroughStep("commit", "CURRENT_AGENT", "commit root scope after evidence", "root receipt exists", "easy edit mistaken for diagnosis", "block premature action"),
+        WalkthroughStep("act", "CURRENT_AGENT", "perform smallest authorized change", "verification supports outcome", "green tests overstated", "bound assurance"),
     )
     receipt = require_architecture_experience_admission(
         signals=(
@@ -133,21 +100,17 @@ def test_current_agent_dogfood_can_follow_the_five_stage_hot_path_without_a_seco
             ArchitectureConcern("operability", "current Agent can execute a short cognition hot path", actor_operability_material=True),
             ArchitectureConcern("ordering", "action cannot precede framing/falsification/root-scope", temporal_behavior_material=True),
         ),
-        scenarios=(
-            ArchitectureScenario(
-                "current-agent-cognition-dogfood",
-                "CURRENT_AGENT_DOGFOOD",
-                "detect and correct a bad framing before it becomes a system mutation",
-                "UAOS selected; user correction observed",
-                steps,
-                frozenset({"operability", "ordering"}),
-            ),
-        ),
+        scenarios=(ArchitectureScenario("current-agent-cognition-dogfood", "CURRENT_AGENT_DOGFOOD", "detect and correct bad framing", "UAOS selected", steps, frozenset({"operability", "ordering"})),),
         representations=(
             Representation("COGNITIVE_WALKTHROUGH", frozenset({"operability"}), "test://cognition-hot-path"),
             Representation("SEQUENCE", frozenset({"ordering"}), "test://frame-expand-falsify-commit-act"),
+        ),
+        candidates=(
+            ArchitectureCandidate("no-change", "keep current cognition search semantics", frozenset({"operability", "ordering"}), ("tradeoff://no-change",), True),
+            ArchitectureCandidate("adaptive", "add bounded adaptive search inside existing kernel", frozenset({"operability", "ordering"}), ("tradeoff://adaptive",)),
         ),
         material_control_plane_or_agent_experience_change=True,
     )
     assert receipt.dogfood_present is True
     assert "role-example" in receipt.user_examples_kept_nonbinding
+    assert receipt.candidate_ids == ("no-change", "adaptive")
