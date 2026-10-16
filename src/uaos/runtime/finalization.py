@@ -13,6 +13,8 @@ from uaos.kernel.deep_task import (
     DeepTaskAdmissionError,
     DeepTaskCase,
     DeepTaskReceipt,
+    DeepTaskSignals,
+    assess_deep_task_requirement,
     require_deep_task_admission,
 )
 from uaos.kernel.problem_closure import (
@@ -47,6 +49,7 @@ class FinalizationContext:
     cognition_case: CognitionCase | None = None
     closure_signals: ProblemClosureSignals | None = None
     deep_task_required: bool = False
+    deep_task_signals: DeepTaskSignals | None = None
     deep_task_case: DeepTaskCase | None = None
 
 
@@ -175,28 +178,36 @@ def _bind_and_validate_deep_task(
     return receipt
 
 
+def _deep_task_required(context: FinalizationContext) -> bool:
+    signal_required = False
+    if context.deep_task_signals is not None:
+        signal_required = assess_deep_task_requirement(context.deep_task_signals).required
+    return bool(context.deep_task_required or signal_required)
+
+
 def admit_final_response(response: str, context: FinalizationContext) -> FinalizationReceipt:
     """Fail closed when an actionable or explicitly deep response is finalized prematurely.
 
     Controlled runtimes recompute cognition admission from the full case, bind terminal
     closure to the admitted intervention, require V&V evidence to identify the exact
-    methods planned before execution, and require an evidence-complete DeepTaskCase when
-    the runtime classifies the task as explicitly deep. Native hosts that do not invoke
-    this gate remain outside the physical complete-mediation claim.
+    methods planned before execution, and recompute deep-task activation from typed
+    semantic signals when supplied. Native hosts that do not invoke this gate or do not
+    supply current semantic signals remain outside the physical complete-mediation claim.
     """
 
     if context.work_remaining_without_user_input and not context.user_input_required:
         raise FinalizationBlocked("ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT")
 
+    deep_required = _deep_task_required(context)
     deep_task_receipt: DeepTaskReceipt | None = None
-    if context.deep_task_required and not context.user_input_required:
+    if deep_required and not context.user_input_required:
         if context.deep_task_case is None:
             raise FinalizationBlocked("MISSING_DEEP_TASK_EVIDENCE_CASE")
         deep_task_receipt = _bind_and_validate_deep_task(
             context.deep_task_case,
             context.cognition_case if context.problem_signal_observed else None,
         )
-    elif context.deep_task_case is not None and not context.deep_task_required:
+    elif context.deep_task_case is not None and not deep_required:
         raise FinalizationBlocked("UNEXPECTED_DEEP_TASK_CASE_WITHOUT_DEEP_TASK_REQUIREMENT")
 
     closure_decision = ProblemClosureDecision.CLEAN_NO_PROBLEM
