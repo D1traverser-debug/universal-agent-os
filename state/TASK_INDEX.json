@@ -3,8 +3,20 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-16T20:19:34+08:00",
+  "updated_at":"2026-10-16T20:45:49+08:00",
   "controller_tasks":[
+    {
+      "task_id":"uaos:maintenance:cognition-architecture-reassessment-20261016",
+      "authority_context":"UAOS",
+      "task_type":"controller_maintenance",
+      "display_name_zh":"总控维护｜认知架构重审与必要时重构",
+      "status":"RUNNING",
+      "resume_eligible":true,
+      "default_resume":true,
+      "semantic_summary":"Reassess the cognition/action architecture after repeated user-anchoring and explanation-only stopping despite existing hypothesis-first/upstream-testing policy. Compare enforcement hardening, kernel redesign and full replacement without presuming the root layer.",
+      "current_stage":"SYSTEMIC_REASSESSMENT__COMPETING_ARCHITECTURE_CANDIDATES_ACTIVE",
+      "state_ref":"state/tasks/uaos-cognition-architecture-reassessment-20261016.json"
+    },
     {
       "task_id":"uaos:maintenance:domain-health-live-reconciliation-20261016",
       "authority_context":"UAOS",
