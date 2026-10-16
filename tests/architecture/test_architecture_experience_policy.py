@@ -33,7 +33,7 @@ def test_policy_rejects_literalizing_user_examples_and_requires_dogfood():
 
 def test_deliberation_policy_makes_experience_evaluation_part_of_material_architecture_admission():
     deliberation = load_json("config/DELIBERATION_POLICY.json")
-    assert tuple(map(int, deliberation["policy_version"].split("."))) >= (1, 9, 0)
+    assert tuple(map(int, deliberation["policy_version"].split("."))) >= (2, 0, 0)
     admission = deliberation["architecture_experience_admission"]
     assert admission["policy_ref"] == "config/ARCHITECTURE_EXPERIENCE_POLICY.json"
     assert admission["executable_ref"] == "src/uaos/kernel/architecture_experience.py"
@@ -41,7 +41,7 @@ def test_deliberation_policy_makes_experience_evaluation_part_of_material_archit
     before = "\n".join(deliberation["material_change_admission"]["before_mutation"])
     assert "config/ARCHITECTURE_EXPERIENCE_POLICY.json" in before
     assert "current-agent dogfood" in before.lower()
-    assert "root-scope admission" in before.lower()
+    assert "causal/intervention admission" in before.lower()
     assert "bounded search requirements" in before.lower()
 
 
@@ -51,7 +51,7 @@ def test_repo_instructions_require_concern_driven_walkthrough_before_architectur
     assert "A user example, analogy, observation or hypothesis is evidence/candidate input" in instructions
     assert "CURRENT_AGENT dogfood walkthrough" in instructions
     assert "Choose representations by concern" in instructions
-    assert "green unit test cannot by itself prove the architecture is usable in sequence" in instructions
+    assert "green unit test cannot by itself prove the architecture is suitable in use" in instructions
 
 
 def test_method_complements_structure_instead_of_replacing_it_with_sequence():
