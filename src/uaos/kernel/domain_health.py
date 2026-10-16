@@ -13,6 +13,7 @@ class HealthFindingType(str, Enum):
     COMMON_BEHAVIOR_BINDING_MISSING = "COMMON_BEHAVIOR_BINDING_MISSING"
     DECLARED_WITHOUT_OPERATIONAL_EVIDENCE = "DECLARED_WITHOUT_OPERATIONAL_EVIDENCE"
     CANONICAL_EVOLUTION_INTERFACE_MISSING = "CANONICAL_EVOLUTION_INTERFACE_MISSING"
+    SCENARIO_OR_RECOVERY_GAP = "SCENARIO_OR_RECOVERY_GAP"
 
 
 class Severity(str, Enum):
@@ -41,10 +42,14 @@ class DomainObservation:
     operational_evidence_capabilities: tuple[str, ...] = ()
     canonical_evolution_interface_required: bool = False
     canonical_evolution_interface_present: bool = False
+    material_change_pending: bool = False
+    failure_recovery_scenario_evidence_refs: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if not self.domain_id.strip() or not self.current_revision.strip():
             raise ValueError("domain_id and current_revision are required")
+        if any(not ref.strip() for ref in self.failure_recovery_scenario_evidence_refs):
+            raise ValueError("failure/recovery scenario evidence refs must be non-empty")
 
 
 @dataclass(frozen=True, slots=True)
@@ -69,8 +74,11 @@ class DomainHealthReceipt:
 def assess_domain_health(observation: DomainObservation) -> DomainHealthReceipt:
     """Assess parent/child control-plane health from current owner evidence.
 
-    A parent observation is deliberately treated as a cache.  A mismatch is a
+    A parent observation is deliberately treated as a cache. A mismatch is a
     health finding; it never rewrites or downgrades current child authority.
+    Material change readiness is also checked before execution: if the owner
+    cannot show a failure/recovery scenario for a pending material change, the
+    gap is surfaced before a real incident is needed to reveal it.
     """
 
     findings: list[DomainHealthFinding] = []
@@ -116,6 +124,16 @@ def assess_domain_health(observation: DomainObservation) -> DomainHealthReceipt:
                 HealthFindingType.CANONICAL_EVOLUTION_INTERFACE_MISSING,
                 Severity.MEDIUM,
                 "material/open evolution exists but no canonical child evolution evidence entrypoint is exposed",
+            )
+        )
+
+    if observation.material_change_pending and not observation.failure_recovery_scenario_evidence_refs:
+        findings.append(
+            DomainHealthFinding(
+                observation.domain_id,
+                HealthFindingType.SCENARIO_OR_RECOVERY_GAP,
+                Severity.HIGH,
+                "material change is pending without owner-native pre-change failure/recovery scenario evidence",
             )
         )
 
@@ -165,7 +183,6 @@ class ParentUpcall:
             raise ValueError("duplicate conflict key")
 
     def as_runnable_work(self) -> RunnableWork:
-        # Severity dominates, then bounded urgency/blast-radius refine ordering.
         priority = _SEVERITY_PRIORITY[self.severity] + self.urgency + min(self.blast_radius, 50)
         return RunnableWork(
             task_id=f"parent-guidance:{self.domain_id}",
@@ -178,11 +195,7 @@ class ParentUpcall:
 
 
 def triage_parent_upcalls(upcalls: tuple[ParentUpcall, ...], *, max_slots: int) -> ScheduleSelection:
-    """Bulkhead parent guidance by selecting every non-conflicting high-value upcall.
-
-    There is intentionally no global FIFO lock.  Existing scheduling semantics
-    serialize only declared resource conflicts or slot exhaustion.
-    """
+    """Bulkhead parent guidance by selecting every non-conflicting high-value upcall."""
 
     works = tuple(upcall.as_runnable_work() for upcall in upcalls)
     return select_non_conflicting(works, max_slots=max_slots)
