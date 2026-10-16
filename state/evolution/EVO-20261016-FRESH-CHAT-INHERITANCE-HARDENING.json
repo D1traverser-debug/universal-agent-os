@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "evolution_id":"EVO-20261016-FRESH-CHAT-INHERITANCE-HARDENING",
   "authority":"UAOS",
-  "recorded_at":"2026-10-16T17:25:01+08:00",
-  "status":"CANDIDATE_IMPLEMENTED__ALL_REGISTERED_CHILDREN_PRODUCTION_RECONCILED__PARENT_PROMOTION_OPEN",
+  "recorded_at":"2026-10-16T17:30:54+08:00",
+  "status":"PRODUCTION_PROMOTED__ALL_REGISTERED_CHILD_BINDINGS_REREAD_AND_PRODUCTION_VERIFIED__NATIVE_CHATGPT_BOOTSTRAP_MEDIATION_UNVERIFIED",
   "trigger_signals":[
     "USER_REQUESTED_FULL_REPOSITORY_TRAVERSAL_FROM_FRESH_CHAT_INHERITANCE",
     "FRESH_CHAT_PERFECT_EXECUTION_CLAIM_CHALLENGED",
@@ -49,7 +49,7 @@
     {
       "id":"H3_FORCE_ALL_CHILDREN_TO_SHARE_BYTE_IDENTICAL_BINDING_SCHEMA",
       "disposition":"REJECTED",
-      "reason":"The A-share owner legitimately uses status for its direct domain work plane. Forcing child schema identity would couple business-owner representation to parent implementation. Binding must validate semantic authority/status with explicit binding_status and established aliases instead."
+      "reason":"The A-share owner legitimately uses status for its direct domain work plane. Forcing child schema identity would couple business-owner representation to parent implementation. Binding validates semantic authority/status with explicit binding_status and established aliases instead."
     },
     {
       "id":"H4_FRESH_CHAT_INHERITANCE_AUTHORITY_AND_BINDING_COHERENCE_GAP",
@@ -59,7 +59,7 @@
     {
       "id":"H5_WHOLE_UAOS_TOPOLOGY_INVALID",
       "disposition":"NOT_SELECTED",
-      "reason":"Selector routing, direct-domain ownership, parent/child authority hierarchy, runtime finalization and existing control boundaries remain independently coherent; current evidence supports bounded inheritance/control-plane repair rather than whole-system rewrite."
+      "reason":"Selector routing, direct-domain ownership, parent/child authority hierarchy, runtime finalization and existing control boundaries remain independently coherent; current evidence supported bounded inheritance/control-plane repair rather than whole-system rewrite."
     }
   ],
   "selected_parent_changes":[
@@ -87,8 +87,22 @@
     {
       "pull_request":55,
       "run_number":238,
+      "conclusion":"PASS_BUT_SUPERSEDED_BY_LATER_HEAD",
+      "finding":"Semantic owner-native binding aliases and bounded synthetic-test assurance were added; later child-health/evolution reconciliation required another final candidate run."
+    },
+    {
+      "pull_request":55,
+      "run_number":241,
+      "conclusion":"FAIL",
+      "finding":"323 tests passed and one parent cache test still froze Financial observed release at 1.0.1 after legitimate child production advanced to 1.0.2; the current-health-cache test was corrected to compatibility-floor semantics."
+    },
+    {
+      "pull_request":55,
+      "run_number":242,
+      "run_id":38880852838,
+      "head_commit":"41d7dfa8b478382e56d90449fa4bf717f8a38d34",
       "conclusion":"PASS",
-      "finding":"Semantic owner-native binding aliases and bounded synthetic-test assurance added; further candidate CI remains required after final child-health/evolution reconciliation commits."
+      "finding":"Final candidate promotion-gate passed after live-child reconciliation, semantic binding repair, bounded synthetic assurance, current health cache reconciliation and mutable-cache release test repair."
     }
   ],
   "child_production_reconciliation":{
@@ -97,8 +111,18 @@
     "novel":{"main_commit":"911f31b692e6475be26a0221a676b3eb6ce9ce39","profile_version":7,"production_ci_run":38878759468,"production_ci_number":326,"result":"PASS"},
     "video":{"main_commit":"20cbe7c415b5671f8f38f299aa9715bdb932f952","profile_version":11,"production_ci_run":38878780056,"production_ci_number":707,"result":"PASS"}
   },
+  "parent_production_promotion":{
+    "pull_request":55,
+    "production_commit":"7965a6fa60f583b8a67fc8e34fda98f1941d8e04",
+    "production_ci_run":38880939250,
+    "production_ci_number":243,
+    "production_ci_result":"PASS",
+    "production_ci_completed_at":"2026-10-16T17:30:54+08:00",
+    "production_reread":["CURRENT_SYSTEM.json","config/BINDING_POLICY.json","src/uaos/integrations/binding.py","config/COMMON_CAPABILITIES.json","state/DOMAIN_HEALTH_INDEX.json","state/evolution/EVO-20261016-FRESH-CHAT-INHERITANCE-HARDENING.json"],
+    "result":"PRODUCTION_CONTENT_MATCHED_PROMOTED_CANDIDATE__EVOLUTION_RECORD_REQUIRED_THIS_EVIDENCE_ONLY_TO_CLOSE"
+  },
   "promotion_evidence_rule":"SYNTHETIC_UNIT_FIXTURES_PROVE_VALIDATOR_SEMANTICS_ONLY__MATERIAL_CROSS_REPOSITORY_BINDING_PROMOTION_REQUIRES_CURRENT_CHILD_AUTHORITY_REREAD_AND_OWNER_PRODUCTION_CI_EVIDENCE",
   "repair_disposition":"DO_NOT_RESTORE_SHADOW_SNAPSHOTS_OR_FIXED_RESEARCH_FLOOR__DO_NOT_FORCE_BYTE_IDENTICAL_CHILD_SCHEMA__VALIDATE_SEMANTIC_BINDING_AND_CURRENT_PARENT_COGNITION__KEEP_CHILD_BUSINESS_AUTHORITY_OWNER_NATIVE",
-  "assurance_boundary":"Repository traversal, child production CI, parent CI and live current-child authority reread can prove the repository-controlled selector/binding/owner-reference path to the stated evidence level. They cannot prove a native ChatGPT new conversation always receives or obeys the bootstrap pointer, because CHATGPT_GITHUB has no verified repository-controlled pre-send/bootstrap hook. Do not claim perfect fresh-chat execution on native ChatGPT from repository evidence alone.",
-  "status_after_parent_and_children":"CHILDREN_PRODUCTION_RECONCILED__PARENT_FINAL_CANDIDATE_AND_PRODUCTION_PROMOTION_PENDING"
+  "assurance_boundary":"Repository traversal, child production CI, parent CI and live current-child authority reread prove the repository-controlled selector/binding/owner-reference path to the recorded evidence level. They do not prove that a native ChatGPT brand-new conversation always receives or obeys the bootstrap pointer, because CHATGPT_GITHUB has no verified repository-controlled pre-send/bootstrap hook. Therefore native ChatGPT fresh-chat execution is not claimed perfect or physically non-bypassable.",
+  "status_after_parent_and_children":"REPOSITORY_CONTROLLED_FRESH_CHAT_INHERITANCE_PRODUCTION_VERIFIED__NATIVE_CHATGPT_BOOTSTRAP_HOOK_UNVERIFIED"
 }
