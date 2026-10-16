@@ -2,7 +2,7 @@
 
 Status: `CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE`
 System release: `2.5.2`
-Authority updated at: `2026-10-16T10:09:00+08:00`
+Authority updated at: `2026-10-16T17:37:00+08:00`
 
 ## Minimal bootstrap
 
@@ -23,7 +23,7 @@ Classify the request semantically first:
 - `CONTINUE`: resolve the selected controller/domain and exact resumable authority from current metadata; do not reconstruct business-task identity from chat memory or search results.
 - `REQUIREMENT_CHANGE`: update requirement authority at the narrowest valid scope and invalidate only affected downstream work.
 - `QUERY`: read only what the question requires.
-- `SYSTEM_MAINTENANCE`: operate on UAOS/system authority, not an ordinary business task.
+- `SYSTEM_MAINTENANCE`: operate on UAOS/system authority. Material or multi-turn controller maintenance is persisted through `state/TASK_INDEX.json#controller_tasks` plus an exact `state/tasks/` state reference so interruption recovery does not depend on chat memory.
 - `PAUSE/CANCEL`: persist a safe checkpoint when possible, then change lifecycle state.
 
 Natural-language resolution obeys `config/INTENT_RESOLUTION_POLICY.json`: user wording is semantic input, aliases are convenience metadata, ambiguity fails closed, and a target-less generic “继承/继续/恢复” opens the current selector.
@@ -34,9 +34,11 @@ Natural-language resolution obeys `config/INTENT_RESOLUTION_POLICY.json`: user w
 
 For a generic inheritance request with no resolved target, present:
 1. `总控系统` as the controller/system-maintenance option;
-2. every current `resume_eligible` task/project from `state/TASK_INDEX.json`.
+2. every current `resume_eligible` domain task/project from `state/TASK_INDEX.json#tasks`.
 
-Selecting `总控系统` establishes `UAOS`. Selecting a registered domain establishes `DOMAIN:<domain_id>` and activates that domain directly as the current Agent. The user does not need to first enter a UAOS controller chat, and normal child business turns do not traverse a live UAOS proxy.
+Selecting `总控系统` establishes `UAOS`, then inspects `state/TASK_INDEX.json#controller_tasks`. If exactly one eligible controller task is marked `default_resume`, resume it and reread its `state_ref` before reporting progress or acting. Multiple default controller tasks fail closed. If no eligible controller task exists, remain at the UAOS controller root. Controller tasks are nested under the controller option rather than duplicated as domain choices.
+
+Selecting a registered domain establishes `DOMAIN:<domain_id>` and activates that domain directly as the current Agent. The user does not need to first enter a UAOS controller chat, and normal child business turns do not traverse a live UAOS proxy.
 
 ## Current routing
 
@@ -108,6 +110,8 @@ Before material domain work:
 3. validate binding/capability compatibility against current authority;
 4. block the affected domain work if binding drifts.
 
+For an adaptive child declaring pointer-only hosted cognition, the active Skill must point to current `config/DELIBERATION_POLICY.json` and must not freeze a competing universal parent cognition/research floor. `config/BINDING_POLICY.json` and `src/uaos/integrations/binding.py` own the executable failure-class guard.
+
 `config/BINDING_POLICY.json` validates binding/capabilities; mutation hierarchy remains owned by `config/AUTHORITY_WRITE_POLICY.json`.
 
 After a domain's business authority is externalized, UAOS must not retain a competing current business workflow package under `domains/<domain_id>/`.
@@ -124,6 +128,8 @@ Search presence is not authority. Retrieval starts from `config/SYSTEM_MAP.json`
 - otherwise resolve semantic intent/domain/task before aliases;
 - each domain may have at most one default-resume selector entry;
 - a target-less generic inheritance request opens the selector;
+- selecting `总控系统` resumes one unambiguous eligible default controller-maintenance task when present, otherwise remains at controller root;
+- material or multi-turn controller maintenance must persist identity/progress in `state/TASK_INDEX.json#controller_tasks` and exact state under `state/tasks/`; completion/cancellation removes it from resume/default eligibility while historical evidence may remain;
 - multiple non-default tasks are never merged;
 - time-sensitive work is revalidated before material execution;
 - parent-controller progress is stored under `state/tasks/`, while domain business progress/identity remain in domain authority;
