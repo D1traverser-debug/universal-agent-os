@@ -28,15 +28,21 @@ def test_binding_treats_parent_snapshots_as_cache_and_forbids_global_fifo_blocki
     assert "ROOT_SCOPE_ADMISSION" in binding["problem_cognition_action_rule"]
 
 
-def test_policy_requires_active_discovery_bulkheading_and_bounded_skill_intake():
+def test_policy_requires_active_discovery_bulkheading_and_two_skill_discovery_modes():
     policy = _json("config/DOMAIN_HEALTH_ESCALATION_POLICY.json")
-    assert policy["policy_version"] == "1.0.0"
+    assert _version_tuple(policy["policy_version"]) >= (1, 1, 0)
     checks = set(policy["proactive_discovery"]["checks"])
     assert "PARENT_CHILD_AUTHORITY_FRESHNESS" in checks
     assert "INHERITED_BEHAVIOR_OPERATIONAL_EVIDENCE" in checks
     assert "REPEATED_OR_CROSS_DOMAIN_FAILURE_CLASS_CLUSTERING" in checks
     assert "global FIFO" in policy["triage_and_bulkheading"]["serialization_rule"]
-    forbidden = set(policy["external_skill_intake"]["forbidden"])
+
+    intake = policy["external_skill_intake"]
+    assert set(intake["discovery_modes"]) == {"KNOWN_NEED_MATCH", "OUTSIDE_IN_LATENT_CAPABILITY_DISCOVERY"}
+    assert intake["outside_in_executable_ref"] == "src/uaos/kernel/problem_space.py"
+    forbidden = set(intake["forbidden"])
+    assert "REQUIRE_EVERY_BROAD_SURVEY_TO_PRETEND_THE_USEFUL_NEED_WAS_ALREADY_KNOWN" in forbidden
+    assert "TREAT_ONE_ROLE_OCCUPATION_CATEGORY_OR_CREATOR_AS_THE_ARCHITECTURE" in forbidden
     assert "BLIND_COPY_OR_INSTALL_AS_AUTHORITY" in forbidden
     assert "PROMOTE_WITHOUT_EVALUATION_EVIDENCE" in forbidden
 
