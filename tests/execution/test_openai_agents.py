@@ -38,14 +38,22 @@ class FakeGuardrailFunctionOutput:
         self.tripwire_triggered = tripwire_triggered
 
 
+class FakeOutputGuardrail:
+    def __init__(self, guardrail_function, name):
+        self.guardrail_function = guardrail_function
+        self.name = name
+
+    def get_name(self):
+        return self.name
+
+
 def _install_fake_agents_module(monkeypatch):
     module = ModuleType("agents")
     module.GuardrailFunctionOutput = FakeGuardrailFunctionOutput
 
-    def output_guardrail(*, name):
+    def output_guardrail(*, name=None):
         def decorate(fn):
-            fn.guardrail_name = name
-            return fn
+            return FakeOutputGuardrail(fn, name or fn.__name__)
         return decorate
 
     module.output_guardrail = output_guardrail
@@ -97,8 +105,8 @@ def test_uaos_output_guardrail_builder_admits_clean_final_output(monkeypatch):
     guardrail = build_uaos_output_guardrail(
         lambda _run_context, _agent, _output: FinalizationContext(context_selected=True)
     )
-    outcome = guardrail(None, None, _clean_progress_report())
-    assert guardrail.guardrail_name == "uaos_finalization_gate"
+    outcome = guardrail.guardrail_function(None, None, _clean_progress_report())
+    assert guardrail.get_name() == "uaos_finalization_gate"
     assert outcome.tripwire_triggered is False
     assert outcome.output_info["uaos_finalization"] == "ADMITTED"
 
@@ -111,7 +119,7 @@ def test_uaos_output_guardrail_builder_trips_when_actionable_work_remains(monkey
             work_remaining_without_user_input=True,
         )
     )
-    outcome = guardrail(None, None, _clean_progress_report())
+    outcome = guardrail.guardrail_function(None, None, _clean_progress_report())
     assert outcome.tripwire_triggered is True
     assert "ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT" in outcome.output_info["uaos_finalization_blocked"]
 
