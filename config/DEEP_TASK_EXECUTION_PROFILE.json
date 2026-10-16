@@ -2,7 +2,7 @@
   "schema_version":"1.0",
   "profile_version":"1.0.0",
   "authority":"UAOS",
-  "status":"CANDIDATE_EXECUTION_PROFILE",
+  "status":"ACTIVE_EXECUTION_PROFILE",
   "owner_policy":"config/DELIBERATION_POLICY.json",
   "purpose":"Turn requests for a deeper task into evidence depth rather than output length, role-play, extra agents, extra documents or architecture bloat. This profile constrains the existing canonical cognition kernel; it does not define a second cognition state machine.",
   "executable_trigger":"src/uaos/kernel/deep_task.py#assess_deep_task_requirement",
