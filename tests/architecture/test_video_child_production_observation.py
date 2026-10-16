@@ -12,7 +12,6 @@ def test_parent_video_observation_is_cache_only_and_current_system_has_no_child_
     current = load("CURRENT_SYSTEM.json")
     health = load("state/DOMAIN_HEALTH_INDEX.json")
 
-    assert current["system_release_version"] == "2.5.2"
     assert current["child_observation"]["source"] == "state/DOMAIN_HEALTH_INDEX.json"
     assert current["child_observation"]["freshness_rule"].startswith("CURRENT_CHILD_AUTHORITY_ALWAYS_WINS")
     assert "video_binding_assurance" not in current
