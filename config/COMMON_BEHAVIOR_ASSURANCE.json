@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "contract_version": "1.3.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-16T00:52:39+08:00",
+  "updated_at": "2026-10-16T10:09:00+08:00",
   "scope": "ALL_REGISTERED_DOMAINS_IN_config/AGENT_REGISTRY.json",
-  "purpose": "Operationalize inherited common-capability behavior, durable learning evidence and an evidence-gated problem cognition -> evolution -> action transaction without making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
+  "purpose": "Operationalize inherited common-capability outcomes, durable learning evidence and problem-to-action assurance without duplicating the canonical cognition state machine or making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
   "source_parent_upcall": "D1traverser-debug/financial-writing-agent@main:evals/PARENT_GUIDANCE_HANDOFF.md",
   "parent_decisions": {
     "PROACTIVE_RESOLUTION_GAP": "PROMOTE_COMMON_OUTCOME_SEMANTICS__KEEP_DOMAIN_SPECIFIC_RECOVERY_ORDER_DOMAIN_OWNED",
@@ -34,42 +34,23 @@
   },
   "problem_cognition_action_transaction": {
     "principle": "A_REPAIRABLE_SYMPTOM_IS_NOT_YET_AN_ADMITTED_ROOT_CAUSE",
-    "ordered_stages": [
-      "DETECT",
-      "RECORD_WHEN_MATERIAL_OR_EVOLUTION_RELEVANT",
-      "DELIBERATE_AND_CHALLENGE",
-      "COMPETING_HYPOTHESES_AND_FALSIFICATION",
-      "ROOT_SCOPE_ADMISSION",
-      "EVOLUTION_DISPOSITION",
-      "REPAIR_REDESIGN_OR_NO_CHANGE",
-      "VERIFY",
-      "POST_PROMOTION_OR_LIVE_OBSERVATION"
-    ],
+    "canonical_cognition_policy_ref": "config/DELIBERATION_POLICY.json#cognition_kernel",
     "root_scope_executable_ref": "src/uaos/kernel/deliberation.py",
     "action_executable_ref": "src/uaos/kernel/problem_closure.py",
-    "rules": [
-      "A user correction, user theory, external Skill, popular architecture method, first plausible explanation or first available edit is evidence/candidate input, not root-cause authority.",
-      "Before repair/no-change, require an evidence-tested selected problem layer and hypothesis.",
-      "Repeated, cross-subsystem, architecture-gap, scope-expanding or complexity-growth problems must compare hypotheses across at least two layers, test at least one architecture/upstream hypothesis, and preserve evidence for a rejected alternative.",
-      "A local root cause may still be selected for a systemic-looking symptom, but only after upstream alternatives are actually tested and bounded.",
-      "Every admitted problem must receive an evolution/learning disposition before action; material or evolution-relevant problems require durable causal evidence.",
-      "Finding an authorized repair path does not waive cognition admission."
+    "required_cross_domain_invariants": [
+      "user/external/first-fix framing is hypothesis input rather than root-cause authority",
+      "evidence-tested root scope precedes repair or no-change",
+      "every admitted problem receives an evolution/learning disposition before action",
+      "material or evolution-relevant problems preserve durable causal evidence",
+      "an available authorized repair path cannot terminate as recommendation-only after admission"
     ],
-    "root_layers": [
-      "LOCAL_IMPLEMENTATION",
-      "DOMAIN_WORKFLOW",
-      "DOMAIN_ARCHITECTURE",
-      "COMMON_CAPABILITY",
-      "CONTROL_PLANE",
-      "HOST",
-      "REQUIREMENT_OR_GOAL"
-    ]
+    "owner_native_rule": "Domains realize these invariants with their own receipts/replay/evidence and do not copy a second parent cognition state machine."
   },
   "problem_to_action_closure": {
     "principle": "AFTER_COGNITIVE_AND_EVOLUTION_ADMISSION__DETECTED_PROBLEM_MUST_END_IN_REPAIR_EXECUTED_BLOCKED_WITH_REASON_OR_NO_CHANGE_WITH_EVIDENCE__NOT_RECOMMENDATION_ONLY_WHEN_REPAIR_IS_AVAILABLE",
     "executable_ref": "src/uaos/kernel/problem_closure.py",
     "terminal_states": ["REPAIR_EXECUTED", "BLOCKED_WITH_REASON", "NO_CHANGE_WITH_EVIDENCE"],
-    "repair_now_rule": "If root-scope cognition is admitted, evolution disposition is recorded, a current legal repair path exists, the selected Agent has authority/capability to use it, and no explicit user choice is required, the turn must attempt the repair before finalizing.",
+    "repair_now_rule": "If canonical root-scope cognition is admitted, evolution disposition is recorded, a current legal repair path exists, the selected Agent has authority/capability to use it, and no explicit user choice is required, the turn must attempt the repair before finalizing.",
     "premature_action_rule": "Do not execute or retroactively justify a repair before root-scope admission merely because the edit is easy, familiar, requested, or authorized.",
     "blocker_rule": "If repair cannot proceed, preserve the concrete blocker, missing permission/capability/evidence or required user choice; do not disguise a convenience stop as a blocker.",
     "no_change_rule": "No-change is valid only after cognition admission and when diagnosis/counterexample/evidence supports preserving current behavior.",
@@ -132,7 +113,7 @@
   "adoption_and_compatibility": {
     "existing_child_business_execution": "NOT_REVOKED_BY_THIS_CONTRACT_ALONE",
     "immediate_parent_assurance_rule": "UAOS must not call a common capability operational merely because a child capability file declares inheritance.",
-    "next_material_domain_maintenance": "Registered children should bind or reconcile the 1.3 problem cognition/action transaction using owner-native receipts/replay/evidence without adopting a second controller or common journal implementation.",
+    "next_material_domain_maintenance": "Registered children keep their owner-native Common Behavior 1.3 realization; this representation cleanup does not require them to adopt another cognition state machine.",
     "no_parent_microscheduler": true,
     "no_parent_business_state_mirroring": true
   },
@@ -145,6 +126,6 @@
       "SRE/chaos contributes operational and unknown-failure discovery but is not required on every small problem.",
       "Architecture review/ADR contributes cross-layer tradeoff and revisit discipline but does not replace live diagnosis."
     ],
-    "design_choice": "BORROW_MINIMUM_MECHANISMS__DO_NOT_INSTALL_OR_COPY_ONE_EXTERNAL_SKILL_AS_AUTHORITY"
+    "design_choice": "ONE_CANONICAL_COGNITION_KERNEL__COMMON_BEHAVIOR_OWNS_ONLY_CROSS_DOMAIN_OUTCOME_INVARIANTS"
   }
 }
