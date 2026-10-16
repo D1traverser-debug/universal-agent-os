@@ -1,17 +1,15 @@
 # ChatGPT Fresh-Chat Bootstrap Pointer
 
-UAOS core does not store its full policy in account-level ChatGPT Custom Instructions. The repository remains authoritative.
+UAOS repository authority remains the source of truth. ChatGPT Custom Instructions are only a compact bootstrap because they apply across chats; OpenAI documents them as instructions ChatGPT should consider, not as an application-level execution gate.
 
-OpenAI Custom Instructions are useful here for one narrow reason: they are applied across chats, so they can carry a stable bootstrap pointer and an always-on lightweight mutation sentinel. They are not a physical security boundary.
+## Recommended Custom Instructions
 
-For deterministic fresh-chat continuation, keep only this compact pointer in ChatGPT Custom Instructions:
+Paste only this compact pointer:
 
-> When I ask to continue, inherit, resume, or work with my persistent Agent projects, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md`. Interpret my wording semantically; do not require exact aliases and do not create new aliases from casual wording. Use the current selector/registry only to resolve the controller or registered domain I selected. If I select a child Agent, activate that child directly as the current Agent in this chat and reread its current business authority before acting; do not require me to first enter a UAOS controller conversation and do not proxy normal child business turns through UAOS. Before any external or durable mutation for these Agent projects, run the current UAOS mutation sentinel: resolve authority and target, classify the action as read/write, and verify the proposed production write path is mediated by the current host enforcement policy. For GitHub production authority, do not use a direct-main write as the normal promotion path; use the repository's current candidate-branch/PR/protected-merge policy. If host enforcement cannot be verified, do not claim physical resolution. Never use retired controller repositories or old continuity files as current authority.
+> When I ask to continue, inherit, resume, or work with my persistent Agent projects, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`. Resolve my intent semantically and activate the selected registered domain directly when applicable. After an Agent/controller is selected, keep lightweight problem detection on every turn. When a problem, correction, contradiction, knowledge gap, or unreliable result is detected, use the repository's canonical cognition kernel; treat my wording and your first explanation as hypotheses, test competing explanations, and do not claim cognition/evolution unless the required admission evidence exists. If authorized work can continue without a genuinely missing user fact, approval, authorization, preference, or safety-sensitive choice, continue it in the same work cycle; never use `next` or another no-op user message as the workflow clock. Before external or durable mutation, obey the current UAOS authority/mutation policy. End selected-context final responses with the current compact progress report. Repository authority overrides stale wording in this pointer.
 
-This pointer is bootstrap-only and non-authoritative. UAOS owns parent/control-plane policy and shared governance; each registered domain repository remains authoritative for its own business identity, workflow, rules, state and artifacts.
+Do not paste the full UAOS policy into Custom Instructions. Duplicating policy there creates drift and prompt bloat.
 
-Do not paste the full UAOS policy into ChatGPT Custom Instructions. A duplicated policy copy would drift independently from repository authority.
+## Enforcement boundary
 
-## Assurance boundary
-
-Custom Instructions can make the bootstrap/sentinel persist across chats, but they cannot make a GitHub write path physically non-bypassable. Physical production enforcement belongs to GitHub rulesets/branch protection or an equivalent host mediation layer.
+Custom Instructions improve bootstrap consistency but do not prove that the ChatGPT product runs a UAOS pre-send validator before every response. Hosts controlled by UAOS should use `src/uaos/runtime/finalization.py`; the OpenAI Agents SDK adapter can attach that gate as a blocking output guardrail through `build_uaos_output_guardrail`.
