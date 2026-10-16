@@ -1,0 +1,53 @@
+{
+  "schema_version":"1.0",
+  "observation_id":"OBS-20261016-CONVERSATIONAL-ADHERENCE-BASELINE",
+  "authority":"UAOS",
+  "related_evolution":"EVO-20261016-CONVERSATIONAL-ADHERENCE-OBSERVABILITY",
+  "observed_at":"2026-10-16T11:24:00+08:00",
+  "source":"CURRENT_CHAT_SELECTED_CONTEXT_FINAL_RESPONSES",
+  "sample_policy":"Only responses whose observable final output can be classified from the current conversation are included. Hidden reasoning is not inferred.",
+  "samples":[
+    {
+      "sample_id":"S1_PRE_OBSERVABILITY_CONFIRMED_ESCAPE",
+      "context_selected":true,
+      "problem_signal_observed":true,
+      "result":"FAIL",
+      "violations":["MISSING_PROGRESS_REPORT"],
+      "note":"The response discussing whether the cognition rules were useful/stable finalized without the mandatory Session 1.9 progress report."
+    },
+    {
+      "sample_id":"S2_CORRECTION_AFTER_POLICY_REREAD",
+      "context_selected":true,
+      "problem_signal_observed":true,
+      "result":"PASS",
+      "violations":[],
+      "note":"The correction response included all ten semantic report fields and reported triggered deliberation/evolution state consistent with the observed user correction."
+    },
+    {
+      "sample_id":"S3_POST_OBSERVABILITY_CONTINUATION",
+      "context_selected":true,
+      "problem_signal_observed":false,
+      "result":"PASS",
+      "violations":[],
+      "note":"The continuation response included all ten semantic report fields; no contradiction was observed in the report state."
+    }
+  ],
+  "summary":{
+    "sample_count":3,
+    "required_report_count":3,
+    "pass_count":2,
+    "fail_count":1,
+    "missing_report_count":1,
+    "problem_state_contradiction_count":0,
+    "adherence_rate":0.6666666667
+  },
+  "interpretation":"This is a baseline, not a stability estimate. It proves at least one live escape and two subsequent observable passes. n=3 is insufficient to distinguish an isolated model slip from repeated session-mechanism failure.",
+  "architecture_disposition":"NO_ARCHITECTURE_ESCALATION_YET",
+  "next_evidence_needed":[
+    "more clean selected-context turns",
+    "more user-correction turns",
+    "contradiction and knowledge-gap turns",
+    "repair/no-change closure turns",
+    "enough repeated samples to estimate recurrence rather than rely on one escape"
+  ]
+}
