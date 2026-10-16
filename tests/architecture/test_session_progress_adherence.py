@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from uaos.kernel.deliberation import (
+    ActionCandidate,
     DeliberationEvidence,
     DeliberationSignals,
     HypothesisDisposition,
@@ -78,6 +79,30 @@ def _verified_problem_admission():
         ),
         selected_hypothesis_id="H_ASSURANCE_BINDING",
         architecture_reassessment_refs=("session-policy-and-kernel-review",),
+        action_candidates=(
+            ActionCandidate(
+                "local-report-fix",
+                ProblemLayer.LOCAL_IMPLEMENTATION,
+                "repair only the report wording",
+                ("evidence://action/local",),
+                ("tradeoff://local-does-not-bind-admission",),
+            ),
+            ActionCandidate(
+                "bind-admission",
+                ProblemLayer.COMMON_CAPABILITY,
+                "bind reported problem state to verified cognition/evolution evidence",
+                ("evidence://action/common",),
+                ("tradeoff://common-addresses-recurrence",),
+            ),
+            ActionCandidate(
+                "no-change",
+                ProblemLayer.CONTROL_PLANE,
+                "preserve existing behavior and accept the observability gap",
+                ("evidence://action/no-change",),
+                ("tradeoff://no-change-preserves-gap",),
+                True,
+            ),
+        ),
     )
     receipt = require_root_scope_admission(signals, evidence, assessment)
     return receipt, EvolutionDisposition.DURABLE_EVOLUTION_UPDATED

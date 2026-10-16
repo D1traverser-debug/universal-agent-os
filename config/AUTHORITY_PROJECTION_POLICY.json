@@ -1,0 +1,42 @@
+{
+  "schema_version":"1.0",
+  "policy_version":"1.0.0",
+  "authority":"UAOS",
+  "updated_at":"2026-10-16T15:12:00+08:00",
+  "purpose":"Prevent bootstrap and status projections from becoming stale shadow authorities. Semantic owners remain authoritative; projections must point to owners, declare derivation, and fail CI when their freshness trails a projected owner.",
+  "semantic_owners":{
+    "cognition":"config/DELIBERATION_POLICY.json",
+    "architecture_experience":"config/ARCHITECTURE_EXPERIENCE_POLICY.json",
+    "host_enforcement":"config/HOST_PROFILES.json",
+    "session_interaction":"config/SESSION_INTERACTION_POLICY.json",
+    "common_capabilities":"config/COMMON_CAPABILITIES.json",
+    "common_behavior":"config/COMMON_BEHAVIOR_ASSURANCE.json",
+    "authority_write":"config/AUTHORITY_WRITE_POLICY.json"
+  },
+  "derived_projections":{
+    "CURRENT_SYSTEM.json":{
+      "role":"DERIVED_OPERATIONAL_PROJECTION__NOT_POLICY_OWNER",
+      "freshness":"MUST_NOT_BE_OLDER_THAN_ANY_PROJECTED_OWNER_UPDATED_AT",
+      "may_contain":"release identity, owner references, bounded assurance summaries, current observation refs",
+      "must_not_contain":"a competing cognition state machine, host enforcement semantics that contradict HOST_PROFILES, or business authority copied from child domains"
+    },
+    "ENTRYPOINT.md":{
+      "role":"BOOTSTRAP_ROUTER_AND_OWNER_POINTERS",
+      "freshness":"MUST_REFERENCE_CURRENT_OWNER_SURFACES",
+      "must_not_contain":"independently maintained detailed policy copies"
+    },
+    "AGENTS.md":{
+      "role":"REPOSITORY_OPERATOR_INSTRUCTIONS_AND_OWNER_POINTERS",
+      "freshness":"MUST_REFERENCE_CURRENT_OWNER_SURFACES",
+      "must_not_contain":"a second cognition/evolution/host policy"
+    },
+    "config/SYSTEM_MAP.json":{
+      "role":"LOCATION_AND_OWNERSHIP_MAP",
+      "freshness":"MUST_MAP_CURRENT_EXECUTABLE_AND_POLICY_OWNERS",
+      "must_not_contain":"duplicated policy logic"
+    }
+  },
+  "reconciliation_rule":"When a semantic owner changes materially, all affected derived projections are updated in the same candidate or CI fails. A green owner change with a stale projection is not a valid promotion.",
+  "analogy":"Controller-style reconciliation: desired semantic authority is owned once; projections are reconciled views, not competing sources of truth.",
+  "anti_bloat":"Do not solve projection drift by adding another controller. Use static/reproducible reconciliation checks in the existing promotion gate."
+}

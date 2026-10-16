@@ -14,7 +14,7 @@ def _version_tuple(value: str) -> tuple[int, ...]:
 
 def test_system_map_registers_domain_health_control_surface():
     system_map = _json("config/SYSTEM_MAP.json")
-    assert system_map["schema_version"] == "1.8"
+    assert _version_tuple(system_map["schema_version"]) >= (1, 9)
     assert system_map["controller"]["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
     assert system_map["controller"]["domain_health_index"] == "state/DOMAIN_HEALTH_INDEX.json"
 

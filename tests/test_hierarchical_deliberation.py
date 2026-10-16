@@ -2,7 +2,7 @@ import pytest
 
 from uaos.contracts.context import ContextPacket, GovernanceFrame, ParentGuidance, ParentUpcall
 from uaos.contracts.context_budget import ContextBudget, validate_context_budget
-from uaos.kernel import DeliberationSignals, assess_deliberation
+from uaos.kernel import CognitiveSearchMode, DeliberationSignals, assess_deliberation
 
 
 def test_low_risk_familiar_work_does_not_force_meta_process():
@@ -10,51 +10,59 @@ def test_low_risk_familiar_work_does_not_force_meta_process():
     assert not d.required
     assert not d.external_research_required
     assert not d.independent_verification_required
+    assert d.search_mode is CognitiveSearchMode.LIGHTWEIGHT
 
 
-def test_single_failure_always_requires_research_and_reflection():
+def test_single_failure_keeps_reflection_compact_without_mandatory_external_research():
     d=assess_deliberation(DeliberationSignals(repeated_failure_count=1))
     assert d.required and d.micro_diagnosis_required
     assert d.macro_alignment_required
     assert d.governing_assumptions_challenge_required
-    assert d.external_research_required
+    assert not d.external_research_required
+    assert d.search_mode is CognitiveSearchMode.LIGHTWEIGHT
 
 
-def test_user_correction_challenges_micro_macro_assumptions_and_counterexamples():
+def test_user_correction_uses_contrastive_search_and_counterexamples():
     d=assess_deliberation(DeliberationSignals(user_correction=True,change_proposal=True))
     assert d.required and d.micro_diagnosis_required and d.macro_alignment_required
     assert d.governing_assumptions_challenge_required
-    assert d.external_research_required
     assert d.counterexample_search_required
+    assert d.search_mode is CognitiveSearchMode.CONTRASTIVE
+    assert d.min_hypotheses == 2 and d.min_action_candidates == 2
 
 
-def test_architecture_gap_forces_external_research_beyond_internal_framing():
+def test_architecture_gap_forces_structured_external_research():
     d=assess_deliberation(DeliberationSignals(architecture_gap=True))
     assert d.external_research_required
     assert d.macro_alignment_required
     assert d.governing_assumptions_challenge_required
+    assert d.search_mode is CognitiveSearchMode.STRUCTURED
 
 
-def test_conflicting_evidence_still_has_problem_floor_plus_independent_verification():
+def test_conflicting_evidence_has_structured_search_and_independent_verification():
     d=assess_deliberation(DeliberationSignals(conflicting_evidence=True))
     assert d.external_research_required
     assert d.macro_alignment_required
     assert d.governing_assumptions_challenge_required
     assert d.independent_verification_required and d.counterexample_search_required
+    assert d.no_change_baseline_required
 
 
-def test_high_risk_without_detected_problem_escalates_independent_verification_only():
+def test_high_risk_without_detected_problem_escalates_verification_and_structured_search():
     d=assess_deliberation(DeliberationSignals(high_risk=True))
     assert d.independent_verification_required and d.counterexample_search_required
-    assert not d.external_research_required
+    assert d.external_research_required
+    assert d.search_mode is CognitiveSearchMode.STRUCTURED
 
 
-def test_repeated_failure_uses_double_loop_instead_of_another_local_patch():
+def test_repeated_failure_uses_structured_search_instead_of_another_local_patch():
     d=assess_deliberation(DeliberationSignals(repeated_failure_count=2,complexity_increasing=True))
     assert d.macro_alignment_required
     assert d.governing_assumptions_challenge_required
     assert d.external_research_required
     assert d.counterexample_search_required
+    assert d.min_action_candidates == 3
+    assert d.max_deliberation_rounds == 3
 
 
 def test_parent_upcall_preserves_child_identity_and_carries_unknowns():
