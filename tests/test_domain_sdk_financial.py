@@ -47,6 +47,8 @@ def test_financial_binding_requires_current_common_capability_inheritance():
     common = _json("config/COMMON_CAPABILITIES.json")
     ids = {item["capability_id"] for item in common["capabilities"]}
     assert "CAPABILITY_COMMON_INHERITANCE" in binding["checks"]
+    assert "CAPABILITY_CURRENT_DELIBERATION_POLICY_REF_WHEN_ADAPTIVE" in binding["checks"]
+    assert "CAPABILITY_NO_DUPLICATED_PARENT_COGNITION_ALGORITHM" in binding["checks"]
     assert _version_tuple(common["contract_version"]) >= (1, 5, 0)
     assert {
         "intent_and_requirement_governance",
@@ -59,14 +61,14 @@ def test_financial_binding_requires_current_common_capability_inheritance():
     }.issubset(ids)
 
     cognition = next(item for item in common["capabilities"] if item["capability_id"] == "adaptive_deliberation_and_parent_guidance")
-    assert cognition["problem_response_floor"] == [
-        "MICRO_DIAGNOSIS",
-        "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT",
-        "GOVERNING_ASSUMPTION_CHALLENGE",
-        "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH",
-    ]
+    assert cognition["policy_ref"] == "config/DELIBERATION_POLICY.json"
+    assert cognition["inheritance_semantics"] == "REFERENCE_CURRENT_CANONICAL_OWNER__DO_NOT_COPY_A_LOCAL_PROBLEM_RESPONSE_ALGORITHM"
+    assert "problem_response_floor" not in cognition
+    rules = "\n".join(cognition["rules"])
+    assert "LIGHTWEIGHT" in rules and "CONTRASTIVE" in rules and "STRUCTURED" in rules
+
     evolution = next(item for item in common["capabilities"] if item["capability_id"] == "governed_self_evolution")
-    assert "not every problem must become a durable global rule" in "\n".join(evolution["rules"])
+    assert "not every problem becomes a durable global rule" in "\n".join(evolution["rules"])
 
 
 def test_financial_router_does_not_own_child_article_identity_or_implementation_details():
