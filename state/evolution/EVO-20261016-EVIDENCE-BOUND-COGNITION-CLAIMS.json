@@ -1,15 +1,15 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "evolution_id": "EVO-20261016-EVIDENCE-BOUND-COGNITION-CLAIMS",
   "authority": "UAOS",
   "failure_class": "FC-SELF-REPORTED-COGNITION-WITHOUT-ADMISSION-EVIDENCE-007",
-  "status": "CANDIDATE_REPAIR__PRODUCTION_NOT_YET_PROMOTED",
+  "status": "PRODUCTION_PROMOTED__STRUCTURAL_AND_BEHAVIORAL_TESTS_VERIFIED__LIVE_CONVERSATIONAL_ADHERENCE_OPEN",
   "trigger": [
     "USER_CORRECTION",
     "REPEATED_FAILURE",
     "ASSURANCE_GAP"
   ],
-  "problem": "A final response can report Deliberation=TRIGGERED and an evolution state while the session adherence evaluator verifies only report text, not whether root-scope cognition admission, evolution disposition, and any required durable problem evidence actually exist.",
+  "problem": "A final response could report Deliberation=TRIGGERED and an evolution state while session adherence verified only report text, not whether root-scope cognition admission, evolution disposition, and required durable problem evidence actually existed.",
   "cognition_evidence": {
     "canonical_policy_ref": "config/DELIBERATION_POLICY.json#cognition_kernel",
     "root_scope_executable_ref": "src/uaos/kernel/deliberation.py#require_root_scope_admission",
@@ -25,28 +25,28 @@
       "layer": "LOCAL_IMPLEMENTATION",
       "disposition": "REJECTED_AS_COMPLETE_EXPLANATION",
       "support": "The immediately prior answer explained concepts without fresh evidence of cognition execution.",
-      "falsification": "Repeated user corrections plus the evaluator implementation show a reusable path where report labels can pass without admission evidence."
+      "falsification": "Repeated user corrections plus the evaluator implementation showed a reusable path where report labels could pass without admission evidence."
     },
     {
       "id": "H2_OBSERVABILITY_ASSURANCE_BINDING_GAP",
       "layer": "COMMON_CAPABILITY",
       "disposition": "SELECTED",
-      "support": "session_adherence.py parses report labels and state contradictions but, before this candidate, has no RootScopeReceipt or EvolutionDisposition evidence binding.",
-      "falsification": "The kernel already exposes typed RootScopeReceipt and EvolutionDisposition, so the gap can be closed without a second cognition controller or new SOP."
+      "support": "Before PR #47, session_adherence.py parsed report labels and state contradictions but had no RootScopeReceipt or EvolutionDisposition evidence binding.",
+      "falsification": "The kernel already exposed typed RootScopeReceipt and EvolutionDisposition, so the gap was closed without a second cognition controller or new SOP."
     },
     {
       "id": "H3_SESSION_POLICY_MISSING_COGNITION_RULE",
       "layer": "CONTROL_PLANE",
       "disposition": "REJECTED",
       "support": "Repeated live failures could suggest the policy never required cognition before problem closure.",
-      "falsification": "Session 1.9 already requires the canonical cognition transaction and root-scope/evolution admission before problem closure."
+      "falsification": "Session 1.9 already required the canonical cognition transaction and root-scope/evolution admission before problem closure."
     },
     {
       "id": "H4_HOST_PHYSICAL_INTERCEPTION_REQUIRED",
       "layer": "HOST",
       "disposition": "NOT_SELECTED__INSUFFICIENT_EVIDENCE",
       "support": "Host-level interception could provide stronger non-bypassability.",
-      "falsification": "The observed false-positive can be explained and detected at the assurance layer without proving host interception is necessary."
+      "falsification": "The observed false-positive was explained and detected at the assurance layer without proving host interception necessary."
     }
   ],
   "root_scope": {
@@ -55,22 +55,28 @@
     "architecture_reassessment_performed": true,
     "durable_problem_record_required": true
   },
-  "evolution_disposition": "DURABLE_EVOLUTION_CANDIDATE",
-  "candidate_change": {
+  "evolution_disposition": "DURABLE_EVOLUTION_UPDATED",
+  "production_change": {
+    "pull_request": 47,
+    "candidate_head": "8b0383ba61ff1d5ea650b3af47557a675bc09a56",
+    "production_commit": "af40c5b057464d82e7b4ba941ef5913e37f728d6",
+    "candidate_ci_number": 205,
+    "candidate_ci_status": "PASS",
+    "production_ci_number": 206,
+    "production_ci_status": "PASS",
     "scope": "src/uaos/observability/session_adherence.py plus architecture tests",
     "mechanism": "When cognition admission is required, report text cannot self-prove execution. The evaluator separately requires a typed RootScopeReceipt, a typed EvolutionDisposition, and a problem_record_ref when the receipt requires durable evidence.",
     "anti_bloat": "No Session policy expansion, no new controller, no duplicated cognition state machine, no extra mandatory user-facing report field."
   },
+  "verified_behaviors": [
+    "A problem response that merely claims triggered cognition/evolution fails when verified admission artifacts are absent.",
+    "A response with a typed admitted RootScopeReceipt, typed EvolutionDisposition and required durable problem record can pass.",
+    "A durable problem record required by the receipt cannot be omitted.",
+    "Existing missing-report, state-contradiction and unnecessary-user-continuation-handoff detection remains covered."
+  ],
   "known_execution_slips_during_repair": [
     "Two rejected writes were attempted against nonexistent branches; GitHub rejected both and no repository mutation occurred.",
     "A direct update_file mutation was blocked by connector safety checks; the candidate was then written atomically through Git blob/tree/commit/ref operations."
   ],
-  "verification_required": [
-    "candidate CI",
-    "tests proving report text alone cannot satisfy cognition/evolution evidence",
-    "tests proving typed admitted evidence passes",
-    "tests proving required durable problem record cannot be omitted",
-    "production CI after merge",
-    "production reread"
-  ]
+  "assurance_boundary": "Production code and regression behavior are verified. This does not prove the ChatGPT host physically routes every natural-language response through a non-bypassable RootScopeReceipt boundary; live conversational adherence remains an observation concern."
 }
