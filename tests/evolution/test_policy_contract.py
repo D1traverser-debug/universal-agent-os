@@ -51,6 +51,6 @@ def test_proactive_depth_contract_requires_real_evidence_and_judge():
 def test_chatgpt_host_does_not_fake_background_execution():
     hosts = load("config/HOST_PROFILES.json")
     chatgpt = hosts["profiles"]["CHATGPT_GITHUB"]
-    assert "WHEN_CONFIGURED" in chatgpt["proactive_evolution_trigger"]
+    assert "WHEN_EXPLICITLY_CONFIGURED" in chatgpt["proactive_evolution_trigger"]
     assert "ONLY_WHEN" in chatgpt["background_execution"]
     assert "NO_VERIFIED_CHATGPT_PRE_SEND_HOOK" in chatgpt["final_response_enforcement"]
