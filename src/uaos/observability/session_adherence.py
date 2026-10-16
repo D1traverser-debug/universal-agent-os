@@ -4,6 +4,9 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Iterable, Mapping
 
+from uaos.kernel.deliberation import RootScopeReceipt
+from uaos.kernel.problem_closure import EvolutionDisposition
+
 
 POLICY_REQUIRED_PROGRESS_FIELDS: tuple[str, ...] = (
     "current_agent",
@@ -35,47 +38,23 @@ REQUIRED_PROGRESS_FIELDS: tuple[str, ...] = tuple(
     POLICY_TO_CANONICAL_FIELD[field] for field in POLICY_REQUIRED_PROGRESS_FIELDS
 )
 
-
 _FIELD_ALIASES: Mapping[str, tuple[str, ...]] = {
     "current_agent": ("当前 agent", "current agent"),
     "current_scope_or_task": (
-        "当前范围",
-        "当前任务",
-        "当前范围或任务",
-        "current scope",
-        "current task",
-        "current scope or task",
+        "当前范围", "当前任务", "当前范围或任务", "current scope", "current task", "current scope or task",
     ),
     "authority_context": ("authority", "authority context", "权威", "权限上下文"),
     "status": ("状态", "status"),
     "current_stage": ("当前阶段", "stage", "current stage"),
-    "next_action_or_blocker": (
-        "下一动作或阻塞",
-        "下一动作",
-        "下一步",
-        "next action or blocker",
-        "next action",
-        "blocker",
-    ),
+    "next_action_or_blocker": ("下一动作或阻塞", "下一动作", "下一步", "next action or blocker", "next action", "blocker"),
     "evolution_state": ("evolution", "进化"),
     "deliberation_state": ("deliberation", "认知审议"),
     "version_identity": ("版本", "version", "version identity"),
     "progress_timestamp": ("进度时间", "progress timestamp", "timestamp"),
 }
 
-
 _NO_OP_CONTINUATION_MARKERS: tuple[str, ...] = (
-    "下一轮",
-    "下轮",
-    "下一条",
-    "回复 next",
-    "回复next",
-    "发 next",
-    "发next",
-    "send next",
-    "reply next",
-    "next turn",
-    "next message",
+    "下一轮", "下轮", "下一条", "回复 next", "回复next", "发 next", "发next", "send next", "reply next", "next turn", "next message",
 )
 
 
@@ -86,22 +65,26 @@ class SessionAdherenceViolation(str, Enum):
     PROBLEM_SIGNAL_REPORTED_NO_EVOLUTION_TRIGGER = "PROBLEM_SIGNAL_REPORTED_NO_EVOLUTION_TRIGGER"
     EMPTY_REQUIRED_FIELD = "EMPTY_REQUIRED_FIELD"
     UNNECESSARY_USER_CONTINUATION_HANDOFF = "UNNECESSARY_USER_CONTINUATION_HANDOFF"
+    CLAIMED_COGNITION_WITHOUT_ROOT_SCOPE_RECEIPT = "CLAIMED_COGNITION_WITHOUT_ROOT_SCOPE_RECEIPT"
+    CLAIMED_EVOLUTION_WITHOUT_VERIFIED_DISPOSITION = "CLAIMED_EVOLUTION_WITHOUT_VERIFIED_DISPOSITION"
+    MISSING_DURABLE_PROBLEM_RECORD_EVIDENCE = "MISSING_DURABLE_PROBLEM_RECORD_EVIDENCE"
 
 
 @dataclass(frozen=True, slots=True)
 class SessionProgressExpectation:
     """Observable expectations for one final assistant response.
 
-    This evaluator does not infer whether a problem existed or whether user input is
-    genuinely required. The caller supplies those facts from selected session/controller
-    evidence. That keeps observation separate from diagnosis and prevents the evaluator
-    from inventing hidden chain-of-thought or blockers.
+    Report text is never treated as proof that cognition/evolution actually ran.
+    Verified admission artifacts must be supplied separately when required.
     """
-
     context_selected: bool
     problem_signal_observed: bool = False
     user_input_required: bool = False
     no_op_continuation_disallowed: bool = False
+    cognition_admission_required: bool = False
+    root_scope_receipt: RootScopeReceipt | None = None
+    evolution_disposition: EvolutionDisposition | None = None
+    problem_record_ref: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -125,6 +108,8 @@ class SessionAdherenceSummary:
     missing_report_count: int
     problem_state_contradiction_count: int
     unnecessary_continuation_handoff_count: int
+    cognition_evidence_gap_count: int
+    durable_problem_record_gap_count: int
 
     @property
     def adherence_rate(self) -> float:
@@ -142,14 +127,11 @@ def _contains_no_op_continuation_handoff(value: str) -> bool:
     return any(marker in normalized for marker in _NO_OP_CONTINUATION_MARKERS)
 
 
+def _present(value: str | None) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
 def extract_progress_fields(response: str) -> dict[str, str]:
-    """Extract a compact progress block without imposing one human-language rendering.
-
-    The current policy specifies semantic fields, not one literal template. This parser
-    therefore accepts the existing Chinese and English labels while keeping the
-    canonical field names internal.
-    """
-
     alias_to_field = {
         _normalize_key(alias): field
         for field, aliases in _FIELD_ALIASES.items()
@@ -170,18 +152,10 @@ def extract_progress_fields(response: str) -> dict[str, str]:
     return fields
 
 
-def evaluate_session_progress_response(
-    response: str,
-    expectation: SessionProgressExpectation,
-) -> SessionAdherenceResult:
+def evaluate_session_progress_response(response: str, expectation: SessionProgressExpectation) -> SessionAdherenceResult:
     fields = extract_progress_fields(response)
     if not expectation.context_selected:
-        return SessionAdherenceResult(
-            report_required=False,
-            fields=fields,
-            violations=(),
-            missing_fields=(),
-        )
+        return SessionAdherenceResult(False, fields, (), ())
 
     missing = tuple(field for field in REQUIRED_PROGRESS_FIELDS if field not in fields)
     violations: list[SessionAdherenceViolation] = []
@@ -197,58 +171,51 @@ def evaluate_session_progress_response(
         deliberation = fields.get("deliberation_state", "").upper()
         evolution = fields.get("evolution_state", "").upper()
         if "NOT_TRIGGERED" in deliberation:
-            violations.append(
-                SessionAdherenceViolation.PROBLEM_SIGNAL_REPORTED_NOT_TRIGGERED
-            )
+            violations.append(SessionAdherenceViolation.PROBLEM_SIGNAL_REPORTED_NOT_TRIGGERED)
         if "NO_EVOLUTION_TRIGGER" in evolution:
-            violations.append(
-                SessionAdherenceViolation.PROBLEM_SIGNAL_REPORTED_NO_EVOLUTION_TRIGGER
-            )
+            violations.append(SessionAdherenceViolation.PROBLEM_SIGNAL_REPORTED_NO_EVOLUTION_TRIGGER)
 
     if (
         expectation.no_op_continuation_disallowed
         and not expectation.user_input_required
-        and _contains_no_op_continuation_handoff(
-            fields.get("next_action_or_blocker", "")
-        )
+        and _contains_no_op_continuation_handoff(fields.get("next_action_or_blocker", ""))
     ):
-        violations.append(
-            SessionAdherenceViolation.UNNECESSARY_USER_CONTINUATION_HANDOFF
-        )
+        violations.append(SessionAdherenceViolation.UNNECESSARY_USER_CONTINUATION_HANDOFF)
 
-    return SessionAdherenceResult(
-        report_required=True,
-        fields=fields,
-        violations=tuple(dict.fromkeys(violations)),
-        missing_fields=missing,
-    )
+    if expectation.cognition_admission_required:
+        if not isinstance(expectation.root_scope_receipt, RootScopeReceipt):
+            violations.append(SessionAdherenceViolation.CLAIMED_COGNITION_WITHOUT_ROOT_SCOPE_RECEIPT)
+        if not isinstance(expectation.evolution_disposition, EvolutionDisposition):
+            violations.append(SessionAdherenceViolation.CLAIMED_EVOLUTION_WITHOUT_VERIFIED_DISPOSITION)
+        if (
+            isinstance(expectation.root_scope_receipt, RootScopeReceipt)
+            and expectation.root_scope_receipt.durable_problem_record_required
+            and not _present(expectation.problem_record_ref)
+        ):
+            violations.append(SessionAdherenceViolation.MISSING_DURABLE_PROBLEM_RECORD_EVIDENCE)
+
+    return SessionAdherenceResult(True, fields, tuple(dict.fromkeys(violations)), missing)
 
 
-def summarize_session_adherence(
-    samples: Iterable[tuple[str, SessionProgressExpectation]],
-) -> SessionAdherenceSummary:
+def summarize_session_adherence(samples: Iterable[tuple[str, SessionProgressExpectation]]) -> SessionAdherenceSummary:
     results = [evaluate_session_progress_response(response, expected) for response, expected in samples]
     required = [result for result in results if result.report_required]
     contradiction_types = {
         SessionAdherenceViolation.PROBLEM_SIGNAL_REPORTED_NOT_TRIGGERED,
         SessionAdherenceViolation.PROBLEM_SIGNAL_REPORTED_NO_EVOLUTION_TRIGGER,
     }
+    cognition_gap_types = {
+        SessionAdherenceViolation.CLAIMED_COGNITION_WITHOUT_ROOT_SCOPE_RECEIPT,
+        SessionAdherenceViolation.CLAIMED_EVOLUTION_WITHOUT_VERIFIED_DISPOSITION,
+    }
     return SessionAdherenceSummary(
         sample_count=len(results),
         required_report_count=len(required),
         pass_count=sum(result.passed for result in required),
         fail_count=sum(not result.passed for result in required),
-        missing_report_count=sum(
-            SessionAdherenceViolation.MISSING_PROGRESS_REPORT in result.violations
-            for result in required
-        ),
-        problem_state_contradiction_count=sum(
-            bool(contradiction_types.intersection(result.violations))
-            for result in required
-        ),
-        unnecessary_continuation_handoff_count=sum(
-            SessionAdherenceViolation.UNNECESSARY_USER_CONTINUATION_HANDOFF
-            in result.violations
-            for result in required
-        ),
+        missing_report_count=sum(SessionAdherenceViolation.MISSING_PROGRESS_REPORT in result.violations for result in required),
+        problem_state_contradiction_count=sum(bool(contradiction_types.intersection(result.violations)) for result in required),
+        unnecessary_continuation_handoff_count=sum(SessionAdherenceViolation.UNNECESSARY_USER_CONTINUATION_HANDOFF in result.violations for result in required),
+        cognition_evidence_gap_count=sum(bool(cognition_gap_types.intersection(result.violations)) for result in required),
+        durable_problem_record_gap_count=sum(SessionAdherenceViolation.MISSING_DURABLE_PROBLEM_RECORD_EVIDENCE in result.violations for result in required),
     )
