@@ -4,6 +4,16 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '17 */6 * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'state/DOMAIN_HEALTH_INDEX.json'
+      - 'config/AGENT_REGISTRY.json'
+      - 'src/uaos/integrations/domain_health_live.py'
+      - 'src/uaos/kernel/domain_health.py'
+      - 'scripts/domain_health_audit.py'
+      - '.github/workflows/domain-health-live-audit.yml'
   pull_request:
     paths:
       - 'state/DOMAIN_HEALTH_INDEX.json'
