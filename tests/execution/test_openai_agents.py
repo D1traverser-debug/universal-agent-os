@@ -3,8 +3,11 @@ from uaos.execution import ExecutionDisposition, ExecutionRequest, OpenAIAgentSp
 
 
 class Agent:
+    last_kwargs = None
+
     def __init__(self, **kwargs):
         self.kwargs = kwargs
+        Agent.last_kwargs = kwargs
 
 
 class Runner:
@@ -25,6 +28,23 @@ def test_openai_adapter_returns_bounded_run_output():
     result = executor.execute(ExecutionRequest("a", "research", "topic", "input"))
     assert result.disposition is ExecutionDisposition.CONFIRMED
     assert result.output == "done:input"
+
+
+def test_openai_adapter_forwards_output_guardrails_to_agent():
+    guardrail = object()
+    executor = OpenAIAgentsExecutor(
+        agent_spec=OpenAIAgentSpec(
+            "Researcher",
+            "research carefully",
+            "gpt-x",
+            output_guardrails=(guardrail,),
+        ),
+        agent_factory=Agent,
+        runner=Runner,
+    )
+    result = executor.execute(ExecutionRequest("a", "research", "topic", "input"))
+    assert result.disposition is ExecutionDisposition.CONFIRMED
+    assert Agent.last_kwargs["output_guardrails"] == [guardrail]
 
 
 def test_model_failure_is_known_failure_for_read_work():
