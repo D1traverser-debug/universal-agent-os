@@ -5,6 +5,7 @@
   "status":"CANDIDATE_EXECUTION_PROFILE",
   "owner_policy":"config/DELIBERATION_POLICY.json",
   "purpose":"Turn requests for a deeper task into evidence depth rather than output length, role-play, extra agents, extra documents or architecture bloat. This profile constrains the existing canonical cognition kernel; it does not define a second cognition state machine.",
+  "executable_trigger":"src/uaos/kernel/deep_task.py#assess_deep_task_requirement",
   "executable_admission":"src/uaos/kernel/deep_task.py#require_deep_task_admission",
   "controlled_finalization":"src/uaos/runtime/finalization.py#admit_final_response",
   "activation":{
@@ -13,14 +14,17 @@
       "a host/controller classifies a material task as high-uncertainty and requiring professional-method discovery plus independent validation",
       "a material unknown-knowledge, architecture/control-plane, or repeated-systemic problem cannot be responsibly resolved by the ordinary structured evidence floor alone"
     ],
+    "semantic_signal_contract":"DeepTaskSignals records explicit_user_depth_request and bounded material escalation signals; assess_deep_task_requirement derives the requirement without language-specific keyword matching.",
+    "material_escalation_rule":"A non-explicit material task escalates only when ordinary_structured_evidence_insufficient is true together with material-high-uncertainty, unknown-knowledge, architecture/control-plane or repeated-systemic evidence.",
+    "compatibility_override":"FinalizationContext.deep_task_required remains a one-way explicit compatibility override; a true semantic trigger cannot be cancelled by passing false.",
     "not_required_for":[
       "routine factual queries",
       "small local defects with sufficient current evidence",
       "formatting/rewrite tasks where no research or decision uncertainty exists",
       "ceremonial expansion merely to make an answer look sophisticated"
     ],
-    "host_signal":"FinalizationContext.deep_task_required",
-    "boundary":"Native ChatGPT paths that do not invoke the repository finalization gate cannot be claimed as physically fail-closed."
+    "host_signal":"FinalizationContext.deep_task_signals -> assess_deep_task_requirement; explicit true deep_task_required may also force admission for compatibility.",
+    "boundary":"A compatible host must produce truthful current semantic signals. Native ChatGPT paths that do not invoke the repository finalization gate or do not supply such signals cannot be claimed as physically fail-closed."
   },
   "depth_dimensions":[
     {
