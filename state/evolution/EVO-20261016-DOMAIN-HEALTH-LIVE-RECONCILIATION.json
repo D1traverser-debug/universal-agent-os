@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "evolution_id":"EVO-20261016-DOMAIN-HEALTH-LIVE-RECONCILIATION",
-  "status":"CANDIDATE_IMPLEMENTED__PROMOTION_VERIFICATION_PENDING",
+  "status":"RESOLVED",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T20:00:00+08:00",
+  "updated_at":"2026-10-16T20:19:34+08:00",
   "trigger":["PROACTIVE_UAOS_HEALTH_AUDIT","FOUR_DOMAIN_PARENT_CHILD_REVISION_DRIFT","RECURRENT_MANUAL_RECONCILIATION_GAP"],
   "failure_class":"FC-PARENT-HEALTH-CACHE-LIVE-ACQUISITION-AND-RECONCILIATION-005",
   "symptom":"DOMAIN_HEALTH_INDEX declared proactive currentness checks but all four cached observed_main_commit values lagged current child main after later child promotions. PR #32 had previously reconciled parent observations, so recurrence demonstrated that manual refresh alone did not provide a live acquisition lifecycle. The older domain-health evolution record also retained stale promotion-pending evidence.",
@@ -11,45 +11,49 @@
   "competing_hypotheses":[
     {"id":"H1_ACCEPT_EVENTUAL_CACHE_STALENESS","disposition":"REJECTED","evidence":"Current DOMAIN_HEALTH policy classifies revision mismatch as a health finding requiring reconciliation and requires proactive discovery during UAOS health audit."},
     {"id":"H2_ONE_OFF_CACHE_REFRESH","disposition":"REJECTED_AS_ROOT_REPAIR","evidence":"PR #32 refreshed parent observations, but later child releases recreated the same drift across all four domains."},
-    {"id":"H3_MISSING_LIVE_ACQUISITION_AND_RECONCILIATION_LIFECYCLE","disposition":"SELECTED","evidence":"assess_domain_health detects revision drift only after current_revision is supplied; before this candidate there was no recurring executable that derived registered child repositories, fetched current main and ran the existing assessor independently of a parent code change."}
+    {"id":"H3_MISSING_LIVE_ACQUISITION_AND_RECONCILIATION_LIFECYCLE","disposition":"SELECTED","evidence":"assess_domain_health detected revision drift only after current_revision was supplied; before this repair there was no recurring executable that derived registered child repositories, fetched current main and ran the existing assessor independently of a parent code change."}
   ],
   "architecture_candidates":[
     {"id":"NO_CHANGE","result":"REJECTED","tradeoff":"Would leave proactive freshness declarative and allow repeated stale-current claims."},
-    {"id":"MANUAL_REFRESH_ONLY","result":"REJECTED","tradeoff":"Repairs today’s cache but recurrence after PR #32 disproves it as durable prevention."},
+    {"id":"MANUAL_REFRESH_ONLY","result":"REJECTED","tradeoff":"Repairs one snapshot but recurrence after PR #32 disproved it as durable prevention."},
     {"id":"SCHEDULED_AUTO_MUTATION","result":"REJECTED","tradeoff":"Would keep cache fresh but grants a periodic observer direct production mutation authority, increasing race/churn risk and bypassing governed promotion."},
     {"id":"READ_ONLY_LIVE_AUDIT_PLUS_GOVERNED_RECONCILIATION","result":"SELECTED","tradeoff":"Adds currentness acquisition and proactive detection while reusing the existing health assessor/index; production updates remain candidate-PR-CI-re-read governed."}
   ],
-  "current_evidence":{
-    "stale_cached_revisions":{
-      "financial_writing":"29b778744edd8e306b64587078464c11c4e17acc",
-      "ashare":"f0c5144586923a3ebbae1a7efed1972aa1256f6a",
-      "novel":"911f31b692e6475be26a0221a676b3eb6ce9ce39",
-      "video":"20cbe7c415b5671f8f38f299aa9715bdb932f952"
-    },
-    "reconciled_current_revisions":{
-      "financial_writing":"8122c184fac7f84a29e3420269952cb3975b7b41",
-      "ashare":"3182b36027f9f82bd0d4bb6483aeadb0d8f23dce",
-      "novel":"f8bc5cacb9125b0cc7ebac658140fda77e6cd75f",
-      "video":"4632634e5133961b3280dcfc5bc211712c3a1c83"
-    },
-    "current_head_ci":{
-      "financial_writing":{"run_id":38892166265,"run_number":1360,"conclusion":"success"},
-      "ashare":{"run_id":38887104236,"run_number":192,"conclusion":"success"},
-      "novel":{"run_id":38887119580,"run_number":329,"conclusion":"success"},
-      "video":{"run_id":38887137169,"run_number":713,"conclusion":"success"}
-    },
-    "manual_reconciliation_precedent":"UAOS PR #32 merged after CI #165 and refreshed child observations; later recurrence establishes the lifecycle gap.",
-    "original_health_promotion":"UAOS PR #31 merged after CI #162 and live-integration #42.",
-    "bulkhead_observation_boundary":"FC-PARENT-GUIDANCE-SINGLE-QUEUE-BLOCKING-RISK-003 remains intentionally open as live multi-upcall concurrency observation; implemented non-conflicting triage is not itself treated as unresolved implementation drift."
-  },
-  "candidate_implementation":[
-    "src/uaos/integrations/domain_health_live.py derives repositories from current AGENT_REGISTRY, verifies registry/cache topology and fetches child main revisions read-only.",
-    "scripts/domain_health_audit.py emits machine-readable PASS/DRIFT_DETECTED/AUDIT_ERROR and exits nonzero on drift or acquisition failure.",
-    ".github/workflows/domain-health-live-audit.yml runs read-only every six hours, on manual dispatch and on relevant pull requests; it has contents: read only.",
-    "tests/integrations/test_domain_health_live.py proves matching cache pass, stale revision detection, topology fail-closed behavior and read-only recurring workflow properties.",
-    "state/DOMAIN_HEALTH_INDEX.json is reconciled to current child main and current-head CI evidence, with CI explicitly commit-bound."
+  "implemented_solution":[
+    "src/uaos/integrations/domain_health_live.py derives repositories from current AGENT_REGISTRY, validates registry/cache topology and fetches current child main revisions read-only.",
+    "scripts/domain_health_audit.py emits PASS, DRIFT_DETECTED or AUDIT_ERROR and exits nonzero on drift or acquisition failure.",
+    ".github/workflows/domain-health-live-audit.yml runs with contents: read only every six hours, on manual dispatch, on relevant pull requests, and on relevant main pushes for immediate production observation.",
+    "tests/integrations/test_domain_health_live.py proves matching-cache success, stale-revision detection, topology fail-closed behavior and read-only recurring workflow semantics.",
+    "state/DOMAIN_HEALTH_INDEX.json schema 1.2 is reconciled to current child heads with CI evidence explicitly bound to exact commits.",
+    "EVO-20261015-DOMAIN-HEALTH-ESCALATION-GOVERNANCE was reconciled to its real PR #31/#32 production history rather than left promotion-pending."
   ],
-  "external_research_disposition":"NOT_MATERIAL_FOR_ROOT_SCOPE__the failure is directly reproducible from current repository authority, current GitHub child revisions and the prior manual reconciliation precedent; external method research is not needed to establish the missing live acquisition path.",
-  "promotion":{"status":"PENDING_PARENT_PR_AND_GREEN_CI_PLUS_LIVE_DOMAIN_HEALTH_AUDIT"},
-  "remaining_observation":"The live audit detects registered child revision drift, not exhaustive unknown failure classes. FC-PROACTIVE-UNKNOWN-FAILURE-DISCOVERY-GAP-004 remains a bounded observation problem rather than a claim that all future defects can be prevented."
+  "verification_history":[
+    {"stage":"FIRST_CANDIDATE","head":"039cae795c518443ee6e60a8e1b26378e2f7347f","domain_health_live_audit":{"run_id":38899160275,"run_number":1,"conclusion":"success"},"full_ci":{"run_id":38899159909,"run_number":255,"conclusion":"failure","finding":"Legacy fresh-chat regression incorrectly asserted every current controller task must be COMPLETE, conflicting with reusable persisted controller maintenance semantics."},"repair":"Updated the regression to require completed tasks be nonresumable while allowing exactly one active resumable default controller task; resolver semantics were not weakened."},
+    {"stage":"POST_TEST_REPAIR","head":"2a5e5a3b841d4bff071b988d6a2649fef678eb6d","full_ci":{"run_id":38899314053,"run_number":256,"conclusion":"success"},"domain_health_live_audit":{"run_id":38899313583,"run_number":2,"conclusion":"success"}},
+    {"stage":"FINAL_CANDIDATE_WITH_MAIN_PUSH_OBSERVATION","head":"2e7a223c1efafde2fdaf786e94f267c759a7d5ff","full_ci":{"run_id":38899419971,"run_number":257,"conclusion":"success"},"domain_health_live_audit":{"run_id":38899420163,"run_number":3,"conclusion":"success"}}
+  ],
+  "promotion":{
+    "status":"PROMOTED_AND_OBSERVED",
+    "pull_request":60,
+    "candidate_head":"2e7a223c1efafde2fdaf786e94f267c759a7d5ff",
+    "production_commit":"1ebd923e44d215f650d3d0656e6fe7a09e829cfe",
+    "production_ci":{"run_id":38899688588,"run_number":258,"conclusion":"success"},
+    "production_domain_health_live_audit":{"run_id":38899688356,"run_number":4,"conclusion":"success","completed_at":"2026-10-16T12:19:31Z"},
+    "production_reread":"PASS__DOMAIN_HEALTH_INDEX_1_2_MATCHES_ALL_FOUR_CURRENT_CHILD_HEADS__WORKFLOW_IS_READ_ONLY_AND_RECURRING"
+  },
+  "post_promotion_disposition":"KEEP",
+  "acceptance":{
+    "registered_child_revision_acquisition":"PASS__LIVE_GITHUB_RUNNER",
+    "parent_cache_currentness":"PASS__FOUR_OF_FOUR_CURRENT_HEADS_MATCH",
+    "observer_production_mutation_separation":"PASS__WORKFLOW_CONTENTS_READ_ONLY",
+    "topology_drift_fail_closed":"PASS",
+    "full_repository_regression":"PASS__CI_257_CANDIDATE_AND_CI_258_PRODUCTION",
+    "production_live_observation":"PASS__DOMAIN_HEALTH_LIVE_AUDIT_4",
+    "controller_maintenance_closure":"PENDING_CLOSURE_PR_PROMOTION"
+  },
+  "remaining_observation":[
+    "FC-PARENT-GUIDANCE-SINGLE-QUEUE-BLOCKING-RISK-003 remains live multi-upcall concurrency observation; non-conflicting triage is implemented but real concurrent parent-guidance traffic is not claimed as fully observed.",
+    "FC-PROACTIVE-UNKNOWN-FAILURE-DISCOVERY-GAP-004 remains a bounded observation problem; this audit detects registered child revision drift and cannot prove exhaustive future failure discovery.",
+    "The live revision audit establishes freshness identity, not general semantic equivalence of every child business contract; material child execution still requires current binding/business-authority reread."
+  ]
 }
