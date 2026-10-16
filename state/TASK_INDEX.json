@@ -3,18 +3,18 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-17T00:52:07+08:00",
+  "updated_at":"2026-10-17T01:13:27+08:00",
   "controller_tasks":[
     {
       "task_id":"uaos:maintenance:native-chatgpt-depth-routing-bootstrap-20261017",
       "authority_context":"UAOS",
       "task_type":"controller_maintenance",
       "display_name_zh":"总控维护｜原生 ChatGPT 自主深度路由与自定义指令收口",
-      "status":"RUNNING",
-      "resume_eligible":true,
-      "default_resume":true,
-      "semantic_summary":"Repairing the native ChatGPT bootstrap/invocation gap so every selected-context turn independently assesses execution depth and proactively activates current UAOS mechanisms when warranted; Custom Instructions remain a compact non-authoritative pointer and native ChatGPT physical complete mediation remains explicitly unclaimed.",
-      "current_stage":"EVIDENCE_ADMITTED__CANDIDATE_IMPLEMENTATION",
+      "status":"COMPLETE",
+      "resume_eligible":false,
+      "default_resume":false,
+      "semantic_summary":"Completed native ChatGPT depth-routing repair: every selected-context turn now has an explicit lightweight Agent-owned execution-depth sentinel feeding current UAOS DeepTask/cognition authority; the account Custom Instructions remain one compact bootstrap-only pointer, and native ChatGPT physical complete mediation remains explicitly unclaimed.",
+      "current_stage":"PRODUCTION_VERIFIED_CLOSED",
       "state_ref":"state/tasks/uaos-native-chatgpt-depth-routing-bootstrap-20261017.json"
     },
     {
