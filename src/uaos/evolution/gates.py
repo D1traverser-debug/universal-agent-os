@@ -1,4 +1,9 @@
 from __future__ import annotations
+from collections.abc import Mapping
+
+from uaos.contracts.enums import KnowledgeState
+from uaos.contracts.models import KnowledgeItem
+
 from .models import ChangeProposal, ComplexityBudget, EvaluationResult, PromotionAuthorization, ProposalState
 
 
@@ -7,10 +12,26 @@ def assess_promotion(
     evaluations: tuple[EvaluationResult, ...],
     *,
     budget: ComplexityBudget,
+    knowledge_by_id: Mapping[str, KnowledgeItem] | None = None,
 ) -> PromotionAuthorization:
     reasons: list[str] = []
     if proposal.state is not ProposalState.EVALUATED:
         reasons.append(f"proposal must be EVALUATED before promotion: {proposal.state}")
+
+    if proposal.knowledge_ids:
+        knowledge_by_id = knowledge_by_id or {}
+        missing = tuple(item_id for item_id in proposal.knowledge_ids if item_id not in knowledge_by_id)
+        if missing:
+            reasons.append(f"knowledge-origin proposal has unresolved knowledge ids: {list(missing)}")
+        immature = tuple(
+            item_id
+            for item_id in proposal.knowledge_ids
+            if item_id in knowledge_by_id
+            and knowledge_by_id[item_id].state not in {KnowledgeState.EVALUATED, KnowledgeState.CANONICAL}
+        )
+        if immature:
+            reasons.append(f"knowledge-origin proposal requires EVALUATED or CANONICAL knowledge: {list(immature)}")
+
     relevant = tuple(e for e in evaluations if e.proposal_id == proposal.proposal_id)
     if not relevant:
         reasons.append("no evaluation for proposal")
