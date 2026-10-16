@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Iterable, Mapping
 
+from uaos.kernel.cognition_case import CognitionCaseReceipt
 from uaos.kernel.deliberation import RootScopeReceipt
 from uaos.kernel.problem_closure import EvolutionDisposition
 
@@ -75,7 +76,8 @@ class SessionProgressExpectation:
     """Observable expectations for one final assistant response.
 
     Report text is never treated as proof that cognition/evolution actually ran.
-    Verified admission artifacts must be supplied separately when required.
+    New controlled-runtime paths supply a CognitionCaseReceipt recomputed from the full
+    problem case. RootScopeReceipt remains accepted only for legacy compatibility.
     """
     context_selected: bool
     problem_signal_observed: bool = False
@@ -83,6 +85,7 @@ class SessionProgressExpectation:
     no_op_continuation_disallowed: bool = False
     cognition_admission_required: bool = False
     root_scope_receipt: RootScopeReceipt | None = None
+    cognition_case_receipt: CognitionCaseReceipt | None = None
     evolution_disposition: EvolutionDisposition | None = None
     problem_record_ref: str | None = None
 
@@ -183,15 +186,17 @@ def evaluate_session_progress_response(response: str, expectation: SessionProgre
         violations.append(SessionAdherenceViolation.UNNECESSARY_USER_CONTINUATION_HANDOFF)
 
     if expectation.cognition_admission_required:
-        if not isinstance(expectation.root_scope_receipt, RootScopeReceipt):
+        has_cognition_receipt = isinstance(expectation.cognition_case_receipt, CognitionCaseReceipt)
+        has_legacy_receipt = isinstance(expectation.root_scope_receipt, RootScopeReceipt)
+        if not (has_cognition_receipt or has_legacy_receipt):
             violations.append(SessionAdherenceViolation.CLAIMED_COGNITION_WITHOUT_ROOT_SCOPE_RECEIPT)
         if not isinstance(expectation.evolution_disposition, EvolutionDisposition):
             violations.append(SessionAdherenceViolation.CLAIMED_EVOLUTION_WITHOUT_VERIFIED_DISPOSITION)
-        if (
-            isinstance(expectation.root_scope_receipt, RootScopeReceipt)
-            and expectation.root_scope_receipt.durable_problem_record_required
-            and not _present(expectation.problem_record_ref)
-        ):
+        durable_required = bool(
+            (has_cognition_receipt and expectation.cognition_case_receipt.durable_problem_record_required)
+            or (has_legacy_receipt and expectation.root_scope_receipt.durable_problem_record_required)
+        )
+        if durable_required and not _present(expectation.problem_record_ref):
             violations.append(SessionAdherenceViolation.MISSING_DURABLE_PROBLEM_RECORD_EVIDENCE)
 
     return SessionAdherenceResult(True, fields, tuple(dict.fromkeys(violations)), missing)
