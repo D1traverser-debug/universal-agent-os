@@ -151,13 +151,17 @@ def test_ambiguous_problem_cannot_be_silently_finalized():
 
 def test_session_policy_makes_problem_cognition_and_action_gate_mandatory():
     policy = _json("config/SESSION_INTERACTION_POLICY.json")
+    deliberation = _json("config/DELIBERATION_POLICY.json")
     gate = policy["problem_to_action_closure_gate"]
     cognition = policy["problem_cognition_action_transaction"]
     assert gate["required"] is True
     assert gate["executable_ref"] == "src/uaos/kernel/problem_closure.py"
     assert cognition["required"] is True
     assert cognition["root_scope_executable_ref"] == "src/uaos/kernel/deliberation.py"
-    assert "ROOT_SCOPE_ADMISSION" in cognition["ordered_stages"]
+    assert cognition["canonical_cognition_policy_ref"] == "config/DELIBERATION_POLICY.json#cognition_kernel"
+    assert "ordered_stages" not in cognition
+    assert "root_scope_admission" in deliberation
+    assert "COMMIT_ROOT_SCOPE_AND_LEARNING_DISPOSITION" in deliberation["cognition_kernel"]["hot_path"]
     assert "REPAIR_EXECUTED" in gate["terminal_states"]
     assert "recommendation-only" in gate["rule"].lower()
 
@@ -169,6 +173,7 @@ def test_common_behavior_contract_requires_cognition_before_repair_or_block():
     assert policy["contract_version"] == "1.3.0"
     assert closure["executable_ref"] == "src/uaos/kernel/problem_closure.py"
     assert cognition["root_scope_executable_ref"] == "src/uaos/kernel/deliberation.py"
+    assert cognition["canonical_cognition_policy_ref"] == "config/DELIBERATION_POLICY.json#cognition_kernel"
     assert "REPAIR_EXECUTED" in closure["terminal_states"]
     assert "PREMATURE_REPAIR_BEFORE_ROOT_SCOPE" in policy["parent_decisions"]
 
