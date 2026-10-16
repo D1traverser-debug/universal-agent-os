@@ -8,6 +8,10 @@ def _json(path: str):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def _version_tuple(value: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in value.split("."))
+
+
 def test_financial_parent_guidance_is_resolved_as_common_outcomes_not_financial_shape():
     policy = _json("config/COMMON_BEHAVIOR_ASSURANCE.json")
     decisions = policy["parent_decisions"]
@@ -20,7 +24,7 @@ def test_financial_parent_guidance_is_resolved_as_common_outcomes_not_financial_
     assert "RECOMMENDATION_ONLY" in decisions["PROBLEM_TO_ACTION_CLOSURE_GAP"]
     assert "ROOT_SCOPE" in decisions["PREMATURE_REPAIR_BEFORE_ROOT_SCOPE"]
 
-    assert tuple(map(int, policy["contract_version"].split("."))) >= (1, 3, 0)
+    assert _version_tuple(policy["contract_version"]) >= (1, 3, 0)
     assert policy["observable_inheritance_assurance"]["no_uniform_probe_implementation"] is True
     assert policy["adoption_and_compatibility"]["no_parent_microscheduler"] is True
     assert "FORCE_FINANCIAL_WRITINGS_EXACT_RECOVERY_ORDER_ON_OTHER_DOMAINS" in policy["recover_before_user_escalation"]["forbidden"]
@@ -127,13 +131,18 @@ def test_child_observations_remain_current_evidence_not_parent_authority():
     assert current["financial_binding_assurance"].startswith("CURRENT_CHILD_OBSERVATION_IN_state/DOMAIN_HEALTH_INDEX.json")
     assert verification["observation_role"] == "CURRENT_CHILD_HEAD_OBSERVATION__NOT_IMMUTABLE_RELEASE_CERTIFICATE"
     assert health["domains"]["financial_writing"]["observed_main_commit"] == verification["current_main_commit"]
+    assert health["domains"]["financial_writing"]["observed_profile_version"] == verification["profile_version"]
+    assert _version_tuple(verification["common_behavior_assurance_min"]) >= (1, 3, 0)
     assert verification["result"] == "PASS"
 
 
 def test_novel_parent_observation_is_current_and_owner_native():
     current = _json("CURRENT_SYSTEM.json")
+    health = _json("state/DOMAIN_HEALTH_INDEX.json")
     verification = current["novel_child_production_verification"]
-    assert verification["profile_version"] == 5
+    assert verification["profile_version"] >= 6
+    assert verification["profile_version"] == health["domains"]["novel"]["observed_profile_version"]
+    assert _version_tuple(verification["common_behavior_assurance_min"]) >= (1, 3, 0)
     assert verification["active_rulebook_version"] == "2.5-github"
     assert verification["result"] == "PASS"
     assert "NEXT_LINE_3914" in verification["business_cursor_preserved"]
