@@ -3,8 +3,20 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-16T22:48:36+08:00",
+  "updated_at":"2026-10-16T22:55:00+08:00",
   "controller_tasks":[
+    {
+      "task_id":"uaos:maintenance:deep-task-execution-protocol-20261016",
+      "authority_context":"UAOS",
+      "task_type":"controller_maintenance",
+      "display_name_zh":"总控维护｜深度任务执行协议可执行化",
+      "status":"RUNNING",
+      "resume_eligible":true,
+      "default_resume":true,
+      "semantic_summary":"Adopt the user-provided deep-task protocol as an executable UAOS admission for explicit depth requests/materially deep work: governing outcome, professional-practice gaps, primary/raw evidence, methods/tools, unknown discovery, competing alternatives/falsification, feasibility-bounded stretch targets, independent judge, holdout/replay/production validation and acceptance criteria, without creating a second cognition state machine.",
+      "current_stage":"ARCHITECTURE_AND_EXECUTABLE_ADMISSION_IMPLEMENTATION_ACTIVE",
+      "state_ref":"state/tasks/uaos-deep-task-execution-protocol-20261016.json"
+    },
     {
       "task_id":"uaos:maintenance:proactive-capability-evolution-audit-20261016",
       "authority_context":"UAOS",
