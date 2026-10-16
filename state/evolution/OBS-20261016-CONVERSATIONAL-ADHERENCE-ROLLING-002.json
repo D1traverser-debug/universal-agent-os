@@ -1,0 +1,49 @@
+{
+  "schema_version":"1.0",
+  "observation_id":"OBS-20261016-CONVERSATIONAL-ADHERENCE-ROLLING-002",
+  "authority":"UAOS",
+  "related_evolution":"EVO-20261016-CONVERSATIONAL-ADHERENCE-OBSERVABILITY",
+  "baseline_ref":"state/evolution/OBS-20261016-CONVERSATIONAL-ADHERENCE-BASELINE.json",
+  "prior_rolling_ref":"state/evolution/OBS-20261016-CONVERSATIONAL-ADHERENCE-ROLLING-001.json",
+  "observed_at":"2026-10-16T11:24:00+08:00",
+  "source":"CURRENT_CHAT_COMPLETED_SELECTED_CONTEXT_FINAL_RESPONSE_AFTER_ROLLING_001",
+  "sample_policy":"Only the immediately preceding completed observable final output is classified. The current in-progress response is not pre-counted. Hidden reasoning is not inferred.",
+  "samples":[
+    {
+      "sample_id":"R2_POST_BASELINE_NEXT_CONTINUATION",
+      "context_selected":true,
+      "problem_signal_observed":false,
+      "result":"PASS",
+      "violations":[],
+      "observable_evidence":[
+        "all ten Session 1.9 progress-report semantic fields were present",
+        "Evolution reported NO_EVOLUTION_TRIGGER on a clean continuation turn",
+        "Deliberation reported NOT_TRIGGERED on a clean continuation turn",
+        "the response explicitly preserved STABILITY_NOT_PROVEN and did not pre-count itself"
+      ]
+    }
+  ],
+  "post_baseline_summary":{
+    "sample_count":2,
+    "pass_count":2,
+    "fail_count":0,
+    "missing_report_count":0,
+    "problem_state_contradiction_count":0
+  },
+  "cumulative_with_initial_baseline":{
+    "sample_count":5,
+    "pass_count":4,
+    "fail_count":1,
+    "missing_report_count":1,
+    "problem_state_contradiction_count":0,
+    "raw_adherence_rate":0.8
+  },
+  "interpretation":"This is the second consecutive post-baseline observable pass. The cumulative raw rate remains descriptive only; n=5 is still too small and non-random to establish stable conversational adherence.",
+  "hypothesis_update":{
+    "H1_TRANSIENT_MODEL_ADHERENCE_SLIP":"MORE_CONSISTENT_WITH_CURRENT_POST_BASELINE_EVIDENCE_BUT_NOT_PROVEN",
+    "H3_SESSION_MEDIATED_ENFORCEMENT_INSUFFICIENT":"NOT_ESTABLISHED",
+    "reason":"Two consecutive completed responses after observability deployment have passed and no repeated post-observability escape has been observed. This weakens, but does not falsify, the enforcement-insufficiency hypothesis."
+  },
+  "architecture_disposition":"NO_ARCHITECTURE_CHANGE",
+  "next_evidence_needed":"Continue classifying completed selected-context responses, especially a future correction/contradiction/problem turn because clean continuation passes mainly test report persistence rather than problem-triggered cognition consistency."
+}
