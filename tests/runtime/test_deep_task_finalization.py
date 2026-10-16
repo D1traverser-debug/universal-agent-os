@@ -4,6 +4,7 @@ from uaos.kernel import (
     DeepTaskAlternative,
     DeepTaskAlternativeDisposition,
     DeepTaskCase,
+    DeepTaskSignals,
     EvidenceItem,
     EvidenceKind,
 )
@@ -64,6 +65,32 @@ def test_explicit_deep_task_cannot_finalize_without_evidence_case():
             FinalizationContext(context_selected=True, deep_task_required=True),
         )
     assert "MISSING_DEEP_TASK_EVIDENCE_CASE" in exc.value.reasons
+
+
+def test_semantic_explicit_depth_signal_cannot_be_cancelled_by_false_compatibility_boolean():
+    with pytest.raises(FinalizationBlocked) as exc:
+        admit_final_response(
+            _report(),
+            FinalizationContext(
+                context_selected=True,
+                deep_task_required=False,
+                deep_task_signals=DeepTaskSignals(explicit_user_depth_request=True),
+            ),
+        )
+    assert "MISSING_DEEP_TASK_EVIDENCE_CASE" in exc.value.reasons
+
+
+def test_semantic_explicit_depth_signal_finalizes_after_evidence_admission():
+    receipt = admit_final_response(
+        _report(),
+        FinalizationContext(
+            context_selected=True,
+            deep_task_signals=DeepTaskSignals(explicit_user_depth_request=True),
+            deep_task_case=_case(),
+        ),
+    )
+    assert receipt.deep_task_receipt is not None
+    assert receipt.deep_task_receipt.preferred_alternative_id == "a"
 
 
 def test_explicit_deep_task_finalizes_after_evidence_admission():
