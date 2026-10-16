@@ -3,18 +3,18 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-16T22:04:22+08:00",
+  "updated_at":"2026-10-16T22:43:28+08:00",
   "controller_tasks":[
     {
       "task_id":"uaos:maintenance:proactive-capability-evolution-audit-20261016",
       "authority_context":"UAOS",
       "task_type":"controller_maintenance",
-      "display_name_zh":"总控维护｜主动能力缺口发现与无事故进化链审计",
+      "display_name_zh":"总控维护｜主动能力缺口发现与无事故进化链重构",
       "status":"RUNNING",
       "resume_eligible":true,
       "default_resume":true,
-      "semantic_summary":"Audit and, if required, implement the proactive no-incident learning path: capability-gap discovery -> external learning -> evaluated candidate -> dogfood/eval -> governed promotion, without treating user framing or method prose as sufficient execution evidence.",
-      "current_stage":"AUDIT_ACTIVE__PROACTIVE_LEARNING_TRIGGER_AND_EXECUTION_CHAIN_UNDER_REVIEW",
+      "semantic_summary":"Evidence supported an evolution-architecture defect rather than a missing reminder: fragmented lifecycle helpers and an incident-centric proposal model left proactively discovered capability gaps without one transaction owner. Candidate UAOS 2.7.0 rebuilds governed evolution around one EvolutionTransaction for incident, capability-gap and evaluated-knowledge origins with governing-outcome/raw-evidence/professional-method/novelty/independent-judge evidence and post-promotion observation.",
+      "current_stage":"CANDIDATE_ARCHITECTURE_REBUILD_FROZEN__FINAL_HEAD_CHECKS_PENDING",
       "state_ref":"state/tasks/uaos-proactive-capability-evolution-audit-20261016.json"
     },
     {
