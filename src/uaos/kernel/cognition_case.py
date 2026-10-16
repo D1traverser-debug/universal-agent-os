@@ -3,6 +3,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
+from .architecture_experience import (
+    ArchitectureCandidate,
+    ArchitectureConcern,
+    ArchitectureExperienceAdmissionError,
+    ArchitectureScenario,
+    InputSignal,
+    Representation,
+    require_architecture_experience_admission,
+)
 from .deliberation import (
     ActionCandidate,
     CognitiveSearchMode,
@@ -43,10 +52,13 @@ class EvidenceItem:
     kind: EvidenceKind
     statement: str
     source_ref: str
+    method_ref: str | None = None
 
     def __post_init__(self) -> None:
         if not self.evidence_id.strip() or not self.statement.strip() or not self.source_ref.strip():
             raise ValueError("evidence identity, statement and source_ref are required")
+        if self.method_ref is not None and not self.method_ref.strip():
+            raise ValueError("method_ref cannot be empty when supplied")
 
 
 @dataclass(frozen=True, slots=True)
@@ -71,13 +83,7 @@ class CausalFactor:
 
 @dataclass(frozen=True, slots=True)
 class EngineeringTrace:
-    """Trace the governing outcome to the selected mechanism and its V&V plan.
-
-    Verification asks whether the implementation satisfies its governing requirement;
-    validation asks whether the resulting behavior is suitable for the governing outcome
-    in a realistic scenario. The methods are plans at cognition admission time; closure
-    binds them to concrete evidence after execution.
-    """
+    """Trace the governing outcome to the selected mechanism and its V&V plan."""
 
     governing_outcome: str
     requirement_or_goal_evidence_ids: tuple[str, ...]
@@ -99,12 +105,23 @@ class EngineeringTrace:
 
 
 @dataclass(frozen=True, slots=True)
+class ArchitectureExperienceCase:
+    """Raw architecture-experience inputs that must be re-admitted for architecture actions."""
+
+    signals: tuple[InputSignal, ...]
+    concerns: tuple[ArchitectureConcern, ...]
+    scenarios: tuple[ArchitectureScenario, ...]
+    representations: tuple[Representation, ...]
+    candidates: tuple[ArchitectureCandidate, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class CognitionCase:
     """One evidence-traced problem -> causal model -> intervention transaction.
 
-    The case intentionally separates causal explanation from intervention selection:
-    multiple contributing causes may be supported, while exactly one action/no-change
-    candidate is selected for the current bounded intervention.
+    Causal explanation and intervention are intentionally separate: several contributing
+    causes may remain supported while exactly one bounded action/no-change candidate is
+    selected for the current work cycle.
     """
 
     case_id: str
@@ -116,6 +133,7 @@ class CognitionCase:
     selected_action_candidate_id: str
     engineering_trace: EngineeringTrace
     architecture_reassessment_evidence_ids: tuple[str, ...] = ()
+    architecture_experience: ArchitectureExperienceCase | None = None
 
     def __post_init__(self) -> None:
         if not self.case_id.strip():
@@ -133,7 +151,9 @@ class CognitionCaseReceipt:
     compared_layers: tuple[ProblemLayer, ...]
     intervention_candidate_id: str
     intervention_layer: ProblemLayer
+    intervention_no_change_baseline: bool
     architecture_reassessment_performed: bool
+    architecture_experience_admitted: bool
     durable_problem_record_required: bool
     evidence_ids: tuple[str, ...]
     verification_methods: tuple[str, ...]
@@ -156,12 +176,27 @@ _INDEPENDENT_EVIDENCE_KINDS = {
     EvidenceKind.RUNTIME_OBSERVATION,
     EvidenceKind.SCENARIO_RESULT,
 }
+_INTERVENTION_SUPPORT_EVIDENCE_KINDS = {
+    EvidenceKind.REPOSITORY_FACT,
+    EvidenceKind.TOOL_RESULT,
+    EvidenceKind.TEST_RESULT,
+    EvidenceKind.RUNTIME_OBSERVATION,
+    EvidenceKind.SCENARIO_RESULT,
+    EvidenceKind.ANALYSIS_RESULT,
+}
+_TRADEOFF_EVIDENCE_KINDS = _INTERVENTION_SUPPORT_EVIDENCE_KINDS | {EvidenceKind.EXTERNAL_SOURCE}
 _UPSTREAM_LAYERS = {
     ProblemLayer.DOMAIN_ARCHITECTURE,
     ProblemLayer.COMMON_CAPABILITY,
     ProblemLayer.CONTROL_PLANE,
     ProblemLayer.HOST,
     ProblemLayer.REQUIREMENT_OR_GOAL,
+}
+_ARCHITECTURE_INTERVENTION_LAYERS = {
+    ProblemLayer.DOMAIN_ARCHITECTURE,
+    ProblemLayer.COMMON_CAPABILITY,
+    ProblemLayer.CONTROL_PLANE,
+    ProblemLayer.HOST,
 }
 
 
@@ -182,13 +217,60 @@ def _require_known_refs(refs: tuple[str, ...], index: dict[str, EvidenceItem], l
         )
 
 
-def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceipt:
-    """Recompute cognition admission from raw case evidence instead of trusting a receipt.
+def _require_any_evidence_kind(
+    refs: tuple[str, ...],
+    index: dict[str, EvidenceItem],
+    allowed: set[EvidenceKind],
+    label: str,
+) -> None:
+    if not any(index[ref].kind in allowed for ref in refs):
+        raise CognitionCaseAdmissionError(
+            f"{label} requires substantive current-system evidence; user claims or authority labels alone are insufficient"
+        )
 
-    This is the canonical executable admission for material problem handling. It keeps
-    user/external framing as evidence inputs, allows multiple supported contributing
-    causes, and selects one bounded intervention separately from the causal model.
-    """
+
+def _admit_architecture_experience(
+    architecture: ArchitectureExperienceCase,
+    evidence_by_id: dict[str, EvidenceItem],
+    selected_action_id: str,
+) -> None:
+    for representation in architecture.representations:
+        if representation.evidence_ref not in evidence_by_id:
+            raise CognitionCaseAdmissionError(
+                f"architecture representation references unknown evidence: {representation.evidence_ref}"
+            )
+        if evidence_by_id[representation.evidence_ref].kind is EvidenceKind.USER_CLAIM:
+            raise CognitionCaseAdmissionError(
+                "architecture representation cannot be proven only by a user claim"
+            )
+    for candidate in architecture.candidates:
+        refs = tuple(candidate.tradeoff_evidence_refs)
+        _require_known_refs(refs, evidence_by_id, f"architecture candidate {candidate.candidate_id}")
+        _require_any_evidence_kind(
+            refs,
+            evidence_by_id,
+            _TRADEOFF_EVIDENCE_KINDS,
+            f"architecture candidate {candidate.candidate_id} tradeoff",
+        )
+    try:
+        receipt = require_architecture_experience_admission(
+            signals=architecture.signals,
+            concerns=architecture.concerns,
+            scenarios=architecture.scenarios,
+            representations=architecture.representations,
+            material_control_plane_or_agent_experience_change=True,
+            candidates=architecture.candidates,
+        )
+    except ArchitectureExperienceAdmissionError as exc:
+        raise CognitionCaseAdmissionError(f"architecture experience not admitted: {exc}") from exc
+    if selected_action_id not in receipt.candidate_ids:
+        raise CognitionCaseAdmissionError(
+            "selected architecture intervention was not evaluated by architecture-experience admission"
+        )
+
+
+def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceipt:
+    """Recompute cognition admission from raw case evidence instead of trusting a receipt."""
 
     directive = require_deliberation_admission(case.signals, case.evidence)
     evidence_by_id = _index_evidence(case.evidence_items)
@@ -248,11 +330,12 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
             f"causal factor {factor.factor_id} falsification",
         )
         if factor.disposition is CausalFactorDisposition.SUPPORTED:
-            support_items = [evidence_by_id[ref] for ref in factor.supporting_evidence_ids]
-            if not any(item.kind in _CAUSAL_EVIDENCE_KINDS for item in support_items):
-                raise CognitionCaseAdmissionError(
-                    f"supported causal factor {factor.factor_id} cannot be justified only by user claims, requirements or external method authority"
-                )
+            _require_any_evidence_kind(
+                factor.supporting_evidence_ids,
+                evidence_by_id,
+                _CAUSAL_EVIDENCE_KINDS,
+                f"supported causal factor {factor.factor_id}",
+            )
 
     if len({item.candidate_id for item in case.action_candidates}) != len(case.action_candidates):
         raise CognitionCaseAdmissionError("action candidate identifiers must be unique")
@@ -275,6 +358,18 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
     for candidate in case.action_candidates:
         _require_known_refs(candidate.evidence_refs, evidence_by_id, f"action candidate {candidate.candidate_id}")
         _require_known_refs(candidate.tradeoff_refs, evidence_by_id, f"action tradeoff {candidate.candidate_id}")
+    _require_any_evidence_kind(
+        selected_action.evidence_refs,
+        evidence_by_id,
+        _INTERVENTION_SUPPORT_EVIDENCE_KINDS,
+        f"selected intervention {selected_action.candidate_id}",
+    )
+    _require_any_evidence_kind(
+        selected_action.tradeoff_refs,
+        evidence_by_id,
+        _TRADEOFF_EVIDENCE_KINDS,
+        f"selected intervention {selected_action.candidate_id} tradeoff",
+    )
 
     compared_layers = tuple(sorted({item.layer for item in case.causal_factors}, key=lambda item: item.value))
     systemic = architecture_reassessment_required(case.signals)
@@ -303,6 +398,13 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
         evidence_by_id,
         "engineering trace goal/requirement",
     )
+    if not any(
+        evidence_by_id[ref].kind in {EvidenceKind.USER_CLAIM, EvidenceKind.REQUIREMENT}
+        for ref in trace.requirement_or_goal_evidence_ids
+    ):
+        raise CognitionCaseAdmissionError(
+            "engineering trace must bind the selected mechanism to explicit governing goal/requirement evidence"
+        )
     if trace.mechanism_candidate_id != selected_action.candidate_id:
         raise CognitionCaseAdmissionError(
             "engineering trace mechanism must match the selected intervention candidate"
@@ -311,6 +413,19 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
         raise CognitionCaseAdmissionError(
             "structured/material cognition requires an explicit validation method in addition to verification"
         )
+
+    architecture_experience_admitted = False
+    if selected_action.target_layer in _ARCHITECTURE_INTERVENTION_LAYERS:
+        if case.architecture_experience is None:
+            raise CognitionCaseAdmissionError(
+                "architecture/control intervention requires executable architecture-experience admission"
+            )
+        _admit_architecture_experience(
+            case.architecture_experience,
+            evidence_by_id,
+            selected_action.candidate_id,
+        )
+        architecture_experience_admitted = True
 
     used_ids = {
         *(ref for refs in case.evidence.by_dimension.values() for ref in refs),
@@ -329,7 +444,9 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
         compared_layers=compared_layers,
         intervention_candidate_id=selected_action.candidate_id,
         intervention_layer=selected_action.target_layer,
+        intervention_no_change_baseline=selected_action.no_change_baseline,
         architecture_reassessment_performed=bool(case.architecture_reassessment_evidence_ids),
+        architecture_experience_admitted=architecture_experience_admitted,
         durable_problem_record_required=durable_problem_record_required(case.signals),
         evidence_ids=tuple(sorted(used_ids)),
         verification_methods=trace.verification_methods,
