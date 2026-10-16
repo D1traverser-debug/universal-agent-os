@@ -1,8 +1,9 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "policy_version":"2.0.0",
   "authority":"UAOS",
-  "status":"CANDIDATE_CANONICAL_EVOLUTION_OWNER",
+  "status":"ACTIVE_CANONICAL_EVOLUTION_OWNER",
+  "updated_at":"2026-10-16T22:48:36+08:00",
   "purpose":"Own one governed evolution transaction for incident-driven repair, opportunity/capability-gap discovery and evaluated-knowledge improvement. Prevent discovery, evaluation, promotion, execution and observation from becoming disconnected helper-local steps.",
   "canonical_executable":"src/uaos/evolution/transaction.py",
   "canonical_transaction":"EvolutionTransaction",
@@ -52,5 +53,12 @@
     "SEI ATAM: business-driver/scenario/risk/tradeoff architecture evaluation",
     "User-provided Felix Rieseberg height/breadth/depth method used as a candidate operational lens, with stretch-target feasibility bounded by evidence"
   ],
+  "production_evidence":{
+    "candidate_ci":{"run_number":305,"conclusion":"success"},
+    "candidate_live_integration":{"run_number":116,"conclusion":"success"},
+    "production_commit":"1952b5eb858908575d55c73b254965ca8678a0ff",
+    "production_ci":{"run_number":306,"conclusion":"success"},
+    "production_reread":"UAOS_2.7.0_AND_EVOLUTION_TRANSACTION_PRESENT_ON_main"
+  },
   "assurance_boundary":"Repository-controlled runtimes can mechanically enforce this transaction where they invoke it. Native ChatGPT response/tool paths still have no verified repository-controlled pre-send or pre-tool hook; host adapters must not claim non-bypassable enforcement without evidence."
 }
