@@ -38,7 +38,7 @@ def test_material_change_still_requires_deliberation_evidence():
     assert require_deliberation_admission(signals, evidence).required
 
 
-def test_v19_keeps_problem_research_floor_and_adds_child_product_governance():
+def test_current_common_capabilities_delegate_problem_response_to_canonical_adaptive_owner():
     current = _json("CURRENT_SYSTEM.json")
     assert _version_tuple(current["system_release_version"]) >= (2, 4, 5)
     assert current["status"] == "ACTIVE_PRIMARY_CONTROLLER" or current["status"].startswith("CANDIDATE_")
@@ -48,26 +48,23 @@ def test_v19_keeps_problem_research_floor_and_adds_child_product_governance():
         "docs/requirements/FROZEN_REQUIREMENTS_v1.9.md",
     ):
         assert requirement in current["requirements"]
-    assert current["production_host_hardening"].startswith("OPTIONAL_DEFENSE_IN_DEPTH")
-    assert "REGISTERED_CHILDREN_REFERENCE_CURRENT_UAOS_COMMON_CAPABILITIES" in current["child_inheritance_assurance"]
-    assert "DOMAIN_PRODUCT_REQUIREMENTS" in current["product_governance_assurance"]
-    assert "ARCHITECTURE" in current["product_governance_assurance"]
+    assert current["owners"]["common_capabilities"] == "config/COMMON_CAPABILITIES.json"
+    assert current["owners"]["deliberation_policy"] == "config/DELIBERATION_POLICY.json"
+    assert current["physical_complete_mediation_assurance"] == "CONTROLLED_RUNTIME_GATE_VERIFIED__NATIVE_CHATGPT_COMPLETE_MEDIATION_NOT_CLAIMED"
 
     common = _json("config/COMMON_CAPABILITIES.json")
     assert _version_tuple(common["contract_version"]) >= (1, 5, 0)
     by_id = {item["capability_id"]: item for item in common["capabilities"]}
     assert "product_requirements_and_architecture_governance" in by_id
     cognition = by_id["adaptive_deliberation_and_parent_guidance"]
-    assert cognition["problem_response_floor"] == [
-        "MICRO_DIAGNOSIS",
-        "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT",
-        "GOVERNING_ASSUMPTION_CHALLENGE",
-        "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH",
-    ]
-    cognition_rules = "\n".join(cognition["rules"]).lower()
-    assert "familiarity is not a waiver" in cognition_rules
-    assert "problem size changes" in cognition_rules
-    assert "research must affect or validate" in cognition_rules
+    assert cognition["policy_ref"] == "config/DELIBERATION_POLICY.json"
+    assert cognition["inheritance_semantics"] == "REFERENCE_CURRENT_CANONICAL_OWNER__DO_NOT_COPY_A_LOCAL_PROBLEM_RESPONSE_ALGORITHM"
+    assert "problem_response_floor" not in cognition
+    cognition_rules = "\n".join(cognition["rules"])
+    assert "LIGHTWEIGHT" in cognition_rules
+    assert "CONTRASTIVE" in cognition_rules
+    assert "STRUCTURED" in cognition_rules
+    assert "ceremonial external research" in cognition_rules
 
 
 def test_material_production_workflow_uses_candidate_validation_without_requiring_remote_ruleset():
