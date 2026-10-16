@@ -9,6 +9,12 @@ from uaos.kernel.cognition_case import (
     EvidenceItem,
     require_cognition_case_admission,
 )
+from uaos.kernel.deep_task import (
+    DeepTaskAdmissionError,
+    DeepTaskCase,
+    DeepTaskReceipt,
+    require_deep_task_admission,
+)
 from uaos.kernel.problem_closure import (
     ProblemClosureDecision,
     ProblemClosureError,
@@ -40,12 +46,15 @@ class FinalizationContext:
     work_remaining_without_user_input: bool = False
     cognition_case: CognitionCase | None = None
     closure_signals: ProblemClosureSignals | None = None
+    deep_task_required: bool = False
+    deep_task_case: DeepTaskCase | None = None
 
 
 @dataclass(frozen=True, slots=True)
 class FinalizationReceipt:
     closure_decision: ProblemClosureDecision
     adherence: SessionAdherenceResult
+    deep_task_receipt: DeepTaskReceipt | None = None
 
 
 def _blocked_before_cognition(signals: ProblemClosureSignals) -> bool:
@@ -134,17 +143,61 @@ def _bind_and_validate_cognition_case(
     return replace(closure, cognition_case_receipt=receipt)
 
 
+def _bind_and_validate_deep_task(
+    case: DeepTaskCase,
+    cognition_case: CognitionCase | None,
+) -> DeepTaskReceipt:
+    try:
+        receipt = require_deep_task_admission(case)
+    except (DeepTaskAdmissionError, RuntimeError, ValueError) as exc:
+        raise FinalizationBlocked(f"DEEP_TASK_NOT_ADMITTED: {exc}") from exc
+
+    if cognition_case is not None:
+        if case.governing_outcome != cognition_case.engineering_trace.governing_outcome:
+            raise FinalizationBlocked(
+                "DEEP_TASK_AND_COGNITION_OUTCOME_DISAGREE"
+            )
+        cognition_evidence = {
+            item.evidence_id: (item.kind, item.source_ref, item.method_ref)
+            for item in cognition_case.evidence_items
+        }
+        for item in case.evidence_items:
+            expected = cognition_evidence.get(item.evidence_id)
+            if expected is None:
+                raise FinalizationBlocked(
+                    f"DEEP_TASK_EVIDENCE_NOT_BOUND_TO_COGNITION:{item.evidence_id}"
+                )
+            observed = (item.kind, item.source_ref, item.method_ref)
+            if expected != observed:
+                raise FinalizationBlocked(
+                    f"DEEP_TASK_EVIDENCE_CONTRADICTS_COGNITION:{item.evidence_id}"
+                )
+    return receipt
+
+
 def admit_final_response(response: str, context: FinalizationContext) -> FinalizationReceipt:
-    """Fail closed when an actionable response is being finalized prematurely.
+    """Fail closed when an actionable or explicitly deep response is finalized prematurely.
 
     Controlled runtimes recompute cognition admission from the full case, bind terminal
-    closure to the admitted intervention, and require V&V evidence to identify the exact
-    methods planned before execution. Native hosts that do not invoke this gate remain
-    outside the physical complete-mediation claim.
+    closure to the admitted intervention, require V&V evidence to identify the exact
+    methods planned before execution, and require an evidence-complete DeepTaskCase when
+    the runtime classifies the task as explicitly deep. Native hosts that do not invoke
+    this gate remain outside the physical complete-mediation claim.
     """
 
     if context.work_remaining_without_user_input and not context.user_input_required:
         raise FinalizationBlocked("ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT")
+
+    deep_task_receipt: DeepTaskReceipt | None = None
+    if context.deep_task_required and not context.user_input_required:
+        if context.deep_task_case is None:
+            raise FinalizationBlocked("MISSING_DEEP_TASK_EVIDENCE_CASE")
+        deep_task_receipt = _bind_and_validate_deep_task(
+            context.deep_task_case,
+            context.cognition_case if context.problem_signal_observed else None,
+        )
+    elif context.deep_task_case is not None and not context.deep_task_required:
+        raise FinalizationBlocked("UNEXPECTED_DEEP_TASK_CASE_WITHOUT_DEEP_TASK_REQUIREMENT")
 
     closure_decision = ProblemClosureDecision.CLEAN_NO_PROBLEM
     closure = context.closure_signals
@@ -196,4 +249,5 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
     return FinalizationReceipt(
         closure_decision=closure_decision,
         adherence=adherence,
+        deep_task_receipt=deep_task_receipt,
     )
