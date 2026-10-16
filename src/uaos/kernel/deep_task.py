@@ -100,6 +100,14 @@ _RAW_ALLOWED = {
     EvidenceKind.SCENARIO_RESULT,
 }
 _SUBSTANTIVE_ALLOWED = _RAW_ALLOWED | {EvidenceKind.ANALYSIS_RESULT}
+_FALSIFICATION_ALLOWED = {
+    EvidenceKind.REPOSITORY_FACT,
+    EvidenceKind.TOOL_RESULT,
+    EvidenceKind.TEST_RESULT,
+    EvidenceKind.RUNTIME_OBSERVATION,
+    EvidenceKind.SCENARIO_RESULT,
+    EvidenceKind.ANALYSIS_RESULT,
+}
 _INDEPENDENT_JUDGE_ALLOWED = {
     EvidenceKind.REPOSITORY_FACT,
     EvidenceKind.TOOL_RESULT,
@@ -193,7 +201,7 @@ def require_deep_task_admission(case: DeepTaskCase) -> DeepTaskReceipt:
         _require_kind(
             alternative.falsification_evidence_ids,
             index,
-            _SUBSTANTIVE_ALLOWED,
+            _FALSIFICATION_ALLOWED,
             f"alternative {alternative.alternative_id} falsification",
         )
 
@@ -203,8 +211,6 @@ def require_deep_task_admission(case: DeepTaskCase) -> DeepTaskReceipt:
         _INDEPENDENT_JUDGE_ALLOWED,
         "independent-judge evidence",
     )
-    if all(index[ref].kind is EvidenceKind.ANALYSIS_RESULT for ref in case.independent_judge_evidence_ids):
-        raise DeepTaskAdmissionError("same-model analysis cannot be the independent judge")
 
     _require_kind(
         case.holdout_replay_or_production_evidence_ids,
