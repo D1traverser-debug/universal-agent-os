@@ -95,6 +95,7 @@ class ArchitectureExperienceReceipt:
     dogfood_present: bool
     user_examples_kept_nonbinding: tuple[str, ...]
     candidate_ids: tuple[str, ...] = ()
+    failure_recovery_scenario_ids: tuple[str, ...] = ()
 
 
 def require_architecture_experience_admission(
@@ -153,6 +154,7 @@ def require_architecture_experience_admission(
             )
 
     scenario_ids: list[str] = []
+    failure_recovery_scenario_ids: list[str] = []
     dogfood_present = False
     covered_concerns: set[str] = set()
     for scenario in scenarios:
@@ -181,6 +183,8 @@ def require_architecture_experience_admission(
                 )
             if step.actor == "CURRENT_AGENT":
                 dogfood_present = True
+        if scenario.scenario_class == "FAILURE_AND_RECOVERY":
+            failure_recovery_scenario_ids.append(scenario.scenario_id)
         covered_concerns.update(scenario.concern_ids)
         scenario_ids.append(scenario.scenario_id)
 
@@ -227,6 +231,11 @@ def require_architecture_experience_admission(
             )
         candidate_ids = tuple(candidate.candidate_id for candidate in candidates)
 
+        if not failure_recovery_scenario_ids:
+            raise ArchitectureExperienceAdmissionError(
+                "material control-plane/agent-experience change requires a counterfactual FAILURE_AND_RECOVERY scenario before promotion"
+            )
+
     nonbinding = tuple(
         signal.signal_id
         for signal in signals
@@ -239,4 +248,5 @@ def require_architecture_experience_admission(
         dogfood_present=dogfood_present,
         user_examples_kept_nonbinding=nonbinding,
         candidate_ids=candidate_ids,
+        failure_recovery_scenario_ids=tuple(failure_recovery_scenario_ids),
     )
