@@ -54,7 +54,7 @@ def test_session_common_and_current_system_reference_kernel_instead_of_copying_s
     assert "CANONICAL_COGNITION" in bootstrap_tx
     assert "DETECT__DELIBERATE" not in bootstrap_tx
     assert "SOURCE_FIRST_MULTI_LENS_OUTSIDE_IN_DISCOVERY" in current["capability_discovery_assurance"]
-    assert common["contract_version"] == "1.3.0"
+    assert common["contract_version"] == "1.4.0"
 
 
 def test_bootstrap_hot_path_exposes_only_the_canonical_five_primitives():
