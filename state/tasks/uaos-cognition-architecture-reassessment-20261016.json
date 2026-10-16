@@ -1,12 +1,12 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "task_id":"uaos:maintenance:cognition-architecture-reassessment-20261016",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
-  "status":"RUNNING",
-  "current_stage":"CAUSAL_INTERVENTION_TRANSACTION_REBUILT__P1_REVIEW_CLOSED_IN_CODE__CANDIDATE_CI_RUNNING",
+  "status":"COMPLETE",
+  "current_stage":"PRODUCTION_VERIFIED_CLOSED",
   "governing_goal":"Prevent repeated user-anchored causal conclusions and explanation-only stopping by making problem evidence, causal modeling, architecture evaluation, bounded intervention selection, execution and V&V one evidence-traced transaction without presuming local, upstream or full-rebuild causality.",
-  "incident":"Repeated live user corrections showed that policy-level hypothesis-first and root-scope rules did not reliably govern real execution. Repository audit found two independent structural contributors: controlled finalization trusted a precomputed cognition receipt instead of re-deriving the decision from raw evidence, and the legacy root-scope model forced complex/systemic cases into exactly one selected hypothesis. Tests often constructed compliant receipts/contexts manually, so component presence could pass without proving an end-to-end user-correction -> evidence -> causal model -> intervention -> V&V path.",
+  "incident":"Repeated live user corrections showed that policy-level hypothesis-first and root-scope rules did not reliably govern real execution. Repository audit found three structural contributors: controlled finalization trusted a precomputed cognition receipt instead of re-deriving the decision from raw evidence; the legacy root-scope model forced complex/systemic cases into exactly one selected hypothesis; and prior assurance tests could prove component shape without proving an end-to-end user-correction -> evidence -> causal model -> intervention -> V&V path.",
   "supported_contributing_causes":[
     "COGNITION_RECEIPT_SELF_ATTESTATION_AT_FINALIZATION_BOUNDARY",
     "SINGULAR_ROOT_CAUSE_COMPRESSION_IN_LEGACY_ROOT_SCOPE_MODEL",
@@ -14,22 +14,38 @@
   ],
   "rejected_or_bounded_alternatives":[
     "USER_ASSERTION_THAT_UPSTREAM_IS_THE_CAUSE__REJECTED_AS_CAUSAL_AUTHORITY",
-    "WHOLE_UAOS_REBUILD__REJECTED_FOR_CURRENT_SCOPE_BECAUSE_AUTHORITY_CONTINUITY_DOMAIN_HEALTH_AND_OTHER_UNRELATED_CONTROL_SURFACES_HAVE_INDEPENDENT_PRODUCTION_EVIDENCE",
+    "WHOLE_UAOS_REBUILD__REJECTED_FOR_CURRENT_SCOPE_BECAUSE_UNRELATED_CONTROL_SURFACES_RETAIN_INDEPENDENT_PRODUCTION_EVIDENCE",
     "MORE_POLICY_PROSE_ONLY__REJECTED_BECAUSE_EQUIVALENT_GUIDANCE_ALREADY_EXISTED_BEFORE_RECURRENCE"
   ],
   "selected_intervention":"REBUILD_COGNITION_TRANSACTION_ONLY__EVIDENCE_TRACED_MULTI_CAUSAL_MODEL__ONE_BOUNDED_INTERVENTION__EXECUTABLE_ARCHITECTURE_EXPERIENCE_FOR_ARCHITECTURE_ACTIONS__TERMINAL_CANDIDATE_BINDING__METHOD_BOUND_VERIFICATION_AND_SYSTEMIC_VALIDATION",
   "review_hardening":[
-    "P1 terminal repair/no-change must match the admitted intervention candidate",
-    "P1 V&V evidence must bind to the exact planned method rather than only an allowed evidence type",
-    "P1 architecture/control interventions must pass executable architecture-experience admission including CURRENT_AGENT dogfood and failure/recovery scenario",
-    "P1 selected interventions require substantive current-system evidence and cannot be supported only by a user claim such as rebuild everything"
+    "terminal repair/no-change must match the admitted intervention candidate",
+    "V&V evidence must bind to the exact planned method rather than only an allowed evidence type",
+    "architecture/control interventions must pass executable architecture-experience admission including CURRENT_AGENT dogfood and failure/recovery scenario",
+    "selected interventions require substantive current-system evidence and cannot be supported only by a user claim such as rebuild everything"
   ],
-  "external_learning":["NASA-style governing requirement to verification/validation traceability","ATAM-style scenario and tradeoff architecture evaluation","SRE-style recurrent incident learning with contributing causes and concrete corrective action","CAST/STAMP-style avoidance of simplistic single-root causal narratives"],
-  "candidate_branch":"maintenance/cognition-architecture-reassessment-20261016",
-  "pull_request":62,
-  "candidate_head":"271c18c65e4dca5ccfda588fb6812910f9bbb9e9",
-  "candidate_ci":{"run_number":280,"status":"IN_PROGRESS"},
-  "candidate_live_integration":{"run_number":95,"status":"IN_PROGRESS"},
-  "next_action":"Consume candidate CI/live results; repair any remaining real regressions; then update durable evolution evidence and promote only after all required checks pass.",
-  "progress_timestamp":"2026-10-16T21:06:00+08:00"
+  "external_learning":[
+    "NASA-style governing requirement to verification/validation traceability",
+    "ATAM-style scenario and tradeoff architecture evaluation",
+    "SRE-style recurrent incident learning with contributing causes and concrete corrective action",
+    "CAST/STAMP-style avoidance of simplistic single-root causal narratives"
+  ],
+  "promotion":{
+    "candidate_branch":"maintenance/cognition-architecture-reassessment-20261016",
+    "pull_request":62,
+    "final_candidate_head":"93273f4271e06c6656c53bff4309e92a7ca19df4",
+    "candidate_ci":{"run_number":284,"conclusion":"success"},
+    "candidate_live_integration":{"run_number":99,"conclusion":"success"},
+    "production_commit":"66664b93cc9e1d3f3e609ab4b5710e53b508c331",
+    "production_ci":{"run_number":285,"conclusion":"success"},
+    "production_reread":{"system_release_version":"2.6.0","common_behavior":"1.4.0","status":"ACTIVE_PRIMARY_CONTROLLER"}
+  },
+  "evolution_ref":"state/evolution/EVO-20261016-CAUSAL-INTERVENTION-TRANSACTION-2_0.json",
+  "remaining_scope":[
+    "Native ChatGPT pre-send complete mediation remains unverified and is not claimed.",
+    "Registered child domains remain on owner-native behavior assurance until each independently adopts and verifies Common Behavior 1.4.",
+    "Unknown future failure classes remain subject to normal post-promotion observation and recurrence detection; they do not keep this maintenance task open."
+  ],
+  "next_action":"No task-local repair remains. Continue normal production observation; reopen only on new evidence or regression.",
+  "progress_timestamp":"2026-10-16T21:36:21+08:00"
 }

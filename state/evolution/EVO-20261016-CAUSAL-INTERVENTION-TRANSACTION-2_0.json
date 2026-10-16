@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261016-CAUSAL-INTERVENTION-TRANSACTION-2_0",
   "authority":"UAOS",
-  "status":"CANDIDATE_IMPLEMENTED__AWAITING_GREEN_CI_AND_PROMOTION",
-  "updated_at":"2026-10-16T21:06:00+08:00",
+  "status":"PROMOTED__PRODUCTION_REREAD_VERIFIED",
+  "updated_at":"2026-10-16T21:36:21+08:00",
   "trigger":["USER_CORRECTION","REPEATED_FAILURE","ARCHITECTURE_GAP","ASSURANCE_GAP","PREMATURE_CAUSAL_COMMITMENT","EXPLANATION_ONLY_STOP"],
   "failure_class":"FC-USER-ANCHORING-SINGULAR-CAUSAL-COMPRESSION-AND-SELF-ATTESTED-CLOSURE-009",
   "observed_failure":"Across repeated live turns, the assistant could convert the user's latest framing into a causal conclusion, oscillate between local and upstream explanations, or explain the correction and stop despite existing hypothesis-first/root-scope policy and available authorized repair work.",
@@ -63,9 +63,9 @@
     "architecture_experience":"src/uaos/kernel/architecture_experience.py",
     "legacy_root_scope":"src/uaos/kernel/deliberation.py#require_root_scope_admission__COMPATIBILITY_ONLY",
     "policies":["config/DELIBERATION_POLICY.json","config/SESSION_INTERACTION_POLICY.json","config/COMMON_BEHAVIOR_ASSURANCE.json","config/BINDING_POLICY.json"],
-    "release_candidate":"UAOS 2.6.0 / Common Behavior 1.4.0"
+    "production_release":"UAOS 2.6.0 / Common Behavior 1.4.0"
   },
-  "review_findings_closed_in_candidate":[
+  "review_findings_closed":[
     "Selected intervention and terminal repair/no-change disposition are mechanically bound by candidate ID and no-change semantics.",
     "Verification/validation evidence carries method_ref and controlled finalization requires coverage of the exact predeclared methods.",
     "Architecture/control interventions must supply raw ArchitectureExperienceCase data and pass require_architecture_experience_admission, including CURRENT_AGENT dogfood, concern-driven representations, competing candidates and FAILURE_AND_RECOVERY scenario.",
@@ -84,16 +84,17 @@
   "promotion":{
     "pull_request":62,
     "candidate_branch":"maintenance/cognition-architecture-reassessment-20261016",
-    "candidate_ci":"PENDING_LATEST_HEAD",
-    "candidate_live_integration":"PENDING_LATEST_HEAD",
-    "production_commit":null,
-    "production_reread":null
+    "final_candidate_head":"93273f4271e06c6656c53bff4309e92a7ca19df4",
+    "candidate_ci":{"run_number":284,"conclusion":"success"},
+    "candidate_live_integration":{"run_number":99,"conclusion":"success"},
+    "production_commit":"66664b93cc9e1d3f3e609ab4b5710e53b508c331",
+    "production_ci":{"run_number":285,"conclusion":"success"},
+    "production_reread":{"system_release_version":"2.6.0","common_behavior":"1.4.0","status":"ACTIVE_PRIMARY_CONTROLLER","physical_complete_mediation_assurance":"CONTROLLED_RUNTIME_GATE_VERIFIED__NATIVE_CHATGPT_COMPLETE_MEDIATION_NOT_CLAIMED"}
   },
-  "assurance_boundary":"The redesign can be enforced in UAOS-controlled runtimes that invoke the finalization gate and in compatible Agents SDK output-guardrail paths. Native ChatGPT still has no verified repository-controlled pre-send hook, so this release must not claim physical complete mediation of every native-chat answer.",
+  "assurance_boundary":"The redesign is enforced in UAOS-controlled runtimes that invoke the finalization gate and in compatible Agents SDK output-guardrail paths. Native ChatGPT still has no verified repository-controlled pre-send hook, so this release does not claim physical complete mediation of every native-chat answer.",
   "remaining_scope":[
-    "Run full candidate CI and live integration on the final candidate head.",
-    "Resolve any remaining regression or authority-projection failure without weakening the new invariants.",
-    "Promote through controlled merge only after green checks, then reread production authority and observe the real correction sequence post-promotion.",
-    "Registered child domains remain on their owner-native current behavior assurance until each independently adopts and verifies Common Behavior 1.4; parent must not overstate child adoption."
+    "Registered child domains remain on their owner-native current behavior assurance until each independently adopts and verifies Common Behavior 1.4; parent must not overstate child adoption.",
+    "Unknown future failure classes remain subject to normal post-promotion observation and recurrence detection.",
+    "Native ChatGPT pre-send mediation remains unverified."
   ]
 }
