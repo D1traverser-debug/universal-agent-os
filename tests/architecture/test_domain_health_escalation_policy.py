@@ -21,11 +21,11 @@ def test_system_map_registers_domain_health_control_surface():
 
 def test_binding_treats_parent_snapshots_as_cache_and_forbids_global_fifo_blocking():
     binding = _json("config/BINDING_POLICY.json")
-    assert tuple(map(int, binding["schema_version"].split("."))) >= (1, 7)
+    assert tuple(map(int, binding["schema_version"].split("."))) >= (2, 1)
     assert binding["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
     assert "PARENT_RELEASE_OR_PROFILE_OBSERVATIONS_ARE_CACHE_EVIDENCE_NOT_CHILD_AUTHORITY" in binding["proactive_domain_health_rule"]
     assert "MUST_NOT_CREATE_A_GLOBAL_FIFO_BLOCKER" in binding["multi_upcall_rule"]
-    assert "ROOT_SCOPE_ADMISSION" in binding["problem_cognition_action_rule"]
+    assert "CANONICAL_CAUSAL_INTERVENTION_ADMISSION" in binding["problem_cognition_action_rule"]
 
 
 def test_policy_requires_active_discovery_bulkheading_and_two_skill_discovery_modes():
@@ -68,9 +68,6 @@ def test_health_index_is_non_authoritative_cache_and_current_system_does_not_dup
         assert "OWNER_NATIVE" in observed["common_behavior_assurance"]
         assert observed["findings"] == []
 
-    # DOMAIN_HEALTH_INDEX is a moving observation cache. Tests may assert compatibility
-    # floors for current runtime releases, but must not turn one historical observation
-    # into a permanent exact-version authority.
     release_floors = {
         "financial_writing": (1, 0, 1),
         "ashare": (0, 3, 0),
