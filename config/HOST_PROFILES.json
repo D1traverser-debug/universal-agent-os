@@ -1,27 +1,39 @@
 {
-  "schema_version": "1.4",
-  "updated_at": "2026-10-14T16:32:00Z",
+  "schema_version": "1.5",
+  "updated_at": "2026-10-16T06:07:00Z",
   "profiles": {
     "CHATGPT_GITHUB": {
       "state_authority": "GITHUB_REPOSITORY_AUTHORITY",
       "state_root": "state/tasks",
       "evolution_state_root": "state/evolution",
       "production_mutation_protocol": "CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_CHECKS__CONTROLLED_MERGE_OR_UPDATE__REREAD",
-      "candidate_ref_concurrency":"CAS_OR_NORMAL_BRANCH_CONCURRENCY_CONTROL",
-      "production_ref_enforcement":"OPTIONAL_DEFENSE_IN_DEPTH_UNLESS_NON_BYPASSABLE_ASSURANCE_IS_REQUIRED",
-      "uaos_promotion_check":"promotion-gate",
-      "direct_main_raw_connector_write":"NOT_THE_NORMAL_PATH_FOR_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGES",
+      "candidate_ref_concurrency": "CAS_OR_NORMAL_BRANCH_CONCURRENCY_CONTROL",
+      "production_ref_enforcement": "OPTIONAL_DEFENSE_IN_DEPTH_UNLESS_STRONGER_ASSURANCE_IS_REQUIRED",
+      "uaos_promotion_check": "promotion-gate",
+      "direct_main_raw_connector_write": "NOT_THE_NORMAL_PATH_FOR_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGES",
       "capability_discovery": "CURRENT_SESSION",
       "retrieval_policy": "config/RETRIEVAL_POLICY.json",
       "binding_policy": "config/BINDING_POLICY.json",
       "authority_write_policy": "config/AUTHORITY_WRITE_POLICY.json",
       "uaos_action_coordinator_authority_enforcement": "MECHANICAL_FAIL_CLOSED_WHEN_INVOKED",
       "raw_github_connector_authority_enforcement": "MODEL_HOST_PATH_OUTSIDE_PYTHON_INTERCEPTION__GOVERNED_BY_SESSION_POLICY_AND_REPOSITORY_WORKFLOW",
-      "optional_remote_hardening":["GITHUB_RULESET","BRANCH_PROTECTION","MANDATORY_REVIEW"],
-      "physical_complete_mediation_claim":"NOT_BASELINE__REQUIRES_VERIFIED_REMOTE_ENFORCEMENT_IF_CLAIMED",
+      "final_response_enforcement": "SESSION_BOOTSTRAP_PLUS_OBSERVABLE_ASSURANCE__NO_VERIFIED_CHATGPT_PRE_SEND_HOOK",
+      "uaos_finalization_gate_ref": "src/uaos/runtime/finalization.py",
+      "custom_instructions_role": "BOOTSTRAP_ONLY__NON_AUTHORITATIVE",
+      "optional_remote_hardening": ["GITHUB_RULESET", "BRANCH_PROTECTION", "MANDATORY_REVIEW"],
       "background_execution": false,
       "maintenance_mode_without_background": "OPPORTUNISTIC_ON_NEXT_INVOCATION",
       "cost_policy": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
+    },
+    "OPENAI_AGENTS_SDK": {
+      "state_authority": "CALLER_DEFINED__UAOS_AUTHORITY_REMAINS_EXTERNAL_TO_MODEL_RUN",
+      "execution_adapter": "src/uaos/execution/openai_agents.py",
+      "uaos_finalization_gate_ref": "src/uaos/runtime/finalization.py",
+      "final_response_enforcement": "BLOCKING_OUTPUT_GUARDRAIL_WHEN_UAOS_GUARDRAIL_IS_ATTACHED",
+      "output_guardrail_builder": "src/uaos/execution/openai_agents.py#build_uaos_output_guardrail",
+      "enforcement_scope": "THE_AGENT_RUN_PATH_THAT_ATTACHES_THE_OUTPUT_GUARDRAIL",
+      "tool_side_effects": "DISABLED_IN_BASELINE_OPENAI_AGENTS_EXECUTOR",
+      "cost_policy": "CALLER_GOVERNED"
     },
     "LOCAL": {
       "state_authority": "SQLITE_CAS",
@@ -31,6 +43,8 @@
       "retrieval_policy": "config/RETRIEVAL_POLICY.json",
       "binding_policy": "config/BINDING_POLICY.json",
       "authority_write_policy": "config/AUTHORITY_WRITE_POLICY.json",
+      "uaos_finalization_gate_ref": "src/uaos/runtime/finalization.py",
+      "final_response_enforcement": "AVAILABLE_TO_CALLER__FAIL_CLOSED_WHEN_INVOKED_BEFORE_EMIT",
       "background_execution": "ONLY_IF_A_FREE_OR_ALREADY_AVAILABLE_HOST_EXISTS",
       "cost_policy": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
     }
