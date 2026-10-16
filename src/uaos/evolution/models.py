@@ -101,13 +101,14 @@ class ChangeProposal:
     evidence_refs: tuple[str, ...]
     state: ProposalState = ProposalState.DRAFT
     knowledge_ids: tuple[str, ...] = ()
+    capability_gap_ids: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         required = (self.proposal_id, self.title, self.hypothesis, self.target_scope, self.rollback_plan, self.expected_benefit)
         if not all(value.strip() for value in required):
             raise ValueError("proposal identity, hypothesis, scope, rollback and expected benefit are required")
-        if not (self.failure_class_ids or self.knowledge_ids):
-            raise ValueError("proposal must have at least one admitted origin: failure class or evaluated knowledge")
+        if not (self.failure_class_ids or self.knowledge_ids or self.capability_gap_ids):
+            raise ValueError("proposal must have at least one admitted origin: failure class, evaluated knowledge, or capability gap")
         if not self.evidence_refs:
             raise ValueError("proposal requires evidence")
         if not self.required_scenarios:
@@ -116,6 +117,8 @@ class ChangeProposal:
             raise ValueError("duplicate failure class in proposal")
         if len(self.knowledge_ids) != len(set(self.knowledge_ids)):
             raise ValueError("duplicate knowledge item in proposal")
+        if len(self.capability_gap_ids) != len(set(self.capability_gap_ids)):
+            raise ValueError("duplicate capability gap in proposal")
         if self.added_mechanisms and not self.why_not_reuse.strip():
             raise ValueError("new mechanisms require why-not-reuse analysis")
         if self.added_mechanisms and not self.retirement_rationale.strip():

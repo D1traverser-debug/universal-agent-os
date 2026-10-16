@@ -1,30 +1,55 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.4",
   "task_id":"uaos:maintenance:proactive-capability-evolution-audit-20261016",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
   "status":"RUNNING",
-  "current_stage":"AUDIT_ACTIVE__PROACTIVE_LEARNING_TRIGGER_AND_EXECUTION_CHAIN_UNDER_REVIEW",
-  "governing_goal":"Determine whether UAOS can discover and evaluate capability gaps without waiting for incidents, and implement the smallest justified architecture that closes any trigger/executor/evidence/promotion gap while preserving governed evolution.",
-  "starting_observations":[
-    "UAOS 2.6.0 already defines outside-in capability discovery and governed self-evolution.",
-    "Current GitHub workflows include CI, live integration and domain-health audit but no visible scheduled capability-gap/learning audit.",
-    "Current problem_space executable admits a supplied CapabilityDiscoveryAssessment but does not itself acquire sources, schedule audits or create evaluated evolution candidates.",
-    "The previous cognition incident showed that prose/method availability is insufficient when the execution chain is not mechanically connected."
+  "current_stage":"CANDIDATE_ARCHITECTURE_REBUILD_FROZEN__FINAL_HEAD_CHECKS_PENDING",
+  "governing_goal":"Make UAOS capable of discovering and evaluating capability gaps without waiting for incidents, while ensuring incident-, knowledge-, and opportunity-driven evolution all traverse one evidence-traced transaction from governing outcome and discovery through proposal, evaluation, governed promotion, execution evidence, and post-promotion observation. Distinguish repository-enforced controls from native-host paths that are not physically mediated.",
+  "supported_architecture_findings":[
+    "AF-001-FRAGMENTED-EVOLUTION-OWNERSHIP: opportunistic.py, maintenance.py, gates.py, lifecycle.py and drill.py split timing/admission/promotion/state/orchestration without one discovery-to-observation transaction owner.",
+    "AF-002-CAPABILITY-GAP-NOT-FIRST-CLASS: pre-rebuild ChangeProposal admitted failure classes or evaluated knowledge but not newly discovered latent capability gaps.",
+    "AF-003-POLICY-EXECUTION-SEPARATION-RECURS: live direct-main mutation and inherited-progress drift occurred despite repository rules/gates because native ChatGPT tool/response paths are not verified as physically mediated.",
+    "AF-004-REPAIRABLE-STOP-RECURRENCE: confirmed repairable gaps were twice reported/recorded without continuing repair until the user demanded it."
   ],
-  "competing_hypotheses":[
-    "H1__NO_GAP__AN_EXISTING_EXECUTOR_OR_TRIGGER_EXISTS_ELSEWHERE_AND_ONLY_NEEDS_DISCOVERY",
-    "H2__TRIGGER_GAP__METHOD_AND_EVOLUTION_EXIST_BUT_NO_PROACTIVE_CADENCE_OR_EVENT_TRIGGER_EXISTS",
-    "H3__EXECUTION_GAP__A_TRIGGER_EXISTS_BUT_NO_EVIDENCE_TRACED_SOURCE_TO_GAP_TO_EVAL_PIPELINE_EXISTS",
-    "H4__ASSURANCE_GAP__DISCOVERY_CAN_RUN_BUT_CANNOT_PROVE_GENERALIZATION_OR PROMOTION_READINESS",
-    "H5__BROADER_EVOLUTION_ARCHITECTURE_GAP__THE_CURRENT GOVERNED_SELF_EVOLUTION CONTRACT_IS INCIDENT_CENTRIC_OR TOO WEAK FOR OPPORTUNITY_DRIVEN LEARNING"
+  "architecture_decision":{
+    "selected":"REBUILD_EVOLUTION_TRANSACTION",
+    "rejected":["PATCH_TRIGGER_ONLY","ADD_MORE_GUARDS_TO_EXISTING_HELPERS","REBUILD_WHOLE_UAOS"],
+    "reason":"The evidenced defect is transaction ownership and origin modeling in governed evolution. One canonical transaction closes this scope while preserving independently verified authority routing, continuity, domain-health and other control surfaces."
+  },
+  "method_comparison":[
+    "NIST AI RMF ongoing monitoring/periodic review -> supports non-incident-only review.",
+    "ISO/IEC 42001 continual improvement -> supports recurrent adaptation rather than one-off correction.",
+    "SEI ATAM business-driver/scenario/risk/tradeoff evaluation -> supports architecture comparison against governing outcomes rather than familiarity.",
+    "User-provided Felix Rieseberg height/breadth/depth lens -> height maps to governing outcome; breadth to outside-in multi-lens discovery; depth to raw evidence, professional methods/tools, novelty probes and external judge. Stretch targets require feasibility evidence rather than repeated model insistence."
   ],
-  "external_method_benchmarks":[
-    "NIST AI RMF ongoing monitoring and periodic review",
-    "ISO/IEC 42001 Plan-Do-Check-Act continual improvement",
-    "NASA Technical Assessment continuous technical measures/trend feedback",
-    "SEI ATAM scenario/tradeoff architecture evaluation"
+  "candidate_implementation":[
+    "config/EVOLUTION_POLICY.json is the candidate sole common governed-evolution policy owner.",
+    "src/uaos/evolution/transaction.py introduces one EvolutionTransaction spanning FRAMED -> DISCOVERED -> PROPOSED -> EVALUATED -> AUTHORIZED -> PROMOTED -> OBSERVED with optional ROLLED_BACK/RETIRED.",
+    "ChangeProposal.capability_gap_ids makes latent capability gaps first-class evolution origins beside failure classes and evaluated knowledge.",
+    "EvolutionDepthTrace binds governing outcome, raw evidence, professional methods/tools, external/independent judge, proactive novelty probes and feasibility-bounded stretch targets.",
+    "Evaluation must actually include declared judge evidence; promotion/rollback execution evidence remains in the transaction.",
+    "run_self_change_drill dogfoods the canonical transaction and preserves typed ProposalState plus the full eight-event transaction ledger.",
+    "COMMON_CAPABILITIES 1.7.0, SYSTEM_MAP 2.0, HOST_PROFILES 1.6, ENTRYPOINT, AGENTS and candidate CURRENT_SYSTEM 2.7.0 all point to the same evolution owner.",
+    "tests/evolution/test_transaction.py and test_policy_contract.py mechanically guard the transaction, depth evidence and authority projection."
   ],
-  "next_action":"Complete authority-wide scan for proactive learning triggers/executors/evals, compare mature continuous-improvement methods, then select and implement a bounded intervention with a current-state report.",
-  "progress_timestamp":"2026-10-16T21:36:21+08:00"
+  "host_boundary":{
+    "native_chatgpt_pre_send_or_pre_tool_mediation":"UNVERIFIED",
+    "background_execution":"ONLY_WHEN_REAL_CHATGPT_AUTOMATION_OR_EQUIVALENT_HOST_SCHEDULER_IS_CONFIGURED",
+    "without_scheduler":"OPPORTUNISTIC_ON_NEXT_INVOCATION",
+    "scheduled_discovery_default":"READ_ONLY__PRODUCTION_MUTATION_STILL_REQUIRES_CANDIDATE_PR_CHECKS_PROMOTION_REREAD"
+  },
+  "execution_incidents":[
+    "FC-MAINTENANCE-BOOTSTRAP-DIRECT-MAIN-WRITE-010",
+    "FC-INHERITED-PROGRESS-REPORT-NATIVE-HOST-MEDIATION-011",
+    "FC-REPAIRABLE-PROBLEM-EXPLANATION-ONLY-STOP-012"
+  ],
+  "evolution_ref":"state/evolution/EVO-20261016-CANONICAL-PROACTIVE-EVOLUTION-TRANSACTION.json",
+  "candidate_branch":"maintenance/proactive-capability-evolution-audit-20261016",
+  "pull_request":65,
+  "implementation_freeze_head_before_state_metadata":"a5f33211b7337e41d9b12f393008e4740334587c",
+  "previous_ci_observation":{"run_number":294,"result":"FAILED_4__351_PASSED_1_SKIPPED","classification":"SEMANTIC_MIGRATION_FAILURES_ONLY__ENTRYPOINT_VERSION_COMMON_CONTRACT_VERSION_AND_EXPECTED_LEDGER_LENGTH","repair":"MIGRATED_AUTHORITY_AND_TESTS_TO_NEW_SEMANTICS_WITHOUT_REVERTING_ARCHITECTURE"},
+  "final_checks":{"status":"PENDING_ON_FINAL_METADATA_HEAD","required":["promotion-gate CI","live-integration","PR review/diff scan"]},
+  "next_action":"Do not change candidate design unless final-head checks reveal a real defect. Require green final CI and live integration, then make PR #65 ready, controlled-merge, reread production, run production CI, close task/evolution as production-verified, and configure a real ChatGPT Automation for periodic proactive capability review.",
+  "progress_timestamp":"2026-10-16T22:43:28+08:00"
 }

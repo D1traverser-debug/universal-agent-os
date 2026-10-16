@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.5",
-  "updated_at": "2026-10-16T06:07:00Z",
+  "schema_version": "1.6",
+  "updated_at": "2026-10-16T22:31:23+08:00",
   "profiles": {
     "CHATGPT_GITHUB": {
       "state_authority": "GITHUB_REPOSITORY_AUTHORITY",
@@ -11,7 +11,10 @@
       "production_ref_enforcement": "OPTIONAL_DEFENSE_IN_DEPTH_UNLESS_STRONGER_ASSURANCE_IS_REQUIRED",
       "uaos_promotion_check": "promotion-gate",
       "direct_main_raw_connector_write": "NOT_THE_NORMAL_PATH_FOR_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGES",
-      "capability_discovery": "CURRENT_SESSION",
+      "capability_discovery": "CURRENT_SESSION_OR_CONFIGURED_HOST_AUTOMATION",
+      "canonical_evolution_transaction": "src/uaos/evolution/transaction.py#EvolutionTransaction",
+      "proactive_evolution_trigger": "SCHEDULED_CHATGPT_AUTOMATION_WHEN_EXPLICITLY_CONFIGURED__OTHERWISE_OPPORTUNISTIC_ON_NEXT_INVOCATION",
+      "proactive_trigger_rule": "A scheduled host trigger may start read-only capability discovery and evaluation, but production mutation still requires the normal candidate/PR/check/promotion path.",
       "retrieval_policy": "config/RETRIEVAL_POLICY.json",
       "binding_policy": "config/BINDING_POLICY.json",
       "authority_write_policy": "config/AUTHORITY_WRITE_POLICY.json",
@@ -21,13 +24,15 @@
       "uaos_finalization_gate_ref": "src/uaos/runtime/finalization.py",
       "custom_instructions_role": "BOOTSTRAP_ONLY__NON_AUTHORITATIVE",
       "optional_remote_hardening": ["GITHUB_RULESET", "BRANCH_PROTECTION", "MANDATORY_REVIEW"],
-      "background_execution": false,
+      "background_execution": "AVAILABLE_ONLY_WHEN_A_REAL_CHATGPT_AUTOMATION_OR_EQUIVALENT_HOST_SCHEDULER_IS_CONFIGURED",
       "maintenance_mode_without_background": "OPPORTUNISTIC_ON_NEXT_INVOCATION",
       "cost_policy": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
     },
     "OPENAI_AGENTS_SDK": {
       "state_authority": "CALLER_DEFINED__UAOS_AUTHORITY_REMAINS_EXTERNAL_TO_MODEL_RUN",
       "execution_adapter": "src/uaos/execution/openai_agents.py",
+      "canonical_evolution_transaction": "src/uaos/evolution/transaction.py#EvolutionTransaction",
+      "proactive_evolution_trigger": "CALLER_SCHEDULER_IF_CONFIGURED",
       "uaos_finalization_gate_ref": "src/uaos/runtime/finalization.py",
       "final_response_enforcement": "BLOCKING_OUTPUT_GUARDRAIL_WHEN_UAOS_GUARDRAIL_IS_ATTACHED",
       "output_guardrail_builder": "src/uaos/execution/openai_agents.py#build_uaos_output_guardrail",
@@ -40,6 +45,8 @@
       "continuity_runtime": "SQLiteCheckpointRuntime",
       "artifact_store": "LocalContentAddressedStore",
       "capability_discovery": "LOCAL_AND_CURRENT_HOST",
+      "canonical_evolution_transaction": "src/uaos/evolution/transaction.py#EvolutionTransaction",
+      "proactive_evolution_trigger": "LOCAL_SCHEDULER_ONLY_IF_ACTUALLY_CONFIGURED",
       "retrieval_policy": "config/RETRIEVAL_POLICY.json",
       "binding_policy": "config/BINDING_POLICY.json",
       "authority_write_policy": "config/AUTHORITY_WRITE_POLICY.json",

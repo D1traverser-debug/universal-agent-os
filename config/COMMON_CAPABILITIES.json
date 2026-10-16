@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.7",
-  "contract_version":"1.6.0",
+  "schema_version":"1.8",
+  "contract_version":"1.7.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T16:00:00+08:00",
+  "updated_at":"2026-10-16T22:31:23+08:00",
   "inheritance_model":"UAOS_HOSTED_COMMON_CAPABILITIES__DIRECT_DOMAIN_WORK_PLANE__DOMAIN_BUSINESS_LOGIC_IDENTITY_STATE_REMAIN_WITH_OWNER",
   "applies_to":"ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
   "capabilities":[
@@ -103,18 +103,23 @@
     {
       "capability_id":"governed_self_evolution",
       "owner":"UAOS_FOR_COMMON_OR_CROSS_DOMAIN_MECHANISMS__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_RULE_PROMOTION",
-      "lifecycle":"Problem/Incident OR EVALUATED/CANONICAL Knowledge -> Change Candidate -> Reproducible Evaluation -> Owner-Scoped Promotion -> Post-Promotion Observation -> Keep/Rollback/Retire",
-      "domain_role":"turn domain problems, user feedback and sufficiently mature knowledge into evidence-bound learning candidates, evaluate generalization and alternatives, promote only domain-owned rules with regression/eval evidence, and upcall common/cross-domain changes to UAOS",
+      "policy_ref":"config/EVOLUTION_POLICY.json",
+      "canonical_executable_ref":"src/uaos/evolution/transaction.py#EvolutionTransaction",
+      "lifecycle":"INCIDENT_OR_CAPABILITY_GAP_OR_EVALUATED_KNOWLEDGE -> DISCOVERY/EVIDENCE -> CHANGE_PROPOSAL -> REPRODUCIBLE_EVALUATION -> OWNER_SCOPED_AUTHORIZATION -> GOVERNED_PROMOTION -> POST_PROMOTION_OBSERVATION -> KEEP/ROLLBACK/RETIRE",
+      "domain_role":"turn domain problems, user feedback, proactively discovered capability gaps and sufficiently mature knowledge into evidence-bound evolution transactions; evaluate generalization and alternatives; promote only owner-scoped changes with regression/eval evidence; and upcall common/cross-domain evolution to UAOS",
       "rules":[
         "Every detected problem receives an explicit learning/evolution disposition after canonical risk-adaptive cognition; not every problem becomes a durable global rule or release.",
+        "A proactively discovered latent capability gap may originate evolution without fabricating an incident, but must be traceable to admitted outside-in discovery and raw evidence.",
+        "Evaluated/canonical knowledge may originate evolution without fabricating an incident, but it uses the same transaction, evaluation, complexity, promotion and observation gates.",
+        "Incident, capability-gap and evaluated-knowledge origins converge on one canonical EvolutionTransaction; helper-local lifecycle fragments are not independent transaction owners.",
+        "Material/proactive evolution preserves governing outcome, raw evidence, professional method/tool evidence and an external/independent judge; proactive capability-gap evolution also includes novelty/unknown-signal probes.",
+        "Stretch targets are bounded search constraints and require feasibility evidence; repeating an ambitious target to the model is not proof that it is achievable.",
         "Domain-local learning is evidence/candidate generation, not a second controller or unrestricted production rewriter.",
-        "One article, one feedback event or one source may create a candidate but must not silently become a universal rule.",
-        "Evaluated/canonical knowledge may originate a proposal without fabricating an incident, but it uses the same evaluation, complexity, promotion and observation gates.",
+        "One article, one feedback event, one source or one discovery lens may create a candidate but must not silently become a universal rule.",
         "Cross-domain/common-capability changes are promoted by UAOS; domain-specific business rules remain domain-owned under UAOS lineage.",
-        "Repeated failures are repaired at the common failure class/root abstraction and require regression evidence before closure.",
-        "Triggered material evolution must expose a durable lifecycle/evaluation record at the owning scope.",
+        "Triggered material evolution must expose a durable transaction/evaluation record at the owning scope.",
         "Evolution closure requires an authority-wide contradiction scan across the surfaces that can encode the changed semantic; edited-file success alone is not closure.",
-        "Post-promotion observation determines keep, rollback or retirement."
+        "Promotion is not closure. Post-promotion observation determines keep, rollback or retirement."
       ]
     },
     {
@@ -133,6 +138,7 @@
     "Do not mirror child project/program/workstream/subtask identities into UAOS parent task state; parent routing may retain only opaque child references when continuity requires them.",
     "Do not turn UAOS into a mandatory per-turn business proxy merely because a domain inherits common capabilities.",
     "Do not create a parallel parent-guidance, architecture-advisor, self-dialogue or verification control plane when existing Control/Context/Assurance/Evolution contracts can be extended.",
+    "Do not create a second evolution state machine beside config/EVOLUTION_POLICY.json and EvolutionTransaction; domain-specific learning hooks remain owner-native mechanisms under the common transaction contract.",
     "Do not duplicate a child repository's business-specific CI/release logic merely to satisfy common mutation discipline; reuse owner-declared checks where available.",
     "A domain may implement business-specific learning/evaluation hooks and internal task orchestration, but those remain domain business mechanisms under the common governance contract rather than replacement parent controllers."
   ]

@@ -1,0 +1,79 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261016-CANONICAL-PROACTIVE-EVOLUTION-TRANSACTION",
+  "authority":"UAOS",
+  "status":"CANDIDATE_IMPLEMENTED__AWAITING_FINAL_GREEN_CHECKS_AND_PROMOTION",
+  "updated_at":"2026-10-16T22:43:28+08:00",
+  "trigger":["USER_REQUESTED_PROACTIVE_EVOLUTION","REPEATED_ACTION_CLOSURE_FAILURE","ARCHITECTURE_GAP","CAPABILITY_GAP","HOST_MEDIATION_GAP"],
+  "failure_class":"FC-FRAGMENTED-EVOLUTION-TRANSACTION-AND-NONFIRSTCLASS-CAPABILITY-GAP-013",
+  "governing_outcome":"UAOS should be able to discover useful missing capabilities before incidents and carry any justified improvement through one evidence-traced governed transaction without relying on repeated user reminders or disconnected helper-local lifecycle steps.",
+  "supported_contributing_causes":[
+    {
+      "id":"CF-001-FRAGMENTED-EVOLUTION-OWNERSHIP",
+      "layer":"CONTROL_PLANE",
+      "evidence":"Maintenance timing/admission, proposal transition, promotion gating and self-change orchestration were split across opportunistic.py, maintenance.py, lifecycle.py, gates.py and manual drill composition; no canonical executable owned discovery through post-promotion observation."
+    },
+    {
+      "id":"CF-002-CAPABILITY-GAP-NOT-FIRST-CLASS",
+      "layer":"COMMON_CAPABILITY",
+      "evidence":"ChangeProposal previously required a failure_class_id or evaluated knowledge id and could not represent a newly discovered latent capability gap as its own admitted origin."
+    },
+    {
+      "id":"CF-003-POLICY-TO-HOST-MEDIATION-GAP",
+      "layer":"HOST",
+      "evidence":"A direct-main maintenance write and repeated inherited-progress omission occurred in native ChatGPT despite repository policy/runtime gates, demonstrating that native response/tool paths are not physically mediated by those gates."
+    },
+    {
+      "id":"CF-004-REPAIRABLE-STOP-RECURRENCE",
+      "layer":"CONTROL_PLANE",
+      "evidence":"The assistant twice stopped after diagnosis/recording of repairable gaps until the user explicitly demanded continued repair, despite problem-to-action policy already existing."
+    }
+  ],
+  "architecture_candidates":[
+    {"id":"PATCH_TRIGGER_ONLY","disposition":"REJECTED_AS_INCOMPLETE","reason":"Scheduling the existing fragments would automate a fragmented lifecycle and would not make capability gaps first-class or prevent stage orphaning."},
+    {"id":"ADD_MORE_GUARDS_TO_EXISTING_HELPERS","disposition":"REJECTED_AS_RECURRENT_PATCH_PATTERN","reason":"Repeated cognition/progress/mutation/action-closure failures show that local guards do not establish one owner for the full evolution transaction."},
+    {"id":"REBUILD_WHOLE_UAOS","disposition":"REJECTED_FOR_CURRENT_SCOPE","reason":"Independent production evidence still supports authority routing, continuity, domain health and other unrelated control surfaces; full replacement would widen the failure surface without causal evidence."},
+    {"id":"REBUILD_EVOLUTION_TRANSACTION","disposition":"SELECTED","reason":"A single transaction owner directly closes the evidenced ownership/origin gaps while reusing lower-level helper mechanisms and existing promotion/action authority."}
+  ],
+  "method_evidence":[
+    "NIST AI RMF ongoing monitoring and periodic review supports non-incident-only review.",
+    "ISO/IEC 42001 continual-improvement framing supports recurrent Plan-Do-Check-Act style adaptation rather than one-off correction.",
+    "SEI ATAM supports evaluating architecture against goals, scenarios, risks and tradeoffs rather than preserving familiar structure.",
+    "User-provided Felix Rieseberg height/breadth/depth methodology was treated as an evaluation candidate: height -> governing outcome; breadth -> multi-lens outside-in discovery; depth -> raw evidence, professional methods/tools, novelty probes and external judge. Its stretch-target tactic was bounded by feasibility evidence rather than model insistence."
+  ],
+  "selected_architecture":"ONE_CANONICAL_EvolutionTransaction__INCIDENT_CAPABILITY_GAP_OR_EVALUATED_KNOWLEDGE_ORIGIN__HEIGHT_BREADTH_DEPTH_EVIDENCE_TRACE__FIRST_CLASS_CAPABILITY_GAP__STAGE_SKIP_BLOCKING__INDEPENDENT_JUDGE_BOUND_EVALUATION__EXECUTION_EVIDENCE_PERSISTENCE__POST_PROMOTION_OBSERVATION",
+  "implementation":{
+    "policy":"config/EVOLUTION_POLICY.json",
+    "transaction":"src/uaos/evolution/transaction.py",
+    "proposal_model":"src/uaos/evolution/models.py#ChangeProposal.capability_gap_ids",
+    "dogfood":"src/uaos/evolution/drill.py",
+    "common_contract":"config/COMMON_CAPABILITIES.json@1.7.0",
+    "host_boundary":"config/HOST_PROFILES.json@1.6",
+    "bootstrap":"ENTRYPOINT.md",
+    "projection":"CURRENT_SYSTEM.json@candidate-2.7.0",
+    "system_map":"config/SYSTEM_MAP.json@2.0"
+  },
+  "regression_scenarios":[
+    "CAPABILITY_GAP_CANNOT_ENTER_EVOLUTION_WITHOUT_ADMITTED_OUTSIDE_IN_DISCOVERY",
+    "PROACTIVE_GAP_REQUIRES_NOVELTY_OR_UNKNOWN_SIGNAL_PROBE",
+    "PROPOSAL_CANNOT_INVENT_A_GAP_NOT_PRESENT_IN_DISCOVERY",
+    "EVOLUTION_STAGES_CANNOT_BE_SKIPPED",
+    "EVALUATION_CANNOT_PASS_WITHOUT_DECLARED_EXTERNAL_OR_INDEPENDENT_JUDGE_EVIDENCE",
+    "STRETCH_TARGET_CANNOT_BE_ADMITTED_WITHOUT_FEASIBILITY_EVIDENCE",
+    "PROMOTION_AND_ROLLBACK_EXECUTION_EVIDENCE_REMAIN_IN_TRANSACTION",
+    "SELF_CHANGE_DRILL_DOGFOODS_FULL_TRANSACTION_AND_RESTORES_BASELINE",
+    "ALL_PARENT_AUTHORITY_PROJECTIONS_POINT_TO_ONE_EVOLUTION_OWNER",
+    "CHATGPT_HOST_MUST_NOT_CLAIM_BACKGROUND_OR_PRE_SEND_ENFORCEMENT_WITHOUT_REAL_HOST_CAPABILITY"
+  ],
+  "promotion":{
+    "pull_request":65,
+    "candidate_branch":"maintenance/proactive-capability-evolution-audit-20261016",
+    "candidate_head":"a5f33211b7337e41d9b12f393008e4740334587c",
+    "final_ci":null,
+    "final_live_integration":null,
+    "production_commit":null,
+    "production_reread":null
+  },
+  "assurance_boundary":"The repository can enforce EvolutionTransaction in controlled paths that invoke it. Native ChatGPT has no verified repository-controlled pre-send or pre-tool hook. A periodic proactive trigger exists only when a real host scheduler/ChatGPT Automation is configured; kernel policy alone does not create background execution.",
+  "next_action":"Freeze candidate semantics after task/index synchronization, require green final-head CI and live integration, then promote through controlled merge, production reread and post-promotion closure. Only after production promotion configure a real ChatGPT Automation for periodic proactive capability review."
+}

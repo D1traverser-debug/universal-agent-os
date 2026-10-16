@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE`
-System release: `2.6.0`
-Authority updated at: `2026-10-16T20:59:52+08:00`
+System release: `2.7.0`
+Authority updated at: `2026-10-16T22:31:23+08:00`
 
 ## Minimal bootstrap
 
@@ -76,6 +76,8 @@ All registered domains inherit `config/COMMON_CAPABILITIES.json`, including inte
 
 `config/COMMON_BEHAVIOR_ASSURANCE.json` owns cross-domain behavioral outcomes and assurance. It does not own a second cognition state machine.
 
+`config/EVOLUTION_POLICY.json` owns the canonical governed-evolution transaction. Incident-driven repair, proactively discovered capability gaps and evaluated/canonical knowledge converge on `src/uaos/evolution/transaction.py#EvolutionTransaction`; helper modules may supply mechanisms but do not own competing lifecycle state machines.
+
 This is reuse, not mandatory per-turn proxying. Domain repositories must not create a second parent controller, global task index, global requirement registry, evolution catalog or parent-guidance control plane.
 
 ## Cognition kernel — hot path
@@ -103,6 +105,8 @@ Use this only for broad capability learning, source-usage research, or unknown/l
 Before searching an external catalog/site for particular items, first model how that source organizes knowledge. Then use multiple outside-in lenses such as role/occupation, task/activity, workflow/handoff, category/taxonomy, creator/portfolio, repository/portfolio or adjacent domain. Broad discovery that only searches already-known keywords does not count.
 
 A role, occupation, taxonomy, creator or repository is a discovery lens, not a literal instruction to create a matching Agent, team or architecture layer. `src/uaos/kernel/problem_space.py` mechanically admits this broad discovery path; `config/DOMAIN_HEALTH_ESCALATION_POLICY.json` keeps external Skills as candidates rather than authority.
+
+If admitted discovery identifies a material latent capability gap worth changing, discovery is not a terminal state. The gap enters `EvolutionTransaction` as `CAPABILITY_GAP` and must retain governing-outcome, raw-evidence, professional-method/tool, novelty-probe and external/independent-judge evidence through proposal/evaluation/promotion or receive an explicit evidence-backed rejection/no-change disposition. Stretch targets may widen search only when feasibility evidence is attached; repeatedly asserting an ambitious target is not proof that it is achievable.
 
 The mutation sentinel remains separate: it resolves authority/target and side-effect workflow before external or durable writes. Same-model critique remains candidate-generation evidence, not independent verification.
 
@@ -155,8 +159,10 @@ Do not expose private chain-of-thought. Deliberation reporting describes the evi
 
 Only promoted/current knowledge is authoritative by default. Raw evidence/candidates do not silently become global rules.
 
-Governed self-evolution follows:
-`Incident -> Failure Class -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep / Rollback / Retire`.
+Governed self-evolution is owned by `config/EVOLUTION_POLICY.json` and `EvolutionTransaction`:
+`Incident / Capability Gap / Evaluated Knowledge -> Discovery + Evidence Trace -> Change Proposal -> Reproducible Evaluation -> Promotion Authorization -> Action Authority -> Post-Promotion Observation -> Keep / Rollback / Retire`.
+
+Capability gaps are first-class origins; they must not be disguised as incidents merely to enter the lifecycle. Promotion is not closure. The same transaction retains origin/discovery evidence, proposal/evaluation evidence, promotion/rollback execution evidence and post-promotion observation.
 
 Evolution closure is authority-wide, not file-local. Scan every current authority that can encode the changed semantic. Host-control surfaces are closure-critical only when the claimed invariant depends on host-level enforcement.
 
@@ -178,12 +184,13 @@ For a material UAOS change on `CHATGPT_GITHUB`:
 1. reread current production authority;
 2. create/update an isolated candidate branch;
 3. if a problem is involved, build and admit the canonical evidence-traced `CognitionCase` rather than trusting a preferred cause/solution;
-4. apply problem-to-action closure: execute an available authorized repair rather than ending at recommendation-only;
-5. build the coherent candidate and run required verification plus material/systemic scenario validation;
-6. open/update a pull request targeting `main`;
-7. require `promotion-gate` plus any additional evidence warranted by the change;
-8. perform a controlled merge/update;
-9. reread production authority and observe post-promotion behavior.
+4. if governed evolution is triggered by an incident, proactive capability gap or evaluated knowledge, carry it through the canonical `EvolutionTransaction` rather than manually stitching helper-local lifecycle steps;
+5. apply problem-to-action closure: execute an available authorized repair rather than ending at recommendation-only;
+6. build the coherent candidate and run required verification plus material/systemic scenario validation;
+7. open/update a pull request targeting `main`;
+8. require `promotion-gate` plus any additional evidence warranted by the change;
+9. perform a controlled merge/update;
+10. reread production authority and observe post-promotion behavior.
 
 Direct `main` mutation is not the normal path for material architecture/governance changes. CAS/stale-head checks remain useful for concurrency integrity where appropriate, but do not establish authorization.
 

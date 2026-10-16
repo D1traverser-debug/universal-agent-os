@@ -1,0 +1,56 @@
+{
+  "schema_version":"1.0",
+  "policy_version":"2.0.0",
+  "authority":"UAOS",
+  "status":"CANDIDATE_CANONICAL_EVOLUTION_OWNER",
+  "purpose":"Own one governed evolution transaction for incident-driven repair, opportunity/capability-gap discovery and evaluated-knowledge improvement. Prevent discovery, evaluation, promotion, execution and observation from becoming disconnected helper-local steps.",
+  "canonical_executable":"src/uaos/evolution/transaction.py",
+  "canonical_transaction":"EvolutionTransaction",
+  "stages":["FRAMED","DISCOVERED","PROPOSED","EVALUATED","AUTHORIZED","PROMOTED","OBSERVED","ROLLED_BACK","RETIRED"],
+  "origin_kinds":{
+    "INCIDENT":"A detected failure class or recurring problem may originate evolution after evidence-traced cognition.",
+    "CAPABILITY_GAP":"A newly discovered latent capability gap may originate evolution without fabricating an incident. It must be traceable to admitted outside-in discovery and raw evidence.",
+    "EVALUATED_KNOWLEDGE":"Evaluated or canonical knowledge may originate evolution without fabricating a failure, but must satisfy the same proposal/evaluation/promotion/observation transaction."
+  },
+  "height_breadth_depth_admission":{
+    "height":"Every material evolution transaction names the governing outcome; the current task is not assumed to be the final objective.",
+    "breadth":"Broad capability-gap discovery uses multiple outside-in lenses and cannot be only a known-keyword search or literal role-play.",
+    "depth":[
+      "bind the transaction to raw evidence rather than only digested summaries",
+      "identify professional methods/tools that materially change evaluation",
+      "for proactive capability-gap evolution include novelty/unknown-signal probes",
+      "bind evaluation to an external or independent judge/eval path rather than same-model confidence",
+      "stretch targets are search constraints only and require feasibility evidence; model insistence is not feasibility proof"
+    ]
+  },
+  "transaction_invariants":[
+    "Exactly one transaction owns a proposal from admitted origin through post-promotion observation.",
+    "Stages cannot be skipped by directly mutating ProposalState.",
+    "Capability gaps are first-class proposal origins via capability_gap_ids rather than being misclassified as failure classes.",
+    "A proposal must retain evidence linkage to its admitted origin/discovery.",
+    "Evaluation must include evidence from at least one declared external/independent judge.",
+    "Promotion authorization still uses complexity, scenario coverage, regression and owner/action-authority gates.",
+    "Promotion and rollback execution evidence are persisted in the same transaction.",
+    "Post-promotion observation determines keep/observe, rollback or retirement; promotion is not closure."
+  ],
+  "proactive_evolution":{
+    "goal":"DISCOVER_USEFUL_MISSING_CAPABILITIES_BEFORE_FAILURE_WHEN_HOST_CAN_RUN_THE_AUDIT",
+    "trigger_classes":["PERIODIC_HOST_AUDIT","MATERIAL_PLATFORM_OR_TOOL_CHANGE","NEW_EVALUATED_KNOWLEDGE","CAPABILITY_INVENTORY_DRIFT","USER_REQUESTED_CAPABILITY_REASSESSMENT"],
+    "periodic_review_principle":"A capable host should run periodic capability review even when no incident exists; cadence is host-owned and risk/velocity aware rather than hard-coded into the kernel.",
+    "discovery_ref":"src/uaos/kernel/problem_space.py#require_outside_in_capability_discovery",
+    "handoff_rule":"An admitted CapabilityDiscoveryReceipt does not terminate the work. If a latent gap is worth changing, it must enter EvolutionTransaction as CAPABILITY_GAP and continue through evaluation and governed promotion or receive an explicit evidence-backed no-change/reject disposition.",
+    "mutation_rule":"Periodic discovery is read-only by default. Production changes remain candidate branch -> PR -> owner-appropriate checks -> controlled merge/update -> production reread."
+  },
+  "compatibility":{
+    "helper_modules":["src/uaos/evolution/opportunistic.py","src/uaos/evolution/maintenance.py","src/uaos/evolution/gates.py","src/uaos/evolution/lifecycle.py"],
+    "rule":"Helpers remain reusable mechanisms and compatibility surfaces; they no longer own an independent end-to-end evolution lifecycle.",
+    "dogfood":"src/uaos/evolution/drill.py must execute through EvolutionTransaction."
+  },
+  "external_method_basis":[
+    "NIST AI RMF: ongoing monitoring and periodic review",
+    "ISO/IEC 42001: continual improvement of AI management systems",
+    "SEI ATAM: business-driver/scenario/risk/tradeoff architecture evaluation",
+    "User-provided Felix Rieseberg height/breadth/depth method used as a candidate operational lens, with stretch-target feasibility bounded by evidence"
+  ],
+  "assurance_boundary":"Repository-controlled runtimes can mechanically enforce this transaction where they invoke it. Native ChatGPT response/tool paths still have no verified repository-controlled pre-send or pre-tool hook; host adapters must not claim non-bypassable enforcement without evidence."
+}
