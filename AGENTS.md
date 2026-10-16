@@ -30,17 +30,20 @@ Parent authority is a control/supervision relationship, not a mandatory business
 
 A child may issue a non-mutating parent upcall for diagnosis, goal clarification, replanning, architecture/method research, assurance or evolution support without surrendering its selected task authority, business identity, workflow or state.
 
-## Problem response and deliberation
+## Canonical cognition kernel
 
-Apply `config/DELIBERATION_POLICY.json` whenever a problem is detected or a material change is proposed. Do not promote the first plausible framing merely because it sounds coherent.
+`config/DELIBERATION_POLICY.json#cognition_kernel` is the only cognition-stage authority. Do not maintain a second ordered problem-solving state machine in repository instructions, session policy, common-behavior policy or a domain copy.
 
-- Every detected problem requires concrete diagnosis, macro goal/topology alignment, governing-assumption challenge and relevant external research before selecting the repair.
-- Familiarity is not a waiver. Small problems may use a lightweight research/reflection pass; material/systemic problems require deeper evidence.
-- Research must affect the diagnosis or repair choice; ceremonial browsing does not count.
-- Same-model critique/refinement/debate may generate candidates but is not independent verification.
-- Counterexample search and independent verification add depth according to risk.
-- For material architecture/governance changes, call the executable deliberation admission (`require_deliberation_admission`) or its host-equivalent before mutation/promotion. If any required dimension lacks evidence, fail closed.
-- Before declaring an evolution incident resolved, scan every current authority that can encode the changed semantic; include host control surfaces only when the assurance claim depends on them.
+For a detected problem/knowledge gap use the five hot-path primitives:
+1. `FRAME_AS_HYPOTHESIS` — user framing, Agent framing, external methods, existing code and first-fix ideas are candidates, not authority.
+2. `EXPAND_PROBLEM_SPACE_WHEN_NEEDED` — test whether the case is local, workflow/interface, architecture/common-control, requirement/goal or an unknown/latent capability gap before narrowing.
+3. `FALSIFY_COMPETING_FRAMES` — actively seek evidence that would make the preferred frame wrong; material/systemic work must preserve a rejected alternative and test upstream/architecture involvement.
+4. `COMMIT_ROOT_SCOPE_AND_LEARNING_DISPOSITION` — only after evidence bounds/selects the layer may root scope, evolution disposition and durable-record need be committed.
+5. `ACT_AND_VERIFY` — execute the smallest authorized repair/redesign/no-change/block and verify against the governing objective.
+
+The detailed evidence floor and root-scope mechanics remain in `config/DELIBERATION_POLICY.json` and `src/uaos/kernel/deliberation.py`. `src/uaos/kernel/problem_closure.py` owns terminal action admission. Same-model critique may generate alternatives but is not independent verification.
+
+For broad external capability learning, source-usage research or unknown-gap audits, apply the outside-in discovery admission in `src/uaos/kernel/problem_space.py`: model the source's own organization axes first, then use multiple lenses such as role/occupation, task/activity, workflow/handoff, category/taxonomy, creator/repository portfolio or adjacent domain. A known-keyword-only survey is not broad discovery. A role or taxonomy is a lens, not a literal new Agent/team/architecture requirement.
 
 ## Architecture experience evaluation
 
