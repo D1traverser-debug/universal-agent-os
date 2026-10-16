@@ -34,6 +34,6 @@ def test_entrypoint_release_matches_current_system():
 
 
 def test_entrypoint_declares_turn_level_problem_detection():
-    text = (ROOT / "ENTRYPOINT.md").read_text(encoding="utf-8")
-    assert "lightweight problem-detection sentinel" in text
-    assert "every assistant turn" in text
+    text = (ROOT / "ENTRYPOINT.md").read_text(encoding="utf-8").lower()
+    assert "problem detection lightweight and always on" in text
+    assert "after authority selection" in text

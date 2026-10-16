@@ -4,6 +4,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from enum import Enum
 
+from .problem_space import CapabilityDiscoveryReceipt
 from .scheduling import RunnableWork, ScheduleSelection, select_non_conflicting
 
 
@@ -233,6 +234,8 @@ class ExternalSkillCandidate:
     security_and_permissions_reviewed: bool
     existing_overlap_assessed: bool
     evaluation_refs: tuple[str, ...]
+    discovered_capability_gap: str | None = None
+    discovery_receipt: CapabilityDiscoveryReceipt | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -242,10 +245,25 @@ class ExternalSkillAdmission:
 
 
 def assess_external_skill_candidate(candidate: ExternalSkillCandidate) -> ExternalSkillAdmission:
-    """Keep marketplace Skills as evidence-bound candidates, never authority by popularity."""
+    """Keep marketplace Skills as evidence-bound candidates, never authority by popularity.
 
-    if not candidate.skill_id.strip() or not candidate.source_ref.strip() or not candidate.mapped_need_or_failure_class.strip():
-        raise ValueError("skill_id, source_ref and mapped need/failure class are required")
+    A candidate may be pulled from an already-known need/failure class or from an
+    outside-in discovery receipt that established a previously unnamed capability gap.
+    Broad catalog learning therefore does not have to pretend the gap was known first.
+    """
+
+    if not candidate.skill_id.strip() or not candidate.source_ref.strip():
+        raise ValueError("skill_id and source_ref are required")
+
+    known_need = candidate.mapped_need_or_failure_class.strip()
+    discovered_gap = (candidate.discovered_capability_gap or "").strip()
+    if not known_need:
+        if not discovered_gap or candidate.discovery_receipt is None:
+            raise ValueError(
+                "candidate requires either a mapped known need/failure class or an outside-in discovered capability gap with receipt"
+            )
+        if discovered_gap not in candidate.discovery_receipt.latent_gap_candidates:
+            raise ValueError("discovered capability gap must be present in the discovery receipt")
 
     missing: list[str] = []
     checks = {

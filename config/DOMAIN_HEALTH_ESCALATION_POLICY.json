@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.0",
-  "policy_version": "1.0.0",
+  "schema_version": "1.1",
+  "policy_version": "1.1.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-15T23:15:00+08:00",
-  "purpose": "Make child inheritance operationally observable, discover parent/child drift before user correction, and bulkhead multiple child upcalls so one blocked investigation does not stall unrelated domains.",
+  "updated_at": "2026-10-16T10:09:00+08:00",
+  "purpose": "Make child inheritance operationally observable, discover parent/child drift before user correction, bulkhead multiple child upcalls, and discover external capabilities without assuming every useful need was already known.",
   "requirements_ref": "docs/requirements/FROZEN_REQUIREMENTS_v2.1.md",
   "ownership": {
     "parent": "UAOS owns cross-domain health discovery, common failure-class clustering, parent-guidance triage and common/cross-domain promotion decisions.",
@@ -85,15 +85,23 @@
   },
   "external_skill_intake": {
     "catalog_role": "DISCOVERY_ONLY",
+    "discovery_modes": {
+      "KNOWN_NEED_MATCH": "Use when a need/failure class/capability gap is already evidence-established; search may be narrow and targeted.",
+      "OUTSIDE_IN_LATENT_CAPABILITY_DISCOVERY": "Use for broad capability learning, source-usage research, or unknown-gap audits. First model the source's own organization axes, then use multiple outside-in lenses before naming latent gaps."
+    },
+    "outside_in_policy_ref": "config/DELIBERATION_POLICY.json#outside_in_capability_discovery",
+    "outside_in_executable_ref": "src/uaos/kernel/problem_space.py",
     "review_steps": [
+      "establish whether the candidate came from a known need or an evidence-admitted outside-in latent capability gap",
       "inspect source repository, SKILL.md and material companion files",
-      "map the candidate to a concrete need, failure class or capability gap",
       "inspect scripts, tool/permission implications and authority boundary",
       "compare against existing UAOS/domain mechanisms to avoid duplicate control planes",
       "run bounded scenario/replay/regression/adversarial evaluation appropriate to the claim",
       "promote the minimum useful mechanism at UAOS scope only if it is genuinely common; otherwise keep it child-owned"
     ],
     "forbidden": [
+      "REQUIRE_EVERY_BROAD_SURVEY_TO_PRETEND_THE_USEFUL_NEED_WAS_ALREADY_KNOWN",
+      "TREAT_ONE_ROLE_OCCUPATION_CATEGORY_OR_CREATOR_AS_THE_ARCHITECTURE",
       "TREAT_POPULARITY_OR_STARS_AS_CERTIFICATION",
       "BLIND_COPY_OR_INSTALL_AS_AUTHORITY",
       "IMPORT_A_PARALLEL_CONTROLLER_OR_HIDDEN_RUNTIME",
@@ -117,6 +125,7 @@
   ],
   "executable_refs": [
     "src/uaos/kernel/domain_health.py",
+    "src/uaos/kernel/problem_space.py",
     "src/uaos/kernel/scheduling.py"
   ]
 }

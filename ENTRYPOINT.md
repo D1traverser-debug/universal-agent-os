@@ -2,7 +2,7 @@
 
 Status: `CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE`
 System release: `2.5.2`
-Authority updated at: `2026-10-15T10:17:12+08:00`
+Authority updated at: `2026-10-16T10:09:00+08:00`
 
 ## Minimal bootstrap
 
@@ -72,33 +72,33 @@ Parent governance does not make UAOS the child's normal business executor. A chi
 
 All registered domains inherit `config/COMMON_CAPABILITIES.json`, including intent/requirement governance, continuity/recovery, capability handshake, assurance/completion governance, hierarchical authority, adaptive deliberation/parent guidance, governed evolution, progress reporting and version/timestamp provenance.
 
-`config/COMMON_BEHAVIOR_ASSURANCE.json` owns cross-domain behavioral assurance: recovery before avoidable user escalation, declaration-vs-operation evidence, owner-native evolution evidence, causal problem history and problem-to-action closure.
+`config/COMMON_BEHAVIOR_ASSURANCE.json` owns cross-domain behavioral outcomes and assurance. It does not own a second cognition state machine.
 
 This is reuse, not mandatory per-turn proxying. Domain repositories must not create a second parent controller, global task index, global requirement registry, evolution catalog or parent-guidance control plane.
 
-## Problem response and adaptive deliberation
+## Cognition kernel — hot path
 
-`config/DELIBERATION_POLICY.json` defines epistemic depth.
+`config/DELIBERATION_POLICY.json#cognition_kernel` is the single cognition-stage authority. Session and common-behavior policies activate or constrain it; they do not redefine its stages.
 
-A lightweight problem-detection sentinel runs on every assistant turn after a controller or domain is selected, including read-only turns and authority inspection. It only classifies current user/evidence signals. If no problem is detected, normal work remains lightweight. If a problem is detected, the mandatory research/reflection floor starts immediately. This is distinct from the mutation sentinel, which runs before external or durable writes.
+After authority selection, keep problem detection lightweight and always on. If no problem/knowledge gap is detected, continue normal work. If one is detected, use only these five primitives:
 
-The always-on mutation sentinel is lightweight. It resolves authority/target, classifies read versus write, checks the owner-appropriate workflow, and forwards current problem/risk signals to deliberation.
+1. `FRAME_AS_HYPOTHESIS` — treat the user's explanation, the Agent's first interpretation, external experts/Skills, existing code and the first convenient repair as hypotheses rather than authority.
+2. `EXPAND_PROBLEM_SPACE_WHEN_NEEDED` — before narrowing, test local implementation, workflow/interface, architecture/common-control, requirement/goal and unknown/latent-capability possibilities appropriate to the case.
+3. `FALSIFY_COMPETING_FRAMES` — ask what evidence would make the preferred explanation wrong; material/systemic cases must preserve an evidence-rejected alternative and test upstream/architecture involvement.
+4. `COMMIT_ROOT_SCOPE_AND_LEARNING_DISPOSITION` — only after evidence bounds/selects the layer may the Agent commit root scope, evolution disposition and durable-record need.
+5. `ACT_AND_VERIFY` — execute the smallest authorized repair/redesign/no-change/block and verify it against the governing objective. A cognitively admitted authorized repair cannot end as recommendation-only.
 
-Once a problem is detected, **research and reflection are mandatory**. Before selecting/promoting a repair, UAOS must obtain evidence for:
-- concrete/micro diagnosis;
-- macro goal/topology/architecture alignment;
-- governing-assumption challenge;
-- relevant external research.
+The detailed evidence depth, root-scope gate and architecture-experience rules remain in `config/DELIBERATION_POLICY.json`, `src/uaos/kernel/deliberation.py`, `config/ARCHITECTURE_EXPERIENCE_POLICY.json` and `src/uaos/kernel/problem_closure.py`.
 
-Familiarity is not a waiver. Small problems may use a short research/reflection pass; material/systemic problems require deeper evidence. Risk signals add counterexample search and genuinely independent verification when warranted.
+### Outside-in capability discovery
 
-Use micro -> macro -> micro: reproduce the symptom, challenge the governing abstraction, consult relevant external evidence, then return to the smallest correct repair and verify it.
+Use this only for broad capability learning, source-usage research, or unknown/latent-gap audits — not every narrow known-need lookup.
 
-After deliberation identifies a real problem, apply the **problem-to-action closure gate** from `config/SESSION_INTERACTION_POLICY.json` and `src/uaos/kernel/problem_closure.py`. If an owner-authorized repair path is currently available, required tools/capabilities exist, and no missing user fact/approval/authorization/safety-sensitive choice blocks action, the repair must be attempted before finalizing. A recommendation for future repair is not a valid terminal state in that case. Valid terminal dispositions are verified repair, a concrete blocker/required user choice, or evidence-backed no-change.
+Before searching an external catalog/site for particular items, first model how that source organizes knowledge. Then use multiple outside-in lenses such as role/occupation, task/activity, workflow/handoff, category/taxonomy, creator/portfolio, repository/portfolio or adjacent domain. Broad discovery that only searches already-known keywords does not count.
 
-Same-model critique/refinement/debate is candidate generation, not independent verification. External architecture names never become authority merely because they are popular.
+A role, occupation, taxonomy, creator or repository is a discovery lens, not a literal instruction to create a matching Agent, team or architecture layer. `src/uaos/kernel/problem_space.py` mechanically admits this broad discovery path; `config/DOMAIN_HEALTH_ESCALATION_POLICY.json` keeps external Skills as candidates rather than authority.
 
-For material architecture/governance changes, `require_deliberation_admission` or its host-equivalent fails closed until required evidence dimensions are present. `require_problem_finalization_admission` or its host-equivalent fails closed when a repairable problem is being finalized as recommendation-only.
+The mutation sentinel remains separate: it resolves authority/target and side-effect workflow before external or durable writes. Same-model critique remains candidate-generation evidence, not independent verification.
 
 ## Domain execution admission
 
@@ -167,7 +167,7 @@ A mutation of UAOS parent authority requires selected authority context `UAOS`. 
 For a material UAOS change on `CHATGPT_GITHUB`:
 1. reread current production authority;
 2. create/update an isolated candidate branch;
-3. if a problem is involved, complete the mandatory research/reflection floor;
+3. if a problem is involved, complete the canonical cognition kernel and required evidence depth;
 4. apply problem-to-action closure: execute an available authorized repair rather than ending at recommendation-only;
 5. build the coherent candidate and run required assurance;
 6. open/update a pull request targeting `main`;
