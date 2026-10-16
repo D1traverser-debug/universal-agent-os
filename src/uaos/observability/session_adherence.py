@@ -5,17 +5,34 @@ from enum import Enum
 from typing import Iterable, Mapping
 
 
-REQUIRED_PROGRESS_FIELDS: tuple[str, ...] = (
+POLICY_REQUIRED_PROGRESS_FIELDS: tuple[str, ...] = (
     "current_agent",
     "current_scope_or_task",
     "authority_context",
     "status",
     "current_stage",
     "next_action_or_blocker",
-    "evolution_state",
-    "deliberation_state",
+    "evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER",
+    "deliberation_state_when_triggered_or_NOT_TRIGGERED",
     "version_identity",
     "progress_timestamp",
+)
+
+POLICY_TO_CANONICAL_FIELD: Mapping[str, str] = {
+    "current_agent": "current_agent",
+    "current_scope_or_task": "current_scope_or_task",
+    "authority_context": "authority_context",
+    "status": "status",
+    "current_stage": "current_stage",
+    "next_action_or_blocker": "next_action_or_blocker",
+    "evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER": "evolution_state",
+    "deliberation_state_when_triggered_or_NOT_TRIGGERED": "deliberation_state",
+    "version_identity": "version_identity",
+    "progress_timestamp": "progress_timestamp",
+}
+
+REQUIRED_PROGRESS_FIELDS: tuple[str, ...] = tuple(
+    POLICY_TO_CANONICAL_FIELD[field] for field in POLICY_REQUIRED_PROGRESS_FIELDS
 )
 
 
