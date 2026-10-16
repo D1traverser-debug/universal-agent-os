@@ -1,5 +1,5 @@
 {
-  "schema_version":"2.0",
+  "schema_version":"2.1",
   "controller":{
     "repository":"D1traverser-debug/universal-agent-os",
     "entrypoint":"ENTRYPOINT.md",
@@ -16,6 +16,7 @@
     "common_behavior_assurance":"config/COMMON_BEHAVIOR_ASSURANCE.json",
     "authority_write_policy":"config/AUTHORITY_WRITE_POLICY.json",
     "deliberation_policy":"config/DELIBERATION_POLICY.json",
+    "deep_task_execution_profile":"config/DEEP_TASK_EXECUTION_PROFILE.json",
     "architecture_experience_policy":"config/ARCHITECTURE_EXPERIENCE_POLICY.json",
     "evolution_policy":"config/EVOLUTION_POLICY.json",
     "canonical_evolution_transaction":"src/uaos/evolution/transaction.py#EvolutionTransaction",
@@ -42,5 +43,5 @@
     "copilot_ref":".github/copilot-instructions.md"
   },
   "retired_controller":{"repository":"D1traverser-debug/universal-continuity-agent","default_branch_role":"TOMBSTONE_REDIRECT_ONLY","executable_or_recovery_authority":false},
-  "updated_at":"2026-10-16T22:31:23+08:00"
+  "updated_at":"2026-10-16T22:55:00+08:00"
 }

@@ -1,8 +1,8 @@
 # Universal Agent OS — Entry Point
 
 Status: `CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE`
-System release: `2.7.0`
-Authority updated at: `2026-10-16T22:31:23+08:00`
+System release: `2.8.0`
+Authority updated at: `2026-10-16T23:15:43+08:00`
 
 ## Minimal bootstrap
 
@@ -97,6 +97,26 @@ After authority selection, keep problem detection lightweight and always on. If 
 A user statement, including “the upper layer is the problem” or “even rebuild it”, may seed a causal factor or architecture candidate but cannot by itself support the causal conclusion or selection. External methods guide search/evaluation but do not become current-system causal proof by reputation.
 
 `src/uaos/kernel/deliberation.py#require_root_scope_admission` is legacy compatibility only. For controlled problem finalization, `src/uaos/runtime/finalization.py` must receive the full `CognitionCase` and recompute admission; a caller-supplied `RootScopeReceipt`, user-visible progress label or boolean `repair_verified` claim is insufficient. CognitionCase repairs require concrete verification evidence; systemic/material repairs also require validation evidence.
+
+### Deep-task execution profile
+
+`config/DEEP_TASK_EXECUTION_PROFILE.json` is an evidence-admission profile owned by the canonical deliberation policy. It does not define a second cognition state machine.
+
+When the user explicitly asks for a deeper rather than larger task, or a compatible host classifies a task as materially deep because uncertainty/unknown knowledge/architecture risk exceeds the ordinary structured floor, deepen the evidence rather than the output size. The admitted deep-task case must bind:
+- the governing outcome rather than only the surface task;
+- externally grounded professional-practice gaps;
+- primary/raw materials rather than only digested summaries;
+- concrete professional methods/tools;
+- active search for unknown signals, hidden constraints or capability gaps;
+- at least two competing alternatives with explicit falsification conditions and actual red-team/falsification evidence;
+- any stretch target to benchmark/engineering/experimental feasibility evidence rather than model insistence;
+- an independent judge outside same-model confidence;
+- holdout, replay, realistic-runtime or production validation evidence;
+- explicit acceptance criteria.
+
+`src/uaos/kernel/deep_task.py#require_deep_task_admission` is the executable admission. A controlled runtime setting `FinalizationContext.deep_task_required=true` cannot claim completion without an admitted `DeepTaskCase` unless a real user-input blocker exists. For problem cases, deep-task evidence must remain consistent with the canonical `CognitionCase`; it may not create a parallel diagnosis.
+
+The A-H structure is a user-facing report format when the user asks for it or when it materially improves communication. It is not a requirement to make every answer long.
 
 ### Outside-in capability discovery
 

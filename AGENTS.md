@@ -47,6 +47,16 @@ For a detected problem/knowledge gap use the five hot-path primitives:
 
 For broad external capability learning, source-usage research or unknown-gap audits, apply the outside-in discovery admission in `src/uaos/kernel/problem_space.py`: model the source's own organization axes first, then use multiple lenses such as role/occupation, task/activity, workflow/handoff, category/taxonomy, creator/repository portfolio or adjacent domain. A known-keyword-only survey is not broad discovery. A role or taxonomy is a lens, not a literal new Agent/team/architecture requirement. A material latent gap worth changing must continue into the canonical governed-evolution transaction rather than terminate at discovery.
 
+### Deep-task evidence profile
+
+When the user explicitly asks for a deeper rather than larger task, use `config/DEEP_TASK_EXECUTION_PROFILE.json` under the existing canonical `DELIBERATION_POLICY`; do not create a second cognition state machine or merely make the answer longer.
+
+A deep task must ground its work in the real governing outcome, externally evidenced professional-practice gaps, primary/raw materials, concrete methods/tools, active unknown-signal discovery, competing alternatives with falsification conditions and actual red-team evidence, an independent judge, holdout/replay/realistic-runtime/production validation and explicit acceptance criteria. A stretch target is optional and is a search constraint only; it requires feasibility evidence before being treated as achievable.
+
+`src/uaos/kernel/deep_task.py#require_deep_task_admission` is the executable evidence admission. `src/uaos/runtime/finalization.py` fail-closes when a compatible runtime marks `deep_task_required` but no admissible `DeepTaskCase` is supplied. For a detected problem, DeepTaskCase must remain evidence/outcome-consistent with the canonical `CognitionCase`, not become a parallel diagnosis.
+
+The A-H shape is a reporting format only when the user asks for it or it materially clarifies the result. Depth is an evidence property, not a verbosity requirement.
+
 ## Architecture experience evaluation
 
 For material architecture work, also apply `config/ARCHITECTURE_EXPERIENCE_POLICY.json` and the executable admission in `src/uaos/kernel/architecture_experience.py`.

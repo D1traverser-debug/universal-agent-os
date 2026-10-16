@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.8",
+  "schema_version":"1.9",
   "contract_version":"1.7.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T22:31:23+08:00",
+  "updated_at":"2026-10-16T23:12:00+08:00",
   "inheritance_model":"UAOS_HOSTED_COMMON_CAPABILITIES__DIRECT_DOMAIN_WORK_PLANE__DOMAIN_BUSINESS_LOGIC_IDENTITY_STATE_REMAIN_WITH_OWNER",
   "applies_to":"ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
   "capabilities":[
@@ -89,12 +89,15 @@
       "capability_id":"adaptive_deliberation_and_parent_guidance",
       "owner":"UAOS",
       "policy_ref":"config/DELIBERATION_POLICY.json",
-      "domain_role":"bind to the current canonical UAOS cognition owner, expose owner-native evidence for the selected risk-adaptive search mode, and request parent guidance when common/cross-domain diagnosis, replanning or architecture support is useful",
+      "deep_task_profile_ref":"config/DEEP_TASK_EXECUTION_PROFILE.json",
+      "domain_role":"bind to the current canonical UAOS cognition owner, expose owner-native evidence for the selected risk-adaptive search mode, apply the deep-task evidence profile when explicitly or materially required, and request parent guidance when common/cross-domain diagnosis, replanning or architecture support is useful",
       "inheritance_semantics":"REFERENCE_CURRENT_CANONICAL_OWNER__DO_NOT_COPY_A_LOCAL_PROBLEM_RESPONSE_ALGORITHM",
       "rules":[
         "Problem detection is always-on after authority selection, but deliberation depth is selected by the canonical DELIBERATION_POLICY rather than by a child-local fixed research floor.",
         "LIGHTWEIGHT local/familiar problems do not require ceremonial external research when current evidence is sufficient.",
         "CONTRASTIVE corrections/change proposals compare competing hypotheses and actions; STRUCTURED systemic/material/high-risk/unknown cases require deeper falsification, architecture/upstream reassessment and external research.",
+        "An explicit request for a deeper rather than larger task activates the current deep-task execution profile: governing outcome, externally grounded professional-practice gaps, raw materials, concrete methods/tools, unknown discovery, competing alternatives/falsification, independent judge, holdout/replay/production validation, explicit acceptance criteria, and feasibility evidence for any stretch target.",
+        "The deep-task profile is evidence admission only; domains must not create a second cognition state machine or turn the A-H report shape into a mandatory verbose output format.",
         "Same-model reflection/debate is candidate generation, not independent verification.",
         "Children may add stricter domain-specific evidence requirements when justified, but must not weaken or freeze a competing copy of the parent cognition algorithm.",
         "Do not create a parallel architecture-advisor or debate control plane."
@@ -139,6 +142,7 @@
     "Do not turn UAOS into a mandatory per-turn business proxy merely because a domain inherits common capabilities.",
     "Do not create a parallel parent-guidance, architecture-advisor, self-dialogue or verification control plane when existing Control/Context/Assurance/Evolution contracts can be extended.",
     "Do not create a second evolution state machine beside config/EVOLUTION_POLICY.json and EvolutionTransaction; domain-specific learning hooks remain owner-native mechanisms under the common transaction contract.",
+    "Do not create a second cognition state machine for deep tasks; config/DEEP_TASK_EXECUTION_PROFILE.json constrains the canonical DELIBERATION_POLICY and finalization evidence only.",
     "Do not duplicate a child repository's business-specific CI/release logic merely to satisfy common mutation discipline; reuse owner-declared checks where available.",
     "A domain may implement business-specific learning/evaluation hooks and internal task orchestration, but those remain domain business mechanisms under the common governance contract rather than replacement parent controllers."
   ]
