@@ -1,0 +1,56 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261016-PROACTIVE-PREVENTION-BEFORE-INCIDENT",
+  "authority":"UAOS",
+  "recorded_at":"2026-10-16T15:58:26+08:00",
+  "status":"PRODUCTION_PROMOTED__PRE_CHANGE_FAILURE_SCENARIO_GATE_VERIFIED__LIVE_EFFECTIVENESS_OBSERVATION_OPEN",
+  "trigger_signals":[
+    "USER_CHALLENGE_TO_REACTIVE_ONLY_LEARNING",
+    "POLICY_EXECUTION_GAP_IN_PRE_CHANGE_SCENARIO_ASSURANCE"
+  ],
+  "observed_problem":"UAOS already declared proactive material-change failure/recovery scenario checks in DOMAIN_HEALTH_ESCALATION_POLICY, but executable domain_health assessment did not implement SCENARIO_OR_RECOVERY_GAP and material architecture admission did not mechanically require a counterfactual FAILURE_AND_RECOVERY scenario before promotion. This left a gap where policy language could remain proactive while execution still depended too heavily on post-failure discovery.",
+  "failure_class":"FC-PROACTIVE-ASSURANCE-DECLARED-BUT-NOT-EXECUTABLY-ADMITTED-010",
+  "competing_hypotheses":[
+    {
+      "id":"H1_REACTIVE_EVOLUTION_IS_INTRINSICALLY_REQUIRED",
+      "disposition":"REJECTED",
+      "reason":"Mature safety/security engineering supports pre-failure scenario analysis and design-time threat/hazard modeling; UAOS already had policy hooks for proactive discovery."
+    },
+    {
+      "id":"H2_CREATE_A_NEW_PREVENTIVE_AGENT_OR_CONTROLLER",
+      "disposition":"REJECTED",
+      "reason":"The gap was executable admission, not missing organizational topology. A second controller would duplicate cognition/governance and increase cost."
+    },
+    {
+      "id":"H3_EXISTING_POLICY_TO_EXECUTABLE_GATE_GAP",
+      "disposition":"SELECTED",
+      "reason":"The repository already defined proactive scenario checks and health-audit activation, but the corresponding runtime/kernel checks were absent."
+    }
+  ],
+  "selected_changes":[
+    "Material control-plane or Agent-experience architecture changes must include at least one counterfactual FAILURE_AND_RECOVERY scenario before promotion.",
+    "ArchitectureExperienceReceipt records admitted failure/recovery scenario IDs.",
+    "DomainObservation can declare a pending material change and owner-native failure/recovery scenario evidence.",
+    "assess_domain_health now emits HIGH SCENARIO_OR_RECOVERY_GAP before execution when material change evidence is missing.",
+    "Regression tests cover both pre-change blocking and admitted preventive evidence."
+  ],
+  "external_method_evidence":[
+    "MIT STPA explicitly analyzes potential hazards and future loss scenarios proactively before accidents.",
+    "OWASP threat modeling recommends design-time modeling of what can go wrong and continuous refinement before incidents."
+  ],
+  "promotion_evidence":{
+    "pull_request":53,
+    "candidate_head":"a2d3045621e05dbbf8e899b8f87d904680510b63",
+    "candidate_ci":{"run_number":225,"run_id":38870426962,"conclusion":"PASS"},
+    "candidate_live_integration":{"run_number":69,"run_id":38870427070,"conclusion":"PASS","openai_provider":"SKIPPED_BY_WORKFLOW_DEFAULT"},
+    "production_main_commit":"fa34de148abc101de8e9313e91e5f5267203f88a",
+    "production_ci":{"run_number":226,"run_id":38870576426,"conclusion":"PASS"}
+  },
+  "architecture_disposition":"NO_NEW_CONTROLLER__NO_NEW_PERMANENT_AGENT_ROLE__EXTEND_EXISTING_ARCHITECTURE_EXPERIENCE_AND_DOMAIN_HEALTH_EXECUTION",
+  "assurance_boundary":"This prevents a class of avoidable pre-release failures by requiring modeled failure/recovery evidence before material changes. It cannot enumerate every unknown unknown or guarantee zero future incidents. Residual unknowns still require outside-in discovery, adversarial/replay testing, live observation and post-incident learning when genuinely novel failures occur.",
+  "post_promotion_observation":[
+    "Watch whether teams produce meaningful counterfactual scenarios rather than ceremonial text.",
+    "Watch false-positive rate of SCENARIO_OR_RECOVERY_GAP for material changes.",
+    "Expand scenario diversity only when evidence shows one FAILURE_AND_RECOVERY scenario is insufficient; do not preemptively create a new controller or large SOP."
+  ]
+}
