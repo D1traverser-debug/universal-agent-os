@@ -68,6 +68,32 @@ def test_declared_inherited_behavior_without_owner_native_evidence_is_visible():
     assert HealthFindingType.DECLARED_WITHOUT_OPERATIONAL_EVIDENCE in types
 
 
+def test_pending_material_change_is_flagged_before_execution_when_failure_recovery_scenario_is_missing():
+    receipt = assess_domain_health(
+        DomainObservation(
+            domain_id="video",
+            current_revision="0.8.0/profile10",
+            material_change_pending=True,
+        )
+    )
+    assert not receipt.healthy
+    finding = next(item for item in receipt.findings if item.finding_type is HealthFindingType.SCENARIO_OR_RECOVERY_GAP)
+    assert finding.severity is Severity.HIGH
+    assert "pre-change" in finding.summary
+
+
+def test_pending_material_change_with_owner_native_failure_scenario_does_not_create_scenario_gap():
+    receipt = assess_domain_health(
+        DomainObservation(
+            domain_id="video",
+            current_revision="0.8.0/profile10",
+            material_change_pending=True,
+            failure_recovery_scenario_evidence_refs=("scenario://premortem/stale-authority",),
+        )
+    )
+    assert HealthFindingType.SCENARIO_OR_RECOVERY_GAP not in {item.finding_type for item in receipt.findings}
+
+
 def test_multiple_nonconflicting_child_upcalls_do_not_form_one_global_fifo_blocker():
     selection = triage_parent_upcalls(
         (
