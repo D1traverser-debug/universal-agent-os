@@ -74,11 +74,27 @@ class Representation:
 
 
 @dataclass(frozen=True, slots=True)
+class ArchitectureCandidate:
+    candidate_id: str
+    mechanism_summary: str
+    concern_ids: frozenset[str]
+    tradeoff_evidence_refs: tuple[str, ...]
+    no_change_baseline: bool = False
+
+    def __post_init__(self) -> None:
+        if not self.candidate_id.strip() or not self.mechanism_summary.strip():
+            raise ValueError("architecture candidate identity and mechanism summary are required")
+        if not self.tradeoff_evidence_refs or not all(ref.strip() for ref in self.tradeoff_evidence_refs):
+            raise ValueError("architecture candidate requires tradeoff evidence")
+
+
+@dataclass(frozen=True, slots=True)
 class ArchitectureExperienceReceipt:
     scenario_ids: tuple[str, ...]
     representation_kinds: tuple[str, ...]
     dogfood_present: bool
     user_examples_kept_nonbinding: tuple[str, ...]
+    candidate_ids: tuple[str, ...] = ()
 
 
 def require_architecture_experience_admission(
@@ -88,6 +104,7 @@ def require_architecture_experience_admission(
     scenarios: tuple[ArchitectureScenario, ...],
     representations: tuple[Representation, ...],
     material_control_plane_or_agent_experience_change: bool,
+    candidates: tuple[ArchitectureCandidate, ...] = (),
 ) -> ArchitectureExperienceReceipt:
     if not concerns:
         raise ArchitectureExperienceAdmissionError("material architecture evaluation requires explicit concerns")
@@ -178,6 +195,38 @@ def require_architecture_experience_admission(
             "material control-plane/agent-experience change requires CURRENT_AGENT dogfooding"
         )
 
+    candidate_ids: tuple[str, ...] = ()
+    if material_control_plane_or_agent_experience_change:
+        if len(candidates) < 2:
+            raise ArchitectureExperienceAdmissionError(
+                "material control-plane/agent-experience change requires at least two architecture candidates"
+            )
+        if len(candidates) > 5:
+            raise ArchitectureExperienceAdmissionError(
+                "architecture candidate comparison is bounded to at most five candidates"
+            )
+        if len({candidate.candidate_id for candidate in candidates}) != len(candidates):
+            raise ArchitectureExperienceAdmissionError("architecture candidate identifiers must be unique")
+        if not any(candidate.no_change_baseline for candidate in candidates):
+            raise ArchitectureExperienceAdmissionError(
+                "material control-plane/agent-experience change requires an explicit NO_CHANGE baseline"
+            )
+        covered_by_candidates: set[str] = set()
+        for candidate in candidates:
+            unknown = candidate.concern_ids.difference(concern_by_id)
+            if unknown:
+                raise ArchitectureExperienceAdmissionError(
+                    f"architecture candidate references unknown concerns: {sorted(unknown)}"
+                )
+            covered_by_candidates.update(candidate.concern_ids)
+        missing_candidate_coverage = set(concern_by_id).difference(covered_by_candidates)
+        if missing_candidate_coverage:
+            raise ArchitectureExperienceAdmissionError(
+                "architecture concerns lack candidate tradeoff coverage: "
+                + ", ".join(sorted(missing_candidate_coverage))
+            )
+        candidate_ids = tuple(candidate.candidate_id for candidate in candidates)
+
     nonbinding = tuple(
         signal.signal_id
         for signal in signals
@@ -189,4 +238,5 @@ def require_architecture_experience_admission(
         representation_kinds=tuple(sorted({representation.kind for representation in representations})),
         dogfood_present=dogfood_present,
         user_examples_kept_nonbinding=nonbinding,
+        candidate_ids=candidate_ids,
     )
