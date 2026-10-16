@@ -55,11 +55,12 @@ def _cognition_case() -> CognitionCase:
         EvidenceItem("macro", EvidenceKind.ANALYSIS_RESULT, "Macro alignment checked.", "analysis://macro"),
         EvidenceItem("assumption", EvidenceKind.ANALYSIS_RESULT, "Governing assumption challenged.", "analysis://assumption"),
         EvidenceItem("counter", EvidenceKind.TEST_RESULT, "Competing explanation was probed.", "test://counter"),
-        EvidenceItem("action-local", EvidenceKind.ANALYSIS_RESULT, "Local repair candidate evidence.", "analysis://action-local"),
+        EvidenceItem("action-local", EvidenceKind.REPOSITORY_FACT, "Local repair candidate evidence.", "repo://action-local"),
         EvidenceItem("action-no", EvidenceKind.ANALYSIS_RESULT, "No-change candidate evidence.", "analysis://action-no"),
         EvidenceItem("trade-local", EvidenceKind.ANALYSIS_RESULT, "Local repair tradeoff.", "analysis://trade-local"),
         EvidenceItem("trade-no", EvidenceKind.ANALYSIS_RESULT, "No-change tradeoff.", "analysis://trade-no"),
-        EvidenceItem("verify", EvidenceKind.TEST_RESULT, "Repair passed its deterministic verification.", "test://verify"),
+        EvidenceItem("verify", EvidenceKind.TEST_RESULT, "Repair passed its deterministic verification.", "test://verify", method_ref="deterministic regression test"),
+        EvidenceItem("wrong-verify", EvidenceKind.TEST_RESULT, "An unrelated test passed.", "test://unrelated", method_ref="unrelated check"),
     )
     evidence = DeliberationEvidence({
         "MICRO_DIAGNOSIS": ("micro",),
@@ -104,6 +105,19 @@ def _cognition_case() -> CognitionCase:
     )
 
 
+def _successful_closure(**overrides) -> ProblemClosureSignals:
+    values = dict(
+        problem_detected=True,
+        repair_attempted=True,
+        repair_verified=True,
+        evolution_disposition=EvolutionDisposition.DURABLE_EVOLUTION_UPDATED,
+        terminal_action_candidate_id="local-repair",
+        verification_evidence_refs=("verify",),
+    )
+    values.update(overrides)
+    return ProblemClosureSignals(**values)
+
+
 def test_clean_selected_turn_can_finalize_when_no_work_remains():
     receipt = admit_final_response(
         _report(),
@@ -126,20 +140,13 @@ def test_runtime_blocks_finalization_while_actionable_work_remains():
 
 
 def test_problem_turn_recomputes_cognition_case_and_requires_verified_terminal_closure():
-    closure = ProblemClosureSignals(
-        problem_detected=True,
-        repair_attempted=True,
-        repair_verified=True,
-        evolution_disposition=EvolutionDisposition.DURABLE_EVOLUTION_UPDATED,
-        verification_evidence_refs=("verify",),
-    )
     receipt = admit_final_response(
         _report(problem=True),
         FinalizationContext(
             context_selected=True,
             problem_signal_observed=True,
             cognition_case=_cognition_case(),
-            closure_signals=closure,
+            closure_signals=_successful_closure(),
         ),
     )
     assert receipt.closure_decision.value == "REPAIR_EXECUTED"
@@ -153,6 +160,7 @@ def test_precomputed_root_scope_receipt_cannot_substitute_for_full_cognition_cas
         repair_verified=True,
         root_scope_receipt=_legacy_receipt(durable=False),
         evolution_disposition=EvolutionDisposition.NO_DURABLE_EVOLUTION_WITH_EVIDENCE,
+        terminal_action_candidate_id="local-repair",
         verification_evidence_refs=("verify",),
     )
     with pytest.raises(FinalizationBlocked) as exc:
@@ -168,11 +176,56 @@ def test_precomputed_root_scope_receipt_cannot_substitute_for_full_cognition_cas
 
 
 def test_boolean_repair_verified_claim_without_verification_evidence_is_blocked():
+    closure = _successful_closure(verification_evidence_refs=())
+    with pytest.raises(FinalizationBlocked) as exc:
+        admit_final_response(
+            _report(problem=True),
+            FinalizationContext(
+                context_selected=True,
+                problem_signal_observed=True,
+                cognition_case=_cognition_case(),
+                closure_signals=closure,
+            ),
+        )
+    assert any("VERIFICATION_METHOD_EVIDENCE" in reason or "verification evidence" in reason for reason in exc.value.reasons)
+
+
+def test_unrelated_green_test_cannot_satisfy_planned_verification_method():
+    closure = _successful_closure(verification_evidence_refs=("wrong-verify",))
+    with pytest.raises(FinalizationBlocked) as exc:
+        admit_final_response(
+            _report(problem=True),
+            FinalizationContext(
+                context_selected=True,
+                problem_signal_observed=True,
+                cognition_case=_cognition_case(),
+                closure_signals=closure,
+            ),
+        )
+    assert any("UNPLANNED_VERIFICATION_EVIDENCE_METHOD" in reason for reason in exc.value.reasons)
+
+
+def test_terminal_repair_must_match_the_admitted_intervention_candidate():
+    closure = _successful_closure(terminal_action_candidate_id="no-change")
+    with pytest.raises(FinalizationBlocked) as exc:
+        admit_final_response(
+            _report(problem=True),
+            FinalizationContext(
+                context_selected=True,
+                problem_signal_observed=True,
+                cognition_case=_cognition_case(),
+                closure_signals=closure,
+            ),
+        )
+    assert any("terminal action does not match" in reason for reason in exc.value.reasons)
+
+
+def test_no_change_cannot_close_a_case_whose_admitted_intervention_is_repair():
     closure = ProblemClosureSignals(
         problem_detected=True,
-        repair_attempted=True,
-        repair_verified=True,
+        no_change_reason="leave it unchanged",
         evolution_disposition=EvolutionDisposition.NO_DURABLE_EVOLUTION_WITH_EVIDENCE,
+        terminal_action_candidate_id="local-repair",
     )
     with pytest.raises(FinalizationBlocked) as exc:
         admit_final_response(
@@ -184,7 +237,7 @@ def test_boolean_repair_verified_claim_without_verification_evidence_is_blocked(
                 closure_signals=closure,
             ),
         )
-    assert any("verification evidence" in reason for reason in exc.value.reasons)
+    assert any("NO_CHANGE closure is invalid" in reason for reason in exc.value.reasons)
 
 
 def test_repairable_problem_cannot_finalize_before_repair_attempt():
