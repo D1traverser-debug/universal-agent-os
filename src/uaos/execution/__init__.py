@@ -14,7 +14,7 @@ from .models import (
     ExecutionOutcome,
     ExecutionRequest,
 )
-from .openai_agents import OpenAIAgentSpec, OpenAIAgentsExecutor
+from .openai_agents import OpenAIAgentSpec, OpenAIAgentsExecutor, build_uaos_output_guardrail
 from .registry import CapabilityRegistry, CapabilityRouter, CapabilityUnavailable, RegisteredCapability
 from .retry import RetryDecision, RetryPolicy, assess_retry
 
@@ -45,6 +45,7 @@ __all__ = [
     "RetryDecision",
     "RetryPolicy",
     "assess_retry",
+    "build_uaos_output_guardrail",
     "register_host_capability",
     "register_local_workspace_capability",
 ]
