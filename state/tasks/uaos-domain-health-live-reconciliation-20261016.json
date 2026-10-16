@@ -1,0 +1,34 @@
+{
+  "schema_version":"1.0",
+  "task_id":"uaos:maintenance:domain-health-live-reconciliation-20261016",
+  "authority_context":"UAOS",
+  "task_type":"controller_maintenance",
+  "status":"RUNNING",
+  "current_stage":"ROOT_SCOPE_ADMITTED__LIVE_AUDIT_DESIGN_ACTIVE",
+  "governing_goal":"Make parent domain-health freshness proactively observable from current child authority, reconcile the already-stale parent health cache and stale promotion evidence, and prevent recurrence without creating a second health/control plane or auto-mutating production authority.",
+  "incident":"During a post-closure UAOS health audit, all four DOMAIN_HEALTH_INDEX observed_main_commit values were behind current child main. The same parent cache had previously required manual reconciliation in PR #32, proving that one-off refreshes do not satisfy the proactive freshness objective. The domain-health evolution record also still described promotion as pending even though its mechanisms are production, and FC-PARENT-GUIDANCE-SINGLE-QUEUE-BLOCKING-RISK-003 remained listed as open despite non-conflicting triage being implemented.",
+  "root_scope":"PARENT_HEALTH_OBSERVATION_ACQUISITION_AND_POST_PROMOTION_RECONCILIATION_LIFECYCLE_GAP",
+  "evidence_refs":[
+    "state/DOMAIN_HEALTH_INDEX.json",
+    "config/DOMAIN_HEALTH_ESCALATION_POLICY.json",
+    "src/uaos/kernel/domain_health.py",
+    "state/evolution/EVO-20261015-DOMAIN-HEALTH-ESCALATION-GOVERNANCE.json",
+    "https://github.com/D1traverser-debug/universal-agent-os/pull/32"
+  ],
+  "observed_child_revisions":{
+    "financial_writing":"8122c184fac7f84a29e3420269952cb3975b7b41",
+    "ashare":"3182b36027f9f82bd0d4bb6483aeadb0d8f23dce",
+    "novel":"f8bc5cacb9125b0cc7ebac658140fda77e6cd75f",
+    "video":"4632634e5133961b3280dcfc5bc211712c3a1c83"
+  },
+  "rejected_alternatives":[
+    "NO_CHANGE_AND_TREAT_STALE_CACHE_AS_HARMLESS",
+    "MANUALLY_REFRESH_FOUR_REVISIONS_ONLY",
+    "SCHEDULED_JOB_THAT_DIRECTLY_MUTATES_PRODUCTION_HEALTH_AUTHORITY"
+  ],
+  "selected_direction":"Reuse DOMAIN_HEALTH_INDEX and assess_domain_health; add one read-only live acquisition/audit path driven by AGENT_REGISTRY, schedule/dispatch it for proactive detection, keep production reconciliation governed through candidate PRs, and update stale parent health/evolution evidence only after current child authority is reread.",
+  "evolution_ref":"state/evolution/EVO-20261016-DOMAIN-HEALTH-LIVE-RECONCILIATION.json",
+  "candidate_branch":"maintenance/domain-health-live-reconciliation-20261016",
+  "next_action":"Inspect registry and owner health metadata contracts; implement generic read-only live freshness acquisition plus regression tests; reconcile current cache/evolution evidence; run promotion gate and live audit; promote and reread production.",
+  "progress_timestamp":"2026-10-16T20:00:00+08:00"
+}
