@@ -91,6 +91,23 @@ def test_current_agent_dogfood_can_follow_the_five_stage_hot_path_without_a_seco
         WalkthroughStep("commit", "CURRENT_AGENT", "commit root scope after evidence", "root receipt exists", "easy edit mistaken for diagnosis", "block premature action"),
         WalkthroughStep("act", "CURRENT_AGENT", "perform smallest authorized change", "verification supports outcome", "green tests overstated", "bound assurance"),
     )
+    premortem = ArchitectureScenario(
+        "cognition-pre-failure",
+        "FAILURE_AND_RECOVERY",
+        "prevent the cognition refactor from creating a new failure before release",
+        "candidate cognition architecture",
+        (
+            WalkthroughStep(
+                "premortem",
+                "CURRENT_AGENT",
+                "simulate a plausible failure such as ceremonial over-deliberation or skipped falsification",
+                "a missing invariant or recovery path is exposed before promotion",
+                "happy-path cognition tests may miss an expensive or bypassable failure mode",
+                "strengthen the minimum admission/test and replay before promotion",
+            ),
+        ),
+        frozenset({"operability", "ordering"}),
+    )
     receipt = require_architecture_experience_admission(
         signals=(
             InputSignal("goal", SignalKind.GOAL_OR_OUTCOME, "reduce repeated cognitive errors without adding another control plane"),
@@ -100,7 +117,10 @@ def test_current_agent_dogfood_can_follow_the_five_stage_hot_path_without_a_seco
             ArchitectureConcern("operability", "current Agent can execute a short cognition hot path", actor_operability_material=True),
             ArchitectureConcern("ordering", "action cannot precede framing/falsification/root-scope", temporal_behavior_material=True),
         ),
-        scenarios=(ArchitectureScenario("current-agent-cognition-dogfood", "CURRENT_AGENT_DOGFOOD", "detect and correct bad framing", "UAOS selected", steps, frozenset({"operability", "ordering"})),),
+        scenarios=(
+            ArchitectureScenario("current-agent-cognition-dogfood", "CURRENT_AGENT_DOGFOOD", "detect and correct bad framing", "UAOS selected", steps, frozenset({"operability", "ordering"})),
+            premortem,
+        ),
         representations=(
             Representation("COGNITIVE_WALKTHROUGH", frozenset({"operability"}), "test://cognition-hot-path"),
             Representation("SEQUENCE", frozenset({"ordering"}), "test://frame-expand-falsify-commit-act"),
@@ -114,3 +134,4 @@ def test_current_agent_dogfood_can_follow_the_five_stage_hot_path_without_a_seco
     assert receipt.dogfood_present is True
     assert "role-example" in receipt.user_examples_kept_nonbinding
     assert receipt.candidate_ids == ("no-change", "adaptive")
+    assert receipt.failure_recovery_scenario_ids == ("cognition-pre-failure",)

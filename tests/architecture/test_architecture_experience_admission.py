@@ -32,6 +32,27 @@ def candidates(*concern_ids: str):
     )
 
 
+def premortem(*concern_ids: str) -> ArchitectureScenario:
+    covered = frozenset(concern_ids)
+    return ArchitectureScenario(
+        "pre-failure",
+        "FAILURE_AND_RECOVERY",
+        "prevent the proposed architecture from silently violating its governing outcome",
+        "candidate architecture before promotion",
+        (
+            WalkthroughStep(
+                "p1",
+                "CURRENT_AGENT",
+                "simulate a plausible failure before promotion",
+                "the missing invariant or recovery evidence becomes observable before release",
+                "the candidate may pass happy-path tests while failing under stale authority, interruption or wrong assumptions",
+                "add or strengthen the minimum invariant, test or recovery path before promotion",
+            ),
+        ),
+        covered,
+    )
+
+
 def test_user_example_is_not_directly_promoted_to_architecture_requirement():
     signals = (
         InputSignal("goal", SignalKind.GOAL_OR_OUTCOME, "make the architecture understandable and usable by the current Agent"),
@@ -56,6 +77,7 @@ def test_view_selection_is_concern_driven_not_one_diagram_for_everything():
     )
     scenarios = (
         ArchitectureScenario("resume", "RESUME_AFTER_INTERRUPTION", "resume the correct task", "checkpoint", (step("s1"),), frozenset({"ownership", "recovery", "use"})),
+        premortem("ownership", "recovery", "use"),
     )
     representations = (
         Representation("AUTHORITY_MAP", frozenset({"ownership"}), "arch://authority"),
@@ -73,6 +95,7 @@ def test_view_selection_is_concern_driven_not_one_diagram_for_everything():
     assert receipt.dogfood_present is True
     assert set(receipt.representation_kinds) == {"AUTHORITY_MAP", "EVENT_TRACE", "COGNITIVE_WALKTHROUGH"}
     assert receipt.candidate_ids == ("keep", "change")
+    assert receipt.failure_recovery_scenario_ids == ("pre-failure",)
 
 
 def test_temporal_concern_cannot_be_proven_only_by_static_structure():
@@ -92,7 +115,7 @@ def test_material_agent_experience_change_requires_current_agent_dogfood():
         require_architecture_experience_admission(
             signals=(InputSignal("goal", SignalKind.GOAL_OR_OUTCOME, "usable control plane"),),
             concerns=(ArchitectureConcern("use", "operator usability", actor_operability_material=True),),
-            scenarios=(ArchitectureScenario("third-party", "PRIMARY_SUCCESS_PATH", "complete task", "UAOS", (step("s1", actor="OTHER_ACTOR"),), frozenset({"use"})),),
+            scenarios=(ArchitectureScenario("third-party", "FAILURE_AND_RECOVERY", "complete task", "UAOS", (step("s1", actor="OTHER_ACTOR"),), frozenset({"use"})),),
             representations=(Representation("TASK_JOURNEY", frozenset({"use"}), "arch://journey"),),
             candidates=candidates("use"),
             material_control_plane_or_agent_experience_change=True,
@@ -103,7 +126,10 @@ def test_material_change_requires_competing_candidates_and_no_change_baseline():
     kwargs = dict(
         signals=(InputSignal("goal", SignalKind.GOAL_OR_OUTCOME, "usable control plane"),),
         concerns=(ArchitectureConcern("use", "operator usability", actor_operability_material=True),),
-        scenarios=(ArchitectureScenario("dogfood", "CURRENT_AGENT_DOGFOOD", "complete task", "UAOS", (step("s1"),), frozenset({"use"})),),
+        scenarios=(
+            ArchitectureScenario("dogfood", "CURRENT_AGENT_DOGFOOD", "complete task", "UAOS", (step("s1"),), frozenset({"use"})),
+            premortem("use"),
+        ),
         representations=(Representation("TASK_JOURNEY", frozenset({"use"}), "arch://journey"),),
         material_control_plane_or_agent_experience_change=True,
     )
@@ -116,6 +142,18 @@ def test_material_change_requires_competing_candidates_and_no_change_baseline():
                 ArchitectureCandidate("a", "option a", frozenset({"use"}), ("tradeoff://a",)),
                 ArchitectureCandidate("b", "option b", frozenset({"use"}), ("tradeoff://b",)),
             ),
+        )
+
+
+def test_material_change_cannot_promote_without_counterfactual_failure_recovery_scenario():
+    with pytest.raises(ArchitectureExperienceAdmissionError, match="counterfactual FAILURE_AND_RECOVERY"):
+        require_architecture_experience_admission(
+            signals=(InputSignal("goal", SignalKind.GOAL_OR_OUTCOME, "prevent failures before release"),),
+            concerns=(ArchitectureConcern("use", "operator usability", actor_operability_material=True),),
+            scenarios=(ArchitectureScenario("dogfood", "CURRENT_AGENT_DOGFOOD", "complete task", "UAOS", (step("s1"),), frozenset({"use"})),),
+            representations=(Representation("TASK_JOURNEY", frozenset({"use"}), "arch://journey"),),
+            candidates=candidates("use"),
+            material_control_plane_or_agent_experience_change=True,
         )
 
 
