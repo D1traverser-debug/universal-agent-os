@@ -59,7 +59,7 @@
   "execution_principles":[
     "Depth is measured by evidence directness, professional method quality, falsifiability, discovery of previously unmodeled factors and independence of validation; not by answer length or number of modules.",
     "Do not create extra Agents, roles, documents, workflows or architecture layers unless their distinct tool/policy/context/output contract is itself evidence-justified.",
-    "The existing DELIBERATION_POLICY remains the sole cognition-stage authority. DeepTaskCase is an evidence admission profile, not another ordered reasoning workflow.",
+    "The existing DELIBERATION_POLICY remains the sole cognition-stage authority. DeepTaskCase is an evidence admission profile, not a second cognition state machine and not another ordered reasoning workflow.",
     "For problem cases, DeepTaskCase evidence and governing outcome must be consistent with the canonical CognitionCase rather than forming a parallel diagnosis.",
     "If the evidence shows the existing task is already sufficiently deep, record the evidence-backed no-expansion conclusion instead of manufacturing extra work.",
     "When the user requests an A-H report, render those dimensions explicitly; otherwise the protocol may operate internally and the user-facing answer should remain proportional to the task."
