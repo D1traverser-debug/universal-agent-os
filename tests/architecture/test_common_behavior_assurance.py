@@ -117,37 +117,36 @@ def test_binding_and_current_system_reference_common_behavior_assurance():
     assert "EVOLUTION_RELEVANT_OR_MATERIAL_DETECTED_PROBLEM" in binding["causal_problem_history_rule"]
     assert binding["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
 
-    assert current["common_behavior_assurance"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
-    assert current["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
-    assert current["domain_health_index"] == "state/DOMAIN_HEALTH_INDEX.json"
-    assert "COMMON_BEHAVIOR_ASSURANCE_1_3" in current["common_behavior_assurance_contract"]
-    assert "CAUSAL_PROBLEM_HISTORY" in current["common_behavior_assurance_contract"]
-    assert "ROOT_SCOPE_ADMISSION" in current["problem_action_closure_assurance"]
+    owners = current["owners"]
+    assert owners["common_behavior_assurance"] == "config/COMMON_BEHAVIOR_ASSURANCE.json"
+    assert owners["domain_health_escalation_policy"] == "config/DOMAIN_HEALTH_ESCALATION_POLICY.json"
+    assert owners["domain_health_index"] == "state/DOMAIN_HEALTH_INDEX.json"
+    assert "COMMON_BEHAVIOR_1_3" in current["assurance"]["parent_core"]
+    assert "ROOT_SCOPE_ADMISSION" in current["assurance"]["problem_action_closure"]
 
 
-def test_child_observations_remain_current_evidence_not_parent_authority():
+def test_child_observations_live_only_in_parent_health_cache_not_current_system():
     current = _json("CURRENT_SYSTEM.json")
     health = _json("state/DOMAIN_HEALTH_INDEX.json")
-    verification = current["financial_child_production_verification"]
 
-    assert current["financial_binding_assurance"].startswith("CURRENT_CHILD_OBSERVATION_IN_state/DOMAIN_HEALTH_INDEX.json")
-    assert verification["observation_role"] == "CURRENT_CHILD_HEAD_OBSERVATION__NOT_IMMUTABLE_RELEASE_CERTIFICATE"
-    assert health["domains"]["financial_writing"]["observed_main_commit"] == verification["current_main_commit"]
-    assert health["domains"]["financial_writing"]["observed_profile_version"] == verification["profile_version"]
-    assert _version_tuple(verification["common_behavior_assurance_min"]) >= (1, 3, 0)
-    assert verification["result"] == "PASS"
+    assert current["child_observation"]["source"] == "state/DOMAIN_HEALTH_INDEX.json"
+    assert current["child_observation"]["role"] == "PARENT_HEALTH_OBSERVATION_CACHE__NOT_CHILD_BUSINESS_AUTHORITY"
+    assert "financial_child_production_verification" not in current
+    observed = health["domains"]["financial_writing"]
+    assert observed["observed_profile_version"] >= 19
+    assert _version_tuple(observed["common_behavior_assurance_min"]) >= (1, 3, 0)
+    assert observed["production_ci"]["conclusion"] == "success"
 
 
-def test_novel_parent_observation_is_current_and_owner_native():
+def test_novel_parent_observation_is_cache_only_and_owner_native():
     current = _json("CURRENT_SYSTEM.json")
     health = _json("state/DOMAIN_HEALTH_INDEX.json")
-    verification = current["novel_child_production_verification"]
-    assert verification["profile_version"] >= 6
-    assert verification["profile_version"] == health["domains"]["novel"]["observed_profile_version"]
-    assert _version_tuple(verification["common_behavior_assurance_min"]) >= (1, 3, 0)
-    assert verification["active_rulebook_version"] == "2.5-github"
-    assert verification["result"] == "PASS"
-    assert "NEXT_LINE_3914" in verification["business_cursor_preserved"]
+    assert "novel_child_production_verification" not in current
+    observed = health["domains"]["novel"]
+    assert observed["observed_profile_version"] >= 6
+    assert _version_tuple(observed["common_behavior_assurance_min"]) >= (1, 3, 0)
+    assert observed["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
+    assert "OWNER_NATIVE" in observed["common_behavior_assurance"]
 
 
 def test_version_metadata_drift_remains_mechanically_guarded():
