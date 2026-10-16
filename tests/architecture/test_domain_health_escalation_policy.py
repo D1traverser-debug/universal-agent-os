@@ -54,13 +54,13 @@ def test_health_index_is_non_authoritative_cache_and_current_system_does_not_dup
     assert current["child_observation"]["source"] == "state/DOMAIN_HEALTH_INDEX.json"
     assert current["child_observation"]["role"] == health["role"]
 
-    expected_floors = {
+    expected_profile_floors = {
         "financial_writing": 19,
         "ashare": 7,
         "novel": 6,
         "video": 10,
     }
-    for domain_id, profile_floor in expected_floors.items():
+    for domain_id, profile_floor in expected_profile_floors.items():
         observed = health["domains"][domain_id]
         assert observed["observed_profile_version"] >= profile_floor
         assert _version_tuple(observed["common_behavior_assurance_min"]) >= (1, 3, 0)
@@ -68,9 +68,17 @@ def test_health_index_is_non_authoritative_cache_and_current_system_does_not_dup
         assert "OWNER_NATIVE" in observed["common_behavior_assurance"]
         assert observed["findings"] == []
 
-    assert health["domains"]["financial_writing"]["observed_release"] == "1.0.1"
-    assert health["domains"]["ashare"]["observed_release"] == "0.3.0"
-    assert health["domains"]["video"]["observed_release"] == "0.8.0"
+    # DOMAIN_HEALTH_INDEX is a moving observation cache. Tests may assert compatibility
+    # floors for current runtime releases, but must not turn one historical observation
+    # into a permanent exact-version authority.
+    release_floors = {
+        "financial_writing": (1, 0, 1),
+        "ashare": (0, 3, 0),
+        "video": (0, 8, 0),
+    }
+    for domain_id, release_floor in release_floors.items():
+        assert _version_tuple(health["domains"][domain_id]["observed_release"]) >= release_floor
+
     assert health["domains"]["financial_writing"]["canonical_evolution_entrypoint"] == "evals/EVOLUTION_INDEX.json"
     assert health["domains"]["ashare"]["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
     assert health["domains"]["novel"]["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
@@ -87,6 +95,9 @@ def test_health_index_is_non_authoritative_cache_and_current_system_does_not_dup
     learning = {row["failure_class"]: row for row in health["cross_domain_learnings"]}
     freeze = learning["FC-EVOLVING-CAPABILITY-MINIMUM-ENCODED-AS-EXACT-CURRENT-VERSION-005"]
     assert "compatibility-floor" in freeze["selected_rule"].lower()
+    live_binding = learning["FC-LIVE-CROSS-REPO-BINDING-DRIFT-HIDDEN-BY-SYNTHETIC-FIXTURE-014"]
+    assert "synthetic" in live_binding["selected_rule"].lower()
+    assert "current child authority" in live_binding["selected_rule"].lower()
 
     open_common = set(health["open_common_findings"])
     assert "FC-PARENT-CHILD-FRESHNESS-SNAPSHOT-MASQUERADING-AS-CURRENT-001" not in open_common
