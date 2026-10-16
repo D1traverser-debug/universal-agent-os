@@ -35,13 +35,15 @@ A child may issue a non-mutating parent upcall for diagnosis, goal clarification
 `config/DELIBERATION_POLICY.json#cognition_kernel` is the only cognition-stage authority. Do not maintain a second ordered problem-solving state machine in repository instructions, session policy, common-behavior policy or a domain copy.
 
 For a detected problem/knowledge gap use the five hot-path primitives:
-1. `FRAME_AS_HYPOTHESIS` — user framing, Agent framing, external methods, existing code and first-fix ideas are candidates, not authority.
-2. `EXPAND_PROBLEM_SPACE_WHEN_NEEDED` — test whether the case is local, workflow/interface, architecture/common-control, requirement/goal or an unknown/latent capability gap before narrowing.
-3. `FALSIFY_COMPETING_FRAMES` — actively seek evidence that would make the preferred frame wrong; material/systemic work must preserve a rejected alternative and test upstream/architecture involvement.
-4. `COMMIT_ROOT_SCOPE_AND_LEARNING_DISPOSITION` — only after evidence bounds/selects the layer may root scope, evolution disposition and durable-record need be committed.
-5. `ACT_AND_VERIFY` — execute the smallest authorized repair/redesign/no-change/block and verify against the governing objective.
+1. `FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES` — recover the governing outcome and observations; user framing, Agent framing, external methods, existing code and first-fix ideas remain hypotheses/candidates rather than causal authority.
+2. `EXPAND_CAUSAL_SOLUTION_AND_EVIDENCE_SPACE` — expand plausible causal factors and intervention candidates across local/workflow/architecture/control/host/requirement/unknown layers without preferring local or upstream causes.
+3. `FALSIFY_TRACE_AND_COMPARE` — attack preferred causal factors/interventions, trace evidence provenance and compare tradeoffs. Same-model confidence is not independent verification.
+4. `COMMIT_CAUSAL_MODEL_INTERVENTION_AND_LEARNING` — admit one or more evidence-supported contributing causes, reject/bound alternatives, then select exactly one bounded current intervention/no-change candidate and learning disposition.
+5. `ACT_VERIFY_VALIDATE_AND_OBSERVE` — execute the selected authorized change, verify requirement/contract compliance, validate material/systemic behavior against the governing outcome in realistic scenario/runtime conditions, then observe production.
 
-The detailed evidence floor and root-scope mechanics remain in `config/DELIBERATION_POLICY.json` and `src/uaos/kernel/deliberation.py`. `src/uaos/kernel/problem_closure.py` owns terminal action admission. Same-model critique may generate alternatives but is not independent verification.
+`src/uaos/kernel/cognition_case.py` is the canonical executable problem transaction for controlled finalization. It separates causal explanation from intervention selection, binds typed evidence provenance, and carries an `EngineeringTrace` from governing outcome/requirement evidence to the selected mechanism and V&V plan. A user assertion such as “the upper layer is the cause” or “rebuild everything” may seed a causal factor or architecture candidate, but cannot by itself support a causal conclusion or selection.
+
+`src/uaos/kernel/deliberation.py#require_root_scope_admission` remains a legacy compatibility API. A precomputed `RootScopeReceipt` is not sufficient proof for controlled problem finalization; `src/uaos/runtime/finalization.py` recomputes cognition admission from the complete `CognitionCase`. `src/uaos/kernel/problem_closure.py` owns terminal action admission and requires concrete verification evidence for CognitionCase repairs plus validation evidence for systemic/material repairs.
 
 For broad external capability learning, source-usage research or unknown-gap audits, apply the outside-in discovery admission in `src/uaos/kernel/problem_space.py`: model the source's own organization axes first, then use multiple lenses such as role/occupation, task/activity, workflow/handoff, category/taxonomy, creator/repository portfolio or adjacent domain. A known-keyword-only survey is not broad discovery. A role or taxonomy is a lens, not a literal new Agent/team/architecture requirement.
 
@@ -55,7 +57,7 @@ For material architecture work, also apply `config/ARCHITECTURE_EXPERIENCE_POLIC
 - Choose representations by concern. Ownership/dependency concerns normally need a structural view; ordering/lifecycle/recovery/handoff concerns need a temporal/behavioral view; actor-operability concerns need a cognitive/task walkthrough. Do not force one representation family onto every problem.
 - Every walkthrough step must expose the intended action, observable progress evidence, plausible confusion/failure, and recovery/next-evidence path.
 - Compare candidate architectures against governing goals and relevant tradeoffs. The fact that a mechanism was mentioned by the user, already exists in the repository, or is familiar is not sufficient selection evidence.
-- Architecture promotion requires the scenario/walkthrough evidence to agree with the structural contracts; a clean static diagram or green unit test cannot by itself prove the architecture is usable in sequence.
+- Architecture promotion requires the scenario/walkthrough evidence to agree with structural contracts and V&V trace; a clean static diagram or green unit test cannot by itself prove the architecture is suitable in use.
 
 ## Autonomous mutation baseline
 
@@ -75,9 +77,9 @@ For parent-governed descendant writes, reread that descendant's current binding/
 
 ## Evolution and anti-bloat
 
-Repair the unique owning abstraction. Prefer extending/replacing/removing superseded mechanisms over layering parallel ones. A repeated failure requires failure-class/root-cause treatment and regression evidence before closure.
+Repair the unique owning abstraction. Prefer extending/replacing/removing superseded mechanisms over layering parallel ones. A repeated failure requires failure-class/causal treatment and regression evidence before closure.
 
-A proposed new mechanism must state existing overlap, why extension is insufficient, what it replaces/retires (or why nothing can be retired), new failure modes, rollback and complexity delta. Do not convert every incident into another guarantee sentence when a contract, state machine, fitness check or deletion is the correct fix.
+A proposed new mechanism must state existing overlap, why extension is insufficient, what it replaces/retires (or why nothing can be retired), new failure modes, rollback and complexity delta. Do not convert every incident into another guarantee sentence when an executable contract, state machine, fitness check or deletion is the correct fix.
 
 Stronger assurance is not automatically required. Before adding a stronger control, ask which objective/failure mode requires it, what existing controls already cover, and whether the added operational complexity is justified.
 
