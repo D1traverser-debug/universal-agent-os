@@ -22,6 +22,7 @@ from .models import (
     ComplexityDelta,
     EvaluationResult,
     PostPromotionObservation,
+    ProposalState,
 )
 from .transaction import (
     EvolutionDepthTrace,
@@ -45,7 +46,7 @@ class SelfChangeDrillResult:
     candidate_hash: str
     restored_hash: str
     recommendation: str
-    final_state: object
+    final_state: ProposalState
     ledger_events: int
 
 
