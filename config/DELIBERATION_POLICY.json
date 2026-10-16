@@ -2,7 +2,7 @@
   "schema_version":"2.1",
   "policy_version":"2.1.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T23:10:00+08:00",
+  "updated_at":"2026-10-16T23:15:43+08:00",
   "purpose":"Own one canonical cognition contract: keep user/model/external framing provisional, adapt search depth to evidence and risk, model multiple contributing causes when supported, select a bounded intervention separately from causal explanation, trace governing outcomes to mechanisms and V&V, verify the smallest justified change, and require an evidence-complete deep-task profile when a task explicitly demands depth beyond ordinary execution.",
   "cognition_kernel":{
     "canonical":true,
@@ -20,7 +20,7 @@
       "COMMIT_CAUSAL_MODEL_INTERVENTION_AND_LEARNING":"After evidence bounds the case, admit one or more supported contributing causes, reject/bound alternatives, then select exactly one current intervention/no-change candidate. Causal explanation and intervention ownership are distinct. Commit learning/evolution and durable-record requirements at the same boundary.",
       "ACT_VERIFY_VALIDATE_AND_OBSERVE":"Execute the selected authorized intervention, verify compliance with its requirement/contract, validate suitability against the governing outcome using realistic scenario/runtime evidence when material/systemic, and preserve post-promotion observation. An admitted authorized repair cannot end as recommendation-only."
     },
-    "anti_bloat":"The five stages are the hot-path cognitive primitives. Other profiles may activate or constrain them, but must not duplicate a second cognition state machine. Legacy RootScope APIs may remain for compatibility but are not sufficient proof for controlled finalization."
+    "anti_bloat":"The five stages are the hot-path cognitive primitives. Other policies or profiles may activate or constrain them, but must not duplicate a second cognition state machine. Legacy RootScope APIs may remain for compatibility but are not sufficient proof for controlled finalization."
   },
   "cognition_case_transaction":{
     "executable_ref":"src/uaos/kernel/cognition_case.py#require_cognition_case_admission",
