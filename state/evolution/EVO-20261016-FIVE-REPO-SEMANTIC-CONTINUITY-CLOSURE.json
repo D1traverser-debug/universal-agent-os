@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261016-FIVE-REPO-SEMANTIC-CONTINUITY-CLOSURE",
-  "status":"CANDIDATE",
+  "status":"OBSERVATION_COMPLETE_FIVE_REPO_CLOSURE",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T17:37:00+08:00",
+  "updated_at":"2026-10-16T18:32:56+08:00",
   "trigger":["USER_CORRECTION","CONTROLLER_RESUME_FAILURE","CROSS_REPOSITORY_BINDING_DRIFT"],
   "failure_class":"FC-CONTROLLER-MAINTENANCE-RESUME-AND-CHILD-COGNITION-CONFORMANCE-001",
   "symptom":"After bare inheritance the user selected 总控系统 expecting continuation of an in-flight five-repository maintenance audit, but only authority_context=UAOS was restored and the assistant incorrectly reported that no current maintenance task existed. Audit then found Financial, A-share and Video active Skills still carried a stale universal parent cognition/external-research floor while their capability profiles declared current hosted cognition with local_overrides=NONE.",
@@ -26,14 +26,15 @@
     {"step":"fresh chat bootstrap","expected":"derive selector from current authority","observed":"PASS"},
     {"step":"select 总控系统","expected":"restore UAOS and any single default resumable controller maintenance scope","observed_before_repair":"FAIL__restored only authority_context and lost in-flight scope"},
     {"step":"recover exact work","expected":"reread durable controller state instead of chat memory","observed_before_repair":"FAIL__required user correction and reconstruction"},
-    {"step":"candidate repair","expected":"persist controller task in existing TASK_INDEX/state/tasks and make SYSTEM_MAINTENANCE resolve it","observed_candidate":"IMPLEMENTED_PENDING_FULL_CI"}
+    {"step":"promoted repair","expected":"persist controller task in existing TASK_INDEX/state/tasks and make SYSTEM_MAINTENANCE resolve it","observed":"PASS__PARENT_PR_57_MERGED_AND_PRODUCTION_REREAD"},
+    {"step":"post-completion selector hygiene","expected":"completed maintenance no longer default-resumes","observed":"CLOSURE_CANDIDATE_SETS_COMPLETE_AND_RESUME_ELIGIBLE_FALSE"}
   ],
   "cross_repository_findings":[
-    {"repository":"financial-writing-agent","finding":"active UAOS_SKILL froze universal problem/external-research prose while CAPABILITIES declared CURRENT_UAOS_DELIBERATION_POLICY with local_overrides=NONE","repair":"pointer-only parent cognition section; preserve Financial owner-native gates"},
-    {"repository":"a-share-event-driven-agent","finding":"active UAOS_SKILL froze universal problem/external-research prose while CAPABILITIES declared pointer-only hosted cognition","repair":"pointer-only parent cognition section; preserve A-share owner-native gates"},
-    {"repository":"novel-writing-agent","finding":"no equivalent stale universal floor found; explicit pointer was missing","repair":"add explicit current DELIBERATION_POLICY pointer as control/conformance normalization"},
-    {"repository":"video-growth-agent","finding":"active UAOS_SKILL froze current-problem-response-floor and every-problem research language while CAPABILITIES declared pointer-only hosted cognition","repair":"pointer-only parent cognition section; preserve Video owner-native gates"},
-    {"repository":"universal-agent-os","finding":"binding validator and controller-maintenance resume path did not enforce the claimed semantics","repair":"Skill conformance guard plus persisted controller maintenance resolution and regression tests"}
+    {"repository":"financial-writing-agent","finding":"active UAOS_SKILL froze universal problem/external-research prose while CAPABILITIES declared CURRENT_UAOS_DELIBERATION_POLICY with local_overrides=NONE","repair":"pointer-only parent cognition section; preserve Financial owner-native gates","promotion":"PR_44_MERGED_OWNER_CI_PASS"},
+    {"repository":"a-share-event-driven-agent","finding":"active UAOS_SKILL froze universal problem/external-research prose while CAPABILITIES declared pointer-only hosted cognition","repair":"pointer-only parent cognition section; preserve A-share owner-native gates","promotion":"PR_15_MERGED_OWNER_CI_PASS"},
+    {"repository":"novel-writing-agent","finding":"no equivalent stale universal floor found; explicit pointer was missing","repair":"add explicit current DELIBERATION_POLICY pointer as control/conformance normalization","promotion":"PR_9_MERGED_OWNER_CI_PASS"},
+    {"repository":"video-growth-agent","finding":"active UAOS_SKILL froze current-problem-response-floor and every-problem research language while CAPABILITIES declared pointer-only hosted cognition","repair":"pointer-only parent cognition section; preserve Video owner-native gates","promotion":"PR_21_MERGED_OWNER_CI_PASS"},
+    {"repository":"universal-agent-os","finding":"binding validator and controller-maintenance resume path did not enforce the claimed semantics","repair":"Skill conformance guard plus persisted controller maintenance resolution and regression tests","promotion":"PR_57_MERGED_CI_250_PASS_LIVE_INTEGRATION_75_PASS"}
   ],
   "local_verification":{
     "workspace":"/mnt/data/uaos-five-repo-audit",
@@ -53,6 +54,22 @@
     "novel-writing-agent":"architecture/uaos-pointer-only-cognition-20261016",
     "video-growth-agent":"architecture/uaos-pointer-only-cognition-20261016"
   },
-  "promotion":{"status":"PENDING_PULL_REQUEST_AND_OWNER_APPROPRIATE_CI"},
+  "promotion":{
+    "status":"PROMOTED_AND_PRODUCTION_REREAD",
+    "parent_pr":57,
+    "parent_candidate_head":"47b539cb3decd2d84ae056fdd2cd8cef5e2160e8",
+    "parent_merge_commit":"ead50c388bc28873e014f512aff6d5fb412aa622",
+    "ci":{"run_number":250,"run_id":38887820268,"result":"PASS"},
+    "live_integration":{"run_number":75,"run_id":38887820280,"result":"PASS"},
+    "child_prs":{"financial":44,"ashare":15,"novel":9,"video":21},
+    "production_reread":"PASS"
+  },
+  "post_promotion_observation":{
+    "parent_main_entrypoint":"UAOS_2_5_3_BOOTSTRAP_AND_CONTROLLER_RESUME_CONTRACT_PRESENT",
+    "parent_main_current_system":"UAOS_2_5_3_BINDING_AND_CONTROLLER_CONTINUITY_ASSURANCE_PRESENT",
+    "child_main_skills":"FOUR_REGISTERED_CHILDREN_REREAD__CURRENT_DELIBERATION_POINTER_PRESENT__NO_CONFIRMED_STALE_UNIVERSAL_FLOOR_REMAINS",
+    "controller_task_retirement":"CLOSURE_CANDIDATE_MARKS_COMPLETE_AND_REMOVES_DEFAULT_RESUME",
+    "recommendation":"KEEP_AS_CURRENT_FIVE_REPO_BASELINE"
+  },
   "remaining_observation":"The Skill semantic guard is deliberately narrow to the confirmed stale universal-cognition failure class; it does not claim general natural-language equivalence detection. Native ChatGPT pre-send/physical complete mediation remains outside the verified assurance boundary."
 }
