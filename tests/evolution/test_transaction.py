@@ -26,7 +26,7 @@ from uaos.kernel.problem_space import CapabilityDiscoveryReceipt, DiscoveryLens
 def depth(*, novelty=("probe:unknown-signal",), stretch=None, feasibility=()):
     return EvolutionDepthTrace(
         governing_outcome="discover useful missing capabilities before incidents",
-        raw_evidence_refs=("raw:repo", "raw:runtime"),
+        raw_evidence_refs=("evidence:workflow-scan", "raw:runtime"),
         professional_method_refs=("method:nist-monitoring", "method:atam"),
         external_judge_refs=("judge:ci", "judge:holdout"),
         novelty_probe_refs=novelty,
@@ -116,7 +116,7 @@ def test_stretch_target_is_search_constraint_not_unverified_assertion():
 def test_capability_gap_requires_broad_discovery_and_novelty_probe():
     no_novelty = EvolutionTransaction(
         "evo:no-novelty",
-        EvolutionOrigin(EvolutionOriginKind.CAPABILITY_GAP, ("gap:x",), ("evidence:x",)),
+        EvolutionOrigin(EvolutionOriginKind.CAPABILITY_GAP, ("gap:x",), ("evidence:workflow-scan",)),
         depth(novelty=()),
     )
     with pytest.raises(EvolutionTransactionError, match="novelty"):
@@ -138,6 +138,24 @@ def test_proposal_cannot_invent_gap_not_present_in_discovery():
         admit_proposal(discovered, proposal(gap_ids=("gap:invented",)))
 
 
+def test_evaluation_must_use_declared_external_judge():
+    discovered = admit_discovery(tx(), discovery())
+    proposed = admit_proposal(discovered, proposal())
+    bad = EvaluationResult(
+        "eval:no-judge",
+        "p:proactive-evolution",
+        ("scenario:proactive-gap-to-promotion",),
+        {"x": 1.0},
+        {"x": 0.0},
+        {"passes": True},
+        (),
+        True,
+        ("test:self-claim",),
+    )
+    with pytest.raises(EvolutionTransactionError, match="external/independent judge"):
+        admit_evaluation(proposed, (bad,), budget=ComplexityBudget())
+
+
 def test_transaction_cannot_skip_discovery_or_evaluation():
     with pytest.raises(EvolutionTransactionError, match="expected stage"):
         admit_proposal(tx(), proposal())
@@ -153,6 +171,7 @@ def test_proactive_evolution_reaches_observation_only_through_full_transaction()
     current = admit_evaluation(current, (evaluation(),), budget=ComplexityBudget())
     current = authorize(current)
     current = record_promotion(current, execution_evidence_refs=("execution:pr-merge",))
+    assert current.execution_evidence_refs == ("execution:pr-merge",)
     current = observe(
         current,
         (
