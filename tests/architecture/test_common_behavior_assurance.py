@@ -30,17 +30,19 @@ def test_financial_parent_guidance_is_resolved_as_common_outcomes_not_financial_
     assert "FORCE_FINANCIAL_WRITINGS_EXACT_RECOVERY_ORDER_ON_OTHER_DOMAINS" in policy["recover_before_user_escalation"]["forbidden"]
 
 
-def test_problem_cognition_transaction_prevents_user_external_or_first_fix_anchoring():
+def test_common_behavior_keeps_cognition_invariants_without_duplicating_the_state_machine():
     policy = _json("config/COMMON_BEHAVIOR_ASSURANCE.json")
     transaction = policy["problem_cognition_action_transaction"]
-    rules = "\n".join(transaction["rules"]).lower()
-    assert "user correction" in rules
-    assert "external skill" in rules
-    assert "first available edit" in rules
-    assert "at least two layers" in rules
-    assert "architecture/upstream" in rules
-    assert "evolution/learning disposition" in rules
-    assert transaction["ordered_stages"].index("ROOT_SCOPE_ADMISSION") < transaction["ordered_stages"].index("REPAIR_REDESIGN_OR_NO_CHANGE")
+    assert transaction["canonical_cognition_policy_ref"] == "config/DELIBERATION_POLICY.json#cognition_kernel"
+    assert "ordered_stages" not in transaction
+    assert "rules" not in transaction
+    invariants = "\n".join(transaction["required_cross_domain_invariants"]).lower()
+    assert "user/external/first-fix" in invariants
+    assert "root scope precedes repair" in invariants
+    assert "evolution/learning disposition" in invariants
+    assert "durable causal evidence" in invariants
+    assert "recommendation-only" in invariants
+    assert "do not copy a second parent cognition state machine" in transaction["owner_native_rule"].lower()
 
 
 def test_declaration_is_not_operational_proof_and_user_escalation_has_safe_boundary():
