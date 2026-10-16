@@ -20,6 +20,21 @@ def _version_tuple(value: str) -> tuple[int, ...]:
     return parts
 
 
+def _controller_value(payload: Mapping[str, Any]) -> Any:
+    """Return the semantic parent-controller binding without forcing child schema identity."""
+    return payload.get("controller", payload.get("parent_control_plane"))
+
+
+def _binding_status(payload: Mapping[str, Any]) -> Any:
+    """Separate control-plane binding health from an owner-native work-plane status."""
+    return payload.get("binding_status", payload.get("status"))
+
+
+def _controller_ref(binding: Mapping[str, Any]) -> Any:
+    """Accept the canonical controller_ref or the established parent_system_ref alias."""
+    return binding.get("controller_ref", binding.get("parent_system_ref"))
+
+
 @dataclass(frozen=True, slots=True)
 class BindingPolicy:
     controller: str
@@ -61,28 +76,33 @@ class BindingPolicy:
     ) -> None:
         """Fail closed when a registered child cannot inherit current UAOS semantics.
 
-        The binding contract intentionally validates both structural pointers and the
-        minimum common-capability handshake.  Parent cognition semantics are owned by
-        DELIBERATION_POLICY; children may point to that owner but must not freeze a
-        competing copy of the problem-response algorithm in CAPABILITIES.json.
+        The handshake validates semantic authority/binding invariants, not byte-for-byte
+        child schema identity. A child may retain an owner-native work-plane ``status``
+        when it exposes ``binding_status`` for the parent handshake. Likewise, the
+        established ``parent_control_plane``/``parent_system_ref`` aliases are accepted
+        when they resolve to the same current UAOS authority.
+
+        Parent cognition semantics are owned by DELIBERATION_POLICY; children may point
+        to that owner but must not freeze a competing copy of the problem-response
+        algorithm in CAPABILITIES.json.
         """
 
         errors: list[str] = []
         domain_id = str(registry_entry.get("domain_id", "")).strip()
 
-        if adapter.get("controller") != self.controller:
+        if _controller_value(adapter) != self.controller:
             errors.append("adapter controller")
-        if adapter.get("status") != self.required_adapter_status:
-            errors.append("adapter status")
-        if manifest.get("controller") != self.controller:
+        if _binding_status(adapter) != self.required_adapter_status:
+            errors.append("adapter binding status")
+        if _controller_value(manifest) != self.controller:
             errors.append("manifest controller")
-        if manifest.get("status") != self.required_manifest_status:
-            errors.append("manifest status")
+        if _binding_status(manifest) != self.required_manifest_status:
+            errors.append("manifest binding status")
         if manifest.get("skill", {}).get("entrypoint") != registry_entry.get("skill_ref"):
             errors.append("skill entrypoint")
 
         binding = manifest.get("binding", {})
-        if binding.get("controller_ref") != self.controller_ref:
+        if _controller_ref(binding) != self.controller_ref:
             errors.append("manifest controller ref")
         if binding.get("adapter_ref") != registry_entry.get("uaos_adapter_ref"):
             errors.append("manifest adapter ref")
