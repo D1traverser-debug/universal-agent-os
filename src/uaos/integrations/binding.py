@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping
@@ -33,6 +34,29 @@ def _binding_status(payload: Mapping[str, Any]) -> Any:
 def _controller_ref(binding: Mapping[str, Any]) -> Any:
     """Accept the canonical controller_ref or the established parent_system_ref alias."""
     return binding.get("controller_ref", binding.get("parent_system_ref"))
+
+
+_DELIBERATION_POLICY_MARKER = "config/DELIBERATION_POLICY.json"
+_SKILL_COGNITION_COPY_PATTERNS = (
+    re.compile(
+        r"\bevery detected (?:problem|defect)\b.{0,320}\b(?:external research|research/verification|method/architecture research)\b",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    re.compile(r"\binherits the current uaos problem-response floor\b", re.IGNORECASE),
+    re.compile(r"\bproblem size changes depth, not activation\b", re.IGNORECASE),
+)
+
+
+def _skill_copies_parent_cognition(skill_text: str) -> bool:
+    """Detect the known stale-parent-cognition failure class in active child Skills.
+
+    This is intentionally a narrow conformance guard, not a natural-language policy
+    engine. The authoritative cognition algorithm remains DELIBERATION_POLICY. The
+    guard blocks universal research/floor prose that previously survived while the
+    capability profile simultaneously claimed pointer-only hosted cognition.
+    """
+
+    return any(pattern.search(skill_text) for pattern in _SKILL_COGNITION_COPY_PATTERNS)
 
 
 @dataclass(frozen=True, slots=True)
@@ -84,7 +108,7 @@ class BindingPolicy:
 
         Parent cognition semantics are owned by DELIBERATION_POLICY; children may point
         to that owner but must not freeze a competing copy of the problem-response
-        algorithm in CAPABILITIES.json.
+        algorithm in either CAPABILITIES.json or the active UAOS Skill.
         """
 
         errors: list[str] = []
@@ -160,6 +184,7 @@ class BindingPolicy:
             for key in ("problem_response_floor", "problem_response_rule")
         )
         hosted_cognition = capabilities.get("hosted_cognition_semantics")
+        pointer_only_cognition = False
         if hosted_cognition is not None:
             claims_adaptive = True
             if not isinstance(hosted_cognition, Mapping):
@@ -169,11 +194,16 @@ class BindingPolicy:
                     errors.append("capability cognition source")
                 if "rule" in hosted_cognition or "problem_response_floor" in hosted_cognition:
                     errors.append("capability duplicated cognition semantics")
+                pointer_only_cognition = hosted_cognition.get("local_overrides") == "NONE"
         if copied_cognition:
             claims_adaptive = True
             errors.append("capability duplicated cognition semantics")
         if claims_adaptive and capabilities.get("uaos_deliberation_policy_ref") != self.deliberation_policy_ref:
             errors.append("capability deliberation policy ref")
+        if claims_adaptive and _DELIBERATION_POLICY_MARKER not in skill_text:
+            errors.append("skill deliberation policy marker")
+        if pointer_only_cognition and _skill_copies_parent_cognition(skill_text):
+            errors.append("skill duplicated cognition semantics")
 
         if errors:
             raise DomainBindingDrift("domain binding drift: " + ", ".join(errors))

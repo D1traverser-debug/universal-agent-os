@@ -53,11 +53,44 @@ def _eligible(candidate: TaskCandidate) -> bool:
     return candidate.resume_eligible and candidate.status not in {TaskStatus.COMPLETE, TaskStatus.CANCELLED}
 
 
+def _select_resume_candidate(eligible: list[TaskCandidate]) -> TaskCandidate:
+    defaults = [candidate for candidate in eligible if candidate.default_resume]
+    if len(defaults) == 1:
+        return defaults[0]
+    if len(defaults) > 1:
+        raise AmbiguousControlTarget("multiple default-resume tasks match")
+    if len(eligible) == 1:
+        return eligible[0]
+    if not eligible:
+        raise ControlResolutionError("no resumable task matches the control request")
+    raise AmbiguousControlTarget("multiple resumable tasks match; exact task identity is required")
+
+
 def resolve_control_target(command: ControlCommand, candidates: tuple[TaskCandidate, ...]) -> ControlResolution:
     if command.intent is IntentType.NEW_TASK:
         return ControlResolution("CREATE_NEW", scope=command.domain_hint)
+
     if command.intent is IntentType.SYSTEM_MAINTENANCE:
+        maintenance = [
+            candidate
+            for candidate in candidates
+            if _eligible(candidate) and candidate.owner_domain == "UAOS"
+        ]
+        if command.task_id_hint:
+            exact = [candidate for candidate in maintenance if candidate.task_id == command.task_id_hint]
+            if len(exact) != 1:
+                raise ControlResolutionError(
+                    f"requested controller maintenance task is not uniquely resumable: {command.task_id_hint}"
+                )
+            selected = exact[0]
+            return ControlResolution("MAINTENANCE", task_id=selected.task_id, scope="UAOS")
+        if command.task_type_hint:
+            maintenance = [candidate for candidate in maintenance if candidate.task_type == command.task_type_hint]
+        if maintenance:
+            selected = _select_resume_candidate(maintenance)
+            return ControlResolution("MAINTENANCE", task_id=selected.task_id, scope="UAOS")
         return ControlResolution("MAINTENANCE", scope=command.domain_hint or "GLOBAL")
+
     if command.intent is IntentType.QUERY and command.task_id_hint is None:
         return ControlResolution("QUERY", scope=command.domain_hint or "GLOBAL")
 
@@ -73,17 +106,7 @@ def resolve_control_target(command: ControlCommand, candidates: tuple[TaskCandid
     if command.task_type_hint:
         eligible = [candidate for candidate in eligible if candidate.task_type == command.task_type_hint]
 
-    defaults = [candidate for candidate in eligible if candidate.default_resume]
-    if len(defaults) == 1:
-        selected = defaults[0]
-    elif len(defaults) > 1:
-        raise AmbiguousControlTarget("multiple default-resume tasks match")
-    elif len(eligible) == 1:
-        selected = eligible[0]
-    elif not eligible:
-        raise ControlResolutionError("no resumable task matches the control request")
-    else:
-        raise AmbiguousControlTarget("multiple resumable tasks match; exact task identity is required")
+    selected = _select_resume_candidate(eligible)
     return ControlResolution(command.intent.value, task_id=selected.task_id, scope=selected.owner_domain)
 
 

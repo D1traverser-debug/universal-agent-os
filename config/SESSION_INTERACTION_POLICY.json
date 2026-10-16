@@ -1,12 +1,21 @@
 {
-  "schema_version":"1.9",
-  "policy_version":"1.9.0",
+  "schema_version":"2.0",
+  "policy_version":"2.0.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T10:09:00+08:00",
+  "updated_at":"2026-10-16T17:37:00+08:00",
   "bare_inheritance_selector":{
     "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
-    "controller_option":{"option_id":"uaos:controller","display_name_zh":"总控系统","intent":"SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY","creates_business_task":false,"authority_context":"UAOS"},
-    "task_source":"state/TASK_INDEX.json",
+    "controller_option":{
+      "option_id":"uaos:controller",
+      "display_name_zh":"总控系统",
+      "intent":"SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY",
+      "creates_business_task":false,
+      "authority_context":"UAOS",
+      "controller_task_source":"state/TASK_INDEX.json#controller_tasks",
+      "on_select":"ESTABLISH_UAOS__THEN_RESOLVE_ONE_UNAMBIGUOUS_ELIGIBLE_DEFAULT_CONTROLLER_TASK_IF_PRESENT__ELSE_REMAIN_AT_CONTROLLER_ROOT",
+      "state_rule":"WHEN_A_CONTROLLER_TASK_IS_SELECTED_REREAD_ITS_state_ref_BEFORE_REPORTING_PROGRESS_OR_ACTING"
+    },
+    "task_source":"state/TASK_INDEX.json#tasks",
     "include_task_when":"resume_eligible == true",
     "ordering":["controller_option_first","RUNNING_default_resume_tasks","HOLD_default_resume_tasks","explicit_only_resume_tasks"],
     "display_fields":["display_name_zh","task_id","domain_id","status","current_stage","default_resume_within_domain"],
@@ -15,8 +24,22 @@
       "Selecting an option does not create or mutate aliases.",
       "Explicit-only or HOLD tasks must be visibly labelled and never silently selected by a bare inheritance request.",
       "Once an option is selected, continue with normal authority loading and freshness checks.",
-      "Selecting a domain task establishes authority_context=DOMAIN:<domain_id>; selecting controller establishes authority_context=UAOS."
+      "Selecting a domain task establishes authority_context=DOMAIN:<domain_id>; selecting controller establishes authority_context=UAOS.",
+      "Selecting controller is not equivalent to discarding current controller work. If controller_tasks contains exactly one eligible default_resume task, resume it and reread its state_ref. Multiple default controller tasks fail closed; no eligible controller task leaves the session at the UAOS controller root.",
+      "Controller maintenance tasks are nested under the controller option and are not rendered again as domain task choices."
     ]
+  },
+  "controller_maintenance_continuity":{
+    "authority":"UAOS",
+    "index_ref":"state/TASK_INDEX.json#controller_tasks",
+    "state_root":"state/tasks",
+    "task_owner_value":"UAOS",
+    "resumable_task_type":"controller_maintenance",
+    "persistence_admission":"WHEN_SYSTEM_MAINTENANCE_IS_MATERIAL_OR_EXPECTED_TO_SPAN_MULTIPLE_TURNS_OR_SESSIONS__CREATE_OR_UPDATE_A_CONTROLLER_TASK_INDEX_ENTRY_AND_EXACT_state_ref_BEFORE_RELYING_ON_CHAT_CONTEXT",
+    "non_persistent_cases":["READ_ONLY_CONTROLLER_QUERY","TRIVIAL_ONE_TURN_MAINTENANCE_WITH_NO_MATERIAL_SIDE_EFFECT_OR_RESUME_RISK"],
+    "selection_rule":"EXACT_CONTROLLER_TASK_ID_WINS__ELSE_ONE_ELIGIBLE_default_resume_WINS__ELSE_ONE_ELIGIBLE_TASK_WINS__MULTIPLE_MATCHES_FAIL_CLOSED__NONE_RETURNS_CONTROLLER_ROOT",
+    "completion_rule":"COMPLETE_OR_CANCELLED_CONTROLLER_TASKS_MUST_NOT_REMAIN_resume_eligible_OR_default_resume; historical state may remain as evidence.",
+    "anti_duplication":"REUSE_TASK_INDEX_AND_state/tasks__DO_NOT_CREATE_A_SECOND_CONTROLLER_INDEX_LEASE_RESUME_EPOCH_OR_PARALLEL_CONTINUITY_PROTOCOL"
   },
   "domain_session_activation":{
     "model":"DIRECT_DOMAIN_WORK_PLANE_WITH_PARENT_CONTROL_PLANE",

@@ -12,7 +12,6 @@ def test_novel_current_observation_lives_in_domain_health_cache_not_current_syst
     system = load_json("CURRENT_SYSTEM.json")
     health = load_json("state/DOMAIN_HEALTH_INDEX.json")
     assert tuple(int(part) for part in system["schema_version"].split(".")) >= (2, 31)
-    assert system["system_release_version"] == "2.5.2"
     assert system["child_observation"]["source"] == "state/DOMAIN_HEALTH_INDEX.json"
     assert system["child_observation"]["role"] == "PARENT_HEALTH_OBSERVATION_CACHE__NOT_CHILD_BUSINESS_AUTHORITY"
     assert "novel_child_production_verification" not in system

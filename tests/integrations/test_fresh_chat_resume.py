@@ -2,12 +2,14 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
+import pytest
+
 from uaos.contracts.enums import IntentType, TaskStatus
 from uaos.integrations import BindingPolicy
-from uaos.kernel import ControlCommand, TaskCandidate, resolve_control_target
+from uaos.kernel import AmbiguousControlTarget, ControlCommand, TaskCandidate, resolve_control_target
 
 ROOT = Path(__file__).resolve().parents[2]
-NOW = datetime(2026, 10, 14, tzinfo=UTC)
+NOW = datetime(2026, 10, 16, tzinfo=UTC)
 
 
 def _load_json(path: str):
@@ -16,7 +18,7 @@ def _load_json(path: str):
 
 def _candidates_from_index():
     index = _load_json("state/TASK_INDEX.json")
-    return tuple(
+    domain_candidates = [
         TaskCandidate(
             task_id=item["task_id"],
             owner_domain=item["domain_id"],
@@ -27,7 +29,20 @@ def _candidates_from_index():
             default_resume=item["default_resume_within_domain"],
         )
         for item in index["tasks"]
-    )
+    ]
+    controller_candidates = [
+        TaskCandidate(
+            task_id=item["task_id"],
+            owner_domain="UAOS",
+            task_type=item["task_type"],
+            status=TaskStatus(item["status"]),
+            updated_at=NOW,
+            resume_eligible=item["resume_eligible"],
+            default_resume=item["default_resume"],
+        )
+        for item in index.get("controller_tasks", [])
+    ]
+    return tuple(domain_candidates + controller_candidates)
 
 
 def test_domain_level_video_continue_selects_parent_router_without_child_identity_guess():
@@ -46,6 +61,41 @@ def test_domain_level_ashare_continue_selects_parent_router_without_market_day_g
     assert result.task_id == "ashare:main"
 
 
+def test_selecting_controller_resumes_current_default_controller_maintenance_task():
+    result = resolve_control_target(
+        ControlCommand(IntentType.SYSTEM_MAINTENANCE),
+        _candidates_from_index(),
+    )
+    assert result.mode == "MAINTENANCE"
+    assert result.scope == "UAOS"
+    assert result.task_id == "uaos:maintenance:five-repo-semantic-continuity-closure-20261016"
+
+
+def test_controller_maintenance_without_persisted_task_remains_at_controller_root():
+    domain_only = tuple(candidate for candidate in _candidates_from_index() if candidate.owner_domain != "UAOS")
+    result = resolve_control_target(ControlCommand(IntentType.SYSTEM_MAINTENANCE), domain_only)
+    assert result.mode == "MAINTENANCE"
+    assert result.task_id is None
+    assert result.scope == "GLOBAL"
+
+
+def test_multiple_default_controller_tasks_fail_closed():
+    maintenance = TaskCandidate(
+        task_id="uaos:maintenance:other",
+        owner_domain="UAOS",
+        task_type="controller_maintenance",
+        status=TaskStatus.RUNNING,
+        updated_at=NOW,
+        resume_eligible=True,
+        default_resume=True,
+    )
+    with pytest.raises(AmbiguousControlTarget):
+        resolve_control_target(
+            ControlCommand(IntentType.SYSTEM_MAINTENANCE),
+            _candidates_from_index() + (maintenance,),
+        )
+
+
 def test_aliases_are_hints_not_phrase_grammar():
     policy = _load_json("config/INTENT_RESOLUTION_POLICY.json")
     index = _load_json("state/TASK_INDEX.json")
@@ -54,6 +104,19 @@ def test_aliases_are_hints_not_phrase_grammar():
     assert any("not a phrase grammar" in rule for rule in policy["rules"])
     assert any("Do not add or mutate aliases" in rule for rule in policy["prohibitions"])
     assert "resolution_note" in index
+
+
+def test_controller_option_uses_persisted_controller_task_source_without_second_index():
+    policy = _load_json("config/SESSION_INTERACTION_POLICY.json")
+    selector = policy["bare_inheritance_selector"]
+    controller = selector["controller_option"]
+    continuity = policy["controller_maintenance_continuity"]
+
+    assert controller["controller_task_source"] == "state/TASK_INDEX.json#controller_tasks"
+    assert selector["task_source"] == "state/TASK_INDEX.json#tasks"
+    assert continuity["index_ref"] == "state/TASK_INDEX.json#controller_tasks"
+    assert continuity["state_root"] == "state/tasks"
+    assert "DO_NOT_CREATE_A_SECOND_CONTROLLER_INDEX" in continuity["anti_duplication"]
 
 
 def test_video_has_one_unambiguous_parent_router_and_child_resolution_stays_in_domain():
@@ -151,5 +214,8 @@ def test_fresh_chat_binding_validator_schema_contract_covers_all_registered_doma
             manifest=manifest,
             capabilities=capabilities,
             common_capabilities=common,
-            skill_text=f"Controller: `{policy.controller}`.",
+            skill_text=(
+                f"Controller: `{policy.controller}`.\n"
+                "Parent cognition authority: `config/DELIBERATION_POLICY.json`."
+            ),
         )

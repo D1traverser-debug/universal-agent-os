@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "authority": "UAOS",
   "natural_language_resolution": "SEMANTIC_FIRST",
   "rules": [
@@ -8,9 +8,11 @@
     "Classify intent and domain semantically before resolving task state.",
     "For CONTINUE with an exact current task identity, use that exact task.",
     "For CONTINUE with a resolved domain and exactly one default-resume task in that domain, select that task even when the user's wording does not match any alias.",
+    "For SYSTEM_MAINTENANCE or selection of the UAOS controller option, inspect state/TASK_INDEX.json#controller_tasks: exact controller task identity wins; otherwise one eligible default-resume controller task is resumed; multiple defaults fail closed; no eligible controller task leaves the session at the controller root.",
+    "For material or multi-turn controller maintenance, persist controller identity/progress through the existing state/TASK_INDEX.json#controller_tasks plus state/tasks state_ref before relying on chat context for continuation.",
     "For a bare generic CONTINUE/INHERIT request that resolves to no domain or exact task, do not guess a task: render the current inheritance selector defined by config/SESSION_INTERACTION_POLICY.json.",
     "If the wording semantically identifies a non-default task, require enough evidence to resolve that exact task; otherwise fail closed on ambiguity.",
-    "After task selection, reread the exact domain business authority before any material action."
+    "After task selection, reread the exact domain business authority or controller maintenance state before any material action."
   ],
   "fresh_chat": {
     "bootstrap_chain": [
@@ -26,7 +28,8 @@
     "Do not add or mutate aliases because of one-off colloquial wording.",
     "Do not route by raw keyword overlap alone.",
     "Do not use chat memory, broad search results, or retired controller state as task authority.",
-    "Do not silently default a bare generic inheritance request to whichever task was most recently active."
+    "Do not silently default a bare generic inheritance request to whichever task was most recently active.",
+    "Do not discard a persisted eligible controller maintenance task merely because the user first selected the generic UAOS controller option."
   ],
-  "updated_at": "2026-10-14T08:21:28Z"
+  "updated_at": "2026-10-16T17:37:00+08:00"
 }
