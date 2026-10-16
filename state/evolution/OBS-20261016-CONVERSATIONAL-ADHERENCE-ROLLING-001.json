@@ -1,0 +1,47 @@
+{
+  "schema_version":"1.0",
+  "observation_id":"OBS-20261016-CONVERSATIONAL-ADHERENCE-ROLLING-001",
+  "authority":"UAOS",
+  "related_evolution":"EVO-20261016-CONVERSATIONAL-ADHERENCE-OBSERVABILITY",
+  "baseline_ref":"state/evolution/OBS-20261016-CONVERSATIONAL-ADHERENCE-BASELINE.json",
+  "observed_at":"2026-10-16T11:24:00+08:00",
+  "source":"CURRENT_CHAT_SELECTED_CONTEXT_FINAL_RESPONSE_AFTER_BASELINE_PROMOTION",
+  "sample_policy":"Only completed observable final output is classified. The current in-progress response is not pre-counted. Hidden reasoning is not inferred.",
+  "samples":[
+    {
+      "sample_id":"R1_POST_BASELINE_CONTINUATION",
+      "context_selected":true,
+      "problem_signal_observed":false,
+      "result":"PASS",
+      "violations":[],
+      "observable_evidence":[
+        "all ten Session 1.9 progress-report semantic fields were present",
+        "no observable problem-state contradiction was present",
+        "the response preserved STABILITY_NOT_PROVEN rather than promoting a stability claim"
+      ]
+    }
+  ],
+  "post_baseline_summary":{
+    "sample_count":1,
+    "pass_count":1,
+    "fail_count":0,
+    "missing_report_count":0,
+    "problem_state_contradiction_count":0
+  },
+  "cumulative_with_initial_baseline":{
+    "sample_count":4,
+    "pass_count":3,
+    "fail_count":1,
+    "missing_report_count":1,
+    "problem_state_contradiction_count":0,
+    "raw_adherence_rate":0.75
+  },
+  "interpretation":"This adds one post-baseline observable pass. The cumulative raw rate is descriptive only and remains unsuitable as a stability estimate because the sample is tiny, non-random and includes the known incident that triggered observability work.",
+  "hypothesis_update":{
+    "H1_TRANSIENT_MODEL_ADHERENCE_SLIP":"STILL_PLAUSIBLE",
+    "H3_SESSION_MEDIATED_ENFORCEMENT_INSUFFICIENT":"NOT_ESTABLISHED",
+    "reason":"No second post-observability escape has yet been observed. One subsequent pass does not prove H1, but it also provides no new support for escalating H3."
+  },
+  "architecture_disposition":"NO_ARCHITECTURE_CHANGE",
+  "next_evidence_needed":"Classify the next completed selected-context response. A repeated post-observability escape would be materially stronger evidence than additional clean passes."
+}
