@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -9,41 +8,28 @@ def load(path: str):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
-def version_tuple(value: str) -> tuple[int, ...]:
-    return tuple(int(part) for part in value.split("."))
-
-
-def test_parent_observes_current_video_head_and_keeps_old_release_historical():
+def test_parent_video_observation_is_cache_only_and_current_system_has_no_child_snapshot_copy():
     current = load("CURRENT_SYSTEM.json")
     health = load("state/DOMAIN_HEALTH_INDEX.json")
 
     assert current["system_release_version"] == "2.5.2"
-    assert current["video_binding_assurance"].startswith("CURRENT_CHILD_OBSERVATION_IN_state/DOMAIN_HEALTH_INDEX.json")
-    assert "VIDEO_0_8_0_PROFILE_10" in current["video_binding_assurance"]
-    assert "COMMON_BEHAVIOR_1_3_OWNER_NATIVE" in current["video_binding_assurance"]
-    assert "CURRENT_CHILD_FRESHNESS_RESOLVED_FROM_DOMAIN_HEALTH_INDEX" in current["parent_core_assurance"]
+    assert current["child_observation"]["source"] == "state/DOMAIN_HEALTH_INDEX.json"
+    assert current["child_observation"]["freshness_rule"].startswith("CURRENT_CHILD_AUTHORITY_ALWAYS_WINS")
+    assert "video_binding_assurance" not in current
+    assert "video_child_production_verification" not in current
 
-    observed = current["video_child_production_verification"]
-    assert observed["observation_role"] == "CURRENT_CHILD_HEAD_OBSERVATION__NOT_IMMUTABLE_RELEASE_CERTIFICATE"
-    assert observed["release"] == "0.8.0"
-    assert observed["profile_version"] >= 10
-    assert observed["profile_version"] == health["domains"]["video"]["observed_profile_version"]
-    assert version_tuple(observed["common_capabilities_contract_min"]) >= (1, 6, 0)
-    assert version_tuple(observed["common_behavior_assurance_min"]) >= (1, 3, 0)
-    assert observed["current_main_commit"] == health["domains"]["video"]["observed_main_commit"]
-    assert observed["current_production_ci_run"] == health["domains"]["video"]["production_ci"]["run_id"]
-    assert observed["current_production_ci_number"] == health["domains"]["video"]["production_ci"]["run_number"]
-    assert observed["result"] == "PASS"
-    assert "LIVE_EPISODE_GROWTH_IP_COMMERCIAL_OUTCOME_OPEN" in observed["assurance"]
-    assert "historical" in observed["historical_verified_release_ref"].lower()
-    assert "H1_SCULPTURAL_MASSING_V2" in observed["business_cursor_preserved"]
-    assert "A2_POSITIVE_MORPH_NEXT" in observed["business_cursor_preserved"]
-    assert "PILOT_002_REJECTION_AND_PROCESS_INVALID_EVIDENCE_PRESERVED" in observed["business_cursor_preserved"]
+    observed = health["domains"]["video"]
+    assert observed["repository"] == "D1traverser-debug/video-growth-agent"
+    assert observed["observed_release"] == "0.8.0"
+    assert observed["observed_profile_version"] >= 10
+    assert observed["common_behavior_assurance_min"] == "1.3.0"
+    assert observed["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
 
 
 def test_parent_keeps_one_video_router_and_does_not_mirror_child_business_state():
     index = load("state/TASK_INDEX.json")
     task = load("state/tasks/video-main.json")
+    current = load("CURRENT_SYSTEM.json")
 
     video_tasks = [item for item in index["tasks"] if item.get("domain_id") == "video"]
     assert len(video_tasks) == 1
@@ -60,7 +46,8 @@ def test_parent_keeps_one_video_router_and_does_not_mirror_child_business_state(
     assert "NO_PARENT_BUSINESS_PROJECT_SELECTION" in task["generic_resolution_rule"]
     assert "REREAD_CURRENT_VIDEO_DOMAIN_BINDING_BEFORE_DELEGATION" in task["freshness_rule"]
 
-    serialized = json.dumps(task, ensure_ascii=False)
-    assert "H1_SCULPTURAL_MASSING_V2" not in serialized
-    assert "pilot-002" not in serialized.lower()
-    assert "0.7.0" not in serialized
+    serialized_task = json.dumps(task, ensure_ascii=False)
+    serialized_current = json.dumps(current, ensure_ascii=False)
+    for text in (serialized_task, serialized_current):
+        assert "H1_SCULPTURAL_MASSING_V2" not in text
+        assert "pilot-002" not in text.lower()

@@ -2,7 +2,7 @@
   "schema_version": "1.1",
   "authority": "UAOS",
   "role": "PARENT_HEALTH_OBSERVATION_CACHE__NOT_CHILD_BUSINESS_AUTHORITY",
-  "updated_at": "2026-10-16T08:55:00+08:00",
+  "updated_at": "2026-10-16T17:25:01+08:00",
   "policy_ref": "config/DOMAIN_HEALTH_ESCALATION_POLICY.json",
   "rules": [
     "Current child authority always wins over this cache.",
@@ -13,48 +13,48 @@
   "domains": {
     "financial_writing": {
       "repository": "D1traverser-debug/financial-writing-agent",
-      "observed_main_commit": "1ea0d7cbd126a3267aeef63400d02f07ff01c6af",
-      "observed_release": "1.0.1",
-      "observed_profile_version": 19,
-      "observed_capability_updated_at": "2026-10-16T08:39:00+08:00",
-      "production_ci": {"run_id": 38831837910, "run_number": 1202, "conclusion": "success"},
+      "observed_main_commit": "29b778744edd8e306b64587078464c11c4e17acc",
+      "observed_release": "1.0.2",
+      "observed_profile_version": 21,
+      "observed_capability_updated_at": "2026-10-16T16:19:38+08:00",
+      "production_ci": {"run_id": 38878799047, "run_number": 1294, "conclusion": "success"},
       "common_behavior_assurance_min": "1.3.0",
-      "common_behavior_assurance": "OWNER_NATIVE_SINGLE_DECISION_ENVELOPE_ROOT_SCOPE_MODEL__EVIDENCE_GROUNDED_THIN_ACTION_GATE__TYPED_EVOLUTION__PRODUCTION_CI_VERIFIED__LIVE_ARTICLE_OBSERVATION_OPEN",
+      "common_behavior_assurance": "OWNER_NATIVE_SINGLE_DECISION_ENVELOPE_ROOT_SCOPE_MODEL__POINTER_ONLY_CURRENT_UAOS_COGNITION__EVIDENCE_GROUNDED_ACTION_GATE__TYPED_EVOLUTION__PRODUCTION_CI_VERIFIED__LIVE_ARTICLE_OBSERVATION_OPEN",
       "canonical_evolution_entrypoint": "evals/EVOLUTION_INDEX.json",
       "findings": []
     },
     "ashare": {
       "repository": "D1traverser-debug/a-share-event-driven-agent",
-      "observed_main_commit": "c40fbe52cc3aeab2cb8f08a45bb33049e6cebde0",
+      "observed_main_commit": "f0c5144586923a3ebbae1a7efed1972aa1256f6a",
       "observed_release": "0.3.0",
-      "observed_profile_version": 7,
-      "observed_capability_updated_at": "2026-10-16T07:13:00+08:00",
-      "production_ci": {"run_id": 38831596335, "run_number": 174, "conclusion": "success"},
+      "observed_profile_version": 8,
+      "observed_capability_updated_at": "2026-10-16T16:19:38+08:00",
+      "production_ci": {"run_id": 38880235687, "run_number": 189, "conclusion": "success"},
       "common_behavior_assurance_min": "1.3.0",
-      "common_behavior_assurance": "OWNER_NATIVE_ROOT_SCOPE__TYPED_EVOLUTION__RECOVERY__REPAIR_OR_BLOCK__STRUCTURED_PARENT_GUIDANCE__PRODUCTION_CI_VERIFIED__LIVE_MARKET_DAY_OBSERVATION_OPEN",
+      "common_behavior_assurance": "OWNER_NATIVE_DIRECT_WORK_PLANE_WITH_EXPLICIT_UAOS_BINDING_STATUS__POINTER_ONLY_CURRENT_UAOS_COGNITION__ROOT_SCOPE__TYPED_EVOLUTION__RECOVERY__REPAIR_OR_BLOCK__PRODUCTION_CI_VERIFIED__LIVE_MARKET_DAY_OBSERVATION_OPEN",
       "canonical_evolution_entrypoint": "audits/EVOLUTION_INDEX.json",
       "findings": []
     },
     "novel": {
       "repository": "D1traverser-debug/novel-writing-agent",
-      "observed_main_commit": "61f465ff36686bf61a0917a5a2061b09f0d9d60f",
-      "observed_profile_version": 6,
-      "observed_capability_updated_at": "2026-10-16T07:13:00+08:00",
-      "production_ci": {"run_id": 38831606755, "run_number": 323, "conclusion": "success"},
+      "observed_main_commit": "911f31b692e6475be26a0221a676b3eb6ce9ce39",
+      "observed_profile_version": 7,
+      "observed_capability_updated_at": "2026-10-16T16:19:38+08:00",
+      "production_ci": {"run_id": 38878759468, "run_number": 326, "conclusion": "success"},
       "common_behavior_assurance_min": "1.3.0",
-      "common_behavior_assurance": "OWNER_NATIVE_ROOT_SCOPE_PLUS_EXISTING_MATERIAL_DELIBERATION__TYPED_EVOLUTION__PROBLEM_ACTION_CLOSURE__PRODUCTION_CI_VERIFIED__LIVE_LITERARY_AND_COMMERCIAL_OBSERVATION_OPEN",
+      "common_behavior_assurance": "OWNER_NATIVE_ROOT_SCOPE_PLUS_EXISTING_MATERIAL_DELIBERATION__POINTER_ONLY_CURRENT_UAOS_COGNITION__TYPED_EVOLUTION__PROBLEM_ACTION_CLOSURE__PRODUCTION_CI_VERIFIED__LIVE_LITERARY_AND_COMMERCIAL_OBSERVATION_OPEN",
       "canonical_evolution_entrypoint": "audits/EVOLUTION_INDEX.json",
       "findings": []
     },
     "video": {
       "repository": "D1traverser-debug/video-growth-agent",
-      "observed_main_commit": "fa2aac50cdb93e66720c2f6fc8b18a43c37ff661",
+      "observed_main_commit": "20cbe7c415b5671f8f38f299aa9715bdb932f952",
       "observed_release": "0.8.0",
-      "observed_profile_version": 10,
-      "observed_capability_updated_at": "2026-10-16T07:13:00+08:00",
-      "production_ci": {"run_id": 38832021414, "run_number": 699, "conclusion": "success"},
+      "observed_profile_version": 11,
+      "observed_capability_updated_at": "2026-10-16T16:19:38+08:00",
+      "production_ci": {"run_id": 38878780056, "run_number": 707, "conclusion": "success"},
       "common_behavior_assurance_min": "1.3.0",
-      "common_behavior_assurance": "OWNER_NATIVE_ROOT_SCOPE__TYPED_EVOLUTION__CURRENT_AGENT_OPERABILITY_DOGFOOD_FOR_SYSTEMIC_MATERIAL_PROBLEMS__PRODUCTION_CI_VERIFIED__LIVE_MEDIA_BUSINESS_OBSERVATION_OPEN",
+      "common_behavior_assurance": "OWNER_NATIVE_ROOT_SCOPE__POINTER_ONLY_CURRENT_UAOS_COGNITION__TYPED_EVOLUTION__CURRENT_AGENT_OPERABILITY_DOGFOOD_FOR_SYSTEMIC_MATERIAL_PROBLEMS__PRODUCTION_CI_VERIFIED__LIVE_MEDIA_BUSINESS_OBSERVATION_OPEN",
       "canonical_evolution_entrypoint": "audits/EVOLUTION_INDEX.json",
       "findings": []
     }
@@ -65,6 +65,12 @@
       "status": "REPAIRED_IN_ALL_FOUR_CHILD_ADOPTION_PATHS__PARENT_GOVERNANCE_RECORDED",
       "finding": "All four child 1.3 adoptions exposed at least one guard/test that treated an evolving capability profile or minimum common-behavior contract as an exact permanent value, creating false-negative CI on legitimate upgrades.",
       "selected_rule": "Use compatibility-floor semantics for fields whose contract is minimum/evolving; retain exact equality for immutable release identities, historical evidence identities and business cursors where exactness is intentional."
+    },
+    {
+      "failure_class": "FC-LIVE-CROSS-REPO-BINDING-DRIFT-HIDDEN-BY-SYNTHETIC-FIXTURE-014",
+      "status": "REPAIRED__LIVE_CHILD_AUTHORITY_REREAD_REQUIRED_FOR_PROMOTION_EVIDENCE",
+      "finding": "A parent-side synthetic fresh-chat fixture passed while A-share production still used owner-native work-plane status/parent field names that the stricter parent validator would have rejected. The repair separates binding_status from child work-plane status and validates semantic authority aliases rather than forcing byte-identical child schemas.",
+      "selected_rule": "Synthetic unit fixtures prove validator behavior only. Cross-repository promotion evidence must reread current child authority; child owner-native schemas may expose equivalent controller/status aliases when binding semantics remain explicit and fail-closed."
     }
   ],
   "open_common_findings": [

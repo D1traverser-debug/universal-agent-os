@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.6",
+  "schema_version":"1.7",
   "contract_version":"1.6.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-15T02:26:00+08:00",
+  "updated_at":"2026-10-16T16:00:00+08:00",
   "inheritance_model":"UAOS_HOSTED_COMMON_CAPABILITIES__DIRECT_DOMAIN_WORK_PLANE__DOMAIN_BUSINESS_LOGIC_IDENTITY_STATE_REMAIN_WITH_OWNER",
   "applies_to":"ALL_AGENTS_REGISTERED_IN_config/AGENT_REGISTRY.json",
   "capabilities":[
@@ -27,16 +27,7 @@
       "capability_id":"domain_internal_work_orchestration",
       "owner":"UAOS_FOR_COMMON_ORCHESTRATION_SEMANTICS__DOMAIN_OWNER_FOR_INTERNAL_TASK_GRAPH_BUSINESS_STATE_AND_DECISIONS",
       "domain_role":"allow one selected domain Agent to decompose business work into independently owned subtasks/workstreams with explicit dependency, concurrency, consultation, competition, revision, synthesis and adjudication relations while the domain remains the single user-facing business owner",
-      "patterns":[
-        "SERIAL_DEPENDENCY",
-        "INDEPENDENT_PARALLEL",
-        "FAN_OUT_FAN_IN",
-        "CONSULTATIVE_ADVICE",
-        "COMPETITIVE_CANDIDATES",
-        "STRUCTURED_CRITIQUE_AND_REVISION",
-        "OWNER_ADJUDICATION",
-        "QUORUM_OR_PANEL_REVIEW"
-      ],
+      "patterns":["SERIAL_DEPENDENCY","INDEPENDENT_PARALLEL","FAN_OUT_FAN_IN","CONSULTATIVE_ADVICE","COMPETITIVE_CANDIDATES","STRUCTURED_CRITIQUE_AND_REVISION","OWNER_ADJUDICATION","QUORUM_OR_PANEL_REVIEW"],
       "rules":[
         "The domain owns its internal work graph, workstream identities, project/program identities, decision receipts and business state. UAOS must not mirror these as parent task identities or become the domain micro-scheduler.",
         "Subtasks may run concurrently when their declared inputs and dependencies are satisfied; unrelated unfinished work must not block them merely because it belongs to an earlier global wave.",
@@ -98,33 +89,27 @@
       "capability_id":"adaptive_deliberation_and_parent_guidance",
       "owner":"UAOS",
       "policy_ref":"config/DELIBERATION_POLICY.json",
-      "domain_role":"for every detected problem, surface symptoms/evidence/unknowns and perform at least lightweight external research plus macro/topology and governing-assumption reflection; request parent guidance when common/cross-domain diagnosis, replanning or architecture support is useful",
-      "problem_response_floor":[
-        "MICRO_DIAGNOSIS",
-        "MACRO_GOAL_AND_TOPOLOGY_ALIGNMENT",
-        "GOVERNING_ASSUMPTION_CHALLENGE",
-        "EXTERNAL_METHOD_OR_ARCHITECTURE_RESEARCH"
-      ],
+      "domain_role":"bind to the current canonical UAOS cognition owner, expose owner-native evidence for the selected risk-adaptive search mode, and request parent guidance when common/cross-domain diagnosis, replanning or architecture support is useful",
+      "inheritance_semantics":"REFERENCE_CURRENT_CANONICAL_OWNER__DO_NOT_COPY_A_LOCAL_PROBLEM_RESPONSE_ALGORITHM",
       "rules":[
-        "Every detected defect, failed/degraded outcome, user correction, contradiction or evidence of unreliable goal satisfaction activates the problem-response floor; familiarity is not a waiver.",
-        "Problem size changes research/reflection depth, not whether research/reflection happens.",
-        "Use micro -> macro -> micro reasoning: diagnose the concrete symptom, challenge goal/assumption/topology, consult relevant external evidence, then return to the smallest correct repair.",
-        "Research must affect or validate the diagnosis/repair; ceremonial browsing does not satisfy the capability.",
-        "Counterexample search and independent verification add depth according to risk and disputed evidence.",
+        "Problem detection is always-on after authority selection, but deliberation depth is selected by the canonical DELIBERATION_POLICY rather than by a child-local fixed research floor.",
+        "LIGHTWEIGHT local/familiar problems do not require ceremonial external research when current evidence is sufficient.",
+        "CONTRASTIVE corrections/change proposals compare competing hypotheses and actions; STRUCTURED systemic/material/high-risk/unknown cases require deeper falsification, architecture/upstream reassessment and external research.",
         "Same-model reflection/debate is candidate generation, not independent verification.",
-        "For material architecture/governance changes and material changes after a trigger signal, required deliberation dimensions are fail-closed admission evidence rather than optional advice.",
+        "Children may add stricter domain-specific evidence requirements when justified, but must not weaken or freeze a competing copy of the parent cognition algorithm.",
         "Do not create a parallel architecture-advisor or debate control plane."
       ]
     },
     {
       "capability_id":"governed_self_evolution",
       "owner":"UAOS_FOR_COMMON_OR_CROSS_DOMAIN_MECHANISMS__DOMAIN_OWNER_FOR_DOMAIN_BUSINESS_RULE_PROMOTION",
-      "lifecycle":"Problem/Incident -> Research+Reflection -> Failure Class -> Change Candidate -> Reproducible Evaluation -> Owner-Scoped Promotion -> Post-Promotion Observation -> Keep/Rollback/Retire",
-      "domain_role":"turn domain problems and user feedback into evidence-bound learning candidates, evaluate generalization and alternatives, promote only domain-owned rules with regression/eval evidence, and upcall common/cross-domain changes to UAOS",
+      "lifecycle":"Problem/Incident OR EVALUATED/CANONICAL Knowledge -> Change Candidate -> Reproducible Evaluation -> Owner-Scoped Promotion -> Post-Promotion Observation -> Keep/Rollback/Retire",
+      "domain_role":"turn domain problems, user feedback and sufficiently mature knowledge into evidence-bound learning candidates, evaluate generalization and alternatives, promote only domain-owned rules with regression/eval evidence, and upcall common/cross-domain changes to UAOS",
       "rules":[
-        "Every detected problem is evaluated for learning/evolution impact after the mandatory research/reflection floor; not every problem must become a durable global rule or release.",
+        "Every detected problem receives an explicit learning/evolution disposition after canonical risk-adaptive cognition; not every problem becomes a durable global rule or release.",
         "Domain-local learning is evidence/candidate generation, not a second controller or unrestricted production rewriter.",
-        "One article or one feedback event may create a candidate but must not silently become a universal writing rule.",
+        "One article, one feedback event or one source may create a candidate but must not silently become a universal rule.",
+        "Evaluated/canonical knowledge may originate a proposal without fabricating an incident, but it uses the same evaluation, complexity, promotion and observation gates.",
         "Cross-domain/common-capability changes are promoted by UAOS; domain-specific business rules remain domain-owned under UAOS lineage.",
         "Repeated failures are repaired at the common failure class/root abstraction and require regression evidence before closure.",
         "Triggered material evolution must expose a durable lifecycle/evaluation record at the owning scope.",

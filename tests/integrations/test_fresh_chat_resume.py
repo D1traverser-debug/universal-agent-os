@@ -3,6 +3,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from uaos.contracts.enums import IntentType, TaskStatus
+from uaos.integrations import BindingPolicy
 from uaos.kernel import ControlCommand, TaskCandidate, resolve_control_target
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -92,3 +93,63 @@ def test_plain_chatgpt_fresh_chat_bootstrap_contract_is_explicit():
     assert bootstrap["deterministic_plain_chatgpt_requires_bootstrap_pointer_unless_host_injects_entrypoint"] is True
     assert bootstrap["pointer_ref"] == "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md"
     assert policy["fresh_chat"]["bootstrap_chain"][0] == "ENTRYPOINT.md"
+
+
+def test_every_registered_domain_has_one_resumable_parent_route():
+    registry_domains = {item["domain_id"] for item in _load_json("config/AGENT_REGISTRY.json")["agents"]}
+    index = _load_json("state/TASK_INDEX.json")
+    resumable_domains = {
+        item["domain_id"]
+        for item in index["tasks"]
+        if item["resume_eligible"] and item["status"] not in {"COMPLETE", "CANCELLED"}
+    }
+    assert registry_domains == resumable_domains
+
+
+def test_fresh_chat_binding_validator_schema_contract_covers_all_registered_domains():
+    """Exercise the parent validator with synthetic contract-conformant payloads.
+
+    This is intentionally NOT evidence that current remote child ``main`` bytes were
+    fetched or validated. Remote child authority is live-audited separately during
+    promotion/runtime. The regression proves only that every registry entry can use
+    the same executable semantic handshake when given conformant owner payloads.
+    """
+
+    registry = _load_json("config/AGENT_REGISTRY.json")["agents"]
+    common = _load_json("config/COMMON_CAPABILITIES.json")
+    policy = BindingPolicy.from_path(ROOT / "config" / "BINDING_POLICY.json")
+    required_common = [item["capability_id"] for item in common["capabilities"]]
+
+    for entry in registry:
+        adapter = {"controller": policy.controller, "status": policy.required_adapter_status}
+        manifest = {
+            "controller": policy.controller,
+            "status": policy.required_manifest_status,
+            "skill": {"entrypoint": entry["skill_ref"]},
+            "binding": {
+                "controller_ref": policy.controller_ref,
+                "adapter_ref": entry["uaos_adapter_ref"],
+                "capability_ref": entry["capability_ref"],
+            },
+        }
+        capabilities = {
+            "domain_id": entry["domain_id"],
+            "uaos_common_capabilities_ref": policy.common_capabilities_ref,
+            "uaos_common_capabilities_contract_min": common["contract_version"],
+            "uaos_common_behavior_assurance_ref": policy.common_behavior_ref,
+            "uaos_deliberation_policy_ref": policy.deliberation_policy_ref,
+            "common_capabilities_inheritance": "UAOS_HOSTED",
+            "required_uaos_common_capabilities": required_common,
+            "hosted_cognition_semantics": {
+                "source": "CURRENT_UAOS_DELIBERATION_POLICY",
+                "local_overrides": "NONE",
+            },
+        }
+        policy.validate_domain_binding(
+            registry_entry=entry,
+            adapter=adapter,
+            manifest=manifest,
+            capabilities=capabilities,
+            common_capabilities=common,
+            skill_text=f"Controller: `{policy.controller}`.",
+        )

@@ -47,48 +47,57 @@ def test_policy_requires_active_discovery_bulkheading_and_two_skill_discovery_mo
     assert "PROMOTE_WITHOUT_EVALUATION_EVIDENCE" in forbidden
 
 
-def test_health_index_is_non_authoritative_and_tracks_current_repaired_children():
+def test_health_index_is_non_authoritative_cache_and_current_system_does_not_duplicate_it():
     health = _json("state/DOMAIN_HEALTH_INDEX.json")
     current = _json("CURRENT_SYSTEM.json")
     assert health["role"] == "PARENT_HEALTH_OBSERVATION_CACHE__NOT_CHILD_BUSINESS_AUTHORITY"
+    assert current["child_observation"]["source"] == "state/DOMAIN_HEALTH_INDEX.json"
+    assert current["child_observation"]["role"] == health["role"]
 
-    expected_floors = {
+    expected_profile_floors = {
         "financial_writing": 19,
         "ashare": 7,
         "novel": 6,
         "video": 10,
     }
-    current_receipts = {
-        "financial_writing": current["financial_child_production_verification"],
-        "ashare": current["ashare_child_production_verification"],
-        "novel": current["novel_child_production_verification"],
-        "video": current["video_child_production_verification"],
-    }
-    for domain_id, profile_floor in expected_floors.items():
+    for domain_id, profile_floor in expected_profile_floors.items():
         observed = health["domains"][domain_id]
-        receipt = current_receipts[domain_id]
         assert observed["observed_profile_version"] >= profile_floor
-        assert observed["observed_profile_version"] == receipt["profile_version"]
-        assert observed["observed_main_commit"] in {
-            receipt.get("current_main_commit"),
-            receipt.get("final_main_commit"),
-        }
         assert _version_tuple(observed["common_behavior_assurance_min"]) >= (1, 3, 0)
         assert observed["production_ci"]["conclusion"] == "success"
         assert "OWNER_NATIVE" in observed["common_behavior_assurance"]
         assert observed["findings"] == []
 
-    assert health["domains"]["financial_writing"]["observed_release"] == "1.0.1"
-    assert health["domains"]["ashare"]["observed_release"] == "0.3.0"
-    assert health["domains"]["video"]["observed_release"] == "0.8.0"
+    # DOMAIN_HEALTH_INDEX is a moving observation cache. Tests may assert compatibility
+    # floors for current runtime releases, but must not turn one historical observation
+    # into a permanent exact-version authority.
+    release_floors = {
+        "financial_writing": (1, 0, 1),
+        "ashare": (0, 3, 0),
+        "video": (0, 8, 0),
+    }
+    for domain_id, release_floor in release_floors.items():
+        assert _version_tuple(health["domains"][domain_id]["observed_release"]) >= release_floor
+
     assert health["domains"]["financial_writing"]["canonical_evolution_entrypoint"] == "evals/EVOLUTION_INDEX.json"
     assert health["domains"]["ashare"]["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
     assert health["domains"]["novel"]["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
     assert health["domains"]["video"]["canonical_evolution_entrypoint"] == "audits/EVOLUTION_INDEX.json"
 
+    for old_snapshot_key in (
+        "financial_child_production_verification",
+        "ashare_child_production_verification",
+        "novel_child_production_verification",
+        "video_child_production_verification",
+    ):
+        assert old_snapshot_key not in current
+
     learning = {row["failure_class"]: row for row in health["cross_domain_learnings"]}
     freeze = learning["FC-EVOLVING-CAPABILITY-MINIMUM-ENCODED-AS-EXACT-CURRENT-VERSION-005"]
     assert "compatibility-floor" in freeze["selected_rule"].lower()
+    live_binding = learning["FC-LIVE-CROSS-REPO-BINDING-DRIFT-HIDDEN-BY-SYNTHETIC-FIXTURE-014"]
+    assert "synthetic" in live_binding["selected_rule"].lower()
+    assert "current child authority" in live_binding["selected_rule"].lower()
 
     open_common = set(health["open_common_findings"])
     assert "FC-PARENT-CHILD-FRESHNESS-SNAPSHOT-MASQUERADING-AS-CURRENT-001" not in open_common

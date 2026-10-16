@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.0",
-  "policy_version":"1.0.0",
+  "schema_version":"1.1",
+  "policy_version":"1.1.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T15:12:00+08:00",
-  "purpose":"Prevent bootstrap and status projections from becoming stale shadow authorities. Semantic owners remain authoritative; projections must point to owners, declare derivation, and fail CI when their freshness trails a projected owner.",
+  "updated_at":"2026-10-16T16:00:00+08:00",
+  "purpose":"Prevent bootstrap/status projections and cross-owner summaries from becoming stale shadow authorities. Semantic owners remain authoritative; projections point to owners, stay fresh, and referenced-owner semantics must not be reimplemented by contradictory copies.",
   "semantic_owners":{
     "cognition":"config/DELIBERATION_POLICY.json",
     "architecture_experience":"config/ARCHITECTURE_EXPERIENCE_POLICY.json",
@@ -17,8 +17,8 @@
     "CURRENT_SYSTEM.json":{
       "role":"DERIVED_OPERATIONAL_PROJECTION__NOT_POLICY_OWNER",
       "freshness":"MUST_NOT_BE_OLDER_THAN_ANY_PROJECTED_OWNER_UPDATED_AT",
-      "may_contain":"release identity, owner references, bounded assurance summaries, current observation refs",
-      "must_not_contain":"a competing cognition state machine, host enforcement semantics that contradict HOST_PROFILES, or business authority copied from child domains"
+      "may_contain":"release identity, owner references, bounded assurance summaries and observation-cache pointers",
+      "must_not_contain":"a competing cognition state machine, host enforcement semantics that contradict HOST_PROFILES, per-child current commit/profile/CI snapshots, or business authority copied from child domains"
     },
     "ENTRYPOINT.md":{
       "role":"BOOTSTRAP_ROUTER_AND_OWNER_POINTERS",
@@ -37,6 +37,8 @@
     }
   },
   "reconciliation_rule":"When a semantic owner changes materially, all affected derived projections are updated in the same candidate or CI fails. A green owner change with a stale projection is not a valid promotion.",
+  "cross_owner_reference_rule":"When one semantic owner delegates a sub-semantic to another canonical owner, it must carry an owner reference and invariant/assurance summary only; it must not freeze a competing algorithm whose behavior can diverge. CI should test material known delegations such as COMMON_CAPABILITIES -> DELIBERATION_POLICY.",
+  "child_observation_rule":"Parent child-head/profile/CI observations belong in state/DOMAIN_HEALTH_INDEX.json as a cache. Fresh domain execution rereads current child authority. CURRENT_SYSTEM must not duplicate those volatile observations.",
   "analogy":"Controller-style reconciliation: desired semantic authority is owned once; projections are reconciled views, not competing sources of truth.",
-  "anti_bloat":"Do not solve projection drift by adding another controller. Use static/reproducible reconciliation checks in the existing promotion gate."
+  "anti_bloat":"Do not solve projection drift by adding another controller or another current-state mirror. Use owner references, compact projections and static/reproducible reconciliation checks in the existing promotion gate."
 }

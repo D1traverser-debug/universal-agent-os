@@ -48,6 +48,20 @@ def test_system_map_points_to_current_semantic_and_runtime_owners():
     assert controller["openai_agents_output_guardrail"] == "src/uaos/execution/openai_agents.py#build_uaos_output_guardrail"
 
 
+def test_common_capabilities_references_canonical_adaptive_cognition_without_shadow_algorithm():
+    common = _json("config/COMMON_CAPABILITIES.json")
+    adaptive = next(
+        item for item in common["capabilities"]
+        if item["capability_id"] == "adaptive_deliberation_and_parent_guidance"
+    )
+    assert adaptive["policy_ref"] == "config/DELIBERATION_POLICY.json"
+    assert adaptive["inheritance_semantics"] == "REFERENCE_CURRENT_CANONICAL_OWNER__DO_NOT_COPY_A_LOCAL_PROBLEM_RESPONSE_ALGORITHM"
+    text = json.dumps(adaptive, ensure_ascii=False)
+    assert "EVERY_DETECTED_PROBLEM_REQUIRES_RESEARCH_AND_REFLECTION" not in text
+    assert "Problem size changes research/reflection depth, not whether research/reflection happens" not in text
+    assert "LIGHTWEIGHT" in text and "CONTRASTIVE" in text and "STRUCTURED" in text
+
+
 def test_bootstrap_projection_exposes_finalization_boundary_without_claiming_native_chatgpt_hook():
     current = _json("CURRENT_SYSTEM.json")
     bootstrap = current["fresh_chat_bootstrap"]

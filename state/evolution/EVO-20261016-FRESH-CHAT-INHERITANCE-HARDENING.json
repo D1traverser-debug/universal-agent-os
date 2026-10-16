@@ -1,0 +1,104 @@
+{
+  "schema_version":"1.1",
+  "evolution_id":"EVO-20261016-FRESH-CHAT-INHERITANCE-HARDENING",
+  "authority":"UAOS",
+  "recorded_at":"2026-10-16T17:25:01+08:00",
+  "status":"CANDIDATE_IMPLEMENTED__ALL_REGISTERED_CHILDREN_PRODUCTION_RECONCILED__PARENT_PROMOTION_OPEN",
+  "trigger_signals":[
+    "USER_REQUESTED_FULL_REPOSITORY_TRAVERSAL_FROM_FRESH_CHAT_INHERITANCE",
+    "FRESH_CHAT_PERFECT_EXECUTION_CLAIM_CHALLENGED",
+    "CROSS_OWNER_COGNITION_SEMANTIC_CONTRADICTION",
+    "DECLARED_CAPABILITY_HANDSHAKE_NOT_EXECUTED",
+    "VOLATILE_CHILD_SNAPSHOT_DUPLICATION_IN_DERIVED_PROJECTION",
+    "LIVE_CROSS_REPO_AUDIT_FOUND_SYNTHETIC_FIXTURE_FALSE_CONFIDENCE"
+  ],
+  "observed_problem":"A repository-wide fresh-chat audit disproved any claim that a new native ChatGPT conversation could be called perfectly inherited from repository evidence. Parent COMMON_CAPABILITIES retained stale copied cognition semantics, executable binding did not validate child CAPABILITIES/current cognition, CURRENT_SYSTEM duplicated volatile child observations, and child repositories copied parent cognition. After initial repairs and green parent CI, live reread of real child main authority found an additional defect: A-share owner-native work-plane status/parent field naming would have been rejected by the stricter parent validator even though the synthetic fresh-chat fixture passed. This proved that synthetic parent tests cannot substitute for live cross-repository promotion evidence.",
+  "failure_classes":[
+    {
+      "failure_class":"FC-FRESH-CHAT-CAPABILITY-HANDSHAKE-DECLARED-BUT-NOT-EXECUTED-011",
+      "root_layer":"CONTROL_PLANE",
+      "evidence":["config/BINDING_POLICY.json declared capability checks","src/uaos/integrations/binding.py previously accepted no capabilities/common-capabilities arguments","tests/integrations/test_binding_policy.py previously froze only adapter/manifest/skill validation"]
+    },
+    {
+      "failure_class":"FC-CANONICAL-COGNITION-SEMANTIC-COPY-DRIFT-012",
+      "root_layer":"COMMON_CAPABILITY",
+      "evidence":["config/DELIBERATION_POLICY.json 1.9 makes LIGHTWEIGHT research conditional","config/COMMON_CAPABILITIES.json still required research/reflection for every detected problem","Financial/A-share/Video capability profiles retained copied old cognition rules"]
+    },
+    {
+      "failure_class":"FC-DERIVED-PROJECTION-VOLATILE-CHILD-SNAPSHOT-DUPLICATION-013",
+      "root_layer":"CONTROL_PLANE",
+      "evidence":["CURRENT_SYSTEM declared itself derived but duplicated per-child commit/profile/CI observations","Financial current child main had advanced beyond the parent snapshot","tests froze duplicated snapshots as parent contracts even though DOMAIN_HEALTH_INDEX says current child authority wins"]
+    },
+    {
+      "failure_class":"FC-LIVE-CROSS-REPO-BINDING-DRIFT-HIDDEN-BY-SYNTHETIC-FIXTURE-014",
+      "root_layer":"CROSS_REPOSITORY_INHERITANCE_ASSURANCE",
+      "evidence":["parent synthetic fresh-chat binding test passed on constructed conformant payloads","live A-share main used parent_control_plane/parent_system_ref and DIRECT_DOMAIN_WORK_PLANE_ACTIVE semantics","initial strict validator expected controller/controller_ref and UAOS_CONTROL_PLANE_ACTIVE in the same status field","A-share owner static audit correctly treated DIRECT_DOMAIN_WORK_PLANE_ACTIVE as its work-plane state"]
+    }
+  ],
+  "competing_root_hypotheses":[
+    {
+      "id":"H1_NATIVE_CHATGPT_HOST_LIMITATION_ONLY",
+      "disposition":"REJECTED_AS_SOLE_CAUSE",
+      "reason":"Native host mediation remains a real assurance boundary, but repository-internal binding and semantic contradictions were reproducible before host behavior is considered."
+    },
+    {
+      "id":"H2_ONLY_STALE_CHILD_CAPABILITY_FILES",
+      "disposition":"REJECTED_AS_TOO_NARROW",
+      "reason":"The parent COMMON_CAPABILITIES owner also carried stale cognition semantics and the parent executable binding gate did not inspect capabilities."
+    },
+    {
+      "id":"H3_FORCE_ALL_CHILDREN_TO_SHARE_BYTE_IDENTICAL_BINDING_SCHEMA",
+      "disposition":"REJECTED",
+      "reason":"The A-share owner legitimately uses status for its direct domain work plane. Forcing child schema identity would couple business-owner representation to parent implementation. Binding must validate semantic authority/status with explicit binding_status and established aliases instead."
+    },
+    {
+      "id":"H4_FRESH_CHAT_INHERITANCE_AUTHORITY_AND_BINDING_COHERENCE_GAP",
+      "disposition":"SELECTED",
+      "reason":"Canonical cognition ownership changed without semantic-copy retirement, capability inheritance was declared but not mechanically validated, derived parent projection retained volatile child mirrors, and parent promotion evidence did not distinguish synthetic validator fixtures from live remote child authority."
+    },
+    {
+      "id":"H5_WHOLE_UAOS_TOPOLOGY_INVALID",
+      "disposition":"NOT_SELECTED",
+      "reason":"Selector routing, direct-domain ownership, parent/child authority hierarchy, runtime finalization and existing control boundaries remain independently coherent; current evidence supports bounded inheritance/control-plane repair rather than whole-system rewrite."
+    }
+  ],
+  "selected_parent_changes":[
+    "Make executable BindingPolicy validate manifest, adapter, skill, capabilities, common capability contract floors, required common capability IDs and current deliberation-policy inheritance.",
+    "Validate semantic controller/binding status across owner-native schema aliases; separate parent binding_status from a child's business/work-plane status where needed.",
+    "Reject child capability profiles that copy/freeze a parent cognition algorithm instead of referencing the canonical DELIBERATION_POLICY owner.",
+    "Remove the stale fixed research floor from COMMON_CAPABILITIES and delegate risk-adaptive search semantics to DELIBERATION_POLICY.",
+    "Compact CURRENT_SYSTEM into an owner/pointer/bounded-assurance projection and remove per-child current commit/profile/CI copies.",
+    "Add semantic cross-owner reconciliation tests in addition to timestamp freshness.",
+    "Bound the synthetic fresh-chat fixture explicitly: it tests validator behavior only; live current child authority reread is separate promotion evidence."
+  ],
+  "candidate_history":[
+    {
+      "pull_request":55,
+      "run_number":228,
+      "conclusion":"FAIL",
+      "finding":"Eight regressions were old tests that froze per-child CURRENT_SYSTEM mirrors or the retired every-problem-research floor; shadow snapshots were not restored."
+    },
+    {
+      "pull_request":55,
+      "run_number":235,
+      "conclusion":"PASS_BUT_INCOMPLETE_ASSURANCE",
+      "finding":"Parent suite passed, but subsequent live child reread found A-share schema incompatibility hidden by synthetic fixtures. Green parent CI was therefore not treated as cross-repository closure."
+    },
+    {
+      "pull_request":55,
+      "run_number":238,
+      "conclusion":"PASS",
+      "finding":"Semantic owner-native binding aliases and bounded synthetic-test assurance added; further candidate CI remains required after final child-health/evolution reconciliation commits."
+    }
+  ],
+  "child_production_reconciliation":{
+    "financial_writing":{"main_commit":"29b778744edd8e306b64587078464c11c4e17acc","profile_version":21,"production_ci_run":38878799047,"production_ci_number":1294,"result":"PASS"},
+    "ashare":{"main_commit":"f0c5144586923a3ebbae1a7efed1972aa1256f6a","profile_version":8,"production_ci_run":38880235687,"production_ci_number":189,"result":"PASS","binding_note":"OWNER_NATIVE_WORK_PLANE_STATUS_PRESERVED__EXPLICIT_UAOS_BINDING_STATUS_ADDED"},
+    "novel":{"main_commit":"911f31b692e6475be26a0221a676b3eb6ce9ce39","profile_version":7,"production_ci_run":38878759468,"production_ci_number":326,"result":"PASS"},
+    "video":{"main_commit":"20cbe7c415b5671f8f38f299aa9715bdb932f952","profile_version":11,"production_ci_run":38878780056,"production_ci_number":707,"result":"PASS"}
+  },
+  "promotion_evidence_rule":"SYNTHETIC_UNIT_FIXTURES_PROVE_VALIDATOR_SEMANTICS_ONLY__MATERIAL_CROSS_REPOSITORY_BINDING_PROMOTION_REQUIRES_CURRENT_CHILD_AUTHORITY_REREAD_AND_OWNER_PRODUCTION_CI_EVIDENCE",
+  "repair_disposition":"DO_NOT_RESTORE_SHADOW_SNAPSHOTS_OR_FIXED_RESEARCH_FLOOR__DO_NOT_FORCE_BYTE_IDENTICAL_CHILD_SCHEMA__VALIDATE_SEMANTIC_BINDING_AND_CURRENT_PARENT_COGNITION__KEEP_CHILD_BUSINESS_AUTHORITY_OWNER_NATIVE",
+  "assurance_boundary":"Repository traversal, child production CI, parent CI and live current-child authority reread can prove the repository-controlled selector/binding/owner-reference path to the stated evidence level. They cannot prove a native ChatGPT new conversation always receives or obeys the bootstrap pointer, because CHATGPT_GITHUB has no verified repository-controlled pre-send/bootstrap hook. Do not claim perfect fresh-chat execution on native ChatGPT from repository evidence alone.",
+  "status_after_parent_and_children":"CHILDREN_PRODUCTION_RECONCILED__PARENT_FINAL_CANDIDATE_AND_PRODUCTION_PROMOTION_PENDING"
+}
