@@ -9,27 +9,33 @@ def load(path: str):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def version_tuple(value: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in value.split("."))
+
+
 def test_parent_observes_current_video_head_and_keeps_old_release_historical():
     current = load("CURRENT_SYSTEM.json")
     health = load("state/DOMAIN_HEALTH_INDEX.json")
 
     assert current["system_release_version"] == "2.5.2"
     assert current["video_binding_assurance"].startswith("CURRENT_CHILD_OBSERVATION_IN_state/DOMAIN_HEALTH_INDEX.json")
-    assert "VIDEO_0_8_0_PROFILE_9" in current["video_binding_assurance"]
+    assert "VIDEO_0_8_0_PROFILE_10" in current["video_binding_assurance"]
+    assert "COMMON_BEHAVIOR_1_3_OWNER_NATIVE" in current["video_binding_assurance"]
     assert "CURRENT_CHILD_FRESHNESS_RESOLVED_FROM_DOMAIN_HEALTH_INDEX" in current["parent_core_assurance"]
 
     observed = current["video_child_production_verification"]
     assert observed["observation_role"] == "CURRENT_CHILD_HEAD_OBSERVATION__NOT_IMMUTABLE_RELEASE_CERTIFICATE"
     assert observed["release"] == "0.8.0"
-    assert observed["profile_version"] == 9
-    assert observed["common_capabilities_contract_min"] == "1.6.0"
-    assert observed["common_behavior_assurance_min"] == "1.2.0"
-    assert observed["current_main_commit"] == "02d39d8e3609c6d988009f4bc5a7f5d0378128ec"
-    assert observed["current_production_ci_number"] == 656
+    assert observed["profile_version"] >= 10
+    assert observed["profile_version"] == health["domains"]["video"]["observed_profile_version"]
+    assert version_tuple(observed["common_capabilities_contract_min"]) >= (1, 6, 0)
+    assert version_tuple(observed["common_behavior_assurance_min"]) >= (1, 3, 0)
+    assert observed["current_main_commit"] == health["domains"]["video"]["observed_main_commit"]
+    assert observed["current_production_ci_run"] == health["domains"]["video"]["production_ci"]["run_id"]
+    assert observed["current_production_ci_number"] == health["domains"]["video"]["production_ci"]["run_number"]
     assert observed["result"] == "PASS"
     assert "LIVE_EPISODE_GROWTH_IP_COMMERCIAL_OUTCOME_OPEN" in observed["assurance"]
     assert "historical" in observed["historical_verified_release_ref"].lower()
-    assert health["domains"]["video"]["observed_main_commit"] == observed["current_main_commit"]
     assert "H1_SCULPTURAL_MASSING_V2" in observed["business_cursor_preserved"]
     assert "A2_POSITIVE_MORPH_NEXT" in observed["business_cursor_preserved"]
     assert "PILOT_002_REJECTION_AND_PROCESS_INVALID_EVIDENCE_PRESERVED" in observed["business_cursor_preserved"]
