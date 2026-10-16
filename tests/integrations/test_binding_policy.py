@@ -37,7 +37,10 @@ def base_objects():
             "local_overrides": "NONE",
         },
     }
-    skill = "Controller: `D1traverser-debug/universal-agent-os@main`."
+    skill = (
+        "Controller: `D1traverser-debug/universal-agent-os@main`.\n"
+        "Parent cognition authority: `config/DELIBERATION_POLICY.json`."
+    )
     return registry, adapter, manifest, capabilities, skill
 
 
@@ -88,6 +91,8 @@ def test_owner_native_work_plane_status_and_established_parent_aliases_pass():
         "adapter_ref",
         "capability_ref",
         "skill_marker",
+        "skill_deliberation_marker",
+        "skill_duplicated_cognition",
         "retired_registry_path",
         "capability_domain",
         "common_inheritance",
@@ -119,7 +124,14 @@ def test_binding_drift_fails_closed(target):
     elif target == "capability_ref":
         manifest["binding"]["capability_ref"] = "other.json"
     elif target == "skill_marker":
-        skill = "no controller marker"
+        skill = "Parent cognition authority: `config/DELIBERATION_POLICY.json`."
+    elif target == "skill_deliberation_marker":
+        skill = "Controller: `D1traverser-debug/universal-agent-os@main`."
+    elif target == "skill_duplicated_cognition":
+        skill += (
+            "\nEvery detected problem requires micro diagnosis and relevant external research/verification. "
+            "Problem size changes depth, not activation."
+        )
     elif target == "retired_registry_path":
         registry["uaos_adapter_ref"] = "continuity/UAOS_ADAPTER.json"
     elif target == "capability_domain":
@@ -144,8 +156,9 @@ def test_binding_drift_fails_closed(target):
 
 
 def test_parent_cognition_is_referenced_not_reimplemented_in_child_capability_handshake():
-    _, _, _, capabilities, _ = base_objects()
+    _, _, _, capabilities, skill = base_objects()
     hosted = capabilities["hosted_cognition_semantics"]
     assert hosted == {"source": "CURRENT_UAOS_DELIBERATION_POLICY", "local_overrides": "NONE"}
     assert "problem_response_floor" not in capabilities
     assert "problem_response_rule" not in capabilities
+    assert "config/DELIBERATION_POLICY.json" in skill
