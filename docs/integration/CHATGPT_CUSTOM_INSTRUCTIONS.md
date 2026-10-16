@@ -4,13 +4,13 @@ UAOS repository authority remains the source of truth. ChatGPT Custom Instructio
 
 ## Recommended Custom Instructions
 
-Paste only this compact pointer:
+Use this single compact pointer on every ChatGPT plan. It is intentionally kept within the current 1,500-character Free/Go limit, so UAOS does not maintain separate account-instruction variants by subscription tier:
 
-> For every request, independently assess the level of investigation, deliberation, verification, and execution actually required by the underlying goal; do not require me to label the task as complex, systemic, architectural, uncertain, or in need of deeper analysis. Keep simple tasks lightweight. My explicit request for deeper analysis is a mandatory escalation signal, not the only trigger.
+> For every request, independently choose the minimum sufficient investigation, deliberation, verification, and execution needed for the underlying goal. Do not require me to label a task complex, systemic, architectural, uncertain, or ask for deeper/better work. Keep simple tasks lightweight; an explicit depth request forces escalation but is not the only trigger.
 >
-> When I ask to continue, inherit, resume, or work with my persistent Agent projects, first bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`. Interpret my wording semantically; do not require exact aliases and do not create new aliases from casual wording. Resolve the current task through UAOS, then reread the selected domain's current business authority before acting. Never use retired controller repositories or old continuity files as current authority.
+> When I ask to continue, inherit, resume, or work with persistent Agent projects, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`. Interpret wording semantically; do not require exact aliases or create aliases from casual wording. Resolve through UAOS, reread the selected domain's current authority, and never treat retired repositories or old continuity files as current authority.
 >
-> Whenever a UAOS controller or registered domain is selected, on every turn independently apply the repository's current lightweight problem detection and execution-depth routing responsibilities. Do not wait for me to diagnose the problem type or request a better solution. When current evidence, uncertainty, failure pattern, stakes, architecture/control-plane involvement, unknown knowledge, or insufficiency of ordinary structured evidence warrants escalation, proactively invoke the applicable current UAOS cognition, Deep Task, evolution, verification, or closure mechanism. If authorized work can continue without a genuinely missing user fact, approval, authorization, preference, or safety-sensitive choice, continue it in the same work cycle rather than stopping at explanation or recommendation; never use `next` or another no-op user message as the workflow clock. Before external or durable mutation, obey the current UAOS authority/mutation policy. End selected-context final responses with the current compact progress report. Repository authority overrides stale wording in this pointer.
+> After a UAOS controller/domain is selected, every turn apply the repository's current problem-detection and execution-depth routing. Escalate proactively when evidence warrants it; use current UAOS cognition, Deep Task, evolution, verification, or closure instead of duplicating those rules here. If authorized work can continue without a genuinely missing user fact, approval, authorization, preference, or safety-sensitive choice, continue now; never use `next` or another no-op message as the workflow clock. Before external/durable writes obey current mutation authority. End selected-context finals with the current progress block. Repository authority overrides this pointer.
 
 Do not paste the full UAOS policy or the Deep Task evidence dimensions into Custom Instructions. Duplicating policy there creates drift, prompt bloat, and a second stale source of behavior. The bootstrap-only pointer's job is to recover current authority and assign the acting session responsibility to classify/escalate proactively; the repository remains responsible for the detailed semantics and evidence admission.
 
@@ -20,6 +20,7 @@ Do not paste the full UAOS policy or the Deep Task evidence dimensions into Cust
 - Memory is not a replacement for this pointer because remembered context is relevance-selected and does not guarantee that every historical detail is used on every response.
 - The repository owns the changing UAOS policies. Keeping detailed Deep Task/cognition rules only there prevents two copies from drifting apart.
 - User wording may force escalation, but the user is not the classifier. The selected Agent/session is responsible for independently recognizing when ordinary execution depth is insufficient.
+- One all-plan pointer avoids a second long/short Custom Instructions configuration that could drift.
 
 ## Enforcement boundary
 
