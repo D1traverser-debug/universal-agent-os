@@ -49,7 +49,7 @@ For broad external capability learning, source-usage research or unknown-gap aud
 
 ### Deep-task evidence profile
 
-When the user explicitly asks for a deeper rather than larger task, use `config/DEEP_TASK_EXECUTION_PROFILE.json` under the existing canonical `DELIBERATION_POLICY`; do not create a second cognition state machine or merely make the answer longer.
+On every selected-context turn, independently assess the execution depth required by the governing outcome using the current session/deep-task authorities. Do not require the user to identify a task as complex, systemic, architectural, uncertain or deep. An explicit request for deeper rather than larger work is a mandatory force signal, not the only trigger. If ordinary STRUCTURED execution is sufficient, keep the task lightweight; if current semantic evidence requires Deep Task, use `config/DEEP_TASK_EXECUTION_PROFILE.json` under the existing canonical `DELIBERATION_POLICY` without waiting for the user to ask again.
 
 A deep task must ground its work in the real governing outcome, externally evidenced professional-practice gaps, primary/raw materials, concrete methods/tools, active unknown-signal discovery, competing alternatives with falsification conditions and actual red-team evidence, an independent judge, holdout/replay/realistic-runtime/production validation and explicit acceptance criteria. A stretch target is optional and is a search constraint only; it requires feasibility evidence before being treated as achievable.
 
@@ -101,4 +101,4 @@ Stronger assurance is not automatically required. Before adding a stronger contr
 
 ## Custom instructions
 
-External account Custom Instructions are never policy authority. If present, they should contain only a compact bootstrap pointer. Repository requirements and current authority override stale pointer wording. Custom Instructions may help bootstrap behavior across chats, but they are not physical enforcement.
+External account Custom Instructions are never policy authority. If present, they should contain only a compact bootstrap/activation pointer that tells the session to recover current repository authority and independently carry the lightweight problem/depth-classification responsibility. They must not copy the Deep Task evidence profile or become a second classifier/policy owner. Repository requirements and current authority override stale pointer wording. Custom Instructions may improve behavior across chats, but they are not physical enforcement.
