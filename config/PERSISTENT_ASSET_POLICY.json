@@ -24,10 +24,12 @@
     "MIGRATED_DECOMMISSIONED_ARCHIVED_AND_DELETE_CANDIDATE_ASSETS_CANNOT_RESUME_CURRENT_EXECUTION",
     "TEMP_SANDBOX_CANNOT_BE_CURRENT_AUTHORITY_OR_DURABLE_BUSINESS_STATE",
     "RECONCILIATION_MUST_MATCH_THE_ORIGINAL_ADMISSION_RECEIPT_AND_RERUN_MUTATION_GATES",
+    "MIGRATION_CLOSURE_REQUIRES_TARGET_VERIFIED_AND_SOURCE_RETIRED_OR_EXPLICITLY_ARCHIVED",
     "MIGRATION_CLOSURE_REQUIRES_DECLARED_TARGET_IDENTITY_OBSERVED_SOURCE_TARGET_IDENTITIES_TARGET_VERIFICATION_AND_SOURCE_RETIREMENT",
     "DELIVERY_AND_DELIVERY_HISTORY_ARE_USER_OUTPUTS_NOT_TASK_STATE",
     "OBSERVED_EXTERNAL_MUTATIONS_MUST_BE_RECONCILED_BEFORE_CLAIMING_CROSS_SURFACE_CLOSURE"
   ],
+  "compatibility_note":"The legacy migration-closure invariant token is retained; the stronger identity-bound invariant now defines how that condition is mechanically satisfied.",
   "trusted_sources_of_execution_semantics":{
     "mutation_persistence_and_crud":"selected RegisteredCapability.mutation_contracts[action_name]",
     "canonical_target":"selected RegisteredCapability.canonicalize_target",
