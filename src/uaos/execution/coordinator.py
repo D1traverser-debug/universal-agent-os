@@ -5,6 +5,8 @@ from datetime import UTC, datetime
 from enum import Enum
 import hashlib
 import json
+import secrets
+from threading import RLock
 from typing import Mapping
 
 from .approvals import ApprovalGate, ApprovalGrant
@@ -45,6 +47,16 @@ class CoordinatedExecution:
     outcome: ExecutionOutcome
     admission: ExecutionAdmissionReceipt
     original_request: ExecutionRequest | None = None
+    execution_id: str | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class _UnknownExecutionRecord:
+    execution_id: str
+    capability_id: str
+    request: ExecutionRequest
+    admission: ExecutionAdmissionReceipt
+    outcome: ExecutionOutcome
 
 
 def _canonical_value(value: object) -> object:
@@ -138,6 +150,14 @@ class ActionCoordinator:
     decide whether mutation gates execute. Durable/external target identity comes from
     the selected adapter, while a trusted ``PersistentAssetCatalog`` supplies lifecycle,
     owner, role and operation permissions.
+
+    UNKNOWN reconciliation is coordinator-owned. A caller receives an opaque execution
+    id, but the authoritative original request, admission and outcome remain in the
+    coordinator's internal record. Reconciliation therefore cannot be redirected by
+    reconstructing or editing ``CoordinatedExecution`` fields. This baseline store is
+    process-local and intentionally fails closed after coordinator restart; a host that
+    requires cross-process reconciliation must persist the same record in its authority
+    store rather than trusting a caller-supplied receipt.
     """
 
     def __init__(
@@ -158,6 +178,8 @@ class ActionCoordinator:
         self.persistent_asset_gate = persistent_asset_gate or PersistentAssetGate()
         self.persistent_asset_catalog = persistent_asset_catalog
         self.authority_context = authority_context
+        self._unknown_records: dict[str, _UnknownExecutionRecord] = {}
+        self._unknown_lock = RLock()
 
     @staticmethod
     def _trusted_contract(
@@ -327,6 +349,27 @@ class ActionCoordinator:
             )
         return outcome
 
+    def _record_unknown(
+        self,
+        request: ExecutionRequest,
+        registered: RegisteredCapability,
+        admission: ExecutionAdmissionReceipt,
+        outcome: ExecutionOutcome,
+        *,
+        execution_id: str | None = None,
+    ) -> str:
+        execution_id = execution_id or secrets.token_urlsafe(32)
+        record = _UnknownExecutionRecord(
+            execution_id=execution_id,
+            capability_id=registered.observation.capability_id,
+            request=request,
+            admission=admission,
+            outcome=outcome,
+        )
+        with self._unknown_lock:
+            self._unknown_records[execution_id] = record
+        return execution_id
+
     def _execute_registered(
         self,
         request: ExecutionRequest,
@@ -343,11 +386,20 @@ class ActionCoordinator:
         )
         outcome = self._enforce_migration_closure(admission, outcome)
         self.router.record_outcome(registered.observation.capability_id, outcome.disposition)
+        execution_id = None
+        if outcome.disposition is ExecutionDisposition.UNKNOWN:
+            execution_id = self._record_unknown(
+                request,
+                registered,
+                admission,
+                outcome,
+            )
         return CoordinatedExecution(
             registered.observation.capability_id,
             outcome,
             admission,
             request,
+            execution_id,
         )
 
     def execute(
@@ -423,47 +475,83 @@ class ActionCoordinator:
         approval: ApprovalGrant | None = None,
         now: datetime | None = None,
     ) -> CoordinatedExecution:
-        normalized_unknown = _normalize_outcome(unknown.outcome, source="unknown execution")
-        if normalized_unknown.disposition is not ExecutionDisposition.UNKNOWN:
-            raise ValueError("only UNKNOWN execution may be reconciled")
-        if unknown.original_request is None:
+        execution_id = unknown.execution_id
+        if not isinstance(execution_id, str) or not execution_id:
             raise PersistentAssetViolation(
-                "reconciliation requires the immutable originally executed request"
+                "reconciliation requires a coordinator-issued UNKNOWN execution_id"
             )
-        if request != unknown.original_request:
+        with self._unknown_lock:
+            record = self._unknown_records.get(execution_id)
+        if record is None:
+            raise PersistentAssetViolation(
+                "reconciliation UNKNOWN execution is not owned by this coordinator"
+            )
+        if request != record.request:
             raise PersistentAssetViolation(
                 "reconciliation request must exactly equal the originally executed request"
             )
-        if _request_fingerprint(request) != unknown.admission.request_fingerprint:
+        if _request_fingerprint(request) != record.admission.request_fingerprint:
             raise PersistentAssetViolation(
                 "reconciliation request fingerprint does not match original admission"
             )
 
-        registered = self.registry.get(unknown.capability_id)
-        if registered.registration_generation != unknown.admission.registration_generation:
+        registered = self.registry.get(record.capability_id)
+        if registered.registration_generation != record.admission.registration_generation:
             raise PersistentAssetViolation(
                 "reconciliation capability registration generation changed since execution"
             )
         admission = self._admit(request, registered)
-        if admission != unknown.admission:
+        if admission != record.admission:
             raise PersistentAssetViolation(
                 "reconciliation admission no longer matches original execution admission"
             )
 
+        # Never use caller-returned outcome/request/admission data after resolving the
+        # opaque execution id. The coordinator-owned record is the reconciliation truth.
+        normalized_unknown = _normalize_outcome(
+            record.outcome,
+            source="coordinator-owned unknown execution",
+        )
+        if normalized_unknown.disposition is not ExecutionDisposition.UNKNOWN:
+            raise PersistentAssetViolation(
+                "coordinator reconciliation record is no longer UNKNOWN"
+            )
+
         now = now or datetime.now(UTC)
-        self.approval_gate.require(request, approval, now=now)
+        self.approval_gate.require(record.request, approval, now=now)
         reconciler = getattr(registered.executor, "reconcile", None)
         if reconciler is None:
-            return unknown
+            return CoordinatedExecution(
+                record.capability_id,
+                record.outcome,
+                record.admission,
+                record.request,
+                execution_id,
+            )
+
         outcome = _normalize_outcome(
-            reconciler(request, normalized_unknown),
+            reconciler(record.request, normalized_unknown),
             source="reconciler",
         )
         outcome = self._enforce_migration_closure(admission, outcome)
-        self.router.record_outcome(unknown.capability_id, outcome.disposition)
+        self.router.record_outcome(record.capability_id, outcome.disposition)
+
+        if outcome.disposition is ExecutionDisposition.UNKNOWN:
+            self._record_unknown(
+                record.request,
+                registered,
+                admission,
+                outcome,
+                execution_id=execution_id,
+            )
+        else:
+            with self._unknown_lock:
+                self._unknown_records.pop(execution_id, None)
+
         return CoordinatedExecution(
-            unknown.capability_id,
+            record.capability_id,
             outcome,
             admission,
-            request,
+            record.request,
+            execution_id if outcome.disposition is ExecutionDisposition.UNKNOWN else None,
         )
