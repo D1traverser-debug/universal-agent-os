@@ -14,6 +14,7 @@ from .models import (
     CapabilityHealth,
     CapabilityObservation,
     ExecutionDisposition,
+    ExecutionOutcome,
     ExecutionRequest,
     Executor,
 )
@@ -29,14 +30,18 @@ TargetCanonicalizer = Callable[[str], str]
 
 @dataclass(frozen=True, slots=True)
 class RegisteredCapability:
-    """Detached public view of a trusted capability registration."""
+    """Detached public view of trusted registration semantics.
+
+    The executor and target canonicalizer are intentionally absent. Those objects are part
+    of the registry's trusted computing base and are never returned through get/all/
+    candidates. Public callers can inspect routing/contract semantics but cannot obtain a
+    mutable provider/workspace object through a registry view.
+    """
 
     observation: CapabilityObservation
-    executor: Executor
     registration_generation: int
     read_only_actions: frozenset[str] = frozenset()
     mutation_contracts: Mapping[str, MutationContract] = field(default_factory=dict)
-    canonicalize_target: TargetCanonicalizer | None = None
 
     def mutation_contract_for(self, action_name: str) -> MutationContract | None:
         if action_name in self.read_only_actions:
@@ -106,8 +111,6 @@ def _observation_record(observation: CapabilityObservation) -> _ObservationRecor
         _exact_string(permission, field_name="permission")
         for permission in observation.permissions
     )
-    # Historical contract allows an empty executor_kind. Preserve that semantic while
-    # still requiring an exact builtin string so a subclass cannot smuggle behavior.
     executor_kind = _exact_string(
         observation.executor_kind,
         field_name="executor_kind",
@@ -196,21 +199,20 @@ def _materialize_registration(record: _RegisteredCapabilityRecord) -> Registered
     }
     return RegisteredCapability(
         observation=_materialize_observation(record.observation),
-        executor=record.executor,
         registration_generation=record.registration_generation,
         read_only_actions=frozenset(record.read_only_actions),
         mutation_contracts=MappingProxyType(contracts),
-        canonicalize_target=record.canonicalize_target,
     )
 
 
 class CapabilityRegistry:
-    """Registry whose authoritative semantics are never returned by public APIs.
+    """Trusted registry with opaque executor/canonicalizer ownership.
 
-    Internally stored observations/contracts are primitive immutable records. Every public
-    lookup/candidate call materializes a fresh detached view. Mutating an original input or
-    a returned ``RegisteredCapability`` therefore cannot change trusted registration truth
-    without calling ``register`` again and receiving a new generation.
+    Registration code is part of the trusted setup boundary. After registration, public
+    registry views contain only detached routing/contract values; the mutable executor and
+    canonicalizer never leave the registry. Coordinator execution/reconciliation calls use
+    capability id + exact registration generation, so a re-registration invalidates the
+    old binding before any provider or adapter method is invoked.
     """
 
     def __init__(self) -> None:
@@ -276,14 +278,29 @@ class CapabilityRegistry:
                 canonicalize_target=canonicalize_target,
             )
 
-    def get(self, capability_id: str) -> RegisteredCapability:
+    def _record_for(
+        self,
+        capability_id: str,
+        *,
+        registration_generation: int | None = None,
+    ) -> _RegisteredCapabilityRecord:
         key = _exact_string(capability_id, field_name="capability_id")
         with self._lock:
             try:
                 record = self._items[key]
             except KeyError as exc:
                 raise CapabilityUnavailable(f"capability not registered: {key}") from exc
-        return _materialize_registration(record)
+            if (
+                registration_generation is not None
+                and record.registration_generation != registration_generation
+            ):
+                raise CapabilityUnavailable(
+                    "capability registration generation changed before trusted adapter invocation"
+                )
+            return record
+
+    def get(self, capability_id: str) -> RegisteredCapability:
+        return _materialize_registration(self._record_for(capability_id))
 
     def all(self) -> tuple[RegisteredCapability, ...]:
         with self._lock:
@@ -320,6 +337,51 @@ class CapabilityRegistry:
                 continue
             eligible.append(_materialize_registration(record))
         return tuple(eligible)
+
+    def canonicalize_trusted_target(
+        self,
+        capability_id: str,
+        registration_generation: int,
+        target: str,
+    ) -> str:
+        record = self._record_for(
+            capability_id,
+            registration_generation=registration_generation,
+        )
+        canonicalizer = record.canonicalize_target
+        if canonicalizer is None:
+            raise CapabilityUnavailable(
+                "capability registration has no trusted target canonicalizer"
+            )
+        return canonicalizer(target)
+
+    def execute_trusted(
+        self,
+        capability_id: str,
+        registration_generation: int,
+        request: ExecutionRequest,
+    ) -> ExecutionOutcome:
+        record = self._record_for(
+            capability_id,
+            registration_generation=registration_generation,
+        )
+        return record.executor.execute(request)
+
+    def reconcile_trusted(
+        self,
+        capability_id: str,
+        registration_generation: int,
+        request: ExecutionRequest,
+        unknown: ExecutionOutcome,
+    ) -> ExecutionOutcome | None:
+        record = self._record_for(
+            capability_id,
+            registration_generation=registration_generation,
+        )
+        reconciler = getattr(record.executor, "reconcile", None)
+        if reconciler is None:
+            return None
+        return reconciler(request, unknown)
 
 
 class CapabilityRouter:
