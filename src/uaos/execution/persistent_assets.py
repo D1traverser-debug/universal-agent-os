@@ -169,30 +169,142 @@ class PersistentAssetDescriptor:
         object.__setattr__(self, "allowed_operations", operations)
 
 
+@dataclass(frozen=True, slots=True)
+class _PersistentAssetRecord:
+    asset_id: str
+    resource_ref: str
+    surface: PersistentSurface
+    role: AssetRole
+    lifecycle: AssetLifecycle
+    owner_authority: str
+    allowed_operations: tuple[CrudOperation, ...]
+    canonical_authority_ref: str | None
+    migration_target_ref: str | None
+
+
+def _exact_catalog_string(value: object, *, field_name: str, optional: bool = False) -> str | None:
+    if value is None and optional:
+        return None
+    if type(value) is not str:
+        raise PersistentAssetViolation(
+            f"catalog {field_name} must be an exact builtin string"
+        )
+    stripped = value.strip()
+    if not stripped:
+        if optional:
+            return None
+        raise PersistentAssetViolation(f"catalog {field_name} is required")
+    return stripped
+
+
+def _asset_record(descriptor: PersistentAssetDescriptor) -> _PersistentAssetRecord:
+    if type(descriptor) is not PersistentAssetDescriptor:
+        raise PersistentAssetViolation(
+            "catalog descriptors must use the canonical PersistentAssetDescriptor type"
+        )
+    try:
+        surface = (
+            descriptor.surface
+            if isinstance(descriptor.surface, PersistentSurface)
+            else PersistentSurface(descriptor.surface)
+        )
+        role = (
+            descriptor.role
+            if isinstance(descriptor.role, AssetRole)
+            else AssetRole(descriptor.role)
+        )
+        lifecycle = (
+            descriptor.lifecycle
+            if isinstance(descriptor.lifecycle, AssetLifecycle)
+            else AssetLifecycle(descriptor.lifecycle)
+        )
+        operations = tuple(
+            sorted(
+                (
+                    operation
+                    if isinstance(operation, CrudOperation)
+                    else CrudOperation(operation)
+                    for operation in descriptor.allowed_operations
+                ),
+                key=lambda item: item.value,
+            )
+        )
+    except (TypeError, ValueError) as exc:
+        raise PersistentAssetViolation(
+            "catalog descriptor contains invalid enum/operation values"
+        ) from exc
+    return _PersistentAssetRecord(
+        asset_id=_exact_catalog_string(descriptor.asset_id, field_name="asset_id"),  # type: ignore[arg-type]
+        resource_ref=_exact_catalog_string(descriptor.resource_ref, field_name="resource_ref"),  # type: ignore[arg-type]
+        surface=surface,
+        role=role,
+        lifecycle=lifecycle,
+        owner_authority=_exact_catalog_string(
+            descriptor.owner_authority,
+            field_name="owner_authority",
+        ),  # type: ignore[arg-type]
+        allowed_operations=operations,
+        canonical_authority_ref=_exact_catalog_string(
+            descriptor.canonical_authority_ref,
+            field_name="canonical_authority_ref",
+            optional=True,
+        ),
+        migration_target_ref=_exact_catalog_string(
+            descriptor.migration_target_ref,
+            field_name="migration_target_ref",
+            optional=True,
+        ),
+    )
+
+
+def _materialize_asset(record: _PersistentAssetRecord) -> PersistentAssetDescriptor:
+    return PersistentAssetDescriptor(
+        asset_id=record.asset_id,
+        resource_ref=record.resource_ref,
+        surface=record.surface,
+        role=record.role,
+        lifecycle=record.lifecycle,
+        owner_authority=record.owner_authority,
+        allowed_operations=frozenset(record.allowed_operations),
+        canonical_authority_ref=record.canonical_authority_ref,
+        migration_target_ref=record.migration_target_ref,
+    )
+
+
 class PersistentAssetCatalog:
-    """Trusted inventory keyed by canonical resource identity."""
+    """Trusted inventory keyed by canonical resource identity.
+
+    The catalog stores private primitive records, never descriptor objects supplied by a
+    caller. ``resolve``/``all`` return fresh detached views. Public descriptor mutation,
+    including ``object.__setattr__`` on a frozen dataclass, therefore cannot change
+    trusted lifecycle/owner/operation truth.
+    """
 
     def __init__(self, assets: Iterable[PersistentAssetDescriptor] = ()) -> None:
-        self._by_ref: dict[str, PersistentAssetDescriptor] = {}
+        self._by_ref: dict[str, _PersistentAssetRecord] = {}
         gate = PersistentAssetGate()
         for asset in assets:
-            gate.require_descriptor(asset)
-            if asset.resource_ref in self._by_ref:
+            record = _asset_record(asset)
+            materialized = _materialize_asset(record)
+            gate.require_descriptor(materialized)
+            if record.resource_ref in self._by_ref:
                 raise PersistentAssetViolation(
-                    f"duplicate catalog resource_ref: {asset.resource_ref}"
+                    f"duplicate catalog resource_ref: {record.resource_ref}"
                 )
-            self._by_ref[asset.resource_ref] = asset
+            self._by_ref[record.resource_ref] = record
 
     def resolve(self, resource_ref: str) -> PersistentAssetDescriptor:
+        key = _exact_catalog_string(resource_ref, field_name="resource_ref")
         try:
-            return self._by_ref[resource_ref]
+            record = self._by_ref[key]
         except KeyError as exc:
             raise PersistentAssetViolation(
-                f"persistent asset is not registered in trusted catalog: {resource_ref}"
+                f"persistent asset is not registered in trusted catalog: {key}"
             ) from exc
+        return _materialize_asset(record)
 
     def all(self) -> tuple[PersistentAssetDescriptor, ...]:
-        return tuple(self._by_ref.values())
+        return tuple(_materialize_asset(record) for record in self._by_ref.values())
 
 
 @dataclass(frozen=True, slots=True)
