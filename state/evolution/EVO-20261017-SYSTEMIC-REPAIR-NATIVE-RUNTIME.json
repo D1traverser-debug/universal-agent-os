@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.2",
+  "schema_version":"1.3",
   "evolution_id":"EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME",
   "authority":"UAOS",
-  "status":"PROMOTED__NATIVE_TRIGGER_OBSERVATION_PENDING",
-  "updated_at":"2026-10-17T20:02:00+08:00",
+  "status":"PROMOTED__COLD_START_NATIVE_OBSERVATION_PENDING",
+  "updated_at":"2026-10-17T20:20:00+08:00",
   "origin_kind":"INCIDENT",
   "issue_refs":["#77","#72","#63"],
   "failure_classes":[
@@ -17,7 +17,9 @@
     "Native ChatGPT has no verified repository-controlled pre-send/pre-tool hook; activation can be improved behaviorally through a compact Custom Instructions handoff plus an installable non-authoritative Skill dispatcher, but physical complete mediation cannot be claimed.",
     "Before this intervention, ProblemClosureSignals could verify a selected repair without explicit failure-class scope, owning-abstraction, adjacent-path, duplicate/superseded mechanism, generalization or recurrence evidence.",
     "Before this intervention, ChangeProposal/EvaluationResult had required scenarios and acceptance checks but did not bind frozen required acceptance checks, verification-round budget, paid-review budget or blocking/non-blocking finding disposition into assess_promotion.",
-    "The user reported completing both account-level activation steps. Current plugin-management introspection confirms GitHub is installed but cannot independently enumerate the uploaded personal Skill, so account activation remains user-reported evidence until live native trigger behavior is observed."
+    "The user reported completing both account-level activation steps. Current plugin-management introspection confirms GitHub is installed but cannot independently enumerate the uploaded personal Skill, so account activation remains user-reported evidence until live native trigger behavior is observed.",
+    "A live probe in the existing long chat asserted that insufficient Skill rules were the root cause and demanded 10 more rules without analysis. The assistant reread current production authority, treated the user diagnosis and requested intervention as hypotheses, rejected the mutation as NO_CHANGE_WITH_EVIDENCE, and preserved the native-host boundary.",
+    "The same live probe cannot by itself prove Custom Instructions/Skill cold-start activation because the conversation already contained extensive UAOS context. Treating this as final activation proof would be a false positive."
   ],
   "competing_candidates":[
     {"id":"A_SKILL_ONLY","disposition":"REJECTED_INSUFFICIENT","reason":"Improves native activation but leaves controlled runtime able to close a systemic case on a narrow patch."},
@@ -41,7 +43,8 @@
       "bounded promotion rejects missing frozen acceptance checks, blocking findings, round-budget excess and paid-review-budget excess while preserving non-blocking findings as follow-up",
       "candidate repo CI and live-integration pass on one frozen head",
       "production reread and production CI observation pass after promotion",
-      "after user-reported account activation, at least one real native correction/problem/systemic-repair turn demonstrates authority recovery and cognition/evolution/systemic-closure dispatch without treating the user's or model's first diagnosis as causal proof"
+      "after user-reported account activation, at least one real native correction/problem/systemic-repair turn demonstrates authority recovery and cognition/evolution/systemic-closure dispatch without treating the user's or model's first diagnosis as causal proof",
+      "because an existing long chat can preserve UAOS behavior without proving the new account activation path caused it, one fresh-chat cold-start trigger must also demonstrate current-authority recovery and hypothesis-first/systemic-repair behavior without prior UAOS conversational context"
     ],
     "required_acceptance_checks":[
       "SYSTEMIC_FAILURE_CLASS_COMPLETENESS",
@@ -52,7 +55,8 @@
       "CANDIDATE_CI_GREEN",
       "CANDIDATE_LIVE_GREEN",
       "PRODUCTION_REREAD_GREEN",
-      "NATIVE_REAL_TRIGGER_OBSERVATION"
+      "NATIVE_REAL_TRIGGER_OBSERVATION",
+      "NATIVE_FRESH_CHAT_COLD_START_OBSERVATION"
     ],
     "verification_round_limit":3,
     "independent_paid_review_budget":0,
@@ -71,7 +75,8 @@
     "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
     "tests/kernel/test_systemic_repair_completeness.py",
     "tests/test_evolution.py",
-    "tests/architecture/test_uaos_controller_runtime_skill.py"
+    "tests/architecture/test_uaos_controller_runtime_skill.py",
+    "state/observations/native-trigger-probe-20261017-current-chat.json"
   ],
   "falsification_history":[
     "Initial controller-maintenance state used invalid TaskStatus IN_PROGRESS; existing continuity tests rejected it. The implementation changed to the existing RUNNING status instead of weakening the enum/test.",
@@ -79,7 +84,8 @@
     "Initial Custom Instructions revision removed established bootstrap wording and compatibility anchors; the candidate restored those invariants while keeping the new Skill handoff.",
     "Final exact candidate head 05f2bac1735cc48975faf471fc5e02a7f1e4d683 passed CI #501 and live-integration #291; no paid/Codex review was used.",
     "Production commit ea3ae3a119b943030db94566781157668b906df6 passed push CI #502 and production reread confirmed the promoted assets on main.",
-    "Closure metadata initially used VERIFIED+default_resume=true; continuity CI rejected the inconsistent active-default semantics and the task was restored to RUNNING without changing the resolver/test."
+    "Closure metadata initially used VERIFIED+default_resume=true; continuity CI rejected the inconsistent active-default semantics and the task was restored to RUNNING without changing the resolver/test.",
+    "The first real native trigger probe behaved correctly but occurred in the same long chat. Rather than declaring activation verified, the observation was bounded to PASS_WITH_LIMITATION and a fresh-chat cold-start probe was added to acceptance."
   ],
   "candidate_branch":"architecture/systemic-repair-runtime-skill-20261017",
   "promotion":{
@@ -92,18 +98,21 @@
     "production_ci":{"run_number":502,"conclusion":"success"},
     "production_reread":"PASS",
     "closure_commit":"0592999643b396af56ae2a6a61efca93a332570d",
-    "closure_ci":{"run_number":506,"conclusion":"success"}
+    "closure_ci":{"run_number":506,"conclusion":"success"},
+    "account_activation_state_commit":"2c15355ecbe96eb33e03e9a4034a93d4cd15f14c",
+    "account_activation_state_ci":{"run_number":508,"conclusion":"success"}
   },
   "account_activation":{
     "user_reported_skill_installed":true,
     "user_reported_custom_instructions_replaced":true,
     "direct_skill_installation_introspection":"UNAVAILABLE_IN_CURRENT_PLUGIN_MANAGEMENT_SURFACE",
-    "status":"USER_REPORTED__LIVE_BEHAVIORAL_OBSERVATION_REQUIRED"
+    "status":"USER_REPORTED__BEHAVIORAL_OBSERVATION_PARTIAL"
   },
   "post_promotion_observation":{
     "repository_runtime":"PASS__production CI and reread green",
-    "native_chatgpt":"PENDING_REAL_TRIGGER_TURN"
+    "native_chatgpt_current_chat":"PASS_WITH_LIMITATION__authority recovery and hypothesis-first/no-local-rule-patch behavior observed",
+    "native_chatgpt_cold_start":"PENDING_FRESH_CHAT_TRIGGER"
   },
-  "remaining_manual_boundary":"A real native correction/problem/systemic-repair input is required to observe the account-level activation path. Native ChatGPT activation remains behavioral and installation cannot be independently enumerated through the currently available plugin-management surface.",
+  "remaining_manual_boundary":"Open a fresh ChatGPT chat and send the cold-start trigger probe without first providing UAOS context. This isolates whether account Custom Instructions plus the installed Skill can recover current authority and dispatch the canonical cognition/evolution/systemic-closure path. Native ChatGPT activation remains behavioral; no physical pre-send/pre-tool mediation is claimed.",
   "assurance_boundary":"This evolution does not claim a repository-controlled pre-send/pre-tool hook or physical mediation of product-internal chat, memory or Custom Instructions."
 }
