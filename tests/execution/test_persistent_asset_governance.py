@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 def asset(
     *,
     asset_id="a",
+    resource_ref="repo:file",
     surface=PersistentSurface.GITHUB,
     role=AssetRole.AUTHORITY,
     lifecycle=AssetLifecycle.CURRENT,
@@ -31,6 +32,7 @@ def asset(
 ):
     return PersistentAssetDescriptor(
         asset_id=asset_id,
+        resource_ref=resource_ref,
         surface=surface,
         role=role,
         lifecycle=lifecycle,
@@ -40,12 +42,25 @@ def asset(
     )
 
 
-def test_current_authority_requires_canonical_ref_and_non_temporary_surface():
+def test_descriptor_requires_resource_identity_and_current_authority_ref():
     gate = PersistentAssetGate()
+    with pytest.raises(PersistentAssetViolation, match="resource_ref"):
+        gate.require_descriptor(
+            PersistentAssetDescriptor(
+                asset_id="missing-resource",
+                resource_ref="",
+                surface=PersistentSurface.GITHUB,
+                role=AssetRole.REFERENCE,
+                lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
+                owner_authority="UAOS",
+                allowed_operations=frozenset({CrudOperation.READ}),
+            )
+        )
     with pytest.raises(PersistentAssetViolation, match="canonical_authority_ref"):
         gate.require_descriptor(
             PersistentAssetDescriptor(
                 asset_id="missing-ref",
+                resource_ref="repo:file",
                 surface=PersistentSurface.GITHUB,
                 role=AssetRole.AUTHORITY,
                 lifecycle=AssetLifecycle.CURRENT,
@@ -53,10 +68,15 @@ def test_current_authority_requires_canonical_ref_and_non_temporary_surface():
                 allowed_operations=frozenset({CrudOperation.READ}),
             )
         )
+
+
+def test_current_authority_cannot_live_in_temporary_sandbox():
+    gate = PersistentAssetGate()
     with pytest.raises(PersistentAssetViolation, match="TEMP_SANDBOX"):
         gate.require_descriptor(
             PersistentAssetDescriptor(
                 asset_id="tmp-authority",
+                resource_ref="sandbox:/mnt/data/current.json",
                 surface=PersistentSurface.TEMP_SANDBOX,
                 role=AssetRole.AUTHORITY,
                 lifecycle=AssetLifecycle.CURRENT,
@@ -74,10 +94,26 @@ def test_bootstrap_delivery_and_history_cannot_claim_current_lifecycle():
             gate.require_descriptor(asset(asset_id=role.value, role=role, lifecycle=AssetLifecycle.CURRENT))
 
 
+def test_descriptor_must_bind_exact_executor_target():
+    gate = PersistentAssetGate()
+    descriptor = asset(resource_ref="repo:allowed")
+    with pytest.raises(PersistentAssetViolation, match="executor target"):
+        gate.require(
+            PersistentAssetRequest(
+                CrudOperation.UPDATE,
+                descriptor,
+                "DOMAIN:financial_writing",
+                "DOMAIN:financial_writing",
+                execution_target="repo:different",
+            )
+        )
+
+
 def test_decommissioned_drive_or_library_asset_cannot_update_or_output():
     gate = PersistentAssetGate()
     old_router = asset(
         asset_id="old-drive-router",
+        resource_ref="drive:old-router",
         surface=PersistentSurface.GOOGLE_DRIVE,
         role=AssetRole.MIGRATED_HISTORY,
         lifecycle=AssetLifecycle.DECOMMISSIONED,
@@ -91,6 +127,7 @@ def test_decommissioned_drive_or_library_asset_cannot_update_or_output():
                     descriptor=old_router,
                     active_authority="DOMAIN:financial_writing",
                     target_authority="DOMAIN:financial_writing",
+                    execution_target="drive:old-router",
                 )
             )
 
@@ -99,9 +136,9 @@ def test_mutation_requires_target_authority_matching_asset_owner():
     gate = PersistentAssetGate()
     current = asset()
     with pytest.raises(PersistentAssetViolation, match="active_authority"):
-        gate.require(PersistentAssetRequest(CrudOperation.UPDATE, current, None, "DOMAIN:financial_writing"))
+        gate.require(PersistentAssetRequest(CrudOperation.UPDATE, current, None, "DOMAIN:financial_writing", "repo:file"))
     with pytest.raises(PersistentAssetViolation, match="target_authority"):
-        gate.require(PersistentAssetRequest(CrudOperation.UPDATE, current, "UAOS", "UAOS"))
+        gate.require(PersistentAssetRequest(CrudOperation.UPDATE, current, "UAOS", "UAOS", "repo:file"))
 
 
 def test_reading_chat_memory_or_reference_is_allowed_but_not_authority():
@@ -109,12 +146,13 @@ def test_reading_chat_memory_or_reference_is_allowed_but_not_authority():
     for surface in (PersistentSurface.CHAT, PersistentSurface.MEMORY, PersistentSurface.NOTION):
         reference = asset(
             asset_id=f"ref-{surface.value}",
+            resource_ref=f"{surface.value.lower()}:reference",
             surface=surface,
             role=AssetRole.REFERENCE,
             lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
             ops=frozenset({CrudOperation.READ}),
         )
-        gate.require(PersistentAssetRequest(CrudOperation.READ, reference, None, None))
+        gate.require(PersistentAssetRequest(CrudOperation.READ, reference, None, None, reference.resource_ref))
         assert reference.role is not AssetRole.AUTHORITY
 
 
@@ -122,6 +160,7 @@ def test_library_docx_is_delivery_history_not_task_state():
     gate = PersistentAssetGate()
     delivery = asset(
         asset_id="cross-border-final.docx",
+        resource_ref="library:/Financial/cross-border-final.docx",
         surface=PersistentSurface.LIBRARY,
         role=AssetRole.DELIVERY_HISTORY,
         lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
@@ -133,6 +172,7 @@ def test_library_docx_is_delivery_history_not_task_state():
             delivery,
             "DOMAIN:financial_writing",
             "DOMAIN:financial_writing",
+            delivery.resource_ref,
         )
     )
     assert delivery.canonical_authority_ref is None
@@ -142,13 +182,14 @@ def test_custom_instructions_is_bootstrap_only():
     gate = PersistentAssetGate()
     bootstrap = asset(
         asset_id="uaos-custom-instructions",
+        resource_ref="chatgpt:custom-instructions",
         surface=PersistentSurface.CUSTOM_INSTRUCTIONS,
         role=AssetRole.BOOTSTRAP,
         lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
         ops=frozenset({CrudOperation.READ, CrudOperation.UPDATE}),
         owner="UAOS",
     )
-    gate.require(PersistentAssetRequest(CrudOperation.UPDATE, bootstrap, "UAOS", "UAOS"))
+    gate.require(PersistentAssetRequest(CrudOperation.UPDATE, bootstrap, "UAOS", "UAOS", bootstrap.resource_ref))
     assert bootstrap.role is AssetRole.BOOTSTRAP
 
 
@@ -156,13 +197,14 @@ def test_automation_role_cannot_become_business_state_authority():
     gate = PersistentAssetGate()
     automation = asset(
         asset_id="uaos-capability-audit",
+        resource_ref="automation:uaos-capability-audit",
         surface=PersistentSurface.AUTOMATION,
         role=AssetRole.AUTOMATION,
         lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
         ops=frozenset({CrudOperation.READ, CrudOperation.UPDATE}),
         owner="UAOS",
     )
-    gate.require(PersistentAssetRequest(CrudOperation.READ, automation, None, None))
+    gate.require(PersistentAssetRequest(CrudOperation.READ, automation, None, None, automation.resource_ref))
     assert automation.role is not AssetRole.AUTHORITY
 
 
@@ -170,12 +212,13 @@ def test_migration_cannot_close_until_target_verified_and_source_retired():
     gate = PersistentAssetGate()
     source = asset(
         asset_id="legacy-library-pointer",
+        resource_ref="library:/Financial/legacy-pointer.md",
         surface=PersistentSurface.LIBRARY,
         role=AssetRole.MIGRATED_HISTORY,
         lifecycle=AssetLifecycle.DECOMMISSIONED,
         ops=frozenset({CrudOperation.READ, CrudOperation.ARCHIVE, CrudOperation.DELETE}),
     )
-    target = asset(asset_id="financial-main")
+    target = asset(asset_id="financial-main", resource_ref="repo:financial-main")
     with pytest.raises(PersistentAssetViolation, match="target must be verified"):
         gate.require_migration_closed(MigrationObservation(source, target, False, True))
     with pytest.raises(PersistentAssetViolation, match="source must be retired"):
@@ -184,9 +227,10 @@ def test_migration_cannot_close_until_target_verified_and_source_retired():
 
 
 def test_reconciliation_detects_stale_or_unexpected_authority_and_works_with_generator():
-    current = asset(asset_id="financial-main")
+    current = asset(asset_id="financial-main", resource_ref="repo:financial-main")
     old = asset(
         asset_id="drive-router",
+        resource_ref="drive:legacy-router",
         surface=PersistentSurface.GOOGLE_DRIVE,
         role=AssetRole.MIGRATED_HISTORY,
         lifecycle=AssetLifecycle.DECOMMISSIONED,
@@ -199,6 +243,13 @@ def test_reconciliation_detects_stale_or_unexpected_authority_and_works_with_gen
     assert report.admitted
     assert report.current_authority_assets == ("financial-main",)
     assert report.retired_assets == ("drive-router",)
+
+
+def test_reconciliation_rejects_two_descriptors_for_same_physical_resource():
+    one = asset(asset_id="one", resource_ref="repo:same")
+    two = asset(asset_id="two", resource_ref="repo:same")
+    report = reconcile_asset_inventory((one, two))
+    assert any(item.startswith("duplicate-resource-ref:") for item in report.violations)
 
 
 def test_policy_declares_cross_surface_invariants_and_executable_refs():
