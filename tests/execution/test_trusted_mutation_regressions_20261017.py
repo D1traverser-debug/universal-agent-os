@@ -116,7 +116,7 @@ def test_local_create_and_update_are_distinct_trusted_actions(tmp_path: Path):
 
     updated = update_coordinator.execute(update_request)
     assert updated.outcome.disposition is ExecutionDisposition.CONFIRMED
-    assert updated.outcome.evidence["commit_semantics"] == "BOUND_PARENT_ATOMIC_REPLACE"
+    assert updated.outcome.evidence["commit_semantics"] == "BOUND_PARENT_ATOMIC_RENAME"
     assert (tmp_path / "policy.txt").read_text(encoding="utf-8") == "v2"
 
 
