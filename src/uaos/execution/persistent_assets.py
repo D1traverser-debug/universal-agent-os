@@ -80,6 +80,7 @@ _NON_AUTHORITY_ROLES = {
 @dataclass(frozen=True, slots=True)
 class PersistentAssetDescriptor:
     asset_id: str
+    resource_ref: str
     surface: PersistentSurface
     role: AssetRole
     lifecycle: AssetLifecycle
@@ -95,6 +96,7 @@ class PersistentAssetRequest:
     descriptor: PersistentAssetDescriptor
     active_authority: str | None
     target_authority: str | None
+    execution_target: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -125,14 +127,16 @@ def _nonempty(value: str | None) -> bool:
 class PersistentAssetGate:
     """Fail-closed classification/admission for durable assets across surfaces.
 
-    This gate governs what is being mutated and where it lives. It does not replace
-    AuthorityScopeGate, owner-specific approvals, repository checks, or connector
-    permissions; those remain independent gates.
+    A descriptor is an identity-bound classification, not a caller-supplied label that
+    may be reused for another target. Authority/approval/owner-specific checks remain
+    independent gates around this one.
     """
 
     def require_descriptor(self, descriptor: PersistentAssetDescriptor) -> None:
         if not _nonempty(descriptor.asset_id):
             raise PersistentAssetViolation("persistent asset requires asset_id")
+        if not _nonempty(descriptor.resource_ref):
+            raise PersistentAssetViolation("persistent asset requires resource_ref")
         if not _nonempty(descriptor.owner_authority):
             raise PersistentAssetViolation("persistent asset requires owner_authority")
         if not descriptor.allowed_operations:
@@ -164,6 +168,10 @@ class PersistentAssetGate:
         descriptor = request.descriptor
         operation = request.operation
 
+        if request.execution_target is not None and descriptor.resource_ref != request.execution_target:
+            raise PersistentAssetViolation(
+                "persistent asset resource_ref must match the executor target"
+            )
         if operation not in descriptor.allowed_operations:
             raise PersistentAssetViolation(
                 f"operation={operation.value} is not admitted for asset={descriptor.asset_id}"
@@ -211,13 +219,19 @@ def reconcile_asset_inventory(
     temporary: list[str] = []
     violations: list[str] = []
     seen: set[tuple[PersistentSurface, str]] = set()
+    seen_refs: set[tuple[PersistentSurface, str]] = set()
 
     for asset in inventory:
         key = (asset.surface, asset.asset_id)
+        ref_key = (asset.surface, asset.resource_ref)
         if key in seen:
             violations.append(f"duplicate-asset:{asset.surface.value}:{asset.asset_id}")
             continue
+        if ref_key in seen_refs:
+            violations.append(f"duplicate-resource-ref:{asset.surface.value}:{asset.resource_ref}")
+            continue
         seen.add(key)
+        seen_refs.add(ref_key)
         try:
             gate.require_descriptor(asset)
         except PersistentAssetViolation as exc:
