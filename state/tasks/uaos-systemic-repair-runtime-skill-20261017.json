@@ -1,11 +1,11 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "task_id": "uaos:maintenance:systemic-repair-runtime-skill-20261017",
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "display_name_zh": "总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
   "status": "RUNNING",
-  "current_stage": "PRODUCTION_VERIFIED__ACCOUNT_UI_ACTIVATION_AND_NATIVE_OBSERVATION_PENDING",
+  "current_stage": "ACCOUNT_UI_ACTIVATION_REPORTED__NATIVE_TRIGGER_OBSERVATION_PENDING",
   "governing_outcome": "在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话更稳定进入当前 UAOS 认知与进化系统；重复/系统性问题不得以样本级局部补丁收口，除非证据证明 failure class 确实局限于该 leaf；修复后必须做 generalization 与独立验证；promotion 必须在冻结验收边界下有限收敛。",
   "origin_issue_refs": ["#77", "#72", "#63"],
   "evolution_ref": "state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
@@ -34,7 +34,8 @@
     "initial Custom Instructions edit removed established bootstrap wording and compatibility anchors; the pointer was compressed/restored rather than weakening tests",
     "final frozen candidate head 05f2bac1735cc48975faf471fc5e02a7f1e4d683 passed repo CI #501 and live-integration #291",
     "production commit ea3ae3a119b943030db94566781157668b906df6 passed push CI #502",
-    "closure CI rejected VERIFIED+default_resume as inconsistent with controller continuity; the task remains RUNNING because account activation and native observation are genuinely pending"
+    "closure CI rejected VERIFIED+default_resume as inconsistent with controller continuity; the task remains RUNNING because account activation and native observation are genuinely pending",
+    "the user reported both account-level setup actions complete on 2026-10-17, but available plugin-management introspection could not independently enumerate the uploaded personal Skill; activation is therefore recorded as USER_REPORTED rather than VERIFIED"
   ],
   "cost_constraint": "INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
   "verification_boundary": "FROZEN_BY_state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json#frozen_acceptance",
@@ -47,13 +48,20 @@
     "production_commit": "ea3ae3a119b943030db94566781157668b906df6",
     "production_ci_number": 502,
     "production_ci": "PASS",
-    "production_reread": "PASS"
+    "production_reread": "PASS",
+    "closure_production_commit": "0592999643b396af56ae2a6a61efca93a332570d",
+    "closure_production_ci_number": 506,
+    "closure_production_ci": "PASS"
+  },
+  "account_activation": {
+    "user_reported_skill_installed": true,
+    "user_reported_custom_instructions_replaced": true,
+    "direct_product_introspection": "UNAVAILABLE_FOR_PERSONAL_UPLOADED_SKILL_IN_CURRENT_PLUGIN_MANAGEMENT_SURFACE",
+    "evidence_status": "USER_REPORTED__NOT_INDEPENDENTLY_VERIFIED"
   },
   "remaining_user_owned_actions": [
-    "install the production uaos-controller-runtime Skill in ChatGPT account UI",
-    "replace account Custom Instructions with docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md#Recommended-Custom-Instructions",
-    "after activation, allow one or more real native ChatGPT turns to provide post-promotion observation evidence"
+    "provide one real correction/problem/systemic-repair input so the native selected-context activation path can be observed end-to-end"
   ],
-  "next_action": "USER_ACCOUNT_UI_ACTIVATION__THEN_NATIVE_POST_PROMOTION_OBSERVATION",
-  "updated_at": "2026-10-17T19:59:00+08:00"
+  "next_action": "NATIVE_CHATGPT_REAL_TRIGGER_OBSERVATION",
+  "updated_at": "2026-10-17T20:02:00+08:00"
 }
