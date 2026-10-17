@@ -5,7 +5,7 @@
   "status":"AUTHORIZED__ACTIVATES_ON_PRODUCTION_MAIN_MERGE",
   "updated_at":"2026-10-17T10:18:00+08:00",
   "governing_outcome":"One abstract lifecycle/CRUD/output model governs durable assets and external records across persistent surfaces without turning those surfaces into competing business authorities or trusting caller-supplied labels as execution truth.",
-  "surfaces":["GITHUB","CHAT","LIBRARY","MEMORY","CUSTOM_INSTRUCTIONS","AUTOMATION","NOTION","GOOGLE_DRIVE","GMAIL","GOOGLE_CALENDAR","OTHER_EXTERNAL","TEMP_SANDBOX"],
+  "surfaces":["GITHUB","CHAT","LIBRARY","MEMORY","CUSTOM_INSTRUCTIONS","AUTOMATION","NOTION","GOOGLE_DRIVE","GMAIL","GOOGLE_CALENDAR","LOCAL_WORKSPACE","OTHER_EXTERNAL","TEMP_SANDBOX"],
   "asset_roles":["AUTHORITY","BOOTSTRAP","REFERENCE","SHARED_RESOURCE","DELIVERY","DELIVERY_HISTORY","MIGRATED_HISTORY","ARCHIVE","AUTOMATION","EXTERNAL_RECORD"],
   "lifecycle_states":["CURRENT","ACTIVE_NON_AUTHORITY","MIGRATED","DECOMMISSIONED","ARCHIVED","DELETE_CANDIDATE","TEMPORARY"],
   "operations":["READ","CREATE","UPDATE","DELETE","OUTPUT","MIGRATE","ARCHIVE"],
@@ -23,6 +23,8 @@
     "REFERENCE_SHARED_RESOURCE_DELIVERY_AUTOMATION_AND_EXTERNAL_RECORD_ASSETS_CANNOT_RESTORE_WORKFLOW_STATE_OR_IDENTITY",
     "MIGRATED_DECOMMISSIONED_ARCHIVED_AND_DELETE_CANDIDATE_ASSETS_CANNOT_RESUME_CURRENT_EXECUTION",
     "TEMP_SANDBOX_CANNOT_BE_CURRENT_AUTHORITY_OR_DURABLE_BUSINESS_STATE",
+    "TEMP_SANDBOX_CANNOT_OUTPUT_MIGRATE_OR_ARCHIVE__USER_DELIVERY_MUST_TARGET_AN_ADMITTED_DELIVERY_OR_AUTHORITY_ASSET",
+    "LOCAL_WORKSPACE_IS_A_FIRST_CLASS_DURABLE_SURFACE_NOT_AN_EXTERNAL_CATCH_ALL",
     "RECONCILIATION_MUST_MATCH_THE_ORIGINAL_ADMISSION_RECEIPT_AND_RERUN_MUTATION_GATES",
     "MIGRATION_CLOSURE_REQUIRES_TARGET_VERIFIED_AND_SOURCE_RETIRED_OR_EXPLICITLY_ARCHIVED",
     "MIGRATION_CLOSURE_REQUIRES_DECLARED_TARGET_IDENTITY_OBSERVED_SOURCE_TARGET_IDENTITIES_TARGET_VERIFICATION_AND_SOURCE_RETIREMENT",
@@ -46,7 +48,8 @@
     "EXTERNAL_RECORD":{"forbidden_as_business_authority":true}
   },
   "retired_lifecycle_allowed_operations":["READ","ARCHIVE","DELETE","MIGRATE_CLOSURE_ONLY"],
-  "temporary_surface_rule":"TEMP_SANDBOX assets may support current execution only as temporary working material; before durable completion they must be promoted to an admitted persistent asset/delivery or discarded.",
+  "temporary_surface_rule":"TEMP_SANDBOX assets are internal working material only. Their descriptors may not admit OUTPUT, MIGRATE or ARCHIVE and may not use AUTHORITY, DELIVERY, DELIVERY_HISTORY, MIGRATED_HISTORY or ARCHIVE roles. CREATE/UPDATE/READ/DELETE may support temporary work; user delivery or durable promotion must target a separate admitted persistent asset or the temp asset must be discarded.",
+  "local_workspace_rule":"Durable local filesystem/workspace records use LOCAL_WORKSPACE so inventory and surface-specific controls do not misclassify them as external systems.",
   "migration_semantics":"MIGRATE_IS_A_CLOSURE_OR_CUTOVER_CONFIRMATION_OPERATION__COPY_OR_REBUILD_USES_NORMAL_CREATE_UPDATE_OUTPUT_OPERATIONS__CONFIRMED_MIGRATE_REQUIRES_POST_EXECUTION_CLOSURE_EVIDENCE",
   "migration_protocol":[
     "CLASSIFY_SOURCE_AND_TARGET",
