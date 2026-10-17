@@ -64,17 +64,17 @@ def test_other_repository_main_does_not_activate_policy():
     )
 
 
-def test_production_identity_itself_must_be_fully_qualified_branch_ref():
-    with pytest.raises(PolicyActivationViolation, match="fully qualified branch ref"):
-        ProductionRefIdentity(
-            repository="D1traverser-debug/universal-agent-os",
-            ref="main",
-        )
-    with pytest.raises(PolicyActivationViolation, match="fully qualified branch ref"):
-        ProductionRefIdentity(
-            repository="D1traverser-debug/universal-agent-os",
-            ref="refs/tags/main",
-        )
+def test_production_identity_is_pinned_to_exact_uaos_main():
+    invalid = (
+        ("D1traverser-debug/universal-agent-os", "main", "fully qualified"),
+        ("D1traverser-debug/universal-agent-os", "refs/tags/main", "fully qualified"),
+        ("D1traverser-debug/universal-agent-os", "refs/heads/", "non-empty"),
+        ("evil/repo", "refs/heads/main", "pinned UAOS"),
+        ("D1traverser-debug/universal-agent-os", "refs/heads/release", "pinned UAOS"),
+    )
+    for repository, ref, message in invalid:
+        with pytest.raises(PolicyActivationViolation, match=message):
+            ProductionRefIdentity(repository=repository, ref=ref)
 
 
 def test_missing_or_wrong_declaration_fails_closed():
