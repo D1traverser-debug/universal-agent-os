@@ -25,7 +25,8 @@ def test_custom_instruction_pointer_is_bootstrap_not_a_policy_copy():
     assert "bootstrap from `d1traverser-debug/universal-agent-os@main:entrypoint.md`" in lower
     assert "bootstrap-only" in lower
     assert "non-authoritative" in lower
-    assert "while the admitted objective is unfinished" in lower
+    assert "while the governing objective is unfinished" in lower
+    assert "no genuine user-input, authorization, safety, budget, capability, or external blocker exists" in lower
     assert "choose the next evidence-supported action, execute, verify, reassess, and continue" in lower
     assert "do not prove a repository-controlled chatgpt pre-send/pre-tool hook" in lower
     assert "do not paste the full cognition kernel" in lower
