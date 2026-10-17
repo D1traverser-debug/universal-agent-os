@@ -10,7 +10,7 @@
   "source_versions": {
     "session": "2.2.0",
     "deliberation": "2.1.0",
-    "host_schema": "1.7"
+    "host_schema": "1.8"
   },
   "assurance": {
     "semantic_signals": "BEHAVIORAL_SESSION_SELF_CLASSIFICATION__NO_VERIFIED_REPOSITORY_CONTROLLED_NON_BYPASSABLE_SIGNAL_INJECTOR",
