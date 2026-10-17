@@ -2,9 +2,10 @@ from datetime import UTC, datetime, timedelta
 import pytest
 
 from uaos.execution import (
-    ActionCoordinator, ApprovalGrant, ApprovalRequired, CapabilityHealth,
-    CapabilityObservation, CapabilityRegistry, CapabilityUnavailable,
-    ExecutionDisposition, ExecutionOutcome, ExecutionRequest
+    ActionCoordinator, ApprovalGrant, ApprovalRequired, AssetLifecycle, AssetRole,
+    CapabilityHealth, CapabilityObservation, CapabilityRegistry, CapabilityUnavailable,
+    CrudOperation, ExecutionDisposition, ExecutionOutcome, ExecutionRequest,
+    PersistentAssetDescriptor, PersistentAssetViolation, PersistentSurface,
 )
 
 
@@ -27,6 +28,18 @@ def observation(capability_id, *, actions=("research",), permissions=(), quality
     return CapabilityObservation(capability_id, health, 1.0, actions, permissions, quality, cost, "agent")
 
 
+def repo_asset():
+    return PersistentAssetDescriptor(
+        asset_id="uaos-repo-file",
+        surface=PersistentSurface.GITHUB,
+        role=AssetRole.AUTHORITY,
+        lifecycle=AssetLifecycle.CURRENT,
+        owner_authority="UAOS",
+        allowed_operations=frozenset({CrudOperation.READ, CrudOperation.UPDATE}),
+        canonical_authority_ref="github://D1traverser-debug/universal-agent-os@main",
+    )
+
+
 def test_router_filters_mandatory_permissions_quality_and_cost():
     registry = CapabilityRegistry()
     registry.register(observation("cheap", permissions=("web",), quality=0.8, cost=1), Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED)))
@@ -44,7 +57,21 @@ def test_router_never_silently_downgrades_mandatory_floor():
         ActionCoordinator(registry).execute(request)
 
 
-def test_side_effect_can_require_exact_action_approval():
+def test_mutation_without_persistent_asset_classification_fails_before_approval_or_executor():
+    registry = CapabilityRegistry()
+    executor = Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED))
+    registry.register(observation("writer", actions=("write",), permissions=("repo:write",)), executor)
+    request = ExecutionRequest(
+        "a1", "write", "repo:file", {}, required_permissions=("repo:write",),
+        side_effect_class="WRITE", approval_required=True, target_authority="UAOS",
+    )
+    coordinator = ActionCoordinator(registry, authority_context="UAOS")
+    with pytest.raises(PersistentAssetViolation, match="persistent_asset"):
+        coordinator.execute(request)
+    assert executor.calls == []
+
+
+def test_side_effect_can_require_exact_action_approval_after_asset_admission():
     registry = CapabilityRegistry()
     registry.register(observation("writer", actions=("write",), permissions=("repo:write",)), Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED)))
     request = ExecutionRequest(
@@ -57,6 +84,8 @@ def test_side_effect_can_require_exact_action_approval():
         side_effect_class="WRITE",
         approval_required=True,
         target_authority="UAOS",
+        persistent_asset=repo_asset(),
+        persistent_operation=CrudOperation.UPDATE,
     )
     coordinator = ActionCoordinator(registry, authority_context="UAOS")
     with pytest.raises(ApprovalRequired):
