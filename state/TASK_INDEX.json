@@ -1,9 +1,9 @@
 {
-  "schema_version":"2.13",
+  "schema_version":"2.14",
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-17T20:20:00+08:00",
+  "updated_at":"2026-10-17T21:15:00+08:00",
   "controller_tasks":[
     {
       "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
@@ -13,8 +13,8 @@
       "status":"RUNNING",
       "resume_eligible":true,
       "default_resume":true,
-      "semantic_summary":"Repository/runtime production is verified and account setup is user-reported. A real trigger in the existing long chat passed hypothesis-first, authority-recovery and no-local-rule-patch behavior, but the same chat already contained UAOS context, so it cannot isolate whether the new Custom Instructions/Skill activation path caused the success. Fresh-chat cold-start observation remains the final behavioral entry test.",
-      "current_stage":"CURRENT_CHAT_TRIGGER_PASS__FRESH_CHAT_COLD_START_PENDING",
+      "semantic_summary":"Fresh-chat cold-start observation failed: UAOS authority was recovered, but the user-proposed 10-rule remedy was still executed without cognition/evolution re-admission and promoted as PR #83 while current task authority still held NO_CHANGE_WITH_EVIDENCE. Repair candidate now separates problem remedies from independent mechanism requirements, compiles the native Skill from canonical policy owners, and adds a CI trace gate for native control-plane changes. Promotion is intentionally blocked until automatic Codex PR review is disabled because ready-PR creation currently triggers an unwanted review outside the zero-review budget.",
+      "current_stage":"COLD_START_FAILURE_CONFIRMED__REPAIR_CANDIDATE_PRE_PR__CODEX_AUTOREVIEW_BLOCKER",
       "state_ref":"state/tasks/uaos-systemic-repair-runtime-skill-20261017.json"
     },
     {
