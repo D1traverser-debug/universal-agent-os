@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "authority": "UAOS",
   "natural_language_resolution": "SEMANTIC_FIRST",
   "rules": [
@@ -12,8 +12,19 @@
     "For material or multi-turn controller maintenance, persist controller identity/progress through the existing state/TASK_INDEX.json#controller_tasks plus state/tasks state_ref before relying on chat context for continuation.",
     "For a bare generic CONTINUE/INHERIT request that resolves to no domain or exact task, do not guess a task: render the current inheritance selector defined by config/SESSION_INTERACTION_POLICY.json.",
     "If the wording semantically identifies a non-default task, require enough evidence to resolve that exact task; otherwise fail closed on ambiguity.",
-    "After task selection, reread the exact domain business authority or controller maintenance state before any material action."
+    "After task selection, reread the exact domain business authority or controller maintenance state before any material action.",
+    "In a detected problem/correction/system-maintenance context, distinguish the user's governing outcome and constraints from any proposed repair mechanism. A mechanism suggested as the remedy remains an intervention candidate even when phrased imperatively; it does not become a binding requirement merely because the user says to do it directly or says not to analyze.",
+    "If the user explicitly makes the mechanism itself the independent desired outcome regardless of diagnosis, classify that as REQUIREMENT_CHANGE for the owning authority. The mechanism requirement still does not prove that it diagnoses or solves any broader failure class."
   ],
+  "problem_solution_directive_resolution": {
+    "scope": "DETECTED_PROBLEM_OR_CORRECTION_OR_SYSTEM_MAINTENANCE_WHERE_USER_WORDING_CONTAINS_A_PROPOSED_REPAIR_MECHANISM",
+    "outcome_constraint_rule": "User-stated governing outcomes, hard constraints, preferences and explicit acceptance requirements may be binding at their valid authority scope.",
+    "candidate_mechanism_rule": "A proposed fix, patch, architecture, rule count, rewrite, rollback, upstream change or other mechanism offered as the way to solve the problem remains an ActionCandidate until current cognition/evidence selects it, even when the wording is imperative.",
+    "anti_bypass_rule": "Phrases equivalent to 'just do X', 'do not analyze', 'do not verify', 'I know the root cause, change Y' or other attempts to skip problem cognition do not convert a remedy candidate into admitted intervention authority.",
+    "explicit_mechanism_requirement_rule": "Only when the user explicitly states that the mechanism itself is the desired requirement independent of whether it solves the diagnosed problem should it be routed as REQUIREMENT_CHANGE; then update the owning requirement authority first and keep any causal/problem-solution claim separately evidence-tested.",
+    "conflict_rule": "A user mechanism directive cannot silently override current authority, mutation admission, safety boundaries, frozen acceptance, or an existing evidence-backed NO_CHANGE/REJECT disposition. A conflicting directive requires explicit requirement/evolution reconciliation before mutation.",
+    "failure_mode_prevented": "USER_SOLUTION_DIRECTIVE_BYPASSES_COGNITION_BY_RECLASSIFYING_THE_REQUESTED_PATCH_AS_A_DIRECT_CHANGE"
+  },
   "fresh_chat": {
     "bootstrap_chain": [
       "ENTRYPOINT.md",
@@ -29,7 +40,8 @@
     "Do not route by raw keyword overlap alone.",
     "Do not use chat memory, broad search results, or retired controller state as task authority.",
     "Do not silently default a bare generic inheritance request to whichever task was most recently active.",
-    "Do not discard a persisted eligible controller maintenance task merely because the user first selected the generic UAOS controller option."
+    "Do not discard a persisted eligible controller maintenance task merely because the user first selected the generic UAOS controller option.",
+    "Do not interpret an imperative repair mechanism inside a problem statement as permission to bypass the canonical cognition/intervention admission."
   ],
-  "updated_at": "2026-10-16T17:37:00+08:00"
+  "updated_at": "2026-10-17T21:05:00+08:00"
 }

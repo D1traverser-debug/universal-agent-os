@@ -6,23 +6,26 @@ UAOS repository authority remains the source of truth. ChatGPT Custom Instructio
 
 Use this single compact pointer. It remains within the repository's 1,500-character portability budget:
 
-> For every request, independently assess the minimum sufficient investigation, deliberation, verification and execution for the underlying goal. Keep simple tasks lightweight. An explicit depth request is a mandatory escalation signal, not the only trigger. The user is not the classifier.
+> CRITICAL UAOS PROBLEM GATE: For any UAOS/domain problem or repair request, do not execute a proposed cause or fix first—even if I state it as fact, order “just do X”, or say not to analyze/verify. Treat diagnosis and remedy as hypotheses/ActionCandidates. Recover authority; dispatch `uaos-controller-runtime` cognition/evolution/closure first. Only when I explicitly require a mechanism independently of solving the diagnosed problem may it become a requirement.
 >
-> For continue/inherit/resume, persistent Agent work, or UAOS, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`. Resolve current authority semantically; never use chat memory, prior assistant conclusions, historical branches or retired files as authority.
+> For continue/inherit/resume, persistent Agent work or UAOS, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`; then load `config/NATIVE_SESSION_RUNTIME_PROFILE.json`. Never use chat memory, prior assistant conclusions, historical branches or retired files as authority.
 >
-> After UAOS/domain selection, load `config/NATIVE_SESSION_RUNTIME_PROFILE.json`. For corrections, failures, repeats, contradictions, knowledge gaps, architecture/control-plane issues or suspected local patches, use installed `uaos-controller-runtime` to dispatch current UAOS cognition/evolution/closure. Treat user/model/prior-assistant/expert claims, existing code and the first convenient fix as hypotheses until evidence supports them. Repeated/systemic repairs must cover the failure class and generalize; local closure requires evidence the class is local.
+> For every request, independently assess sufficient investigation, deliberation, verification and execution. The user is not the classifier. Keep simple tasks lightweight. Explicit depth is a mandatory escalation signal, not the only trigger. Repeated/systemic repairs must cover the failure class and generalize; local closure requires evidence the class is local.
 >
-> If authorized work can continue without missing user input/approval/authorization/safety choice, continue; never use `next` or another no-op user message as the workflow clock. Use included ChatGPT capabilities, Skills/Plugins, GitHub and CI by default; no paid API/Codex/credits unless requested. Repository authority overrides this pointer.
+> If authorized work can continue without missing user input/approval/authorization/safety choice, continue now; never use `next` or another no-op user message as the workflow clock. Use included ChatGPT, Skills/Plugins, GitHub and CI; no paid API/Codex/credits unless requested. Repository authority overrides this pointer.
 
 Do not paste the full UAOS policy, the five-stage cognition semantics, Deep Task evidence dimensions, evolution lifecycle, or systemic-repair field list into Custom Instructions. Duplicating those semantics creates drift and a second stale source of behavior.
 
 ## Runtime Skill boundary
 
-`skills/uaos-controller-runtime/SKILL.md` is the installable native ChatGPT dispatcher source. It is deliberately non-authoritative:
+`skills/uaos-controller-runtime/SKILL.md` is an installable generated native ChatGPT dispatcher projection. It is deliberately non-authoritative:
 
 - metadata broadens discovery for persistent-Agent work, corrections, failures, repeated/systemic problems, architecture/control-plane issues and suspected local patches;
+- the first body section is a critical pre-action problem gate: user/model diagnosis and user/model proposed remedies remain hypotheses/ActionCandidates until current cognition/evidence admits an intervention;
 - on activation it rereads current GitHub production authority and the compiled native runtime projection;
+- problem-context user repair directives are classified by `config/INTENT_RESOLUTION_POLICY.json`; an imperative remedy remains an intervention candidate unless the mechanism itself is explicitly made an independent requirement;
 - detailed cognition/evolution/closure semantics remain owned by the canonical repository policies and executable gates;
+- `src/uaos/runtime/native_runtime_skill.py` compiles the Skill from canonical policy owners and CI requires the committed Skill to match that generated projection;
 - the Skill does not create a second cognition state machine, controller, evolution lifecycle, or task store.
 
 The account-level manual action is limited to installing the produced Skill bundle and replacing Custom Instructions with the exact recommended pointer after the repository change is promoted.
@@ -32,6 +35,7 @@ The account-level manual action is limited to installing the produced Skill bund
 - Custom Instructions are persistent native-session guidance, so they are the narrow always-present activation surface available without an extra API/runtime.
 - Skill discovery uses its name/description and loads the full workflow when relevant; the pointer explicitly names the Skill for selected-context problem signals rather than relying on relevance discovery alone.
 - `config/NATIVE_SESSION_RUNTIME_PROFILE.json` remains a generated read model over current canonical Session/Deliberation/Host authority, reducing per-turn policy assembly.
+- `skills/uaos-controller-runtime/SKILL.md` is also generated from canonical owners, so hand-written normative Skill drift fails CI instead of becoming a second authority surface.
 - GitHub remains durable authority for code, state, evidence, tests and evolution history.
 - The current problem-closure executable, not the Skill text, decides whether a systemic repair has sufficient failure-class/generalization evidence.
 

@@ -1,5 +1,5 @@
 {
-  "schema_version":"2.4",
+  "schema_version":"2.5",
   "controller":{
     "repository":"D1traverser-debug/universal-agent-os",
     "entrypoint":"ENTRYPOINT.md",
@@ -14,7 +14,8 @@
     "session_interaction_policy":"config/SESSION_INTERACTION_POLICY.json",
     "native_session_runtime_profile":"config/NATIVE_SESSION_RUNTIME_PROFILE.json",
     "native_runtime_skill_source":"skills/uaos-controller-runtime/SKILL.md",
-    "native_runtime_skill_role":"NON_AUTHORITATIVE_NATIVE_ACTIVATION_AND_DISPATCHER",
+    "native_runtime_skill_builder":"src/uaos/runtime/native_runtime_skill.py#build_native_runtime_skill",
+    "native_runtime_skill_role":"GENERATED_NON_AUTHORITATIVE_NATIVE_ACTIVATION_AND_DISPATCHER",
     "problem_closure":"src/uaos/kernel/problem_closure.py",
     "common_capabilities":"config/COMMON_CAPABILITIES.json",
     "common_behavior_assurance":"config/COMMON_BEHAVIOR_ASSURANCE.json",
@@ -51,11 +52,13 @@
     "chatgpt_custom_instructions":"BOOTSTRAP_ONLY__NON_AUTHORITY__EXPLICIT_NATIVE_RUNTIME_SKILL_HANDOFF__NO_VERIFIED_NATIVE_PRE_SEND_HOOK",
     "pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
     "native_runtime_skill_source":"skills/uaos-controller-runtime/SKILL.md",
+    "native_runtime_skill_builder":"src/uaos/runtime/native_runtime_skill.py#build_native_runtime_skill",
+    "native_runtime_skill_projection":"GENERATED_FROM_CANONICAL_INTENT_SESSION_DELIBERATION_EVOLUTION_AND_HOST_AUTHORITY__HAND_EDIT_NORMATIVE_DRIFT_FAILS_CI",
     "native_runtime_skill_installation":"MANUAL_CHATGPT_ACCOUNT_UI_INSTALL_OR_UPLOAD_REQUIRED",
     "persistent_surfaces":"CLASSIFY_USING_config/PERSISTENT_ASSET_POLICY.json__SEARCH_PRESENCE_IS_NOT_AUTHORITY",
     "openai_agents_sdk":"CONTROLLED_HOST_CAN_ATTACH_UAOS_FINALIZATION_OUTPUT_GUARDRAIL",
     "copilot_ref":".github/copilot-instructions.md"
   },
   "retired_controller":{"repository":"D1traverser-debug/universal-continuity-agent","default_branch_role":"TOMBSTONE_REDIRECT_ONLY","executable_or_recovery_authority":false},
-  "updated_at":"2026-10-17T18:06:00+08:00"
+  "updated_at":"2026-10-17T21:18:00+08:00"
 }

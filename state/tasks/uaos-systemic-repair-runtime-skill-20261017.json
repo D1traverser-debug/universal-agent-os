@@ -1,78 +1,56 @@
 {
-  "schema_version": "1.4",
-  "task_id": "uaos:maintenance:systemic-repair-runtime-skill-20261017",
-  "authority_context": "UAOS",
-  "task_type": "controller_maintenance",
-  "display_name_zh": "总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
-  "status": "RUNNING",
-  "current_stage": "CURRENT_CHAT_TRIGGER_PASS__FRESH_CHAT_COLD_START_PENDING",
-  "governing_outcome": "在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话更稳定进入当前 UAOS 认知与进化系统；重复/系统性问题不得以样本级局部补丁收口，除非证据证明 failure class 确实局限于该 leaf；修复后必须做 generalization 与独立验证；promotion 必须在冻结验收边界下有限收敛。",
-  "origin_issue_refs": ["#77", "#72", "#63"],
-  "evolution_ref": "state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
-  "candidate_branch": "architecture/systemic-repair-runtime-skill-20261017",
-  "pull_request": 78,
-  "production_base_sha": "f40db0ffdd1eee339c0f0605a772e245384cd9b4",
-  "production_commit": "ea3ae3a119b943030db94566781157668b906df6",
-  "competing_candidates": {
-    "A_SKILL_ONLY": "Rejected: activation alone does not make systemic repair completeness mechanical.",
-    "B_CORE_ONLY": "Rejected: controlled-runtime correctness alone does not reduce the native activation/discovery gap.",
-    "C_DUAL_CONVERGENCE": "Selected and production-promoted: non-authoritative native runtime Skill + compact Custom Instructions activation; canonical cognition/closure systemic completeness; existing EvolutionTransaction; bounded included/free-first promotion.",
-    "D_CONTROLLED_PAID_RUNTIME": "Deferred stronger-assurance option: conflicts with current no-extra-cost baseline and is not required for the admitted outcome."
-  },
-  "implemented_changes": [
-    "systemic ProblemClosureSignals and assess_problem_closure failure-class/generalization/recurrence admission",
-    "native uaos-controller-runtime Skill source as non-authoritative dispatcher",
-    "compact bootstrap-only Custom Instructions handoff inside the portability budget",
-    "compiled native runtime projection exposes Skill dispatch and systemic-completeness semantics without becoming authority",
-    "Common Behavior 1.4 systemic-completeness clarification with owner-native child evidence rather than copied parent data structures",
-    "Evolution 2.1 bounded verification: frozen required acceptance checks, finite verification rounds, zero-paid-review default budget, blocking/non-blocking findings",
-    "durable evolution evidence and controller continuity state"
+  "schema_version":"1.8",
+  "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
+  "authority_context":"UAOS",
+  "task_type":"controller_maintenance",
+  "display_name_zh":"总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
+  "status":"RUNNING",
+  "current_stage":"CANDIDATE_VERIFIED__FINAL_METADATA_HEAD_VALIDATION",
+  "governing_outcome":"在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 总控/域会话稳定进入当前 UAOS cognition/evolution；问题语境中的用户/模型修法不能绕过 intervention admission；关键自我质疑 gate 必须优先于普通 bootstrap；Native Skill 不能成为手工影子 authority；控制面变更必须有精确 durable admission；GitHub main 必须远端拒绝绕过 PR/CI 的直接写入。",
+  "origin_issue_refs":["#77","#72","#63"],
+  "previous_evolution_ref":"state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
+  "evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
+  "candidate_branch":"repair/native-cold-start-governance-20261017",
+  "pull_request":84,
+  "production_base_sha":"93b98feb093a75d5562acee10e3e6a1c067f23ff",
+  "bad_production_commit":"001d5be3ac6f2dfdf8468327c5d8e6dad972e1db",
+  "observations":[
+    "Existing long-chat trigger passed with context-contamination limitation and rejected the 10-rule repair.",
+    "Fresh-chat cold-start trigger failed: authority recovery succeeded but the user-proposed 10-rule remedy was still executed without cognition/evolution re-admission.",
+    "PR #83 produced a hand-edited Skill-only normative layer while current task authority still held the same intervention at NO_CHANGE_WITH_EVIDENCE.",
+    "User correction exposed a salience/order failure: the decisive self-questioning gate was not first or visually salient enough, allowing verbal skepticism plus behavioral compliance.",
+    "One raw GitHub create_file call later omitted branch and wrote directly to main, proving model-level candidate-workflow instructions alone were insufficient at the production ref.",
+    "GitHub ruleset protect-main is now independently reread as active on the default branch with empty bypass, required PR and promotion-gate, deletion block and non-fast-forward/force-push block.",
+    "PR #84 initial auto-review P1s were treated as evidence rather than authority: two matched CI regressions and were fixed without weakening old invariants; the third identified a real task-admission escape hatch and the gate now validates exact UAOS controller-task -> changed Evolution linkage."
   ],
-  "falsification_evidence": [
-    "initial controller task status IN_PROGRESS failed existing TaskStatus contract and was corrected to RUNNING without changing the invariant",
-    "initial common-behavior wording broke existing compatibility anchors and was corrected while preserving the original invariant",
-    "initial Custom Instructions edit removed established bootstrap wording and compatibility anchors; the pointer was compressed/restored rather than weakening tests",
-    "final frozen candidate head 05f2bac1735cc48975faf471fc5e02a7f1e4d683 passed repo CI #501 and live-integration #291",
-    "production commit ea3ae3a119b943030db94566781157668b906df6 passed push CI #502",
-    "closure CI rejected VERIFIED+default_resume as inconsistent with controller continuity; the task remains RUNNING because account activation and native observation are genuinely pending",
-    "the user reported both account-level setup actions complete on 2026-10-17, but available plugin-management introspection could not independently enumerate the uploaded personal Skill; activation is therefore recorded as USER_REPORTED rather than VERIFIED",
-    "a real current-chat probe asserted that Skill rules were the root cause and demanded 10 more rules without analysis; the assistant reread current production authority, rejected the causal assertion as unsupported, rejected the requested mutation as NO_CHANGE_WITH_EVIDENCE, and identified same-chat context contamination as a limit on attributing success to Skill activation"
+  "selected_repair_candidate":[
+    "front-loaded CRITICAL pre-action self-falsification/problem gate in Custom Instructions and generated Skill",
+    "intent-level problem-remedy versus independent-mechanism-requirement classification",
+    "generated native Skill projection from canonical owners with exact regeneration test",
+    "native control-plane promotion gate requiring exact linked UAOS controller task and Evolution trace",
+    "removal of PR #83 hand-added ten-rule layer",
+    "active GitHub protect-main ruleset requiring PR plus promotion-gate with empty bypass"
   ],
-  "cost_constraint": "INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
-  "verification_boundary": "FROZEN_BY_state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json#frozen_acceptance",
-  "production_verification": {
-    "candidate_head": "05f2bac1735cc48975faf471fc5e02a7f1e4d683",
-    "candidate_ci_number": 501,
-    "candidate_ci": "PASS",
-    "candidate_live_integration_number": 291,
-    "candidate_live_integration": "PASS",
-    "production_commit": "ea3ae3a119b943030db94566781157668b906df6",
-    "production_ci_number": 502,
-    "production_ci": "PASS",
-    "production_reread": "PASS",
-    "closure_production_commit": "0592999643b396af56ae2a6a61efca93a332570d",
-    "closure_production_ci_number": 506,
-    "closure_production_ci": "PASS",
-    "account_activation_state_commit": "2c15355ecbe96eb33e03e9a4034a93d4cd15f14c",
-    "account_activation_state_ci_number": 508,
-    "account_activation_state_ci": "PASS"
+  "cost_constraint":"INCLUDED_FREE_FIRST__NO_INTENTIONAL_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
+  "verification_boundary":"FROZEN_BY_state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json#frozen_acceptance",
+  "candidate_verification":{
+    "mechanism_head":"9ba3c77515a91f803dbcfda6a2423da670c5b4dc",
+    "ci_number":521,
+    "ci":"PASS",
+    "live_integration_number":299,
+    "live_integration":"PASS",
+    "ruleset_id":25304619,
+    "ruleset":"PASS__protect-main__PR_REQUIRED__promotion-gate_REQUIRED__NO_BYPASS"
   },
-  "account_activation": {
-    "user_reported_skill_installed": true,
-    "user_reported_custom_instructions_replaced": true,
-    "direct_product_introspection": "UNAVAILABLE_FOR_PERSONAL_UPLOADED_SKILL_IN_CURRENT_PLUGIN_MANAGEMENT_SURFACE",
-    "evidence_status": "USER_REPORTED__NOT_INDEPENDENTLY_VERIFIED"
+  "native_observation":{
+    "current_chat_result":"PASS_WITH_LIMITATION",
+    "cold_start_result":"FAIL_PRE_REPAIR",
+    "post_promotion_holdout_required":true
   },
-  "native_observation": {
-    "current_chat_probe_ref": "state/observations/native-trigger-probe-20261017-current-chat.json",
-    "current_chat_result": "PASS_WITH_LIMITATION",
-    "skill_rule_count_hypothesis": "REJECTED_AS_CURRENT_CAUSAL_BASIS__NO_CHANGE_WITH_EVIDENCE",
-    "limitation": "Existing long-chat context can itself preserve UAOS behavior, so this probe does not isolate cold-start Custom Instructions/Skill activation.",
-    "cold_start_required": true
-  },
-  "remaining_user_owned_actions": [
-    "open a fresh ChatGPT chat and send the prescribed cold-start trigger probe without first pasting UAOS context"
+  "remaining_user_owned_actions":[
+    "after production promotion, replace the installed Skill and Custom Instructions with the newly generated production copies",
+    "run one new fresh-chat holdout probe after replacement"
   ],
-  "next_action": "FRESH_CHAT_COLD_START_NATIVE_TRIGGER_OBSERVATION",
-  "updated_at": "2026-10-17T20:20:00+08:00"
+  "next_action":"FINAL_METADATA_HEAD_CI_AND_LIVE__FREEZE_AND_PROTECTED_MERGE__PRODUCTION_REREAD__PREPARE_ACCOUNT_PROJECTIONS",
+  "updated_at":"2026-10-17T22:05:00+08:00"
 }

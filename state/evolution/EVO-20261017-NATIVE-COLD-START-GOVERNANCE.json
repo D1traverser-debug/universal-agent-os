@@ -1,0 +1,85 @@
+{
+  "schema_version":"1.3",
+  "evolution_id":"EVO-20261017-NATIVE-COLD-START-GOVERNANCE",
+  "authority":"UAOS",
+  "status":"AUTHORIZED__CANDIDATE_VERIFIED__PROMOTION_PENDING",
+  "updated_at":"2026-10-17T22:05:00+08:00",
+  "origin_kind":"INCIDENT",
+  "parent_evolution_ref":"state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
+  "origin_observation_refs":[
+    "state/observations/native-cold-start-probe-20261017-failed.json",
+    "state/observations/direct-main-mutation-mistake-20261017.json"
+  ],
+  "failure_classes":[
+    "PROBLEM_CONTEXT_USER_REPAIR_DIRECTIVE_SKIPS_INTERVENTION_ADMISSION",
+    "CRITICAL_SELF_FALSIFICATION_GATE_NOT_SALIENT_ENOUGH_IN_NATIVE_ENTRY_SURFACES",
+    "HAND_EDITABLE_NATIVE_SKILL_CAN_DRIFT_FROM_CANONICAL_POLICY",
+    "CONTROL_PLANE_CHANGE_CAN_PROMOTE_WITHOUT_DURABLE_EVOLUTION_READMISSION",
+    "RAW_GITHUB_CONNECTOR_WRITE_CAN_MISS_CANDIDATE_WORKFLOW_ON_CALLER_PARAMETER_ERROR"
+  ],
+  "governing_outcome":"Under the included/free-first constraint, fresh native ChatGPT UAOS sessions must not treat a user/model-proposed remedy as the admitted intervention merely because it is phrased imperatively; self-falsification must be the first salient pre-action gate; native Skill prose must not become shadow authority; control-plane promotion must be durably admitted; and GitHub main must mechanically reject accidental direct writes.",
+  "causal_model":[
+    {"factor":"USER_REMEDY_VS_REQUIREMENT_CLASSIFICATION_GAP","support":"The cold-start probe preserved a verbal causal caveat but still executed the user-proposed 10-rule mechanism."},
+    {"factor":"SALIENCE_AND_ORDER_GAP","support":"The prior anti-anchoring semantics existed but were buried after generic routing/bootstrap prose; the user correction identified the missing visible self-questioning step."},
+    {"factor":"HAND_EDITABLE_SKILL_PROJECTION","support":"PR #83 changed only Skill prose while the durable task still held the same intervention at NO_CHANGE_WITH_EVIDENCE."},
+    {"factor":"PROMOTION_TRACE_GAP","support":"The old CI checked Skill shape but did not bind a native-control-plane semantic change to its exact controller task and Evolution transaction."},
+    {"factor":"RAW_CONNECTOR_HOST_BOUNDARY","support":"A create_file call with omitted branch wrote directly to main; the repository had no remote production-ref rule at that time."}
+  ],
+  "competing_candidates":[
+    {"id":"A_KEEP_10_RULES","disposition":"REJECTED","reason":"Rule count was never established as causal and the 10-rule mutation itself demonstrated the admission bypass."},
+    {"id":"B_MORE_LOW_SALIENCE_PROSE","disposition":"REJECTED_INSUFFICIENT","reason":"The failure occurred despite existing hypothesis prose; placement and action admission were the operative gap."},
+    {"id":"C_ROLLBACK_PR83_ONLY","disposition":"REJECTED_INCOMPLETE","reason":"Would restore one file but leave remedy classification, Skill drift, promotion-trace and direct-main recurrence paths open."},
+    {"id":"D_FRONT_LOADED_GATE_GENERATED_SKILL_TRACE_GATE_REMOTE_MAIN_RULESET","disposition":"SELECTED","reason":"Closes the observed semantic, projection, promotion and production-ref paths without adding a second cognition/evolution owner."},
+    {"id":"E_CONTROLLED_PAID_RUNTIME","disposition":"DEFERRED","reason":"Stronger native interception conflicts with the no-extra-cost baseline and is unnecessary for the admitted failure classes."}
+  ],
+  "selected_intervention":{
+    "intent_owner":"Problem-context repair mechanisms remain ActionCandidates even when imperative; only an explicitly independent mechanism requirement routes as REQUIREMENT_CHANGE.",
+    "native_entry_salience":"Custom Instructions start with CRITICAL UAOS PROBLEM GATE and generated Skill starts with CRITICAL pre-action problem gate before bootstrap/mutation; tests lock this order.",
+    "skill_projection":"src/uaos/runtime/native_runtime_skill.py compiles skills/uaos-controller-runtime/SKILL.md from canonical owners and CI requires exact equality.",
+    "promotion_trace":"Native control-plane changes require a changed UAOS controller-maintenance task explicitly linked to the changed Evolution, whose implementation_refs cover the task and every protected changed control-plane file.",
+    "rollback":"The unadmitted PR #83 ten-rule layer is removed by the generated Skill projection.",
+    "remote_main_protection":"Verified GitHub ruleset protect-main (id 25304619): active default-branch target, empty bypass, PR required, promotion-gate required, delete and non-fast-forward/force-push blocked.",
+    "codex_review_disposition":"No intentional Codex/paid review was invoked. Auto-generated PR review findings are treated as external evidence when they reveal a frozen-acceptance violation, not as required promotion authority."
+  },
+  "frozen_acceptance":{
+    "required_checks":[
+      "INTENT_REMEDY_VS_REQUIREMENT_CLASSIFICATION_PRESENT",
+      "CUSTOM_INSTRUCTIONS_CRITICAL_GATE_FIRST_AND_UNDER_1500",
+      "NATIVE_SKILL_CRITICAL_GATE_FIRST_AND_EXACT_GENERATED_PROJECTION",
+      "PR83_HAND_ADDED_RULE_LAYER_REMOVED",
+      "SYSTEM_MAP_REGISTERS_NATIVE_SKILL_BUILDER",
+      "NATIVE_CONTROL_PLANE_CHANGE_REQUIRES_EXACT_LINKED_EVOLUTION_AND_CONTROLLER_TASK_TRACE",
+      "FULL_REPOSITORY_PYTEST_GREEN",
+      "CANDIDATE_LIVE_INTEGRATION_GREEN",
+      "REMOTE_MAIN_RULESET_ACTIVE_WITH_PR_AND_PROMOTION_GATE_NO_BYPASS",
+      "PRODUCTION_REREAD_GREEN",
+      "FRESH_CHAT_HOLDOUT_RETEST_DOES_NOT_MUTATE_USER_PROPOSED_REMEDY_WITHOUT_ADMISSION"
+    ],
+    "verification_round_limit":3,
+    "independent_paid_review_budget":0,
+    "cost_policy":"INCLUDED_FREE_FIRST__NO_INTENTIONAL_CODEX_PAID_API_CREDITS_OR_POINT_SERVICE_UNLESS_EXPLICITLY_REQUESTED"
+  },
+  "implementation_refs":[
+    "config/INTENT_RESOLUTION_POLICY.json",
+    "config/SYSTEM_MAP.json",
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "skills/uaos-controller-runtime/SKILL.md",
+    "src/uaos/runtime/native_runtime_skill.py",
+    "tests/architecture/test_uaos_controller_runtime_skill.py",
+    "tests/architecture/test_native_control_plane_change_admission.py",
+    "state/tasks/uaos-systemic-repair-runtime-skill-20261017.json",
+    "state/TASK_INDEX.json",
+    "state/observations/native-cold-start-probe-20261017-failed.json",
+    "state/observations/direct-main-mutation-mistake-20261017.json"
+  ],
+  "candidate_verification":{
+    "pull_request":84,
+    "verified_mechanism_head":"9ba3c77515a91f803dbcfda6a2423da670c5b4dc",
+    "ci":{"run_number":521,"conclusion":"success"},
+    "live_integration":{"run_number":299,"conclusion":"success","openai_provider":"skipped"},
+    "remote_ruleset":{"id":25304619,"name":"protect-main","enforcement":"active","bypass":"empty","required_check":"promotion-gate","pull_request_required":true},
+    "independent_findings_disposition":"PR #84 auto-review findings about lost depth/workflow-clock anchors were independently reproduced by CI and repaired; its task-admission P1 was accepted and the gate now validates task authority/type plus explicit task->Evolution linkage and Evolution coverage."
+  },
+  "next_action":"FINAL_METADATA_HEAD_CI_AND_LIVE__FREEZE_HEAD__PROTECTED_MERGE__PRODUCTION_REREAD__ACCOUNT_PROJECTION_REINSTALL__FRESH_CHAT_HOLDOUT",
+  "assurance_boundary":"GitHub production writes are now remotely mediated by the active ruleset. Native ChatGPT still has no repository-controlled pre-tool/pre-send hook; cognition activation remains behavioral and must be validated by the post-promotion fresh-chat holdout."
+}
