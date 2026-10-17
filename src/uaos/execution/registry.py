@@ -82,9 +82,15 @@ class _RegisteredCapabilityRecord:
     canonicalize_target: TargetCanonicalizer | None
 
 
-def _exact_string(value: object, *, field_name: str) -> str:
-    if type(value) is not str or not value:
-        raise ValueError(f"{field_name} must be a non-empty exact builtin string")
+def _exact_string(
+    value: object,
+    *,
+    field_name: str,
+    allow_empty: bool = False,
+) -> str:
+    if type(value) is not str or (not allow_empty and not value):
+        requirement = "an exact builtin string" if allow_empty else "a non-empty exact builtin string"
+        raise ValueError(f"{field_name} must be {requirement}")
     return value
 
 
@@ -100,7 +106,13 @@ def _observation_record(observation: CapabilityObservation) -> _ObservationRecor
         _exact_string(permission, field_name="permission")
         for permission in observation.permissions
     )
-    executor_kind = _exact_string(observation.executor_kind, field_name="executor_kind")
+    # Historical contract allows an empty executor_kind. Preserve that semantic while
+    # still requiring an exact builtin string so a subclass cannot smuggle behavior.
+    executor_kind = _exact_string(
+        observation.executor_kind,
+        field_name="executor_kind",
+        allow_empty=True,
+    )
     metadata_items = tuple(
         sorted(
             (
@@ -173,8 +185,6 @@ def _contract_record(action_name: str, contract: MutationContract) -> _MutationC
         if isinstance(contract.operation, CrudOperation)
         else CrudOperation(contract.operation)
     )
-    # Reconstruct through the canonical contract to re-run semantic validation before
-    # publishing only primitive/enum truth into the registry record.
     normalized = MutationContract(persistence, operation)
     return _MutationContractRecord(action, normalized.persistence, normalized.operation)
 
