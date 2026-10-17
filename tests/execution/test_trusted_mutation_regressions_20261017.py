@@ -100,6 +100,7 @@ def test_local_create_and_update_are_distinct_trusted_actions(tmp_path: Path):
     created = create_coordinator.execute(create_request)
     assert created.outcome.disposition is ExecutionDisposition.CONFIRMED
     assert created.outcome.evidence["commit_semantics"] == "ATOMIC_CREATE_NO_REPLACE"
+    assert created.outcome.evidence["concurrency_semantics"] == "ADVISORY_PARENT_DIRECTORY_LOCK"
     assert (tmp_path / "policy.txt").read_text(encoding="utf-8") == "v1"
 
     update_request = ExecutionRequest(
@@ -116,7 +117,8 @@ def test_local_create_and_update_are_distinct_trusted_actions(tmp_path: Path):
 
     updated = update_coordinator.execute(update_request)
     assert updated.outcome.disposition is ExecutionDisposition.CONFIRMED
-    assert updated.outcome.evidence["commit_semantics"] == "BOUND_PARENT_ATOMIC_RENAME"
+    assert updated.outcome.evidence["commit_semantics"] == "LOCKED_COMPARE_AND_ATOMIC_RENAME"
+    assert "EXPECTED_HASH_RECHECK" in updated.outcome.evidence["concurrency_semantics"]
     assert (tmp_path / "policy.txt").read_text(encoding="utf-8") == "v2"
 
 
