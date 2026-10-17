@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.2",
-  "policy_version":"1.2.0",
+  "schema_version":"1.3",
+  "policy_version":"1.3.0",
   "authority":"UAOS",
   "status":"REF_CONDITIONAL__RESOLVE_EFFECTIVE_STATUS",
-  "updated_at":"2026-10-17T10:48:58+08:00",
+  "updated_at":"2026-10-17T11:05:28+08:00",
   "activation":{
     "resolver_ref":"src/uaos/runtime/policy_activation.py#resolve_ref_conditioned_policy_activation",
     "required_declared_status":"REF_CONDITIONAL__RESOLVE_EFFECTIVE_STATUS",
@@ -14,7 +14,7 @@
     "identity_source_rule":"REPOSITORY_AND_REF_MUST_COME_FROM_TRUSTED_HOST_OR_VCS_CONTEXT__NEVER_MODEL_OR_REQUEST_TEXT",
     "atomicity_rule":"THE_VALIDATED_TREE_BECOMES_ACTIVE_BY_BECOMING_REACHABLE_AT_THE_CONFIGURED_PRODUCTION_REF__NO_POST_MERGE_STATUS_REWRITE_REQUIRED"
   },
-  "governing_outcome":"One abstract lifecycle/CRUD/output model governs durable assets and external records across persistent surfaces without turning those surfaces into competing business authorities or trusting caller-supplied labels as execution truth.",
+  "governing_outcome":"One abstract lifecycle/CRUD/output model governs durable assets and external records across persistent surfaces without turning those surfaces into competing business authorities or trusting caller-supplied labels, receipts or returned UNKNOWN payloads as execution truth.",
   "surfaces":["GITHUB","CHAT","LIBRARY","MEMORY","CUSTOM_INSTRUCTIONS","AUTOMATION","NOTION","GOOGLE_DRIVE","GMAIL","GOOGLE_CALENDAR","LOCAL_WORKSPACE","OTHER_EXTERNAL","TEMP_SANDBOX"],
   "asset_roles":["AUTHORITY","BOOTSTRAP","REFERENCE","SHARED_RESOURCE","DELIVERY","DELIVERY_HISTORY","MIGRATED_HISTORY","ARCHIVE","AUTOMATION","EXTERNAL_RECORD"],
   "lifecycle_states":["CURRENT","ACTIVE_NON_AUTHORITY","MIGRATED","DECOMMISSIONED","ARCHIVED","DELETE_CANDIDATE","TEMPORARY"],
@@ -41,13 +41,17 @@
     "TEMP_SANDBOX_CANNOT_OUTPUT_MIGRATE_OR_ARCHIVE__USER_DELIVERY_MUST_TARGET_AN_ADMITTED_DELIVERY_OR_AUTHORITY_ASSET",
     "LOCAL_WORKSPACE_IS_A_FIRST_CLASS_DURABLE_SURFACE_NOT_AN_EXTERNAL_CATCH_ALL",
     "RECONCILIATION_BINDS_THE_IMMUTABLE_ORIGINAL_REQUEST_ORIGINAL_ADMISSION_AND_CAPABILITY_REGISTRATION_GENERATION_AND_RERUNS_GATES",
+    "UNKNOWN_RECONCILIATION_USES_A_COORDINATOR_OWNED_OPAQUE_EXECUTION_RECORD__CALLER_RETURNED_OUTCOME_REQUEST_OR_ADMISSION_FIELDS_ARE_NOT_RECONCILIATION_TRUTH",
     "EXECUTOR_AND_RECONCILER_DISPOSITIONS_ARE_NORMALIZED_BEFORE_MIGRATION_OR_ROUTING_DECISIONS",
+    "LOCAL_EXPECTED_HASH_UPDATE_SERIALIZES_COOPERATING_UAOS_WRITERS_WITH_AN_ADVISORY_PARENT_DIRECTORY_LOCK_AND_RECHECKS_CONTENT_BEFORE_ATOMIC_RENAME",
+    "LOCAL_ADVISORY_LOCKING_DOES_NOT_CLAIM_LINEARIZABILITY_AGAINST_EXTERNAL_NONCOOPERATING_FILESYSTEM_WRITERS",
+    "FILESYSTEM_MUTATION_AFTER_COMMIT_POINT_WITH_UNCONFIRMED_CLEANUP_OR_DURABILITY_RETURNS_UNKNOWN_NOT_FAILED",
     "MIGRATION_CLOSURE_REQUIRES_TARGET_VERIFIED_AND_SOURCE_RETIRED_OR_EXPLICITLY_ARCHIVED",
     "MIGRATION_CLOSURE_REQUIRES_DECLARED_TARGET_IDENTITY_OBSERVED_SOURCE_TARGET_IDENTITIES_TARGET_VERIFICATION_AND_SOURCE_RETIREMENT",
     "DELIVERY_AND_DELIVERY_HISTORY_ARE_USER_OUTPUTS_NOT_TASK_STATE",
     "OBSERVED_EXTERNAL_MUTATIONS_MUST_BE_RECONCILED_BEFORE_CLAIMING_CROSS_SURFACE_CLOSURE"
   ],
-  "compatibility_note":"The legacy migration-closure invariant token is retained; the stronger identity-bound invariant now defines how that condition is mechanically satisfied.",
+  "compatibility_note":"The legacy migration-closure invariant token is retained; stronger identity-, outcome- and commit-state-bound invariants define how execution and reconciliation are mechanically satisfied.",
   "trusted_sources_of_execution_semantics":{
     "policy_activation":"trusted host/VCS repository+ref identity interpreted by src/uaos/runtime/policy_activation.py",
     "action_mutability":"selected RegisteredCapability.read_only_actions versus mutation_contracts[action_name]; every supported action must be classified at registration",
@@ -55,7 +59,9 @@
     "capability_registration_identity":"selected RegisteredCapability.registration_generation",
     "canonical_target":"selected RegisteredCapability.canonicalize_target",
     "asset_owner_role_lifecycle_permissions":"PersistentAssetCatalog.resolve(canonical_target)",
-    "request_fields":"ASSERTIONS_OR_ROUTING_CONTEXT_ONLY__SIDE_EFFECT_CLASS_PERSISTENCE_CRUD_AND_ASSET_LABELS_NEVER_DEFINE_MUTABILITY_OR_AUTHORITY"
+    "unknown_reconciliation_truth":"ActionCoordinator-owned opaque execution record containing the original request, admission and normalized UNKNOWN outcome",
+    "request_fields":"ASSERTIONS_OR_ROUTING_CONTEXT_ONLY__SIDE_EFFECT_CLASS_PERSISTENCE_CRUD_AND_ASSET_LABELS_NEVER_DEFINE_MUTABILITY_OR_AUTHORITY",
+    "caller_returned_unknown_fields":"UNTRUSTED__EXECUTION_ID_ONLY_SELECTS_A_COORDINATOR_OWNED_RECORD"
   },
   "role_constraints":{
     "BOOTSTRAP":{"forbidden_lifecycle":["CURRENT"],"forbidden_as_business_authority":true},
@@ -68,13 +74,14 @@
   },
   "retired_lifecycle_allowed_operations":["READ","ARCHIVE","DELETE","MIGRATE_CLOSURE_ONLY"],
   "temporary_surface_rule":"TEMP_SANDBOX assets are internal working material only. Their descriptors may not admit OUTPUT, MIGRATE or ARCHIVE and may not use AUTHORITY, DELIVERY, DELIVERY_HISTORY, MIGRATED_HISTORY or ARCHIVE roles. CREATE/UPDATE/READ/DELETE may support temporary work; user delivery or durable promotion must target a separate admitted persistent asset or the temp asset must be discarded.",
-  "local_workspace_rule":"Durable local filesystem/workspace records use LOCAL_WORKSPACE so inventory and surface-specific controls do not misclassify them as external systems. CREATE and UPDATE are separate trusted actions when existence changes the real effect.",
+  "local_workspace_rule":"Durable local filesystem/workspace records use LOCAL_WORKSPACE. CREATE is atomic no-replace. UPDATE uses no-follow dirfd traversal and, when expected_current_hash is supplied, holds an advisory exclusive lock on the bound parent directory across hash verification and atomic rename and rechecks content immediately before commit. This serializes cooperating UAOS local-workspace writers but does not claim linearizability against external writers that ignore the lock. Any exception after the link/rename commit point is UNKNOWN until reconciled rather than FAILED.",
   "migration_semantics":"MIGRATE_IS_A_CLOSURE_OR_CUTOVER_CONFIRMATION_OPERATION__COPY_OR_REBUILD_USES_NORMAL_CREATE_UPDATE_OUTPUT_OPERATIONS__CONFIRMED_MIGRATE_REQUIRES_NORMALIZED_DISPOSITION_AND_POST_EXECUTION_CLOSURE_EVIDENCE",
   "migration_protocol":["CLASSIFY_SOURCE_AND_TARGET","COPY_OR_REBUILD_TARGET_THROUGH_OWNER_APPROPRIATE_CREATE_UPDATE_OUTPUT_PATH","VERIFY_TARGET_IDENTITY_CONTENT_AND_ROLE","RETIRE_OR_ARCHIVE_SOURCE","EXECUTE_MIGRATION_CLOSURE_AGAINST_RETIRED_SOURCE_WITH_DECLARED_TARGET_REF","NORMALIZE_EXECUTION_DISPOSITION","REQUIRE_EXECUTOR_OBSERVED_SOURCE_AND_TARGET_CANONICAL_REFS_TO_MATCH_CATALOG","RECONCILE_SEARCHABLE_RESIDUALS","ONLY_THEN_DECLARE_MIGRATION_CLOSED"],
   "executable_ref":"src/uaos/execution/persistent_assets.py#PersistentAssetGate",
   "catalog_ref":"src/uaos/execution/persistent_assets.py#PersistentAssetCatalog",
   "execution_integration_ref":"src/uaos/execution/coordinator.py#ActionCoordinator",
-  "reconciliation_ref":"src/uaos/execution/persistent_assets.py#reconcile_asset_inventory",
+  "execution_reconciliation_ref":"src/uaos/execution/coordinator.py#ActionCoordinator.reconcile",
+  "inventory_reconciliation_ref":"src/uaos/execution/persistent_assets.py#reconcile_asset_inventory",
   "promotion_semantics":"AUTHORIZED_TREE_USES_REF_CONDITIONAL_EFFECTIVE_STATE__CANDIDATE_REFS_RESOLVE_AUTHORIZED_NOT_PRODUCTION_ACTIVE__EXACT_PRODUCTION_REPOSITORY_MAIN_RESOLVES_ACTIVE_EXECUTION_POLICY__MERGE_REF_MOVEMENT_IS_THE_ATOMIC_ACTIVATION_EVENT",
   "native_chatgpt_boundary":"BEHAVIORAL_AND_CONNECTOR_OBSERVED__NO_REPOSITORY_CONTROLLED_PHYSICAL_INTERCEPTION_OF_PRODUCT_INTERNAL_CHAT_MEMORY_OR_CUSTOM_INSTRUCTIONS"
 }
