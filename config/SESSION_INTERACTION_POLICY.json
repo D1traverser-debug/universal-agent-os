@@ -1,8 +1,8 @@
 {
-  "schema_version":"2.2",
-  "policy_version":"2.2.0",
+  "schema_version":"2.3",
+  "policy_version":"2.3.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-17T00:52:07+08:00",
+  "updated_at":"2026-10-17T17:58:00+08:00",
   "bare_inheritance_selector":{
     "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option":{
@@ -71,6 +71,7 @@
     "checks":[
       "classify the current user message for correction/failure/contradiction/uncertainty or other problem signals",
       "classify newly read authority/evidence for defects, drift, knowledge gaps or control-plane gaps",
+      "classify repeated correction/failure, duplicate or shadow mechanisms, and evidence that the current repair may be only a local sample patch",
       "before reporting NOT_TRIGGERED, verify that no current problem signal was observed",
       "when a problem is detected, activate the canonical cognition case before selecting or executing a repair"
     ],
@@ -115,10 +116,10 @@
     "executable_ref":"src/uaos/kernel/problem_closure.py",
     "common_contract_ref":"config/COMMON_BEHAVIOR_ASSURANCE.json",
     "terminal_states":["REPAIR_EXECUTED","BLOCKED_WITH_REASON","NO_CHANGE_WITH_EVIDENCE"],
-    "rule":"Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state.",
+    "rule":"Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state. For systemic/material cases, choose and verify the smallest complete intervention that covers the admitted failure class rather than equating the smallest code diff with the smallest justified repair.",
     "repair_now_conditions":[
       "a CognitionCase admission exists from current raw signals/evidence in controlled paths",
-      "supported causal factors are not justified solely by user framing or external method authority",
+      "supported causal factors are not justified solely by user/model/prior-assistant/external-authority framing",
       "one bounded intervention/no-change candidate is selected separately from causal explanation",
       "an evolution/learning disposition exists",
       "durable problem evidence exists when material/evolution-relevant",
@@ -127,11 +128,25 @@
       "the required tools/capabilities are available",
       "no explicit user fact, approval, authorization or safety-sensitive choice is required"
     ],
-    "verification_rule":"On the CognitionCase path, repair_verified=true is insufficient without concrete verification_evidence_refs bound to typed evidence. Systemic/material repairs also require validation_evidence_refs.",
+    "systemic_repair_completeness":{
+      "activation":"COGNITION_CASE_RECEIPT.systemic == true AND REPAIR_EXECUTED_CLOSURE",
+      "required_evidence":[
+        "failure-class scope and definition",
+        "owning abstraction/control point",
+        "adjacent/sibling execution-path coverage",
+        "duplicate/shadow/stale/superseded mechanism scan",
+        "post-repair generalization across the admitted failure class",
+        "recurrence detection/regression able to catch the next occurrence without waiting for the user to rediscover it"
+      ],
+      "local_intervention_exception":"A LOCAL_IMPLEMENTATION or DOMAIN_WORKFLOW intervention may close a systemic/material case only when evidence proves the failure class is genuinely bounded to that leaf/path. This is evidence-bounded local repair, not a preference for upstream change.",
+      "selection_principle":"SMALLEST_COMPLETE_INTERVENTION__NOT_SMALLEST_DIFF__NO_DEFAULT_PREFERENCE_FOR_LOCAL_OR_UPSTREAM_LAYER",
+      "executable_ref":"src/uaos/kernel/problem_closure.py#_require_systemic_repair_completeness"
+    },
+    "verification_rule":"On the CognitionCase path, repair_verified=true is insufficient without concrete verification_evidence_refs bound to typed evidence. Systemic/material repairs also require validation_evidence_refs plus evidence-bound failure-class scope, generalization and recurrence detection per systemic_repair_completeness.",
     "premature_action_rule":"A repair attempted before causal/intervention admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence.",
     "blocker_rule":"When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or unresolved causality disguised as certainty is not a valid repair claim.",
     "no_change_rule":"When no change is selected, preserve the admitted causal model, selected NO_CHANGE intervention and evidence/counterexample/tradeoff rationale.",
-    "response_consistency_rule":"A final response that reports a confirmed repairable problem and only recommends future repair violates this gate unless it reports a verified blocker. A response also violates this gate if it reports repair execution without prior cognition/evolution admission and required V&V evidence.",
+    "response_consistency_rule":"A final response that reports a confirmed repairable problem and only recommends future repair violates this gate unless it reports a verified blocker. A response also violates this gate if it reports repair execution without prior cognition/evolution admission and required V&V/systemic-completeness evidence.",
     "assurance_boundary":"This policy and kernel gates are executable/regression-testable but do not claim host-level physical interception of every natural-language response."
   },
   "always_on_mutation_sentinel":{

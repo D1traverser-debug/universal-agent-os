@@ -102,6 +102,9 @@ class ChangeProposal:
     state: ProposalState = ProposalState.DRAFT
     knowledge_ids: tuple[str, ...] = ()
     capability_gap_ids: tuple[str, ...] = ()
+    required_acceptance_checks: tuple[str, ...] = ()
+    verification_round_limit: int = 3
+    independent_paid_review_budget: int = 0
 
     def __post_init__(self) -> None:
         required = (self.proposal_id, self.title, self.hypothesis, self.target_scope, self.rollback_plan, self.expected_benefit)
@@ -119,6 +122,14 @@ class ChangeProposal:
             raise ValueError("duplicate knowledge item in proposal")
         if len(self.capability_gap_ids) != len(set(self.capability_gap_ids)):
             raise ValueError("duplicate capability gap in proposal")
+        if len(self.required_acceptance_checks) != len(set(self.required_acceptance_checks)):
+            raise ValueError("duplicate required acceptance check")
+        if any(not item.strip() for item in self.required_acceptance_checks):
+            raise ValueError("required acceptance checks cannot be blank")
+        if self.verification_round_limit < 1:
+            raise ValueError("verification round limit must be at least one")
+        if self.independent_paid_review_budget < 0:
+            raise ValueError("independent paid review budget cannot be negative")
         if self.added_mechanisms and not self.why_not_reuse.strip():
             raise ValueError("new mechanisms require why-not-reuse analysis")
         if self.added_mechanisms and not self.retirement_rationale.strip():
@@ -136,6 +147,10 @@ class EvaluationResult:
     regression_failures: tuple[str, ...] = ()
     passed: bool = False
     evidence_refs: tuple[str, ...] = ()
+    verification_round: int = 1
+    independent_paid_reviews_used: int = 0
+    blocking_findings: tuple[str, ...] = ()
+    non_blocking_findings: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if not self.evaluation_id.strip() or not self.proposal_id.strip():
@@ -148,6 +163,12 @@ class EvaluationResult:
             raise ValueError("evaluation requires explicit acceptance checks")
         if self.passed and not all(self.acceptance_checks.values()):
             raise ValueError("passing evaluation cannot contain failed acceptance checks")
+        if self.verification_round < 1:
+            raise ValueError("verification round must be at least one")
+        if self.independent_paid_reviews_used < 0:
+            raise ValueError("independent paid reviews used cannot be negative")
+        if self.passed and self.blocking_findings:
+            raise ValueError("passing evaluation cannot retain blocking findings")
 
 
 @dataclass(frozen=True, slots=True)

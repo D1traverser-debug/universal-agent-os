@@ -37,12 +37,29 @@ def assess_promotion(
         reasons.append("no evaluation for proposal")
     if relevant and not all(e.passed for e in relevant):
         reasons.append("one or more evaluations failed")
+
     covered = {scenario for evaluation in relevant for scenario in evaluation.scenario_refs}
     missing_scenarios = set(proposal.required_scenarios) - covered
     if missing_scenarios:
         reasons.append(f"required evaluation scenarios missing: {sorted(missing_scenarios)}")
+
+    acceptance_covered = {name for evaluation in relevant for name in evaluation.acceptance_checks}
+    missing_acceptance = set(proposal.required_acceptance_checks) - acceptance_covered
+    if missing_acceptance:
+        reasons.append(f"required acceptance checks missing: {sorted(missing_acceptance)}")
+
     if any(e.regression_failures for e in relevant):
         reasons.append("regression failures remain")
+    if any(e.blocking_findings for e in relevant):
+        reasons.append("blocking verification findings remain")
+
+    max_round = max((e.verification_round for e in relevant), default=0)
+    if max_round > proposal.verification_round_limit:
+        reasons.append("verification round budget exceeded")
+    paid_reviews = sum(e.independent_paid_reviews_used for e in relevant)
+    if paid_reviews > proposal.independent_paid_review_budget:
+        reasons.append("independent paid review budget exceeded")
+
     if proposal.complexity_delta.net_components > budget.max_net_components:
         reasons.append("component complexity budget exceeded")
     if proposal.complexity_delta.net_state_surfaces > budget.max_net_state_surfaces:

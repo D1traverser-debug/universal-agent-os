@@ -1,0 +1,82 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME",
+  "authority":"UAOS",
+  "status":"CANDIDATE_VALIDATION_ACTIVE",
+  "updated_at":"2026-10-17T18:20:00+08:00",
+  "origin_kind":"INCIDENT",
+  "issue_refs":["#77","#72","#63"],
+  "failure_classes":[
+    "NATIVE_SELECTED_CONTEXT_CAN_BYPASS_CURRENT_COGNITION_ACTIVATION",
+    "SYSTEMIC_REPAIR_CAN_CLOSE_ON_SAMPLE_LEVEL_LOCAL_PATCH_WITHOUT_FAILURE_CLASS_GENERALIZATION",
+    "UNBOUNDED_VERIFICATION__PROMOTION_CONVERGENCE_FAILURE"
+  ],
+  "governing_outcome":"Reduce repeated user-detected drift by making native UAOS activation more reliable, making systemic repair completeness mechanically observable, and making promotion converge under frozen included/free-first verification without creating another cognition/evolution controller or claiming native ChatGPT physical complete mediation.",
+  "observations":[
+    "Current canonical cognition already states that user/model/expert framing is evidence rather than causal authority, so duplicating that algorithm in Custom Instructions or a Skill would create a shadow authority rather than fix the executable closure gap.",
+    "Native ChatGPT has no verified repository-controlled pre-send/pre-tool hook; activation can be improved behaviorally through a compact Custom Instructions handoff plus an installable non-authoritative Skill dispatcher, but physical complete mediation cannot be claimed.",
+    "Before this candidate, ProblemClosureSignals could verify a selected repair without explicit failure-class scope, owning-abstraction, adjacent-path, duplicate/superseded mechanism, generalization or recurrence evidence.",
+    "Before this candidate, ChangeProposal/EvaluationResult had required scenarios and acceptance checks but did not bind frozen required acceptance checks, verification-round budget, paid-review budget or blocking/non-blocking finding disposition into assess_promotion."
+  ],
+  "competing_candidates":[
+    {"id":"A_SKILL_ONLY","disposition":"REJECTED_INSUFFICIENT","reason":"Improves native activation but leaves controlled runtime able to close a systemic case on a narrow patch."},
+    {"id":"B_CORE_ONLY","disposition":"REJECTED_INSUFFICIENT","reason":"Strengthens controlled runtime but does not reduce native ChatGPT policy-activation/discovery gap."},
+    {"id":"C_DUAL_CONVERGENCE","disposition":"SELECTED_CANDIDATE","reason":"Use a non-authoritative Skill plus compact Custom Instructions only for activation; keep cognition/closure/evolution owned by canonical repository mechanisms; extend existing closure and promotion gates mechanically."},
+    {"id":"D_CONTROLLED_PAID_RUNTIME","disposition":"DEFERRED_STRONGER_ASSURANCE","reason":"Could provide stronger physical enforcement but conflicts with the user's included/free-first baseline and is unnecessary for the admitted current outcome."}
+  ],
+  "selected_intervention":{
+    "principle":"SMALLEST_COMPLETE_INTERVENTION__NOT_SMALLEST_DIFF",
+    "native_activation":"Custom Instructions -> installed uaos-controller-runtime Skill -> reread current main authority/runtime profile -> canonical cognition/evolution/closure",
+    "systemic_closure":"Extend existing ProblemClosureSignals/assess_problem_closure with failure-class scope, owning abstraction, adjacent/sibling path scan, duplicate/superseded mechanism scan, generalization, recurrence detector and evidence-bounded local exception.",
+    "promotion_convergence":"Extend existing ChangeProposal/EvaluationResult/assess_promotion with frozen required acceptance checks, finite verification rounds, zero-paid-review default budget, and blocking/non-blocking finding semantics.",
+    "evolution_owner":"Reuse config/EVOLUTION_POLICY.json and EvolutionTransaction; no second lifecycle or review state machine."
+  },
+  "frozen_acceptance":{
+    "required_scenarios":[
+      "systemic repair cannot close on green sample-level verification without complete failure-class/generalization evidence",
+      "local intervention for systemic case requires evidence that failure class is genuinely leaf-bounded",
+      "native runtime Skill is discoverable but non-authoritative and points to current GitHub authority/runtime projection",
+      "Custom Instructions remain bootstrap-only and under the portability budget",
+      "bounded promotion rejects missing frozen acceptance checks, blocking findings, round-budget excess and paid-review-budget excess while preserving non-blocking findings as follow-up",
+      "candidate repo CI and live-integration pass on one frozen head",
+      "production reread and production CI/live observation pass after promotion"
+    ],
+    "required_acceptance_checks":[
+      "SYSTEMIC_FAILURE_CLASS_COMPLETENESS",
+      "LOCAL_EXCEPTION_EVIDENCE_BOUND",
+      "NATIVE_SKILL_NON_AUTHORITATIVE",
+      "CUSTOM_INSTRUCTIONS_POINTER_ONLY",
+      "BOUNDED_PROMOTION_EXECUTABLE",
+      "CANDIDATE_CI_GREEN",
+      "CANDIDATE_LIVE_GREEN",
+      "PRODUCTION_REREAD_GREEN"
+    ],
+    "verification_round_limit":3,
+    "independent_paid_review_budget":0,
+    "cost_policy":"INCLUDED_FREE_FIRST__NO_CODEX_PAID_API_CREDITS_OR_POINT_SERVICE_UNLESS_EXPLICITLY_REQUESTED"
+  },
+  "implementation_refs":[
+    "src/uaos/kernel/problem_closure.py",
+    "src/uaos/evolution/models.py",
+    "src/uaos/evolution/gates.py",
+    "config/SESSION_INTERACTION_POLICY.json",
+    "config/COMMON_BEHAVIOR_ASSURANCE.json",
+    "config/EVOLUTION_POLICY.json",
+    "config/HOST_PROFILES.json",
+    "config/NATIVE_SESSION_RUNTIME_PROFILE.json",
+    "skills/uaos-controller-runtime/SKILL.md",
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "tests/kernel/test_systemic_repair_completeness.py",
+    "tests/test_evolution.py",
+    "tests/architecture/test_uaos_controller_runtime_skill.py"
+  ],
+  "falsification_history":[
+    "Initial controller-maintenance state used invalid TaskStatus IN_PROGRESS; existing continuity tests rejected it. The implementation changed to the existing RUNNING status instead of weakening the enum/test.",
+    "Initial common-behavior wording broke existing compatibility anchors; the repair preserved the original CognitionCase/validation wording while adding systemic-completeness semantics instead of changing tests to fit the candidate.",
+    "Initial Custom Instructions revision removed established bootstrap wording and exceeded the exact pointer compatibility expectations; the candidate restored those invariants while keeping the new Skill handoff."
+  ],
+  "candidate_branch":"architecture/systemic-repair-runtime-skill-20261017",
+  "promotion":{"pull_request":78,"head_frozen":false,"candidate_ci":"PENDING_FINAL_HEAD","candidate_live_integration":"PENDING_FINAL_HEAD","production_commit":null,"production_ci":null,"production_reread":"PENDING"},
+  "remaining_manual_boundary":"After production promotion, the repository cannot physically install the ChatGPT Skill or replace account Custom Instructions. Those two account-UI actions remain user-owned and will be provided only after production verification.",
+  "assurance_boundary":"Native ChatGPT activation remains behavioral. This evolution does not claim a repository-controlled pre-send/pre-tool hook or physical mediation of product-internal chat, memory or Custom Instructions."
+}

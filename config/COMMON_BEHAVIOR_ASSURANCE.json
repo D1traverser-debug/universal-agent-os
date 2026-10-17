@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.5",
+  "schema_version": "1.6",
   "contract_version": "1.4.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-16T20:59:52+08:00",
+  "updated_at": "2026-10-17T18:14:00+08:00",
   "scope": "ALL_REGISTERED_DOMAINS_IN_config/AGENT_REGISTRY.json",
   "purpose": "Operationalize inherited common-capability outcomes, evidence-traced multi-causal problem handling, durable learning evidence and problem-to-action assurance without duplicating the canonical cognition state machine or making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
   "source_parent_upcall": "D1traverser-debug/financial-writing-agent@main:evals/PARENT_GUIDANCE_HANDOFF.md",
@@ -16,7 +16,8 @@
     "PREMATURE_REPAIR_BEFORE_ROOT_SCOPE": "SUPERSEDED_BY_CAUSAL_INTERVENTION_1_4__USER_OR_EXTERNAL_FRAMING_IS_EVIDENCE_NOT_CAUSAL_AUTHORITY__DO_NOT_PREFER_LOCAL_OR_UPSTREAM",
     "SINGULAR_ROOT_CAUSE_COMPRESSION": "ALLOW_MULTIPLE_EVIDENCE_SUPPORTED_CONTRIBUTING_CAUSES__SELECT_ONE_BOUNDED_INTERVENTION_SEPARATELY",
     "COGNITION_RECEIPT_SELF_ATTESTATION": "CONTROLLED_PARENT_FINALIZATION_RECOMPUTES_FULL_COGNITION_CASE__CHILDREN_USE_OWNER_NATIVE_EQUIVALENT_EVIDENCE_BINDING",
-    "REPAIR_VERIFICATION_SELF_ATTESTATION": "MATERIAL_OR_SYSTEMIC_REPAIRS_REQUIRE_CONCRETE_VERIFICATION_AND_VALIDATION_EVIDENCE__BOOLEAN_SUCCESS_CLAIM_IS_NOT_OPERATIONAL_PROOF"
+    "REPAIR_VERIFICATION_SELF_ATTESTATION": "MATERIAL_OR_SYSTEMIC_REPAIRS_REQUIRE_CONCRETE_VERIFICATION_AND_VALIDATION_EVIDENCE__BOOLEAN_SUCCESS_CLAIM_IS_NOT_OPERATIONAL_PROOF",
+    "SYSTEMIC_LOCAL_PATCH_CLOSURE_GAP": "CLARIFY_EXISTING_1_4_SYSTEMIC_V_AND_V_OUTCOME__SYSTEMIC_REPAIR_COMPLETION_REQUIRES_FAILURE_CLASS_SCOPE_OWNER_PATH_GENERALIZATION_AND_RECURRENCE_EVIDENCE__LOCAL_INTERVENTION_REMAINS_VALID_WHEN_OWNER_NATIVE_EVIDENCE_PROVES_THE_CLASS_IS_LEAF_BOUNDED__NO_NEW_COGNITION_STATE_MACHINE_OR_UNIVERSAL_CHILD_SCHEMA"
   },
   "recover_before_user_escalation": {
     "rule": "Before externalizing a plausibly recoverable dependency to the user, a selected Agent must attempt proportionate recovery from legally and currently available authority, durable state/artifacts, relevant conversation or connected context, and appropriate external evidence when those sources can materially reduce the uncertainty.",
@@ -49,16 +50,19 @@
       "every admitted problem receives an evolution/learning disposition before action",
       "material or evolution-relevant problems preserve durable causal and decision evidence",
       "material/systemic changes preserve governing outcome/requirement -> mechanism -> verification/validation trace",
+      "systemic/material repair completion preserves owner-native evidence for failure-class scope, owning abstraction/control point, relevant adjacent paths, duplicate/shadow/superseded mechanism assessment, post-repair generalization and recurrence detection; a local intervention may still win when evidence proves the class is genuinely leaf-bounded",
       "an available authorized repair path cannot terminate as recommendation-only after admission",
       "repair completion is backed by concrete owner-native verification evidence; material/systemic behavior also has realistic validation evidence"
     ],
-    "owner_native_rule": "Domains realize these invariants with their own envelopes/receipts/replays/evidence and do not copy the parent's CognitionCase data structure or a second parent cognition state machine."
+    "owner_native_rule": "Domains realize these invariants with their own envelopes/receipts/replays/evidence and do not copy the parent's CognitionCase data structure, ProblemClosureSignals data structure, or a second parent cognition state machine."
   },
   "problem_to_action_closure": {
     "principle": "AFTER_CAUSAL_INTERVENTION_AND_EVOLUTION_ADMISSION__DETECTED_PROBLEM_MUST_END_IN_REPAIR_EXECUTED_BLOCKED_WITH_REASON_OR_NO_CHANGE_WITH_EVIDENCE__NOT_RECOMMENDATION_ONLY_WHEN_REPAIR_IS_AVAILABLE",
     "executable_ref": "src/uaos/kernel/problem_closure.py",
     "terminal_states": ["REPAIR_EXECUTED", "BLOCKED_WITH_REASON", "NO_CHANGE_WITH_EVIDENCE"],
     "repair_now_rule": "If canonical causal/intervention cognition is admitted, evolution disposition is recorded, a current legal repair path exists, the selected Agent has authority/capability to use it, and no explicit user choice is required, the turn must attempt the repair before finalizing.",
+    "systemic_repair_completeness_rule": "For a systemic/material repair, a green sample-level check is not sufficient closure. Preserve owner-native evidence that defines the failure class, identifies the owning abstraction/control point, examines relevant adjacent/sibling paths and duplicate/shadow/stale/superseded mechanisms, generalizes the repair across the admitted class, and provides a recurrence detector/regression. Select the smallest complete intervention rather than the smallest diff. A local repair is valid when evidence proves the failure class is genuinely local; upstream change is not preferred by default.",
+    "owner_native_systemic_evidence_rule": "UAOS standardizes the outcome/evidence semantics, not one child data structure. Parent controlled runtime uses ProblemClosureSignals; children may use their existing domain-native receipts, tests, audit records or replay artifacts so long as the same claim is observable and current enough for the assurance asserted.",
     "premature_action_rule": "Do not execute or retroactively justify a repair before causal/intervention admission merely because the edit is easy, familiar, requested, authorized or matches the user's current theory.",
     "blocker_rule": "If repair cannot proceed, preserve the concrete blocker, missing permission/capability/evidence or required user choice; do not disguise a convenience stop as a blocker.",
     "no_change_rule": "No-change is valid only after cognition admission and when causal/counterexample/tradeoff evidence supports preserving current behavior.",
@@ -107,10 +111,12 @@
       "supporting and falsification/rejection evidence for material factors",
       "supported contributing causes without forcing artificial singularity",
       "selected bounded intervention/no-change candidate plus tradeoff evidence",
+      "for systemic/material repair: failure-class boundary, owning abstraction/control point, relevant adjacent/sibling paths, duplicate/shadow/stale/superseded mechanism assessment, and evidence if a selected local intervention is truly leaf-bounded",
       "governing assumption challenged when material",
       "research or method evidence when the problem-response floor requires it",
       "verification evidence for implemented requirement/contract compliance",
-      "validation evidence for material/systemic suitability in realistic scenario/runtime conditions",
+      "validation evidence plus generalization evidence for material/systemic suitability across the admitted failure class in realistic scenario/runtime conditions",
+      "recurrence detector/regression evidence sufficient to catch the same class without relying on the user to rediscover it",
       "result/status plus remaining unknowns, observation items or rollback conditions",
       "parent-upcall/common-capability impact when applicable"
     ],
@@ -122,6 +128,7 @@
   "adoption_and_compatibility": {
     "existing_child_business_execution": "NOT_REVOKED_BY_THIS_CONTRACT_ALONE",
     "immediate_parent_assurance_rule": "UAOS must not call Common Behavior 1.4 operational for a child merely because its capability file points at current parent cognition. Owner-native 1.4 adoption evidence is required.",
+    "systemic_completeness_1_4_clarification": "This revision makes the already-required material/systemic causal-and-V&V outcome explicit; it does not force children to copy the parent ProblemClosureSignals structure, create a new journal, or synchronously upgrade business state schemas. Parent health may only claim this systemic-completeness behavior where owner-native current evidence actually demonstrates it.",
     "next_material_domain_maintenance": "Registered children must realize Common Behavior 1.4 owner-natively before parent health may record 1.4 operational assurance for that child.",
     "legacy_1_3_rule": "A child still on Common Behavior 1.3 remains usable only to the extent its current binding/minimum contract permits, but parent must not overstate 1.4 behavior until owner-native adoption is verified.",
     "no_parent_microscheduler": true,
@@ -135,6 +142,6 @@
       "Google SRE contributes systemic recurrence learning, multiple root-cause/contributing categories, concrete preventive actions and environment/process hardening rather than repeated human reminders.",
       "MIT CAST/STAMP contributes explicit warning against root-cause seduction and oversimplification of causality, supporting multi-factor causal modeling without assuming one layer is always primary."
     ],
-    "design_choice": "ONE_CANONICAL_COGNITION_KERNEL__MULTI_CAUSAL_OWNER_NATIVE_REALIZATION__ONE_BOUNDED_INTERVENTION__EVIDENCE_TRACED_V_AND_V__NO_SECOND_CONTROLLER"
+    "design_choice": "ONE_CANONICAL_COGNITION_KERNEL__MULTI_CAUSAL_OWNER_NATIVE_REALIZATION__ONE_BOUNDED_INTERVENTION__EVIDENCE_TRACED_V_AND_V__SYSTEMIC_FAILURE_CLASS_GENERALIZATION__NO_SECOND_CONTROLLER"
   }
 }

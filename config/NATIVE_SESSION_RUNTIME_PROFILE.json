@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "projection_role": "COMPILED_EFFECTIVE_RUNTIME_PROJECTION__NON_AUTHORITATIVE",
   "host": "CHATGPT_GITHUB",
   "source_authorities": {
@@ -8,14 +8,20 @@
     "host": "config/HOST_PROFILES.json#profiles.CHATGPT_GITHUB"
   },
   "source_versions": {
-    "session": "2.2.0",
+    "session": "2.3.0",
     "deliberation": "2.1.0",
-    "host_schema": "1.8"
+    "host_schema": "1.9"
   },
   "assurance": {
     "semantic_signals": "BEHAVIORAL_SESSION_SELF_CLASSIFICATION__NO_VERIFIED_REPOSITORY_CONTROLLED_NON_BYPASSABLE_SIGNAL_INJECTOR",
-    "final_response": "SESSION_BOOTSTRAP_PLUS_OBSERVABLE_ASSURANCE__NO_VERIFIED_CHATGPT_PRE_SEND_HOOK",
+    "final_response": "SESSION_BOOTSTRAP_PLUS_SKILL_DISPATCH_PLUS_OBSERVABLE_ASSURANCE__NO_VERIFIED_CHATGPT_PRE_SEND_HOOK",
     "cost": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
+  },
+  "runtime_skill": {
+    "source": "skills/uaos-controller-runtime/SKILL.md",
+    "role": "NON_AUTHORITATIVE_ACTIVATION_AND_DISPATCHER__REREAD_CURRENT_GITHUB_AUTHORITY__NO_SECOND_COGNITION_OR_EVOLUTION_OWNER",
+    "activation": "CUSTOM_INSTRUCTIONS_EXPLICIT_HANDOFF_FOR_SELECTED_CONTEXT_CORRECTION_FAILURE_REPEATED_SYSTEMIC_ARCHITECTURE_CONTROL_PLANE_OR_SUSPECTED_LOCAL_PATCH__SKILL_METADATA_RELEVANCE_IS_SECONDARY_NOT_THE_ONLY_ACTIVATION_PATH",
+    "installation": "CHATGPT_ACCOUNT_UI_MANUAL_INSTALL_OR_UPLOAD_REQUIRED__REPOSITORY_CANNOT_PHYSICALLY_INSTALL_PRODUCT_INTERNAL_SKILL"
   },
   "turn_contract": {
     "problem_detection": {
@@ -23,6 +29,7 @@
       "checks": [
         "classify the current user message for correction/failure/contradiction/uncertainty or other problem signals",
         "classify newly read authority/evidence for defects, drift, knowledge gaps or control-plane gaps",
+        "classify repeated correction/failure, duplicate or shadow mechanisms, and evidence that the current repair may be only a local sample patch",
         "before reporting NOT_TRIGGERED, verify that no current problem signal was observed",
         "when a problem is detected, activate the canonical cognition case before selecting or executing a repair"
       ]
@@ -74,7 +81,20 @@
         "BLOCKED_WITH_REASON",
         "NO_CHANGE_WITH_EVIDENCE"
       ],
-      "rule": "Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state.",
+      "rule": "Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state. For systemic/material cases, choose and verify the smallest complete intervention that covers the admitted failure class rather than equating the smallest code diff with the smallest justified repair.",
+      "systemic_repair_completeness": {
+        "activation": "COGNITION_CASE_RECEIPT.systemic == true AND REPAIR_EXECUTED_CLOSURE",
+        "required_evidence": [
+          "failure-class scope and definition",
+          "owning abstraction/control point",
+          "adjacent/sibling execution-path coverage",
+          "duplicate/shadow/stale/superseded mechanism scan",
+          "post-repair generalization across the admitted failure class",
+          "recurrence detection/regression able to catch the next occurrence without waiting for the user to rediscover it"
+        ],
+        "local_intervention_exception": "A LOCAL_IMPLEMENTATION or DOMAIN_WORKFLOW intervention may close a systemic/material case only when evidence proves the failure class is genuinely bounded to that leaf/path. This is evidence-bounded local repair, not a preference for upstream change.",
+        "selection_principle": "SMALLEST_COMPLETE_INTERVENTION__NOT_SMALLEST_DIFF__NO_DEFAULT_PREFERENCE_FOR_LOCAL_OR_UPSTREAM_LAYER"
+      },
       "premature_action_rule": "A repair attempted before causal/intervention admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence."
     },
     "mutation": {
