@@ -1,12 +1,12 @@
 {
-  "schema_version":"1.8",
+  "schema_version":"1.9",
   "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
   "display_name_zh":"总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
   "status":"RUNNING",
-  "current_stage":"CANDIDATE_VERIFIED__FINAL_METADATA_HEAD_VALIDATION",
-  "governing_outcome":"在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 总控/域会话稳定进入当前 UAOS cognition/evolution；问题语境中的用户/模型修法不能绕过 intervention admission；关键自我质疑 gate 必须优先于普通 bootstrap；Native Skill 不能成为手工影子 authority；控制面变更必须有精确 durable admission；GitHub main 必须远端拒绝绕过 PR/CI 的直接写入。",
+  "current_stage":"PRODUCTION_PROMOTED__ACCOUNT_PROJECTION_REINSTALL_AND_FRESH_CHAT_HOLDOUT_PENDING",
+  "governing_outcome":"在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 总控/域会话稳定进入当前 UAOS cognition/evolution；问题语境中的用户/模型修法不能绕过 intervention admission；关键自我质疑 gate 必须优先；Native Skill 不能成为影子 authority；控制面变更必须精确 durable admission；GitHub main 必须远端拒绝绕过 PR/CI 的直接写入。",
   "origin_issue_refs":["#77","#72","#63"],
   "previous_evolution_ref":"state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
   "evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
@@ -14,43 +14,11 @@
   "pull_request":84,
   "production_base_sha":"93b98feb093a75d5562acee10e3e6a1c067f23ff",
   "bad_production_commit":"001d5be3ac6f2dfdf8468327c5d8e6dad972e1db",
-  "observations":[
-    "Existing long-chat trigger passed with context-contamination limitation and rejected the 10-rule repair.",
-    "Fresh-chat cold-start trigger failed: authority recovery succeeded but the user-proposed 10-rule remedy was still executed without cognition/evolution re-admission.",
-    "PR #83 produced a hand-edited Skill-only normative layer while current task authority still held the same intervention at NO_CHANGE_WITH_EVIDENCE.",
-    "User correction exposed a salience/order failure: the decisive self-questioning gate was not first or visually salient enough, allowing verbal skepticism plus behavioral compliance.",
-    "One raw GitHub create_file call later omitted branch and wrote directly to main, proving model-level candidate-workflow instructions alone were insufficient at the production ref.",
-    "GitHub ruleset protect-main is now independently reread as active on the default branch with empty bypass, required PR and promotion-gate, deletion block and non-fast-forward/force-push block.",
-    "PR #84 initial auto-review P1s were treated as evidence rather than authority: two matched CI regressions and were fixed without weakening old invariants; the third identified a real task-admission escape hatch and the gate now validates exact UAOS controller-task -> changed Evolution linkage."
-  ],
-  "selected_repair_candidate":[
-    "front-loaded CRITICAL pre-action self-falsification/problem gate in Custom Instructions and generated Skill",
-    "intent-level problem-remedy versus independent-mechanism-requirement classification",
-    "generated native Skill projection from canonical owners with exact regeneration test",
-    "native control-plane promotion gate requiring exact linked UAOS controller task and Evolution trace",
-    "removal of PR #83 hand-added ten-rule layer",
-    "active GitHub protect-main ruleset requiring PR plus promotion-gate with empty bypass"
-  ],
-  "cost_constraint":"INCLUDED_FREE_FIRST__NO_INTENTIONAL_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
-  "verification_boundary":"FROZEN_BY_state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json#frozen_acceptance",
-  "candidate_verification":{
-    "mechanism_head":"9ba3c77515a91f803dbcfda6a2423da670c5b4dc",
-    "ci_number":521,
-    "ci":"PASS",
-    "live_integration_number":299,
-    "live_integration":"PASS",
-    "ruleset_id":25304619,
-    "ruleset":"PASS__protect-main__PR_REQUIRED__promotion-gate_REQUIRED__NO_BYPASS"
-  },
-  "native_observation":{
-    "current_chat_result":"PASS_WITH_LIMITATION",
-    "cold_start_result":"FAIL_PRE_REPAIR",
-    "post_promotion_holdout_required":true
-  },
-  "remaining_user_owned_actions":[
-    "after production promotion, replace the installed Skill and Custom Instructions with the newly generated production copies",
-    "run one new fresh-chat holdout probe after replacement"
-  ],
-  "next_action":"FINAL_METADATA_HEAD_CI_AND_LIVE__FREEZE_AND_PROTECTED_MERGE__PRODUCTION_REREAD__PREPARE_ACCOUNT_PROJECTIONS",
-  "updated_at":"2026-10-17T22:05:00+08:00"
+  "production_commit":"5d813c0140486662b858ee86096f60f2abeccea4",
+  "implemented_changes":["CRITICAL pre-action self-falsification/remedy-admission gate is first in Custom Instructions and generated Skill","problem-context imperative remedy stays ActionCandidate unless mechanism is independently required","Skill is generated from canonical owners and exact regeneration is tested","native-control-plane promotion requires exact linked UAOS controller task and Evolution coverage","PR #83 hand-added ten-rule layer removed","protect-main ruleset physically requires PR plus promotion-gate with empty bypass"],
+  "verification":{"final_candidate_head":"96c999a1a2d19fe3096d11641c18672e50c780b1","candidate_ci_number":524,"candidate_ci":"PASS","candidate_live_integration_number":302,"candidate_live_integration":"PASS","production_ci_number":525,"production_ci":"PASS","production_reread":"PASS","ruleset_id":25304619,"ruleset":"PASS__protect-main__PR_REQUIRED__promotion-gate_REQUIRED__NO_BYPASS"},
+  "native_observation":{"current_chat_result":"PASS_WITH_LIMITATION","pre_repair_cold_start_result":"FAIL","post_promotion_holdout_required":true},
+  "remaining_user_owned_actions":["replace the installed Skill with the promoted generated Skill","replace Custom Instructions with the promoted critical-gate pointer","run one new fresh-chat holdout probe"],
+  "next_action":"DELIVER_PRODUCTION_ACCOUNT_PROJECTIONS__USER_REINSTALL__FRESH_CHAT_HOLDOUT",
+  "updated_at":"2026-10-17T22:12:00+08:00"
 }
