@@ -4,9 +4,9 @@
   "authority":"UAOS",
   "status":"CANDIDATE",
   "updated_at":"2026-10-17T09:20:00+08:00",
-  "governing_outcome":"One abstract lifecycle/CRUD/output model governs durable assets across all persistent surfaces without turning those surfaces into competing business authorities.",
-  "surfaces":["GITHUB","CHAT","LIBRARY","MEMORY","CUSTOM_INSTRUCTIONS","AUTOMATION","NOTION","GOOGLE_DRIVE","TEMP_SANDBOX"],
-  "asset_roles":["AUTHORITY","BOOTSTRAP","REFERENCE","SHARED_RESOURCE","DELIVERY","DELIVERY_HISTORY","MIGRATED_HISTORY","ARCHIVE","AUTOMATION"],
+  "governing_outcome":"One abstract lifecycle/CRUD/output model governs durable assets and external records across persistent surfaces without turning those surfaces into competing business authorities.",
+  "surfaces":["GITHUB","CHAT","LIBRARY","MEMORY","CUSTOM_INSTRUCTIONS","AUTOMATION","NOTION","GOOGLE_DRIVE","GMAIL","GOOGLE_CALENDAR","OTHER_EXTERNAL","TEMP_SANDBOX"],
+  "asset_roles":["AUTHORITY","BOOTSTRAP","REFERENCE","SHARED_RESOURCE","DELIVERY","DELIVERY_HISTORY","MIGRATED_HISTORY","ARCHIVE","AUTOMATION","EXTERNAL_RECORD"],
   "lifecycle_states":["CURRENT","ACTIVE_NON_AUTHORITY","MIGRATED","DECOMMISSIONED","ARCHIVED","DELETE_CANDIDATE","TEMPORARY"],
   "operations":["READ","CREATE","UPDATE","DELETE","OUTPUT","MIGRATE","ARCHIVE"],
   "invariants":[
@@ -14,7 +14,7 @@
     "EVERY_DURABLE_MUTATION_DECLARES_TARGET_SURFACE_ASSET_ROLE_LIFECYCLE_OWNER_AND_ALLOWED_OPERATION",
     "AUTHORITY_ROLE_REQUIRES_CURRENT_LIFECYCLE_AND_CANONICAL_AUTHORITY_REF",
     "BOOTSTRAP_ROUTES_TO_AUTHORITY_BUT_CANNOT_OWN_BUSINESS_STATE",
-    "REFERENCE_SHARED_RESOURCE_AND_DELIVERY_ASSETS_CANNOT_RESTORE_WORKFLOW_STATE_OR_IDENTITY",
+    "REFERENCE_SHARED_RESOURCE_DELIVERY_AUTOMATION_AND_EXTERNAL_RECORD_ASSETS_CANNOT_RESTORE_WORKFLOW_STATE_OR_IDENTITY",
     "MIGRATED_DECOMMISSIONED_ARCHIVED_AND_DELETE_CANDIDATE_ASSETS_CANNOT_RESUME_CURRENT_EXECUTION",
     "TEMP_SANDBOX_CANNOT_BE_CURRENT_AUTHORITY_OR_DURABLE_BUSINESS_STATE",
     "MIGRATION_CLOSURE_REQUIRES_TARGET_VERIFIED_AND_SOURCE_RETIRED_OR_EXPLICITLY_ARCHIVED",
@@ -27,7 +27,8 @@
     "DELIVERY_HISTORY":{"forbidden_as_business_authority":true},
     "MIGRATED_HISTORY":{"allowed_lifecycle":["MIGRATED","DECOMMISSIONED","ARCHIVED","DELETE_CANDIDATE"],"forbidden_as_business_authority":true},
     "ARCHIVE":{"allowed_lifecycle":["ARCHIVED","DECOMMISSIONED","DELETE_CANDIDATE"],"forbidden_as_business_authority":true},
-    "AUTOMATION":{"forbidden_as_business_authority":true}
+    "AUTOMATION":{"forbidden_as_business_authority":true},
+    "EXTERNAL_RECORD":{"forbidden_as_business_authority":true}
   },
   "retired_lifecycle_allowed_operations":["READ","ARCHIVE","DELETE"],
   "temporary_surface_rule":"TEMP_SANDBOX assets may support current execution only as temporary working material; before durable completion they must be promoted to an admitted persistent asset or discarded.",
