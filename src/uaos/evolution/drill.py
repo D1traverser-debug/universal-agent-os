@@ -133,6 +133,7 @@ def run_self_change_drill(
     now = datetime.now(UTC)
     workspace_asset = PersistentAssetDescriptor(
         asset_id=f"self-change-drill:{run_id}:policy",
+        resource_ref="policy.txt",
         surface=PersistentSurface.OTHER_EXTERNAL,
         role=AssetRole.EXTERNAL_RECORD,
         lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
