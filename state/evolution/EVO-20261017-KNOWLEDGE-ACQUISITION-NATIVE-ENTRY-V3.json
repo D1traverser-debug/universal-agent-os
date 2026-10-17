@@ -1,0 +1,92 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261017-KNOWLEDGE-ACQUISITION-NATIVE-ENTRY-V3",
+  "authority":"UAOS",
+  "status":"PROPOSED__EVALUATED_KNOWLEDGE_RESEARCH_COMPLETE__IMPLEMENTATION_PENDING",
+  "updated_at":"2026-10-17T22:30:00+08:00",
+  "origin_kind":"EVALUATED_KNOWLEDGE",
+  "parent_evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
+  "governing_outcome":"Make native UAOS entry reliably mandatory-but-lightweight, make depth/research/evolution internal routing decisions rather than pre-entry conditions, and turn broad learning into a reusable coverage-oriented evidence-acquisition capability that can discover, compare, falsify, integrate, stop and validate without creating a second cognition or research operating system.",
+  "origin_evidence_refs":[
+    "docs/research/NATIVE_INSTRUCTION_AND_KNOWLEDGE_ACQUISITION_STUDY_20261017.md",
+    "config/DELIBERATION_POLICY.json",
+    "config/DEEP_TASK_EXECUTION_PROFILE.json",
+    "src/uaos/kernel/problem_space.py",
+    "src/uaos/kernel/deep_task.py",
+    "skills/uaos-controller-runtime/SKILL.md",
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md"
+  ],
+  "evaluated_knowledge_findings":[
+    "ENTRY_AND_ESCALATION_MUST_BE_SEPARATE: every selected UAOS/domain turn should enter a cheap mandatory sentinel; unknown/complex/systemic/deep signals decide escalation inside the sentinel rather than whether the sentinel runs.",
+    "SKILL_METADATA_IS_ROUTING_NOT_POLICY: description should be concise and scope/user-intent oriented; exhaustive symptom lists duplicate policy and increase context/trigger risk.",
+    "INSTRUCTION_LANGUAGE_NEEDS_DEGREES_OF_FREEDOM: positive operating invariants for contextual judgment, conditional decision rules for routing, hard MUST/NEVER only at genuine cliffs or fragile operations, scripts/gates for deterministic enforcement.",
+    "INCIDENT_PHRASES_BELONG_PRIMARILY_IN_EVALS: next/just-do-X/upper-layer/ten-rules are regression examples, not the highest-level behavior definition.",
+    "AUTONOMOUS_GOAL_LOOP_IS_THE_HIGHER_ABSTRACTION: while the admitted objective is unfinished and no genuine blocker exists, select the next evidence-supported action, execute, verify and reassess until completion or a real stop condition.",
+    "BROAD_LEARNING_NEEDS_COVERAGE_ORIENTED_ACQUISITION: source-role map, multiple seed lenses, query expansion, reference/repository snowballing, evidence extraction, method-family clustering, contradiction/falsification, triangulation, saturation and holdout.",
+    "SEARCH_SATURATION_IS_NOT_LITERAL_EXHAUSTIVENESS: stop only after required source roles/contradictions/candidate families are covered and successive expansion rounds yield no material new family/failure mode likely to change the decision.",
+    "SAME_MODEL_SELF_CRITIQUE_IS_NOT_INDEPENDENT_JUDGMENT: external sources/tools/tests/runtime/holdouts are required when independent validation is material.",
+    "EXISTING_UAOS_OWNERS_CAN_CARRY_THE_CAPABILITY: Deliberation + Deep Task + problem_space + Evolution can be extended; a separate Research OS would duplicate authority."
+  ],
+  "source_role_classes":[
+    "CURRENT_OR_PRIMARY_PLATFORM_AUTHORITY",
+    "INDEPENDENT_RESEARCH_OR_BENCHMARK",
+    "PROFESSIONAL_SEARCH_REVIEW_METHOD",
+    "IMPLEMENTATION_OR_REPOSITORY_EVIDENCE",
+    "DISCOVERY_INDEX",
+    "COMMUNITY_EMERGING_SIGNAL"
+  ],
+  "competing_candidates":[
+    {"id":"A_KEEP_V2_ADD_RULES","disposition":"REJECTED","reason":"Preserves symptom-driven prose and converts incidents into prompt accumulation."},
+    {"id":"B_NEW_RESEARCH_OS_OR_SKILL","disposition":"REJECTED_AS_DEFAULT","reason":"Duplicates existing cognition/DeepTask/problem-space/evolution ownership without an evidence-backed boundary."},
+    {"id":"C_EXTEND_EXISTING_OWNERS_PLUS_NATIVE_V3","disposition":"SELECTED_FOR_CANDIDATE","reason":"Adds reusable acquisition admission and mandatory lightweight entry while preserving one cognition/evolution architecture."},
+    {"id":"D_CONTROLLED_PAID_WRAPPER","disposition":"DEFERRED","reason":"Stronger physical mediation conflicts with the included/free-first baseline and is not required to evaluate this knowledge/capability gap."}
+  ],
+  "selected_intervention_candidate":{
+    "knowledge_acquisition_owner":"Extend src/uaos/kernel/problem_space.py with a coverage-oriented KnowledgeAcquisitionAssessment/Receipt rather than a new research state machine.",
+    "deep_task_binding":"DeepTask may require the acquisition receipt when broad method/framework/unknown-knowledge learning is materially required.",
+    "deliberation_policy":"Register coverage-oriented acquisition semantics and keep it subordinate to the canonical cognition kernel.",
+    "native_entry":"Redesign Custom Instructions/Skill projection around mandatory lightweight entry -> internal classification -> adaptive escalation -> autonomous goal loop.",
+    "skill_metadata":"Replace symptom-list description with concise runtime-dispatch scope; detailed routing remains body/canonical owners.",
+    "regression_location":"Move incident-specific phrases and near-miss cases into test/eval fixtures rather than making them governing prose.",
+    "promotion_strategy":"Build and repository-verify candidate first; install exact candidate account projections and run a fresh-chat holdout before production promotion when feasible, so native evidence is not deferred until after promotion again."
+  },
+  "frozen_acceptance":{
+    "required_checks":[
+      "RESEARCH_EVIDENCE_DOCUMENTED_WITH_SOURCE_ROLES_METHOD_MODULES_BOUNDARIES_AND_CANDIDATE_COMPARISON",
+      "MANDATORY_LIGHTWEIGHT_NATIVE_ENTRY_IS_SEPARATE_FROM_INTERNAL_ESCALATION",
+      "COVERAGE_ORIENTED_KNOWLEDGE_ACQUISITION_HAS_EXECUTABLE_ADMISSION_WITH_SOURCE_ROLE_AND_SATURATION_EVIDENCE",
+      "DEEP_TASK_CAN_BIND_MATERIAL_BROAD_ACQUISITION_WITHOUT_SECOND_COGNITION_STATE_MACHINE",
+      "SKILL_DESCRIPTION_IS_CONCISE_SCOPE_BASED_NOT_SYMPTOM_ONTOLOGY",
+      "AUTONOMOUS_GOAL_LOOP_IS_PRIMARY_AND_NO_OP_CONTINUATION_IS_REGRESSION_NOT_GOVERNING_ABSTRACTION",
+      "CURRENT_USER_OUTCOME_CONSTRAINT_AUTHORITY_AND_CAUSAL_CANDIDATE_DISTINCTION_IS_PRESERVED",
+      "TRIVIAL_SELECTED_CONTEXT_TURN_DOES_NOT_FORCE_HEAVY_COGNITION_OR_RESEARCH",
+      "BROAD_LEARNING_AND_UNKNOWN_METHOD_HOLDOUTS_ROUTE_TO_COVERAGE_ORIENTED_ACQUISITION",
+      "KNOWN_NARROW_LOOKUP_REMAINS_LIGHTWEIGHT",
+      "FULL_REPOSITORY_PYTEST_GREEN",
+      "CANDIDATE_LIVE_INTEGRATION_GREEN",
+      "FRESH_CHAT_CANDIDATE_HOLDOUT_PASSES_BEFORE_PRODUCTION_PROMOTION_OR_IS_EXPLICITLY_BLOCKED_BY_HOST_LIMITATION",
+      "PRODUCTION_REREAD_AND_POST_PROMOTION_OBSERVATION"
+    ],
+    "verification_round_limit":3,
+    "independent_paid_review_budget":0,
+    "cost_policy":"INCLUDED_FREE_FIRST__NO_INTENTIONAL_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST"
+  },
+  "implementation_refs":[
+    "docs/research/NATIVE_INSTRUCTION_AND_KNOWLEDGE_ACQUISITION_STUDY_20261017.md",
+    "config/DELIBERATION_POLICY.json",
+    "config/DEEP_TASK_EXECUTION_PROFILE.json",
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "skills/uaos-controller-runtime/SKILL.md",
+    "src/uaos/kernel/problem_space.py",
+    "src/uaos/kernel/deep_task.py",
+    "src/uaos/runtime/finalization.py",
+    "src/uaos/runtime/native_runtime_skill.py",
+    "tests/architecture/test_uaos_controller_runtime_skill.py",
+    "tests/kernel/test_problem_space.py",
+    "tests/kernel/test_deep_task.py",
+    "state/tasks/uaos-systemic-repair-runtime-skill-20261017.json",
+    "state/TASK_INDEX.json"
+  ],
+  "next_action":"IMPLEMENT_EXECUTABLE_KNOWLEDGE_ACQUISITION_ADMISSION__REDESIGN_NATIVE_V3_PROJECTION__ADD_REGRESSION_AND_HOLDOUT_FIXTURES__RUN_CI_LIVE__THEN_CANDIDATE_ACCOUNT_HOLDOUT",
+  "assurance_boundary":"This evolution can improve native behavioral routing and controlled-runtime evidence admission. It cannot create a repository-controlled native ChatGPT pre-send/pre-tool hook."
+}
