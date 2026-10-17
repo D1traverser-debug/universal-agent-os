@@ -2,7 +2,7 @@
   "schema_version": "1.6",
   "contract_version": "1.4.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-17T18:09:00+08:00",
+  "updated_at": "2026-10-17T18:14:00+08:00",
   "scope": "ALL_REGISTERED_DOMAINS_IN_config/AGENT_REGISTRY.json",
   "purpose": "Operationalize inherited common-capability outcomes, evidence-traced multi-causal problem handling, durable learning evidence and problem-to-action assurance without duplicating the canonical cognition state machine or making UAOS a child-business proxy, microscheduler, or owner of domain-internal evidence formats.",
   "source_parent_upcall": "D1traverser-debug/financial-writing-agent@main:evals/PARENT_GUIDANCE_HANDOFF.md",
@@ -54,7 +54,7 @@
       "an available authorized repair path cannot terminate as recommendation-only after admission",
       "repair completion is backed by concrete owner-native verification evidence; material/systemic behavior also has realistic validation evidence"
     ],
-    "owner_native_rule": "Domains realize these invariants with their own envelopes/receipts/replays/evidence and do not copy the parent's CognitionCase or ProblemClosureSignals data structures or a second parent cognition state machine."
+    "owner_native_rule": "Domains realize these invariants with their own envelopes/receipts/replays/evidence and do not copy the parent's CognitionCase data structure, ProblemClosureSignals data structure, or a second parent cognition state machine."
   },
   "problem_to_action_closure": {
     "principle": "AFTER_CAUSAL_INTERVENTION_AND_EVOLUTION_ADMISSION__DETECTED_PROBLEM_MUST_END_IN_REPAIR_EXECUTED_BLOCKED_WITH_REASON_OR_NO_CHANGE_WITH_EVIDENCE__NOT_RECOMMENDATION_ONLY_WHEN_REPAIR_IS_AVAILABLE",
@@ -115,7 +115,7 @@
       "governing assumption challenged when material",
       "research or method evidence when the problem-response floor requires it",
       "verification evidence for implemented requirement/contract compliance",
-      "validation/generalization evidence for material/systemic suitability across the admitted failure class in realistic scenario/runtime conditions",
+      "validation evidence plus generalization evidence for material/systemic suitability across the admitted failure class in realistic scenario/runtime conditions",
       "recurrence detector/regression evidence sufficient to catch the same class without relying on the user to rediscover it",
       "result/status plus remaining unknowns, observation items or rollback conditions",
       "parent-upcall/common-capability impact when applicable"
