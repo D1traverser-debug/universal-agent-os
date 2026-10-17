@@ -18,6 +18,9 @@ class PersistentSurface(str, Enum):
     AUTOMATION = "AUTOMATION"
     NOTION = "NOTION"
     GOOGLE_DRIVE = "GOOGLE_DRIVE"
+    GMAIL = "GMAIL"
+    GOOGLE_CALENDAR = "GOOGLE_CALENDAR"
+    OTHER_EXTERNAL = "OTHER_EXTERNAL"
     TEMP_SANDBOX = "TEMP_SANDBOX"
 
 
@@ -31,6 +34,7 @@ class AssetRole(str, Enum):
     MIGRATED_HISTORY = "MIGRATED_HISTORY"
     ARCHIVE = "ARCHIVE"
     AUTOMATION = "AUTOMATION"
+    EXTERNAL_RECORD = "EXTERNAL_RECORD"
 
 
 class AssetLifecycle(str, Enum):
@@ -69,6 +73,7 @@ _NON_AUTHORITY_ROLES = {
     AssetRole.MIGRATED_HISTORY,
     AssetRole.ARCHIVE,
     AssetRole.AUTOMATION,
+    AssetRole.EXTERNAL_RECORD,
 }
 
 
@@ -179,12 +184,6 @@ class PersistentAssetGate:
 
         if descriptor.role in _NON_AUTHORITY_ROLES and descriptor.lifecycle is AssetLifecycle.CURRENT:
             raise PersistentAssetViolation("non-authority asset cannot become current business authority")
-
-        if descriptor.surface is PersistentSurface.TEMP_SANDBOX and operation in {
-            CrudOperation.MIGRATE,
-            CrudOperation.OUTPUT,
-        } and descriptor.role is AssetRole.AUTHORITY:
-            raise PersistentAssetViolation("temporary sandbox cannot emit/migrate current authority")
 
     def require_migration_closed(self, observation: MigrationObservation) -> None:
         self.require_descriptor(observation.source)
