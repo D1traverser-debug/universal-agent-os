@@ -140,14 +140,37 @@ class PersistentAssetDescriptor:
     canonical_authority_ref: str | None = None
     migration_target_ref: str | None = None
 
+    def __post_init__(self) -> None:
+        try:
+            surface = (
+                self.surface
+                if isinstance(self.surface, PersistentSurface)
+                else PersistentSurface(self.surface)
+            )
+            role = self.role if isinstance(self.role, AssetRole) else AssetRole(self.role)
+            lifecycle = (
+                self.lifecycle
+                if isinstance(self.lifecycle, AssetLifecycle)
+                else AssetLifecycle(self.lifecycle)
+            )
+            operations = frozenset(
+                operation
+                if isinstance(operation, CrudOperation)
+                else CrudOperation(operation)
+                for operation in self.allowed_operations
+            )
+        except (TypeError, ValueError) as exc:
+            raise PersistentAssetViolation(
+                "persistent asset descriptor contains invalid surface/role/lifecycle/operation value"
+            ) from exc
+        object.__setattr__(self, "surface", surface)
+        object.__setattr__(self, "role", role)
+        object.__setattr__(self, "lifecycle", lifecycle)
+        object.__setattr__(self, "allowed_operations", operations)
+
 
 class PersistentAssetCatalog:
-    """Trusted inventory keyed by canonical resource identity.
-
-    Callers do not get to invent lifecycle/owner/role metadata at execution time.
-    The coordinator resolves canonical targets through the selected capability and
-    then obtains the descriptor from this catalog.
-    """
+    """Trusted inventory keyed by canonical resource identity."""
 
     def __init__(self, assets: Iterable[PersistentAssetDescriptor] = ()) -> None:
         self._by_ref: dict[str, PersistentAssetDescriptor] = {}
@@ -180,6 +203,15 @@ class PersistentAssetRequest:
     target_authority: str | None
     canonical_execution_target: str
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.operation, CrudOperation):
+            try:
+                object.__setattr__(self, "operation", CrudOperation(self.operation))
+            except (TypeError, ValueError) as exc:
+                raise PersistentAssetViolation(
+                    f"invalid persistent asset request operation: {self.operation!r}"
+                ) from exc
+
 
 @dataclass(frozen=True, slots=True)
 class MigrationObservation:
@@ -209,9 +241,17 @@ def _nonempty(value: str | None) -> bool:
 
 
 class PersistentAssetGate:
-    """Fail-closed lifecycle/owner admission over trusted asset metadata."""
+    """Fail-closed lifecycle/owner admission over normalized trusted metadata."""
 
     def require_descriptor(self, descriptor: PersistentAssetDescriptor) -> None:
+        if not isinstance(descriptor.surface, PersistentSurface):
+            raise PersistentAssetViolation("persistent asset surface must be normalized")
+        if not isinstance(descriptor.role, AssetRole):
+            raise PersistentAssetViolation("persistent asset role must be normalized")
+        if not isinstance(descriptor.lifecycle, AssetLifecycle):
+            raise PersistentAssetViolation("persistent asset lifecycle must be normalized")
+        if any(not isinstance(op, CrudOperation) for op in descriptor.allowed_operations):
+            raise PersistentAssetViolation("persistent asset operations must be normalized")
         if not _nonempty(descriptor.asset_id):
             raise PersistentAssetViolation("persistent asset requires asset_id")
         if not _nonempty(descriptor.resource_ref):
@@ -223,8 +263,6 @@ class PersistentAssetGate:
         if CrudOperation.READ not in descriptor.allowed_operations:
             raise PersistentAssetViolation("persistent asset must allow READ for reconciliation")
 
-        # Surface-specific invariants are checked before generic role/lifecycle rules so
-        # violations identify the actual persistence-plane contract that was broken.
         if descriptor.surface is PersistentSurface.TEMP_SANDBOX:
             if descriptor.lifecycle is not AssetLifecycle.TEMPORARY:
                 raise PersistentAssetViolation("TEMP_SANDBOX assets must be TEMPORARY")
