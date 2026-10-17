@@ -1,6 +1,6 @@
 {
   "schema_version": "1.9",
-  "updated_at": "2026-10-17T18:00:00+08:00",
+  "updated_at": "2026-10-17T18:02:00+08:00",
   "profiles": {
     "CHATGPT_GITHUB": {
       "state_authority": "GITHUB_REPOSITORY_AUTHORITY",
@@ -30,7 +30,7 @@
       "semantic_signal_assurance": "BEHAVIORAL_SESSION_SELF_CLASSIFICATION__NO_VERIFIED_REPOSITORY_CONTROLLED_NON_BYPASSABLE_SIGNAL_INJECTOR",
       "final_response_enforcement": "SESSION_BOOTSTRAP_PLUS_SKILL_DISPATCH_PLUS_OBSERVABLE_ASSURANCE__NO_VERIFIED_CHATGPT_PRE_SEND_HOOK",
       "uaos_finalization_gate_ref": "src/uaos/runtime/finalization.py",
-      "custom_instructions_role": "BOOTSTRAP_AND_ACTIVATION_ONLY__NON_AUTHORITATIVE",
+      "custom_instructions_role": "BOOTSTRAP_ONLY__NON_AUTHORITATIVE",
       "custom_instructions_bootstrap_behavior": "RECOVER_CURRENT_AUTHORITY__LOAD_COMPILED_NATIVE_SESSION_RUNTIME_PROFILE__EXPLICITLY_HAND_OFF_MATERIAL_PROBLEM_SIGNALS_TO_INSTALLED_uaos-controller-runtime__DO_NOT_COPY_DETAILED_POLICY",
       "optional_remote_hardening": ["GITHUB_RULESET", "BRANCH_PROTECTION", "MANDATORY_REVIEW"],
       "background_execution": "AVAILABLE_ONLY_WHEN_A_REAL_CHATGPT_AUTOMATION_OR_EQUIVALENT_HOST_SCHEDULER_IS_CONFIGURED",
