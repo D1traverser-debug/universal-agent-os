@@ -223,24 +223,8 @@ class PersistentAssetGate:
         if CrudOperation.READ not in descriptor.allowed_operations:
             raise PersistentAssetViolation("persistent asset must allow READ for reconciliation")
 
-        if descriptor.role is AssetRole.AUTHORITY:
-            if descriptor.lifecycle is not AssetLifecycle.CURRENT:
-                raise PersistentAssetViolation("authority asset must use CURRENT lifecycle")
-            if not _nonempty(descriptor.canonical_authority_ref):
-                raise PersistentAssetViolation("authority asset requires canonical_authority_ref")
-            if descriptor.surface is PersistentSurface.TEMP_SANDBOX:
-                raise PersistentAssetViolation("TEMP_SANDBOX cannot own current authority")
-        elif descriptor.lifecycle is AssetLifecycle.CURRENT:
-            raise PersistentAssetViolation("CURRENT lifecycle is reserved for authority assets")
-
-        if descriptor.role is AssetRole.MIGRATED_HISTORY and descriptor.lifecycle not in _RETIRED_LIFECYCLES:
-            raise PersistentAssetViolation("MIGRATED_HISTORY must be retired/migrated lifecycle")
-        if descriptor.role is AssetRole.ARCHIVE and descriptor.lifecycle not in {
-            AssetLifecycle.ARCHIVED,
-            AssetLifecycle.DECOMMISSIONED,
-            AssetLifecycle.DELETE_CANDIDATE,
-        }:
-            raise PersistentAssetViolation("ARCHIVE role requires archived/decommissioned lifecycle")
+        # Surface-specific invariants are checked before generic role/lifecycle rules so
+        # violations identify the actual persistence-plane contract that was broken.
         if descriptor.surface is PersistentSurface.TEMP_SANDBOX:
             if descriptor.lifecycle is not AssetLifecycle.TEMPORARY:
                 raise PersistentAssetViolation("TEMP_SANDBOX assets must be TEMPORARY")
@@ -254,6 +238,23 @@ class PersistentAssetGate:
                 raise PersistentAssetViolation(
                     f"TEMP_SANDBOX cannot admit terminal/promotion operations: {names}"
                 )
+
+        if descriptor.role is AssetRole.AUTHORITY:
+            if descriptor.lifecycle is not AssetLifecycle.CURRENT:
+                raise PersistentAssetViolation("authority asset must use CURRENT lifecycle")
+            if not _nonempty(descriptor.canonical_authority_ref):
+                raise PersistentAssetViolation("authority asset requires canonical_authority_ref")
+        elif descriptor.lifecycle is AssetLifecycle.CURRENT:
+            raise PersistentAssetViolation("CURRENT lifecycle is reserved for authority assets")
+
+        if descriptor.role is AssetRole.MIGRATED_HISTORY and descriptor.lifecycle not in _RETIRED_LIFECYCLES:
+            raise PersistentAssetViolation("MIGRATED_HISTORY must be retired/migrated lifecycle")
+        if descriptor.role is AssetRole.ARCHIVE and descriptor.lifecycle not in {
+            AssetLifecycle.ARCHIVED,
+            AssetLifecycle.DECOMMISSIONED,
+            AssetLifecycle.DELETE_CANDIDATE,
+        }:
+            raise PersistentAssetViolation("ARCHIVE role requires archived/decommissioned lifecycle")
 
     def require(self, request: PersistentAssetRequest) -> None:
         self.require_descriptor(request.descriptor)
