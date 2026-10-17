@@ -4,7 +4,7 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "display_name_zh": "总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
-  "status": "IN_PROGRESS",
+  "status": "RUNNING",
   "current_stage": "SYSTEM_WIDE_AUDIT_COMPLETE__CANDIDATE_IMPLEMENTATION_IN_PROGRESS",
   "governing_outcome": "在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话更稳定进入当前 UAOS 认知与进化系统；重复/系统性问题不得以样本级局部补丁收口，除非证据证明 failure class 确实局限于该 leaf；修复后必须做 generalization 与独立验证；promotion 必须在冻结验收边界下有限收敛。",
   "origin_issue_refs": ["#77", "#72", "#63"],
@@ -21,7 +21,8 @@
     "current native host explicitly lacks verified pre-send/pre-tool complete mediation",
     "current controlled closure requires V&V but lacks explicit failure-class/owning-abstraction/generalization closure evidence",
     "issue #72 is open for bounded verification/promotion convergence",
-    "OpenAI Skills use name/description for discovery and may auto-use when helpful, so Skill alone is not a hard always-on hook"
+    "OpenAI Skills use name/description for discovery and may auto-use when helpful, so Skill alone is not a hard always-on hook",
+    "initial PR CI rejected non-canonical IN_PROGRESS controller status; existing TaskStatus contract requires RUNNING"
   ],
   "planned_changes": [
     "extend canonical systemic repair closure with failure-class scope, owning-abstraction, duplication/supersession, bounded-local exception, recurrence detection and generalization evidence",
@@ -33,5 +34,5 @@
   ],
   "cost_constraint": "INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
   "next_action": "implement candidate and regressions; run frozen acceptance; promote only if green",
-  "updated_at": "2026-10-17T17:50:00+08:00"
+  "updated_at": "2026-10-17T17:54:00+08:00"
 }
