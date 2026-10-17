@@ -64,15 +64,27 @@ def test_material_native_control_plane_change_carries_durable_evolution_and_task
         f"{sorted(protected)}"
     )
 
-    implementation_refs: set[str] = set()
-    for path in evolution_changes:
-        data = _json(path)
-        implementation_refs.update(data.get("implementation_refs", []))
+    valid_admissions: list[tuple[str, str]] = []
+    for task_path in task_changes:
+        task = _json(task_path)
+        if task.get("authority_context") != "UAOS" or task.get("task_type") != "controller_maintenance":
+            continue
+        evolution_ref = task.get("evolution_ref")
+        if evolution_ref not in evolution_changes:
+            continue
+        evolution = _json(evolution_ref)
+        implementation_refs = set(evolution.get("implementation_refs", []))
+        if task_path not in implementation_refs:
+            continue
+        if not protected.issubset(implementation_refs):
+            continue
+        valid_admissions.append((task_path, evolution_ref))
 
-    missing_trace = sorted(path for path in protected if path not in implementation_refs)
-    assert not missing_trace, (
-        "native control-plane changed files are not traceable from the changed evolution evidence: "
-        f"{missing_trace}"
+    assert valid_admissions, (
+        "native control-plane change lacks a linked UAOS controller-maintenance admission: a changed task must "
+        "explicitly reference a changed evolution record, and that evolution must trace both the task and every "
+        f"protected changed file. protected={sorted(protected)} task_changes={task_changes} "
+        f"evolution_changes={evolution_changes}"
     )
 
 
