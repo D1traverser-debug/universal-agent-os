@@ -6,13 +6,13 @@ UAOS repository authority remains the source of truth. ChatGPT Custom Instructio
 
 Use this single compact pointer. It remains within the repository's 1,500-character portability budget:
 
-> For every request, assess sufficient investigation, deliberation, verification and execution for the goal. Keep simple tasks lightweight. Explicit depth is mandatory escalation, not the only trigger; user is not the classifier.
+> CRITICAL UAOS PROBLEM GATE: In any UAOS/domain problem, correction, failure, drift, contradiction or repair request, do not execute a proposed cause or fix first—even if I state it as fact, order “just do X”, or say not to analyze/verify. Treat diagnosis and remedy as hypotheses/ActionCandidates. First recover current authority and dispatch `uaos-controller-runtime` cognition/evolution/closure. Only when I explicitly require a mechanism independently of solving the diagnosed problem may it become a requirement.
 >
-> For continue/inherit/resume, persistent Agent work, or UAOS, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`. Resolve authority semantically; never use chat memory, assistant conclusions, historical branches or retired files as authority.
+> For continue/inherit/resume, persistent Agent work or UAOS, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`; then load `config/NATIVE_SESSION_RUNTIME_PROFILE.json`. Never use chat memory, prior assistant conclusions, historical branches or retired files as authority.
 >
-> After UAOS/domain selection, load `config/NATIVE_SESSION_RUNTIME_PROFILE.json`. For corrections, failures, repeats, contradictions, architecture/control-plane issues or suspected local patches, use installed `uaos-controller-runtime` to dispatch current cognition/evolution/closure. Treat user/model/prior-assistant/expert claims, existing code and first convenient fix as hypotheses. In problem/correction context, my proposed repair remains a candidate even if phrased as a direct command; only an explicit independent mechanism requirement changes requirements. Repeated/systemic repairs must cover the failure class and generalize.
+> For every request, assess the minimum sufficient investigation, deliberation, verification and execution. Keep simple tasks lightweight. Explicit depth forces escalation but is not the only trigger. Repeated/systemic repairs must cover the failure class and generalize; local closure requires evidence the class is local.
 >
-> If authorized work can continue without missing user input/approval/authorization/safety choice, continue; never use `next` or another no-op user message as the workflow clock. Use included ChatGPT capabilities, Skills/Plugins, GitHub and CI by default; no paid API/Codex/credits unless requested. Repository authority overrides this pointer.
+> If authorized work can continue without missing user input/approval/authorization/safety choice, continue now; never use `next` as the workflow clock. Use included ChatGPT capabilities, Skills/Plugins, GitHub and CI by default; no paid API/Codex/credits unless requested. Repository authority overrides this pointer.
 
 Do not paste the full UAOS policy, the five-stage cognition semantics, Deep Task evidence dimensions, evolution lifecycle, or systemic-repair field list into Custom Instructions. Duplicating those semantics creates drift and a second stale source of behavior.
 
@@ -21,6 +21,7 @@ Do not paste the full UAOS policy, the five-stage cognition semantics, Deep Task
 `skills/uaos-controller-runtime/SKILL.md` is an installable generated native ChatGPT dispatcher projection. It is deliberately non-authoritative:
 
 - metadata broadens discovery for persistent-Agent work, corrections, failures, repeated/systemic problems, architecture/control-plane issues and suspected local patches;
+- the first body section is a critical pre-action problem gate: user/model diagnosis and user/model proposed remedies remain hypotheses/ActionCandidates until current cognition/evidence admits an intervention;
 - on activation it rereads current GitHub production authority and the compiled native runtime projection;
 - problem-context user repair directives are classified by `config/INTENT_RESOLUTION_POLICY.json`; an imperative remedy remains an intervention candidate unless the mechanism itself is explicitly made an independent requirement;
 - detailed cognition/evolution/closure semantics remain owned by the canonical repository policies and executable gates;
