@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "task_id": "uaos:maintenance:systemic-repair-runtime-skill-20261017",
+  "authority_context": "UAOS",
+  "task_type": "controller_maintenance",
+  "display_name_zh": "总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
+  "status": "IN_PROGRESS",
+  "current_stage": "SYSTEM_WIDE_AUDIT_COMPLETE__CANDIDATE_IMPLEMENTATION_IN_PROGRESS",
+  "governing_outcome": "在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话更稳定进入当前 UAOS 认知与进化系统；重复/系统性问题不得以样本级局部补丁收口，除非证据证明 failure class 确实局限于该 leaf；修复后必须做 generalization 与独立验证；promotion 必须在冻结验收边界下有限收敛。",
+  "origin_issue_refs": ["#77", "#72", "#63"],
+  "candidate_branch": "architecture/systemic-repair-runtime-skill-20261017",
+  "production_base_sha": "f40db0ffdd1eee339c0f0605a772e245384cd9b4",
+  "competing_candidates": {
+    "A_SKILL_ONLY": "Rejected as insufficient unless core repair completeness is already mechanically enforced.",
+    "B_CORE_ONLY": "Rejected as insufficient for native activation unless a stable dispatcher exists.",
+    "C_DUAL_CONVERGENCE": "Selected candidate: non-authoritative native runtime Skill + Custom Instructions activation; canonical cognition/closure systemic completeness; existing EvolutionTransaction; bounded included/free-first promotion.",
+    "D_CONTROLLED_PAID_RUNTIME": "Stronger physical enforcement but rejected for current baseline because it violates the no-extra-cost constraint."
+  },
+  "known_evidence": [
+    "current Deliberation policy already rejects user/model/expert framing as causal authority",
+    "current native host explicitly lacks verified pre-send/pre-tool complete mediation",
+    "current controlled closure requires V&V but lacks explicit failure-class/owning-abstraction/generalization closure evidence",
+    "issue #72 is open for bounded verification/promotion convergence",
+    "OpenAI Skills use name/description for discovery and may auto-use when helpful, so Skill alone is not a hard always-on hook"
+  ],
+  "planned_changes": [
+    "extend canonical systemic repair closure with failure-class scope, owning-abstraction, duplication/supersession, bounded-local exception, recurrence detection and generalization evidence",
+    "add one non-authoritative UAOS Controller Runtime Skill source bundle for native activation/dispatch",
+    "update bootstrap Custom Instructions pointer to explicitly hand off material problem/correction/systemic/local-patch signals to the Skill",
+    "project the new closure semantics into the compiled native runtime profile without making the projection authority",
+    "encode bounded verification/promotion convergence in the existing evolution/promotion model and close #72 if verified",
+    "run frozen-head CI/live integration, merge, reread production and observe"
+  ],
+  "cost_constraint": "INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
+  "next_action": "implement candidate and regressions; run frozen acceptance; promote only if green",
+  "updated_at": "2026-10-17T17:50:00+08:00"
+}
