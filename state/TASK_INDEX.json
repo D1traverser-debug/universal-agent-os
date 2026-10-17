@@ -3,14 +3,14 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-17T17:50:00+08:00",
+  "updated_at":"2026-10-17T17:54:00+08:00",
   "controller_tasks":[
     {
       "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
       "authority_context":"UAOS",
       "task_type":"controller_maintenance",
       "display_name_zh":"总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
-      "status":"IN_PROGRESS",
+      "status":"RUNNING",
       "resume_eligible":true,
       "default_resume":true,
       "semantic_summary":"System-wide maintenance for stable native cognition/evolution activation, mechanical systemic-repair completeness/generalization, and bounded included/free-first promotion convergence. User/model/expert framing remains hypothesis input rather than authority; local patches may close systemic cases only when evidence proves the failure class is truly leaf-bounded.",
