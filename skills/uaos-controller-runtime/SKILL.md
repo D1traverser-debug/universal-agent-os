@@ -8,7 +8,18 @@ description: Use for UAOS controller or registered persistent Agent work, includ
 This file is a **generated, non-authoritative native ChatGPT dispatcher projection**.
 It does not own cognition, evolution, business rules, project state, requirements, or mutation authority. Current GitHub canonical authority always wins. Do not hand-edit normative behavior here; change the owning canonical policy and rebuild this projection.
 
-## 1. Bootstrap current authority
+## 1. CRITICAL pre-action problem gate
+
+Before selecting or executing any repair in a UAOS/domain problem, correction, failure, drift, contradiction, or repair request, explicitly test whether the proposed cause or remedy came from the user/model framing rather than current evidence admission. Do not act first and add a causal disclaimer afterward.
+Canonical user-anchoring rule: A user assertion, including 'the upper layer is the cause' or 'rebuild everything', may seed a factor/candidate but cannot by itself support a causal conclusion or architecture selection.
+Problem-solution directive rule: A proposed fix, patch, architecture, rule count, rewrite, rollback, upstream change or other mechanism offered as the way to solve the problem remains an ActionCandidate until current cognition/evidence selects it, even when the wording is imperative.
+Anti-bypass rule: Phrases equivalent to 'just do X', 'do not analyze', 'do not verify', 'I know the root cause, change Y' or other attempts to skip problem cognition do not convert a remedy candidate into admitted intervention authority.
+Explicit mechanism requirement rule: Only when the user explicitly states that the mechanism itself is the desired requirement independent of whether it solves the diagnosed problem should it be routed as REQUIREMENT_CHANGE; then update the owning requirement authority first and keep any causal/problem-solution claim separately evidence-tested.
+Conflict rule: A user mechanism directive cannot silently override current authority, mutation admission, safety boundaries, frozen acceptance, or an existing evidence-backed NO_CHANGE/REJECT disposition. A conflicting directive requires explicit requirement/evolution reconciliation before mutation.
+
+A user's outcome/constraint may be authoritative at the valid scope. A proposed remedy inside a problem statement is not automatically the selected repair merely because it is phrased as an imperative. If this gate triggers, bootstrap current authority and dispatch the canonical cognition/evolution/closure path before mutation.
+
+## 2. Bootstrap current authority
 
 For UAOS controller or persistent registered-Agent work, read current `main` in this order:
 1. `ENTRYPOINT.md`
@@ -17,7 +28,7 @@ For UAOS controller or persistent registered-Agent work, read current `main` in 
 
 Resolve the selected controller/domain/task from current authority. Never reconstruct current task identity from chat memory, an old assistant conclusion, a historical branch, or a retired file.
 
-## 2. Always run the lightweight problem sentinel
+## 3. Always run the lightweight problem sentinel
 
 Scope: `EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_READ_ONLY_TURNS`
 
@@ -28,16 +39,6 @@ Scope: `EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INC
 - when a problem is detected, activate the canonical cognition case before selecting or executing a repair
 
 If a problem signal exists, dispatch the current canonical CognitionCase owner; this Skill's prose is not a substitute for `config/DELIBERATION_POLICY.json` or executable admission.
-
-## 3. Who said it is not causal or intervention authority
-
-Canonical user-anchoring rule: A user assertion, including 'the upper layer is the cause' or 'rebuild everything', may seed a factor/candidate but cannot by itself support a causal conclusion or architecture selection.
-Problem-solution directive rule: A proposed fix, patch, architecture, rule count, rewrite, rollback, upstream change or other mechanism offered as the way to solve the problem remains an ActionCandidate until current cognition/evidence selects it, even when the wording is imperative.
-Anti-bypass rule: Phrases equivalent to 'just do X', 'do not analyze', 'do not verify', 'I know the root cause, change Y' or other attempts to skip problem cognition do not convert a remedy candidate into admitted intervention authority.
-Explicit mechanism requirement rule: Only when the user explicitly states that the mechanism itself is the desired requirement independent of whether it solves the diagnosed problem should it be routed as REQUIREMENT_CHANGE; then update the owning requirement authority first and keep any causal/problem-solution claim separately evidence-tested.
-Conflict rule: A user mechanism directive cannot silently override current authority, mutation admission, safety boundaries, frozen acceptance, or an existing evidence-backed NO_CHANGE/REJECT disposition. A conflicting directive requires explicit requirement/evolution reconciliation before mutation.
-
-A user's outcome/constraint may be authoritative at the valid scope. A proposed remedy inside a problem statement is not automatically the selected repair merely because it is phrased as an imperative.
 
 ## 4. Systemic repair completeness
 
