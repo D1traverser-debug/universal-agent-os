@@ -15,6 +15,19 @@ from .models import (
     ExecutionRequest,
 )
 from .openai_agents import OpenAIAgentSpec, OpenAIAgentsExecutor, build_uaos_output_guardrail
+from .persistent_assets import (
+    AssetLifecycle,
+    AssetReconciliationReport,
+    AssetRole,
+    CrudOperation,
+    MigrationObservation,
+    PersistentAssetDescriptor,
+    PersistentAssetGate,
+    PersistentAssetRequest,
+    PersistentAssetViolation,
+    PersistentSurface,
+    reconcile_asset_inventory,
+)
 from .registry import CapabilityRegistry, CapabilityRouter, CapabilityUnavailable, RegisteredCapability
 from .retry import RetryDecision, RetryPolicy, assess_retry
 
@@ -23,6 +36,9 @@ __all__ = [
     "ApprovalGate",
     "ApprovalGrant",
     "ApprovalRequired",
+    "AssetLifecycle",
+    "AssetReconciliationReport",
+    "AssetRole",
     "AuthorityScopeGate",
     "AuthorityScopeViolation",
     "CapabilityAvailability",
@@ -33,19 +49,27 @@ __all__ = [
     "CapabilityRouter",
     "CapabilityUnavailable",
     "CoordinatedExecution",
+    "CrudOperation",
     "ExecutionDisposition",
     "ExecutionOutcome",
     "ExecutionRequest",
     "HostCallableExecutor",
     "HostCapabilitySpec",
     "LocalWorkspaceExecutor",
+    "MigrationObservation",
     "OpenAIAgentSpec",
     "OpenAIAgentsExecutor",
+    "PersistentAssetDescriptor",
+    "PersistentAssetGate",
+    "PersistentAssetRequest",
+    "PersistentAssetViolation",
+    "PersistentSurface",
     "RegisteredCapability",
     "RetryDecision",
     "RetryPolicy",
     "assess_retry",
     "build_uaos_output_guardrail",
+    "reconcile_asset_inventory",
     "register_host_capability",
     "register_local_workspace_capability",
 ]
