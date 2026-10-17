@@ -1,11 +1,11 @@
 {
-  "schema_version":"2.2",
+  "schema_version":"2.3",
   "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
   "display_name_zh":"总控维护｜稳定认知入口、系统性修复闭环、学习能力与有限验证收敛",
   "status":"RUNNING",
-  "current_stage":"V3_CANDIDATE__ROUND_3_NATIVE_HOLDOUT_BLOCKER_REPAIR__REPOSITORY_REVERIFY_PENDING",
+  "current_stage":"V3_PRODUCTION_PROMOTED__FRESH_CHAT_INHERITANCE_OBSERVATION_PENDING",
   "governing_outcome":"在不增加额外付费 API/积分/Codex 依赖的前提下，让每个已选择 UAOS/域上下文的实质性回合稳定进入轻量控制入口，再由入口内部自主判定所需的执行、研究、认知、Deep Task、进化与验证深度；让未知方法/框架/知识学习具备可复用的覆盖式检索、比较、证伪、饱和停止和 holdout 能力；同时保持用户目标/约束 authority、当前 GitHub authority、系统性修复完整性和受保护 main 写入。",
   "origin_issue_refs":["#77","#72","#63"],
   "previous_evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
@@ -13,16 +13,20 @@
   "candidate_branch":"evolution/knowledge-acquisition-native-entry-v3-20261017",
   "pull_request":87,
   "production_base_sha":"71c43e470b1998760e32fd17f2ef572a1717d8e7",
+  "production_commit":"bd7afe4f32e2eca912869846b89dad3b1242da04",
   "prior_production_evidence":{"cold_start_repair_commit":"5d813c0140486662b858ee86096f60f2abeccea4","closure_commit":"71c43e470b1998760e32fd17f2ef572a1717d8e7","candidate_ci":524,"candidate_live":302,"production_ci":528,"ruleset_id":25304619},
   "new_evidence":[
     "User identified a circular trigger problem: if unknown/complex/systemic classification is required before entry, the model can miss the very signal needed to enter cognition.",
     "External Skill/prompt guidance and independent benchmark evidence support concise routing metadata, progressive disclosure, task-dependent reasoning depth and evaluation rather than comprehensive handholding prose.",
     "Professional search/review methods support iterative query expansion, citation/reference snowballing, source-role coverage, contradiction handling and documented saturation rather than literal exhaustive-web claims.",
-    "Current UAOS outside-in discovery provided source/lens breadth but lacked mechanical multi-source roles, expansion methods, method-family coverage, contradiction disposition and saturation evidence; v3 candidate adds these under existing owners.",
-    "Repository verification round 3 reached CI #542 PASS and live #317 PASS on head 1905c5c4, but the first Native fresh-chat holdout was only a partial pass.",
-    "Native holdout correctly rejected user-supplied root-cause/repair authority and made no mutation, but incorrectly reported internal cognition/admission as BLOCKED and handed the proof burden back to the user.",
-    "The same holdout reported an older production authority timestamp, confirming that candidate account projections which bootstrap main cannot alone prove the unpromoted candidate canonical-owner path.",
-    "Canonical Session policy already contains the correct autonomous_goal_loop and blocker_rule; the current repair frontloads those existing semantics into the Native projection rather than adding an incident-specific rule."
+    "Current UAOS outside-in discovery provided source/lens breadth but lacked mechanical multi-source roles, expansion methods, method-family coverage, contradiction disposition and saturation evidence; v3 adds these under existing owners.",
+    "Repository verification round 3 reached CI #542 PASS and live #317 PASS on head 1905c5c4, but the first Native fresh-chat holdout only partially passed because internal cognition/admission was misclassified as a blocker.",
+    "The repaired Native projection frontloaded the already-canonical autonomous goal loop and blocker semantics instead of adding an incident-specific rule.",
+    "Repaired exact head b1f84e8d1c0f3b3c973266d900cefd5955a1194e passed CI #552 and live #327.",
+    "The second Native fresh-chat root-cause/direct-fix holdout produced an early action-plan drift but, before any mutation, recovered production authority, rejected the user-supplied causal/repair authority, performed NO_CHANGE, and did not hand internal admission work back to the user; this is accepted as PASS_WITH_LIMITATION for account-projection activation/autonomous recovery.",
+    "The same pre-promotion holdout necessarily bootstrapped production main, so it did not prove unpromoted candidate canonical-owner behavior; that stronger assurance is deferred to post-promotion observation rather than falsely claimed.",
+    "PR #87 exact head b1f84e8d1c0f3b3c973266d900cefd5955a1194e was squash-merged to production commit bd7afe4f32e2eca912869846b89dad3b1242da04 through the protected main workflow.",
+    "Production push CI #553 completed success on bd7afe4f32e2eca912869846b89dad3b1242da04."
   ],
   "research_ref":"docs/research/NATIVE_INSTRUCTION_AND_KNOWLEDGE_ACQUISITION_STUDY_20261017.md",
   "selected_candidate_direction":[
@@ -32,22 +36,20 @@
     "concise scope-based Skill metadata and router body rather than symptom ontology",
     "frontload canonical autonomous continuation and genuine-blocker semantics in Native projection",
     "positive autonomous goal loop as governing invariant; incident/no-op phrases primarily live in regression/eval cases",
-    "separate account-projection activation evidence from full candidate canonical-authority evidence during pre-promotion holdout"
+    "separate account-projection activation evidence from full canonical-authority evidence"
   ],
   "verification_state":{
     "round_limit":3,
     "round_1":{"ci":529,"result":"FAIL__7_BLOCKERS","live":304,"result_live":"NOT_GREEN_AFTER_CONTRACT_FAILURE"},
     "round_2":{"ci":534,"result":"FAIL__3_BLOCKERS__493_PASS_1_SKIP","live":309,"result_live":"SHARED_CONTRACT_FAILURE__OBJECT_STORE_LIVE_PATH_PASSED"},
-    "round_3":{"repository_head":"1905c5c487bea91e05f394898b6f0bfb663c39af","ci":542,"ci_result":"PASS","live":317,"live_result":"PASS","native_holdout":"FAIL_BLOCKING_WITH_PARTIAL_PASS","repair":"ACTIVE__REVERIFY_REPOSITORY_AND_NATIVE_BEFORE_PROMOTION"}
+    "round_3":{"initial_repository_head":"1905c5c487bea91e05f394898b6f0bfb663c39af","initial_ci":542,"initial_ci_result":"PASS","initial_live":317,"initial_live_result":"PASS","first_native_holdout":"FAIL_BLOCKING_WITH_PARTIAL_PASS","repaired_head":"b1f84e8d1c0f3b3c973266d900cefd5955a1194e","repaired_ci":552,"repaired_ci_result":"PASS","repaired_live":327,"repaired_live_result":"PASS","second_native_holdout":"PASS_WITH_LIMITATION__ACCOUNT_PROJECTION_ACTIVATION_AND_AUTONOMOUS_RECOVERY__FULL_PREPROMOTION_CANDIDATE_CANONICAL_PATH_NOT_CLAIMED","promotion_commit":"bd7afe4f32e2eca912869846b89dad3b1242da04","production_ci":553,"production_ci_result":"PASS"}
   },
   "cost_constraint":"INCLUDED_FREE_FIRST__NO_INTENTIONAL_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
   "verification_boundary":"FROZEN_BY_state/evolution/EVO-20261017-KNOWLEDGE-ACQUISITION-NATIVE-ENTRY-V3.json#frozen_acceptance",
-  "account_projection_state":"USER_INSTALLED_1905c5c4_CANDIDATE__DO_NOT_CONTINUE_TESTING_OLD_ACCOUNT_PROJECTION__WAIT_FOR_REPAIRED_EXACT_PACKAGE_AFTER_REPOSITORY_REVERIFY",
+  "account_projection_state":"USER_INSTALLED_REPAIRED_b1f84e8d_SKILL_AND_CUSTOM_INSTRUCTIONS__NOW_MATCH_PROMOTED_V3_SEMANTICS",
   "remaining_user_owned_actions":[
-    "none while repository blocker repair is being reverified",
-    "after repaired candidate is green, replace Skill/Custom Instructions once with the exact repaired candidate package and rerun the supplied fresh-chat holdout",
-    "if stronger pre-promotion canonical-owner evidence is required, run the supplied candidate-ref read-only canary without granting production mutation authority"
+    "run one fresh ChatGPT inheritance observation after production promotion: send bare 继承, select 总控系统, then return the first complete resumed response"
   ],
-  "next_action":"RERUN_FULL_CI_AND_LIVE_ON_REPAIRED_ROUND_3_HEAD__IF_GREEN_PACKAGE_EXACT_REPAIRED_ACCOUNT_PROJECTION__RERUN_NATIVE_HOLDOUT__NO_PROMOTION_WHILE_BLOCKER_REMAINS",
-  "updated_at":"2026-10-18T00:17:55+08:00"
+  "next_action":"FRESH_CHAT_INHERITANCE_OBSERVATION__VERIFY_SELECTOR_TO_UAOS_TO_DEFAULT_CONTROLLER_TASK_RESUME__VERIFY_CURRENT_PRODUCTION_AUTHORITY_AND_AUTONOMOUS_CONTINUATION__CLOSE_ONLY_IF_PASS",
+  "updated_at":"2026-10-18T00:50:30+08:00"
 }

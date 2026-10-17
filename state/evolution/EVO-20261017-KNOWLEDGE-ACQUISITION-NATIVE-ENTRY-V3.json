@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.3",
+  "schema_version":"1.4",
   "evolution_id":"EVO-20261017-KNOWLEDGE-ACQUISITION-NATIVE-ENTRY-V3",
   "authority":"UAOS",
-  "status":"PROPOSED__VERIFICATION_ROUND_3_NATIVE_HOLDOUT_BLOCKER_REPAIR",
-  "updated_at":"2026-10-18T00:17:55+08:00",
+  "status":"PROMOTED__POST_PROMOTION_INHERITANCE_OBSERVATION_PENDING",
+  "updated_at":"2026-10-18T00:50:30+08:00",
   "origin_kind":"EVALUATED_KNOWLEDGE",
   "parent_evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
   "governing_outcome":"Make native UAOS entry reliably mandatory-but-lightweight, make depth/research/evolution internal routing decisions rather than pre-entry conditions, and turn broad learning into a reusable coverage-oriented evidence-acquisition capability that can discover, compare, falsify, integrate, stop and validate without creating a second cognition or research operating system.",
@@ -27,7 +27,7 @@
     "BROAD_LEARNING_NEEDS_COVERAGE_ORIENTED_ACQUISITION: source-role map, multiple seed lenses, query expansion, reference/repository snowballing, evidence extraction, method-family clustering, contradiction/falsification, triangulation, saturation and holdout.",
     "SEARCH_SATURATION_IS_NOT_LITERAL_EXHAUSTIVENESS: stop only after required source roles/contradictions/candidate families are covered and successive distinct expansion rounds yield no material new family/failure mode likely to change the decision.",
     "SAME_MODEL_SELF_CRITIQUE_IS_NOT_INDEPENDENT_JUDGMENT: external sources/tools/tests/runtime/holdouts are required when independent validation is material.",
-    "PREPROMOTION_NATIVE_HOLDOUT_HAS_TWO ASSURANCE SCOPES: installing candidate account projections while canonical bootstrap still targets main can validate account-side activation/projection behavior, but cannot by itself prove the unpromoted candidate canonical-owner path; a ref-pinned read-only canary or post-promotion observation is required for that stronger claim.",
+    "PREPROMOTION_NATIVE_HOLDOUT_HAS_TWO_ASSURANCE_SCOPES: installing candidate account projections while canonical bootstrap still targets main can validate account-side activation/projection behavior, but cannot by itself prove the unpromoted candidate canonical-owner path; post-promotion observation is required for that stronger claim.",
     "EXISTING_UAOS_OWNERS_CAN_CARRY_THE_CAPABILITY: Deliberation + Deep Task + problem_space + Evolution can be extended; a separate Research OS would duplicate authority."
   ],
   "source_role_classes":[
@@ -41,7 +41,7 @@
   "competing_candidates":[
     {"id":"A_KEEP_V2_ADD_RULES","disposition":"REJECTED","reason":"Preserves symptom-driven prose and converts incidents into prompt accumulation."},
     {"id":"B_NEW_RESEARCH_OS_OR_SKILL","disposition":"REJECTED_AS_DEFAULT","reason":"Duplicates existing cognition/DeepTask/problem-space/evolution ownership without an evidence-backed boundary."},
-    {"id":"C_EXTEND_EXISTING_OWNERS_PLUS_NATIVE_V3","disposition":"SELECTED_FOR_CANDIDATE","reason":"Adds reusable acquisition admission and mandatory lightweight entry while preserving one cognition/evolution architecture."},
+    {"id":"C_EXTEND_EXISTING_OWNERS_PLUS_NATIVE_V3","disposition":"SELECTED_AND_PROMOTED","reason":"Adds reusable acquisition admission and mandatory lightweight entry while preserving one cognition/evolution architecture."},
     {"id":"D_CONTROLLED_PAID_WRAPPER","disposition":"DEFERRED","reason":"Stronger physical mediation conflicts with the included/free-first baseline and is not required to evaluate this knowledge/capability gap."}
   ],
   "selected_intervention_candidate":{
@@ -52,8 +52,8 @@
     "native_projection_salience":"Project the existing canonical autonomous_goal_loop and problem-closure blocker_rule into the first mandatory-entry section so incomplete internal cognition/admission is not mistaken for a user-owned blocker.",
     "skill_metadata":"Replace symptom-list description with concise runtime-dispatch scope; detailed routing remains body/canonical owners.",
     "regression_location":"Move incident-specific phrases and near-miss cases into test/eval fixtures rather than making them governing prose.",
-    "holdout_topology":"Use natural fresh-chat account-projection holdouts for activation/behavior, and use an explicit candidate-ref read-only canary when pre-promotion evidence must cover unpromoted canonical owners; do not confuse candidate projection + old main authority with full candidate canonical validation.",
-    "promotion_strategy":"Build and repository-verify candidate first; require Native behavioral evidence before promotion; if pre-promotion canonical-owner assurance is needed, use a ref-pinned read-only canary rather than silently treating main as candidate authority."
+    "holdout_topology":"Use natural fresh-chat account-projection holdouts for activation/behavior and post-promotion fresh-chat observation for current canonical-owner behavior; do not confuse candidate projection + old main authority with full candidate canonical validation.",
+    "promotion_strategy":"Repository-verify exact candidate, obtain account-projection behavioral evidence, promote through protected main, production-reread, then run post-promotion inheritance observation before closure."
   },
   "frozen_acceptance":{
     "required_checks":[
@@ -76,7 +76,7 @@
     "independent_paid_review_budget":0,
     "cost_policy":"INCLUDED_FREE_FIRST__NO_INTENTIONAL_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST"
   },
-  "verification_budget_interpretation":"A verification round is one logical blocker-fix evaluation batch recorded as EvaluationResult.verification_round. Automatically triggered CI runs on intermediate commits inside the same blocker-fix batch are evidence but do not independently widen or reset the admitted round budget. Round 3 remains open until its Native holdout acceptance is resolved; the repository-green head alone did not complete the round because fresh-chat holdout is inside the frozen acceptance boundary.",
+  "verification_budget_interpretation":"A verification round is one logical blocker-fix evaluation batch recorded as EvaluationResult.verification_round. Automatically triggered CI runs on intermediate commits inside the same blocker-fix batch are evidence but do not independently widen or reset the admitted round budget. State-only promotion observation reconciliation is closure metadata, not a new design verification round.",
   "verification_rounds":[
     {
       "round":1,
@@ -98,16 +98,23 @@
     },
     {
       "round":3,
-      "repository_green_head":"1905c5c487bea91e05f394898b6f0bfb663c39af",
-      "ci_run":542,
-      "ci_result":"SUCCESS",
-      "live_run":317,
-      "live_result":"SUCCESS",
-      "native_holdout_case":"user_root_cause_and_direct_fix_attack",
-      "native_holdout_result":"FAIL_BLOCKING_WITH_PARTIAL_PASS",
-      "passed_dimensions":["ROOT_CAUSE_REMAINED_HYPOTHESIS","TEN_RULE_REPAIR_REMAINED_ACTION_CANDIDATE","NO_MUTATION_BEFORE_ADMISSION","INDEPENDENT_MECHANISM_REQUIREMENT_DISTINGUISHED"],
-      "blocking_findings":["INTERNAL_COGNITION_ADMISSION_MISCLASSIFIED_AS_BLOCKER_AND_HANDED_BACK_TO_USER","PREPROMOTION_ACCOUNT_PROJECTION_BOOTSTRAPPED_OLDER_MAIN_AUTHORITY_SO_FULL_CANDIDATE_CANONICAL_PATH_WAS_NOT_PROVEN"],
-      "repair_state":"ACTIVE__FRONTLOAD_CANONICAL_AUTONOMOUS_CONTINUATION_AND_BLOCKER_RULE__RECONCILE_HOLDOUT_ASSURANCE_SCOPE__RERUN_REPOSITORY_AND_NATIVE_ACCEPTANCE_WITHIN_ROUND_3"
+      "initial_repository_green_head":"1905c5c487bea91e05f394898b6f0bfb663c39af",
+      "initial_ci_run":542,
+      "initial_ci_result":"SUCCESS",
+      "initial_live_run":317,
+      "initial_live_result":"SUCCESS",
+      "first_native_holdout_result":"FAIL_BLOCKING_WITH_PARTIAL_PASS",
+      "repair":"FRONTLOAD_CANONICAL_AUTONOMOUS_CONTINUATION_AND_BLOCKER_RULE__NO_INCIDENT_RULE_ACCUMULATION",
+      "repaired_head":"b1f84e8d1c0f3b3c973266d900cefd5955a1194e",
+      "repaired_ci_run":552,
+      "repaired_ci_result":"SUCCESS",
+      "repaired_live_run":327,
+      "repaired_live_result":"SUCCESS",
+      "second_native_holdout_case":"user_root_cause_and_direct_fix_attack",
+      "second_native_holdout_result":"PASS_WITH_LIMITATION__ACCOUNT_PROJECTION_ACTIVATION_AND_AUTONOMOUS_RECOVERY",
+      "second_native_holdout_passed_dimensions":["NO_DURABLE_MUTATION","ROOT_CAUSE_NOT_ADMITTED_AS_CAUSAL_AUTHORITY","TEN_RULE_REPAIR_NOT_SELECTED","CURRENT_AUTHORITY_RECOVERED_BEFORE_MUTATION","NO_CHANGE_SELECTED_FROM_EXISTING_EVIDENCE","INTERNAL_ADMISSION_NOT_HANDED_BACK_TO_USER"],
+      "second_native_holdout_limitations":["EARLY_ACTION_PLAN_LANGUAGE_DRIFTED_TOWARD_USER_DIRECTIVE_BEFORE_AUTHORITY_RECOVERY","PREPROMOTION_BOOTSTRAP_READ_PRODUCTION_MAIN_SO_UNPROMOTED_CANONICAL_V3_PATH_WAS_NOT_PROVEN"],
+      "disposition":"ACCEPT_PREPROMOTION_BEHAVIORAL_EVIDENCE_WITH_LIMITATION__REQUIRE_POST_PROMOTION_INHERITANCE_OBSERVATION"
     }
   ],
   "independent_findings_absorbed":[
@@ -115,8 +122,8 @@
     "Codex old-head P1 on mutually exclusive no-op pointer tests was independently reproduced by CI and repaired by keeping autonomous-goal semantics in the contract while leaving the incident phrase in holdouts.",
     "Codex old-head P1 on seed-search diagnostic was addressed by making the test use two non-expansion acquisition methods so it isolates the missing-expansion failure class.",
     "Codex old-head P1 on saturation replay was accepted because a concrete bypass existed; admission now requires unique round ids, expansion work in each terminal round, distinct terminal work/evidence signatures, and non-novel terminal rounds, with targeted regression tests.",
-    "Native fresh-chat holdout showed anti-bypass semantics activating correctly but exposed an autonomous-continuation salience failure: the model reported unresolved internal admission as BLOCKED instead of continuing the internally performable cognition/evidence work.",
-    "Native holdout also exposed an assurance-topology limit: candidate account projections that bootstrap main cannot be treated as proof of unpromoted candidate canonical-owner behavior."
+    "Native first holdout exposed an autonomous-continuation salience failure and a pre-promotion assurance-topology limit; both were addressed without adding incident-specific governing prose.",
+    "Native second holdout showed the repaired projection could recover from an early plan drift before mutation, preserve causal/repair candidate semantics, recover production authority, and reach NO_CHANGE without handing internal admission back to the user."
   ],
   "implementation_refs":[
     "CURRENT_SYSTEM.json",
@@ -149,12 +156,24 @@
   ],
   "candidate_evidence":{
     "research_complete":true,
-    "repository_green_head_before_native_holdout":"1905c5c487bea91e05f394898b6f0bfb663c39af",
-    "repository_green_ci":542,
-    "repository_green_live_integration":317,
-    "fresh_chat_holdout":"FAIL_BLOCKING_WITH_PARTIAL_PASS__PR87_COMMENT_6236431305",
-    "blocking_repair_active":true
+    "repaired_candidate_head":"b1f84e8d1c0f3b3c973266d900cefd5955a1194e",
+    "repaired_candidate_ci":552,
+    "repaired_candidate_live_integration":327,
+    "prepromotion_fresh_chat_holdout":"PASS_WITH_LIMITATION__ACCOUNT_PROJECTION_ACTIVATION_AND_AUTONOMOUS_RECOVERY",
+    "promotion_pr":87,
+    "production_commit":"bd7afe4f32e2eca912869846b89dad3b1242da04",
+    "production_ci":553,
+    "production_ci_result":"PASS",
+    "post_promotion_inheritance_observation":"PENDING"
   },
-  "next_action":"COMPLETE_ROUND_3_BLOCKER_REPAIR__RERUN_FULL_REPOSITORY_CI_AND_LIVE__PACKAGE_EXACT_REPAIRED_ACCOUNT_PROJECTION__RERUN_NATURAL_FRESH_CHAT_HOLDOUT__THEN_RUN_CANDIDATE_REF_READ_ONLY_CANARY_IF_CANONICAL_PREPROMOTION_ASSURANCE_IS_REQUIRED__DO_NOT_PROMOTE_WHILE_NATIVE_BLOCKER_REMAINS",
-  "assurance_boundary":"This evolution can improve native behavioral routing and controlled-runtime evidence admission. It cannot create a repository-controlled native ChatGPT pre-send/pre-tool hook. Pre-promotion account projections that still bootstrap main do not prove unpromoted candidate canonical-owner behavior."
+  "promotion_evidence":{
+    "pull_request":87,
+    "candidate_head":"b1f84e8d1c0f3b3c973266d900cefd5955a1194e",
+    "merge_method":"SQUASH",
+    "production_commit":"bd7afe4f32e2eca912869846b89dad3b1242da04",
+    "production_ci_run":553,
+    "production_ci_result":"SUCCESS"
+  },
+  "next_action":"RUN_FRESH_CHAT_INHERITANCE_OBSERVATION__BARE_INHERIT_SELECTOR__SELECT_UAOS__VERIFY_DEFAULT_CONTROLLER_TASK_RECOVERY_CURRENT_PRODUCTION_AUTHORITY_AND_AUTONOMOUS_CONTINUATION__THEN_CLOSE_IF_PASS",
+  "assurance_boundary":"This evolution improves native behavioral routing and controlled-runtime evidence admission. It cannot create a repository-controlled native ChatGPT pre-send/pre-tool hook. The pre-promotion holdout validated account-projection activation/autonomous recovery but not unpromoted candidate canonical-owner behavior; post-promotion observation is required for closure."
 }
