@@ -56,6 +56,7 @@ class HostCapabilitySpec:
     health: CapabilityHealth = CapabilityHealth.AVAILABLE
     ttl_seconds: float | None = None
     provider: str = "host"
+    read_only_actions: frozenset[str] = frozenset()
     mutation_contracts: Mapping[str, MutationContract] = field(default_factory=dict)
     canonicalize_target: TargetCanonicalizer | None = None
 
@@ -68,10 +69,22 @@ class HostCapabilitySpec:
             raise ValueError("estimated_cost cannot be negative")
         if self.ttl_seconds is not None and self.ttl_seconds <= 0:
             raise ValueError("ttl_seconds must be positive")
-        unsupported = set(self.mutation_contracts) - set(self.supported_actions)
+        supported = set(self.supported_actions)
+        classified = set(self.read_only_actions) | set(self.mutation_contracts)
+        unsupported = classified - supported
         if unsupported:
             raise ValueError(
-                f"mutation contracts reference unsupported actions: {sorted(unsupported)}"
+                f"action contracts reference unsupported actions: {sorted(unsupported)}"
+            )
+        overlap = set(self.read_only_actions) & set(self.mutation_contracts)
+        if overlap:
+            raise ValueError(
+                f"actions cannot be both read-only and mutating: {sorted(overlap)}"
+            )
+        missing = supported - classified
+        if missing:
+            raise ValueError(
+                f"every host action requires trusted read/mutation classification: {sorted(missing)}"
             )
         durable = any(
             contract.operation is not None for contract in self.mutation_contracts.values()
@@ -107,6 +120,7 @@ def register_host_capability(
     registry.register(
         observation,
         HostCallableExecutor(spec.callback),
+        read_only_actions=spec.read_only_actions,
         mutation_contracts=spec.mutation_contracts,
         canonicalize_target=spec.canonicalize_target,
     )
