@@ -138,7 +138,7 @@ def run_self_change_drill(
     workspace_asset = PersistentAssetDescriptor(
         asset_id=f"self-change-drill:{run_id}:policy",
         resource_ref=canonical_target,
-        surface=PersistentSurface.OTHER_EXTERNAL,
+        surface=PersistentSurface.LOCAL_WORKSPACE,
         role=AssetRole.EXTERNAL_RECORD,
         lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
         owner_authority="UAOS",
