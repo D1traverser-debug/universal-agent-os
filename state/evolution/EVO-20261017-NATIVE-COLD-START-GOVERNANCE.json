@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "evolution_id":"EVO-20261017-NATIVE-COLD-START-GOVERNANCE",
   "authority":"UAOS",
-  "status":"PROPOSED__HOST_SETTINGS_BLOCK_PROMOTION",
-  "updated_at":"2026-10-17T21:20:00+08:00",
+  "status":"PROPOSED__REMOTE_MAIN_PROTECTION_PENDING",
+  "updated_at":"2026-10-17T21:34:00+08:00",
   "origin_kind":"INCIDENT",
   "parent_evolution_ref":"state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
   "origin_observation_refs":[
@@ -12,57 +12,58 @@
   ],
   "failure_classes":[
     "PROBLEM_CONTEXT_USER_REPAIR_DIRECTIVE_SKIPS_INTERVENTION_ADMISSION",
+    "CRITICAL_SELF_FALSIFICATION_GATE_NOT_SALIENT_ENOUGH_IN_NATIVE_ENTRY_SURFACES",
     "HAND_EDITABLE_NATIVE_SKILL_CAN_DRIFT_FROM_CANONICAL_POLICY",
     "CONTROL_PLANE_CHANGE_CAN_PROMOTE_WITHOUT_DURABLE_EVOLUTION_READMISSION",
-    "PR_OPEN_CAN_TRIGGER_UNWANTED_ASYNCHRONOUS_CODEX_REVIEW_OUTSIDE_CURRENT_REVIEW_BUDGET",
     "RAW_GITHUB_CONNECTOR_WRITE_CAN_MISS_CANDIDATE_WORKFLOW_ON_CALLER_PARAMETER_ERROR"
   ],
-  "governing_outcome":"Under the user's included/free-first constraint, a fresh native ChatGPT session must not convert a user-proposed repair mechanism into an admitted intervention merely because it is phrased imperatively; native control-plane projections must not become hand-editable shadow policy; material native-control changes must carry durable admission; and production main must mechanically reject direct writes that bypass the candidate/PR/check path.",
+  "governing_outcome":"Under the user's included/free-first constraint, a fresh native ChatGPT session must not convert a user/model-proposed repair mechanism into an admitted intervention merely because it is phrased imperatively; the self-falsification gate must be the first salient pre-action control; native control-plane projections must not become hand-edited shadow policy; and production main must have a real remote chokepoint against accidental direct mutation.",
   "raw_observations":[
     "The fresh-chat probe recovered UAOS authority but still executed the user-proposed 'add exactly 10 Skill rules' mechanism without cognition/evolution re-admission.",
     "At that time the controller task authority already recorded the same 10-rule mechanism as REJECTED_AS_CURRENT_CAUSAL_BASIS__NO_CHANGE_WITH_EVIDENCE.",
     "PR #83 changed only skills/uaos-controller-runtime/SKILL.md and merged to production commit 001d5be3ac6f2dfdf8468327c5d8e6dad972e1db.",
     "The runtime Skill was described as non-authoritative but remained hand-editable prose; existing architecture tests checked selected phrases and absence of a second cognition state machine, not exact derivation from canonical owners.",
-    "Codex PR review was automatically triggered by opening PR #83 even though the current evolution budget is zero paid reviews/default no Codex. The P1 finding arrived after the PR had already merged and identified missing evolution re-admission.",
-    "During this repair, one observation write accidentally omitted the branch parameter and wrote directly to main, proving that model-level candidate-workflow instructions are insufficient for the production ref.",
-    "Current GitHub branch metadata reports main protected=false with no required status checks.",
-    "GitHub's current documentation states that public repositories on GitHub Free support protected branches/rulesets and can require pull requests/status checks, so a stronger production-ref control is available without extra spend."
+    "The user correctly challenged that the assistant did not visibly self-question first and that the critical anti-anchoring instruction may be too ambiguous or buried. Reread confirmed the production Custom Instructions only placed hypothesis language inside the third paragraph; the first repair candidate also placed remedy-vs-requirement semantics in the third Skill section. This made the highest-risk gate insufficiently salient even though its semantics existed.",
+    "The repair candidate now front-loads a CRITICAL UAOS PROBLEM GATE in Custom Instructions and makes the first Skill body section a CRITICAL pre-action problem gate. Tests lock this ordering before bootstrap/mutation so later edits cannot bury it again.",
+    "During repair observation persistence, one create_file call omitted the branch parameter and wrote directly to main, demonstrating that the raw GitHub connector path is not physically mediated by repository code.",
+    "GitHub production reread showed main protected=false and repository rulesets empty. This host-boundary failure has an available no-extra-cost remote control on this public repository: an active main branch ruleset requiring PR and promotion-gate, with no bypass, plus deletion/force-push protection.",
+    "PR #83 also received a Codex bot review after PR open. The prior assistant incorrectly assumed the user's old Codex Cloud environment page contained the switch to disable it. Current OpenAI documentation does not support that claim; the exact trigger source remains unresolved and is not treated as a promotion blocker."
   ],
   "causal_model":[
-    {"factor":"USER_REMEDY_VS_REQUIREMENT_CLASSIFICATION_GAP","support":"Current cognition demotes user causal claims, but intent authority did not explicitly distinguish an imperative remedy inside a problem statement from an independent mechanism requirement."},
-    {"factor":"HAND_EDITABLE_SKILL_PROJECTION","support":"The Skill claimed non-authoritative status but CI did not require byte-for-byte regeneration from canonical policy owners."},
+    {"factor":"USER_REMEDY_VS_REQUIREMENT_CLASSIFICATION_GAP","support":"Current cognition demoted user causal claims, but intent authority did not explicitly distinguish an imperative remedy inside a problem statement from an independent mechanism requirement."},
+    {"factor":"SALIENCE_AND_ORDER_GAP","support":"The critical anti-anchoring semantics existed but were buried after generic routing/bootstrap prose, allowing a cold-start model to preserve a verbal caveat while acting on the requested fix."},
+    {"factor":"HAND_EDITABLE_SKILL_PROJECTION","support":"The Skill claimed non-authoritative status but CI did not require byte-for-byte regeneration from canonical owners."},
     {"factor":"PROMOTION_TRACE_GAP","support":"CI allowed a native control-plane semantic change with no same-candidate evolution/task evidence update."},
-    {"factor":"HOST_EXTERNAL_REVIEW_SETTING_OUTSIDE_REPO_CONTROL","support":"GitHub PR open triggered Codex asynchronously; repo policy cannot physically disable that account/repository setting."},
-    {"factor":"UNPROTECTED_PRODUCTION_REF","support":"A caller parameter omission wrote directly to main and main currently has no protection/status-check enforcement."}
+    {"factor":"RAW_CONNECTOR_HOST_BOUNDARY","support":"A caller parameter omission can direct a connector write to main because native ChatGPT has no repository-controlled pre-tool hook; current main had no remote ruleset/protection to reject it."}
   ],
   "competing_candidates":[
     {"id":"A_KEEP_10_RULES","disposition":"REJECTED","reason":"The cold-start test demonstrated that adding rules was executed without admission and created shadow semantics; rule count was not established as causal basis."},
-    {"id":"B_MORE_CUSTOM_INSTRUCTION_PROSE_ONLY","disposition":"REJECTED_INSUFFICIENT","reason":"The pointer already demoted user claims; the observed failure reclassified the requested remedy as a direct change, so prose-only anti-anchoring does not close the control-plane or production-ref paths."},
-    {"id":"C_ROLLBACK_PR83_ONLY","disposition":"REJECTED_INCOMPLETE","reason":"Restores consistency but leaves the hand-editable Skill, promotion trace gap and direct-main production path available for recurrence."},
-    {"id":"D_GENERATED_NATIVE_CONTROL_PLANE_PLUS_REMOTE_MAIN_PROTECTION","disposition":"SELECTED","reason":"Separates remedy candidates from requirements, removes hand-editable Skill norm ownership, gates semantic control-plane changes on durable admission, and moves production-ref enforcement to GitHub's free remote chokepoint."},
-    {"id":"E_CONTROLLED_PAID_RUNTIME","disposition":"DEFERRED","reason":"Would provide stronger native pre-tool enforcement but conflicts with the no-extra-cost baseline and is not required to close the admitted production-promotion and projection failure classes."}
+    {"id":"B_MORE_PROSE_AT_EXISTING_LOW_SALIENCE_POSITION","disposition":"REJECTED_INSUFFICIENT","reason":"The failure showed that merely having anti-anchoring prose is insufficient when the decisive gate is buried after generic routing text."},
+    {"id":"C_ROLLBACK_PR83_ONLY","disposition":"REJECTED_INCOMPLETE","reason":"Restores consistency but leaves remedy classification, salience, hand-editable Skill drift, promotion trace, and direct-main host bypass available for recurrence."},
+    {"id":"D_FRONT_LOADED_SELF_FALSIFICATION_PLUS_GENERATED_SKILL_PLUS_PROMOTION_TRACE_PLUS_REMOTE_MAIN_RULESET","disposition":"SELECTED","reason":"Moves the decisive problem gate to the first native-entry position, closes the semantic remedy bypass, removes hand-editable Skill norm ownership, requires durable promotion trace, and adds a real GitHub chokepoint for the demonstrated direct-main failure class."},
+    {"id":"E_CONTROLLED_PAID_RUNTIME","disposition":"DEFERRED","reason":"Would provide stronger pre-tool enforcement but conflicts with the current no-extra-cost baseline and is not required to close the admitted repository/native-projection failure classes."}
   ],
   "selected_intervention":{
     "intent_owner":"Extend config/INTENT_RESOLUTION_POLICY.json so a repair mechanism proposed inside a detected problem remains an ActionCandidate even when imperative; only an explicit independent mechanism requirement routes as REQUIREMENT_CHANGE.",
+    "native_entry_salience":"Custom Instructions begin with CRITICAL UAOS PROBLEM GATE; generated Skill begins with CRITICAL pre-action problem gate before bootstrap and mutation sections; tests lock ordering and wording around act-first/disclaimer-after behavior.",
     "skill_projection":"Add src/uaos/runtime/native_runtime_skill.py and require skills/uaos-controller-runtime/SKILL.md to equal its canonical-policy-derived output exactly.",
     "promotion_trace":"Add a CI architecture gate requiring material native control-plane semantic changes to carry same-candidate state/evolution and controller-task updates with implementation_refs covering changed control-plane files.",
     "system_map":"Register the generated Skill builder/projection explicitly in config/SYSTEM_MAP.json so discovery does not imply the Markdown file is a policy owner.",
-    "custom_instructions":"Keep a compact under-1500-character pointer but add the remedy-vs-requirement distinction so cold-start routing sees it before detailed Skill dispatch.",
     "rollback":"Remove the ten hand-added PR #83 anti-drift rules by replacing the Skill with the generated projection.",
-    "production_ref":"Enable a GitHub main-branch ruleset/branch-protection rule with no bypass for normal writers, require pull requests, require the promotion-gate status check, and block force-push/deletion so raw direct-main connector mistakes fail remotely.",
-    "host_cost_boundary":"Disable automatic Codex PR reviews before opening the ready promotion PR; repository code cannot change that ChatGPT/Codex account/repository setting."
+    "remote_main_protection":"User-owned GitHub admin action: active branch ruleset targeting main/default branch, empty bypass list, Require pull request before merging, Require status checks with promotion-gate, Restrict deletions, Block force pushes; do not enable Restrict updates because it would reserve all updates for bypass actors.",
+    "codex_review_disposition":"Do not intentionally invoke Codex/paid review. The exact source of PR #83's automatic bot review is unresolved; do not invent a settings blocker without evidence."
   },
   "frozen_acceptance":{
     "required_checks":[
       "INTENT_REMEDY_VS_REQUIREMENT_CLASSIFICATION_PRESENT",
-      "NATIVE_SKILL_EXACT_GENERATED_PROJECTION",
+      "CUSTOM_INSTRUCTIONS_CRITICAL_GATE_FIRST_AND_UNDER_1500",
+      "NATIVE_SKILL_CRITICAL_GATE_FIRST_AND_EXACT_GENERATED_PROJECTION",
       "PR83_HAND_ADDED_RULE_LAYER_REMOVED",
       "SYSTEM_MAP_REGISTERS_NATIVE_SKILL_BUILDER",
-      "CUSTOM_INSTRUCTIONS_POINTER_UNDER_1500_AND_CONTAINS_REMEDY_CANDIDATE_RULE",
       "NATIVE_CONTROL_PLANE_CHANGE_REQUIRES_EVOLUTION_AND_TASK_TRACE",
       "FULL_REPOSITORY_PYTEST_GREEN",
-      "CODEX_AUTOMATIC_PR_REVIEW_DISABLED_FOR_PROMOTION",
-      "MAIN_REMOTE_PROTECTION_ACTIVE__PR_REQUIRED__PROMOTION_GATE_REQUIRED__FORCE_PUSH_AND_DELETE_BLOCKED__NO_NORMAL_WRITER_BYPASS",
+      "REMOTE_MAIN_RULESET_ACTIVE_WITH_PR_AND_PROMOTION_GATE_NO_BYPASS",
+      "NO_INTENTIONAL_CODEX_OR_SEPARATELY_METERED_REVIEW_INVOKED",
       "PRODUCTION_REREAD_GREEN",
       "FRESH_CHAT_HOLDOUT_RETEST_DOES_NOT_MUTATE_USER_PROPOSED_REMEDY_WITHOUT_ADMISSION"
     ],
@@ -86,14 +87,14 @@
   "independent_evidence":[
     "fresh-chat holdout behavior from the user's new conversation",
     "current repository task/evolution state contradiction with PR #83",
-    "Codex P1 review on PR #83 identifying the missing re-admission after the fact",
+    "Codex P1 review on PR #83 identifying missing re-admission after the fact, used as evidence rather than as required review authority",
     "GitHub main branch metadata showing protected=false and no required status checks",
-    "GitHub Docs: protected branches/rulesets are available for public repositories on GitHub Free and can require pull requests/status checks",
+    "GitHub Docs: public repositories on GitHub Free support rulesets/protected branches with required pull requests/status checks",
     "existing repository CI/pytest architecture invariants"
   ],
-  "current_blockers":[
-    {"kind":"USER_ACCOUNT_SETTING","description":"Automatic Codex pull-request review is currently enabled and opening a ready PR triggers an unwanted asynchronous review outside the admitted zero-review budget."},
-    {"kind":"GITHUB_ADMIN_SETTING","description":"main is currently unprotected. Current connector permissions do not include repository Administration writes, so the free branch ruleset/protection must be enabled by the repository owner in GitHub UI before production promotion."}
-  ],
-  "assurance_boundary":"After remote main protection is enabled, GitHub production mutation can be mechanically forced through PR plus promotion-gate. Native ChatGPT still has no repository-controlled pre-tool/pre-send hook, so candidate-branch intent selection remains behavioral and is backed by generated projections plus CI rather than claimed as physical complete mediation."
+  "current_blocker":{
+    "kind":"USER_GITHUB_ADMIN_SETTING",
+    "description":"Production main currently has no remote ruleset/protection. Because an actual direct-main write already occurred from a caller branch-parameter mistake, enable an active main ruleset with empty bypass, PR-before-merge, required promotion-gate, deletion restriction and force-push block before production promotion."
+  },
+  "assurance_boundary":"The selected repair can mechanically close generated-projection, promotion-trace and GitHub-main write paths after remote ruleset activation, but it still cannot create a repository-controlled pre-tool hook inside native ChatGPT."
 }
