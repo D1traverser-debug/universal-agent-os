@@ -6,7 +6,7 @@ from datetime import UTC, datetime
 from .approvals import ApprovalGate, ApprovalGrant
 from .authority import AuthorityScopeGate
 from .models import ExecutionDisposition, ExecutionOutcome, ExecutionRequest
-from .persistent_assets import PersistentAssetGate, PersistentAssetRequest, PersistentAssetViolation
+from .persistent_assets import CrudOperation, PersistentAssetGate, PersistentAssetRequest, PersistentAssetViolation
 from .registry import CapabilityRegistry, CapabilityRouter, CapabilityUnavailable
 
 
@@ -37,11 +37,16 @@ class ActionCoordinator:
         self.authority_context = authority_context
 
     def _require_persistent_asset_admission(self, request: ExecutionRequest) -> None:
-        if request.side_effect_class.upper() in {"NONE", "READ"}:
+        mutating = request.side_effect_class.upper() not in {"NONE", "READ"}
+        if not mutating:
             return
         if request.persistent_asset is None or request.persistent_operation is None:
             raise PersistentAssetViolation(
                 "mutating ExecutionRequest requires persistent_asset and persistent_operation"
+            )
+        if request.persistent_operation is CrudOperation.READ:
+            raise PersistentAssetViolation(
+                "mutating ExecutionRequest cannot classify persistent_operation as READ"
             )
         self.persistent_asset_gate.require(
             PersistentAssetRequest(
@@ -49,6 +54,7 @@ class ActionCoordinator:
                 descriptor=request.persistent_asset,
                 active_authority=self.authority_context,
                 target_authority=request.target_authority,
+                execution_target=request.target,
             )
         )
 
