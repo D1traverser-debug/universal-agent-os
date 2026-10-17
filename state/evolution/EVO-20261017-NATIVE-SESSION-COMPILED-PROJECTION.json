@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0",
+  "evolution_id": "EVO-20261017-NATIVE-SESSION-COMPILED-PROJECTION",
+  "authority": "UAOS",
+  "status": "CANDIDATE__AWAITING_REPOSITORY_AND_LIVE_VALIDATION",
+  "origin": "INCIDENT",
+  "source_incident": "github://D1traverser-debug/universal-agent-os/issues/74",
+  "related_prior_evolution": [
+    "EVO-20261016-COGNITION-SIMPLIFICATION-OUTSIDE-IN-DISCOVERY",
+    "EVO-20261016-FINALIZATION-GATE-HOST-ENFORCEMENT"
+  ],
+  "governing_outcome": "The selected Agent should reliably apply current UAOS cognition/depth/mutation/closure behavior in native ChatGPT without making the user repeatedly restate the same correction, without creating a second policy authority, and without falsely claiming hard host enforcement.",
+  "observations": [
+    "The user repeatedly corrected the assistant for promoting user, prior-assistant or current-assistant framing into conclusions and for responding with explanations rather than self-triggered cognition/evolution.",
+    "Current controlled-runtime cognition already escalates repeated_failure_count >= 2 to STRUCTURED search with competing hypotheses, multiple action candidates, NO_CHANGE baseline, falsification and architecture/upstream reassessment.",
+    "Native ChatGPT has no verified repository-controlled pre-send/pre-tool hook; current host authority labels semantic routing as behavioral.",
+    "A prior cognition simplification evolution already identified hot-path overrepresentation across multiple authority surfaces, but ENTRYPOINT/AGENTS/Session/Current System still require the model to assemble effective selected-context behavior from several documents.",
+    "No existing compiled effective native-session policy projection was found in the production repository."
+  ],
+  "external_method_evidence": [
+    {
+      "source": "CMU SEI Architecture Tradeoff Analysis Method",
+      "method": "ATAM-style scenario/tradeoff comparison",
+      "use": "Compare candidate architectures against adherence, modifiability, context cost, enforceability and drift risk rather than selecting the latest plausible repair by familiarity."
+    },
+    {
+      "source": "OpenAI Agents SDK guardrails",
+      "method": "host enforcement boundary comparison",
+      "use": "Output/input guardrails can halt controlled Agent runs, confirming that hard enforcement belongs to a controlled host path and should not be projected onto native ChatGPT."
+    }
+  ],
+  "architecture_candidates": [
+    {
+      "id": "A_KEEP_DISTRIBUTED_NATIVE_HOT_PATH",
+      "disposition": "REJECTED",
+      "fit": "No implementation cost and preserves current authority layout.",
+      "misfit": "The current live conversation repeatedly failed while the model had to reconstruct effective behavior from several large surfaces; keeping it unchanged does not address the observed actor-operability failure."
+    },
+    {
+      "id": "B_ADD_MORE_RULES_OR_INCIDENT_PATCHES",
+      "disposition": "REJECTED",
+      "fit": "Easy to implement and can document every new symptom.",
+      "misfit": "Controlled cognition already contains the missing semantics. More rules increase duplicated reading surface without changing native host enforcement or effective configuration assembly."
+    },
+    {
+      "id": "C_COMPILED_NATIVE_SESSION_RUNTIME_PROJECTION",
+      "disposition": "SELECTED_CANDIDATE",
+      "fit": "Build one compact non-authoritative read model from canonical Session/Deliberation/Host policy; CI compares the committed projection with a fresh build; native sessions consume one effective hot path while detailed source policies remain singular authorities.",
+      "misfit": "Still behavioral in native ChatGPT and therefore cannot provide physical complete mediation; adds a generated artifact and compiler that must remain tested."
+    },
+    {
+      "id": "D_MOVE_ALL_USER_INTERACTION_TO_CONTROLLED_AGENTS_RUNTIME",
+      "disposition": "BOUNDED_ALTERNATIVE_NOT_BASELINE",
+      "fit": "Provides the strongest mechanical input/output guardrail path when every user-visible run is hosted there.",
+      "misfit": "Changes the user's current ChatGPT interaction model, introduces deployment/operation friction and potentially usage cost; stronger enforcement is not justified as the default merely because native behavioral assurance is imperfect."
+    }
+  ],
+  "selected_intervention": {
+    "id": "C_COMPILED_NATIVE_SESSION_RUNTIME_PROJECTION",
+    "changes": [
+      "Add src/uaos/runtime/native_session_profile.py as a deterministic compiler over canonical Session/Deliberation/Host policy.",
+      "Commit config/NATIVE_SESSION_RUNTIME_PROFILE.json as a non-authoritative generated projection and fail CI if it differs from a fresh build.",
+      "Make CHATGPT_GITHUB and CURRENT_SYSTEM bootstrap point native selected-context execution at this projection.",
+      "Keep Custom Instructions bootstrap-only and point it at the compiled projection after authority recovery.",
+      "Do not alter controlled runtime cognition/finalization semantics or claim a native ChatGPT pre-send hook."
+    ]
+  },
+  "complexity_delta": {
+    "added": [
+      "one deterministic projection compiler",
+      "one generated runtime profile",
+      "one projection consistency test"
+    ],
+    "retired_behavior": [
+      "native selected-context turns reconstructing the effective hot path by independently combining multiple policy documents"
+    ],
+    "not_added": [
+      "no second cognition state machine",
+      "no new causal rule",
+      "no new evolution lifecycle",
+      "no paid review requirement",
+      "no false native complete-mediation claim"
+    ]
+  },
+  "acceptance_criteria": [
+    "The committed native runtime profile equals a fresh deterministic build from current canonical source policies.",
+    "The profile remains explicitly non-authoritative and preserves the native host behavioral-assurance boundary.",
+    "Repeated correction, structured cognition, mutation sentinel, problem closure, free-first cost policy and progress consistency are present because they are projected from current authority, not newly invented in the profile.",
+    "CURRENT_SYSTEM and CHATGPT_GITHUB identify the compiled profile as the selected-context hot-path projection.",
+    "The account Custom Instructions recommendation remains within the existing size budget.",
+    "Existing cognition, domain, persistence, finalization and live-integration tests remain green.",
+    "No Codex review is required for closure; repository CI and live integration are the primary independent judges."
+  ],
+  "stop_condition": "If the exact candidate head passes the acceptance tests and live integration with no known blocker, freeze and promote. New non-blocking observations become a separate transaction rather than reopening this candidate.",
+  "assurance_boundary": "This architecture reduces behavioral assembly burden in native ChatGPT. It does not create or claim a repository-controlled native pre-send/pre-tool interception point."
+}
