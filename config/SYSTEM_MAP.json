@@ -1,5 +1,5 @@
 {
-  "schema_version":"2.3",
+  "schema_version":"2.4",
   "controller":{
     "repository":"D1traverser-debug/universal-agent-os",
     "entrypoint":"ENTRYPOINT.md",
@@ -12,6 +12,10 @@
     "task_state_root":"state/tasks",
     "intent_resolution_policy":"config/INTENT_RESOLUTION_POLICY.json",
     "session_interaction_policy":"config/SESSION_INTERACTION_POLICY.json",
+    "native_session_runtime_profile":"config/NATIVE_SESSION_RUNTIME_PROFILE.json",
+    "native_runtime_skill_source":"skills/uaos-controller-runtime/SKILL.md",
+    "native_runtime_skill_role":"NON_AUTHORITATIVE_NATIVE_ACTIVATION_AND_DISPATCHER",
+    "problem_closure":"src/uaos/kernel/problem_closure.py",
     "common_capabilities":"config/COMMON_CAPABILITIES.json",
     "common_behavior_assurance":"config/COMMON_BEHAVIOR_ASSURANCE.json",
     "authority_write_policy":"config/AUTHORITY_WRITE_POLICY.json",
@@ -44,12 +48,14 @@
     "video":{"repository":"D1traverser-debug/video-growth-agent","entrypoint":"UAOS_SKILL.md","binding_root":".uaos","business_state":"projects/PROJECT_INDEX.json -> exact child project/program state and project-local progress/decision artifacts","identity_semantics":"UAOS_ROUTER_AND_VIDEO_BUSINESS_IDS_ARE_DISTINCT__PARENT_MAY_RETAIN_OPAQUE_CHILD_REF_ONLY","rule_roots":["video_growth_agent","projects","skills/video-growth-agent/references"]}
   },
   "external_integration":{
-    "chatgpt_custom_instructions":"BOOTSTRAP_ONLY__NON_AUTHORITY__NO_VERIFIED_NATIVE_PRE_SEND_HOOK",
+    "chatgpt_custom_instructions":"BOOTSTRAP_ONLY__NON_AUTHORITY__EXPLICIT_NATIVE_RUNTIME_SKILL_HANDOFF__NO_VERIFIED_NATIVE_PRE_SEND_HOOK",
     "pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "native_runtime_skill_source":"skills/uaos-controller-runtime/SKILL.md",
+    "native_runtime_skill_installation":"MANUAL_CHATGPT_ACCOUNT_UI_INSTALL_OR_UPLOAD_REQUIRED",
     "persistent_surfaces":"CLASSIFY_USING_config/PERSISTENT_ASSET_POLICY.json__SEARCH_PRESENCE_IS_NOT_AUTHORITY",
     "openai_agents_sdk":"CONTROLLED_HOST_CAN_ATTACH_UAOS_FINALIZATION_OUTPUT_GUARDRAIL",
     "copilot_ref":".github/copilot-instructions.md"
   },
   "retired_controller":{"repository":"D1traverser-debug/universal-continuity-agent","default_branch_role":"TOMBSTONE_REDIRECT_ONLY","executable_or_recovery_authority":false},
-  "updated_at":"2026-10-17T11:05:28+08:00"
+  "updated_at":"2026-10-17T18:06:00+08:00"
 }
