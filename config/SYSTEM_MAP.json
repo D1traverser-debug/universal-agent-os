@@ -1,5 +1,5 @@
 {
-  "schema_version":"2.1",
+  "schema_version":"2.2",
   "controller":{
     "repository":"D1traverser-debug/universal-agent-os",
     "entrypoint":"ENTRYPOINT.md",
@@ -15,6 +15,9 @@
     "common_capabilities":"config/COMMON_CAPABILITIES.json",
     "common_behavior_assurance":"config/COMMON_BEHAVIOR_ASSURANCE.json",
     "authority_write_policy":"config/AUTHORITY_WRITE_POLICY.json",
+    "persistent_asset_policy":"config/PERSISTENT_ASSET_POLICY.json",
+    "persistent_asset_admission":"src/uaos/execution/persistent_assets.py#PersistentAssetGate",
+    "persistent_asset_reconciliation":"src/uaos/execution/persistent_assets.py#reconcile_asset_inventory",
     "deliberation_policy":"config/DELIBERATION_POLICY.json",
     "deep_task_execution_profile":"config/DEEP_TASK_EXECUTION_PROFILE.json",
     "architecture_experience_policy":"config/ARCHITECTURE_EXPERIENCE_POLICY.json",
@@ -39,9 +42,10 @@
   "external_integration":{
     "chatgpt_custom_instructions":"BOOTSTRAP_ONLY__NON_AUTHORITY__NO_VERIFIED_NATIVE_PRE_SEND_HOOK",
     "pointer_ref":"docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "persistent_surfaces":"CLASSIFY_USING_config/PERSISTENT_ASSET_POLICY.json__SEARCH_PRESENCE_IS_NOT_AUTHORITY",
     "openai_agents_sdk":"CONTROLLED_HOST_CAN_ATTACH_UAOS_FINALIZATION_OUTPUT_GUARDRAIL",
     "copilot_ref":".github/copilot-instructions.md"
   },
   "retired_controller":{"repository":"D1traverser-debug/universal-continuity-agent","default_branch_role":"TOMBSTONE_REDIRECT_ONLY","executable_or_recovery_authority":false},
-  "updated_at":"2026-10-16T22:55:00+08:00"
+  "updated_at":"2026-10-17T09:20:00+08:00"
 }
