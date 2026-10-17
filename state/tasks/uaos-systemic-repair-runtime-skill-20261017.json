@@ -1,11 +1,11 @@
 {
-  "schema_version":"2.1",
+  "schema_version":"2.2",
   "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
   "display_name_zh":"总控维护｜稳定认知入口、系统性修复闭环、学习能力与有限验证收敛",
   "status":"RUNNING",
-  "current_stage":"V3_CANDIDATE__VERIFICATION_ROUND_3_PENDING__PRE_ACCOUNT_HOLDOUT",
+  "current_stage":"V3_CANDIDATE__ROUND_3_NATIVE_HOLDOUT_BLOCKER_REPAIR__REPOSITORY_REVERIFY_PENDING",
   "governing_outcome":"在不增加额外付费 API/积分/Codex 依赖的前提下，让每个已选择 UAOS/域上下文的实质性回合稳定进入轻量控制入口，再由入口内部自主判定所需的执行、研究、认知、Deep Task、进化与验证深度；让未知方法/框架/知识学习具备可复用的覆盖式检索、比较、证伪、饱和停止和 holdout 能力；同时保持用户目标/约束 authority、当前 GitHub authority、系统性修复完整性和受保护 main 写入。",
   "origin_issue_refs":["#77","#72","#63"],
   "previous_evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
@@ -19,8 +19,10 @@
     "External Skill/prompt guidance and independent benchmark evidence support concise routing metadata, progressive disclosure, task-dependent reasoning depth and evaluation rather than comprehensive handholding prose.",
     "Professional search/review methods support iterative query expansion, citation/reference snowballing, source-role coverage, contradiction handling and documented saturation rather than literal exhaustive-web claims.",
     "Current UAOS outside-in discovery provided source/lens breadth but lacked mechanical multi-source roles, expansion methods, method-family coverage, contradiction disposition and saturation evidence; v3 candidate adds these under existing owners.",
-    "CI round 1 exposed seven compatibility/projection/test-isolation blockers; round 2 reduced these to three blockers. The remaining stale projection and literal-test conflicts have been repaired without restoring incident phrases to governing prose.",
-    "An independently reported saturation bypass was reproduced by construction and the admission now requires unique, distinct terminal expansion rounds rather than tuple length alone."
+    "Repository verification round 3 reached CI #542 PASS and live #317 PASS on head 1905c5c4, but the first Native fresh-chat holdout was only a partial pass.",
+    "Native holdout correctly rejected user-supplied root-cause/repair authority and made no mutation, but incorrectly reported internal cognition/admission as BLOCKED and handed the proof burden back to the user.",
+    "The same holdout reported an older production authority timestamp, confirming that candidate account projections which bootstrap main cannot alone prove the unpromoted candidate canonical-owner path.",
+    "Canonical Session policy already contains the correct autonomous_goal_loop and blocker_rule; the current repair frontloads those existing semantics into the Native projection rather than adding an incident-specific rule."
   ],
   "research_ref":"docs/research/NATIVE_INSTRUCTION_AND_KNOWLEDGE_ACQUISITION_STUDY_20261017.md",
   "selected_candidate_direction":[
@@ -28,22 +30,24 @@
     "internal adaptive routing for ordinary execution / cognition / Deep Task / coverage-oriented research / evolution / mutation",
     "coverage-oriented knowledge-acquisition receipt under existing problem-space/Deep Task owners",
     "concise scope-based Skill metadata and router body rather than symptom ontology",
+    "frontload canonical autonomous continuation and genuine-blocker semantics in Native projection",
     "positive autonomous goal loop as governing invariant; incident/no-op phrases primarily live in regression/eval cases",
-    "candidate account holdout before production promotion when feasible"
+    "separate account-projection activation evidence from full candidate canonical-authority evidence during pre-promotion holdout"
   ],
   "verification_state":{
     "round_limit":3,
     "round_1":{"ci":529,"result":"FAIL__7_BLOCKERS","live":304,"result_live":"NOT_GREEN_AFTER_CONTRACT_FAILURE"},
     "round_2":{"ci":534,"result":"FAIL__3_BLOCKERS__493_PASS_1_SKIP","live":309,"result_live":"SHARED_CONTRACT_FAILURE__OBJECT_STORE_LIVE_PATH_PASSED"},
-    "round_3":"PENDING_ON_NEXT_FROZEN_HEAD"
+    "round_3":{"repository_head":"1905c5c487bea91e05f394898b6f0bfb663c39af","ci":542,"ci_result":"PASS","live":317,"live_result":"PASS","native_holdout":"FAIL_BLOCKING_WITH_PARTIAL_PASS","repair":"ACTIVE__REVERIFY_REPOSITORY_AND_NATIVE_BEFORE_PROMOTION"}
   },
   "cost_constraint":"INCLUDED_FREE_FIRST__NO_INTENTIONAL_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
   "verification_boundary":"FROZEN_BY_state/evolution/EVO-20261017-KNOWLEDGE-ACQUISITION-NATIVE-ENTRY-V3.json#frozen_acceptance",
-  "account_projection_state":"KEEP_CURRENT_ACCOUNT_CONFIGURATION_UNTIL_V3_REPOSITORY_CANDIDATE_IS_GREEN__THEN_INSTALL_EXACT_CANDIDATE_SKILL_AND_CUSTOM_INSTRUCTIONS_ONCE_FOR_PRE_PROMOTION_FRESH_CHAT_HOLDOUT",
+  "account_projection_state":"USER_INSTALLED_1905c5c4_CANDIDATE__DO_NOT_CONTINUE_TESTING_OLD_ACCOUNT_PROJECTION__WAIT_FOR_REPAIRED_EXACT_PACKAGE_AFTER_REPOSITORY_REVERIFY",
   "remaining_user_owned_actions":[
-    "none until repository round-3 candidate is green",
-    "after green candidate package is prepared, install exact candidate Skill/Custom Instructions once and run the supplied fresh-chat holdout before production promotion"
+    "none while repository blocker repair is being reverified",
+    "after repaired candidate is green, replace Skill/Custom Instructions once with the exact repaired candidate package and rerun the supplied fresh-chat holdout",
+    "if stronger pre-promotion canonical-owner evidence is required, run the supplied candidate-ref read-only canary without granting production mutation authority"
   ],
-  "next_action":"FREEZE_NEXT_CANDIDATE_HEAD__RUN_ROUND_3_CI_AND_LIVE__IF_GREEN_PREPARE_ACCOUNT_HOLDOUT_PACKAGE__DO_NOT_PROMOTE_BEFORE_NATIVE_HOLDOUT",
-  "updated_at":"2026-10-17T23:40:00+08:00"
+  "next_action":"RERUN_FULL_CI_AND_LIVE_ON_REPAIRED_ROUND_3_HEAD__IF_GREEN_PACKAGE_EXACT_REPAIRED_ACCOUNT_PROJECTION__RERUN_NATIVE_HOLDOUT__NO_PROMOTION_WHILE_BLOCKER_REMAINS",
+  "updated_at":"2026-10-18T00:17:55+08:00"
 }
