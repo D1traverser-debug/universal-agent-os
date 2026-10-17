@@ -4,20 +4,20 @@
   "domain_id": "financial_writing",
   "task_type": "article_workspace_router",
   "status": "RUNNING",
-  "current_stage": "READY_FOR_NEW_OR_EXPLICIT_DOMAIN_ARTICLE__IDENTITY_DECOUPLED",
-  "next_action": "For a normal article request route the brief, applicable global requirements and bounded governance context to DOMAIN:financial_writing. Financial Writing creates and owns its own article identity/state/workflow. If parent continuity needs to remember the returned article, store only the opaque Financial state reference returned by the domain. For explicit historical resume, resolve the exact Financial article reference; never require the UAOS router/task ID to equal a Financial article ID and never auto-reactivate completed articles.",
+  "current_stage": "ACTIVE_DOMAIN_ARTICLE_REF__IDENTITY_DECOUPLED",
+  "next_action": "For generic Financial continuation, reread the exact active_domain_state_ref from the Financial owner before any material article action. The parent retains only this opaque child reference and must not adopt the Financial article ID or mirror child business state. New unrelated article requests still delegate to DOMAIN:financial_writing for a new owner-created identity. Explicit historical resume still requires the exact Financial article reference and never reactivates completed history by search presence alone.",
   "domain_registration": {
     "source": "config/AGENT_REGISTRY.json + config/SYSTEM_MAP.json",
     "repository": "D1traverser-debug/financial-writing-agent",
     "entrypoint": "UAOS_SKILL.md"
   },
-  "active_domain_state_ref": null,
+  "active_domain_state_ref": "D1traverser-debug/financial-writing-agent@main:workspaces/articles/cross-border-ecommerce-20261016-v3/STATE.json",
   "domain_reference_semantics": "OPAQUE_REFERENCE_RETURNED_BY_FINANCIAL_DOMAIN__NOT_PARENT_TASK_IDENTITY",
   "identity_boundary": "UAOS_ROUTER_ID_AND_FINANCIAL_ARTICLE_ID_ARE_DISTINCT_NAMESPACES__NO_EQUALITY_REQUIREMENT",
   "freshness_rule": "REREAD_CURRENT_DOMAIN_BINDING_BEFORE_DELEGATION; WHEN_AN_EXACT_FINANCIAL_ARTICLE_REF_IS_SELECTED_REREAD_THAT_CHILD_STATE_BEFORE_MATERIAL_ARTICLE_ACTION",
   "historical_resume_rule": "EXPLICIT_CHILD_ARTICLE_REFERENCE_ONLY__NO_PARENT_ID_ADOPTION__DO_NOT_REWRITE_HISTORICAL_RECEIPTS",
-  "controller_updated_at": "2026-10-14T12:58:00Z",
-  "progress_timestamp": "2026-10-14T12:58:00Z",
-  "progress_timestamp_semantics": "UAOS_FINANCIAL_ROUTER_IDENTITY_DECOUPLED__NO_ACTIVE_ARTICLE_SELECTED",
+  "controller_updated_at": "2026-10-17T07:30:00Z",
+  "progress_timestamp": "2026-10-17T07:30:00Z",
+  "progress_timestamp_semantics": "UAOS_FINANCIAL_ROUTER_HAS_OPAQUE_ACTIVE_CHILD_REF__CHILD_BUSINESS_STATE_REMAINS_FINANCIAL_OWNED",
   "domain_business_state_is_controller": false
 }
