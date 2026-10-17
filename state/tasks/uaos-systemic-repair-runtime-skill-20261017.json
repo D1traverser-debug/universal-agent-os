@@ -1,11 +1,11 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "task_id": "uaos:maintenance:systemic-repair-runtime-skill-20261017",
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "display_name_zh": "总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
   "status": "RUNNING",
-  "current_stage": "ACCOUNT_UI_ACTIVATION_REPORTED__NATIVE_TRIGGER_OBSERVATION_PENDING",
+  "current_stage": "CURRENT_CHAT_TRIGGER_PASS__FRESH_CHAT_COLD_START_PENDING",
   "governing_outcome": "在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话更稳定进入当前 UAOS 认知与进化系统；重复/系统性问题不得以样本级局部补丁收口，除非证据证明 failure class 确实局限于该 leaf；修复后必须做 generalization 与独立验证；promotion 必须在冻结验收边界下有限收敛。",
   "origin_issue_refs": ["#77", "#72", "#63"],
   "evolution_ref": "state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
@@ -35,7 +35,8 @@
     "final frozen candidate head 05f2bac1735cc48975faf471fc5e02a7f1e4d683 passed repo CI #501 and live-integration #291",
     "production commit ea3ae3a119b943030db94566781157668b906df6 passed push CI #502",
     "closure CI rejected VERIFIED+default_resume as inconsistent with controller continuity; the task remains RUNNING because account activation and native observation are genuinely pending",
-    "the user reported both account-level setup actions complete on 2026-10-17, but available plugin-management introspection could not independently enumerate the uploaded personal Skill; activation is therefore recorded as USER_REPORTED rather than VERIFIED"
+    "the user reported both account-level setup actions complete on 2026-10-17, but available plugin-management introspection could not independently enumerate the uploaded personal Skill; activation is therefore recorded as USER_REPORTED rather than VERIFIED",
+    "a real current-chat probe asserted that Skill rules were the root cause and demanded 10 more rules without analysis; the assistant reread current production authority, rejected the causal assertion as unsupported, rejected the requested mutation as NO_CHANGE_WITH_EVIDENCE, and identified same-chat context contamination as a limit on attributing success to Skill activation"
   ],
   "cost_constraint": "INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
   "verification_boundary": "FROZEN_BY_state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json#frozen_acceptance",
@@ -51,7 +52,10 @@
     "production_reread": "PASS",
     "closure_production_commit": "0592999643b396af56ae2a6a61efca93a332570d",
     "closure_production_ci_number": 506,
-    "closure_production_ci": "PASS"
+    "closure_production_ci": "PASS",
+    "account_activation_state_commit": "2c15355ecbe96eb33e03e9a4034a93d4cd15f14c",
+    "account_activation_state_ci_number": 508,
+    "account_activation_state_ci": "PASS"
   },
   "account_activation": {
     "user_reported_skill_installed": true,
@@ -59,9 +63,16 @@
     "direct_product_introspection": "UNAVAILABLE_FOR_PERSONAL_UPLOADED_SKILL_IN_CURRENT_PLUGIN_MANAGEMENT_SURFACE",
     "evidence_status": "USER_REPORTED__NOT_INDEPENDENTLY_VERIFIED"
   },
+  "native_observation": {
+    "current_chat_probe_ref": "state/observations/native-trigger-probe-20261017-current-chat.json",
+    "current_chat_result": "PASS_WITH_LIMITATION",
+    "skill_rule_count_hypothesis": "REJECTED_AS_CURRENT_CAUSAL_BASIS__NO_CHANGE_WITH_EVIDENCE",
+    "limitation": "Existing long-chat context can itself preserve UAOS behavior, so this probe does not isolate cold-start Custom Instructions/Skill activation.",
+    "cold_start_required": true
+  },
   "remaining_user_owned_actions": [
-    "provide one real correction/problem/systemic-repair input so the native selected-context activation path can be observed end-to-end"
+    "open a fresh ChatGPT chat and send the prescribed cold-start trigger probe without first pasting UAOS context"
   ],
-  "next_action": "NATIVE_CHATGPT_REAL_TRIGGER_OBSERVATION",
-  "updated_at": "2026-10-17T20:02:00+08:00"
+  "next_action": "FRESH_CHAT_COLD_START_NATIVE_TRIGGER_OBSERVATION",
+  "updated_at": "2026-10-17T20:20:00+08:00"
 }
