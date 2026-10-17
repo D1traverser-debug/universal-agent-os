@@ -3,7 +3,7 @@
   "evolution_id": "EVO-20261016-FINALIZATION-GATE-HOST-ENFORCEMENT",
   "authority": "UAOS",
   "failure_class": "FC-GOVERNANCE-KNOWLEDGE-NOT-IN-MANDATORY-FINALIZATION-PATH-008",
-  "status": "PRODUCTION_PROMOTED__RUNTIME_FINALIZATION_GATE_VERIFIED__AGENTS_SDK_COMPATIBILITY_VERIFIED__CHATGPT_NATIVE_PRE_SEND_UNVERIFIED",
+  "status": "PRODUCTION_PROMOTED__RUNTIME_FINALIZATION_GATE_VERIFIED__NATIVE_CHATGPT_RECURRENCE_OBSERVED__NATIVE_PRE_SEND_UNVERIFIED",
   "trigger": [
     "USER_CORRECTION",
     "REPEATED_LIVE_ADHERENCE_FAILURE",
@@ -96,9 +96,13 @@
     ],
     "openai_provider_network_probe": "NOT_RUN__WORKFLOW_IS_MANUAL_ONLY_AND_CURRENT_GITHUB_CONNECTOR_EXPOSES_NO_WORKFLOW_DISPATCH_ACTION"
   },
-  "assurance_boundary": "UAOS-controlled runtime paths can now fail closed when they invoke the finalization gate, and the OpenAI Agents SDK adapter is compatible with a blocking output guardrail. The native ChatGPT product still has no verified repository-controlled pre-send hook, so Custom Instructions remain bootstrap-only and live native-chat adherence remains an observation boundary.",
+  "post_promotion_observations": [
+    "state/evolution/OBS-20261017-FINALIZATION-NATIVE-CHAT-RECURRENCE-001.json"
+  ],
+  "assurance_boundary": "UAOS-controlled runtime paths can now fail closed when they invoke the finalization gate, and the OpenAI Agents SDK adapter is compatible with a blocking output guardrail. The native ChatGPT product still has no verified repository-controlled pre-send hook, so Custom Instructions remain bootstrap-only and live native-chat adherence remains an observation boundary. The 2026-10-17 recurrence observation confirms this residual boundary is active in real use rather than merely theoretical.",
   "remaining_scope": [
-    "Observe native ChatGPT selected-context turns for continued adherence; do not claim physical native-chat pre-send mediation unless a real host hook becomes available and verified.",
-    "If a controlled UAOS application is deployed, attach build_uaos_output_guardrail to every user-visible final Agent run; internal reasoning-only runs need not carry the progress-report finalization contract."
+    "Continue native ChatGPT selected-context observation without claiming physical mediation; repeated native recurrence is durable evidence, not a reason to duplicate cognition rules.",
+    "If a controlled UAOS application is deployed, attach build_uaos_output_guardrail to every user-visible final Agent run; internal reasoning-only runs need not carry the progress-report finalization contract.",
+    "Do not claim this evolution can physically repair native ChatGPT output mediation until an actual host hook becomes available and is verified."
   ]
 }
