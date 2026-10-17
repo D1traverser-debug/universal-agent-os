@@ -1,27 +1,30 @@
 {
-  "schema_version":"1.4",
-  "policy_version":"1.4.0",
+  "schema_version":"1.5",
+  "policy_version":"1.5.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T16:31:00Z",
+  "updated_at":"2026-10-17T09:20:00+08:00",
   "context_model":{
     "controller":"UAOS",
     "domain_format":"DOMAIN:<domain_id>",
     "source":"CURRENT_SELECTED_CONTROLLER_OR_TASK_DOMAIN",
     "hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS"
   },
+  "persistent_asset_policy":"config/PERSISTENT_ASSET_POLICY.json",
+  "persistent_asset_executable":"src/uaos/execution/persistent_assets.py#PersistentAssetGate",
   "mutation_admission":{
     "default":"FAIL_CLOSED",
     "non_mutating_side_effects":["NONE","READ"],
     "rules":[
       "Every mutating ExecutionRequest must declare target_authority.",
+      "Every external or durable mutation must also classify the target persistent surface, asset role, lifecycle and owner under config/PERSISTENT_ASSET_POLICY.json before the owner-specific write path runs.",
       "ActionCoordinator or the host-equivalent decision layer must be bound to the selected authority_context.",
-      "Same-authority mutation is permitted subject to owner rules, normal action/approval/concurrency controls and the applicable repository workflow.",
+      "Same-authority mutation is permitted subject to owner rules, persistent-asset admission, normal action/approval/concurrency controls and the applicable repository/workspace workflow.",
       "A registered ancestor may mutate a descendant only when the hierarchy is known and the request carries a non-empty governance_basis.",
       "UAOS parent-governed descendant changes must read current domain binding/business authority, perform impact analysis and preserve domain-specific validation; governance_basis is lineage, not a bypass.",
       "DOMAIN:X -> UAOS direct authoritative mutation is prohibited.",
       "DOMAIN:X -> DOMAIN:Y direct authoritative mutation is prohibited.",
       "A child may issue a non-mutating parent upcall for diagnosis, replan, research, assurance or evolution guidance without surrendering its selected task authority.",
-      "Approval cannot override hierarchy or ownership restrictions."
+      "Approval cannot override hierarchy, ownership, persistent-asset lifecycle, or owner-specific mutation restrictions."
     ]
   },
   "always_on_mutation_sentinel":{
@@ -30,12 +33,19 @@
     "checks":[
       "SELECTED_AUTHORITY_CONTEXT",
       "TARGET_AUTHORITY_OR_RESOURCE",
+      "TARGET_PERSISTENT_SURFACE",
+      "TARGET_ASSET_ROLE",
+      "TARGET_ASSET_LIFECYCLE",
+      "ASSET_OWNER_AUTHORITY",
       "MUTATING_VS_READ_ONLY",
+      "PERSISTENT_ASSET_OPERATION_ADMISSION",
       "OWNER_APPROPRIATE_MUTATION_WORKFLOW",
       "TRIGGER_SIGNALS_REQUIRING_ADAPTIVE_DELIBERATION"
     ],
     "depth_rule":"LIGHTWEIGHT_ALWAYS_ON__ESCALATE_DELIBERATION_ONLY_WHEN_TRIGGERED"
   },
+  "cross_surface_rule":"SEARCH_OR_RETRIEVAL_PRESENCE_DOES_NOT_PROMOTE_AN_ASSET_TO_AUTHORITY__BOOTSTRAP_REFERENCE_SHARED_RESOURCE_DELIVERY_HISTORY_AND_AUTOMATION_SURFACES_REMAIN_NON_AUTHORITATIVE_UNLESS_A_GOVERNED_MIGRATION_EXPLICITLY_PROMOTES_A_TARGET_AUTHORITY_ASSET",
+  "migration_rule":"PERSISTENT_ASSET_MIGRATION_CLOSES_ONLY_AFTER_TARGET_VERIFICATION_AND_SOURCE_RETIREMENT_OR_ARCHIVAL__SOURCE_REMAINS_NON_AUTHORITATIVE_EVEN_IF_SEARCHABLE",
   "autonomous_maintenance_baseline":{
     "goal":"SELF_CHECK__SELF_EXECUTE__VERIFY__REPORT_WITHOUT_PER_WRITE_USER_APPROVAL",
     "normal_material_github_path":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_CHECKS__CONTROLLED_MERGE_OR_UPDATE__PRODUCTION_REREAD",
@@ -43,6 +53,7 @@
       "candidate isolation for material architecture/governance changes",
       "problem-response research and reflection per current deliberation policy",
       "owner-appropriate reproducible validation",
+      "persistent target surface/asset-role/lifecycle admission before durable mutation",
       "freshness/concurrency protection appropriate to the write path",
       "production authority reread and post-promotion observation",
       "user-visible report of changes and evidence"
