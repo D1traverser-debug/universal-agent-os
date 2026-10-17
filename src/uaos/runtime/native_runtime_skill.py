@@ -40,16 +40,11 @@ def build_native_runtime_skill(
     evolution_policy: Mapping[str, Any],
     host_profiles: Mapping[str, Any],
 ) -> str:
-    """Compile the installable native ChatGPT dispatcher from canonical policy owners.
-
-    The Skill is a generated projection, not a policy owner. CI must compare the committed
-    SKILL.md byte-for-byte with this function's output so hand-written normative additions
-    cannot silently create a second control surface.
-    """
+    """Compile the installable native ChatGPT dispatcher from canonical policy owners."""
 
     intent = _mapping(intent_policy, field="intent_policy")
     session = _mapping(session_policy, field="session_policy")
-    deliberation = _mapping(deliberation_policy, field="deliberation_policy")
+    _mapping(deliberation_policy, field="deliberation_policy")
     evolution = _mapping(evolution_policy, field="evolution_policy")
     profiles = _mapping(_value(host_profiles, "profiles", field="host_profiles"), field="host_profiles.profiles")
     chatgpt = _mapping(_value(profiles, "CHATGPT_GITHUB", field="host_profiles.profiles"), field="host_profiles.profiles.CHATGPT_GITHUB")
@@ -60,7 +55,6 @@ def build_native_runtime_skill(
     closure = _mapping(_value(session, "problem_to_action_closure_gate", field="session_policy"), field="session_policy.problem_to_action_closure_gate")
     systemic = _mapping(_value(closure, "systemic_repair_completeness", field="problem_to_action_closure_gate"), field="session_policy.problem_to_action_closure_gate.systemic_repair_completeness")
     mutation = _mapping(_value(session, "always_on_mutation_sentinel", field="session_policy"), field="session_policy.always_on_mutation_sentinel")
-    cognition_tx = _mapping(_value(deliberation, "cognition_case_transaction", field="deliberation_policy"), field="deliberation_policy.cognition_case_transaction")
     solution_directive = _mapping(_value(intent, "problem_solution_directive_resolution", field="intent_policy"), field="intent_policy.problem_solution_directive_resolution")
     bounded = _mapping(_value(evolution, "bounded_verification_and_promotion", field="evolution_policy"), field="evolution_policy.bounded_verification_and_promotion")
 
@@ -99,11 +93,10 @@ def build_native_runtime_skill(
         "",
         "## 4. Keep claims and requirements distinct",
         "",
-        "Explicit user outcomes, preferences, constraints, and independently requested mechanisms are requirements at their valid scope.",
-        f"Causal/architecture claim rule: {_value(cognition_tx, 'user_anchoring_rule', field='cognition_case_transaction')}",
-        f"Problem-remedy rule: {_value(solution_directive, 'candidate_mechanism_rule', field='problem_solution_directive_resolution')}",
+        f"Requirement rule: {_value(solution_directive, 'outcome_constraint_rule', field='problem_solution_directive_resolution')}",
+        "Causal explanations, framework choices, solution proposals, and action recommendations from any source remain candidates until current evidence admits them at the required risk/depth level.",
+        "A remedy proposed inside a problem statement remains an ActionCandidate until current cognition/evidence selects it; imperative wording does not change that epistemic role.",
         f"Independent-mechanism requirement rule: {_value(solution_directive, 'explicit_mechanism_requirement_rule', field='problem_solution_directive_resolution')}",
-        "Speaker identity, popularity, imperative wording, existing code, or the first convenient solution does not substitute for current evidence admission.",
         "",
         "## 5. Execute toward the governing objective",
         "",
