@@ -88,16 +88,18 @@ def test_runtime_skill_preserves_requirement_vs_candidate_semantics_without_inci
 
 def test_custom_instruction_pointer_is_mandatory_entry_not_symptom_trigger_and_stays_compact():
     pointer = _recommended_custom_instruction_pointer()
+    lower = pointer.lower()
     assert 0 < len(pointer) <= 1500
     assert pointer.startswith("After UAOS or a registered persistent Agent/domain is selected")
     assert "before every substantive response, tool call, or action" in pointer
-    assert "Entry is unconditional; heavy cognition/research/evolution is adaptive." in pointer
-    assert "Neither I nor your pre-entry interpretation must label a task" in pointer
-    assert "from any source remain candidates until evidence supports them" in pointer
-    assert "explicit outcomes/constraints" in pointer
-    assert "choose the next evidence-supported action, execute, verify, reassess, and continue" in pointer
-    assert "Broad unknown-method/framework learning uses coverage-oriented acquisition" in pointer
-    assert "never use `next` or another no-op user message as the workflow clock" not in pointer
+    assert "entry is unconditional" in lower
+    assert "escalation is adaptive" in lower
+    assert "do not require pre-classification as complex, unknown, systemic, architectural, deep, or problematic" in lower
+    assert "from any source as candidates until evidence supports them" in lower
+    assert "explicit outcomes/constraints" in lower
+    assert "choose the next evidence-supported action, execute, verify, reassess, and continue" in lower
+    assert "broad unknown-method/framework learning uses coverage-oriented acquisition" in lower
+    assert "never use `next` or another no-op user message as the workflow clock" not in lower
     assert "FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES" not in pointer
 
 
