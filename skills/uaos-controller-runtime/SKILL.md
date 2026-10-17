@@ -5,111 +5,81 @@ description: Use for UAOS controller or registered persistent Agent work, includ
 
 # UAOS Controller Runtime
 
-This skill is a **non-authoritative native ChatGPT runtime adapter** for `D1traverser-debug/universal-agent-os`.
-
-It does not own cognition, evolution, business rules, project state, or mutation authority. Current GitHub production authority always wins.
+This file is a **generated, non-authoritative native ChatGPT dispatcher projection**.
+It does not own cognition, evolution, business rules, project state, requirements, or mutation authority. Current GitHub canonical authority always wins. Do not hand-edit normative behavior here; change the owning canonical policy and rebuild this projection.
 
 ## 1. Bootstrap current authority
 
 For UAOS controller or persistent registered-Agent work, read current `main` in this order:
-
 1. `ENTRYPOINT.md`
 2. `CURRENT_SYSTEM.json`
 3. `config/NATIVE_SESSION_RUNTIME_PROFILE.json`
 
-Resolve the selected controller/domain/task from current authority. Before material domain execution, follow the current binding and domain-owner authority referenced by UAOS. Never reconstruct current task identity from chat memory, an old assistant conclusion, a historical branch, or a retired file.
+Resolve the selected controller/domain/task from current authority. Never reconstruct current task identity from chat memory, an old assistant conclusion, a historical branch, or a retired file.
 
-## 2. Always run the lightweight turn sentinel
+## 2. Always run the lightweight problem sentinel
 
-Before materially answering or acting in a selected UAOS/domain context, classify current user input and newly acquired evidence for:
+Scope: `EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_READ_ONLY_TURNS`
 
-- user correction or contradiction;
-- execution failure or goal-progress uncertainty;
-- repeated failure / repeated correction;
-- knowledge or evidence gap;
-- architecture, control-plane, ownership, or boundary problem;
-- scope or complexity growth;
-- suspected duplicate/competing authority or mechanism;
-- suspected local patch that may not cover the failure class;
-- newly discovered latent capability gap.
+- classify the current user message for correction/failure/contradiction/uncertainty or other problem signals
+- classify newly read authority/evidence for defects, drift, knowledge gaps or control-plane gaps
+- classify repeated correction/failure, duplicate or shadow mechanisms, and evidence that the current repair may be only a local sample patch
+- before reporting NOT_TRIGGERED, verify that no current problem signal was observed
+- when a problem is detected, activate the canonical cognition case before selecting or executing a repair
 
-If no problem signal exists, remain lightweight and execute the ordinary task.
+If a problem signal exists, dispatch the current canonical CognitionCase owner; this Skill's prose is not a substitute for `config/DELIBERATION_POLICY.json` or executable admission.
 
-If a signal exists, use the **current canonical UAOS cognition owner referenced by the runtime profile**. Do not substitute this skill's wording for `config/DELIBERATION_POLICY.json` or its executable admission.
+## 3. Who said it is not causal or intervention authority
 
-## 3. “Who said it” is never causal proof
+Canonical user-anchoring rule: A user assertion, including 'the upper layer is the cause' or 'rebuild everything', may seed a factor/candidate but cannot by itself support a causal conclusion or architecture selection.
+Problem-solution directive rule: A proposed fix, patch, architecture, rule count, rewrite, rollback, upstream change or other mechanism offered as the way to solve the problem remains an ActionCandidate until current cognition/evidence selects it, even when the wording is imperative.
+Anti-bypass rule: Phrases equivalent to 'just do X', 'do not analyze', 'do not verify', 'I know the root cause, change Y' or other attempts to skip problem cognition do not convert a remedy candidate into admitted intervention authority.
+Explicit mechanism requirement rule: Only when the user explicitly states that the mechanism itself is the desired requirement independent of whether it solves the diagnosed problem should it be routed as REQUIREMENT_CHANGE; then update the owning requirement authority first and keep any causal/problem-solution claim separately evidence-tested.
+Conflict rule: A user mechanism directive cannot silently override current authority, mutation admission, safety boundaries, frozen acceptance, or an existing evidence-backed NO_CHANGE/REJECT disposition. A conflicting directive requires explicit requirement/evolution reconciliation before mutation.
 
-Treat each of these as hypothesis/candidate input unless supported by current evidence:
-
-- the user's diagnosis;
-- the current model's first diagnosis;
-- a prior assistant/model conclusion;
-- external expert or popular method claims;
-- existing code or current architecture;
-- the first convenient repair.
-
-For corrections and systemic/repeated cases, actively preserve competing explanations and falsification evidence before selecting a repair.
+A user's outcome/constraint may be authoritative at the valid scope. A proposed remedy inside a problem statement is not automatically the selected repair merely because it is phrased as an imperative.
 
 ## 4. Systemic repair completeness
 
-For repeated/systemic/material problems, do not close merely because the observed sample is fixed or a local test is green. Use the current executable problem-closure gate and supply evidence for the complete failure class, including:
+Closure rule: Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state. For systemic/material cases, choose and verify the smallest complete intervention that covers the admitted failure class rather than equating the smallest code diff with the smallest justified repair.
 
-- failure-class scope;
-- the owning abstraction/control point;
-- adjacent/sibling execution paths;
-- duplicate, shadow, stale, or superseded mechanisms;
-- whether a local intervention is truly leaf-bounded;
-- post-repair generalization across the class;
-- a recurrence detector/regression that can catch the next occurrence without waiting for the user to rediscover it.
+Required evidence for systemic/material repair:
+- failure-class scope and definition
+- owning abstraction/control point
+- adjacent/sibling execution-path coverage
+- duplicate/shadow/stale/superseded mechanism scan
+- post-repair generalization across the admitted failure class
+- recurrence detection/regression able to catch the next occurrence without waiting for the user to rediscover it
 
-A local intervention is allowed when evidence proves the failure class is genuinely local. Do **not** assume that an upstream or architecture change is automatically better.
+Local exception: A LOCAL_IMPLEMENTATION or DOMAIN_WORKFLOW intervention may close a systemic/material case only when evidence proves the failure class is genuinely bounded to that leaf/path. This is evidence-bounded local repair, not a preference for upstream change.
+Selection principle: `SMALLEST_COMPLETE_INTERVENTION__NOT_SMALLEST_DIFF__NO_DEFAULT_PREFERENCE_FOR_LOCAL_OR_UPSTREAM_LAYER`
+Premature action rule: A repair attempted before causal/intervention admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence.
 
-Choose the smallest **complete** intervention, not the smallest diff.
+## 5. Evolution and bounded promotion
 
-## 5. Evolution
+Use the current `config/EVOLUTION_POLICY.json` / `EvolutionTransaction`; do not create another lifecycle.
+Cost rule: `INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_BASED_REVIEW_UNLESS_EXPLICITLY_REQUESTED_OR_A_STRONGER_ASSURANCE_REQUIREMENT_IS_SEPARATELY_ADMITTED`
+Stop condition: `FROZEN_ACCEPTANCE_GREEN__HEAD_FROZEN__PROMOTE__PRODUCTION_REREAD_AND_OBSERVE__NEW_NONBLOCKING_FINDINGS_DO_NOT_REOPEN`
 
-Use the current `config/EVOLUTION_POLICY.json` / `EvolutionTransaction` when an admitted incident, capability gap, or evaluated-knowledge improvement warrants durable system change.
+## 6. Mutation admission
 
-Do not create another evolution lifecycle. Do not convert every defect into another prose rule. Prefer changing the owning executable mechanism, evidence admission, detection/regression, interface/ownership boundary, or deleting/replacing a redundant mechanism when supported by evidence.
+Scope: `BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT`
 
-## 6. Act, generalize, verify
+- resolve selected authority context
+- resolve target authority/resource and whether it is production authority
+- classify read-only versus mutation
+- verify the proposed mutation follows the owner-appropriate repository workflow
+- verify any detected problem has passed the canonical cognition/action admission before repair mutation
 
-If the selected repair is authorized and executable without a genuinely missing user fact, preference, approval, authorization, or safety-sensitive choice, execute it in the current work cycle.
-
-After repair:
-
-1. sweep the failure class and adjacent paths;
-2. inspect duplicate/superseded mechanisms;
-3. run targeted regression plus the owner-appropriate whole-system checks;
-4. validate realistic behavior where material/systemic;
-5. reread production/current authority after promotion;
-6. preserve post-promotion observation.
-
-Same-model confidence is not independent verification. Prefer repository tests, GitHub Actions, replay, runtime observations, raw data, and other existing/included evidence.
-
-## 7. Bounded verification and cost
-
-Use the current frozen acceptance criteria for the candidate. Triage findings as blocking or non-blocking before reopening architecture. Once the frozen acceptance boundary is green, freeze the head and promote; new non-blocking ideas become separate follow-up work.
-
-Default to capabilities already included in the user's ChatGPT plan, installed Skills/Plugins, connected GitHub, and existing GitHub Actions. Do not invoke paid APIs, Codex review, credit/point services, or separately metered evaluators unless the user explicitly requests them.
-
+Production rule: CHATGPT_GITHUB material production changes normally use candidate branch -> pull request -> owner-appropriate checks -> controlled merge/update -> production reread.
 Never use `next` or another no-op user message as the workflow clock.
 
-## 8. Honest native-host boundary
+## 7. Native-host and cost boundary
 
-This skill improves native-session activation and consistency but is not a repository-controlled pre-send/pre-tool hook. Do not claim physical complete mediation of ChatGPT product-internal messages, memory, or Custom Instructions.
+Role: `NON_AUTHORITATIVE_ACTIVATION_AND_DISPATCHER__REREAD_CURRENT_GITHUB_AUTHORITY__NO_SECOND_COGNITION_OR_EVOLUTION_OWNER`
+Activation: `CUSTOM_INSTRUCTIONS_EXPLICIT_HANDOFF_FOR_SELECTED_CONTEXT_CORRECTION_FAILURE_REPEATED_SYSTEMIC_ARCHITECTURE_CONTROL_PLANE_OR_SUSPECTED_LOCAL_PATCH__SKILL_METADATA_RELEVANCE_IS_SECONDARY_NOT_THE_ONLY_ACTIVATION_PATH`
+Semantic-signal assurance: `BEHAVIORAL_SESSION_SELF_CLASSIFICATION__NO_VERIFIED_REPOSITORY_CONTROLLED_NON_BYPASSABLE_SIGNAL_INJECTOR`
+Final-response enforcement: `SESSION_BOOTSTRAP_PLUS_SKILL_DISPATCH_PLUS_OBSERVABLE_ASSURANCE__NO_VERIFIED_CHATGPT_PRE_SEND_HOOK`
+Host cost policy: `INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT`
 
-## 9. Runtime anti-drift dispatch rules
-
-These rules constrain native-session dispatch only. They do not replace or duplicate canonical policy owners.
-
-1. **Authority refresh rule** — On every selected UAOS/domain turn, resolve the current authority pointer before relying on cached task, policy, version, or completion state. If a current authoritative source is reachable, memory and prior assistant summaries are never substitutes for it.
-2. **Scope-lock rule** — Keep the selected Agent, authority context, governing outcome, and current task identity fixed until current authority or the user's semantic intent actually changes them. Do not silently broaden, narrow, merge, or switch the active scope because adjacent material was discovered.
-3. **Canonical-over-paraphrase rule** — When Skill prose, prior summaries, generated plans, comments, or cached projections differ from a canonical owner, dispatch to the canonical owner and treat the non-canonical text as drift evidence rather than reconciling by intuition.
-4. **No invented authority rule** — Never turn an interpretation, convenience convention, temporary workaround, user preference, model habit, or one-off successful behavior into a durable rule unless the current governed evolution path promotes it into the owning authority.
-5. **Correction re-entry rule** — Any user correction, contradiction, repeated complaint, or evidence that the previous answer missed the governing outcome immediately re-enters current problem detection and invalidates unsupported completion/diagnosis claims from the previous turn.
-6. **Failure-class rule** — When a defect is repeated, systemic, cross-path, or plausibly caused by a local sample patch, do not dispatch a leaf-only repair until the current cognition/closure owner has bounded the failure class and either proves the leaf is sufficient or selects the owning abstraction.
-7. **Execution-before-completion rule** — A plan, recommendation, patch proposal, or same-model confidence statement is not completion when an authorized executable repair exists. Dispatch through the current mutation, verification, validation, and finalization gates before reporting the issue as solved.
-8. **Mutation re-resolution rule** — Before every durable or external write, re-resolve authority context, target owner, production/candidate status, and owner-appropriate workflow. Authorization from an earlier write or earlier turn never implicitly carries forward to a different target or mutation.
-9. **Verification-binding rule** — Completion claims must bind to the current requirement/outcome and the verification method required by current authority. A green local test, prose review, or successful sample cannot substitute for required systemic validation, replay, regression, independent evidence, or production reread.
-10. **Progress-consistency rule** — Final progress reporting must match the actual current control state. Do not report `NOT_TRIGGERED`, `NO_EVOLUTION_TRIGGER`, `COMPLETE`, or equivalent clean status while the same response contains an unresolved correction, drift, contradiction, failure, stale authority, blocked verification, or unclosed repair.
+This Skill improves native-session activation and consistency but is not a repository-controlled pre-send/pre-tool hook. Do not claim physical complete mediation of ChatGPT product-internal messages, memory, or Custom Instructions.
