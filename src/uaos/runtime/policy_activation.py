@@ -14,6 +14,8 @@ class PolicyActivationState(StrEnum):
 
 
 REF_CONDITIONAL_POLICY_STATUS = "REF_CONDITIONAL__RESOLVE_EFFECTIVE_STATUS"
+UAOS_PRODUCTION_REPOSITORY = "D1traverser-debug/universal-agent-os"
+UAOS_PRODUCTION_REF = "refs/heads/main"
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,9 +28,15 @@ class ProductionRefIdentity:
             raise PolicyActivationViolation("production repository identity is required")
         if not isinstance(self.ref, str) or not self.ref.strip():
             raise PolicyActivationViolation("production ref identity is required")
-        if not self.ref.strip().startswith("refs/heads/"):
+        repository = self.repository.strip()
+        ref = self.ref.strip()
+        if not ref.startswith("refs/heads/") or ref == "refs/heads/":
             raise PolicyActivationViolation(
-                "production ref identity must be a fully qualified branch ref"
+                "production ref identity must be a fully qualified non-empty branch ref"
+            )
+        if repository != UAOS_PRODUCTION_REPOSITORY or ref != UAOS_PRODUCTION_REF:
+            raise PolicyActivationViolation(
+                "production identity does not match the pinned UAOS production authority"
             )
 
 
@@ -45,12 +53,12 @@ def resolve_ref_conditioned_policy_activation(
     current_ref: str,
     production_identity: ProductionRefIdentity,
 ) -> PolicyActivationState:
-    """Resolve one authorized policy's effective state from trusted repository/ref identity.
+    """Resolve effective state against the pinned trusted UAOS production authority.
 
-    Activation requires the exact fully qualified production branch ref. Short names such
-    as ``main`` are deliberately non-active because they do not identify ref type and can
-    be ambiguous with a tag of the same name. The host/VCS boundary must therefore supply
-    a trusted ``refs/heads/...`` identity; model/request text is never sufficient.
+    Activation requires the exact repository plus fully qualified branch identity
+    ``D1traverser-debug/universal-agent-os`` + ``refs/heads/main``. Short refs, tags,
+    pull refs, alternate repositories/branches, and malformed or misloaded production
+    identities fail closed. Model/request text is never sufficient identity evidence.
     """
 
     if declared_status != REF_CONDITIONAL_POLICY_STATUS:
@@ -60,14 +68,22 @@ def resolve_ref_conditioned_policy_activation(
     if not isinstance(current_repository, str) or not current_repository.strip():
         raise PolicyActivationViolation("trusted current repository identity is required")
 
+    # Revalidate at the decision point even though ProductionRefIdentity validates on
+    # construction; callers may deserialize/reconstruct objects through unusual paths.
+    if (
+        production_identity.repository.strip() != UAOS_PRODUCTION_REPOSITORY
+        or production_identity.ref.strip() != UAOS_PRODUCTION_REF
+    ):
+        raise PolicyActivationViolation(
+            "production identity does not match the pinned UAOS production authority"
+        )
+
     current_repo = current_repository.strip()
     trusted_current_ref = _require_current_ref(current_ref)
-    production_ref = production_identity.ref.strip()
 
     if (
-        current_repo == production_identity.repository.strip()
-        and trusted_current_ref.startswith("refs/heads/")
-        and trusted_current_ref == production_ref
+        current_repo == UAOS_PRODUCTION_REPOSITORY
+        and trusted_current_ref == UAOS_PRODUCTION_REF
     ):
         return PolicyActivationState.ACTIVE_EXECUTION_POLICY
     return PolicyActivationState.AUTHORIZED_NOT_PRODUCTION_ACTIVE
