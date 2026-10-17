@@ -68,7 +68,21 @@ class MutationContract:
     operation: CrudOperation | None = None
 
     def __post_init__(self) -> None:
-        if self.persistence is MutationPersistence.EPHEMERAL:
+        try:
+            persistence = (
+                self.persistence
+                if isinstance(self.persistence, MutationPersistence)
+                else MutationPersistence(self.persistence)
+            )
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"invalid mutation persistence: {self.persistence!r}") from exc
+        object.__setattr__(self, "persistence", persistence)
+        if self.operation is not None and not isinstance(self.operation, CrudOperation):
+            try:
+                object.__setattr__(self, "operation", CrudOperation(self.operation))
+            except (TypeError, ValueError) as exc:
+                raise ValueError(f"invalid CRUD operation: {self.operation!r}") from exc
+        if persistence is MutationPersistence.EPHEMERAL:
             if self.operation is not None:
                 raise ValueError("ephemeral mutation contract cannot declare persistent operation")
             return
@@ -82,7 +96,12 @@ _RETIRED_LIFECYCLES = {
     AssetLifecycle.ARCHIVED,
     AssetLifecycle.DELETE_CANDIDATE,
 }
-_RETIRED_ALLOWED_OPS = {CrudOperation.READ, CrudOperation.ARCHIVE, CrudOperation.DELETE}
+_RETIRED_ALLOWED_OPS = {
+    CrudOperation.READ,
+    CrudOperation.ARCHIVE,
+    CrudOperation.DELETE,
+    CrudOperation.MIGRATE,
+}
 _NON_AUTHORITY_ROLES = {
     AssetRole.BOOTSTRAP,
     AssetRole.REFERENCE,
@@ -189,7 +208,6 @@ class PersistentAssetGate:
         if not descriptor.allowed_operations:
             raise PersistentAssetViolation("persistent asset requires allowed_operations")
         if CrudOperation.READ not in descriptor.allowed_operations:
-            # Every durable record must remain inspectable for reconciliation/audit.
             raise PersistentAssetViolation("persistent asset must allow READ for reconciliation")
 
         if descriptor.role is AssetRole.AUTHORITY:
@@ -239,6 +257,15 @@ class PersistentAssetGate:
             raise PersistentAssetViolation(
                 f"retired asset lifecycle={descriptor.lifecycle.value} cannot perform {operation.value}"
             )
+        if operation is CrudOperation.MIGRATE:
+            if descriptor.lifecycle not in _RETIRED_LIFECYCLES:
+                raise PersistentAssetViolation(
+                    "MIGRATE is closure-only and requires a retired source lifecycle"
+                )
+            if not _nonempty(descriptor.migration_target_ref):
+                raise PersistentAssetViolation(
+                    "MIGRATE closure source requires migration_target_ref"
+                )
 
         if descriptor.role in _NON_AUTHORITY_ROLES and descriptor.lifecycle is AssetLifecycle.CURRENT:
             raise PersistentAssetViolation("non-authority asset cannot become current business authority")
