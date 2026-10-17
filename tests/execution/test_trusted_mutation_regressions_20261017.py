@@ -49,12 +49,20 @@ def _asset(resource_ref: str, operations: frozenset[CrudOperation]):
     )
 
 
+def _canonical_local_target(registry: CapabilityRegistry, target: str) -> str:
+    registered = registry.get("local.workspace")
+    assert not hasattr(registered, "canonicalize_target")
+    return registry.canonicalize_trusted_target(
+        "local.workspace",
+        registered.registration_generation,
+        target,
+    )
+
+
 def _coordinator_for_local(tmp_path: Path, target: str, operations: frozenset[CrudOperation]):
     registry = CapabilityRegistry()
     register_local_workspace_capability(registry, tmp_path)
-    registered = registry.get("local.workspace")
-    assert registered.canonicalize_target is not None
-    descriptor = _asset(registered.canonicalize_target(target), operations)
+    descriptor = _asset(_canonical_local_target(registry, target), operations)
     coordinator = ActionCoordinator(
         registry,
         authority_context="UAOS",
@@ -69,9 +77,9 @@ def test_local_create_and_update_are_distinct_trusted_actions(tmp_path: Path):
     registered = registry.get("local.workspace")
     assert registered.mutation_contracts["local.create_text"].operation is CrudOperation.CREATE
     assert registered.mutation_contracts["local.update_text"].operation is CrudOperation.UPDATE
-    assert registered.canonicalize_target is not None
+    assert not hasattr(registered, "canonicalize_target")
 
-    canonical = registered.canonicalize_target("policy.txt")
+    canonical = _canonical_local_target(registry, "policy.txt")
     update_only = _asset(canonical, frozenset({CrudOperation.READ, CrudOperation.UPDATE}))
     update_coordinator = ActionCoordinator(
         registry,
@@ -156,9 +164,7 @@ def test_local_workspace_refuses_symlink_parent_escape(tmp_path: Path):
 
     registry = CapabilityRegistry()
     register_local_workspace_capability(registry, tmp_path)
-    registered = registry.get("local.workspace")
-    assert registered.canonicalize_target is not None
-    canonical = registered.canonicalize_target("redirect/escape.txt")
+    canonical = _canonical_local_target(registry, "redirect/escape.txt")
     descriptor = _asset(canonical, frozenset({CrudOperation.READ, CrudOperation.CREATE}))
     coordinator = ActionCoordinator(
         registry,
