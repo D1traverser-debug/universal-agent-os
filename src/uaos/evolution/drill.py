@@ -153,7 +153,7 @@ def run_self_change_drill(
 
     promote = ExecutionRequest(
         action_id=f"action:promote:{run_id}",
-        action_name="local.write_text",
+        action_name="local.update_text",
         target="policy.txt",
         payload={
             "content": candidate,
@@ -196,7 +196,7 @@ def run_self_change_drill(
 
     rollback = ExecutionRequest(
         action_id=f"action:rollback:{run_id}",
-        action_name="local.write_text",
+        action_name="local.update_text",
         target="policy.txt",
         payload={
             "content": baseline,
