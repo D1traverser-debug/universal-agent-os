@@ -1,0 +1,9 @@
+{
+  "schema_version":"1.0",
+  "authority":"UAOS",
+  "observed_at":"2026-10-17T21:00:00+08:00",
+  "kind":"PROCESS_FAILURE",
+  "description":"While persisting the failed fresh-chat observation, the GitHub create_file call omitted the branch argument and wrote that observation directly to main. No claim is made that this was the governed candidate/PR path.",
+  "failure_class":"RAW_GITHUB_CONNECTOR_WRITE_CAN_ESCAPE_MODEL_LEVEL_CANDIDATE_WORKFLOW_ON_CALLER_PARAMETER_ERROR",
+  "disposition":"PRESERVE_AS_EVIDENCE__REPAIR_IN_ISOLATED_CANDIDATE__DO_NOT_ERASE_WITH_SECOND_DIRECT_MAIN_WRITE"
+}
