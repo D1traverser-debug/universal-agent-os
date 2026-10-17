@@ -49,6 +49,20 @@ def _asset(resource_ref: str, operations: frozenset[CrudOperation]):
     )
 
 
+def _coordinator_for_local(tmp_path: Path, target: str, operations: frozenset[CrudOperation]):
+    registry = CapabilityRegistry()
+    register_local_workspace_capability(registry, tmp_path)
+    registered = registry.get("local.workspace")
+    assert registered.canonicalize_target is not None
+    descriptor = _asset(registered.canonicalize_target(target), operations)
+    coordinator = ActionCoordinator(
+        registry,
+        authority_context="UAOS",
+        persistent_asset_catalog=PersistentAssetCatalog((descriptor,)),
+    )
+    return registry, coordinator
+
+
 def test_local_create_and_update_are_distinct_trusted_actions(tmp_path: Path):
     registry = CapabilityRegistry()
     register_local_workspace_capability(registry, tmp_path)
@@ -85,6 +99,7 @@ def test_local_create_and_update_are_distinct_trusted_actions(tmp_path: Path):
     )
     created = create_coordinator.execute(create_request)
     assert created.outcome.disposition is ExecutionDisposition.CONFIRMED
+    assert created.outcome.evidence["commit_semantics"] == "ATOMIC_CREATE_NO_REPLACE"
     assert (tmp_path / "policy.txt").read_text(encoding="utf-8") == "v1"
 
     update_request = ExecutionRequest(
@@ -101,4 +116,62 @@ def test_local_create_and_update_are_distinct_trusted_actions(tmp_path: Path):
 
     updated = update_coordinator.execute(update_request)
     assert updated.outcome.disposition is ExecutionDisposition.CONFIRMED
+    assert updated.outcome.evidence["commit_semantics"] == "BOUND_PARENT_ATOMIC_REPLACE"
     assert (tmp_path / "policy.txt").read_text(encoding="utf-8") == "v2"
+
+
+def test_local_create_never_overwrites_existing_target(tmp_path: Path):
+    target = tmp_path / "existing.txt"
+    target.write_text("original", encoding="utf-8")
+    _, coordinator = _coordinator_for_local(
+        tmp_path,
+        "existing.txt",
+        frozenset({CrudOperation.READ, CrudOperation.CREATE}),
+    )
+    result = coordinator.execute(
+        ExecutionRequest(
+            "create-existing",
+            "local.create_text",
+            "existing.txt",
+            {"content": "attacker"},
+            required_permissions=("workspace:write",),
+            target_authority="UAOS",
+        )
+    )
+    assert result.outcome.disposition is ExecutionDisposition.FAILED
+    assert "already exists" in (result.outcome.error or "")
+    assert target.read_text(encoding="utf-8") == "original"
+
+
+def test_local_workspace_refuses_symlink_parent_escape(tmp_path: Path):
+    outside = tmp_path.parent / f"{tmp_path.name}-outside"
+    outside.mkdir(exist_ok=True)
+    link = tmp_path / "redirect"
+    try:
+        link.symlink_to(outside, target_is_directory=True)
+    except (OSError, NotImplementedError):
+        pytest.skip("symlink creation unavailable on this platform")
+
+    registry = CapabilityRegistry()
+    register_local_workspace_capability(registry, tmp_path)
+    registered = registry.get("local.workspace")
+    assert registered.canonicalize_target is not None
+    canonical = registered.canonicalize_target("redirect/escape.txt")
+    descriptor = _asset(canonical, frozenset({CrudOperation.READ, CrudOperation.CREATE}))
+    coordinator = ActionCoordinator(
+        registry,
+        authority_context="UAOS",
+        persistent_asset_catalog=PersistentAssetCatalog((descriptor,)),
+    )
+    result = coordinator.execute(
+        ExecutionRequest(
+            "escape",
+            "local.create_text",
+            "redirect/escape.txt",
+            {"content": "blocked"},
+            required_permissions=("workspace:write",),
+            target_authority="UAOS",
+        )
+    )
+    assert result.outcome.disposition is ExecutionDisposition.FAILED
+    assert not (outside / "escape.txt").exists()
