@@ -44,3 +44,13 @@ def test_native_profile_has_context_budget_and_free_first_cost_policy():
     assert len(path.read_text(encoding="utf-8")) <= 12000
     profile = _json("config/NATIVE_SESSION_RUNTIME_PROFILE.json")
     assert profile["assurance"]["cost"] == "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
+
+
+def test_native_host_and_fresh_chat_bootstrap_prefer_compiled_profile():
+    host = _json("config/HOST_PROFILES.json")["profiles"]["CHATGPT_GITHUB"]
+    current = _json("CURRENT_SYSTEM.json")
+    assert host["native_session_runtime_profile"] == "config/NATIVE_SESSION_RUNTIME_PROFILE.json"
+    assert "COMPILED_EFFECTIVE_RUNTIME_PROJECTION" in host["native_session_runtime_profile_role"]
+    assert "NATIVE_SESSION_RUNTIME_PROFILE.json" in current["fresh_chat_bootstrap"]["native_session_runtime_profile"]
+    assert "NON_AUTHORITATIVE" in current["fresh_chat_bootstrap"]["native_session_runtime_profile"]
+    assert "native_session_runtime_profile_builder" in current["runtime"]
