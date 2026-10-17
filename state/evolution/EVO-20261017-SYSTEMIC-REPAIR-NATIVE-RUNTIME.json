@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.0",
+  "schema_version":"1.1",
   "evolution_id":"EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME",
   "authority":"UAOS",
-  "status":"CANDIDATE_VALIDATION_ACTIVE",
-  "updated_at":"2026-10-17T18:20:00+08:00",
+  "status":"PROMOTED__NATIVE_OBSERVATION_PENDING_ACCOUNT_ACTIVATION",
+  "updated_at":"2026-10-17T19:56:00+08:00",
   "origin_kind":"INCIDENT",
   "issue_refs":["#77","#72","#63"],
   "failure_classes":[
@@ -15,13 +15,13 @@
   "observations":[
     "Current canonical cognition already states that user/model/expert framing is evidence rather than causal authority, so duplicating that algorithm in Custom Instructions or a Skill would create a shadow authority rather than fix the executable closure gap.",
     "Native ChatGPT has no verified repository-controlled pre-send/pre-tool hook; activation can be improved behaviorally through a compact Custom Instructions handoff plus an installable non-authoritative Skill dispatcher, but physical complete mediation cannot be claimed.",
-    "Before this candidate, ProblemClosureSignals could verify a selected repair without explicit failure-class scope, owning-abstraction, adjacent-path, duplicate/superseded mechanism, generalization or recurrence evidence.",
-    "Before this candidate, ChangeProposal/EvaluationResult had required scenarios and acceptance checks but did not bind frozen required acceptance checks, verification-round budget, paid-review budget or blocking/non-blocking finding disposition into assess_promotion."
+    "Before this intervention, ProblemClosureSignals could verify a selected repair without explicit failure-class scope, owning-abstraction, adjacent-path, duplicate/superseded mechanism, generalization or recurrence evidence.",
+    "Before this intervention, ChangeProposal/EvaluationResult had required scenarios and acceptance checks but did not bind frozen required acceptance checks, verification-round budget, paid-review budget or blocking/non-blocking finding disposition into assess_promotion."
   ],
   "competing_candidates":[
     {"id":"A_SKILL_ONLY","disposition":"REJECTED_INSUFFICIENT","reason":"Improves native activation but leaves controlled runtime able to close a systemic case on a narrow patch."},
     {"id":"B_CORE_ONLY","disposition":"REJECTED_INSUFFICIENT","reason":"Strengthens controlled runtime but does not reduce native ChatGPT policy-activation/discovery gap."},
-    {"id":"C_DUAL_CONVERGENCE","disposition":"SELECTED_CANDIDATE","reason":"Use a non-authoritative Skill plus compact Custom Instructions only for activation; keep cognition/closure/evolution owned by canonical repository mechanisms; extend existing closure and promotion gates mechanically."},
+    {"id":"C_DUAL_CONVERGENCE","disposition":"PROMOTED","reason":"Use a non-authoritative Skill plus compact Custom Instructions only for activation; keep cognition/closure/evolution owned by canonical repository mechanisms; extend existing closure and promotion gates mechanically."},
     {"id":"D_CONTROLLED_PAID_RUNTIME","disposition":"DEFERRED_STRONGER_ASSURANCE","reason":"Could provide stronger physical enforcement but conflicts with the user's included/free-first baseline and is unnecessary for the admitted current outcome."}
   ],
   "selected_intervention":{
@@ -39,7 +39,7 @@
       "Custom Instructions remain bootstrap-only and under the portability budget",
       "bounded promotion rejects missing frozen acceptance checks, blocking findings, round-budget excess and paid-review-budget excess while preserving non-blocking findings as follow-up",
       "candidate repo CI and live-integration pass on one frozen head",
-      "production reread and production CI/live observation pass after promotion"
+      "production reread and production CI observation pass after promotion"
     ],
     "required_acceptance_checks":[
       "SYSTEMIC_FAILURE_CLASS_COMPLETENESS",
@@ -73,10 +73,25 @@
   "falsification_history":[
     "Initial controller-maintenance state used invalid TaskStatus IN_PROGRESS; existing continuity tests rejected it. The implementation changed to the existing RUNNING status instead of weakening the enum/test.",
     "Initial common-behavior wording broke existing compatibility anchors; the repair preserved the original CognitionCase/validation wording while adding systemic-completeness semantics instead of changing tests to fit the candidate.",
-    "Initial Custom Instructions revision removed established bootstrap wording and exceeded the exact pointer compatibility expectations; the candidate restored those invariants while keeping the new Skill handoff."
+    "Initial Custom Instructions revision removed established bootstrap wording and compatibility anchors; the candidate restored those invariants while keeping the new Skill handoff.",
+    "Final exact candidate head 05f2bac1735cc48975faf471fc5e02a7f1e4d683 passed CI #501 and live-integration #291; no paid/Codex review was used.",
+    "Production commit ea3ae3a119b943030db94566781157668b906df6 passed push CI #502 and production reread confirmed the promoted assets on main."
   ],
   "candidate_branch":"architecture/systemic-repair-runtime-skill-20261017",
-  "promotion":{"pull_request":78,"head_frozen":false,"candidate_ci":"PENDING_FINAL_HEAD","candidate_live_integration":"PENDING_FINAL_HEAD","production_commit":null,"production_ci":null,"production_reread":"PENDING"},
-  "remaining_manual_boundary":"After production promotion, the repository cannot physically install the ChatGPT Skill or replace account Custom Instructions. Those two account-UI actions remain user-owned and will be provided only after production verification.",
+  "promotion":{
+    "pull_request":78,
+    "head_frozen":true,
+    "candidate_head":"05f2bac1735cc48975faf471fc5e02a7f1e4d683",
+    "candidate_ci":{"run_number":501,"conclusion":"success"},
+    "candidate_live_integration":{"run_number":291,"conclusion":"success"},
+    "production_commit":"ea3ae3a119b943030db94566781157668b906df6",
+    "production_ci":{"run_number":502,"conclusion":"success"},
+    "production_reread":"PASS"
+  },
+  "post_promotion_observation":{
+    "repository_runtime":"PASS__production CI and reread green",
+    "native_chatgpt":"PENDING_USER_ACCOUNT_ACTIVATION__requires installed uaos-controller-runtime Skill plus updated Custom Instructions before real-use observation is meaningful"
+  },
+  "remaining_manual_boundary":"The repository cannot physically install the ChatGPT Skill or replace account Custom Instructions. Those account-UI actions remain user-owned. After activation, real native ChatGPT use provides the remaining post-promotion observation; no additional paid runtime is required.",
   "assurance_boundary":"Native ChatGPT activation remains behavioral. This evolution does not claim a repository-controlled pre-send/pre-tool hook or physical mediation of product-internal chat, memory or Custom Instructions."
 }

@@ -1,9 +1,9 @@
 {
-  "schema_version":"2.10",
+  "schema_version":"2.11",
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-17T18:22:00+08:00",
+  "updated_at":"2026-10-17T19:59:00+08:00",
   "controller_tasks":[
     {
       "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
@@ -13,8 +13,8 @@
       "status":"RUNNING",
       "resume_eligible":true,
       "default_resume":true,
-      "semantic_summary":"System-wide maintenance for stable native cognition/evolution activation, mechanical systemic-repair completeness/generalization, and bounded included/free-first promotion convergence. User/model/expert framing remains hypothesis input rather than authority; local patches may close systemic cases only when evidence proves the failure class is truly leaf-bounded.",
-      "current_stage":"CANDIDATE_IMPLEMENTED__FINAL_FROZEN_ACCEPTANCE_PENDING_CI_LIVE",
+      "semantic_summary":"Production-verified systemic-repair/native-activation evolution. Native ChatGPT uses a compact bootstrap pointer plus a non-authoritative uaos-controller-runtime Skill to enter current GitHub cognition/evolution/closure; systemic repairs require failure-class/generalization/recurrence evidence; promotion uses frozen bounded included/free-first verification. Repository production is green; account UI Skill installation and Custom Instructions replacement remain user-owned, followed by native post-promotion observation.",
+      "current_stage":"PRODUCTION_VERIFIED__ACCOUNT_UI_ACTIVATION_AND_NATIVE_OBSERVATION_PENDING",
       "state_ref":"state/tasks/uaos-systemic-repair-runtime-skill-20261017.json"
     },
     {
