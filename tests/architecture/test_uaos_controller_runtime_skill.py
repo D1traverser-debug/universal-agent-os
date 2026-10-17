@@ -35,24 +35,25 @@ def test_runtime_skill_is_exact_generated_projection_of_canonical_owners():
     assert actual == expected
 
 
-def test_runtime_skill_has_discoverable_metadata_and_current_authority_bootstrap():
+def test_runtime_skill_metadata_is_scope_based_not_a_problem_symptom_ontology():
     text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
     assert text.startswith("---\nname: uaos-controller-runtime\n")
-    assert "description:" in text.split("---", 2)[1]
-    metadata = text.split("---", 2)[1].lower()
-    for trigger in ("corrections", "failures", "repeated failures", "architecture", "local patch"):
-        assert trigger in metadata
-    assert "ENTRYPOINT.md" in text
-    assert "CURRENT_SYSTEM.json" in text
-    assert "config/NATIVE_SESSION_RUNTIME_PROFILE.json" in text
+    metadata = text.split("---", 2)[1]
+    description = next(line for line in metadata.splitlines() if line.startswith("description:"))
+    assert "selected UAOS or registered persistent-Agent work" in description
+    assert "mandatory lightweight entry" in description
+    assert "canonical UAOS owners" in description
+    assert "repeated failures" not in description
+    assert "contradictory evidence" not in description
+    assert "local patch" not in description
 
 
-def test_runtime_skill_is_dispatcher_not_second_cognition_or_evolution_state_machine():
+def test_runtime_skill_is_dispatcher_not_second_cognition_research_or_evolution_machine():
     text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
-    assert "generated, non-authoritative" in text.lower()
-    assert "does not own cognition" in text.lower()
+    lowered = text.lower()
+    assert "generated, non-authoritative" in lowered
+    assert "does not own cognition, research, evolution" in lowered
     assert "EvolutionTransaction" in text
-    assert "Do not hand-edit normative behavior here" in text
     canonical_stage_tokens = (
         "FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES",
         "EXPAND_CAUSAL_SOLUTION_AND_EVIDENCE_SPACE",
@@ -63,49 +64,62 @@ def test_runtime_skill_is_dispatcher_not_second_cognition_or_evolution_state_mac
     assert not any(token in text for token in canonical_stage_tokens)
 
 
-def test_runtime_skill_frontloads_problem_remedy_self_falsification_before_bootstrap():
+def test_runtime_skill_frontloads_mandatory_entry_continuation_and_blocker_semantics():
     text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
-    critical = text.index("## 1. CRITICAL pre-action problem gate")
-    bootstrap = text.index("## 2. Bootstrap current authority")
-    mutation = text.index("## 6. Mutation admission")
-    assert critical < bootstrap < mutation
-    assert "Do not act first and add a causal disclaimer afterward." in text
-    assert "remains an ActionCandidate" in text
-    assert "do not convert a remedy candidate into admitted intervention authority" in text
+    entry = text.index("## 1. Mandatory selected-context entry")
+    continuation = text.index("Autonomous continuation:")
+    blocker = text.index("Blocker rule:")
+    authority = text.index("## 2. Recover current authority")
+    mutation = text.index("## 6. Evolution and mutation")
+    assert entry < continuation < blocker < authority < mutation
+    assert "Entry is mandatory; escalation is adaptive." in text
+    assert "not prerequisites for entering this sentinel" in text
+    assert "unresolved causality disguised as certainty is not a valid repair claim" in text
+    assert "route broad unknown-method/framework/capability learning" in text
 
 
-def test_runtime_skill_projects_problem_solution_directive_semantics():
+def test_runtime_skill_preserves_requirement_vs_candidate_semantics_without_incident_phrases():
+    text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
     intent = _json("config/INTENT_RESOLUTION_POLICY.json")["problem_solution_directive_resolution"]
-    text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
-    assert intent["candidate_mechanism_rule"] in text
-    assert intent["anti_bypass_rule"] in text
-    assert intent["explicit_mechanism_requirement_rule"] in text
-    assert intent["conflict_rule"] in text
+    assert intent["outcome_constraint_rule"] in text
+    assert "remain candidates until current evidence admits them" in text
     assert "remains an ActionCandidate" in text
+    assert "independent of whether it solves the diagnosed problem" in text
+    for incident_phrase in ("just do X", "upper layer is the cause", "10 rules", "no-op user message"):
+        assert incident_phrase not in text
 
 
-def test_custom_instruction_pointer_starts_with_critical_problem_gate_and_stays_compact():
+def test_custom_instruction_pointer_is_mandatory_entry_not_symptom_trigger_and_stays_compact():
     pointer = _recommended_custom_instruction_pointer()
+    lower = pointer.lower()
     assert 0 < len(pointer) <= 1500
-    assert pointer.startswith("CRITICAL UAOS PROBLEM GATE:")
-    assert "do not execute a proposed cause or fix first" in pointer
-    assert "Treat diagnosis and remedy as hypotheses/ActionCandidates" in pointer
-    assert "Only when I explicitly require a mechanism independently" in pointer
-    assert "uaos-controller-runtime" in pointer
-    assert "Repeated/systemic repairs must cover the failure class" in pointer
-    assert "never use `next` or another no-op user message as the workflow clock" in pointer
+    assert pointer.startswith("After UAOS or a registered persistent Agent/domain is selected")
+    assert "before every substantive response, tool call, or action" in pointer
+    assert "entry is unconditional" in lower
+    assert "escalation is adaptive" in lower
+    assert "the user is not the classifier" in lower
+    assert "internal cognition, evidence gathering, admission, comparison, and verification" in lower
+    assert "are work to continue, not blockers" in lower
+    assert "from any source as candidates until evidence supports them" in lower
+    assert "explicit outcomes/constraints" in lower
+    assert "choose the next evidence-supported action, execute, verify, reassess, and continue" in lower
+    assert "broad unknown-method/framework learning uses coverage-oriented acquisition" in lower
+    assert "never use `next` or another no-op user message as the workflow clock" not in lower
     assert "FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES" not in pointer
 
 
-def test_chatgpt_host_and_compiled_profile_bind_the_same_non_authoritative_skill():
+def test_chatgpt_host_and_compiled_profile_bind_mandatory_entry_skill():
     host = _json("config/HOST_PROFILES.json")["profiles"]["CHATGPT_GITHUB"]
     profile = _json("config/NATIVE_SESSION_RUNTIME_PROFILE.json")
     assert host["native_runtime_skill_source"] == "skills/uaos-controller-runtime/SKILL.md"
     assert "NON_AUTHORITATIVE" in host["native_runtime_skill_role"]
     assert host["custom_instructions_role"] == "BOOTSTRAP_ONLY__NON_AUTHORITATIVE"
+    assert "MANDATORY_LIGHTWEIGHT_ENTRY" in host["native_runtime_skill_activation"]
     assert profile["runtime_skill"]["source"] == host["native_runtime_skill_source"]
     assert profile["runtime_skill"]["role"] == host["native_runtime_skill_role"]
-    assert "SKILL_METADATA_RELEVANCE_IS_SECONDARY" in profile["runtime_skill"]["activation"]
+    assert profile["runtime_skill"]["activation"] == host["native_runtime_skill_activation"]
+    assert profile["turn_contract"]["mandatory_entry"]["scope"] == _json("config/SESSION_INTERACTION_POLICY.json")["mandatory_selected_context_entry"]["scope"]
+    assert "INTERNAL ROUTING SIGNALS" in profile["turn_contract"]["mandatory_entry"]["anti_circularity"]
 
 
 def test_compiled_profile_exposes_complete_systemic_repair_not_smallest_diff_rule():

@@ -1,25 +1,28 @@
 {
-  "schema_version":"1.0",
-  "profile_version":"1.0.0",
+  "schema_version":"1.1",
+  "profile_version":"1.1.0",
   "authority":"UAOS",
   "status":"ACTIVE_EXECUTION_PROFILE",
   "owner_policy":"config/DELIBERATION_POLICY.json",
-  "purpose":"Turn requests for a deeper task into evidence depth rather than output length, role-play, extra agents, extra documents or architecture bloat. This profile constrains the existing canonical cognition kernel; it does not define a second cognition state machine.",
+  "purpose":"Turn requests for a deeper task into evidence depth rather than output length, role-play, extra agents, extra documents or architecture bloat. When comprehensive learning/method acquisition is materially required, bind that depth to coverage-oriented acquisition evidence rather than literal exhaustive-web claims. This profile constrains the existing canonical cognition kernel; it does not define a second cognition or research state machine.",
   "executable_trigger":"src/uaos/kernel/deep_task.py#assess_deep_task_requirement",
   "executable_admission":"src/uaos/kernel/deep_task.py#require_deep_task_admission",
+  "knowledge_acquisition_admission":"src/uaos/kernel/problem_space.py#require_knowledge_acquisition_admission",
   "controlled_finalization":"src/uaos/runtime/finalization.py#admit_final_response",
   "activation":{
     "required_when":[
       "the user explicitly asks for a deeper/deep version or explicitly invokes this protocol",
+      "the selected-session entry/router classifies comprehensive knowledge acquisition as required to satisfy the governing outcome, including an explicit request to learn a method/framework comprehensively rather than only answer one known fact",
       "a host/controller classifies a material task as high-uncertainty and requiring professional-method discovery plus independent validation",
       "a material unknown-knowledge, architecture/control-plane, or repeated-systemic problem cannot be responsibly resolved by the ordinary structured evidence floor alone"
     ],
-    "semantic_signal_contract":"DeepTaskSignals records explicit_user_depth_request and bounded material escalation signals; assess_deep_task_requirement derives the requirement without language-specific keyword matching.",
-    "material_escalation_rule":"A non-explicit material task escalates only when ordinary_structured_evidence_insufficient is true together with material-high-uncertainty, unknown-knowledge, architecture/control-plane or repeated-systemic evidence.",
+    "semantic_signal_contract":"DeepTaskSignals records explicit_user_depth_request plus bounded material escalation signals and comprehensive_knowledge_acquisition_required; assess_deep_task_requirement derives the requirement without language-specific keyword matching. Comprehensive acquisition is an internal routing result, not a precondition for entering the mandatory lightweight session sentinel.",
+    "material_escalation_rule":"A non-explicit material task escalates when ordinary_structured_evidence_insufficient is true together with material-high-uncertainty, unknown-knowledge, architecture/control-plane or repeated-systemic evidence. A separately admitted comprehensive_knowledge_acquisition_required signal also requires the profile because its evidence contract cannot be represented by a shallow known-fact lookup.",
     "compatibility_override":"FinalizationContext.deep_task_required remains a one-way explicit compatibility override; a true semantic trigger cannot be cancelled by passing false.",
     "not_required_for":[
       "routine factual queries",
       "small local defects with sufficient current evidence",
+      "narrow known-need lookups where the authoritative source and target fact/method are already established",
       "formatting/rewrite tasks where no research or decision uncertainty exists",
       "ceremonial expansion merely to make an answer look sophisticated"
     ],
@@ -27,51 +30,45 @@
     "boundary":"A compatible host must produce truthful current semantic signals. Native ChatGPT paths that do not invoke the repository finalization gate or do not supply such signals cannot be claimed as physically fail-closed."
   },
   "depth_dimensions":[
-    {
-      "id":"A_GOVERNING_OUTCOME",
-      "requirement":"Recover the real outcome, distinguish the surface task from the underlying purpose/constraints/failure meaning, and do not preselect a problem layer."
-    },
-    {
-      "id":"B_PROFESSIONAL_PRACTICE_GAP",
-      "requirement":"Identify what top practitioners would investigate, measure, model, challenge or validate that the request did not explicitly ask for. At least one external professional-method source is required; same-model expertise claims alone are insufficient."
-    },
-    {
-      "id":"C_PRIMARY_OR_RAW_MATERIAL",
-      "requirement":"Prefer original logs, raw data, source code, traces, real samples, failed cases, historical versions, user behavior, experiment outputs or original interface results over digested summaries."
-    },
-    {
-      "id":"D_METHODS_AND_TOOLS",
-      "requirement":"Bind conclusions to concrete professional methods/tools/models/databases/tests/simulators or evaluation frameworks; role-play or vocabulary changes are not substitutes."
-    },
-    {
-      "id":"E_UNKNOWN_DISCOVERY",
-      "requirement":"Search beyond the current hypothesis for latent variables, early signals, abnormal samples, uncovered scenarios, hidden constraints and capability gaps."
-    },
-    {
-      "id":"F_COMPETING_ALTERNATIVES_AND_FALSIFICATION",
-      "requirement":"Maintain at least two competing alternatives, state what evidence would make each wrong, and preserve actual falsification/red-team evidence before selecting a current preference."
-    },
-    {
-      "id":"G_STRETCH_WITH_FEASIBILITY",
-      "requirement":"A stretch target is optional. If used, treat it as a search constraint only and require benchmark/engineering/physical/experimental feasibility evidence before calling it achievable."
-    },
-    {
-      "id":"H_INDEPENDENT_JUDGE_AND_VALIDATION",
-      "requirement":"Use evidence outside same-model self-confidence: automatic tests, independent evaluator/tool, holdout data, replay, realistic runtime, benchmark or production observation. Require explicit acceptance criteria."
-    }
+    {"id":"A_GOVERNING_OUTCOME","requirement":"Recover the real outcome, distinguish the surface task from the underlying purpose/constraints/failure meaning, and do not preselect a problem layer."},
+    {"id":"B_PROFESSIONAL_PRACTICE_GAP","requirement":"Identify what top practitioners would investigate, measure, model, challenge or validate that the request did not explicitly ask for. At least one external professional-method source is required; same-model expertise claims alone are insufficient."},
+    {"id":"C_PRIMARY_OR_RAW_MATERIAL","requirement":"Prefer original logs, raw data, source code, traces, real samples, failed cases, historical versions, user behavior, experiment outputs or original interface results over digested summaries."},
+    {"id":"D_METHODS_AND_TOOLS","requirement":"Bind conclusions to concrete professional methods/tools/models/databases/tests/simulators or evaluation frameworks; role-play or vocabulary changes are not substitutes."},
+    {"id":"E_UNKNOWN_DISCOVERY","requirement":"Search beyond the current hypothesis for latent variables, early signals, abnormal samples, uncovered scenarios, hidden constraints and capability gaps. When comprehensive knowledge acquisition is required, supply an admitted KnowledgeAcquisitionAssessment covering declared source roles, more than seed search, competing method families, contradiction handling, documented saturation and a holdout/validation plan."},
+    {"id":"F_COMPETING_ALTERNATIVES_AND_FALSIFICATION","requirement":"Maintain at least two competing alternatives, state what evidence would make each wrong, and preserve actual falsification/red-team evidence before selecting a current preference."},
+    {"id":"G_STRETCH_WITH_FEASIBILITY","requirement":"A stretch target is optional. If used, treat it as a search constraint only and require benchmark/engineering/physical/experimental feasibility evidence before calling it achievable."},
+    {"id":"H_INDEPENDENT_JUDGE_AND_VALIDATION","requirement":"Use evidence outside same-model self-confidence: automatic tests, independent evaluator/tool, holdout data, replay, realistic runtime, benchmark or production observation. Require explicit acceptance criteria."}
   ],
+  "coverage_oriented_knowledge_acquisition":{
+    "activation":"ONLY_WHEN_comprehensive_knowledge_acquisition_required_IS_TRUE__OR_AN_EQUIVALENT_EXPLICIT_DEEP_RESEARCH_REQUIREMENT_IS_ADMITTED",
+    "executable_ref":"src/uaos/kernel/problem_space.py#require_knowledge_acquisition_admission",
+    "required_properties":[
+      "decompose the learning objective into explicit knowledge modules",
+      "declare the source roles needed for the objective and actually cover them",
+      "include current/primary authority plus substantive evidence with a different failure mode; discovery indexes/community signals cannot be the only support",
+      "use multiple acquisition methods and at least one expansion method beyond the seed query",
+      "cluster duplicate findings into competing method/mechanism families rather than counting pages",
+      "resolve or explicitly bound material contradictions",
+      "document terminal saturation rounds where additional expansion no longer yields material method families, failure modes, constraints or decision changes",
+      "record the stop reason and a holdout/replay/realistic validation plan"
+    ],
+    "non_exhaustiveness_rule":"Comprehensive means coverage-oriented and saturation-evidenced, not a literal claim that the entire public web was exhaustively searched.",
+    "narrow_lookup_rule":"A narrow known-need lookup may use a lightweight source-native check and must not be inflated into comprehensive acquisition ceremony."
+  },
   "execution_principles":[
     "Depth is measured by evidence directness, professional method quality, falsifiability, discovery of previously unmodeled factors and independence of validation; not by answer length or number of modules.",
+    "The mandatory selected-context entry sentinel is cheap and always-on; Deep Task and comprehensive acquisition are adaptive escalations inside that entry, not conditions for running the entry itself.",
     "Do not create extra Agents, roles, documents, workflows or architecture layers unless their distinct tool/policy/context/output contract is itself evidence-justified.",
-    "The existing DELIBERATION_POLICY remains the sole cognition-stage authority. DeepTaskCase is an evidence admission profile, not a second cognition state machine and not another ordered reasoning workflow.",
+    "The existing DELIBERATION_POLICY remains the sole cognition-stage authority. DeepTaskCase is not a second cognition state machine; KnowledgeAcquisitionAssessment is not a second research state machine. Both are evidence-admission profiles.",
     "For problem cases, DeepTaskCase evidence and governing outcome must be consistent with the canonical CognitionCase rather than forming a parallel diagnosis.",
-    "If the evidence shows the existing task is already sufficiently deep, record the evidence-backed no-expansion conclusion instead of manufacturing extra work.",
+    "If the evidence shows the existing task is already sufficiently deep, or a known narrow lookup is sufficient, record the evidence-backed no-expansion conclusion instead of manufacturing extra work.",
     "When the user requests an A-H report, render those dimensions explicitly; otherwise the protocol may operate internally and the user-facing answer should remain proportional to the task."
   ],
   "independent_method_basis":[
     "NASA Systems Engineering Handbook: requirements verification matrix and validation planning",
     "NIST AI RMF/TEVV: independent assessors, documented test sets/metrics/tools, deployment-like evaluation and production monitoring",
     "SEI ATAM: business drivers, scenarios, risks, sensitivity points and tradeoffs for architecture evaluation",
-    "User-provided height/breadth/depth protocol treated as a candidate execution method and translated into evidence-based admission rather than literal role-play"
+    "PRISMA-S/Cochrane/TARCiS search-method evidence evaluated in docs/research/NATIVE_INSTRUCTION_AND_KNOWLEDGE_ACQUISITION_STUDY_20261017.md for source coverage, query/reference expansion and saturation",
+    "User-provided height/breadth/depth and comprehensive-learning goals treated as candidate execution requirements and translated into evidence admission rather than literal role-play or impossible exhaustive-web claims"
   ]
 }

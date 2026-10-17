@@ -40,94 +40,81 @@ def build_native_runtime_skill(
     evolution_policy: Mapping[str, Any],
     host_profiles: Mapping[str, Any],
 ) -> str:
-    """Compile the installable native ChatGPT dispatcher from canonical policy owners.
-
-    The Skill is a generated projection, not a policy owner. CI must compare the committed
-    SKILL.md byte-for-byte with this function's output so hand-written normative additions
-    cannot silently create a second control surface.
-    """
+    """Compile the installable native ChatGPT dispatcher from canonical policy owners."""
 
     intent = _mapping(intent_policy, field="intent_policy")
     session = _mapping(session_policy, field="session_policy")
-    deliberation = _mapping(deliberation_policy, field="deliberation_policy")
+    _mapping(deliberation_policy, field="deliberation_policy")
     evolution = _mapping(evolution_policy, field="evolution_policy")
     profiles = _mapping(_value(host_profiles, "profiles", field="host_profiles"), field="host_profiles.profiles")
     chatgpt = _mapping(_value(profiles, "CHATGPT_GITHUB", field="host_profiles.profiles"), field="host_profiles.profiles.CHATGPT_GITHUB")
 
+    entry = _mapping(_value(session, "mandatory_selected_context_entry", field="session_policy"), field="session_policy.mandatory_selected_context_entry")
     problem = _mapping(_value(session, "always_on_problem_detection_sentinel", field="session_policy"), field="session_policy.always_on_problem_detection_sentinel")
+    depth = _mapping(_value(session, "always_on_execution_depth_sentinel", field="session_policy"), field="session_policy.always_on_execution_depth_sentinel")
     closure = _mapping(_value(session, "problem_to_action_closure_gate", field="session_policy"), field="session_policy.problem_to_action_closure_gate")
     systemic = _mapping(_value(closure, "systemic_repair_completeness", field="problem_to_action_closure_gate"), field="session_policy.problem_to_action_closure_gate.systemic_repair_completeness")
     mutation = _mapping(_value(session, "always_on_mutation_sentinel", field="session_policy"), field="session_policy.always_on_mutation_sentinel")
-    cognition_tx = _mapping(_value(deliberation, "cognition_case_transaction", field="deliberation_policy"), field="deliberation_policy.cognition_case_transaction")
     solution_directive = _mapping(_value(intent, "problem_solution_directive_resolution", field="intent_policy"), field="intent_policy.problem_solution_directive_resolution")
     bounded = _mapping(_value(evolution, "bounded_verification_and_promotion", field="evolution_policy"), field="evolution_policy.bounded_verification_and_promotion")
 
     lines: list[str] = [
         "---",
         "name: uaos-controller-runtime",
-        "description: Use for UAOS controller or registered persistent Agent work, including continue/inherit/resume, user corrections, failures, repeated failures, contradictory evidence, uncertain progress, knowledge gaps, architecture/control-plane issues, system maintenance, evolution, or any repair that may be only a local patch. Recover current GitHub authority and dispatch the current canonical UAOS cognition/evolution/closure workflow. Do not use this skill as a second policy authority.",
+        "description: Runtime dispatcher for selected UAOS or registered persistent-Agent work. Use after context selection and on bootstrap/resume to recover current authority, run the mandatory lightweight entry, and dispatch any needed cognition, comprehensive knowledge acquisition, evolution, mutation, or durable continuation to canonical UAOS owners. Non-authoritative.",
         "---",
         "",
         "# UAOS Controller Runtime",
         "",
-        "This file is a **generated, non-authoritative native ChatGPT dispatcher projection**.",
-        "It does not own cognition, evolution, business rules, project state, requirements, or mutation authority. Current GitHub canonical authority always wins. Do not hand-edit normative behavior here; change the owning canonical policy and rebuild this projection.",
+        "This is a **generated, non-authoritative runtime dispatcher projection**. It does not own cognition, research, evolution, requirements, business state, or mutation authority. Change canonical policy, not this file.",
         "",
-        "## 1. CRITICAL pre-action problem gate",
+        "## 1. Mandatory selected-context entry",
         "",
-        "Before selecting or executing any repair in a UAOS/domain problem, correction, failure, drift, contradiction, or repair request, explicitly test whether the proposed cause or remedy came from the user/model framing rather than current evidence admission. Do not act first and add a causal disclaimer afterward.",
-        f"Canonical user-anchoring rule: {_value(cognition_tx, 'user_anchoring_rule', field='cognition_case_transaction')}",
-        f"Problem-solution directive rule: {_value(solution_directive, 'candidate_mechanism_rule', field='problem_solution_directive_resolution')}",
-        f"Anti-bypass rule: {_value(solution_directive, 'anti_bypass_rule', field='problem_solution_directive_resolution')}",
-        f"Explicit mechanism requirement rule: {_value(solution_directive, 'explicit_mechanism_requirement_rule', field='problem_solution_directive_resolution')}",
-        f"Conflict rule: {_value(solution_directive, 'conflict_rule', field='problem_solution_directive_resolution')}",
+        f"Scope: `{_value(entry, 'scope', field='mandatory_selected_context_entry')}`",
+        f"Responsibility: {_value(entry, 'responsibility', field='mandatory_selected_context_entry')}",
+        f"Anti-circularity: {_value(entry, 'anti_circularity', field='mandatory_selected_context_entry')}",
+        f"Autonomous continuation: `{_value(entry, 'autonomous_goal_loop', field='mandatory_selected_context_entry')}`",
+        f"Blocker rule: {_value(closure, 'blocker_rule', field='problem_to_action_closure_gate')}",
         "",
-        "A user's outcome/constraint may be authoritative at the valid scope. A proposed remedy inside a problem statement is not automatically the selected repair merely because it is phrased as an imperative. If this gate triggers, bootstrap current authority and dispatch the canonical cognition/evolution/closure path before mutation.",
+        *_bullets(_strings(_value(entry, "checks", field="mandatory_selected_context_entry"), field="mandatory_selected_context_entry.checks")),
         "",
-        "## 2. Bootstrap current authority",
+        "Entry is mandatory; escalation is adaptive. A simple/familiar turn should pass through without ceremonial cognition or research.",
         "",
-        "For UAOS controller or persistent registered-Agent work, read current `main` in this order:",
-        "1. `ENTRYPOINT.md`",
-        "2. `CURRENT_SYSTEM.json`",
-        "3. `config/NATIVE_SESSION_RUNTIME_PROFILE.json`",
+        "## 2. Recover current authority",
         "",
-        "Resolve the selected controller/domain/task from current authority. Never reconstruct current task identity from chat memory, an old assistant conclusion, a historical branch, or a retired file.",
+        "For UAOS controller or persistent registered-Agent work, read current `main` starting from `ENTRYPOINT.md` and `CURRENT_SYSTEM.json`, then use `config/NATIVE_SESSION_RUNTIME_PROFILE.json` for the selected-context hot path. Reread exact owner authority when the current action requires it.",
+        "Never reconstruct current task identity or authoritative state from chat memory, prior assistant conclusions, historical branches, or retired files.",
         "",
-        "## 3. Always run the lightweight problem sentinel",
+        "## 3. Route adaptively",
         "",
-        f"Scope: `{_value(problem, 'scope', field='problem_detection')}`",
+        f"Problem sentinel scope: `{_value(problem, 'scope', field='problem_detection')}`",
+        "If a problem signal is detected, dispatch the canonical CognitionCase before selecting a repair/no-change outcome.",
+        f"Execution-depth responsibility: {_value(depth, 'responsibility', field='execution_depth')}",
+        "When comprehensive knowledge acquisition is required, use the current Deep Task + `src/uaos/kernel/problem_space.py#require_knowledge_acquisition_admission` evidence path. Narrow known lookups remain lightweight.",
+        "This Skill routes to canonical owners; it is not a second cognition, research, or evolution state machine.",
         "",
-        *_bullets(_strings(_value(problem, "checks", field="problem_detection"), field="problem_detection.checks")),
+        "## 4. Keep claims and requirements distinct",
         "",
-        "If a problem signal exists, dispatch the current canonical CognitionCase owner; this Skill's prose is not a substitute for `config/DELIBERATION_POLICY.json` or executable admission.",
+        f"Requirement rule: {_value(solution_directive, 'outcome_constraint_rule', field='problem_solution_directive_resolution')}",
+        "Causal explanations, framework choices, solution proposals, and action recommendations from any source remain candidates until current evidence admits them at the required risk/depth level.",
+        "A remedy proposed inside a problem statement remains an ActionCandidate until current cognition/evidence selects it; imperative wording does not change that epistemic role.",
+        f"Independent-mechanism requirement rule: {_value(solution_directive, 'explicit_mechanism_requirement_rule', field='problem_solution_directive_resolution')}",
         "",
-        "## 4. Systemic repair completeness",
+        "## 5. Execute toward the governing objective",
         "",
-        f"Closure rule: {_value(closure, 'rule', field='problem_to_action_closure_gate')}",
+        f"Problem closure: {_value(closure, 'rule', field='problem_to_action_closure_gate')}",
+        f"Systemic selection: `{_value(systemic, 'selection_principle', field='systemic_repair_completeness')}`",
+        "Verification and validation must match the admitted objective/intervention; do not stop at a plan when authorized executable work remains and no genuine blocker exists.",
         "",
-        "Required evidence for systemic/material repair:",
-        *_bullets(_strings(_value(systemic, "required_evidence", field="systemic_repair_completeness"), field="systemic_repair_completeness.required_evidence")),
+        "## 6. Evolution and mutation",
         "",
-        f"Local exception: {_value(systemic, 'local_intervention_exception', field='systemic_repair_completeness')}",
-        f"Selection principle: `{_value(systemic, 'selection_principle', field='systemic_repair_completeness')}`",
-        f"Premature action rule: {_value(closure, 'premature_action_rule', field='problem_to_action_closure_gate')}",
+        "Use the current `config/EVOLUTION_POLICY.json` / `EvolutionTransaction`; durable learning does not create another lifecycle.",
+        f"Evolution cost rule: `{_value(bounded, 'cost_rule', field='bounded_verification_and_promotion')}`",
+        f"Evolution stop condition: `{_value(bounded, 'stop_condition', field='bounded_verification_and_promotion')}`",
+        f"Mutation scope: `{_value(mutation, 'scope', field='always_on_mutation_sentinel')}`",
+        f"Production mutation: {_value(mutation, 'production_rule', field='always_on_mutation_sentinel')}",
         "",
-        "## 5. Evolution and bounded promotion",
-        "",
-        "Use the current `config/EVOLUTION_POLICY.json` / `EvolutionTransaction`; do not create another lifecycle.",
-        f"Cost rule: `{_value(bounded, 'cost_rule', field='bounded_verification_and_promotion')}`",
-        f"Stop condition: `{_value(bounded, 'stop_condition', field='bounded_verification_and_promotion')}`",
-        "",
-        "## 6. Mutation admission",
-        "",
-        f"Scope: `{_value(mutation, 'scope', field='always_on_mutation_sentinel')}`",
-        "",
-        *_bullets(_strings(_value(mutation, "checks", field="always_on_mutation_sentinel"), field="always_on_mutation_sentinel.checks")),
-        "",
-        f"Production rule: {_value(mutation, 'production_rule', field='always_on_mutation_sentinel')}",
-        "Never use `next` or another no-op user message as the workflow clock.",
-        "",
-        "## 7. Native-host and cost boundary",
+        "## 7. Host boundary",
         "",
         f"Role: `{_value(chatgpt, 'native_runtime_skill_role', field='CHATGPT_GITHUB')}`",
         f"Activation: `{_value(chatgpt, 'native_runtime_skill_activation', field='CHATGPT_GITHUB')}`",
@@ -135,6 +122,6 @@ def build_native_runtime_skill(
         f"Final-response enforcement: `{_value(chatgpt, 'final_response_enforcement', field='CHATGPT_GITHUB')}`",
         f"Host cost policy: `{_value(chatgpt, 'cost_policy', field='CHATGPT_GITHUB')}`",
         "",
-        "This Skill improves native-session activation and consistency but is not a repository-controlled pre-send/pre-tool hook. Do not claim physical complete mediation of ChatGPT product-internal messages, memory, or Custom Instructions.",
+        "This Skill improves native routing consistency but is not a repository-controlled ChatGPT pre-send/pre-tool hook. Do not claim physical complete mediation of product-internal messages, memory, or Custom Instructions.",
     ]
     return "\n".join(lines).rstrip() + "\n"

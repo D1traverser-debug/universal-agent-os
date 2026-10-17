@@ -203,6 +203,12 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
     if deep_required and not context.user_input_required:
         if context.deep_task_case is None:
             raise FinalizationBlocked("MISSING_DEEP_TASK_EVIDENCE_CASE")
+        if (
+            context.deep_task_signals is not None
+            and context.deep_task_signals.comprehensive_knowledge_acquisition_required
+            and context.deep_task_case.knowledge_acquisition_assessment is None
+        ):
+            raise FinalizationBlocked("MISSING_COMPREHENSIVE_KNOWLEDGE_ACQUISITION_EVIDENCE")
         deep_task_receipt = _bind_and_validate_deep_task(
             context.deep_task_case,
             context.cognition_case if context.problem_signal_observed else None,

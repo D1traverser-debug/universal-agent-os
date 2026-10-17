@@ -38,6 +38,7 @@ def build_native_session_runtime_profile(
     profiles = _mapping(_value(host_profiles, "profiles", field="host_profiles"), field="host_profiles.profiles")
     chatgpt = _mapping(_value(profiles, "CHATGPT_GITHUB", field="host_profiles.profiles"), field="host_profiles.profiles.CHATGPT_GITHUB")
 
+    entry = _mapping(_value(session, "mandatory_selected_context_entry", field="session_policy"), field="session_policy.mandatory_selected_context_entry")
     problem = _mapping(_value(session, "always_on_problem_detection_sentinel", field="session_policy"), field="session_policy.always_on_problem_detection_sentinel")
     depth = _mapping(_value(session, "always_on_execution_depth_sentinel", field="session_policy"), field="session_policy.always_on_execution_depth_sentinel")
     cognition = _mapping(_value(deliberation, "cognition_kernel", field="deliberation_policy"), field="deliberation_policy.cognition_kernel")
@@ -57,7 +58,7 @@ def build_native_session_runtime_profile(
         }
 
     return {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "projection_role": "COMPILED_EFFECTIVE_RUNTIME_PROJECTION__NON_AUTHORITATIVE",
         "host": "CHATGPT_GITHUB",
         "source_authorities": {
@@ -82,6 +83,15 @@ def build_native_session_runtime_profile(
             "installation": _value(chatgpt, "native_runtime_skill_installation", field="CHATGPT_GITHUB"),
         },
         "turn_contract": {
+            "mandatory_entry": {
+                "scope": _value(entry, "scope", field="mandatory_selected_context_entry"),
+                "role": _value(entry, "role", field="mandatory_selected_context_entry"),
+                "responsibility": _value(entry, "responsibility", field="mandatory_selected_context_entry"),
+                "checks": _value(entry, "checks", field="mandatory_selected_context_entry"),
+                "anti_circularity": _value(entry, "anti_circularity", field="mandatory_selected_context_entry"),
+                "clear_path": _value(entry, "clear_path", field="mandatory_selected_context_entry"),
+                "autonomous_goal_loop": _value(entry, "autonomous_goal_loop", field="mandatory_selected_context_entry"),
+            },
             "problem_detection": {
                 "scope": _value(problem, "scope", field="problem_detection"),
                 "checks": _value(problem, "checks", field="problem_detection"),

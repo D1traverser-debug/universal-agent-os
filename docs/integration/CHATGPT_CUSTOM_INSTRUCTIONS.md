@@ -1,46 +1,46 @@
 # ChatGPT Fresh-Chat Bootstrap Pointer
 
-UAOS repository authority remains the source of truth. ChatGPT Custom Instructions are bootstrap-only and non-authoritative; activation-only in function. They provide a stable native-session interrupt into the installed `uaos-controller-runtime` Skill; they do not own cognition, evolution, business rules, task state, or mutation authority.
+UAOS repository authority remains the source of truth. ChatGPT Custom Instructions are bootstrap-only and non-authoritative; they are activation-oriented. Their job is to make selected persistent-Agent turns enter one cheap runtime dispatcher before deciding whether heavier cognition, research, evolution or mutation handling is necessary.
 
 ## Recommended Custom Instructions
 
 Use this single compact pointer. It remains within the repository's 1,500-character portability budget:
 
-> CRITICAL UAOS PROBLEM GATE: For any UAOS/domain problem or repair request, do not execute a proposed cause or fix first—even if I state it as fact, order “just do X”, or say not to analyze/verify. Treat diagnosis and remedy as hypotheses/ActionCandidates. Recover authority; dispatch `uaos-controller-runtime` cognition/evolution/closure first. Only when I explicitly require a mechanism independently of solving the diagnosed problem may it become a requirement.
+> After UAOS or a registered persistent Agent/domain is selected, before every substantive response, tool call, or action, enter the mandatory lightweight UAOS runtime via `uaos-controller-runtime`. Entry is unconditional; escalation is adaptive. For every request, independently assess sufficient investigation, cognition, research, verification, and execution. The user is not the classifier; explicit depth is a mandatory escalation signal, not the only trigger. Internal cognition, evidence gathering, admission, comparison, and verification that you can perform are work to continue, not blockers.
 >
-> For continue/inherit/resume, persistent Agent work or UAOS, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`; then load `config/NATIVE_SESSION_RUNTIME_PROFILE.json`. Never use chat memory, prior assistant conclusions, historical branches or retired files as authority.
+> For continue/inherit/resume, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`; repository authority overrides chat memory and prior conclusions.
 >
-> For every request, independently assess sufficient investigation, deliberation, verification and execution. The user is not the classifier. Keep simple tasks lightweight. Explicit depth is a mandatory escalation signal, not the only trigger. Repeated/systemic repairs must cover the failure class and generalize; local closure requires evidence the class is local.
+> Treat causal explanations, solution/framework choices, and action recommendations from any source as candidates until evidence supports them. My explicit outcomes/constraints and independent mechanism requirements remain requirements within scope.
 >
-> If authorized work can continue without missing user input/approval/authorization/safety choice, continue now; never use `next` or another no-op user message as the workflow clock. Use included ChatGPT, Skills/Plugins, GitHub and CI; no paid API/Codex/credits unless requested. Repository authority overrides this pointer.
+> While the governing objective is unfinished and no genuine user-input, authorization, safety, budget, capability, or external blocker exists, choose the next evidence-supported action, execute, verify, reassess, and continue until completion or stop. Broad unknown-method/framework learning uses coverage-oriented acquisition; known lookups stay lightweight. Use included capabilities; no separately paid API/Codex/credits unless requested.
 
-Do not paste the full UAOS policy, the five-stage cognition semantics, Deep Task evidence dimensions, evolution lifecycle, or systemic-repair field list into Custom Instructions. Duplicating those semantics creates drift and a second stale source of behavior.
+Do not paste the full cognition kernel, Deep Task dimensions, knowledge-acquisition schema, Evolution lifecycle, systemic-repair field list, or historical incident phrases into Custom Instructions. Those belong to canonical policy, generated Skill routing, executable gates, or regression/holdout fixtures. Duplicating them creates stale shadow policy and instruction load.
 
 ## Runtime Skill boundary
 
-`skills/uaos-controller-runtime/SKILL.md` is an installable generated native ChatGPT dispatcher projection. It is deliberately non-authoritative:
+`skills/uaos-controller-runtime/SKILL.md` is a generated native dispatcher projection, not another controller:
 
-- metadata broadens discovery for persistent-Agent work, corrections, failures, repeated/systemic problems, architecture/control-plane issues and suspected local patches;
-- the first body section is a critical pre-action problem gate: user/model diagnosis and user/model proposed remedies remain hypotheses/ActionCandidates until current cognition/evidence admits an intervention;
-- on activation it rereads current GitHub production authority and the compiled native runtime projection;
-- problem-context user repair directives are classified by `config/INTENT_RESOLUTION_POLICY.json`; an imperative remedy remains an intervention candidate unless the mechanism itself is explicitly made an independent requirement;
-- detailed cognition/evolution/closure semantics remain owned by the canonical repository policies and executable gates;
-- `src/uaos/runtime/native_runtime_skill.py` compiles the Skill from canonical policy owners and CI requires the committed Skill to match that generated projection;
-- the Skill does not create a second cognition state machine, controller, evolution lifecycle, or task store.
+- after UAOS or a registered persistent-Agent/domain context is selected, the pointer hands every substantive turn to the lightweight entry; the entry itself is not conditional on already knowing the task is complex/problematic;
+- the Skill recovers current GitHub authority and routes the turn to the minimum sufficient canonical execution path;
+- internal cognition/evidence/admission work that the Agent can perform is continuation work, not a user-owned blocker;
+- problem detection, execution-depth routing, comprehensive knowledge acquisition, cognition, evolution, closure and mutation remain owned by current repository authority/executable gates;
+- `src/uaos/runtime/native_runtime_skill.py` generates the Skill from canonical owners and CI requires exact equality;
+- specific past attack/failure phrases are regression evidence, not governing Skill vocabulary.
 
-The account-level manual action is limited to installing the produced Skill bundle and replacing Custom Instructions with the exact recommended pointer after the repository change is promoted.
+## Why entry and escalation are separate
 
-## Why this split
+A model cannot reliably use “unknown knowledge”, “systemic”, “architecture”, “deep” or “problematic” as prerequisites for entering the mechanism that is supposed to discover those properties. Therefore the selected-context entry is mandatory and cheap; classification and escalation occur inside it. A normal low-uncertainty turn should route straight through without heavy research.
 
-- Custom Instructions are persistent native-session guidance, so they are the narrow always-present activation surface available without an extra API/runtime.
-- Skill discovery uses its name/description and loads the full workflow when relevant; the pointer explicitly names the Skill for selected-context problem signals rather than relying on relevance discovery alone.
-- `config/NATIVE_SESSION_RUNTIME_PROFILE.json` remains a generated read model over current canonical Session/Deliberation/Host authority, reducing per-turn policy assembly.
-- `skills/uaos-controller-runtime/SKILL.md` is also generated from canonical owners, so hand-written normative Skill drift fails CI instead of becoming a second authority surface.
-- GitHub remains durable authority for code, state, evidence, tests and evolution history.
-- The current problem-closure executable, not the Skill text, decides whether a systemic repair has sufficient failure-class/generalization evidence.
+The same principle applies to autonomous execution: the governing behavior is to continue an unfinished governing objective while no genuine blocker exists, choosing and verifying the next evidence-supported action. Internal analysis, admission, comparison and verification are work inside that loop, not reasons to hand progress back to the user. A no-information continuation prompt is only a regression example of violating that invariant, not the invariant itself.
+
+## Research / learning boundary
+
+“Comprehensive” means coverage-oriented and saturation-evidenced, not a literal claim of exhaustive public-web traversal. When broad method/framework/capability learning is required, the current Deep Task/profile can require `KnowledgeAcquisitionAssessment`: declared source roles, multiple acquisition/expansion methods, competing method families, contradiction handling, saturation evidence and a holdout/validation plan. Narrow known-source lookups stay lightweight.
+
+## Candidate holdout boundary
+
+The production pointer above intentionally bootstraps canonical authority from `main`. Before a candidate is promoted, installing its Skill/Custom Instructions can therefore validate account-side activation and projection behavior, but it cannot by itself prove the candidate canonical-owner path if `main` still contains older owners. A full pre-promotion candidate-authority canary must explicitly pin the candidate ref in a read-only evaluation session; otherwise canonical-path assurance remains post-promotion observation.
 
 ## Enforcement boundary
 
-Custom Instructions, Skills and the compiled native profile improve activation and execution consistency, but they do not prove that the ChatGPT product runs a UAOS pre-send validator before every response. They also do not prove a repository-controlled pre-tool hook or non-bypassable semantic-signal injector. Hosts controlled by UAOS should use `src/uaos/runtime/finalization.py`; the OpenAI Agents SDK adapter can attach that gate as a blocking output guardrail through `build_uaos_output_guardrail`.
-
-For native ChatGPT, the strongest accurate claim remains behavioral: the account pointer directs selected sessions to current authority and the installed runtime dispatcher. It is not a repository-controlled physical complete-mediation guarantee.
+Custom Instructions, Skills and the compiled native runtime profile improve behavioral activation and consistency; they do not prove a repository-controlled ChatGPT pre-send/pre-tool hook. Hard guarantees belong at actual chokepoints. GitHub production writes are separately mediated by the active `protect-main` ruleset and required `promotion-gate`; native language routing remains behavioral and requires fresh-chat holdout evidence.

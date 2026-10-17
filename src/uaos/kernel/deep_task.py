@@ -4,6 +4,11 @@ from dataclasses import dataclass
 from enum import Enum
 
 from .cognition_case import EvidenceItem, EvidenceKind
+from .problem_space import (
+    KnowledgeAcquisitionAssessment,
+    KnowledgeAcquisitionReceipt,
+    require_knowledge_acquisition_admission,
+)
 
 
 class DeepTaskAdmissionError(RuntimeError):
@@ -26,6 +31,7 @@ class DeepTaskSignals:
     architecture_or_control_plane: bool = False
     repeated_systemic: bool = False
     ordinary_structured_evidence_insufficient: bool = False
+    comprehensive_knowledge_acquisition_required: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -50,6 +56,8 @@ def assess_deep_task_requirement(signals: DeepTaskSignals) -> DeepTaskRequiremen
         reasons.append("REPEATED_SYSTEMIC")
     if signals.ordinary_structured_evidence_insufficient:
         reasons.append("ORDINARY_STRUCTURED_EVIDENCE_INSUFFICIENT")
+    if signals.comprehensive_knowledge_acquisition_required:
+        reasons.append("COMPREHENSIVE_KNOWLEDGE_ACQUISITION_REQUIRED")
 
     escalated_material = bool(
         signals.ordinary_structured_evidence_insufficient
@@ -63,7 +71,11 @@ def assess_deep_task_requirement(signals: DeepTaskSignals) -> DeepTaskRequiremen
         )
     )
     return DeepTaskRequirement(
-        required=bool(signals.explicit_user_depth_request or escalated_material),
+        required=bool(
+            signals.explicit_user_depth_request
+            or signals.comprehensive_knowledge_acquisition_required
+            or escalated_material
+        ),
         reason_codes=tuple(reasons),
     )
 
@@ -105,6 +117,7 @@ class DeepTaskCase:
     acceptance_criteria: tuple[str, ...]
     stretch_target: str | None = None
     stretch_target_feasibility_evidence_ids: tuple[str, ...] = ()
+    knowledge_acquisition_assessment: KnowledgeAcquisitionAssessment | None = None
 
     def __post_init__(self) -> None:
         if not self.case_id.strip():
@@ -141,6 +154,7 @@ class DeepTaskReceipt:
     evidence_ids: tuple[str, ...]
     acceptance_criteria: tuple[str, ...]
     stretch_target_admitted: bool
+    knowledge_acquisition_receipt: KnowledgeAcquisitionReceipt | None = None
 
 
 _RAW_ALLOWED = {
@@ -284,6 +298,21 @@ def require_deep_task_admission(case: DeepTaskCase) -> DeepTaskReceipt:
             "stretch-target feasibility",
         )
 
+    knowledge_receipt: KnowledgeAcquisitionReceipt | None = None
+    if case.knowledge_acquisition_assessment is not None:
+        try:
+            knowledge_receipt = require_knowledge_acquisition_admission(
+                case.knowledge_acquisition_assessment,
+                comprehensive=True,
+            )
+        except (RuntimeError, ValueError) as exc:
+            raise DeepTaskAdmissionError(f"knowledge-acquisition evidence is not admitted: {exc}") from exc
+        _require_known(
+            knowledge_receipt.evidence_refs,
+            index,
+            "knowledge-acquisition",
+        )
+
     evidence_ids = tuple(sorted({
         *case.professional_practice_evidence_ids,
         *case.raw_material_evidence_ids,
@@ -292,6 +321,7 @@ def require_deep_task_admission(case: DeepTaskCase) -> DeepTaskReceipt:
         *case.independent_judge_evidence_ids,
         *case.holdout_replay_or_production_evidence_ids,
         *case.stretch_target_feasibility_evidence_ids,
+        *(knowledge_receipt.evidence_refs if knowledge_receipt is not None else ()),
         *(ref for item in case.alternatives for ref in item.supporting_evidence_ids),
         *(ref for item in case.alternatives for ref in item.falsification_evidence_ids),
     }))
@@ -302,4 +332,5 @@ def require_deep_task_admission(case: DeepTaskCase) -> DeepTaskReceipt:
         evidence_ids=evidence_ids,
         acceptance_criteria=case.acceptance_criteria,
         stretch_target_admitted=stretch_admitted,
+        knowledge_acquisition_receipt=knowledge_receipt,
     )
