@@ -1,10 +1,10 @@
 {
-  "schema_version":"1.1",
-  "policy_version":"2.0.0",
+  "schema_version":"1.2",
+  "policy_version":"2.1.0",
   "authority":"UAOS",
   "status":"ACTIVE_CANONICAL_EVOLUTION_OWNER",
-  "updated_at":"2026-10-16T22:48:36+08:00",
-  "purpose":"Own one governed evolution transaction for incident-driven repair, opportunity/capability-gap discovery and evaluated-knowledge improvement. Prevent discovery, evaluation, promotion, execution and observation from becoming disconnected helper-local steps.",
+  "updated_at":"2026-10-17T18:04:00+08:00",
+  "purpose":"Own one governed evolution transaction for incident-driven repair, opportunity/capability-gap discovery and evaluated-knowledge improvement. Prevent discovery, evaluation, promotion, execution and observation from becoming disconnected helper-local steps, and ensure verification converges under a frozen acceptance boundary rather than reopening indefinitely.",
   "canonical_executable":"src/uaos/evolution/transaction.py",
   "canonical_transaction":"EvolutionTransaction",
   "stages":["FRAMED","DISCOVERED","PROPOSED","EVALUATED","AUTHORIZED","PROMOTED","OBSERVED","ROLLED_BACK","RETIRED"],
@@ -34,6 +34,27 @@
     "Promotion and rollback execution evidence are persisted in the same transaction.",
     "Post-promotion observation determines keep/observe, rollback or retirement; promotion is not closure."
   ],
+  "bounded_verification_and_promotion":{
+    "goal":"CONVERGE_TO_PROMOTION_OR_EVIDENCE_BACKED_REJECTION_WITHOUT_UNBOUNDED_REVIEW_HEAD_CHURN",
+    "existing_mechanism_refs":[
+      "src/uaos/evolution/models.py#ChangeProposal.required_scenarios",
+      "src/uaos/evolution/models.py#EvaluationResult.acceptance_checks",
+      "src/uaos/evolution/models.py#ComplexityBudget",
+      "src/uaos/evolution/gates.py#assess_promotion"
+    ],
+    "rules":[
+      "Freeze the material acceptance criteria and required scenarios before the final verification batch; do not silently expand the acceptance boundary while evaluating the same candidate.",
+      "Choose verification effort from current risk, materiality and uncertainty. Prefer existing/included/free repository tests, static checks, CI, live integration, replay and production observation before paid, quota-limited or separately metered review.",
+      "Triage every new finding before reopening design: blocking means it violates a frozen acceptance criterion, governing requirement, current invariant, safety/authority boundary or invalidates the selected causal/intervention model; otherwise classify it as non-blocking follow-up evidence.",
+      "A blocking repair gets the smallest targeted regression needed to reproduce it plus the already-agreed whole-system verification; it does not automatically authorize an unbounded new architecture review.",
+      "When the frozen acceptance boundary is green, freeze the candidate head. Test-only or non-material closure metadata edits after a green verification batch do not automatically require another independent paid review unless they materially change the verified risk surface.",
+      "After head freeze, new non-blocking findings become a new evolution/backlog item rather than reopening the completed promotion candidate.",
+      "Promotion is followed by authoritative production reread and post-promotion observation; candidate green alone is not closure."
+    ],
+    "cost_rule":"INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_BASED_REVIEW_UNLESS_EXPLICITLY_REQUESTED_OR_A_STRONGER_ASSURANCE_REQUIREMENT_IS_SEPARATELY_ADMITTED",
+    "stop_condition":"FROZEN_ACCEPTANCE_GREEN__HEAD_FROZEN__PROMOTE__PRODUCTION_REREAD_AND_OBSERVE__NEW_NONBLOCKING_FINDINGS_DO_NOT_REOPEN",
+    "anti_gaming":"Do not relabel a real acceptance violation as non-blocking to preserve a preferred candidate. Existing invariants/tests are falsification evidence unless the governing requirement itself is explicitly and evidencefully evolved."
+  },
   "proactive_evolution":{
     "goal":"DISCOVER_USEFUL_MISSING_CAPABILITIES_BEFORE_FAILURE_WHEN_HOST_CAN_RUN_THE_AUDIT",
     "trigger_classes":["PERIODIC_HOST_AUDIT","MATERIAL_PLATFORM_OR_TOOL_CHANGE","NEW_EVALUATED_KNOWLEDGE","CAPABILITY_INVENTORY_DRIFT","USER_REQUESTED_CAPABILITY_REASSESSMENT"],
@@ -58,7 +79,8 @@
     "candidate_live_integration":{"run_number":116,"conclusion":"success"},
     "production_commit":"1952b5eb858908575d55c73b254965ca8678a0ff",
     "production_ci":{"run_number":306,"conclusion":"success"},
-    "production_reread":"UAOS_2.7.0_AND_EVOLUTION_TRANSACTION_PRESENT_ON_main"
+    "production_reread":"UAOS_2.7.0_AND_EVOLUTION_TRANSACTION_PRESENT_ON_main",
+    "note":"This evidence covers the pre-2.1 evolution baseline. The bounded verification/promotion extension remains candidate until its own promotion evidence is recorded."
   },
   "assurance_boundary":"Repository-controlled runtimes can mechanically enforce this transaction where they invoke it. Native ChatGPT response/tool paths still have no verified repository-controlled pre-send or pre-tool hook; host adapters must not claim non-bypassable enforcement without evidence."
 }
