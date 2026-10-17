@@ -15,6 +15,8 @@ from uaos.execution import (
     CrudOperation,
     ExecutionDisposition,
     ExecutionRequest,
+    MutationPersistence,
+    PersistentAssetCatalog,
     PersistentAssetDescriptor,
     PersistentSurface,
     register_local_workspace_capability,
@@ -129,17 +131,25 @@ def run_self_change_drill(
 
     registry = CapabilityRegistry()
     register_local_workspace_capability(registry, root)
-    coordinator = ActionCoordinator(registry, authority_context="UAOS")
-    now = datetime.now(UTC)
+    registered = registry.get("local.workspace")
+    if registered.canonicalize_target is None:
+        raise RuntimeError("local workspace capability lost target canonicalizer")
+    canonical_target = registered.canonicalize_target("policy.txt")
     workspace_asset = PersistentAssetDescriptor(
         asset_id=f"self-change-drill:{run_id}:policy",
-        resource_ref="policy.txt",
+        resource_ref=canonical_target,
         surface=PersistentSurface.OTHER_EXTERNAL,
         role=AssetRole.EXTERNAL_RECORD,
         lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
         owner_authority="UAOS",
-        allowed_operations=frozenset({CrudOperation.UPDATE}),
+        allowed_operations=frozenset({CrudOperation.READ, CrudOperation.UPDATE}),
     )
+    coordinator = ActionCoordinator(
+        registry,
+        authority_context="UAOS",
+        persistent_asset_catalog=PersistentAssetCatalog((workspace_asset,)),
+    )
+    now = datetime.now(UTC)
 
     promote = ExecutionRequest(
         action_id=f"action:promote:{run_id}",
@@ -154,6 +164,7 @@ def run_self_change_drill(
         side_effect_class="WRITE",
         approval_required=True,
         target_authority="UAOS",
+        mutation_persistence=MutationPersistence.DURABLE_OR_EXTERNAL,
         persistent_asset=workspace_asset,
         persistent_operation=CrudOperation.UPDATE,
     )
@@ -196,6 +207,7 @@ def run_self_change_drill(
         side_effect_class="WRITE",
         approval_required=True,
         target_authority="UAOS",
+        mutation_persistence=MutationPersistence.DURABLE_OR_EXTERNAL,
         persistent_asset=workspace_asset,
         persistent_operation=CrudOperation.UPDATE,
     )
