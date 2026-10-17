@@ -27,9 +27,9 @@ def build_native_session_runtime_profile(
 ) -> dict[str, Any]:
     """Compile the small effective behavior projection used by native ChatGPT sessions.
 
-    This object is deliberately *not* a new policy authority.  It is a generated read model
+    This object is deliberately *not* a new policy authority. It is a generated read model
     over the canonical session, deliberation and host policies so a native ChatGPT turn does
-    not have to reconstruct the effective hot path from several large documents.  Any drift
+    not have to reconstruct the effective hot path from several large documents. Any drift
     is detected by comparing the committed projection with a fresh build in CI.
     """
 
@@ -43,6 +43,7 @@ def build_native_session_runtime_profile(
     cognition = _mapping(_value(deliberation, "cognition_kernel", field="deliberation_policy"), field="deliberation_policy.cognition_kernel")
     modes = _mapping(_value(deliberation, "cognitive_search_modes", field="deliberation_policy"), field="deliberation_policy.cognitive_search_modes")
     closure = _mapping(_value(session, "problem_to_action_closure_gate", field="session_policy"), field="session_policy.problem_to_action_closure_gate")
+    systemic_closure = _mapping(_value(closure, "systemic_repair_completeness", field="problem_to_action_closure_gate"), field="session_policy.problem_to_action_closure_gate.systemic_repair_completeness")
     mutation = _mapping(_value(session, "always_on_mutation_sentinel", field="session_policy"), field="session_policy.always_on_mutation_sentinel")
     progress = _mapping(_value(session, "inherited_session_progress_report", field="session_policy"), field="session_policy.inherited_session_progress_report")
 
@@ -56,7 +57,7 @@ def build_native_session_runtime_profile(
         }
 
     return {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "projection_role": "COMPILED_EFFECTIVE_RUNTIME_PROJECTION__NON_AUTHORITATIVE",
         "host": "CHATGPT_GITHUB",
         "source_authorities": {
@@ -73,6 +74,12 @@ def build_native_session_runtime_profile(
             "semantic_signals": _value(chatgpt, "semantic_signal_assurance", field="CHATGPT_GITHUB"),
             "final_response": _value(chatgpt, "final_response_enforcement", field="CHATGPT_GITHUB"),
             "cost": _value(chatgpt, "cost_policy", field="CHATGPT_GITHUB"),
+        },
+        "runtime_skill": {
+            "source": _value(chatgpt, "native_runtime_skill_source", field="CHATGPT_GITHUB"),
+            "role": _value(chatgpt, "native_runtime_skill_role", field="CHATGPT_GITHUB"),
+            "activation": _value(chatgpt, "native_runtime_skill_activation", field="CHATGPT_GITHUB"),
+            "installation": _value(chatgpt, "native_runtime_skill_installation", field="CHATGPT_GITHUB"),
         },
         "turn_contract": {
             "problem_detection": {
@@ -95,6 +102,12 @@ def build_native_session_runtime_profile(
             "problem_closure": {
                 "terminal_states": _value(closure, "terminal_states", field="problem_to_action_closure_gate"),
                 "rule": _value(closure, "rule", field="problem_to_action_closure_gate"),
+                "systemic_repair_completeness": {
+                    "activation": _value(systemic_closure, "activation", field="systemic_repair_completeness"),
+                    "required_evidence": _value(systemic_closure, "required_evidence", field="systemic_repair_completeness"),
+                    "local_intervention_exception": _value(systemic_closure, "local_intervention_exception", field="systemic_repair_completeness"),
+                    "selection_principle": _value(systemic_closure, "selection_principle", field="systemic_repair_completeness"),
+                },
                 "premature_action_rule": _value(closure, "premature_action_rule", field="problem_to_action_closure_gate"),
             },
             "mutation": {
