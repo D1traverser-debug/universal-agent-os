@@ -31,15 +31,15 @@ class LocalWorkspaceExecutor:
 
     The root directory is opened once at construction by traversing every absolute path
     component with ``O_NOFOLLOW`` and is retained as a directory descriptor. Every later
-    operation starts from ``dup(root_fd)`` instead of reopening the pathname, so replacing
-    an ancestor pathname after construction cannot redirect a write outside the bound
-    workspace.
+    operation obtains a fresh open-file description for ``.`` relative to that pinned
+    root descriptor, then traverses children with ``O_NOFOLLOW``. This both prevents
+    ancestor-path replacement from redirecting writes and ensures advisory ``flock``
+    calls contend even for concurrent root-level targets in the same executor/process.
 
-    Existing parent directories are traversed relative to that descriptor with no-follow
-    semantics. ``local.create_text`` never creates parent directories implicitly: parent
-    provisioning is a separate durable effect and must use its own admitted action if the
-    system adds one. CREATE is atomic no-replace. UPDATE uses an advisory exclusive lock
-    across expected-hash verification and atomic rename for cooperating UAOS writers.
+    ``local.create_text`` never creates parent directories implicitly: parent provisioning
+    is a separate durable effect. CREATE is atomic no-replace. UPDATE uses an advisory
+    exclusive parent-directory lock across expected-hash verification and atomic rename
+    for cooperating UAOS writers.
     """
 
     def __init__(self, root: str | Path) -> None:
@@ -91,10 +91,13 @@ class LocalWorkspaceExecutor:
         except Exception:
             pass
 
-    def _dup_root_fd(self) -> int:
+    def _open_root_description(self) -> int:
+        """Open an independent description of the already pinned root directory."""
+
         if self._root_fd is None:
             raise RuntimeError("local workspace executor is closed")
-        return os.dup(self._root_fd)
+        flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+        return os.open(".", flags, dir_fd=self._root_fd)
 
     @staticmethod
     def _sha256(content: bytes) -> str:
@@ -124,7 +127,7 @@ class LocalWorkspaceExecutor:
         parts = self._target_parts(target)
         leaf = parts[-1]
         flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
-        current_fd = self._dup_root_fd()
+        current_fd = self._open_root_description()
         try:
             for component in parts[:-1]:
                 child_fd = os.open(component, flags, dir_fd=current_fd)
