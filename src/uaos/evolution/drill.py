@@ -132,9 +132,11 @@ def run_self_change_drill(
     registry = CapabilityRegistry()
     register_local_workspace_capability(registry, root)
     registered = registry.get("local.workspace")
-    if registered.canonicalize_target is None:
-        raise RuntimeError("local workspace capability lost target canonicalizer")
-    canonical_target = registered.canonicalize_target("policy.txt")
+    canonical_target = registry.canonicalize_trusted_target(
+        "local.workspace",
+        registered.registration_generation,
+        "policy.txt",
+    )
     workspace_asset = PersistentAssetDescriptor(
         asset_id=f"self-change-drill:{run_id}:policy",
         resource_ref=canonical_target,
