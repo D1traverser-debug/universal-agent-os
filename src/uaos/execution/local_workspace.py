@@ -44,6 +44,63 @@ class LocalWorkspaceExecutor:
     def _sha256(content: bytes) -> str:
         return hashlib.sha256(content).hexdigest()
 
+    def _write_text(self, request: ExecutionRequest, path: Path, *, create: bool) -> ExecutionOutcome:
+        if not isinstance(request.payload, Mapping) or not isinstance(
+            request.payload.get("content"), str
+        ):
+            return ExecutionOutcome(
+                ExecutionDisposition.FAILED,
+                error=f"{request.action_name} requires string payload['content']",
+            )
+        if create and path.exists():
+            return ExecutionOutcome(
+                ExecutionDisposition.FAILED,
+                error="CREATE target already exists",
+            )
+        if not create and not path.exists():
+            return ExecutionOutcome(
+                ExecutionDisposition.FAILED,
+                error="UPDATE target does not exist",
+            )
+
+        current = path.read_bytes() if path.exists() else b""
+        expected_current_hash = request.payload.get("expected_current_hash")
+        if expected_current_hash is not None and self._sha256(current) != expected_current_hash:
+            return ExecutionOutcome(
+                ExecutionDisposition.FAILED,
+                error="current hash mismatch",
+            )
+
+        content = request.payload["content"].encode("utf-8")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.uaos-", dir=path.parent)
+        try:
+            with os.fdopen(fd, "wb") as handle:
+                handle.write(content)
+                handle.flush()
+                os.fsync(handle.fileno())
+            if create and path.exists():
+                return ExecutionOutcome(
+                    ExecutionDisposition.FAILED,
+                    error="CREATE target appeared before commit",
+                )
+            if not create and not path.exists():
+                return ExecutionOutcome(
+                    ExecutionDisposition.FAILED,
+                    error="UPDATE target disappeared before commit",
+                )
+            os.replace(temporary, path)
+        finally:
+            if os.path.exists(temporary):
+                os.unlink(temporary)
+
+        digest = self._sha256(content)
+        return ExecutionOutcome(
+            ExecutionDisposition.CONFIRMED,
+            output={"path": request.target, "sha256": digest},
+            evidence={"sha256": digest},
+        )
+
     def execute(self, request: ExecutionRequest) -> ExecutionOutcome:
         try:
             path = self._resolve(request.target)
@@ -64,50 +121,13 @@ class LocalWorkspaceExecutor:
                 output=content,
                 evidence={"sha256": self._sha256(content)},
             )
-
-        if request.action_name != "local.write_text":
-            return ExecutionOutcome(
-                ExecutionDisposition.FAILED,
-                error=f"unsupported local workspace action: {request.action_name}",
-            )
-        if not isinstance(request.payload, Mapping) or not isinstance(
-            request.payload.get("content"), str
-        ):
-            return ExecutionOutcome(
-                ExecutionDisposition.FAILED,
-                error="local.write_text requires string payload['content']",
-            )
-
-        current = path.read_bytes() if path.exists() else b""
-        expected_current_hash = request.payload.get("expected_current_hash")
-        if (
-            expected_current_hash is not None
-            and self._sha256(current) != expected_current_hash
-        ):
-            return ExecutionOutcome(
-                ExecutionDisposition.FAILED, error="current hash mismatch"
-            )
-
-        content = request.payload["content"].encode("utf-8")
-        path.parent.mkdir(parents=True, exist_ok=True)
-        fd, temporary = tempfile.mkstemp(
-            prefix=f".{path.name}.uaos-", dir=path.parent
-        )
-        try:
-            with os.fdopen(fd, "wb") as handle:
-                handle.write(content)
-                handle.flush()
-                os.fsync(handle.fileno())
-            os.replace(temporary, path)
-        finally:
-            if os.path.exists(temporary):
-                os.unlink(temporary)
-
-        digest = self._sha256(content)
+        if request.action_name == "local.create_text":
+            return self._write_text(request, path, create=True)
+        if request.action_name == "local.update_text":
+            return self._write_text(request, path, create=False)
         return ExecutionOutcome(
-            ExecutionDisposition.CONFIRMED,
-            output={"path": request.target, "sha256": digest},
-            evidence={"sha256": digest},
+            ExecutionDisposition.FAILED,
+            error=f"unsupported local workspace action: {request.action_name}",
         )
 
 
@@ -122,7 +142,7 @@ def register_local_workspace_capability(
         capability_id=capability_id,
         health=CapabilityHealth.AVAILABLE,
         observed_at_epoch=time.time(),
-        supported_actions=("local.read_bytes", "local.write_text"),
+        supported_actions=("local.read_bytes", "local.create_text", "local.update_text"),
         permissions=("workspace:read", "workspace:write"),
         quality_score=1.0,
         estimated_cost=0.0,
@@ -134,11 +154,16 @@ def register_local_workspace_capability(
     registry.register(
         observation,
         executor,
+        read_only_actions={"local.read_bytes"},
         mutation_contracts={
-            "local.write_text": MutationContract(
+            "local.create_text": MutationContract(
+                MutationPersistence.DURABLE_OR_EXTERNAL,
+                CrudOperation.CREATE,
+            ),
+            "local.update_text": MutationContract(
                 MutationPersistence.DURABLE_OR_EXTERNAL,
                 CrudOperation.UPDATE,
-            )
+            ),
         },
         canonicalize_target=executor.canonicalize_target,
     )
