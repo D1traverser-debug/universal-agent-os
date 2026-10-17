@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+from uaos.runtime.native_runtime_skill import build_native_runtime_skill
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -21,6 +23,18 @@ def _recommended_custom_instruction_pointer() -> str:
     return "\n".join(lines).strip()
 
 
+def test_runtime_skill_is_exact_generated_projection_of_canonical_owners():
+    expected = build_native_runtime_skill(
+        intent_policy=_json("config/INTENT_RESOLUTION_POLICY.json"),
+        session_policy=_json("config/SESSION_INTERACTION_POLICY.json"),
+        deliberation_policy=_json("config/DELIBERATION_POLICY.json"),
+        evolution_policy=_json("config/EVOLUTION_POLICY.json"),
+        host_profiles=_json("config/HOST_PROFILES.json"),
+    )
+    actual = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
+    assert actual == expected
+
+
 def test_runtime_skill_has_discoverable_metadata_and_current_authority_bootstrap():
     text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
     assert text.startswith("---\nname: uaos-controller-runtime\n")
@@ -35,9 +49,10 @@ def test_runtime_skill_has_discoverable_metadata_and_current_authority_bootstrap
 
 def test_runtime_skill_is_dispatcher_not_second_cognition_or_evolution_state_machine():
     text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
-    assert "non-authoritative" in text.lower()
+    assert "generated, non-authoritative" in text.lower()
     assert "does not own cognition" in text.lower()
     assert "EvolutionTransaction" in text
+    assert "Do not hand-edit normative behavior here" in text
     canonical_stage_tokens = (
         "FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES",
         "EXPAND_CAUSAL_SOLUTION_AND_EVIDENCE_SPACE",
@@ -48,12 +63,23 @@ def test_runtime_skill_is_dispatcher_not_second_cognition_or_evolution_state_mac
     assert not any(token in text for token in canonical_stage_tokens)
 
 
+def test_runtime_skill_projects_problem_solution_directive_semantics():
+    intent = _json("config/INTENT_RESOLUTION_POLICY.json")["problem_solution_directive_resolution"]
+    text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
+    assert intent["candidate_mechanism_rule"] in text
+    assert intent["anti_bypass_rule"] in text
+    assert intent["explicit_mechanism_requirement_rule"] in text
+    assert intent["conflict_rule"] in text
+    assert "remains an ActionCandidate" in text
+
+
 def test_custom_instruction_pointer_explicitly_interrupts_into_runtime_skill_without_copying_policy():
     pointer = _recommended_custom_instruction_pointer()
     assert 0 < len(pointer) <= 1500
     assert "uaos-controller-runtime" in pointer
     assert "suspected local patches" in pointer
     assert "as hypotheses" in pointer
+    assert "proposed repair remains a candidate" in pointer
     assert "Repeated/systemic repairs must cover the failure class" in pointer
     assert "never use `next` or another no-op user message as the workflow clock" in pointer
     assert "FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES" not in pointer
