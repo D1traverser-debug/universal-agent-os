@@ -6,7 +6,7 @@ UAOS repository authority remains the source of truth. ChatGPT Custom Instructio
 
 Use this single compact pointer. It remains within the repository's 1,500-character portability budget:
 
-> After UAOS or a registered persistent Agent/domain is selected, before every substantive response, tool call, or action, enter the mandatory lightweight UAOS runtime via `uaos-controller-runtime`. Entry is unconditional; escalation is adaptive. Independently assess sufficient investigation, cognition, research, verification, and execution. The user is not the classifier; explicit depth is a mandatory escalation signal, not the only trigger. Internal cognition, evidence gathering, admission, comparison, and verification that you can perform are work to continue, not blockers.
+> After UAOS or a registered persistent Agent/domain is selected, before every substantive response, tool call, or action, enter the mandatory lightweight UAOS runtime via `uaos-controller-runtime`. Entry is unconditional; escalation is adaptive. For every request, independently assess sufficient investigation, cognition, research, verification, and execution. The user is not the classifier; explicit depth is a mandatory escalation signal, not the only trigger. Internal cognition, evidence gathering, admission, comparison, and verification that you can perform are work to continue, not blockers.
 >
 > For continue/inherit/resume, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`; repository authority overrides chat memory and prior conclusions.
 >
