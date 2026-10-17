@@ -18,14 +18,15 @@ from uaos.execution import (
 
 
 class MigrationExecutor:
-    def __init__(self, evidence):
+    def __init__(self, evidence, disposition=ExecutionDisposition.CONFIRMED):
         self.evidence = evidence
+        self.disposition = disposition
         self.calls = 0
 
     def execute(self, request):
         self.calls += 1
         return ExecutionOutcome(
-            ExecutionDisposition.CONFIRMED,
+            self.disposition,
             output="migration-close-attempt",
             evidence=self.evidence,
         )
@@ -55,10 +56,10 @@ def source_and_target():
     return source, target
 
 
-def coordinator_for(evidence):
+def coordinator_for(evidence, *, disposition=ExecutionDisposition.CONFIRMED):
     source, target = source_and_target()
     registry = CapabilityRegistry()
-    executor = MigrationExecutor(evidence)
+    executor = MigrationExecutor(evidence, disposition=disposition)
     registry.register(
         CapabilityObservation(
             capability_id="migration.closer",
@@ -98,6 +99,14 @@ def coordinator_for(evidence):
 
 def test_executor_confirmed_is_downgraded_when_migration_closure_evidence_missing():
     coordinator, request, _, _, executor = coordinator_for({})
+    result = coordinator.execute(request)
+    assert executor.calls == 1
+    assert result.outcome.disposition is ExecutionDisposition.UNKNOWN
+    assert "migration closure unverified" in result.outcome.error
+
+
+def test_string_confirmed_is_normalized_before_migration_closure_gate():
+    coordinator, request, _, _, executor = coordinator_for({}, disposition="CONFIRMED")
     result = coordinator.execute(request)
     assert executor.calls == 1
     assert result.outcome.disposition is ExecutionDisposition.UNKNOWN
