@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.6",
-  "policy_version":"1.6.0",
+  "schema_version":"1.7",
+  "policy_version":"1.7.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-17T10:48:58+08:00",
+  "updated_at":"2026-10-17T11:05:28+08:00",
   "context_model":{
     "controller":"UAOS",
     "domain_format":"DOMAIN:<domain_id>",
@@ -31,8 +31,9 @@
       "UAOS parent-governed descendant changes must read current domain binding/business authority, perform impact analysis and preserve domain-specific validation; governance_basis is lineage, not a bypass.",
       "DOMAIN:X -> UAOS direct authoritative mutation is prohibited.",
       "DOMAIN:X -> DOMAIN:Y direct authoritative mutation is prohibited.",
-      "Reconciliation must bind the immutable original request, the original admission receipt and the original capability registration generation, then rerun authority/persistent/approval gates before adapter reconciliation.",
+      "Reconciliation must resolve a coordinator-owned opaque UNKNOWN execution record, bind its immutable original request, original admission receipt and original capability registration generation, then rerun authority/persistent/approval gates before adapter reconciliation; caller-returned UNKNOWN fields are not trusted reconciliation truth.",
       "Executor and reconciler dispositions must be normalized to the trusted disposition enum before migration, fallback, routing or terminal-state decisions.",
+      "A mutation that crosses its physical commit point but cannot confirm cleanup or durability must return UNKNOWN rather than FAILED.",
       "Approval cannot override hierarchy, trusted asset ownership/lifecycle, trusted capability action/CRUD semantics, or owner-specific mutation restrictions."
     ]
   },
@@ -55,8 +56,10 @@
       "MUTATING_VS_READ_ONLY",
       "PERSISTENT_ASSET_OPERATION_ADMISSION",
       "PERSISTENT_ASSET_OPERATION_ADMISSION_WHEN_APPLICABLE",
+      "RECONCILIATION_COORDINATOR_OWNED_EXECUTION_RECORD_BINDING_WHEN_APPLICABLE",
       "RECONCILIATION_ORIGINAL_REQUEST_RECEIPT_AND_REGISTRATION_BINDING_WHEN_APPLICABLE",
       "NORMALIZED_EXECUTION_DISPOSITION_BEFORE_TERMINAL_DECISIONS",
+      "POST_COMMIT_UNCERTAINTY_CLASSIFIED_UNKNOWN_WHEN_APPLICABLE",
       "OWNER_APPROPRIATE_MUTATION_WORKFLOW",
       "TRIGGER_SIGNALS_REQUIRING_ADAPTIVE_DELIBERATION"
     ],
@@ -75,7 +78,9 @@
       "trusted complete action mutability classification before execution",
       "trusted capability mutation classification and canonical target resolution before durable/external mutation",
       "trusted persistent asset catalog admission for durable/external mutation",
+      "coordinator-owned UNKNOWN reconciliation identity rather than caller-returned outcome trust",
       "freshness/concurrency protection appropriate to the write path",
+      "post-commit uncertainty reported UNKNOWN until reconciled",
       "production authority reread and post-promotion observation",
       "user-visible report of changes and evidence"
     ],
@@ -102,7 +107,8 @@
   "concurrency_semantics":{
     "candidate_branch_updates":"CAS_OR_NORMAL_BRANCH_CONCURRENCY_CONTROLS_ALLOWED",
     "production_updates":"USE_CONTROLLED_MERGE_OR_OWNER_APPROPRIATE_FRESH_WRITE_PROTOCOL",
-    "cas_semantics":"CAS_PREVENTS_STALE_OVERWRITE_BUT_IS_NOT_AUTHORIZATION_OR_PHYSICAL_ENFORCEMENT"
+    "local_workspace_expected_hash":"ADVISORY_PARENT_DIRECTORY_LOCK_SERIALIZES_COOPERATING_UAOS_WRITERS__CONTENT_RECHECK_BEFORE_ATOMIC_RENAME__EXTERNAL_NONCOOPERATING_WRITERS_OUTSIDE_LINEARIZABILITY_CLAIM",
+    "cas_semantics":"CAS_PREVENTS_STALE_OVERWRITE_WITHIN_THE_ENFORCED_WRITE_DOMAIN_BUT_IS_NOT_AUTHORIZATION_OR_PHYSICAL_COMPLETE_MEDIATION"
   },
   "branch_protection_semantics":"OPTIONAL_DEFENSE_IN_DEPTH__NOT_A_SUBSTITUTE_FOR_AGENT_HIERARCHY_DELIBERATION_OR_VALIDATION"
 }
