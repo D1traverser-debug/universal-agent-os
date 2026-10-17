@@ -123,10 +123,12 @@ def test_router_filters_mandatory_permissions_quality_and_cost():
     registry.register(
         observation("cheap", permissions=("web",), quality=0.8, cost=1),
         Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED)),
+        read_only_actions={"research"},
     )
     registry.register(
         observation("best", permissions=("web",), quality=0.95, cost=2),
         Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED)),
+        read_only_actions={"research"},
     )
     request = ExecutionRequest(
         "a1",
@@ -146,29 +148,21 @@ def test_router_never_silently_downgrades_mandatory_floor():
     registry.register(
         observation("weak", quality=0.4),
         Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED)),
+        read_only_actions={"research"},
     )
     request = ExecutionRequest("a1", "research", "topic", {}, quality_floor=0.9)
     with pytest.raises(CapabilityUnavailable):
         ActionCoordinator(registry).execute(request)
 
 
-def test_mutation_without_trusted_capability_contract_fails_before_executor():
+def test_every_registered_action_requires_trusted_mutability_classification():
     registry = CapabilityRegistry()
     executor = Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED))
-    registry.register(
-        observation("writer", actions=("write",), permissions=("repo:write",)), executor
-    )
-    request = ExecutionRequest(
-        "a1",
-        "write",
-        "repo:file",
-        {},
-        required_permissions=("repo:write",),
-        side_effect_class="WRITE",
-        target_authority="UAOS",
-    )
-    with pytest.raises(PersistentAssetViolation, match="trusted MutationContract"):
-        ActionCoordinator(registry, authority_context="UAOS").execute(request)
+    with pytest.raises(ValueError, match="trusted read/mutation classification"):
+        registry.register(
+            observation("writer", actions=("write",), permissions=("repo:write",)),
+            executor,
+        )
     assert executor.calls == []
 
 
@@ -187,13 +181,31 @@ def test_ephemeral_mutation_is_explicit_but_does_not_fabricate_persistent_asset(
         "cache:key",
         {},
         required_permissions=("repo:write",),
-        side_effect_class="WRITE",
+        side_effect_class="READ",
         target_authority="UAOS",
         mutation_persistence=MutationPersistence.EPHEMERAL,
     )
     result = ActionCoordinator(registry, authority_context="UAOS").execute(request)
     assert result.outcome.disposition is ExecutionDisposition.CONFIRMED
     assert result.admission.mutation_persistence is MutationPersistence.EPHEMERAL
+
+
+def test_trusted_mutation_contract_cannot_be_downgraded_by_read_side_effect_assertion():
+    registry = CapabilityRegistry()
+    executor = Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED))
+    register_writer(registry, executor)
+    request = ExecutionRequest(
+        "a1",
+        "write",
+        "repo:file",
+        {},
+        required_permissions=("repo:write",),
+        side_effect_class="READ",
+        target_authority="UAOS",
+    )
+    with pytest.raises(PersistentAssetViolation, match="PersistentAssetCatalog"):
+        ActionCoordinator(registry, authority_context="UAOS").execute(request)
+    assert executor.calls == []
 
 
 def test_durable_mutation_requires_trusted_catalog_before_approval_or_executor():
@@ -333,7 +345,7 @@ def test_side_effect_requires_exact_action_approval_after_trusted_asset_admissio
     )
 
 
-def test_unknown_outcome_reconcile_is_bound_to_original_admission_and_reruns_gates():
+def test_unknown_outcome_reconcile_is_bound_to_original_request_and_reruns_gates():
     registry = CapabilityRegistry()
     executor = ReconcilingExecutor(
         ExecutionOutcome(ExecutionDisposition.UNKNOWN, error="timeout")
@@ -365,8 +377,78 @@ def test_unknown_outcome_reconcile_is_bound_to_original_admission_and_reruns_gat
         side_effect_class="WRITE",
         target_authority="UAOS",
     )
-    with pytest.raises(PersistentAssetViolation, match="originally admitted"):
+    with pytest.raises(PersistentAssetViolation, match="originally executed"):
         coordinator.reconcile(tampered, unknown)
     resolved = coordinator.reconcile(request, unknown)
     assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
     assert len(executor.reconcile_calls) == 1
+
+
+def test_reconcile_cannot_remove_original_approval_requirement():
+    registry = CapabilityRegistry()
+    executor = ReconcilingExecutor(
+        ExecutionOutcome(ExecutionDisposition.UNKNOWN, error="timeout")
+    )
+    register_writer(registry, executor)
+    current = repo_asset()
+    coordinator = ActionCoordinator(
+        registry,
+        authority_context="UAOS",
+        persistent_asset_catalog=PersistentAssetCatalog((current,)),
+    )
+    request = ExecutionRequest(
+        "a1",
+        "write",
+        "repo:file",
+        {"x": 1},
+        required_permissions=("repo:write",),
+        parameter_hash="p1",
+        approval_required=True,
+        target_authority="UAOS",
+    )
+    now = datetime.now(UTC)
+    grant = ApprovalGrant("g", "a1", "repo:file", "p1", now + timedelta(minutes=5))
+    unknown = coordinator.execute(request, approval=grant, now=now)
+    weakened = ExecutionRequest(
+        "a1",
+        "write",
+        "repo:file",
+        {"x": 1},
+        required_permissions=("repo:write",),
+        parameter_hash="p1",
+        approval_required=False,
+        target_authority="UAOS",
+    )
+    with pytest.raises(PersistentAssetViolation, match="originally executed"):
+        coordinator.reconcile(weakened, unknown, now=now)
+    assert executor.reconcile_calls == []
+
+
+def test_reconcile_cannot_cross_capability_reregistration_generation():
+    registry = CapabilityRegistry()
+    original = ReconcilingExecutor(
+        ExecutionOutcome(ExecutionDisposition.UNKNOWN, error="timeout")
+    )
+    register_writer(registry, original)
+    current = repo_asset()
+    coordinator = ActionCoordinator(
+        registry,
+        authority_context="UAOS",
+        persistent_asset_catalog=PersistentAssetCatalog((current,)),
+    )
+    request = ExecutionRequest(
+        "a1",
+        "write",
+        "repo:file",
+        {},
+        required_permissions=("repo:write",),
+        target_authority="UAOS",
+    )
+    unknown = coordinator.execute(request)
+    replacement = ReconcilingExecutor(
+        ExecutionOutcome(ExecutionDisposition.CONFIRMED, output="replacement")
+    )
+    register_writer(registry, replacement)
+    with pytest.raises(PersistentAssetViolation, match="registration generation changed"):
+        coordinator.reconcile(request, unknown)
+    assert replacement.reconcile_calls == []
