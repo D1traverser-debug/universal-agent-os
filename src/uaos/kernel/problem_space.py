@@ -304,6 +304,9 @@ def require_knowledge_acquisition_admission(
     family_ids = [item.family_id for item in assessment.method_families]
     if len(family_ids) != len(set(family_ids)):
         raise KnowledgeAcquisitionAdmissionError("method family ids must be unique")
+    round_ids = [item.round_id for item in assessment.saturation_rounds]
+    if len(round_ids) != len(set(round_ids)):
+        raise KnowledgeAcquisitionAdmissionError("saturation round ids must be unique")
 
     observed_roles = {item.role for item in assessment.sources}
     missing_roles = tuple(role for role in assessment.required_source_roles if role not in observed_roles)
@@ -345,6 +348,21 @@ def require_knowledge_acquisition_admission(
                 "comprehensive acquisition requires at least two documented saturation rounds"
             )
         terminal = assessment.saturation_rounds[-2:]
+        if any(not set(item.methods).intersection(_EXPANSION_METHODS) for item in terminal):
+            raise KnowledgeAcquisitionAdmissionError(
+                "search saturation requires each terminal round to contain expansion work beyond seed/direct lookup"
+            )
+        terminal_signatures = {
+            (
+                tuple(sorted(method.value for method in item.methods)),
+                tuple(sorted(item.evidence_refs)),
+            )
+            for item in terminal
+        }
+        if len(terminal_signatures) < 2:
+            raise KnowledgeAcquisitionAdmissionError(
+                "search saturation requires two distinct terminal expansion rounds, not repeated evidence/work"
+            )
         if any(item.materially_novel for item in terminal):
             raise KnowledgeAcquisitionAdmissionError(
                 "search saturation is not established: a terminal expansion round still changed the method/failure/constraint space"
