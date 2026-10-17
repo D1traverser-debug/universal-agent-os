@@ -28,15 +28,16 @@ def observation(capability_id, *, actions=("research",), permissions=(), quality
     return CapabilityObservation(capability_id, health, 1.0, actions, permissions, quality, cost, "agent")
 
 
-def repo_asset():
+def repo_asset(*, resource_ref="repo:file", lifecycle=AssetLifecycle.CURRENT, role=AssetRole.AUTHORITY, ops=None):
     return PersistentAssetDescriptor(
         asset_id="uaos-repo-file",
+        resource_ref=resource_ref,
         surface=PersistentSurface.GITHUB,
-        role=AssetRole.AUTHORITY,
-        lifecycle=AssetLifecycle.CURRENT,
+        role=role,
+        lifecycle=lifecycle,
         owner_authority="UAOS",
-        allowed_operations=frozenset({CrudOperation.READ, CrudOperation.UPDATE}),
-        canonical_authority_ref="github://D1traverser-debug/universal-agent-os@main",
+        allowed_operations=ops or frozenset({CrudOperation.READ, CrudOperation.UPDATE}),
+        canonical_authority_ref="github://D1traverser-debug/universal-agent-os@main" if role is AssetRole.AUTHORITY else None,
     )
 
 
@@ -68,6 +69,40 @@ def test_mutation_without_persistent_asset_classification_fails_before_approval_
     coordinator = ActionCoordinator(registry, authority_context="UAOS")
     with pytest.raises(PersistentAssetViolation, match="persistent_asset"):
         coordinator.execute(request)
+    assert executor.calls == []
+
+
+def test_mutating_request_cannot_spoof_read_persistent_operation():
+    registry = CapabilityRegistry()
+    executor = Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED))
+    registry.register(observation("writer", actions=("write",), permissions=("repo:write",)), executor)
+    retired = repo_asset(
+        lifecycle=AssetLifecycle.DECOMMISSIONED,
+        role=AssetRole.MIGRATED_HISTORY,
+        ops=frozenset({CrudOperation.READ}),
+    )
+    request = ExecutionRequest(
+        "a1", "write", "repo:file", {}, required_permissions=("repo:write",),
+        side_effect_class="WRITE", target_authority="UAOS",
+        persistent_asset=retired, persistent_operation=CrudOperation.READ,
+    )
+    with pytest.raises(PersistentAssetViolation, match="cannot classify.*READ"):
+        ActionCoordinator(registry, authority_context="UAOS").execute(request)
+    assert executor.calls == []
+
+
+def test_asset_descriptor_cannot_be_reused_for_a_different_executor_target():
+    registry = CapabilityRegistry()
+    executor = Executor(ExecutionOutcome(ExecutionDisposition.CONFIRMED))
+    registry.register(observation("writer", actions=("write",), permissions=("repo:write",)), executor)
+    request = ExecutionRequest(
+        "a1", "write", "repo:archived", {}, required_permissions=("repo:write",),
+        side_effect_class="WRITE", target_authority="UAOS",
+        persistent_asset=repo_asset(resource_ref="repo:current"),
+        persistent_operation=CrudOperation.UPDATE,
+    )
+    with pytest.raises(PersistentAssetViolation, match="executor target"):
+        ActionCoordinator(registry, authority_context="UAOS").execute(request)
     assert executor.calls == []
 
 
