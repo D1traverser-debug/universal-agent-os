@@ -37,6 +37,7 @@ def _runner_for(template, extra_actions=()):
                 quality_score=0.8,
                 cost_class=CapabilityCostClass.INCLUDED,
                 provider="test-host",
+                read_only_actions=frozenset({action}),
             ),
         )
     return LocalWorkflowRunner(ActionCoordinator(registry))

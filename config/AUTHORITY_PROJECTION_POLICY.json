@@ -1,8 +1,8 @@
 {
-  "schema_version":"1.1",
-  "policy_version":"1.1.0",
+  "schema_version":"1.2",
+  "policy_version":"1.2.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-16T16:00:00+08:00",
+  "updated_at":"2026-10-17T09:20:00+08:00",
   "purpose":"Prevent bootstrap/status projections and cross-owner summaries from becoming stale shadow authorities. Semantic owners remain authoritative; projections point to owners, stay fresh, and referenced-owner semantics must not be reimplemented by contradictory copies.",
   "semantic_owners":{
     "cognition":"config/DELIBERATION_POLICY.json",
@@ -11,7 +11,8 @@
     "session_interaction":"config/SESSION_INTERACTION_POLICY.json",
     "common_capabilities":"config/COMMON_CAPABILITIES.json",
     "common_behavior":"config/COMMON_BEHAVIOR_ASSURANCE.json",
-    "authority_write":"config/AUTHORITY_WRITE_POLICY.json"
+    "authority_write":"config/AUTHORITY_WRITE_POLICY.json",
+    "persistent_assets":"config/PERSISTENT_ASSET_POLICY.json"
   },
   "derived_projections":{
     "CURRENT_SYSTEM.json":{
@@ -37,7 +38,7 @@
     }
   },
   "reconciliation_rule":"When a semantic owner changes materially, all affected derived projections are updated in the same candidate or CI fails. A green owner change with a stale projection is not a valid promotion.",
-  "cross_owner_reference_rule":"When one semantic owner delegates a sub-semantic to another canonical owner, it must carry an owner reference and invariant/assurance summary only; it must not freeze a competing algorithm whose behavior can diverge. CI should test material known delegations such as COMMON_CAPABILITIES -> DELIBERATION_POLICY.",
+  "cross_owner_reference_rule":"When one semantic owner delegates a sub-semantic to another canonical owner, it must carry an owner reference and invariant/assurance summary only; it must not freeze a competing algorithm whose behavior can diverge. CI should test material known delegations such as COMMON_CAPABILITIES -> DELIBERATION_POLICY and AUTHORITY_WRITE_POLICY -> PERSISTENT_ASSET_POLICY.",
   "child_observation_rule":"Parent child-head/profile/CI observations belong in state/DOMAIN_HEALTH_INDEX.json as a cache. Fresh domain execution rereads current child authority. CURRENT_SYSTEM must not duplicate those volatile observations.",
   "analogy":"Controller-style reconciliation: desired semantic authority is owned once; projections are reconciled views, not competing sources of truth.",
   "anti_bloat":"Do not solve projection drift by adding another controller or another current-state mirror. Use owner references, compact projections and static/reproducible reconciliation checks in the existing promotion gate."

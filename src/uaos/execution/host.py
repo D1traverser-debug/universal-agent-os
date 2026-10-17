@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import time
-from typing import Any, Callable
+from typing import Any, Callable, Mapping
 
 from .models import (
     CapabilityAvailability,
@@ -13,19 +13,15 @@ from .models import (
     ExecutionOutcome,
     ExecutionRequest,
 )
-from .registry import CapabilityRegistry
+from .persistent_assets import MutationContract
+from .registry import CapabilityRegistry, TargetCanonicalizer
 
 
 HostCallback = Callable[[ExecutionRequest], Any]
 
 
 class HostCallableExecutor:
-    """Wrap a capability supplied by the current host/session.
-
-    The callback may represent a built-in tool, connected plugin, free API,
-    browser/search capability, local script or another host-provided executor.
-    UAOS does not assume that it is available outside the current session.
-    """
+    """Wrap a capability supplied by the current host/session."""
 
     def __init__(self, callback: HostCallback) -> None:
         self._callback = callback
@@ -60,6 +56,9 @@ class HostCapabilitySpec:
     health: CapabilityHealth = CapabilityHealth.AVAILABLE
     ttl_seconds: float | None = None
     provider: str = "host"
+    read_only_actions: frozenset[str] = frozenset()
+    mutation_contracts: Mapping[str, MutationContract] = field(default_factory=dict)
+    canonicalize_target: TargetCanonicalizer | None = None
 
     def __post_init__(self) -> None:
         if not self.capability_id.strip():
@@ -70,6 +69,30 @@ class HostCapabilitySpec:
             raise ValueError("estimated_cost cannot be negative")
         if self.ttl_seconds is not None and self.ttl_seconds <= 0:
             raise ValueError("ttl_seconds must be positive")
+        supported = set(self.supported_actions)
+        classified = set(self.read_only_actions) | set(self.mutation_contracts)
+        unsupported = classified - supported
+        if unsupported:
+            raise ValueError(
+                f"action contracts reference unsupported actions: {sorted(unsupported)}"
+            )
+        overlap = set(self.read_only_actions) & set(self.mutation_contracts)
+        if overlap:
+            raise ValueError(
+                f"actions cannot be both read-only and mutating: {sorted(overlap)}"
+            )
+        missing = supported - classified
+        if missing:
+            raise ValueError(
+                f"every host action requires trusted read/mutation classification: {sorted(missing)}"
+            )
+        durable = any(
+            contract.operation is not None for contract in self.mutation_contracts.values()
+        )
+        if durable and self.canonicalize_target is None:
+            raise ValueError(
+                "durable/external host mutation requires canonicalize_target"
+            )
 
 
 def register_host_capability(
@@ -94,5 +117,11 @@ def register_host_capability(
         cost_class=spec.cost_class,
         availability=spec.availability,
     )
-    registry.register(observation, HostCallableExecutor(spec.callback))
+    registry.register(
+        observation,
+        HostCallableExecutor(spec.callback),
+        read_only_actions=spec.read_only_actions,
+        mutation_contracts=spec.mutation_contracts,
+        canonicalize_target=spec.canonicalize_target,
+    )
     return observation

@@ -1,76 +1,39 @@
 {
-  "schema_version":"1.4",
-  "policy_version":"1.4.0",
+  "schema_version":"1.8",
+  "policy_version":"1.8.0",
   "authority":"UAOS",
-  "updated_at":"2026-10-14T16:31:00Z",
-  "context_model":{
-    "controller":"UAOS",
-    "domain_format":"DOMAIN:<domain_id>",
-    "source":"CURRENT_SELECTED_CONTROLLER_OR_TASK_DOMAIN",
-    "hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS"
-  },
-  "mutation_admission":{
-    "default":"FAIL_CLOSED",
-    "non_mutating_side_effects":["NONE","READ"],
-    "rules":[
-      "Every mutating ExecutionRequest must declare target_authority.",
-      "ActionCoordinator or the host-equivalent decision layer must be bound to the selected authority_context.",
-      "Same-authority mutation is permitted subject to owner rules, normal action/approval/concurrency controls and the applicable repository workflow.",
-      "A registered ancestor may mutate a descendant only when the hierarchy is known and the request carries a non-empty governance_basis.",
-      "UAOS parent-governed descendant changes must read current domain binding/business authority, perform impact analysis and preserve domain-specific validation; governance_basis is lineage, not a bypass.",
-      "DOMAIN:X -> UAOS direct authoritative mutation is prohibited.",
-      "DOMAIN:X -> DOMAIN:Y direct authoritative mutation is prohibited.",
-      "A child may issue a non-mutating parent upcall for diagnosis, replan, research, assurance or evolution guidance without surrendering its selected task authority.",
-      "Approval cannot override hierarchy or ownership restrictions."
-    ]
-  },
-  "always_on_mutation_sentinel":{
-    "enabled":true,
-    "scope":"EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT",
-    "checks":[
-      "SELECTED_AUTHORITY_CONTEXT",
-      "TARGET_AUTHORITY_OR_RESOURCE",
-      "MUTATING_VS_READ_ONLY",
-      "OWNER_APPROPRIATE_MUTATION_WORKFLOW",
-      "TRIGGER_SIGNALS_REQUIRING_ADAPTIVE_DELIBERATION"
-    ],
-    "depth_rule":"LIGHTWEIGHT_ALWAYS_ON__ESCALATE_DELIBERATION_ONLY_WHEN_TRIGGERED"
-  },
-  "autonomous_maintenance_baseline":{
-    "goal":"SELF_CHECK__SELF_EXECUTE__VERIFY__REPORT_WITHOUT_PER_WRITE_USER_APPROVAL",
-    "normal_material_github_path":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_CHECKS__CONTROLLED_MERGE_OR_UPDATE__PRODUCTION_REREAD",
-    "required_properties":[
-      "candidate isolation for material architecture/governance changes",
-      "problem-response research and reflection per current deliberation policy",
-      "owner-appropriate reproducible validation",
-      "freshness/concurrency protection appropriate to the write path",
-      "production authority reread and post-promotion observation",
-      "user-visible report of changes and evidence"
-    ],
-    "direct_production_write":"NOT_THE_NORMAL_PATH_FOR_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGES",
-    "user_confirmation":"NOT_REQUIRED_PER_WRITE_WHEN_HOST_PERMISSION_ALLOWS_AUTONOMOUS_ACTION"
-  },
-  "optional_host_hardening":{
-    "classification":"DEFENSE_IN_DEPTH",
-    "mechanisms":["GITHUB_RULESET","BRANCH_PROTECTION","MANDATORY_REVIEW","EQUIVALENT_REMOTE_ENFORCEMENT"],
-    "default_requirement":"OPTIONAL_UNLESS_RISK_OR_EXPLICIT_REQUIREMENT_CALLS_FOR_NON_BYPASSABLE_ENFORCEMENT",
-    "selection_rule":"ADD_ONLY_WHEN_THE_EXTRA_ASSURANCE_JUSTIFIES_OPERATIONAL_FRICTION_AND_COMPLEXITY",
-    "assurance_rule":"ABSENCE_DOES_NOT_BLOCK_BASELINE_RELEASE_OR_AGENT_OPERATION"
-  },
-  "physical_complete_mediation_assurance":{
-    "claim_is_optional":true,
-    "when_claimed":"REMOTE_NON_BYPASSABLE_ENFORCEMENT_EVIDENCE_IS_MANDATORY",
-    "required_evidence":[
-      "active protection on the relevant production ref",
-      "required owner-appropriate status checks when part of the claim",
-      "no writer bypass inconsistent with the claimed guarantee"
-    ],
-    "without_evidence":"DO_NOT_CLAIM_PHYSICAL_COMPLETE_MEDIATION"
-  },
-  "concurrency_semantics":{
-    "candidate_branch_updates":"CAS_OR_NORMAL_BRANCH_CONCURRENCY_CONTROLS_ALLOWED",
-    "production_updates":"USE_CONTROLLED_MERGE_OR_OWNER_APPROPRIATE_FRESH_WRITE_PROTOCOL",
-    "cas_semantics":"CAS_PREVENTS_STALE_OVERWRITE_BUT_IS_NOT_AUTHORIZATION_OR_PHYSICAL_ENFORCEMENT"
-  },
+  "updated_at":"2026-10-17T11:15:06+08:00",
+  "context_model":{"controller":"UAOS","domain_format":"DOMAIN:<domain_id>","source":"CURRENT_SELECTED_CONTROLLER_OR_TASK_DOMAIN","hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS"},
+  "persistent_asset_policy":"config/PERSISTENT_ASSET_POLICY.json",
+  "persistent_asset_executable":"src/uaos/execution/persistent_assets.py#PersistentAssetGate",
+  "persistent_asset_catalog":"src/uaos/execution/persistent_assets.py#PersistentAssetCatalog",
+  "mutation_admission":{"default":"FAIL_CLOSED","trusted_action_classification":"EVERY_SUPPORTED_ACTION_IS_EXPLICITLY_READ_ONLY_OR_HAS_A_MUTATION_CONTRACT_AT_CAPABILITY_REGISTRATION","legacy_request_side_effect_class":"ASSERTION_OR_CONTEXT_ONLY__NOT_MUTABILITY_AUTHORITY","rules":[
+    "Every supported capability action must be classified by trusted registration as read-only or mutating; unclassified registration fails closed.",
+    "Mutation status is derived from the selected RegisteredCapability, never from ExecutionRequest.side_effect_class.",
+    "Every trusted mutating action must declare target_authority on the request and pass authority admission.",
+    "Every mutating capability action must have a trusted capability registration contract that classifies it as EPHEMERAL or DURABLE_OR_EXTERNAL; absence of a trusted contract fails closed.",
+    "EPHEMERAL mutation does not fabricate a persistent asset and cannot carry persistent CRUD/asset assertions.",
+    "DURABLE_OR_EXTERNAL mutation derives CRUD semantics from the selected capability registration, canonicalizes the target through the selected adapter, and resolves lifecycle/owner/role/permissions from the trusted PersistentAssetCatalog.",
+    "Request-provided side-effect, persistence, CRUD or asset metadata cannot override trusted capability or catalog semantics.",
+    "Trusted CRUD must match the executor's real effect; actions whose real effect differs between CREATE and UPDATE must expose distinct trusted action contracts or equivalent trusted pre-execution derivation.",
+    "ActionCoordinator or the host-equivalent decision layer must be bound to the selected authority_context.",
+    "Same-authority mutation is permitted subject to owner rules, trusted mutation/asset admission, normal action/approval/concurrency controls and the applicable repository/workspace workflow.",
+    "A registered ancestor may mutate a descendant only when the hierarchy is known and the request carries a non-empty governance_basis.",
+    "UAOS parent-governed descendant changes must read current domain binding/business authority, perform impact analysis and preserve domain-specific validation; governance_basis is lineage, not a bypass.",
+    "DOMAIN:X -> UAOS direct authoritative mutation is prohibited.",
+    "DOMAIN:X -> DOMAIN:Y direct authoritative mutation is prohibited.",
+    "Reconciliation must resolve a coordinator-owned opaque UNKNOWN execution record, bind its immutable original request, original admission receipt and original capability registration generation, then rerun authority/persistent/approval gates before adapter reconciliation; caller-returned UNKNOWN fields are not trusted reconciliation truth.",
+    "Reconciliation of one opaque UNKNOWN execution id is single-flight: a concurrent attempt must fail closed before entering the provider reconciler or other repair side effect.",
+    "Executor and reconciler dispositions must be normalized to the trusted disposition enum before migration, fallback, routing or terminal-state decisions.",
+    "A mutation that crosses its physical commit point but cannot confirm cleanup or durability must return UNKNOWN rather than FAILED.",
+    "Approval cannot override hierarchy, trusted asset ownership/lifecycle, trusted capability action/CRUD semantics, or owner-specific mutation restrictions."
+  ]},
+  "always_on_mutation_sentinel":{"enabled":true,"scope":"EVERY_TRUSTED_MUTATION_ATTEMPT__PERSISTENT_ASSET_SUBGATE_ONLY_FOR_TRUSTED_DURABLE_OR_EXTERNAL_CONTRACTS","checks":["TRUSTED_ACTION_MUTABILITY_CLASSIFICATION","SELECTED_CAPABILITY_REGISTRATION_GENERATION","SELECTED_AUTHORITY_CONTEXT","TARGET_AUTHORITY_OR_RESOURCE","TRUSTED_MUTATION_PERSISTENCE_CONTRACT","TRUSTED_CRUD_OPERATION_FOR_DURABLE_OR_EXTERNAL","ADAPTER_CANONICAL_TARGET_IDENTITY_FOR_DURABLE_OR_EXTERNAL","TRUSTED_CATALOG_ASSET_ROLE_LIFECYCLE_OWNER_AND_ALLOWED_OPERATIONS","TARGET_PERSISTENT_SURFACE","TARGET_ASSET_ROLE","TARGET_ASSET_LIFECYCLE","ASSET_OWNER_AUTHORITY","MUTATING_VS_READ_ONLY","PERSISTENT_ASSET_OPERATION_ADMISSION","PERSISTENT_ASSET_OPERATION_ADMISSION_WHEN_APPLICABLE","RECONCILIATION_COORDINATOR_OWNED_EXECUTION_RECORD_BINDING_WHEN_APPLICABLE","RECONCILIATION_SINGLE_FLIGHT_CLAIM_WHEN_APPLICABLE","RECONCILIATION_ORIGINAL_REQUEST_RECEIPT_AND_REGISTRATION_BINDING_WHEN_APPLICABLE","NORMALIZED_EXECUTION_DISPOSITION_BEFORE_TERMINAL_DECISIONS","POST_COMMIT_UNCERTAINTY_CLASSIFIED_UNKNOWN_WHEN_APPLICABLE","OWNER_APPROPRIATE_MUTATION_WORKFLOW","TRIGGER_SIGNALS_REQUIRING_ADAPTIVE_DELIBERATION"],"compatibility_note":"Legacy target/role/lifecycle/owner check identifiers are retained, but their values now come from trusted capability registration, adapter canonicalization and catalog resolution rather than request labels.","depth_rule":"LIGHTWEIGHT_ALWAYS_ON__ESCALATE_DELIBERATION_ONLY_WHEN_TRIGGERED"},
+  "cross_surface_rule":"SEARCH_OR_RETRIEVAL_PRESENCE_DOES_NOT_PROMOTE_AN_ASSET_TO_AUTHORITY__BOOTSTRAP_REFERENCE_SHARED_RESOURCE_DELIVERY_HISTORY_AUTOMATION_AND_EXTERNAL_RECORD_SURFACES_REMAIN_NON_AUTHORITATIVE_UNLESS_A_GOVERNED_MIGRATION_EXPLICITLY_PROMOTES_A_TARGET_AUTHORITY_ASSET",
+  "migration_rule":"COPY_OR_REBUILD_USES_NORMAL_CREATE_UPDATE_OUTPUT_OPERATIONS__MIGRATE_IS_CLOSURE_CONFIRMATION__CONFIRMED_MIGRATE_REQUIRES_NORMALIZED_DISPOSITION_CATALOG_BOUND_SOURCE_TARGET_IDENTITIES_TARGET_VERIFICATION_AND_SOURCE_RETIREMENT__SOURCE_REMAINS_NON_AUTHORITATIVE_EVEN_IF_SEARCHABLE",
+  "autonomous_maintenance_baseline":{"goal":"SELF_CHECK__SELF_EXECUTE__VERIFY__REPORT_WITHOUT_PER_WRITE_USER_APPROVAL","normal_material_github_path":"CANDIDATE_BRANCH__PULL_REQUEST__OWNER_APPROPRIATE_CHECKS__CONTROLLED_MERGE_OR_UPDATE__PRODUCTION_REREAD","required_properties":["candidate isolation for material architecture/governance changes","problem-response research and reflection per current deliberation policy","owner-appropriate reproducible validation","trusted complete action mutability classification before execution","trusted capability mutation classification and canonical target resolution before durable/external mutation","trusted persistent asset catalog admission for durable/external mutation","coordinator-owned UNKNOWN reconciliation identity rather than caller-returned outcome trust","single-flight claim for each UNKNOWN execution id before provider reconciliation side effects","freshness/concurrency protection appropriate to the write path","post-commit uncertainty reported UNKNOWN until reconciled","production authority reread and post-promotion observation","user-visible report of changes and evidence"],"direct_production_write":"NOT_THE_NORMAL_PATH_FOR_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_CHANGES","user_confirmation":"NOT_REQUIRED_PER_WRITE_WHEN_HOST_PERMISSION_ALLOWS_AUTONOMOUS_ACTION"},
+  "optional_host_hardening":{"classification":"DEFENSE_IN_DEPTH","mechanisms":["GITHUB_RULESET","BRANCH_PROTECTION","MANDATORY_REVIEW","EQUIVALENT_REMOTE_ENFORCEMENT"],"default_requirement":"OPTIONAL_UNLESS_RISK_OR_EXPLICIT_REQUIREMENT_CALLS_FOR_NON_BYPASSABLE_ENFORCEMENT","selection_rule":"ADD_ONLY_WHEN_THE_EXTRA_ASSURANCE_JUSTIFIES_OPERATIONAL_FRICTION_AND_COMPLEXITY","assurance_rule":"ABSENCE_DOES_NOT_BLOCK_BASELINE_RELEASE_OR_AGENT_OPERATION"},
+  "physical_complete_mediation_assurance":{"claim_is_optional":true,"when_claimed":"REMOTE_NON_BYPASSABLE_ENFORCEMENT_EVIDENCE_IS_MANDATORY","required_evidence":["active protection on the relevant production ref","required owner-appropriate status checks when part of the claim","no writer bypass inconsistent with the claimed guarantee"],"without_evidence":"DO_NOT_CLAIM_PHYSICAL_COMPLETE_MEDIATION"},
+  "concurrency_semantics":{"candidate_branch_updates":"CAS_OR_NORMAL_BRANCH_CONCURRENCY_CONTROLS_ALLOWED","production_updates":"USE_CONTROLLED_MERGE_OR_OWNER_APPROPRIATE_FRESH_WRITE_PROTOCOL","unknown_reconciliation":"PER_EXECUTION_ID_SINGLE_FLIGHT_CLAIM_SERIALIZES_PROVIDER_REPAIR_ATTEMPTS__DISTINCT_EXECUTION_IDS_REMAIN_BULKHEADED","local_workspace_expected_hash":"ADVISORY_PARENT_DIRECTORY_LOCK_SERIALIZES_COOPERATING_UAOS_WRITERS__CONTENT_RECHECK_BEFORE_ATOMIC_RENAME__EXTERNAL_NONCOOPERATING_WRITERS_OUTSIDE_LINEARIZABILITY_CLAIM","cas_semantics":"CAS_PREVENTS_STALE_OVERWRITE_WITHIN_THE_ENFORCED_WRITE_DOMAIN_BUT_IS_NOT_AUTHORIZATION_OR_PHYSICAL_COMPLETE_MEDIATION"},
   "branch_protection_semantics":"OPTIONAL_DEFENSE_IN_DEPTH__NOT_A_SUBSTITUTE_FOR_AGENT_HIERARCHY_DELIBERATION_OR_VALIDATION"
 }
