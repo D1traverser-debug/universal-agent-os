@@ -216,7 +216,7 @@ def _normalize_outcome(outcome: ExecutionOutcome, *, source: str) -> ExecutionOu
 
 
 def _snapshot_outcome(outcome: ExecutionOutcome) -> ExecutionOutcome:
-    """Create a coordinator-owned outcome instance detached from the public receipt."""
+    """Create a coordinator-owned outcome instance detached from any public receipt."""
 
     normalized = _normalize_outcome(outcome, source="outcome snapshot")
     return ExecutionOutcome(
@@ -238,11 +238,12 @@ class ActionCoordinator:
 
     UNKNOWN reconciliation is coordinator-owned. A caller receives an opaque execution
     id, while the authoritative request snapshot, admission and a separately constructed
-    outcome snapshot remain internal. Public and internal outcome instances never alias.
-    A per-execution reconciliation claim prevents concurrent repair attempts for one id.
-    The baseline record/claim store is process-local and fails closed after restart; a
-    host requiring cross-process reconciliation must persist the same record and atomic
-    claim state in its authority store.
+    outcome snapshot remain internal. Public and internal outcome instances never alias,
+    including UNKNOWN returns from a no-reconciler path. A per-execution reconciliation
+    claim prevents concurrent repair attempts for one id. The baseline record/claim store
+    is process-local and fails closed after restart; a host requiring cross-process
+    reconciliation must persist the same record and atomic claim state in its authority
+    store.
     """
 
     def __init__(
@@ -615,7 +616,7 @@ class ActionCoordinator:
             if reconciler is None:
                 return CoordinatedExecution(
                     record.capability_id,
-                    record.outcome,
+                    _snapshot_outcome(record.outcome),
                     record.admission,
                     record.request,
                     execution_id,
