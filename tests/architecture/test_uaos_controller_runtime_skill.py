@@ -64,14 +64,17 @@ def test_runtime_skill_is_dispatcher_not_second_cognition_research_or_evolution_
     assert not any(token in text for token in canonical_stage_tokens)
 
 
-def test_runtime_skill_frontloads_mandatory_entry_before_bootstrap_and_mutation():
+def test_runtime_skill_frontloads_mandatory_entry_continuation_and_blocker_semantics():
     text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
     entry = text.index("## 1. Mandatory selected-context entry")
+    continuation = text.index("Autonomous continuation:")
+    blocker = text.index("Blocker rule:")
     authority = text.index("## 2. Recover current authority")
     mutation = text.index("## 6. Evolution and mutation")
-    assert entry < authority < mutation
+    assert entry < continuation < blocker < authority < mutation
     assert "Entry is mandatory; escalation is adaptive." in text
     assert "not prerequisites for entering this sentinel" in text
+    assert "unresolved causality disguised as certainty is not a valid repair claim" in text
     assert "route broad unknown-method/framework/capability learning" in text
 
 
@@ -94,7 +97,9 @@ def test_custom_instruction_pointer_is_mandatory_entry_not_symptom_trigger_and_s
     assert "before every substantive response, tool call, or action" in pointer
     assert "entry is unconditional" in lower
     assert "escalation is adaptive" in lower
-    assert "do not require pre-classification as complex, unknown, systemic, architectural, deep, or problematic" in lower
+    assert "the user is not the classifier" in lower
+    assert "internal cognition, evidence gathering, admission, comparison, and verification" in lower
+    assert "are work to continue, not blockers" in lower
     assert "from any source as candidates until evidence supports them" in lower
     assert "explicit outcomes/constraints" in lower
     assert "choose the next evidence-supported action, execute, verify, reassess, and continue" in lower
