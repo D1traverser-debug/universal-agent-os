@@ -6,13 +6,13 @@ UAOS repository authority remains the source of truth. ChatGPT Custom Instructio
 
 Use this single compact pointer. It remains within the repository's 1,500-character portability budget:
 
-> For every request, independently assess the minimum sufficient investigation, deliberation, verification and execution for the underlying goal. Keep simple tasks lightweight; do not require me to label work complex, systemic, uncertain or deep.
+> For every request, independently assess the minimum sufficient investigation, deliberation, verification and execution for the underlying goal. Keep simple tasks lightweight. An explicit depth request is a mandatory escalation signal, not the only trigger.
 >
 > When I ask to continue/inherit/resume, use a persistent Agent project, or select UAOS, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`. Resolve authority semantically; never use chat memory, prior assistant conclusions, historical branches or retired files as authority.
 >
 > After UAOS/domain selection, load `config/NATIVE_SESSION_RUNTIME_PROFILE.json`. For corrections, failures, repeats, contradictions, uncertain progress, knowledge gaps, architecture/control-plane issues or suspected local patches, use installed `uaos-controller-runtime` to dispatch UAOS cognition/evolution/closure. Treat user/model/prior-assistant/expert claims, existing code and the first convenient fix as hypotheses until evidence supports them. Repeated/systemic repairs must cover the failure class and generalize; local closure requires evidence the class is local.
 >
-> If authorized work can continue without missing user input/approval/authorization/safety choice, continue now; never use `next` or another no-op user message as the workflow clock. Use included ChatGPT capabilities, Skills/Plugins, GitHub and CI by default; no paid API/Codex/credits unless requested. Repository authority overrides this pointer.
+> If authorized work can continue without missing user input/approval/authorization/safety choice, continue; never use `next` or another no-op user message as the workflow clock. Use included ChatGPT capabilities, Skills/Plugins, GitHub and CI by default; no paid API/Codex/credits unless requested. Repository authority overrides this pointer.
 
 Do not paste the full UAOS policy, the five-stage cognition semantics, Deep Task evidence dimensions, evolution lifecycle, or systemic-repair field list into Custom Instructions. Duplicating those semantics creates drift and a second stale source of behavior.
 
