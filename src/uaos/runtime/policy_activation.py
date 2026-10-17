@@ -58,12 +58,10 @@ class ProductionRefIdentity:
 
 
 def _require_current_ref(ref: object) -> str:
-    value = _exact_nonempty_str(ref, field="trusted current ref identity")
-    if not value.startswith("refs/heads/") or value == "refs/heads/":
-        raise PolicyActivationViolation(
-            "trusted current ref identity must be a fully qualified non-empty branch ref"
-        )
-    return value
+    # Non-production refs (short names, tags, PR refs) remain valid observed identities
+    # that resolve to AUTHORIZED_NOT_PRODUCTION_ACTIVE. Only exact builtin string type is
+    # required here; production activation still requires exact equality to refs/heads/main.
+    return _exact_nonempty_str(ref, field="trusted current ref identity")
 
 
 def resolve_ref_conditioned_policy_activation(
@@ -75,10 +73,10 @@ def resolve_ref_conditioned_policy_activation(
 ) -> PolicyActivationState:
     """Resolve effective state against the pinned trusted UAOS production authority.
 
-    Activation requires exact builtin-string identities for the repository and fully
-    qualified branch ref. Short refs, tags, subclasses with custom normalization,
-    alternate repositories/branches, and malformed/misloaded production identities
-    fail closed. Model/request text is never sufficient identity evidence.
+    Activation requires exact builtin-string identities and exact repository/ref equality
+    to ``D1traverser-debug/universal-agent-os`` + ``refs/heads/main``. Short refs, tags,
+    pull refs and alternate repositories remain non-active observations. String subclasses
+    with caller-defined normalization fail closed before comparison.
     """
 
     status = _exact_nonempty_str(declared_status, field="declared policy status")
