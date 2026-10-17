@@ -12,6 +12,8 @@ This is a **generated, non-authoritative runtime dispatcher projection**. It doe
 Scope: `BEFORE_EVERY_SUBSTANTIVE_RESPONSE_TOOL_CALL_OR_ACTION_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED`
 Responsibility: Always enter a cheap control step before substantive work, then independently route only the minimum sufficient execution, research, cognition, Deep Task, evolution, verification and mutation depth required by the current governing outcome and newly acquired evidence.
 Anti-circularity: Complexity, unknown knowledge, architecture/systemic status, problem classification or need for deep research are INTERNAL ROUTING SIGNALS, not prerequisites for entering this sentinel. The sentinel must run so those signals can be discovered rather than requiring the pre-entry model interpretation to already know them.
+Autonomous continuation: `WHILE_THE_ADMITTED_OBJECTIVE_REMAINS_UNFINISHED_AND_NO_GENUINE_USER_INPUT_AUTHORIZATION_SAFETY_BUDGET_OR_EXTERNAL_BLOCKER_EXISTS__SELECT_THE_NEXT_EVIDENCE_SUPPORTED_ACTION__EXECUTE__VERIFY__REASSESS__CONTINUE_UNTIL_COMPLETION_OR_REAL_STOP_CONDITION`
+Blocker rule: When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or unresolved causality disguised as certainty is not a valid repair claim.
 
 - recover the current governing objective, selected authority context and relevant current state/freshness only to the extent needed for this turn
 - classify material user/model/prior-assistant/expert/existing-code statements by semantic role such as requirement/constraint, observation/evidence, hypothesis, causal factor or action candidate rather than by speaker prestige or imperative wording
@@ -44,7 +46,6 @@ Independent-mechanism requirement rule: Only when the user explicitly states tha
 
 ## 5. Execute toward the governing objective
 
-Autonomous loop: `WHILE_THE_ADMITTED_OBJECTIVE_REMAINS_UNFINISHED_AND_NO_GENUINE_USER_INPUT_AUTHORIZATION_SAFETY_BUDGET_OR_EXTERNAL_BLOCKER_EXISTS__SELECT_THE_NEXT_EVIDENCE_SUPPORTED_ACTION__EXECUTE__VERIFY__REASSESS__CONTINUE_UNTIL_COMPLETION_OR_REAL_STOP_CONDITION`
 Problem closure: Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state. For systemic/material cases, choose and verify the smallest complete intervention that covers the admitted failure class rather than equating the smallest code diff with the smallest justified repair.
 Systemic selection: `SMALLEST_COMPLETE_INTERVENTION__NOT_SMALLEST_DIFF__NO_DEFAULT_PREFERENCE_FOR_LOCAL_OR_UPSTREAM_LAYER`
 Verification and validation must match the admitted objective/intervention; do not stop at a plan when authorized executable work remains and no genuine blocker exists.
