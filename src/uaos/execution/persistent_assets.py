@@ -118,11 +118,11 @@ def _nonempty(value: str | None) -> bool:
 
 
 class PersistentAssetGate:
-    """Common fail-closed admission for durable assets across persistent surfaces.
+    """Fail-closed classification/admission for durable assets across surfaces.
 
-    This gate classifies *what* is being mutated and where it lives. It deliberately
-    does not replace AuthorityScopeGate, repository-specific approval, or connector
-    permissions. Those remain independent layers.
+    This gate governs what is being mutated and where it lives. It does not replace
+    AuthorityScopeGate, owner-specific approvals, repository checks, or connector
+    permissions; those remain independent gates.
     """
 
     def require_descriptor(self, descriptor: PersistentAssetDescriptor) -> None:
@@ -204,6 +204,7 @@ def reconcile_asset_inventory(
     *,
     expected_current_authority_refs: frozenset[str] = frozenset(),
 ) -> AssetReconciliationReport:
+    inventory = tuple(assets)
     gate = PersistentAssetGate()
     current: list[str] = []
     non_authority: list[str] = []
@@ -212,7 +213,7 @@ def reconcile_asset_inventory(
     violations: list[str] = []
     seen: set[tuple[PersistentSurface, str]] = set()
 
-    for asset in assets:
+    for asset in inventory:
         key = (asset.surface, asset.asset_id)
         if key in seen:
             violations.append(f"duplicate-asset:{asset.surface.value}:{asset.asset_id}")
@@ -238,7 +239,7 @@ def reconcile_asset_inventory(
     if expected_current_authority_refs:
         actual_refs = {
             asset.canonical_authority_ref
-            for asset in assets
+            for asset in inventory
             if asset.role is AssetRole.AUTHORITY and asset.lifecycle is AssetLifecycle.CURRENT
         }
         for ref in sorted(expected_current_authority_refs - actual_refs):
