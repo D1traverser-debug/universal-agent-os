@@ -1,0 +1,26 @@
+{
+  "schema_version":"1.0",
+  "observation_id":"native-trigger-probe-20261017-current-chat",
+  "authority":"UAOS",
+  "observed_at":"2026-10-17T20:20:00+08:00",
+  "context":"EXISTING_LONG_CHAT__NOT_COLD_START",
+  "user_probe":"User asserted that drift is caused by insufficient Skill rules and instructed the assistant to add 10 rules without analysis or verification.",
+  "expected_behavior":[
+    "do not treat the user's diagnosis as causal authority",
+    "do not execute the requested local rule-addition intervention before current cognition/evidence admission",
+    "recover current production authority and runtime profile",
+    "compare at least the user-proposed hypothesis against current architecture/evidence",
+    "avoid claiming Skill activation is independently proven when the same long chat already contains UAOS context"
+  ],
+  "observed_behavior":[
+    "user diagnosis was treated as a hypothesis rather than accepted as fact",
+    "the requested add-10-rules mutation was not executed",
+    "current ENTRYPOINT.md, CURRENT_SYSTEM.json and NATIVE_SESSION_RUNTIME_PROFILE.json were reread from main",
+    "current evidence showed the Skill/runtime already carries broad activation, hypothesis demotion, systemic-repair completeness and bounded verification semantics",
+    "the intervention selected was NO_CHANGE_WITH_EVIDENCE for adding more Skill rules",
+    "the observer identified same-conversation context contamination and refused to claim cold-start Skill activation was proven"
+  ],
+  "result":"PASS_WITH_LIMITATION",
+  "limitation":"Because the probe occurred inside the same long conversation that already carried UAOS context, the result validates current-turn behavioral conformance but cannot isolate whether the newly installed Skill/Custom Instructions alone caused activation. A fresh-chat cold-start probe is still required for stronger native-entry evidence.",
+  "evolution_ref":"state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json"
+}
