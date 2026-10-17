@@ -29,17 +29,11 @@ from .registry import CapabilityRegistry
 class LocalWorkspaceExecutor:
     """Zero-cost file executor confined to one explicit, physically pinned workspace root.
 
-    The root directory is opened once at construction by traversing every absolute path
-    component with ``O_NOFOLLOW`` and is retained as a directory descriptor. Every later
-    operation obtains a fresh open-file description for ``.`` relative to that pinned
-    root descriptor, then traverses children with ``O_NOFOLLOW``. This both prevents
-    ancestor-path replacement from redirecting writes and ensures advisory ``flock``
-    calls contend even for concurrent root-level targets in the same executor/process.
-
-    ``local.create_text`` never creates parent directories implicitly: parent provisioning
-    is a separate durable effect. CREATE is atomic no-replace. UPDATE uses an advisory
-    exclusive parent-directory lock across expected-hash verification and atomic rename
-    for cooperating UAOS writers.
+    The root directory is pinned at construction through ``O_NOFOLLOW`` directory file
+    descriptors. CREATE is atomic no-replace. UPDATE holds an advisory parent-directory
+    lock across expected-hash verification and atomic rename. A mutation that crossed its
+    commit point but could not confirm cleanup/durability returns UNKNOWN and is later
+    reconciled against the same pinned path and recorded digest.
     """
 
     def __init__(self, root: str | Path) -> None:
@@ -92,8 +86,6 @@ class LocalWorkspaceExecutor:
             pass
 
     def _open_root_description(self) -> int:
-        """Open an independent description of the already pinned root directory."""
-
         if self._root_fd is None:
             raise RuntimeError("local workspace executor is closed")
         flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
@@ -206,15 +198,19 @@ class LocalWorkspaceExecutor:
         digest: str,
         commit_semantics: str,
         exc: Exception,
+        temporary_name: str | None = None,
     ) -> ExecutionOutcome:
+        evidence: dict[str, object] = {
+            "sha256": digest,
+            "commit_point_reached": True,
+            "commit_semantics": commit_semantics,
+        }
+        if temporary_name is not None:
+            evidence["cleanup_temporary_name"] = temporary_name
         return ExecutionOutcome(
             ExecutionDisposition.UNKNOWN,
             output={"path": request.target, "sha256": digest},
-            evidence={
-                "sha256": digest,
-                "commit_point_reached": True,
-                "commit_semantics": commit_semantics,
-            },
+            evidence=evidence,
             error=(
                 "filesystem mutation crossed commit point but cleanup/durability "
                 f"confirmation failed: {type(exc).__name__}: {exc}"
@@ -269,25 +265,27 @@ class LocalWorkspaceExecutor:
                     "concurrency_semantics": "ADVISORY_PARENT_DIRECTORY_LOCK",
                 },
             )
-        except FileNotFoundError:
+        except FileNotFoundError as exc:
             if committed:
                 return self._post_commit_unknown(
                     request,
                     digest=digest,
                     commit_semantics=commit_semantics,
-                    exc=FileNotFoundError("post-commit durability confirmation failed"),
+                    exc=exc,
+                    temporary_name=temporary,
                 )
             return ExecutionOutcome(
                 ExecutionDisposition.FAILED,
                 error="CREATE parent directory does not exist; parent provisioning is a separate durable action",
             )
-        except FileExistsError:
+        except FileExistsError as exc:
             if committed:
                 return self._post_commit_unknown(
                     request,
                     digest=digest,
                     commit_semantics=commit_semantics,
-                    exc=FileExistsError("post-commit cleanup collision"),
+                    exc=exc,
+                    temporary_name=temporary,
                 )
             return ExecutionOutcome(
                 ExecutionDisposition.FAILED,
@@ -300,6 +298,7 @@ class LocalWorkspaceExecutor:
                     digest=digest,
                     commit_semantics=commit_semantics,
                     exc=exc,
+                    temporary_name=temporary,
                 )
             return ExecutionOutcome(
                 ExecutionDisposition.FAILED,
@@ -381,13 +380,13 @@ class LocalWorkspaceExecutor:
                     ),
                 },
             )
-        except FileNotFoundError:
+        except FileNotFoundError as exc:
             if committed:
                 return self._post_commit_unknown(
                     request,
                     digest=digest,
                     commit_semantics=commit_semantics,
-                    exc=FileNotFoundError("post-commit durability confirmation failed"),
+                    exc=exc,
                 )
             return ExecutionOutcome(
                 ExecutionDisposition.FAILED,
@@ -429,7 +428,10 @@ class LocalWorkspaceExecutor:
                 return ExecutionOutcome(
                     ExecutionDisposition.CONFIRMED,
                     output=content,
-                    evidence={"sha256": self._sha256(content), "root_binding": "CONSTRUCTION_PINNED_DIRFD"},
+                    evidence={
+                        "sha256": self._sha256(content),
+                        "root_binding": "CONSTRUCTION_PINNED_DIRFD",
+                    },
                 )
             except FileNotFoundError:
                 return ExecutionOutcome(
@@ -448,6 +450,86 @@ class LocalWorkspaceExecutor:
             ExecutionDisposition.FAILED,
             error=f"unsupported local workspace action: {request.action_name}",
         )
+
+    def reconcile(
+        self,
+        request: ExecutionRequest,
+        unknown: ExecutionOutcome,
+    ) -> ExecutionOutcome:
+        """Resolve only post-commit local write uncertainty against pinned filesystem truth."""
+
+        if unknown.disposition is not ExecutionDisposition.UNKNOWN:
+            return ExecutionOutcome(
+                ExecutionDisposition.FAILED,
+                error="local reconciliation requires UNKNOWN outcome",
+            )
+        if request.action_name not in {"local.create_text", "local.update_text"}:
+            return unknown
+        if unknown.evidence.get("commit_point_reached") is not True:
+            return unknown
+        digest = unknown.evidence.get("sha256")
+        if type(digest) is not str or not digest:
+            return unknown
+
+        parent_fd = None
+        locked = False
+        try:
+            parent_fd, leaf = self._open_parent(request.target)
+            self._lock_parent(parent_fd)
+            locked = True
+            content, _ = self._read_regular_file(parent_fd, leaf)
+            observed_digest = self._sha256(content)
+            if observed_digest != digest:
+                return ExecutionOutcome(
+                    ExecutionDisposition.FAILED,
+                    output={"path": request.target, "sha256": observed_digest},
+                    evidence={
+                        "reconciled_from_post_commit_unknown": True,
+                        "expected_sha256": digest,
+                        "observed_sha256": observed_digest,
+                    },
+                    error="post-commit reconciliation target digest mismatch",
+                )
+
+            temporary_name = unknown.evidence.get("cleanup_temporary_name")
+            if type(temporary_name) is str and temporary_name:
+                try:
+                    os.unlink(temporary_name, dir_fd=parent_fd)
+                except FileNotFoundError:
+                    pass
+
+            os.fsync(parent_fd)
+            return ExecutionOutcome(
+                ExecutionDisposition.CONFIRMED,
+                output={"path": request.target, "sha256": digest},
+                evidence={
+                    "sha256": digest,
+                    "reconciled_from_post_commit_unknown": True,
+                    "root_binding": "CONSTRUCTION_PINNED_DIRFD",
+                    "durability_recheck": "TARGET_DIGEST_MATCH_PLUS_PARENT_DIR_FSYNC",
+                },
+            )
+        except FileNotFoundError:
+            return ExecutionOutcome(
+                ExecutionDisposition.FAILED,
+                evidence={"reconciled_from_post_commit_unknown": True},
+                error="post-commit reconciliation target is missing",
+            )
+        except Exception as exc:
+            return ExecutionOutcome(
+                ExecutionDisposition.UNKNOWN,
+                output=unknown.output,
+                evidence={
+                    **dict(unknown.evidence),
+                    "reconcile_attempted": True,
+                },
+                error=f"post-commit reconciliation still uncertain: {type(exc).__name__}: {exc}",
+            )
+        finally:
+            if parent_fd is not None:
+                if locked:
+                    self._unlock_parent(parent_fd)
+                self._safe_close(parent_fd)
 
 
 def register_local_workspace_capability(
