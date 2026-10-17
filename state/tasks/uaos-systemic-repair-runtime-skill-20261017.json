@@ -1,12 +1,12 @@
 {
-  "schema_version":"1.5",
+  "schema_version":"1.6",
   "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
   "authority_context":"UAOS",
   "task_type":"controller_maintenance",
   "display_name_zh":"总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
   "status":"RUNNING",
-  "current_stage":"COLD_START_FAILURE_CONFIRMED__REPAIR_CANDIDATE_PRE_PR__CODEX_AUTOREVIEW_BLOCKER",
-  "governing_outcome":"在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话稳定进入当前 UAOS 认知与进化系统；用户或模型提出的修法不能绕过 intervention admission；Native Skill 不能成为可手工漂移的影子 authority；控制面修改必须携带 durable evolution/task admission 后才能 promotion。",
+  "current_stage":"COLD_START_FAILURE_CONFIRMED__REPAIR_CANDIDATE_READY_FOR_CI__HOST_SETTINGS_BLOCK_PROMOTION",
+  "governing_outcome":"在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话稳定进入当前 UAOS 认知与进化系统；用户或模型提出的修法不能绕过 intervention admission；Native Skill 不能成为可手工漂移的影子 authority；控制面修改必须携带 durable evolution/task admission；生产 main 必须在远端机械拒绝绕过 PR/CI 的直接写入。",
   "origin_issue_refs":["#77","#72","#63"],
   "previous_evolution_ref":"state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
   "evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
@@ -19,14 +19,16 @@
     "Fresh-chat cold-start trigger failed: the assistant recovered UAOS authority but still executed the user-proposed 10-rule repair without cognition/evolution re-admission.",
     "PR #83 merged a Skill-only normative change while this task authority still recorded that same intervention as NO_CHANGE_WITH_EVIDENCE.",
     "Codex auto-review was triggered by opening PR #83 despite the zero-paid-review/default no-Codex constraint; its P1 arrived after merge and identified the missing re-admission.",
-    "During repair observation persistence, one create_file call omitted branch and wrote directly to main; this is preserved as host-boundary process-failure evidence rather than hidden or erased by another direct-main write."
+    "During repair observation persistence, one create_file call omitted branch and wrote directly to main; this is preserved as process-failure evidence rather than hidden or erased by another direct-main write.",
+    "GitHub branch metadata confirms main is currently unprotected and has no required status checks; GitHub Free supports branch protection/rulesets for public repositories, so remote production enforcement is available without extra spend."
   ],
   "selected_repair_candidate":[
     "intent-level remedy-vs-requirement semantic classification",
     "generated native Skill projection from canonical policy owners",
     "CI change-admission trace for native control-plane semantic changes",
     "rollback of PR #83 hand-added rule layer via generated projection",
-    "compact Custom Instructions update carrying only the cold-start remedy-candidate interrupt"
+    "compact Custom Instructions update carrying only the cold-start remedy-candidate interrupt",
+    "GitHub main ruleset/branch protection requiring PR plus promotion-gate and blocking direct updates/force-push/deletion for normal writers"
   ],
   "cost_constraint":"INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
   "verification_boundary":"FROZEN_BY_state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json#frozen_acceptance",
@@ -38,14 +40,15 @@
     "failure_reason":"USER_PROPOSED_REPAIR_WAS_EXECUTED_AS_DIRECT_CHANGE_DESPITE_CAUSAL_CAVEAT_AND_EXISTING_NO_CHANGE_DISPOSITION"
   },
   "process_failure_ref":"state/observations/direct-main-mutation-mistake-20261017.json",
-  "current_blocker":{
-    "kind":"USER_ACCOUNT_OR_REPOSITORY_SETTING",
-    "description":"Ready PR creation currently auto-triggers Codex review. Repository code cannot disable that ChatGPT/Codex setting. Opening the repair PR before it is disabled would repeat a user-forbidden review side effect."
-  },
+  "current_blockers":[
+    {"kind":"USER_ACCOUNT_SETTING","description":"Ready PR creation currently auto-triggers Codex review. Repository code cannot disable that ChatGPT/Codex setting; promotion must wait until automatic PR review is disabled."},
+    {"kind":"GITHUB_ADMIN_SETTING","description":"main is unprotected. The connected GitHub App cannot write Administration settings, so the repository owner must enable the free main ruleset/branch protection before production promotion."}
+  ],
   "remaining_user_owned_actions":[
-    "disable automatic Codex pull-request reviews for this repository/account before promotion PR is opened",
+    "disable automatic Codex pull-request reviews for this repository/account before a ready promotion PR is opened",
+    "enable main branch ruleset/protection: require pull request, require promotion-gate status check, block force pushes and deletions, and do not grant normal writer bypass",
     "after the repaired Skill and Custom Instructions are promoted, replace the installed Skill/Custom Instructions and run one fresh-chat holdout retest"
   ],
-  "next_action":"USER_DISABLE_CODEX_AUTO_REVIEW__THEN_OPEN_REPAIR_PR__RUN_PROMOTION_GATE__PROMOTE__REINSTALL_ACCOUNT_PROJECTIONS__FRESH_CHAT_RETEST",
-  "updated_at":"2026-10-17T21:15:00+08:00"
+  "next_action":"USER_APPLY_TWO_HOST_SETTINGS__THEN_OPEN_REPAIR_PR__RUN_PROMOTION_GATE__PROMOTE__REINSTALL_ACCOUNT_PROJECTIONS__FRESH_CHAT_RETEST",
+  "updated_at":"2026-10-17T21:22:00+08:00"
 }
