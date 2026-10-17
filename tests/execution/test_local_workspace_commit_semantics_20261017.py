@@ -24,6 +24,23 @@ def _update_request(content: str, expected_hash: str | None = None) -> Execution
     )
 
 
+def test_root_level_parent_fds_have_independent_open_file_descriptions(tmp_path: Path):
+    executor = LocalWorkspaceExecutor(tmp_path)
+    first_fd, _ = executor._open_parent("policy.txt")
+    second_fd, _ = executor._open_parent("other.txt")
+    try:
+        local_workspace.fcntl.flock(first_fd, local_workspace.fcntl.LOCK_EX)
+        with pytest.raises(BlockingIOError):
+            local_workspace.fcntl.flock(
+                second_fd,
+                local_workspace.fcntl.LOCK_EX | local_workspace.fcntl.LOCK_NB,
+            )
+    finally:
+        local_workspace.fcntl.flock(first_fd, local_workspace.fcntl.LOCK_UN)
+        os.close(first_fd)
+        os.close(second_fd)
+
+
 def test_update_expected_hash_holds_parent_directory_lock_through_commit(tmp_path: Path):
     executor = LocalWorkspaceExecutor(tmp_path)
     target = tmp_path / "policy.txt"
@@ -52,6 +69,32 @@ def test_update_expected_hash_holds_parent_directory_lock_through_commit(tmp_pat
     assert outcomes[0].disposition is ExecutionDisposition.CONFIRMED
     assert target.read_text(encoding="utf-8") == "v2"
     assert "ADVISORY_PARENT_DIRECTORY_LOCK" in outcomes[0].evidence["concurrency_semantics"]
+
+
+def test_two_root_level_expected_hash_updates_cannot_both_confirm(tmp_path: Path):
+    executor = LocalWorkspaceExecutor(tmp_path)
+    target = tmp_path / "policy.txt"
+    target.write_text("v1", encoding="utf-8")
+    expected = executor._sha256(b"v1")
+    start = threading.Barrier(3)
+    outcomes = []
+
+    def run_update(content: str):
+        start.wait(timeout=5)
+        outcomes.append(executor.execute(_update_request(content, expected)))
+
+    first = threading.Thread(target=run_update, args=("v2-a",), daemon=True)
+    second = threading.Thread(target=run_update, args=("v2-b",), daemon=True)
+    first.start()
+    second.start()
+    start.wait(timeout=5)
+    first.join(timeout=5)
+    second.join(timeout=5)
+
+    dispositions = sorted(outcome.disposition for outcome in outcomes)
+    assert dispositions.count(ExecutionDisposition.CONFIRMED) == 1
+    assert dispositions.count(ExecutionDisposition.FAILED) == 1
+    assert target.read_text(encoding="utf-8") in {"v2-a", "v2-b"}
 
 
 def test_create_reports_unknown_if_directory_fsync_fails_after_link_commit(
