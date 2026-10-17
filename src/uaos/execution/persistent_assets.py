@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from typing import Iterable
 
 
@@ -9,7 +9,7 @@ class PersistentAssetViolation(ValueError):
     pass
 
 
-class PersistentSurface(str, Enum):
+class PersistentSurface(StrEnum):
     GITHUB = "GITHUB"
     CHAT = "CHAT"
     LIBRARY = "LIBRARY"
@@ -24,7 +24,7 @@ class PersistentSurface(str, Enum):
     TEMP_SANDBOX = "TEMP_SANDBOX"
 
 
-class AssetRole(str, Enum):
+class AssetRole(StrEnum):
     AUTHORITY = "AUTHORITY"
     BOOTSTRAP = "BOOTSTRAP"
     REFERENCE = "REFERENCE"
@@ -37,7 +37,7 @@ class AssetRole(str, Enum):
     EXTERNAL_RECORD = "EXTERNAL_RECORD"
 
 
-class AssetLifecycle(str, Enum):
+class AssetLifecycle(StrEnum):
     CURRENT = "CURRENT"
     ACTIVE_NON_AUTHORITY = "ACTIVE_NON_AUTHORITY"
     MIGRATED = "MIGRATED"
@@ -47,7 +47,7 @@ class AssetLifecycle(str, Enum):
     TEMPORARY = "TEMPORARY"
 
 
-class CrudOperation(str, Enum):
+class CrudOperation(StrEnum):
     READ = "READ"
     CREATE = "CREATE"
     UPDATE = "UPDATE"
@@ -55,6 +55,25 @@ class CrudOperation(str, Enum):
     OUTPUT = "OUTPUT"
     MIGRATE = "MIGRATE"
     ARCHIVE = "ARCHIVE"
+
+
+class MutationPersistence(StrEnum):
+    EPHEMERAL = "EPHEMERAL"
+    DURABLE_OR_EXTERNAL = "DURABLE_OR_EXTERNAL"
+
+
+@dataclass(frozen=True, slots=True)
+class MutationContract:
+    persistence: MutationPersistence
+    operation: CrudOperation | None = None
+
+    def __post_init__(self) -> None:
+        if self.persistence is MutationPersistence.EPHEMERAL:
+            if self.operation is not None:
+                raise ValueError("ephemeral mutation contract cannot declare persistent operation")
+            return
+        if self.operation is None or self.operation is CrudOperation.READ:
+            raise ValueError("durable/external mutation contract requires a non-READ CRUD operation")
 
 
 _RETIRED_LIFECYCLES = {
@@ -90,13 +109,44 @@ class PersistentAssetDescriptor:
     migration_target_ref: str | None = None
 
 
+class PersistentAssetCatalog:
+    """Trusted inventory keyed by canonical resource identity.
+
+    Callers do not get to invent lifecycle/owner/role metadata at execution time.
+    The coordinator resolves canonical targets through the selected capability and
+    then obtains the descriptor from this catalog.
+    """
+
+    def __init__(self, assets: Iterable[PersistentAssetDescriptor] = ()) -> None:
+        self._by_ref: dict[str, PersistentAssetDescriptor] = {}
+        gate = PersistentAssetGate()
+        for asset in assets:
+            gate.require_descriptor(asset)
+            if asset.resource_ref in self._by_ref:
+                raise PersistentAssetViolation(
+                    f"duplicate catalog resource_ref: {asset.resource_ref}"
+                )
+            self._by_ref[asset.resource_ref] = asset
+
+    def resolve(self, resource_ref: str) -> PersistentAssetDescriptor:
+        try:
+            return self._by_ref[resource_ref]
+        except KeyError as exc:
+            raise PersistentAssetViolation(
+                f"persistent asset is not registered in trusted catalog: {resource_ref}"
+            ) from exc
+
+    def all(self) -> tuple[PersistentAssetDescriptor, ...]:
+        return tuple(self._by_ref.values())
+
+
 @dataclass(frozen=True, slots=True)
 class PersistentAssetRequest:
     operation: CrudOperation
     descriptor: PersistentAssetDescriptor
     active_authority: str | None
     target_authority: str | None
-    execution_target: str | None = None
+    canonical_execution_target: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -105,6 +155,8 @@ class MigrationObservation:
     target: PersistentAssetDescriptor
     target_verified: bool
     source_retired: bool
+    observed_source_ref: str
+    observed_target_ref: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -125,12 +177,7 @@ def _nonempty(value: str | None) -> bool:
 
 
 class PersistentAssetGate:
-    """Fail-closed classification/admission for durable assets across surfaces.
-
-    A descriptor is an identity-bound classification, not a caller-supplied label that
-    may be reused for another target. Authority/approval/owner-specific checks remain
-    independent gates around this one.
-    """
+    """Fail-closed lifecycle/owner admission over trusted asset metadata."""
 
     def require_descriptor(self, descriptor: PersistentAssetDescriptor) -> None:
         if not _nonempty(descriptor.asset_id):
@@ -141,6 +188,9 @@ class PersistentAssetGate:
             raise PersistentAssetViolation("persistent asset requires owner_authority")
         if not descriptor.allowed_operations:
             raise PersistentAssetViolation("persistent asset requires allowed_operations")
+        if CrudOperation.READ not in descriptor.allowed_operations:
+            # Every durable record must remain inspectable for reconciliation/audit.
+            raise PersistentAssetViolation("persistent asset must allow READ for reconciliation")
 
         if descriptor.role is AssetRole.AUTHORITY:
             if descriptor.lifecycle is not AssetLifecycle.CURRENT:
@@ -168,9 +218,9 @@ class PersistentAssetGate:
         descriptor = request.descriptor
         operation = request.operation
 
-        if request.execution_target is not None and descriptor.resource_ref != request.execution_target:
+        if descriptor.resource_ref != request.canonical_execution_target:
             raise PersistentAssetViolation(
-                "persistent asset resource_ref must match the executor target"
+                "trusted asset resource_ref must match canonical executor target"
             )
         if operation not in descriptor.allowed_operations:
             raise PersistentAssetViolation(
@@ -182,7 +232,7 @@ class PersistentAssetGate:
                 raise PersistentAssetViolation("durable mutation requires active_authority")
             if request.target_authority != descriptor.owner_authority:
                 raise PersistentAssetViolation(
-                    "target_authority must match persistent asset owner_authority"
+                    "target_authority must match trusted persistent asset owner_authority"
                 )
 
         if descriptor.lifecycle in _RETIRED_LIFECYCLES and operation not in _RETIRED_ALLOWED_OPS:
@@ -196,14 +246,29 @@ class PersistentAssetGate:
     def require_migration_closed(self, observation: MigrationObservation) -> None:
         self.require_descriptor(observation.source)
         self.require_descriptor(observation.target)
-        if observation.target.role is not AssetRole.AUTHORITY and observation.target.lifecycle is AssetLifecycle.CURRENT:
-            raise PersistentAssetViolation("migration target CURRENT lifecycle must be authority")
+        source = observation.source
+        target = observation.target
+
+        if source.resource_ref == target.resource_ref:
+            raise PersistentAssetViolation("migration source and target must be distinct")
+        if not _nonempty(source.migration_target_ref):
+            raise PersistentAssetViolation("migration source requires migration_target_ref")
+        if source.migration_target_ref != target.resource_ref:
+            raise PersistentAssetViolation(
+                "migration target must match source.migration_target_ref"
+            )
+        if observation.observed_source_ref != source.resource_ref:
+            raise PersistentAssetViolation("migration observation source identity mismatch")
+        if observation.observed_target_ref != target.resource_ref:
+            raise PersistentAssetViolation("migration observation target identity mismatch")
+        if target.role is not AssetRole.AUTHORITY or target.lifecycle is not AssetLifecycle.CURRENT:
+            raise PersistentAssetViolation("migration target must be CURRENT AUTHORITY")
         if not observation.target_verified:
-            raise PersistentAssetViolation("migration target must be verified before closure")
+            raise PersistentAssetViolation("migration target must be independently verified before closure")
         if not observation.source_retired:
             raise PersistentAssetViolation("migration source must be retired or archived before closure")
-        if observation.source.lifecycle not in _RETIRED_LIFECYCLES:
-            raise PersistentAssetViolation("migration source lifecycle must record retirement")
+        if source.lifecycle not in _RETIRED_LIFECYCLES:
+            raise PersistentAssetViolation("migration source catalog lifecycle must record retirement")
 
 
 def reconcile_asset_inventory(
@@ -219,19 +284,18 @@ def reconcile_asset_inventory(
     temporary: list[str] = []
     violations: list[str] = []
     seen: set[tuple[PersistentSurface, str]] = set()
-    seen_refs: set[tuple[PersistentSurface, str]] = set()
+    seen_refs: set[str] = set()
 
     for asset in inventory:
         key = (asset.surface, asset.asset_id)
-        ref_key = (asset.surface, asset.resource_ref)
         if key in seen:
             violations.append(f"duplicate-asset:{asset.surface.value}:{asset.asset_id}")
             continue
-        if ref_key in seen_refs:
-            violations.append(f"duplicate-resource-ref:{asset.surface.value}:{asset.resource_ref}")
+        if asset.resource_ref in seen_refs:
+            violations.append(f"duplicate-resource-ref:{asset.resource_ref}")
             continue
         seen.add(key)
-        seen_refs.add(ref_key)
+        seen_refs.add(asset.resource_ref)
         try:
             gate.require_descriptor(asset)
         except PersistentAssetViolation as exc:
