@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import Any, Mapping, Protocol
 
+from .persistent_assets import CrudOperation, PersistentAssetDescriptor
+
 
 class ExecutionDisposition(StrEnum):
     CONFIRMED = "CONFIRMED"
@@ -50,6 +52,8 @@ class ExecutionRequest:
     requires_background: bool = False
     target_authority: str | None = None
     governance_basis: str | None = None
+    persistent_asset: PersistentAssetDescriptor | None = None
+    persistent_operation: CrudOperation | None = None
 
 
 @dataclass(frozen=True, slots=True)
