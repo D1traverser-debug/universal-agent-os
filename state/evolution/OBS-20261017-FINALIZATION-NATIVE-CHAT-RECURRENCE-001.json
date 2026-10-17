@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "observation_id": "OBS-20261017-FINALIZATION-NATIVE-CHAT-RECURRENCE-001",
+  "authority": "UAOS",
+  "parent_evolution_id": "EVO-20261016-FINALIZATION-GATE-HOST-ENFORCEMENT",
+  "source_incident": "github://D1traverser-debug/universal-agent-os/issues/74",
+  "observed_failure_class": "REPEATED_CORRECTION_NOT_ESCALATED__MODEL_CONCLUSION_TREATED_AS_AUTHORITY",
+  "observation_type": "POST_PROMOTION_NATIVE_HOST_RECURRENCE",
+  "status": "EVIDENCE_ADMITTED__HOST_BOUNDARY_RECONFIRMED",
+  "observed_behavior": [
+    "Across multiple consecutive selected-context turns, the native ChatGPT assistant was corrected for the same epistemic failure pattern.",
+    "The assistant repeatedly explained existing governance rules but then selected another diagnosis or next step without first preserving and falsifying competing hypotheses.",
+    "The failures occurred in the native ChatGPT product path, not in a repository-controlled runtime invoking admit_final_response."
+  ],
+  "current_authority_evidence": [
+    "src/uaos/kernel/deliberation.py: repeated_failure_count >= 2 selects STRUCTURED cognition, requires at least two hypotheses, at least three action candidates, an explicit NO_CHANGE baseline, and systemic cross-layer comparison/rejection evidence.",
+    "src/uaos/runtime/finalization.py: controlled finalization recomputes CognitionCase admission and blocks candidate responses lacking the required evidence/closure state.",
+    "src/uaos/execution/openai_agents.py: a controlled OpenAI Agents host can attach admit_final_response as a blocking output guardrail.",
+    "config/SESSION_INTERACTION_POLICY.json and CURRENT_SYSTEM.json: native ChatGPT semantic-signal injection and pre-send/pre-tool mediation remain behavioral/unverified rather than repository-controlled.",
+    "state/evolution/EVO-20261016-FINALIZATION-GATE-HOST-ENFORCEMENT.json: the original evolution explicitly retained native ChatGPT live adherence as an observation boundary."
+  ],
+  "competing_hypotheses": [
+    {
+      "id": "H1_COGNITION_POLICY_MISSING_PRIMARY",
+      "disposition": "REJECTED_AS_PRIMARY",
+      "evidence": "Controlled cognition already has repeated-failure escalation and rejects untested framing when the signal/case reaches the gate. Adding another prose cognition rule would duplicate existing authority."
+    },
+    {
+      "id": "H2_NATIVE_HOST_BYPASS_PRIMARY",
+      "disposition": "SUPPORTED_PRIMARY",
+      "evidence": "The observed turns were emitted by native ChatGPT, whose repository-controlled pre-send/finalization hook remains unverified. The failure therefore bypassed the executable gate that would otherwise require the evidence-traced cognition case."
+    },
+    {
+      "id": "H3_CONTROLLED_RUNTIME_RECURRENCE_SEMANTICS_ALSO_INSUFFICIENT",
+      "disposition": "NOT_SUPPORTED_BY_CURRENT_EVIDENCE",
+      "evidence": "Current controlled semantics already encode repeated_failure_count and structured admission. No controlled-runtime reproduction has shown the same unilateral-finalization escape while admit_final_response receives truthful current signals and case evidence."
+    }
+  ],
+  "selected_intervention": {
+    "id": "NO_DUPLICATE_COGNITION_RULE__PRESERVE_HOST_BOUNDARY_AND_RECORD_RECURRENCE",
+    "type": "NO_CHANGE_TO_COGNITION_KERNEL_WITH_DURABLE_OBSERVATION",
+    "reason": "The current failure does not justify another cognition state/rule. The production defect boundary is host invocation/complete mediation, already known and now newly observed in real use.",
+    "immediate_actions": [
+      "Persist this native-host recurrence as post-promotion evidence.",
+      "Bind issue #74 to the existing host-enforcement evolution instead of creating a parallel evolution owner.",
+      "Do not claim Native ChatGPT fail-closed finalization until a real pre-send/pre-tool host hook exists and is verified.",
+      "Do not add Codex review or another cognition policy layer as a substitute for host enforcement."
+    ]
+  },
+  "verification": {
+    "repository_fact_checks": [
+      "deliberation repeated-failure escalation inspected",
+      "controlled finalization gate inspected",
+      "OpenAI Agents output guardrail adapter inspected",
+      "native host assurance boundary inspected"
+    ],
+    "controlled_runtime_regression_needed": false,
+    "reason": "No controlled-runtime semantic change is selected in this observation. Existing tests already cover the admitted structured/deep/finalization paths; this observation updates real-use assurance, not executable policy."
+  },
+  "post_observation_disposition": "KEEP_CONTROLLED_RUNTIME_REPAIR__NATIVE_CHATGPT_ASSURANCE_REMAINS_BEHAVIORAL__HOST_ENFORCEMENT_REQUIRED_FOR_NON_BYPASSABLE_GUARANTEE",
+  "recorded_at": "2026-10-17T07:50:00Z"
+}
