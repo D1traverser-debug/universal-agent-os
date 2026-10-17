@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from threading import RLock
 import time
+from types import MappingProxyType
 from typing import Callable, Mapping
 
 from uaos.resilience import CapabilityCircuitBreaker
@@ -62,15 +63,15 @@ class CapabilityRegistry:
         canonicalize_target: TargetCanonicalizer | None = None,
     ) -> None:
         read_actions = frozenset(read_only_actions or ())
-        contracts = dict(mutation_contracts or {})
+        contracts_dict = dict(mutation_contracts or {})
         supported = set(observation.supported_actions)
-        classified = set(read_actions) | set(contracts)
+        classified = set(read_actions) | set(contracts_dict)
         unsupported = classified - supported
         if unsupported:
             raise ValueError(
                 f"action contracts reference unsupported actions: {sorted(unsupported)}"
             )
-        overlap = set(read_actions) & set(contracts)
+        overlap = set(read_actions) & set(contracts_dict)
         if overlap:
             raise ValueError(
                 f"actions cannot be both read-only and mutating: {sorted(overlap)}"
@@ -80,11 +81,16 @@ class CapabilityRegistry:
             raise ValueError(
                 f"every supported action requires trusted read/mutation classification: {sorted(missing)}"
             )
-        durable = any(contract.operation is not None for contract in contracts.values())
+        durable = any(contract.operation is not None for contract in contracts_dict.values())
         if durable and canonicalize_target is None:
             raise ValueError(
                 "durable/external capability registration requires canonicalize_target"
             )
+
+        # Registration is the sole mutation point for trusted action semantics. Exposed
+        # RegisteredCapability objects must not let callers alter contracts in place
+        # without a new generation, so freeze the mapping before publishing it.
+        contracts: Mapping[str, MutationContract] = MappingProxyType(contracts_dict)
         with self._lock:
             self._generation += 1
             self._items[observation.capability_id] = RegisteredCapability(
