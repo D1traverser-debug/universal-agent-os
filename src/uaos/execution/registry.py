@@ -210,9 +210,10 @@ class CapabilityRegistry:
 
     Registration code is part of the trusted setup boundary. After registration, public
     registry views contain only detached routing/contract values; the mutable executor and
-    canonicalizer never leave the registry. Coordinator execution/reconciliation calls use
-    capability id + exact registration generation, so a re-registration invalidates the
-    old binding before any provider or adapter method is invoked.
+    canonicalizer never leave the registry. Provider execution/reconciliation is not a
+    public registry API: ActionCoordinator uses module-private invocation helpers with the
+    exact registration generation, so ordinary registry holders cannot bypass admission by
+    calling a public provider method and re-registration still invalidates stale bindings.
     """
 
     def __init__(self) -> None:
@@ -355,33 +356,35 @@ class CapabilityRegistry:
             )
         return canonicalizer(target)
 
-    def execute_trusted(
-        self,
-        capability_id: str,
-        registration_generation: int,
-        request: ExecutionRequest,
-    ) -> ExecutionOutcome:
-        record = self._record_for(
-            capability_id,
-            registration_generation=registration_generation,
-        )
-        return record.executor.execute(request)
 
-    def reconcile_trusted(
-        self,
-        capability_id: str,
-        registration_generation: int,
-        request: ExecutionRequest,
-        unknown: ExecutionOutcome,
-    ) -> ExecutionOutcome | None:
-        record = self._record_for(
-            capability_id,
-            registration_generation=registration_generation,
-        )
-        reconciler = getattr(record.executor, "reconcile", None)
-        if reconciler is None:
-            return None
-        return reconciler(request, unknown)
+def _execute_registered(
+    registry: CapabilityRegistry,
+    capability_id: str,
+    registration_generation: int,
+    request: ExecutionRequest,
+) -> ExecutionOutcome:
+    """Coordinator-internal provider invocation; intentionally absent from registry public API."""
+    if type(registry) is not CapabilityRegistry:
+        raise CapabilityUnavailable("trusted provider invocation requires CapabilityRegistry")
+    record = registry._record_for(capability_id, registration_generation=registration_generation)
+    return record.executor.execute(request)
+
+
+def _reconcile_registered(
+    registry: CapabilityRegistry,
+    capability_id: str,
+    registration_generation: int,
+    request: ExecutionRequest,
+    unknown: ExecutionOutcome,
+) -> ExecutionOutcome | None:
+    """Coordinator-internal reconciliation; intentionally absent from registry public API."""
+    if type(registry) is not CapabilityRegistry:
+        raise CapabilityUnavailable("trusted provider reconciliation requires CapabilityRegistry")
+    record = registry._record_for(capability_id, registration_generation=registration_generation)
+    reconciler = getattr(record.executor, "reconcile", None)
+    if reconciler is None:
+        return None
+    return reconciler(request, unknown)
 
 
 class CapabilityRouter:

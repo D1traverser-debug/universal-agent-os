@@ -28,6 +28,8 @@ from .registry import (
     CapabilityRouter,
     CapabilityUnavailable,
     RegisteredCapability,
+    _execute_registered as _registry_execute,
+    _reconcile_registered as _registry_reconcile,
 )
 
 
@@ -172,6 +174,25 @@ def _normalize_operation(value: CrudOperation | str) -> CrudOperation:
         raise PersistentAssetViolation(f"invalid persistent_operation assertion: {value!r}") from exc
 
 
+def _detached_execution_disposition(value: ExecutionDisposition | str) -> ExecutionDisposition:
+    """Create a non-singleton semantic copy for coordinator-owned UNKNOWN truth.
+
+    Public ExecutionDisposition members are process singletons and Python permits callers to
+    attach auxiliary mutable attributes to those instances. Coordinator-owned reconciliation
+    records therefore keep an equal-but-detached StrEnum instance so public mutation cannot
+    alter retained trusted state.
+    """
+
+    try:
+        normalized = value if type(value) is ExecutionDisposition else ExecutionDisposition(str(value))
+    except (TypeError, ValueError) as exc:
+        raise RuntimeError(f"unsupported execution disposition: {value!r}") from exc
+    detached = str.__new__(ExecutionDisposition, normalized.value)
+    object.__setattr__(detached, "_name_", normalized.name)
+    object.__setattr__(detached, "_value_", normalized.value)
+    return detached
+
+
 def _normalize_outcome(outcome: ExecutionOutcome, *, source: str) -> ExecutionOutcome:
     if not isinstance(outcome, ExecutionOutcome):
         raise RuntimeError(f"{source} must return ExecutionOutcome")
@@ -194,10 +215,19 @@ def _normalize_outcome(outcome: ExecutionOutcome, *, source: str) -> ExecutionOu
     )
 
 
-def _snapshot_outcome(outcome: ExecutionOutcome) -> ExecutionOutcome:
+def _snapshot_outcome(
+    outcome: ExecutionOutcome,
+    *,
+    detach_disposition: bool = False,
+) -> ExecutionOutcome:
     normalized = _normalize_outcome(outcome, source="outcome snapshot")
+    disposition = (
+        _detached_execution_disposition(normalized.disposition)
+        if detach_disposition
+        else ExecutionDisposition(str(normalized.disposition))
+    )
     return ExecutionOutcome(
-        disposition=normalized.disposition,
+        disposition=disposition,
         output=normalized.output,
         provider_ref=normalized.provider_ref,
         evidence=normalized.evidence,
@@ -241,9 +271,10 @@ def _public_execution(
 class ActionCoordinator:
     """Policy boundary around executor adapters, ownership and safe fallback.
 
-    Registry public views expose no mutable executor/canonicalizer. Trusted adapter calls
-    are performed through CapabilityRegistry using the exact registration generation.
-    UNKNOWN reconciliation is coordinator-owned and single-flight per execution id.
+    Registry public views expose no mutable executor/canonicalizer and no public provider
+    invocation API. Adapter calls use registry module-private helpers with the exact
+    registration generation. UNKNOWN reconciliation is coordinator-owned and single-flight
+    per execution id.
     """
 
     def __init__(
@@ -451,7 +482,7 @@ class ActionCoordinator:
             capability_id=registered.observation.capability_id,
             request=_snapshot_request(request),
             admission=_snapshot_admission(admission),
-            outcome=_snapshot_outcome(outcome),
+            outcome=_snapshot_outcome(outcome, detach_disposition=True),
         )
         with self._unknown_lock:
             self._unknown_records[execution_id] = record
@@ -468,7 +499,8 @@ class ActionCoordinator:
         admission = self._admit(request, registered)
         self.approval_gate.require(request, approval, now=now)
         outcome = _normalize_outcome(
-            self.registry.execute_trusted(
+            _registry_execute(
+                self.registry,
                 registered.observation.capability_id,
                 registered.registration_generation,
                 request,
@@ -610,14 +642,15 @@ class ActionCoordinator:
                 record.outcome,
                 source="coordinator-owned unknown execution",
             )
-            if normalized_unknown.disposition is not ExecutionDisposition.UNKNOWN:
+            if normalized_unknown.disposition != ExecutionDisposition.UNKNOWN:
                 raise PersistentAssetViolation(
                     "coordinator reconciliation record is no longer UNKNOWN"
                 )
 
             now = now or datetime.now(UTC)
             self.approval_gate.require(record.request, approval, now=now)
-            outcome_raw = self.registry.reconcile_trusted(
+            outcome_raw = _registry_reconcile(
+                self.registry,
                 record.capability_id,
                 record.admission.registration_generation,
                 record.request,

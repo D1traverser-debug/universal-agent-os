@@ -458,7 +458,7 @@ class LocalWorkspaceExecutor:
     ) -> ExecutionOutcome:
         """Resolve only post-commit local write uncertainty against pinned filesystem truth."""
 
-        if unknown.disposition is not ExecutionDisposition.UNKNOWN:
+        if unknown.disposition != ExecutionDisposition.UNKNOWN:
             return ExecutionOutcome(
                 ExecutionDisposition.FAILED,
                 error="local reconciliation requires UNKNOWN outcome",
