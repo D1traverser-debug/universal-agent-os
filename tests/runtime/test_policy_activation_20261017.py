@@ -46,6 +46,17 @@ def test_exact_production_main_identity_activates_same_authorized_tree():
     )
 
 
+def test_pull_merge_and_tag_named_main_do_not_masquerade_as_production_branch():
+    assert (
+        resolve("D1traverser-debug/universal-agent-os", "refs/pull/71/merge")
+        is PolicyActivationState.AUTHORIZED_NOT_PRODUCTION_ACTIVE
+    )
+    assert (
+        resolve("D1traverser-debug/universal-agent-os", "refs/tags/main")
+        is PolicyActivationState.AUTHORIZED_NOT_PRODUCTION_ACTIVE
+    )
+
+
 def test_other_repository_main_does_not_activate_policy():
     assert (
         resolve("D1traverser-debug/financial-writing-agent", "main")
