@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.1",
+  "schema_version":"1.2",
   "evolution_id":"EVO-20261017-KNOWLEDGE-ACQUISITION-NATIVE-ENTRY-V3",
   "authority":"UAOS",
-  "status":"PROPOSED__IMPLEMENTED__PRE_PR_VALIDATION",
-  "updated_at":"2026-10-17T23:30:00+08:00",
+  "status":"PROPOSED__CANDIDATE_VERIFICATION_ROUND_3_PENDING",
+  "updated_at":"2026-10-17T23:40:00+08:00",
   "origin_kind":"EVALUATED_KNOWLEDGE",
   "parent_evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
   "governing_outcome":"Make native UAOS entry reliably mandatory-but-lightweight, make depth/research/evolution internal routing decisions rather than pre-entry conditions, and turn broad learning into a reusable coverage-oriented evidence-acquisition capability that can discover, compare, falsify, integrate, stop and validate without creating a second cognition or research operating system.",
@@ -23,7 +23,7 @@
     "INCIDENT_PHRASES_BELONG_PRIMARILY_IN_EVALS: next/just-do-X/upper-layer/ten-rules are regression examples, not the highest-level behavior definition.",
     "AUTONOMOUS_GOAL_LOOP_IS_THE_HIGHER_ABSTRACTION: while the admitted objective is unfinished and no genuine blocker exists, select the next evidence-supported action, execute, verify and reassess until completion or a real stop condition.",
     "BROAD_LEARNING_NEEDS_COVERAGE_ORIENTED_ACQUISITION: source-role map, multiple seed lenses, query expansion, reference/repository snowballing, evidence extraction, method-family clustering, contradiction/falsification, triangulation, saturation and holdout.",
-    "SEARCH_SATURATION_IS_NOT_LITERAL_EXHAUSTIVENESS: stop only after required source roles/contradictions/candidate families are covered and successive expansion rounds yield no material new family/failure mode likely to change the decision.",
+    "SEARCH_SATURATION_IS_NOT_LITERAL_EXHAUSTIVENESS: stop only after required source roles/contradictions/candidate families are covered and successive distinct expansion rounds yield no material new family/failure mode likely to change the decision.",
     "SAME_MODEL_SELF_CRITIQUE_IS_NOT_INDEPENDENT_JUDGMENT: external sources/tools/tests/runtime/holdouts are required when independent validation is material.",
     "EXISTING_UAOS_OWNERS_CAN_CARRY_THE_CAPABILITY: Deliberation + Deep Task + problem_space + Evolution can be extended; a separate Research OS would duplicate authority."
   ],
@@ -71,7 +71,35 @@
     "independent_paid_review_budget":0,
     "cost_policy":"INCLUDED_FREE_FIRST__NO_INTENTIONAL_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST"
   },
+  "verification_budget_interpretation":"A verification round is one logical blocker-fix evaluation batch recorded as EvaluationResult.verification_round. Automatically triggered CI runs on intermediate commits inside the same blocker-fix batch are evidence but do not independently widen or reset the admitted round budget.",
+  "verification_rounds":[
+    {
+      "round":1,
+      "candidate_head":"573ce658c3e73ca0e967acfa85864451405ac7e7",
+      "ci_run":529,
+      "ci_result":"FAIL__7_BLOCKERS",
+      "live_run":304,
+      "live_result":"NOT_ADMITTED_AS_GREEN__CONTRACT_FAILURE_PRECEDED_LIVE_COMPLETION",
+      "blocking_findings":["CURRENT_SYSTEM_STALE_RELATIVE_TO_SESSION_AND_HOST_OWNERS","ACTIVE_RULESET_FACT_CONFLICTED_WITH_LEGACY_OPTIONAL_RULESET_TEST","OLD_CUSTOM_INSTRUCTION_LITERAL_CONTRACTS_CONFLICTED_WITH_V3_ABSTRACTION","DEEP_TASK_LITERAL_CONTRACT_MISMATCH","SEED_SEARCH_TEST_DID_NOT_ISOLATE_MISSING_EXPANSION"]
+    },
+    {
+      "round":2,
+      "candidate_head":"d683a8d2697dd03685b9c2c56fba9d5359a15f30",
+      "ci_run":534,
+      "ci_result":"FAIL__3_BLOCKERS__493_PASS_1_SKIP",
+      "live_run":309,
+      "live_result":"FAIL_ONLY_BECAUSE_SHARED_CONTRACT_SUITE_FAILED__OBJECT_STORE_LIVE_PATH_PASSED__POSTGRES_DBOS_PROBES_SKIPPED_AFTER_CONTRACT_FAILURE",
+      "blocking_findings":["CURRENT_SYSTEM_PROJECTION_STILL_STALE","NO_OP_CLOCK_INCIDENT_PHRASE_STILL_REQUIRED_BY_LEGACY_TEST","NEW_POINTER_TEST_OVERFIT_ONE_EXACT_SENTENCE"]
+    }
+  ],
+  "independent_findings_absorbed":[
+    "Codex old-head P1 on stale CURRENT_SYSTEM was independently reproduced by CI and repaired by reconciling CURRENT_SYSTEM as a derived projection.",
+    "Codex old-head P1 on mutually exclusive no-op pointer tests was independently reproduced by CI and repaired by keeping autonomous-goal semantics in the contract while leaving the incident phrase in holdouts.",
+    "Codex old-head P1 on seed-search diagnostic was addressed by making the test use two non-expansion acquisition methods so it isolates the missing-expansion failure class.",
+    "Codex old-head P1 on saturation replay was accepted because a concrete bypass existed; admission now requires unique round ids, expansion work in each terminal round, distinct terminal work/evidence signatures, and non-novel terminal rounds, with targeted regression tests."
+  ],
   "implementation_refs":[
+    "CURRENT_SYSTEM.json",
     "config/DELIBERATION_POLICY.json",
     "config/DEEP_TASK_EXECUTION_PROFILE.json",
     "config/HOST_PROFILES.json",
@@ -89,6 +117,7 @@
     "src/uaos/runtime/native_session_profile.py",
     "state/tasks/uaos-systemic-repair-runtime-skill-20261017.json",
     "state/TASK_INDEX.json",
+    "tests/architecture/test_finalization_enforcement_topology.py",
     "tests/architecture/test_native_control_plane_change_admission.py",
     "tests/architecture/test_native_entry_holdout_corpus.py",
     "tests/architecture/test_uaos_controller_runtime_skill.py",
@@ -100,12 +129,12 @@
   ],
   "candidate_evidence":{
     "research_complete":true,
-    "implementation_complete_for_pre_pr_validation":true,
-    "pr":null,
+    "implementation_complete_for_round_3":true,
+    "pr":87,
     "ci":null,
     "live_integration":null,
     "fresh_chat_holdout":null
   },
-  "next_action":"OPEN_CANDIDATE_PR__RUN_PROMOTION_GATE_AND_LIVE_INTEGRATION__FIX_ONLY_FROZEN_ACCEPTANCE_BLOCKERS__THEN_PREPARE_FRESH_CHAT_CANDIDATE_HOLDOUT",
+  "next_action":"FREEZE_NEXT_CANDIDATE_HEAD__RUN_LOGICAL_VERIFICATION_ROUND_3_PROMOTION_GATE_AND_LIVE_INTEGRATION__IF_GREEN_PREPARE_EXACT_ACCOUNT_PROJECTION_FOR_FRESH_CHAT_CANDIDATE_HOLDOUT__DO_NOT_PROMOTE_BEFORE_HOLDOUT",
   "assurance_boundary":"This evolution can improve native behavioral routing and controlled-runtime evidence admission. It cannot create a repository-controlled native ChatGPT pre-send/pre-tool hook."
 }
