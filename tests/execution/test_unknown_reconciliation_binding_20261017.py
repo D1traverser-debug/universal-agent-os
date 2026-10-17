@@ -165,6 +165,30 @@ def test_even_raw_slot_access_to_public_unknown_cannot_mutate_internal_record():
     assert passed_unknown.output == {"repair": {"token": "output:original"}}
 
 
+def test_public_request_and_admission_mutation_cannot_change_internal_unknown_record():
+    coordinator, request, executor = _coordinator()
+    unknown = coordinator.execute(request)
+    assert unknown.execution_id
+    assert unknown.original_request is not None
+
+    object.__setattr__(
+        unknown.original_request,
+        "payload",
+        {"content": "forged-public-payload"},
+    )
+    object.__setattr__(
+        unknown.admission,
+        "request_fingerprint",
+        "forged-public-fingerprint",
+    )
+
+    resolved = coordinator.reconcile(request, unknown)
+    assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
+    assert len(executor.reconcile_calls) == 1
+    passed_request = executor.reconcile_calls[0][0]
+    assert dict(passed_request.payload) == {"content": "x"}
+
+
 def test_no_reconciler_return_is_snapshot_not_internal_unknown_record():
     coordinator, request, executor = _coordinator()
     unknown = coordinator.execute(request)
@@ -179,11 +203,23 @@ def test_no_reconciler_return_is_snapshot_not_internal_unknown_record():
     raw_output = object.__getattribute__(first_retry.outcome, "output")
     raw_evidence["operation_ref"] = "op:no-reconciler-forged"
     raw_output["repair"]["token"] = "output:no-reconciler-forged"
+    assert first_retry.original_request is not None
+    object.__setattr__(
+        first_retry.original_request,
+        "payload",
+        {"content": "forged-no-reconciler-payload"},
+    )
+    object.__setattr__(
+        first_retry.admission,
+        "request_fingerprint",
+        "forged-no-reconciler-fingerprint",
+    )
 
     executor.reconcile = original_reconciler
     resolved = coordinator.reconcile(request, first_retry)
     assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
-    passed_unknown = executor.reconcile_calls[0][1]
+    passed_request, passed_unknown = executor.reconcile_calls[0]
+    assert dict(passed_request.payload) == {"content": "x"}
     assert passed_unknown.evidence["operation_ref"] == "op:original"
     assert passed_unknown.output == {"repair": {"token": "output:original"}}
 
