@@ -7,7 +7,6 @@ import hashlib
 import json
 import secrets
 from threading import RLock
-from types import MappingProxyType
 from typing import Mapping
 
 from .approvals import ApprovalGate, ApprovalGrant
@@ -19,6 +18,7 @@ from .persistent_assets import (
     MutationContract,
     MutationPersistence,
     PersistentAssetCatalog,
+    PersistentAssetDescriptor,
     PersistentAssetGate,
     PersistentAssetRequest,
     PersistentAssetViolation,
@@ -120,54 +120,17 @@ def _canonical_value(value: object) -> object:
     )
 
 
-def _snapshot_value(value: object) -> object:
-    """Detach request data from caller-owned mutable containers."""
+def _snapshot_request(request: ExecutionRequest) -> ExecutionRequest:
+    """Reconstruct through ExecutionRequest's trusted-value normalizer."""
 
-    if isinstance(value, Enum) or value is None or isinstance(value, (bool, int, float, str, bytes)):
-        return value
-    if isinstance(value, bytearray):
-        return bytes(value)
-    if is_dataclass(value):
-        values = {
-            field.name: _snapshot_value(getattr(value, field.name))
-            for field in fields(value)
-        }
-        try:
-            return type(value)(**values)
-        except TypeError as exc:
-            raise PersistentAssetViolation(
-                f"request dataclass cannot be snapshotted: {type(value).__module__}.{type(value).__qualname__}"
-            ) from exc
-    if isinstance(value, Mapping):
-        snapshot = {
-            _snapshot_value(key): _snapshot_value(item)
-            for key, item in value.items()
-        }
-        return MappingProxyType(snapshot)
-    if isinstance(value, tuple):
-        return tuple(_snapshot_value(item) for item in value)
-    if isinstance(value, list):
-        return tuple(_snapshot_value(item) for item in value)
-    if isinstance(value, (set, frozenset)):
-        return frozenset(_snapshot_value(item) for item in value)
-    raise PersistentAssetViolation(
-        f"request contains unsupported snapshot value type: {type(value).__module__}.{type(value).__qualname__}"
+    if not isinstance(request, ExecutionRequest):
+        raise PersistentAssetViolation("execution requires ExecutionRequest")
+    return ExecutionRequest(
+        **{field.name: getattr(request, field.name) for field in fields(request)}
     )
 
 
-def _snapshot_request(request: ExecutionRequest) -> ExecutionRequest:
-    if not isinstance(request, ExecutionRequest):
-        raise PersistentAssetViolation("execution requires ExecutionRequest")
-    values = {
-        field.name: _snapshot_value(getattr(request, field.name))
-        for field in fields(request)
-    }
-    return ExecutionRequest(**values)
-
-
 def _snapshot_admission(admission: ExecutionAdmissionReceipt) -> ExecutionAdmissionReceipt:
-    """Return a detached value copy of a coordinator-owned admission receipt."""
-
     if not isinstance(admission, ExecutionAdmissionReceipt):
         raise PersistentAssetViolation("invalid execution admission receipt")
     return ExecutionAdmissionReceipt(
@@ -197,14 +160,14 @@ def _request_fingerprint(request: ExecutionRequest) -> str:
 
 def _normalize_persistence(value: MutationPersistence | str) -> MutationPersistence:
     try:
-        return value if isinstance(value, MutationPersistence) else MutationPersistence(value)
+        return value if type(value) is MutationPersistence else MutationPersistence(value)
     except (TypeError, ValueError) as exc:
         raise PersistentAssetViolation(f"invalid mutation_persistence assertion: {value!r}") from exc
 
 
 def _normalize_operation(value: CrudOperation | str) -> CrudOperation:
     try:
-        return value if isinstance(value, CrudOperation) else CrudOperation(value)
+        return value if type(value) is CrudOperation else CrudOperation(value)
     except (TypeError, ValueError) as exc:
         raise PersistentAssetViolation(f"invalid persistent_operation assertion: {value!r}") from exc
 
@@ -215,8 +178,8 @@ def _normalize_outcome(outcome: ExecutionOutcome, *, source: str) -> ExecutionOu
     try:
         disposition = (
             outcome.disposition
-            if isinstance(outcome.disposition, ExecutionDisposition)
-            else ExecutionDisposition(outcome.disposition)
+            if type(outcome.disposition) is ExecutionDisposition
+            else ExecutionDisposition(str(outcome.disposition))
         )
     except (TypeError, ValueError) as exc:
         raise RuntimeError(f"{source} returned unsupported disposition: {outcome.disposition!r}") from exc
@@ -232,8 +195,6 @@ def _normalize_outcome(outcome: ExecutionOutcome, *, source: str) -> ExecutionOu
 
 
 def _snapshot_outcome(outcome: ExecutionOutcome) -> ExecutionOutcome:
-    """Create an outcome instance detached from every other trust domain."""
-
     normalized = _normalize_outcome(outcome, source="outcome snapshot")
     return ExecutionOutcome(
         disposition=normalized.disposition,
@@ -244,6 +205,22 @@ def _snapshot_outcome(outcome: ExecutionOutcome) -> ExecutionOutcome:
     )
 
 
+def _asset_assertion(descriptor: PersistentAssetDescriptor) -> Mapping[str, object]:
+    return {
+        "asset_id": descriptor.asset_id,
+        "resource_ref": descriptor.resource_ref,
+        "surface": descriptor.surface.value,
+        "role": descriptor.role.value,
+        "lifecycle": descriptor.lifecycle.value,
+        "owner_authority": descriptor.owner_authority,
+        "allowed_operations": tuple(
+            sorted(operation.value for operation in descriptor.allowed_operations)
+        ),
+        "canonical_authority_ref": descriptor.canonical_authority_ref,
+        "migration_target_ref": descriptor.migration_target_ref,
+    }
+
+
 def _public_execution(
     *,
     capability_id: str,
@@ -252,8 +229,6 @@ def _public_execution(
     request: ExecutionRequest | None,
     execution_id: str | None,
 ) -> CoordinatedExecution:
-    """Build a public receipt with no object alias to coordinator-owned state."""
-
     return CoordinatedExecution(
         capability_id=capability_id,
         outcome=_snapshot_outcome(outcome),
@@ -266,18 +241,9 @@ def _public_execution(
 class ActionCoordinator:
     """Policy boundary around executor adapters, ownership and safe fallback.
 
-    Action mutability and CRUD semantics are capability-owned. Request mutation labels are
-    assertions/context only. Execution first snapshots the complete request into detached
-    immutable containers, so admission, execution and later reconciliation all bind the
-    same values even if caller-owned payload objects are subsequently changed.
-
-    UNKNOWN reconciliation is coordinator-owned. A caller receives an opaque execution
-    id plus detached public copies of request/admission/outcome; none of those public
-    objects alias the authoritative internal record. A per-execution reconciliation claim
-    prevents concurrent repair attempts for one id. The baseline record/claim store is
-    process-local and fails closed after restart; a host requiring cross-process
-    reconciliation must persist the same record and atomic claim state in its authority
-    store.
+    Registry public views expose no mutable executor/canonicalizer. Trusted adapter calls
+    are performed through CapabilityRegistry using the exact registration generation.
+    UNKNOWN reconciliation is coordinator-owned and single-flight per execution id.
     """
 
     def __init__(
@@ -370,28 +336,29 @@ class ActionCoordinator:
             raise PersistentAssetViolation(
                 "trusted durable mutation contract requires a non-READ CRUD operation"
             )
-        if registered.canonicalize_target is None:
-            raise PersistentAssetViolation(
-                "durable/external mutation capability requires trusted target canonicalizer"
-            )
         if self.persistent_asset_catalog is None:
             raise PersistentAssetViolation(
                 "durable/external mutation requires trusted PersistentAssetCatalog"
             )
         try:
-            canonical_target = registered.canonicalize_target(request.target)
+            canonical_target = self.registry.canonicalize_trusted_target(
+                registered.observation.capability_id,
+                registered.registration_generation,
+                request.target,
+            )
         except Exception as exc:
             raise PersistentAssetViolation(
                 f"target canonicalization failed: {type(exc).__name__}: {exc}"
             ) from exc
-        if not isinstance(canonical_target, str) or not canonical_target.strip():
+        if type(canonical_target) is not str or not canonical_target.strip():
             raise PersistentAssetViolation("target canonicalizer returned empty identity")
 
         descriptor = self.persistent_asset_catalog.resolve(canonical_target)
-        if request.persistent_asset is not None and request.persistent_asset != descriptor:
-            raise PersistentAssetViolation(
-                "caller asset assertion does not match trusted catalog descriptor"
-            )
+        if request.persistent_asset is not None:
+            if dict(request.persistent_asset) != dict(_asset_assertion(descriptor)):
+                raise PersistentAssetViolation(
+                    "caller asset assertion does not match trusted catalog descriptor"
+                )
         if request.persistent_operation is not None:
             asserted_operation = _normalize_operation(request.persistent_operation)
             if asserted_operation is not contract.operation:
@@ -482,8 +449,8 @@ class ActionCoordinator:
         record = _UnknownExecutionRecord(
             execution_id=execution_id,
             capability_id=registered.observation.capability_id,
-            request=request,
-            admission=admission,
+            request=_snapshot_request(request),
+            admission=_snapshot_admission(admission),
             outcome=_snapshot_outcome(outcome),
         )
         with self._unknown_lock:
@@ -501,7 +468,11 @@ class ActionCoordinator:
         admission = self._admit(request, registered)
         self.approval_gate.require(request, approval, now=now)
         outcome = _normalize_outcome(
-            registered.executor.execute(request),
+            self.registry.execute_trusted(
+                registered.observation.capability_id,
+                registered.registration_generation,
+                request,
+            ),
             source="executor",
         )
         outcome = self._enforce_migration_closure(admission, outcome)
@@ -646,8 +617,13 @@ class ActionCoordinator:
 
             now = now or datetime.now(UTC)
             self.approval_gate.require(record.request, approval, now=now)
-            reconciler = getattr(registered.executor, "reconcile", None)
-            if reconciler is None:
+            outcome_raw = self.registry.reconcile_trusted(
+                record.capability_id,
+                record.admission.registration_generation,
+                record.request,
+                normalized_unknown,
+            )
+            if outcome_raw is None:
                 return _public_execution(
                     capability_id=record.capability_id,
                     outcome=record.outcome,
@@ -656,10 +632,7 @@ class ActionCoordinator:
                     execution_id=execution_id,
                 )
 
-            outcome = _normalize_outcome(
-                reconciler(record.request, normalized_unknown),
-                source="reconciler",
-            )
+            outcome = _normalize_outcome(outcome_raw, source="reconciler")
             outcome = self._enforce_migration_closure(admission, outcome)
             self.router.record_outcome(record.capability_id, outcome.disposition)
 
