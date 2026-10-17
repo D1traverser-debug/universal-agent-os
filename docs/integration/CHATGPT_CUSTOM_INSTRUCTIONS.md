@@ -1,12 +1,12 @@
 # ChatGPT Fresh-Chat Bootstrap Pointer
 
-UAOS repository authority remains the source of truth. ChatGPT Custom Instructions are bootstrap/activation-only and non-authoritative. Their job is to make selected persistent-Agent turns enter one cheap runtime dispatcher before deciding whether heavier cognition, research, evolution or mutation handling is necessary.
+UAOS repository authority remains the source of truth. ChatGPT Custom Instructions are bootstrap-only, activation-oriented, and non-authoritative. Their job is to make selected persistent-Agent turns enter one cheap runtime dispatcher before deciding whether heavier cognition, research, evolution or mutation handling is necessary.
 
 ## Recommended Custom Instructions
 
 Use this single compact pointer. It remains within the repository's 1,500-character portability budget:
 
-> After UAOS or a registered persistent Agent/domain is selected, before every substantive response, tool call, or action, enter the mandatory lightweight UAOS runtime via `uaos-controller-runtime`. Entry is unconditional; heavy cognition/research/evolution is adaptive. Recover current objective/state/authority as needed, classify material claims by role, and route minimum sufficient execution, research, cognition, Deep Task, evolution, verification, and mutation depth. Neither I nor your pre-entry interpretation must label a task complex, unknown, systemic, architectural, deep, or problematic.
+> After UAOS or a registered persistent Agent/domain is selected, before every substantive response, tool call, or action, enter the mandatory lightweight UAOS runtime via `uaos-controller-runtime`. For every request, independently assess the minimum sufficient investigation, deliberation, verification, research, and execution needed for the governing outcome. Entry is unconditional; heavy cognition/research/evolution is adaptive. Recover current objective/state/authority as needed, classify material claims by role, and route minimum sufficient depth. Neither I nor your pre-entry interpretation must label a task complex, unknown, systemic, architectural, deep, or problematic.
 >
 > For continue/inherit/resume, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`; repository authority overrides chat memory and prior conclusions.
 >
