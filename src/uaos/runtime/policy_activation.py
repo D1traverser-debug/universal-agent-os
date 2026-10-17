@@ -18,18 +18,33 @@ UAOS_PRODUCTION_REPOSITORY = "D1traverser-debug/universal-agent-os"
 UAOS_PRODUCTION_REF = "refs/heads/main"
 
 
+def _exact_nonempty_str(value: object, *, field: str) -> str:
+    """Accept host/VCS identity only as an exact builtin string.
+
+    Identity values are a trust boundary. A ``str`` subclass may override ``strip`` or
+    comparison methods, so accepting ``isinstance(value, str)`` would let the object
+    execute caller-defined normalization while policy activation is being decided.
+    """
+
+    if type(value) is not str:
+        raise PolicyActivationViolation(f"{field} must be an exact builtin string")
+    stripped = value.strip()
+    if not stripped:
+        raise PolicyActivationViolation(f"{field} is required")
+    return stripped
+
+
 @dataclass(frozen=True, slots=True)
 class ProductionRefIdentity:
     repository: str
     ref: str
 
     def __post_init__(self) -> None:
-        if not isinstance(self.repository, str) or not self.repository.strip():
-            raise PolicyActivationViolation("production repository identity is required")
-        if not isinstance(self.ref, str) or not self.ref.strip():
-            raise PolicyActivationViolation("production ref identity is required")
-        repository = self.repository.strip()
-        ref = self.ref.strip()
+        repository = _exact_nonempty_str(
+            self.repository,
+            field="production repository identity",
+        )
+        ref = _exact_nonempty_str(self.ref, field="production ref identity")
         if not ref.startswith("refs/heads/") or ref == "refs/heads/":
             raise PolicyActivationViolation(
                 "production ref identity must be a fully qualified non-empty branch ref"
@@ -38,12 +53,17 @@ class ProductionRefIdentity:
             raise PolicyActivationViolation(
                 "production identity does not match the pinned UAOS production authority"
             )
+        object.__setattr__(self, "repository", repository)
+        object.__setattr__(self, "ref", ref)
 
 
-def _require_current_ref(ref: str) -> str:
-    if not isinstance(ref, str) or not ref.strip():
-        raise PolicyActivationViolation("trusted current ref identity is required")
-    return ref.strip()
+def _require_current_ref(ref: object) -> str:
+    value = _exact_nonempty_str(ref, field="trusted current ref identity")
+    if not value.startswith("refs/heads/") or value == "refs/heads/":
+        raise PolicyActivationViolation(
+            "trusted current ref identity must be a fully qualified non-empty branch ref"
+        )
+    return value
 
 
 def resolve_ref_conditioned_policy_activation(
@@ -55,31 +75,42 @@ def resolve_ref_conditioned_policy_activation(
 ) -> PolicyActivationState:
     """Resolve effective state against the pinned trusted UAOS production authority.
 
-    Activation requires the exact repository plus fully qualified branch identity
-    ``D1traverser-debug/universal-agent-os`` + ``refs/heads/main``. Short refs, tags,
-    pull refs, alternate repositories/branches, and malformed or misloaded production
-    identities fail closed. Model/request text is never sufficient identity evidence.
+    Activation requires exact builtin-string identities for the repository and fully
+    qualified branch ref. Short refs, tags, subclasses with custom normalization,
+    alternate repositories/branches, and malformed/misloaded production identities
+    fail closed. Model/request text is never sufficient identity evidence.
     """
 
-    if declared_status != REF_CONDITIONAL_POLICY_STATUS:
+    status = _exact_nonempty_str(declared_status, field="declared policy status")
+    if status != REF_CONDITIONAL_POLICY_STATUS:
         raise PolicyActivationViolation(
             "policy is not declared for ref-conditioned activation"
         )
-    if not isinstance(current_repository, str) or not current_repository.strip():
-        raise PolicyActivationViolation("trusted current repository identity is required")
+    current_repo = _exact_nonempty_str(
+        current_repository,
+        field="trusted current repository identity",
+    )
+    trusted_current_ref = _require_current_ref(current_ref)
 
-    # Revalidate at the decision point even though ProductionRefIdentity validates on
-    # construction; callers may deserialize/reconstruct objects through unusual paths.
+    if type(production_identity) is not ProductionRefIdentity:
+        raise PolicyActivationViolation("production identity must use the canonical value type")
+    # Revalidate exact builtin values even if a caller attempted object.__setattr__ after
+    # construction. Never dispatch subclass methods while making the activation decision.
+    production_repo = _exact_nonempty_str(
+        object.__getattribute__(production_identity, "repository"),
+        field="production repository identity",
+    )
+    production_ref = _exact_nonempty_str(
+        object.__getattribute__(production_identity, "ref"),
+        field="production ref identity",
+    )
     if (
-        production_identity.repository.strip() != UAOS_PRODUCTION_REPOSITORY
-        or production_identity.ref.strip() != UAOS_PRODUCTION_REF
+        production_repo != UAOS_PRODUCTION_REPOSITORY
+        or production_ref != UAOS_PRODUCTION_REF
     ):
         raise PolicyActivationViolation(
             "production identity does not match the pinned UAOS production authority"
         )
-
-    current_repo = current_repository.strip()
-    trusted_current_ref = _require_current_ref(current_ref)
 
     if (
         current_repo == UAOS_PRODUCTION_REPOSITORY
