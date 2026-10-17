@@ -26,15 +26,16 @@ class ProductionRefIdentity:
             raise PolicyActivationViolation("production repository identity is required")
         if not isinstance(self.ref, str) or not self.ref.strip():
             raise PolicyActivationViolation("production ref identity is required")
+        if not self.ref.strip().startswith("refs/heads/"):
+            raise PolicyActivationViolation(
+                "production ref identity must be a fully qualified branch ref"
+            )
 
 
-def _normalize_ref(ref: str) -> str:
+def _require_current_ref(ref: str) -> str:
     if not isinstance(ref, str) or not ref.strip():
         raise PolicyActivationViolation("trusted current ref identity is required")
-    value = ref.strip()
-    if value.startswith("refs/heads/"):
-        return value[len("refs/heads/") :]
-    return value
+    return ref.strip()
 
 
 def resolve_ref_conditioned_policy_activation(
@@ -46,11 +47,10 @@ def resolve_ref_conditioned_policy_activation(
 ) -> PolicyActivationState:
     """Resolve one authorized policy's effective state from trusted repository/ref identity.
 
-    The committed policy does not mutate itself after merge. Instead, the same validated
-    tree is explicitly ref-conditional: it is non-active on candidate refs and becomes
-    active exactly when that tree is reachable as the configured production ref. Callers
-    must supply repository/ref identity from the host/VCS boundary; model/request text is
-    not a trusted source for these values.
+    Activation requires the exact fully qualified production branch ref. Short names such
+    as ``main`` are deliberately non-active because they do not identify ref type and can
+    be ambiguous with a tag of the same name. The host/VCS boundary must therefore supply
+    a trusted ``refs/heads/...`` identity; model/request text is never sufficient.
     """
 
     if declared_status != REF_CONDITIONAL_POLICY_STATUS:
@@ -61,12 +61,13 @@ def resolve_ref_conditioned_policy_activation(
         raise PolicyActivationViolation("trusted current repository identity is required")
 
     current_repo = current_repository.strip()
-    current_branch = _normalize_ref(current_ref)
-    production_branch = _normalize_ref(production_identity.ref)
+    trusted_current_ref = _require_current_ref(current_ref)
+    production_ref = production_identity.ref.strip()
 
     if (
         current_repo == production_identity.repository.strip()
-        and current_branch == production_branch
+        and trusted_current_ref.startswith("refs/heads/")
+        and trusted_current_ref == production_ref
     ):
         return PolicyActivationState.ACTIVE_EXECUTION_POLICY
     return PolicyActivationState.AUTHORIZED_NOT_PRODUCTION_ACTIVE
