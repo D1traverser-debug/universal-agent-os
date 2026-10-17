@@ -1,39 +1,56 @@
 {
-  "schema_version":"1.2",
+  "schema_version":"1.3",
   "evolution_id":"EVO-20261017-PERSISTENT-ASSET-GOVERNANCE",
   "authority":"UAOS",
-  "status":"FRAMED__CANDIDATE_NOT_PROMOTED",
-  "updated_at":"2026-10-17T09:20:00+08:00",
-  "trigger":["USER_CORRECTION","REPEATED_CROSS_SURFACE_RESIDUALS","CAPABILITY_GAP"],
+  "status":"EVALUATED__AUTHORIZED__PROMOTION_PENDING_FINAL_VALIDATION_AND_MAIN_MERGE",
+  "updated_at":"2026-10-17T10:18:00+08:00",
+  "trigger":["USER_CORRECTION","REPEATED_CROSS_SURFACE_RESIDUALS","CAPABILITY_GAP","SELF_DOGFOOD_MUTATION_INCIDENT"],
   "failure_class":"PERSISTENT_SURFACE_CRUD_OUTPUT_GOVERNANCE_FRAGMENTED__MIGRATED_ASSETS_REMAIN_DISCOVERABLE_AS_IF_CURRENT",
-  "governing_outcome":"Every durable read/create/update/delete/output/migration action must be classified against one persistent-asset model before it can influence authority or execution, so GitHub/Library/Notion/Drive/chat/Memory/Custom Instructions/automations cannot silently become competing current control planes after migration.",
+  "governing_outcome":"Every mutation and every durable read/create/update/delete/output/migration asset must be governed through one persistent-asset model so GitHub/Library/Notion/Drive/chat/Memory/Custom Instructions/automations cannot silently become competing current control planes after migration, while ephemeral mutations remain possible without fake persistent assets.",
   "raw_evidence":[
     "Financial Writing migrated to GitHub but Library still contained an ACTIVE_POINTER with retired topology references until this audit.",
     "Google Drive legacy continuity documents were already inside a legacy archive folder but retained current-looking Router/State/System Policy/Handoff names and remained globally searchable.",
     "Notion retained an old CURRENT_CHAT_HANDOFF, PENDING_REVIEWQUEUE and migrated writing regression records alongside reusable ArticleBase/IndustryBase knowledge.",
-    "UAOS RETRIEVAL_POLICY governs repository retrieval and AUTHORITY_WRITE_POLICY governs authority scope/mutation, but production had no common cross-surface asset lifecycle/CRUD/output classification model.",
-    "During this audit the acting controller twice omitted or mis-sequenced a branch target before a GitHub write; the production write was immediately reverted and later nonexistent-branch writes failed. These incidents are direct evidence that model intention plus prose policy is insufficient mutation admission."
+    "A Library-wide search also found an ACTIVE_POINTER to the retired universal-continuity-agent; it was decommissioned and moved to UAOS_Migrated_History.",
+    "UAOS RETRIEVAL_POLICY governed repository retrieval and AUTHORITY_WRITE_POLICY governed authority scope/mutation, but production had no common cross-surface asset lifecycle/CRUD/output classification model.",
+    "During this audit the acting controller mis-sequenced GitHub candidate targeting and briefly created a placeholder on main before immediately reverting it. This is direct dogfood evidence that model intention plus prose policy is insufficient mutation admission."
   ],
   "professional_method_evidence":[
     "Accellera UVM register abstraction supports multiple physical access paths behind one abstract model and warns that mirrors become stale when changes occur outside observed paths.",
     "UVM explicit prediction uses monitors/predictors to observe operations from all access paths rather than trusting only model-originated writes.",
-    "Selected analogy: persistent-surface governance requires one abstract asset model, per-surface adapters, observed side effects, and a scoreboard/reconciliation step; a search hit or stale mirror is not authority."
+    "Selected analogy: persistent-surface governance requires one abstract asset model, adapter-owned canonical addressing, observed side effects, and reconciliation; a search hit or stale mirror is not authority."
   ],
   "architecture_candidates":[
-    {"id":"NO_CHANGE","disposition":"REJECTED","reason":"Leaves each connector/surface to rely on naming conventions and human memory; already disproven by residual active-looking assets."},
+    {"id":"NO_CHANGE","disposition":"REJECTED","reason":"Residual active-looking assets and the self-dogfood direct-main incident falsify reliance on naming conventions/model discipline."},
     {"id":"FINANCIAL_ONLY_CLEANUP","disposition":"REJECTED_AS_SUFFICIENT","reason":"Would clean one domain but preserve the common failure class for every other Agent and future migration."},
     {"id":"COPY_FULL_POLICIES_INTO_EACH_SURFACE","disposition":"REJECTED","reason":"Creates more shadow authorities and drift."},
-    {"id":"UAOS_PERSISTENT_ASSET_MODEL_PLUS_DOMAIN_PROFILES","disposition":"PREFERRED","reason":"Adds one common lifecycle/CRUD/output contract while domains retain ownership of business assets and declare only domain-specific surface usage."}
+    {"id":"CALLER_SUPPLIED_ASSET_LABEL_GATE","disposition":"REJECTED_AFTER_ADVERSARIAL_REVIEW","reason":"Codex found READ/DELETE spoofing, descriptor relabeling and target-alias bypasses; caller assertions cannot be trusted execution semantics."},
+    {"id":"ALL_MUTATIONS_ARE_PERSISTENT","disposition":"REJECTED_AFTER_ADVERSARIAL_REVIEW","reason":"Would incorrectly force in-memory/session-local side effects to fabricate durable assets."},
+    {"id":"UAOS_TRUSTED_CAPABILITY_CONTRACT_PLUS_CANONICAL_TARGET_PLUS_ASSET_CATALOG_AND_DOMAIN_PROFILES","disposition":"PREFERRED","reason":"Reuses the existing mutation sentinel while separating action semantics, physical target identity and asset lifecycle ownership."}
   ],
-  "selected_architecture":"ONE_UAOS_PERSISTENT_ASSET_MODEL__SURFACE_ADAPTERS_AND_CLASSIFICATION__DOMAIN_OWNED_PROFILES__OBSERVED_SIDE_EFFECT_RECONCILIATION__MIGRATION_RETIREMENT__NO_SHADOW_AUTHORITY",
+  "selected_architecture":"REGISTERED_CAPABILITY_OWNS_MUTATION_PERSISTENCE_AND_CRUD__SELECTED_ADAPTER_CANONICALIZES_TARGET__TRUSTED_ASSET_CATALOG_OWNS_ROLE_LIFECYCLE_OWNER_ALLOWED_OPS__REQUEST_FIELDS_ASSERTION_ONLY__EPHEMERAL_EXPLICIT__RECONCILIATION_BINDS_ORIGINAL_ADMISSION__MIGRATE_IS_IDENTITY_BOUND_CLOSURE__DOMAIN_PROFILES_DECLARE_ONLY_DOMAIN_ASSETS",
+  "falsification_and_review_evidence":[
+    "Independent Codex review found caller READ spoofing, action/CRUD mismatch, descriptor-target mismatch, untrusted owner/lifecycle relabeling, path-alias bypass, missing reconciliation mediation, unused migration closure, weak migration target binding, candidate/activation mismatch and overblocking of ephemeral side effects.",
+    "The candidate was redesigned rather than patching those findings one-by-one: request metadata became assertion-only and trusted semantics moved into capability registration, adapter canonicalization and the asset catalog.",
+    "Adversarial regressions cover string/enum READ spoofing, DELETE-vs-write mismatch, owner/lifecycle relabeling, canonical target aliases, missing trusted contract/catalog, ephemeral mutation, tampered reconciliation request and incomplete/mismatched migration closure."
+  ],
+  "external_surface_remediation":[
+    "Library Financial ACTIVE_POINTER replaced by authority-NONE tombstone and moved to Financial_Writing_Migrated_History; casebook marked MIGRATED_HISTORY.",
+    "Global Library Continuity ACTIVE_POINTER to retired controller decommissioned and moved to UAOS_Migrated_History.",
+    "Drive legacy Router/State/System Policy/Handoff/Conflicts names explicitly marked DECOMMISSIONED LEGACY inside legacy archive.",
+    "Notion old Financial Review Queue and CURRENT_CHAT_HANDOFF renamed MIGRATED_HISTORY/DECOMMISSIONED; ArticleBase/IndustryBase retained as non-authority shared knowledge."
+  ],
   "acceptance_criteria":[
-    "Every persistent asset class has owner, authority role, lifecycle state, allowed operations and migration/retirement semantics.",
+    "Every mutating capability action has a trusted EPHEMERAL or DURABLE_OR_EXTERNAL contract or fails closed.",
+    "Durable/external CRUD is derived from trusted capability registration, not request labels.",
+    "Durable/external target identity is adapter-canonicalized before trusted asset lookup.",
+    "Role/lifecycle/owner/allowed operations come from a trusted asset catalog and cannot be caller-relabeled.",
+    "Ephemeral mutation works without fabricating a persistent asset.",
+    "Reconciliation is bound to the original admission receipt and reruns gates.",
+    "Migration cannot return CONFIRMED without identity-bound verified-target/source-retirement closure evidence.",
     "Non-authority surfaces cannot be promoted to current business authority by search presence, memory relevance or stale bootstrap text.",
-    "Material persistent writes require a declared target surface and asset role before execution.",
-    "Migrations require verify-target then retire-source; retired sources remain non-authoritative even if still searchable.",
-    "Outputs/deliverables are typed separately from state/authority.",
-    "Financial declares GitHub as current business authority and classifies Notion/Drive/Library/chat/Memory/Custom Instructions/automations without duplicating parent policy.",
-    "Current cleanup removes or clearly retires misleading Financial control-plane pointers while preserving useful historical/knowledge evidence."
+    "Financial declares exactly one current business authority and classifies the other persistent surfaces without copying parent policy.",
+    "Native ChatGPT product-internal chat/memory/Custom Instructions physical mediation is not claimed."
   ],
-  "known_boundary":"Native ChatGPT cannot physically intercept every product-internal chat, memory or Custom Instructions operation through repository code. The common policy is mechanically enforceable in UAOS-controlled paths and behaviorally binding in native ChatGPT; external-surface cleanup is verified through available connectors."
+  "known_boundary":"Repository-controlled UAOS can mechanically enforce trusted mutation admission only on controlled execution paths. Native ChatGPT product-internal chat, Memory and Custom Instructions are behaviorally classified and connector-observed where possible, but no repository-controlled physical interception is claimed."
 }
