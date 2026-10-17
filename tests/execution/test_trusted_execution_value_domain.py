@@ -25,7 +25,6 @@ class StickyMutable:
         self.route = "original"
 
     def __deepcopy__(self, memo):
-        # This used to defeat a deepcopy-based trust boundary.
         return self
 
 
@@ -64,9 +63,6 @@ def observation(capability_id, actions):
 def test_request_snapshot_normalizes_mutable_scalar_subclasses_before_unknown_reconcile():
     token = MutableStr("stable-token")
     request = ExecutionRequest("a1", "read", "resource", {"token": "initial"})
-    # Simulate a hostile caller mutating even a frozen dataclass before the coordinator
-    # trust boundary. _snapshot_request reconstructs ExecutionRequest, whose __post_init__
-    # must normalize the subclass into an exact immutable builtin.
     object.__setattr__(request, "payload", {"token": token})
 
     registry = CapabilityRegistry()
@@ -117,5 +113,9 @@ def test_registered_mutation_contract_mapping_is_immutable_after_registration():
         )
 
     current = registry.get("mutator")
+    current_contract = current.mutation_contract_for("mutate")
     assert current.registration_generation == generation
-    assert current.mutation_contract_for("mutate") is original
+    assert current_contract is not original
+    assert current_contract is not None
+    assert current_contract.persistence is MutationPersistence.EPHEMERAL
+    assert current_contract.operation is None
