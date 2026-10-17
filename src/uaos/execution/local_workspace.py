@@ -16,6 +16,7 @@ from .models import (
     ExecutionOutcome,
     ExecutionRequest,
 )
+from .persistent_assets import CrudOperation, MutationContract, MutationPersistence
 from .registry import CapabilityRegistry
 
 
@@ -35,6 +36,9 @@ class LocalWorkspaceExecutor:
         except ValueError as exc:
             raise PermissionError("target escapes workspace root") from exc
         return path
+
+    def canonicalize_target(self, target: str) -> str:
+        return f"file://{self._resolve(target).as_posix()}"
 
     @staticmethod
     def _sha256(content: bytes) -> str:
@@ -113,6 +117,7 @@ def register_local_workspace_capability(
     *,
     capability_id: str = "local.workspace",
 ) -> CapabilityObservation:
+    executor = LocalWorkspaceExecutor(root)
     observation = CapabilityObservation(
         capability_id=capability_id,
         health=CapabilityHealth.AVAILABLE,
@@ -126,5 +131,15 @@ def register_local_workspace_capability(
         cost_class=CapabilityCostClass.FREE,
         availability=CapabilityAvailability.LOCAL,
     )
-    registry.register(observation, LocalWorkspaceExecutor(root))
+    registry.register(
+        observation,
+        executor,
+        mutation_contracts={
+            "local.write_text": MutationContract(
+                MutationPersistence.DURABLE_OR_EXTERNAL,
+                CrudOperation.UPDATE,
+            )
+        },
+        canonicalize_target=executor.canonicalize_target,
+    )
     return observation
