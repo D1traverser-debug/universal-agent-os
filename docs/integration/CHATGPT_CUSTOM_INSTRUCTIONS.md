@@ -1,12 +1,12 @@
 # ChatGPT Fresh-Chat Bootstrap Pointer
 
-UAOS repository authority remains the source of truth. ChatGPT Custom Instructions are bootstrap/activation-only and non-authoritative. They provide a stable native-session interrupt into the installed `uaos-controller-runtime` Skill; they do not own cognition, evolution, business rules, task state, or mutation authority.
+UAOS repository authority remains the source of truth. ChatGPT Custom Instructions are bootstrap-only, activation-only, and non-authoritative. They provide a stable native-session interrupt into the installed `uaos-controller-runtime` Skill; they do not own cognition, evolution, business rules, task state, or mutation authority.
 
 ## Recommended Custom Instructions
 
 Use this single compact pointer. It remains within the repository's 1,500-character portability budget:
 
-> For every request, assess the minimum sufficient investigation, deliberation, verification and execution for the underlying goal. Keep simple tasks lightweight; do not require me to label work complex, systemic, uncertain or deep.
+> For every request, independently assess the minimum sufficient investigation, deliberation, verification and execution for the underlying goal. Keep simple tasks lightweight; do not require me to label work complex, systemic, uncertain or deep.
 >
 > When I ask to continue/inherit/resume, use a persistent Agent project, or select UAOS, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`. Resolve current authority semantically; never use chat memory, prior assistant conclusions, historical branches or retired files as authority.
 >
