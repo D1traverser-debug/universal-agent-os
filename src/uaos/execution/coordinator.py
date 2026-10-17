@@ -165,6 +165,22 @@ def _snapshot_request(request: ExecutionRequest) -> ExecutionRequest:
     return ExecutionRequest(**values)
 
 
+def _snapshot_admission(admission: ExecutionAdmissionReceipt) -> ExecutionAdmissionReceipt:
+    """Return a detached value copy of a coordinator-owned admission receipt."""
+
+    if not isinstance(admission, ExecutionAdmissionReceipt):
+        raise PersistentAssetViolation("invalid execution admission receipt")
+    return ExecutionAdmissionReceipt(
+        capability_id=admission.capability_id,
+        registration_generation=admission.registration_generation,
+        request_fingerprint=admission.request_fingerprint,
+        mutation_persistence=admission.mutation_persistence,
+        canonical_target=admission.canonical_target,
+        persistent_asset_id=admission.persistent_asset_id,
+        persistent_operation=admission.persistent_operation,
+    )
+
+
 def _payload_digest(value: object) -> str:
     rendered = json.dumps(
         _canonical_value(value),
@@ -216,7 +232,7 @@ def _normalize_outcome(outcome: ExecutionOutcome, *, source: str) -> ExecutionOu
 
 
 def _snapshot_outcome(outcome: ExecutionOutcome) -> ExecutionOutcome:
-    """Create a coordinator-owned outcome instance detached from any public receipt."""
+    """Create an outcome instance detached from every other trust domain."""
 
     normalized = _normalize_outcome(outcome, source="outcome snapshot")
     return ExecutionOutcome(
@@ -225,6 +241,25 @@ def _snapshot_outcome(outcome: ExecutionOutcome) -> ExecutionOutcome:
         provider_ref=normalized.provider_ref,
         evidence=normalized.evidence,
         error=normalized.error,
+    )
+
+
+def _public_execution(
+    *,
+    capability_id: str,
+    outcome: ExecutionOutcome,
+    admission: ExecutionAdmissionReceipt,
+    request: ExecutionRequest | None,
+    execution_id: str | None,
+) -> CoordinatedExecution:
+    """Build a public receipt with no object alias to coordinator-owned state."""
+
+    return CoordinatedExecution(
+        capability_id=capability_id,
+        outcome=_snapshot_outcome(outcome),
+        admission=_snapshot_admission(admission),
+        original_request=_snapshot_request(request) if request is not None else None,
+        execution_id=execution_id,
     )
 
 
@@ -237,11 +272,10 @@ class ActionCoordinator:
     same values even if caller-owned payload objects are subsequently changed.
 
     UNKNOWN reconciliation is coordinator-owned. A caller receives an opaque execution
-    id, while the authoritative request snapshot, admission and a separately constructed
-    outcome snapshot remain internal. Public and internal outcome instances never alias,
-    including UNKNOWN returns from a no-reconciler path. A per-execution reconciliation
-    claim prevents concurrent repair attempts for one id. The baseline record/claim store
-    is process-local and fails closed after restart; a host requiring cross-process
+    id plus detached public copies of request/admission/outcome; none of those public
+    objects alias the authoritative internal record. A per-execution reconciliation claim
+    prevents concurrent repair attempts for one id. The baseline record/claim store is
+    process-local and fails closed after restart; a host requiring cross-process
     reconciliation must persist the same record and atomic claim state in its authority
     store.
     """
@@ -480,12 +514,12 @@ class ActionCoordinator:
                 admission,
                 outcome,
             )
-        return CoordinatedExecution(
-            registered.observation.capability_id,
-            outcome,
-            admission,
-            request,
-            execution_id,
+        return _public_execution(
+            capability_id=registered.observation.capability_id,
+            outcome=outcome,
+            admission=admission,
+            request=request,
+            execution_id=execution_id,
         )
 
     def execute(
@@ -614,12 +648,12 @@ class ActionCoordinator:
             self.approval_gate.require(record.request, approval, now=now)
             reconciler = getattr(registered.executor, "reconcile", None)
             if reconciler is None:
-                return CoordinatedExecution(
-                    record.capability_id,
-                    _snapshot_outcome(record.outcome),
-                    record.admission,
-                    record.request,
-                    execution_id,
+                return _public_execution(
+                    capability_id=record.capability_id,
+                    outcome=record.outcome,
+                    admission=record.admission,
+                    request=record.request,
+                    execution_id=execution_id,
                 )
 
             outcome = _normalize_outcome(
@@ -641,12 +675,12 @@ class ActionCoordinator:
                 with self._unknown_lock:
                     self._unknown_records.pop(execution_id, None)
 
-            return CoordinatedExecution(
-                record.capability_id,
-                outcome,
-                admission,
-                record.request,
-                execution_id if outcome.disposition is ExecutionDisposition.UNKNOWN else None,
+            return _public_execution(
+                capability_id=record.capability_id,
+                outcome=outcome,
+                admission=admission,
+                request=record.request,
+                execution_id=execution_id if outcome.disposition is ExecutionDisposition.UNKNOWN else None,
             )
         finally:
             with self._unknown_lock:
