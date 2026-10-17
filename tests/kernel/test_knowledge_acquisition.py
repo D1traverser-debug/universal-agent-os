@@ -173,15 +173,21 @@ def test_discovery_and_community_only_cannot_claim_comprehensive_learning():
 
 
 def test_seed_search_without_expansion_cannot_claim_comprehensive_learning():
-    probes = tuple(
+    probes = (
         AcquisitionProbe(
-            f"seed-{idx}",
+            "seed-search",
             AcquisitionMethod.DIRECT_SEARCH,
-            f"seed {idx}",
-            "Seed finding.",
+            "seed query",
+            "Seed search finding.",
             ("official-guidance",),
-        )
-        for idx in range(2)
+        ),
+        AcquisitionProbe(
+            "seed-browse",
+            AcquisitionMethod.SOURCE_NATIVE_BROWSE,
+            "known source navigation",
+            "A second seed-level acquisition method found supporting material but did not expand the search space.",
+            ("repo-sample",),
+        ),
     )
     with pytest.raises(KnowledgeAcquisitionAdmissionError, match="requires query/reference/repository/adjacent expansion"):
         require_knowledge_acquisition_admission(_assessment(probes=probes))
