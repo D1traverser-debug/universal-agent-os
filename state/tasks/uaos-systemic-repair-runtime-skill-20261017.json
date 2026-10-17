@@ -1,27 +1,28 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "task_id": "uaos:maintenance:systemic-repair-runtime-skill-20261017",
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "display_name_zh": "总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
-  "status": "RUNNING",
-  "current_stage": "CANDIDATE_IMPLEMENTED__FINAL_FROZEN_ACCEPTANCE_PENDING_CI_LIVE",
+  "status": "VERIFIED",
+  "current_stage": "PRODUCTION_VERIFIED__ACCOUNT_UI_ACTIVATION_AND_NATIVE_OBSERVATION_PENDING",
   "governing_outcome": "在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话更稳定进入当前 UAOS 认知与进化系统；重复/系统性问题不得以样本级局部补丁收口，除非证据证明 failure class 确实局限于该 leaf；修复后必须做 generalization 与独立验证；promotion 必须在冻结验收边界下有限收敛。",
   "origin_issue_refs": ["#77", "#72", "#63"],
   "evolution_ref": "state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
   "candidate_branch": "architecture/systemic-repair-runtime-skill-20261017",
   "pull_request": 78,
   "production_base_sha": "f40db0ffdd1eee339c0f0605a772e245384cd9b4",
+  "production_commit": "ea3ae3a119b943030db94566781157668b906df6",
   "competing_candidates": {
     "A_SKILL_ONLY": "Rejected: activation alone does not make systemic repair completeness mechanical.",
     "B_CORE_ONLY": "Rejected: controlled-runtime correctness alone does not reduce the native activation/discovery gap.",
-    "C_DUAL_CONVERGENCE": "Selected: non-authoritative native runtime Skill + compact Custom Instructions activation; canonical cognition/closure systemic completeness; existing EvolutionTransaction; bounded included/free-first promotion.",
+    "C_DUAL_CONVERGENCE": "Selected and production-promoted: non-authoritative native runtime Skill + compact Custom Instructions activation; canonical cognition/closure systemic completeness; existing EvolutionTransaction; bounded included/free-first promotion.",
     "D_CONTROLLED_PAID_RUNTIME": "Deferred stronger-assurance option: conflicts with current no-extra-cost baseline and is not required for the admitted outcome."
   },
   "implemented_changes": [
     "systemic ProblemClosureSignals and assess_problem_closure failure-class/generalization/recurrence admission",
     "native uaos-controller-runtime Skill source as non-authoritative dispatcher",
-    "compact bootstrap-only Custom Instructions handoff kept inside 1,500-character portability budget",
+    "compact bootstrap-only Custom Instructions handoff inside the portability budget",
     "compiled native runtime projection exposes Skill dispatch and systemic-completeness semantics without becoming authority",
     "Common Behavior 1.4 systemic-completeness clarification with owner-native child evidence rather than copied parent data structures",
     "Evolution 2.1 bounded verification: frozen required acceptance checks, finite verification rounds, zero-paid-review default budget, blocking/non-blocking findings",
@@ -30,10 +31,28 @@
   "falsification_evidence": [
     "initial controller task status IN_PROGRESS failed existing TaskStatus contract and was corrected to RUNNING without changing the invariant",
     "initial common-behavior wording broke existing compatibility anchors and was corrected while preserving the original invariant",
-    "initial Custom Instructions edit removed established bootstrap wording and exceeded compatibility expectations; the pointer was compressed/restored rather than weakening tests"
+    "initial Custom Instructions edit removed established bootstrap wording and compatibility anchors; the pointer was compressed/restored rather than weakening tests",
+    "final frozen candidate head 05f2bac1735cc48975faf471fc5e02a7f1e4d683 passed repo CI #501 and live-integration #291",
+    "production commit ea3ae3a119b943030db94566781157668b906df6 passed push CI #502"
   ],
   "cost_constraint": "INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
   "verification_boundary": "FROZEN_BY_state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json#frozen_acceptance",
-  "next_action": "run exact frozen-head repo CI and live-integration; if green, promote PR #78 without another review loop; then production reread/observation and account-UI handoff",
-  "updated_at": "2026-10-17T18:22:00+08:00"
+  "production_verification": {
+    "candidate_head": "05f2bac1735cc48975faf471fc5e02a7f1e4d683",
+    "candidate_ci_number": 501,
+    "candidate_ci": "PASS",
+    "candidate_live_integration_number": 291,
+    "candidate_live_integration": "PASS",
+    "production_commit": "ea3ae3a119b943030db94566781157668b906df6",
+    "production_ci_number": 502,
+    "production_ci": "PASS",
+    "production_reread": "PASS"
+  },
+  "remaining_user_owned_actions": [
+    "install the production uaos-controller-runtime Skill in ChatGPT account UI",
+    "replace account Custom Instructions with docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md#Recommended-Custom-Instructions",
+    "after activation, allow one or more real native ChatGPT turns to provide post-promotion observation evidence"
+  ],
+  "next_action": "USER_ACCOUNT_UI_ACTIVATION__THEN_NATIVE_POST_PROMOTION_OBSERVATION",
+  "updated_at": "2026-10-17T19:56:00+08:00"
 }
