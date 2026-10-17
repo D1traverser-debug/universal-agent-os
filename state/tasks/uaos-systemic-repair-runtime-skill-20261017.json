@@ -11,7 +11,7 @@
   "evolution_ref": "state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
   "candidate_branch": "architecture/systemic-repair-runtime-skill-20261017",
   "pull_request": 78,
-  "production_base_sha": "f40db0ffdd1eee339c0f0605a772e245384cd32",
+  "production_base_sha": "f40db0ffdd1eee339c0f0605a772e245384cd9b4",
   "production_commit": "ea3ae3a119b943030db94566781157668b906df6",
   "competing_candidates": {
     "A_SKILL_ONLY": "Rejected: activation alone does not make systemic repair completeness mechanical.",
