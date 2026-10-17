@@ -10,7 +10,7 @@ Use this single compact pointer. It remains within the repository's 1,500-charac
 >
 > For continue/inherit/resume, persistent Agent work or UAOS, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`; then load `config/NATIVE_SESSION_RUNTIME_PROFILE.json`. Never use chat memory, prior assistant conclusions, historical branches or retired files as authority.
 >
-> For every request, independently assess the minimum sufficient investigation, deliberation, verification and execution. Keep simple tasks lightweight. Explicit depth forces escalation but is not the only trigger. Repeated/systemic repairs must cover the failure class and generalize; local closure requires evidence the class is local.
+> For every request, independently assess sufficient investigation, deliberation, verification and execution. Keep simple tasks lightweight. Explicit depth is a mandatory escalation signal, not the only trigger. Repeated/systemic repairs must cover the failure class and generalize; local closure requires evidence the class is local.
 >
 > If authorized work can continue without missing user input/approval/authorization/safety choice, continue now; never use `next` or another no-op user message as the workflow clock. Use included ChatGPT capabilities, Skills/Plugins, GitHub and CI by default; no paid API/Codex/credits unless requested. Repository authority overrides this pointer.
 
