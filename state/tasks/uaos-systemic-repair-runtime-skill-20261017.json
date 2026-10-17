@@ -1,78 +1,51 @@
 {
-  "schema_version": "1.4",
-  "task_id": "uaos:maintenance:systemic-repair-runtime-skill-20261017",
-  "authority_context": "UAOS",
-  "task_type": "controller_maintenance",
-  "display_name_zh": "总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
-  "status": "RUNNING",
-  "current_stage": "CURRENT_CHAT_TRIGGER_PASS__FRESH_CHAT_COLD_START_PENDING",
-  "governing_outcome": "在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话更稳定进入当前 UAOS 认知与进化系统；重复/系统性问题不得以样本级局部补丁收口，除非证据证明 failure class 确实局限于该 leaf；修复后必须做 generalization 与独立验证；promotion 必须在冻结验收边界下有限收敛。",
-  "origin_issue_refs": ["#77", "#72", "#63"],
-  "evolution_ref": "state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
-  "candidate_branch": "architecture/systemic-repair-runtime-skill-20261017",
-  "pull_request": 78,
-  "production_base_sha": "f40db0ffdd1eee339c0f0605a772e245384cd9b4",
-  "production_commit": "ea3ae3a119b943030db94566781157668b906df6",
-  "competing_candidates": {
-    "A_SKILL_ONLY": "Rejected: activation alone does not make systemic repair completeness mechanical.",
-    "B_CORE_ONLY": "Rejected: controlled-runtime correctness alone does not reduce the native activation/discovery gap.",
-    "C_DUAL_CONVERGENCE": "Selected and production-promoted: non-authoritative native runtime Skill + compact Custom Instructions activation; canonical cognition/closure systemic completeness; existing EvolutionTransaction; bounded included/free-first promotion.",
-    "D_CONTROLLED_PAID_RUNTIME": "Deferred stronger-assurance option: conflicts with current no-extra-cost baseline and is not required for the admitted outcome."
-  },
-  "implemented_changes": [
-    "systemic ProblemClosureSignals and assess_problem_closure failure-class/generalization/recurrence admission",
-    "native uaos-controller-runtime Skill source as non-authoritative dispatcher",
-    "compact bootstrap-only Custom Instructions handoff inside the portability budget",
-    "compiled native runtime projection exposes Skill dispatch and systemic-completeness semantics without becoming authority",
-    "Common Behavior 1.4 systemic-completeness clarification with owner-native child evidence rather than copied parent data structures",
-    "Evolution 2.1 bounded verification: frozen required acceptance checks, finite verification rounds, zero-paid-review default budget, blocking/non-blocking findings",
-    "durable evolution evidence and controller continuity state"
+  "schema_version":"1.5",
+  "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
+  "authority_context":"UAOS",
+  "task_type":"controller_maintenance",
+  "display_name_zh":"总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
+  "status":"RUNNING",
+  "current_stage":"COLD_START_FAILURE_CONFIRMED__REPAIR_CANDIDATE_PRE_PR__CODEX_AUTOREVIEW_BLOCKER",
+  "governing_outcome":"在不增加额外付费 API/积分/Codex 依赖的前提下，让原生 ChatGPT 的总控/域会话稳定进入当前 UAOS 认知与进化系统；用户或模型提出的修法不能绕过 intervention admission；Native Skill 不能成为可手工漂移的影子 authority；控制面修改必须携带 durable evolution/task admission 后才能 promotion。",
+  "origin_issue_refs":["#77","#72","#63"],
+  "previous_evolution_ref":"state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
+  "evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
+  "candidate_branch":"repair/native-cold-start-governance-20261017",
+  "pull_request":null,
+  "production_base_sha":"93b98feb093a75d5562acee10e3e6a1c067f23ff",
+  "bad_production_commit":"001d5be3ac6f2dfdf8468327c5d8e6dad972e1db",
+  "observations":[
+    "Existing long-chat trigger passed with limitation and correctly rejected adding 10 Skill rules.",
+    "Fresh-chat cold-start trigger failed: the assistant recovered UAOS authority but still executed the user-proposed 10-rule repair without cognition/evolution re-admission.",
+    "PR #83 merged a Skill-only normative change while this task authority still recorded that same intervention as NO_CHANGE_WITH_EVIDENCE.",
+    "Codex auto-review was triggered by opening PR #83 despite the zero-paid-review/default no-Codex constraint; its P1 arrived after merge and identified the missing re-admission.",
+    "During repair observation persistence, one create_file call omitted branch and wrote directly to main; this is preserved as host-boundary process-failure evidence rather than hidden or erased by another direct-main write."
   ],
-  "falsification_evidence": [
-    "initial controller task status IN_PROGRESS failed existing TaskStatus contract and was corrected to RUNNING without changing the invariant",
-    "initial common-behavior wording broke existing compatibility anchors and was corrected while preserving the original invariant",
-    "initial Custom Instructions edit removed established bootstrap wording and compatibility anchors; the pointer was compressed/restored rather than weakening tests",
-    "final frozen candidate head 05f2bac1735cc48975faf471fc5e02a7f1e4d683 passed repo CI #501 and live-integration #291",
-    "production commit ea3ae3a119b943030db94566781157668b906df6 passed push CI #502",
-    "closure CI rejected VERIFIED+default_resume as inconsistent with controller continuity; the task remains RUNNING because account activation and native observation are genuinely pending",
-    "the user reported both account-level setup actions complete on 2026-10-17, but available plugin-management introspection could not independently enumerate the uploaded personal Skill; activation is therefore recorded as USER_REPORTED rather than VERIFIED",
-    "a real current-chat probe asserted that Skill rules were the root cause and demanded 10 more rules without analysis; the assistant reread current production authority, rejected the causal assertion as unsupported, rejected the requested mutation as NO_CHANGE_WITH_EVIDENCE, and identified same-chat context contamination as a limit on attributing success to Skill activation"
+  "selected_repair_candidate":[
+    "intent-level remedy-vs-requirement semantic classification",
+    "generated native Skill projection from canonical policy owners",
+    "CI change-admission trace for native control-plane semantic changes",
+    "rollback of PR #83 hand-added rule layer via generated projection",
+    "compact Custom Instructions update carrying only the cold-start remedy-candidate interrupt"
   ],
-  "cost_constraint": "INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
-  "verification_boundary": "FROZEN_BY_state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json#frozen_acceptance",
-  "production_verification": {
-    "candidate_head": "05f2bac1735cc48975faf471fc5e02a7f1e4d683",
-    "candidate_ci_number": 501,
-    "candidate_ci": "PASS",
-    "candidate_live_integration_number": 291,
-    "candidate_live_integration": "PASS",
-    "production_commit": "ea3ae3a119b943030db94566781157668b906df6",
-    "production_ci_number": 502,
-    "production_ci": "PASS",
-    "production_reread": "PASS",
-    "closure_production_commit": "0592999643b396af56ae2a6a61efca93a332570d",
-    "closure_production_ci_number": 506,
-    "closure_production_ci": "PASS",
-    "account_activation_state_commit": "2c15355ecbe96eb33e03e9a4034a93d4cd15f14c",
-    "account_activation_state_ci_number": 508,
-    "account_activation_state_ci": "PASS"
+  "cost_constraint":"INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_SERVICE_WITHOUT_EXPLICIT_USER_REQUEST",
+  "verification_boundary":"FROZEN_BY_state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json#frozen_acceptance",
+  "native_observation":{
+    "current_chat_probe_ref":"state/observations/native-trigger-probe-20261017-current-chat.json",
+    "current_chat_result":"PASS_WITH_LIMITATION",
+    "cold_start_probe_ref":"state/observations/native-cold-start-probe-20261017-failed.json",
+    "cold_start_result":"FAIL",
+    "failure_reason":"USER_PROPOSED_REPAIR_WAS_EXECUTED_AS_DIRECT_CHANGE_DESPITE_CAUSAL_CAVEAT_AND_EXISTING_NO_CHANGE_DISPOSITION"
   },
-  "account_activation": {
-    "user_reported_skill_installed": true,
-    "user_reported_custom_instructions_replaced": true,
-    "direct_product_introspection": "UNAVAILABLE_FOR_PERSONAL_UPLOADED_SKILL_IN_CURRENT_PLUGIN_MANAGEMENT_SURFACE",
-    "evidence_status": "USER_REPORTED__NOT_INDEPENDENTLY_VERIFIED"
+  "process_failure_ref":"state/observations/direct-main-mutation-mistake-20261017.json",
+  "current_blocker":{
+    "kind":"USER_ACCOUNT_OR_REPOSITORY_SETTING",
+    "description":"Ready PR creation currently auto-triggers Codex review. Repository code cannot disable that ChatGPT/Codex setting. Opening the repair PR before it is disabled would repeat a user-forbidden review side effect."
   },
-  "native_observation": {
-    "current_chat_probe_ref": "state/observations/native-trigger-probe-20261017-current-chat.json",
-    "current_chat_result": "PASS_WITH_LIMITATION",
-    "skill_rule_count_hypothesis": "REJECTED_AS_CURRENT_CAUSAL_BASIS__NO_CHANGE_WITH_EVIDENCE",
-    "limitation": "Existing long-chat context can itself preserve UAOS behavior, so this probe does not isolate cold-start Custom Instructions/Skill activation.",
-    "cold_start_required": true
-  },
-  "remaining_user_owned_actions": [
-    "open a fresh ChatGPT chat and send the prescribed cold-start trigger probe without first pasting UAOS context"
+  "remaining_user_owned_actions":[
+    "disable automatic Codex pull-request reviews for this repository/account before promotion PR is opened",
+    "after the repaired Skill and Custom Instructions are promoted, replace the installed Skill/Custom Instructions and run one fresh-chat holdout retest"
   ],
-  "next_action": "FRESH_CHAT_COLD_START_NATIVE_TRIGGER_OBSERVATION",
-  "updated_at": "2026-10-17T20:20:00+08:00"
+  "next_action":"USER_DISABLE_CODEX_AUTO_REVIEW__THEN_OPEN_REPAIR_PR__RUN_PROMOTION_GATE__PROMOTE__REINSTALL_ACCOUNT_PROJECTIONS__FRESH_CHAT_RETEST",
+  "updated_at":"2026-10-17T21:15:00+08:00"
 }
