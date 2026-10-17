@@ -30,35 +30,70 @@ TargetCanonicalizer = Callable[[str], str]
 class RegisteredCapability:
     observation: CapabilityObservation
     executor: Executor
+    registration_generation: int
+    read_only_actions: frozenset[str] = frozenset()
     mutation_contracts: Mapping[str, MutationContract] = field(default_factory=dict)
     canonicalize_target: TargetCanonicalizer | None = None
+
+    def mutation_contract_for(self, action_name: str) -> MutationContract | None:
+        if action_name in self.read_only_actions:
+            return None
+        try:
+            return self.mutation_contracts[action_name]
+        except KeyError as exc:
+            raise CapabilityUnavailable(
+                f"action={action_name!r} has no trusted read/mutation classification"
+            ) from exc
 
 
 class CapabilityRegistry:
     def __init__(self) -> None:
         self._items: dict[str, RegisteredCapability] = {}
         self._lock = RLock()
+        self._generation = 0
 
     def register(
         self,
         observation: CapabilityObservation,
         executor: Executor,
         *,
+        read_only_actions: frozenset[str] | set[str] | tuple[str, ...] | None = None,
         mutation_contracts: Mapping[str, MutationContract] | None = None,
         canonicalize_target: TargetCanonicalizer | None = None,
     ) -> None:
+        read_actions = frozenset(read_only_actions or ())
         contracts = dict(mutation_contracts or {})
-        unsupported = set(contracts) - set(observation.supported_actions)
+        supported = set(observation.supported_actions)
+        classified = set(read_actions) | set(contracts)
+        unsupported = classified - supported
         if unsupported:
             raise ValueError(
-                f"mutation contracts reference unsupported actions: {sorted(unsupported)}"
+                f"action contracts reference unsupported actions: {sorted(unsupported)}"
+            )
+        overlap = set(read_actions) & set(contracts)
+        if overlap:
+            raise ValueError(
+                f"actions cannot be both read-only and mutating: {sorted(overlap)}"
+            )
+        missing = supported - classified
+        if missing:
+            raise ValueError(
+                f"every supported action requires trusted read/mutation classification: {sorted(missing)}"
+            )
+        durable = any(contract.operation is not None for contract in contracts.values())
+        if durable and canonicalize_target is None:
+            raise ValueError(
+                "durable/external capability registration requires canonicalize_target"
             )
         with self._lock:
+            self._generation += 1
             self._items[observation.capability_id] = RegisteredCapability(
-                observation,
-                executor,
-                contracts,
-                canonicalize_target,
+                observation=observation,
+                executor=executor,
+                registration_generation=self._generation,
+                read_only_actions=read_actions,
+                mutation_contracts=contracts,
+                canonicalize_target=canonicalize_target,
             )
 
     def get(self, capability_id: str) -> RegisteredCapability:
