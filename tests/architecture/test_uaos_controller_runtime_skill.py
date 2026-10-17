@@ -77,7 +77,8 @@ def test_runtime_skill_frontloads_mandatory_entry_before_bootstrap_and_mutation(
 
 def test_runtime_skill_preserves_requirement_vs_candidate_semantics_without_incident_phrases():
     text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
-    assert "requirements at their valid scope" in text
+    intent = _json("config/INTENT_RESOLUTION_POLICY.json")["problem_solution_directive_resolution"]
+    assert intent["outcome_constraint_rule"] in text
     assert "remain candidates until current evidence admits them" in text
     assert "remains an ActionCandidate" in text
     assert "independent of whether it solves the diagnosed problem" in text
