@@ -85,7 +85,7 @@ class LocalWorkspaceExecutor:
         if root_fd is not None:
             self._safe_close(root_fd)
 
-    def __del__(self) -> None:  # pragma: no cover - deterministic callers may call close()
+    def __del__(self) -> None:  # pragma: no cover
         try:
             self.close()
         except Exception:
@@ -231,7 +231,7 @@ class LocalWorkspaceExecutor:
         committed = False
         digest = ""
         locked = False
-        commit_semantics = "PINNED_ROOT_ATOMIC_CREATE_NO_REPLACE"
+        commit_semantics = "ATOMIC_CREATE_NO_REPLACE"
         try:
             parent_fd, leaf = self._open_parent(request.target)
             self._lock_parent(parent_fd)
@@ -326,7 +326,7 @@ class LocalWorkspaceExecutor:
         committed = False
         digest = ""
         locked = False
-        commit_semantics = "PINNED_ROOT_LOCKED_COMPARE_AND_ATOMIC_RENAME"
+        commit_semantics = "LOCKED_COMPARE_AND_ATOMIC_RENAME"
         try:
             parent_fd, leaf = self._open_parent(request.target)
             self._lock_parent(parent_fd)
