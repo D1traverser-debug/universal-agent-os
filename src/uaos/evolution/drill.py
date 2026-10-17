@@ -9,9 +9,14 @@ from pathlib import Path
 from uaos.execution import (
     ActionCoordinator,
     ApprovalGrant,
+    AssetLifecycle,
+    AssetRole,
     CapabilityRegistry,
+    CrudOperation,
     ExecutionDisposition,
     ExecutionRequest,
+    PersistentAssetDescriptor,
+    PersistentSurface,
     register_local_workspace_capability,
 )
 from uaos.state import SQLiteAppendOnlyLedger
@@ -126,6 +131,14 @@ def run_self_change_drill(
     register_local_workspace_capability(registry, root)
     coordinator = ActionCoordinator(registry, authority_context="UAOS")
     now = datetime.now(UTC)
+    workspace_asset = PersistentAssetDescriptor(
+        asset_id=f"self-change-drill:{run_id}:policy",
+        surface=PersistentSurface.OTHER_EXTERNAL,
+        role=AssetRole.EXTERNAL_RECORD,
+        lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
+        owner_authority="UAOS",
+        allowed_operations=frozenset({CrudOperation.UPDATE}),
+    )
 
     promote = ExecutionRequest(
         action_id=f"action:promote:{run_id}",
@@ -140,6 +153,8 @@ def run_self_change_drill(
         side_effect_class="WRITE",
         approval_required=True,
         target_authority="UAOS",
+        persistent_asset=workspace_asset,
+        persistent_operation=CrudOperation.UPDATE,
     )
     promotion_grant = ApprovalGrant(
         f"approval:promote:{run_id}",
@@ -180,6 +195,8 @@ def run_self_change_drill(
         side_effect_class="WRITE",
         approval_required=True,
         target_authority="UAOS",
+        persistent_asset=workspace_asset,
+        persistent_operation=CrudOperation.UPDATE,
     )
     rollback_grant = ApprovalGrant(
         f"approval:rollback:{run_id}",
