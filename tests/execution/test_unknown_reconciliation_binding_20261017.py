@@ -27,8 +27,12 @@ class ReconcilingExecutor:
     def execute(self, request):
         return ExecutionOutcome(
             ExecutionDisposition.UNKNOWN,
+            output={"repair": {"token": "output:original"}},
             provider_ref="provider:original",
-            evidence={"operation_ref": "op:original"},
+            evidence={
+                "operation_ref": "op:original",
+                "nested": {"token": "evidence:original"},
+            },
             error="timeout",
         )
 
@@ -114,8 +118,45 @@ def test_reconcile_ignores_forged_public_unknown_outcome_and_uses_owned_record()
     assert len(executor.reconcile_calls) == 1
     passed_unknown = executor.reconcile_calls[0][1]
     assert passed_unknown.provider_ref == "provider:original"
-    assert passed_unknown.evidence == {"operation_ref": "op:original"}
+    assert passed_unknown.evidence["operation_ref"] == "op:original"
     assert passed_unknown.error == "timeout"
+
+
+def test_public_unknown_nested_mutation_cannot_change_coordinator_owned_reconcile_truth():
+    coordinator, request, executor = _coordinator()
+    unknown = coordinator.execute(request)
+    assert unknown.execution_id
+
+    public_evidence = unknown.outcome.evidence
+    public_output = unknown.outcome.output
+    public_evidence["operation_ref"] = "op:forged"
+    public_evidence["nested"]["token"] = "evidence:forged"
+    public_output["repair"]["token"] = "output:forged"
+
+    resolved = coordinator.reconcile(request, unknown)
+    assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
+    assert len(executor.reconcile_calls) == 1
+    passed_unknown = executor.reconcile_calls[0][1]
+    assert passed_unknown.evidence == {
+        "operation_ref": "op:original",
+        "nested": {"token": "evidence:original"},
+    }
+    assert passed_unknown.output == {"repair": {"token": "output:original"}}
+
+
+def test_execution_outcome_snapshots_source_containers_at_construction():
+    evidence = {"nested": {"token": "evidence:original"}}
+    output = {"nested": ["output:original"]}
+    outcome = ExecutionOutcome(
+        ExecutionDisposition.UNKNOWN,
+        output=output,
+        evidence=evidence,
+    )
+    evidence["nested"]["token"] = "evidence:mutated"
+    output["nested"].append("output:mutated")
+
+    assert outcome.evidence == {"nested": {"token": "evidence:original"}}
+    assert outcome.output == {"nested": ["output:original"]}
 
 
 def test_reconcile_rejects_unowned_execution_id_even_with_copied_receipt():
