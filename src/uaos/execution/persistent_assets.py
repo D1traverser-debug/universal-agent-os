@@ -20,6 +20,7 @@ class PersistentSurface(StrEnum):
     GOOGLE_DRIVE = "GOOGLE_DRIVE"
     GMAIL = "GMAIL"
     GOOGLE_CALENDAR = "GOOGLE_CALENDAR"
+    LOCAL_WORKSPACE = "LOCAL_WORKSPACE"
     OTHER_EXTERNAL = "OTHER_EXTERNAL"
     TEMP_SANDBOX = "TEMP_SANDBOX"
 
@@ -112,6 +113,18 @@ _NON_AUTHORITY_ROLES = {
     AssetRole.ARCHIVE,
     AssetRole.AUTOMATION,
     AssetRole.EXTERNAL_RECORD,
+}
+_TEMP_SANDBOX_FORBIDDEN_OPS = {
+    CrudOperation.OUTPUT,
+    CrudOperation.MIGRATE,
+    CrudOperation.ARCHIVE,
+}
+_TEMP_SANDBOX_FORBIDDEN_ROLES = {
+    AssetRole.AUTHORITY,
+    AssetRole.DELIVERY,
+    AssetRole.DELIVERY_HISTORY,
+    AssetRole.MIGRATED_HISTORY,
+    AssetRole.ARCHIVE,
 }
 
 
@@ -228,8 +241,19 @@ class PersistentAssetGate:
             AssetLifecycle.DELETE_CANDIDATE,
         }:
             raise PersistentAssetViolation("ARCHIVE role requires archived/decommissioned lifecycle")
-        if descriptor.surface is PersistentSurface.TEMP_SANDBOX and descriptor.lifecycle is not AssetLifecycle.TEMPORARY:
-            raise PersistentAssetViolation("TEMP_SANDBOX assets must be TEMPORARY")
+        if descriptor.surface is PersistentSurface.TEMP_SANDBOX:
+            if descriptor.lifecycle is not AssetLifecycle.TEMPORARY:
+                raise PersistentAssetViolation("TEMP_SANDBOX assets must be TEMPORARY")
+            if descriptor.role in _TEMP_SANDBOX_FORBIDDEN_ROLES:
+                raise PersistentAssetViolation(
+                    "TEMP_SANDBOX cannot carry authority/delivery/archive roles"
+                )
+            forbidden = descriptor.allowed_operations & _TEMP_SANDBOX_FORBIDDEN_OPS
+            if forbidden:
+                names = ",".join(sorted(operation.value for operation in forbidden))
+                raise PersistentAssetViolation(
+                    f"TEMP_SANDBOX cannot admit terminal/promotion operations: {names}"
+                )
 
     def require(self, request: PersistentAssetRequest) -> None:
         self.require_descriptor(request.descriptor)
