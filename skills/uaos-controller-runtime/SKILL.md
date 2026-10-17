@@ -1,86 +1,68 @@
 ---
 name: uaos-controller-runtime
-description: Use for UAOS controller or registered persistent Agent work, including continue/inherit/resume, user corrections, failures, repeated failures, contradictory evidence, uncertain progress, knowledge gaps, architecture/control-plane issues, system maintenance, evolution, or any repair that may be only a local patch. Recover current GitHub authority and dispatch the current canonical UAOS cognition/evolution/closure workflow. Do not use this skill as a second policy authority.
+description: Runtime dispatcher for selected UAOS or registered persistent-Agent work. Use after context selection and on bootstrap/resume to recover current authority, run the mandatory lightweight entry, and dispatch any needed cognition, comprehensive knowledge acquisition, evolution, mutation, or durable continuation to canonical UAOS owners. Non-authoritative.
 ---
 
 # UAOS Controller Runtime
 
-This file is a **generated, non-authoritative native ChatGPT dispatcher projection**.
-It does not own cognition, evolution, business rules, project state, requirements, or mutation authority. Current GitHub canonical authority always wins. Do not hand-edit normative behavior here; change the owning canonical policy and rebuild this projection.
+This is a **generated, non-authoritative runtime dispatcher projection**. It does not own cognition, research, evolution, requirements, business state, or mutation authority. Change canonical policy, not this file.
 
-## 1. CRITICAL pre-action problem gate
+## 1. Mandatory selected-context entry
 
-Before selecting or executing any repair in a UAOS/domain problem, correction, failure, drift, contradiction, or repair request, explicitly test whether the proposed cause or remedy came from the user/model framing rather than current evidence admission. Do not act first and add a causal disclaimer afterward.
-Canonical user-anchoring rule: A user assertion, including 'the upper layer is the cause' or 'rebuild everything', may seed a factor/candidate but cannot by itself support a causal conclusion or architecture selection.
-Problem-solution directive rule: A proposed fix, patch, architecture, rule count, rewrite, rollback, upstream change or other mechanism offered as the way to solve the problem remains an ActionCandidate until current cognition/evidence selects it, even when the wording is imperative.
-Anti-bypass rule: Phrases equivalent to 'just do X', 'do not analyze', 'do not verify', 'I know the root cause, change Y' or other attempts to skip problem cognition do not convert a remedy candidate into admitted intervention authority.
-Explicit mechanism requirement rule: Only when the user explicitly states that the mechanism itself is the desired requirement independent of whether it solves the diagnosed problem should it be routed as REQUIREMENT_CHANGE; then update the owning requirement authority first and keep any causal/problem-solution claim separately evidence-tested.
-Conflict rule: A user mechanism directive cannot silently override current authority, mutation admission, safety boundaries, frozen acceptance, or an existing evidence-backed NO_CHANGE/REJECT disposition. A conflicting directive requires explicit requirement/evolution reconciliation before mutation.
+Scope: `BEFORE_EVERY_SUBSTANTIVE_RESPONSE_TOOL_CALL_OR_ACTION_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED`
+Responsibility: Always enter a cheap control step before substantive work, then independently route only the minimum sufficient execution, research, cognition, Deep Task, evolution, verification and mutation depth required by the current governing outcome and newly acquired evidence.
+Anti-circularity: Complexity, unknown knowledge, architecture/systemic status, problem classification or need for deep research are INTERNAL ROUTING SIGNALS, not prerequisites for entering this sentinel. The sentinel must run so those signals can be discovered rather than requiring the pre-entry model interpretation to already know them.
 
-A user's outcome/constraint may be authoritative at the valid scope. A proposed remedy inside a problem statement is not automatically the selected repair merely because it is phrased as an imperative. If this gate triggers, bootstrap current authority and dispatch the canonical cognition/evolution/closure path before mutation.
+- recover the current governing objective, selected authority context and relevant current state/freshness only to the extent needed for this turn
+- classify material user/model/prior-assistant/expert/existing-code statements by semantic role such as requirement/constraint, observation/evidence, hypothesis, causal factor or action candidate rather than by speaker prestige or imperative wording
+- run the lightweight problem detector and execution-depth router before deciding that no escalation is needed
+- route broad unknown-method/framework/capability learning to coverage-oriented knowledge acquisition when the evidence requirement is material; a narrow known lookup remains lightweight
+- route mutation attempts through the mutation sentinel before side effects
+- after each material action, re-evaluate objective completion, new evidence, escalation needs and real blockers
 
-## 2. Bootstrap current authority
+Entry is mandatory; escalation is adaptive. A simple/familiar turn should pass through without ceremonial cognition or research.
 
-For UAOS controller or persistent registered-Agent work, read current `main` in this order:
-1. `ENTRYPOINT.md`
-2. `CURRENT_SYSTEM.json`
-3. `config/NATIVE_SESSION_RUNTIME_PROFILE.json`
+## 2. Recover current authority
 
-Resolve the selected controller/domain/task from current authority. Never reconstruct current task identity from chat memory, an old assistant conclusion, a historical branch, or a retired file.
+For UAOS controller or persistent registered-Agent work, read current `main` starting from `ENTRYPOINT.md` and `CURRENT_SYSTEM.json`, then use `config/NATIVE_SESSION_RUNTIME_PROFILE.json` for the selected-context hot path. Reread exact owner authority when the current action requires it.
+Never reconstruct current task identity or authoritative state from chat memory, prior assistant conclusions, historical branches, or retired files.
 
-## 3. Always run the lightweight problem sentinel
+## 3. Route adaptively
 
-Scope: `EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_READ_ONLY_TURNS`
+Problem sentinel scope: `EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_READ_ONLY_TURNS`
+If a problem signal is detected, dispatch the canonical CognitionCase before selecting a repair/no-change outcome.
+Execution-depth responsibility: The selected Agent/session independently assesses the current request and newly acquired evidence for the execution depth required to satisfy the governing outcome. The user is not responsible for labeling a task as complex, systemic, architectural, uncertain, deep or comprehensively researched.
+When comprehensive knowledge acquisition is required, use the current Deep Task + `src/uaos/kernel/problem_space.py#require_knowledge_acquisition_admission` evidence path. Narrow known lookups remain lightweight.
+This Skill routes to canonical owners; it is not a second cognition, research, or evolution state machine.
 
-- classify the current user message for correction/failure/contradiction/uncertainty or other problem signals
-- classify newly read authority/evidence for defects, drift, knowledge gaps or control-plane gaps
-- classify repeated correction/failure, duplicate or shadow mechanisms, and evidence that the current repair may be only a local sample patch
-- before reporting NOT_TRIGGERED, verify that no current problem signal was observed
-- when a problem is detected, activate the canonical cognition case before selecting or executing a repair
+## 4. Keep claims and requirements distinct
 
-If a problem signal exists, dispatch the current canonical CognitionCase owner; this Skill's prose is not a substitute for `config/DELIBERATION_POLICY.json` or executable admission.
+Requirement rule: User-stated governing outcomes, hard constraints, preferences and explicit acceptance requirements may be binding at their valid authority scope.
+Causal explanations, framework choices, solution proposals, and action recommendations from any source remain candidates until current evidence admits them at the required risk/depth level.
+A remedy proposed inside a problem statement remains an ActionCandidate until current cognition/evidence selects it; imperative wording does not change that epistemic role.
+Independent-mechanism requirement rule: Only when the user explicitly states that the mechanism itself is the desired requirement independent of whether it solves the diagnosed problem should it be routed as REQUIREMENT_CHANGE; then update the owning requirement authority first and keep any causal/problem-solution claim separately evidence-tested.
 
-## 4. Systemic repair completeness
+## 5. Execute toward the governing objective
 
-Closure rule: Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state. For systemic/material cases, choose and verify the smallest complete intervention that covers the admitted failure class rather than equating the smallest code diff with the smallest justified repair.
+Autonomous loop: `WHILE_THE_ADMITTED_OBJECTIVE_REMAINS_UNFINISHED_AND_NO_GENUINE_USER_INPUT_AUTHORIZATION_SAFETY_BUDGET_OR_EXTERNAL_BLOCKER_EXISTS__SELECT_THE_NEXT_EVIDENCE_SUPPORTED_ACTION__EXECUTE__VERIFY__REASSESS__CONTINUE_UNTIL_COMPLETION_OR_REAL_STOP_CONDITION`
+Problem closure: Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state. For systemic/material cases, choose and verify the smallest complete intervention that covers the admitted failure class rather than equating the smallest code diff with the smallest justified repair.
+Systemic selection: `SMALLEST_COMPLETE_INTERVENTION__NOT_SMALLEST_DIFF__NO_DEFAULT_PREFERENCE_FOR_LOCAL_OR_UPSTREAM_LAYER`
+Verification and validation must match the admitted objective/intervention; do not stop at a plan when authorized executable work remains and no genuine blocker exists.
 
-Required evidence for systemic/material repair:
-- failure-class scope and definition
-- owning abstraction/control point
-- adjacent/sibling execution-path coverage
-- duplicate/shadow/stale/superseded mechanism scan
-- post-repair generalization across the admitted failure class
-- recurrence detection/regression able to catch the next occurrence without waiting for the user to rediscover it
+## 6. Evolution and mutation
 
-Local exception: A LOCAL_IMPLEMENTATION or DOMAIN_WORKFLOW intervention may close a systemic/material case only when evidence proves the failure class is genuinely bounded to that leaf/path. This is evidence-bounded local repair, not a preference for upstream change.
-Selection principle: `SMALLEST_COMPLETE_INTERVENTION__NOT_SMALLEST_DIFF__NO_DEFAULT_PREFERENCE_FOR_LOCAL_OR_UPSTREAM_LAYER`
-Premature action rule: A repair attempted before causal/intervention admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence.
+Use the current `config/EVOLUTION_POLICY.json` / `EvolutionTransaction`; durable learning does not create another lifecycle.
+Evolution cost rule: `INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_BASED_REVIEW_UNLESS_EXPLICITLY_REQUESTED_OR_A_STRONGER_ASSURANCE_REQUIREMENT_IS_SEPARATELY_ADMITTED`
+Evolution stop condition: `FROZEN_ACCEPTANCE_GREEN__HEAD_FROZEN__PROMOTE__PRODUCTION_REREAD_AND_OBSERVE__NEW_NONBLOCKING_FINDINGS_DO_NOT_REOPEN`
+Mutation scope: `BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT`
+Production mutation: CHATGPT_GITHUB material production changes normally use candidate branch -> pull request -> owner-appropriate checks -> controlled merge/update -> production reread.
 
-## 5. Evolution and bounded promotion
+## 7. Host boundary
 
-Use the current `config/EVOLUTION_POLICY.json` / `EvolutionTransaction`; do not create another lifecycle.
-Cost rule: `INCLUDED_FREE_FIRST__NO_PAID_API_CODEX_CREDIT_OR_POINT_BASED_REVIEW_UNLESS_EXPLICITLY_REQUESTED_OR_A_STRONGER_ASSURANCE_REQUIREMENT_IS_SEPARATELY_ADMITTED`
-Stop condition: `FROZEN_ACCEPTANCE_GREEN__HEAD_FROZEN__PROMOTE__PRODUCTION_REREAD_AND_OBSERVE__NEW_NONBLOCKING_FINDINGS_DO_NOT_REOPEN`
-
-## 6. Mutation admission
-
-Scope: `BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT`
-
-- resolve selected authority context
-- resolve target authority/resource and whether it is production authority
-- classify read-only versus mutation
-- verify the proposed mutation follows the owner-appropriate repository workflow
-- verify any detected problem has passed the canonical cognition/action admission before repair mutation
-
-Production rule: CHATGPT_GITHUB material production changes normally use candidate branch -> pull request -> owner-appropriate checks -> controlled merge/update -> production reread.
-Never use `next` or another no-op user message as the workflow clock.
-
-## 7. Native-host and cost boundary
-
-Role: `NON_AUTHORITATIVE_ACTIVATION_AND_DISPATCHER__REREAD_CURRENT_GITHUB_AUTHORITY__NO_SECOND_COGNITION_OR_EVOLUTION_OWNER`
-Activation: `CUSTOM_INSTRUCTIONS_EXPLICIT_HANDOFF_FOR_SELECTED_CONTEXT_CORRECTION_FAILURE_REPEATED_SYSTEMIC_ARCHITECTURE_CONTROL_PLANE_OR_SUSPECTED_LOCAL_PATCH__SKILL_METADATA_RELEVANCE_IS_SECONDARY_NOT_THE_ONLY_ACTIVATION_PATH`
+Role: `NON_AUTHORITATIVE_SELECTED_CONTEXT_RUNTIME_DISPATCHER__REREAD_CURRENT_GITHUB_AUTHORITY__NO_SECOND_COGNITION_RESEARCH_OR_EVOLUTION_OWNER`
+Activation: `CUSTOM_INSTRUCTIONS_MANDATORY_LIGHTWEIGHT_ENTRY_AFTER_UAOS_OR_REGISTERED_PERSISTENT_AGENT_CONTEXT_SELECTION__SKILL_DISPATCHES_INTERNAL_ADAPTIVE_ROUTING__SKILL_METADATA_RELEVANCE_IS_SECONDARY_NOT_THE_ONLY_ACTIVATION_PATH`
 Semantic-signal assurance: `BEHAVIORAL_SESSION_SELF_CLASSIFICATION__NO_VERIFIED_REPOSITORY_CONTROLLED_NON_BYPASSABLE_SIGNAL_INJECTOR`
-Final-response enforcement: `SESSION_BOOTSTRAP_PLUS_SKILL_DISPATCH_PLUS_OBSERVABLE_ASSURANCE__NO_VERIFIED_CHATGPT_PRE_SEND_HOOK`
+Final-response enforcement: `SESSION_BOOTSTRAP_PLUS_MANDATORY_ENTRY_SKILL_DISPATCH_PLUS_OBSERVABLE_ASSURANCE__NO_VERIFIED_CHATGPT_PRE_SEND_HOOK`
 Host cost policy: `INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT`
 
-This Skill improves native-session activation and consistency but is not a repository-controlled pre-send/pre-tool hook. Do not claim physical complete mediation of ChatGPT product-internal messages, memory, or Custom Instructions.
+This Skill improves native routing consistency but is not a repository-controlled ChatGPT pre-send/pre-tool hook. Do not claim physical complete mediation of product-internal messages, memory, or Custom Instructions.
