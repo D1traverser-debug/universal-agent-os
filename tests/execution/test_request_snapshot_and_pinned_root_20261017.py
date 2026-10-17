@@ -14,7 +14,6 @@ from uaos.execution import (
     ExecutionOutcome,
     ExecutionRequest,
     LocalWorkspaceExecutor,
-    PersistentAssetViolation,
 )
 
 
@@ -54,12 +53,16 @@ def test_unknown_record_detaches_mutable_payload_and_preserves_mapping_key_ident
     unknown = coordinator.execute(request)
     assert unknown.outcome.disposition is ExecutionDisposition.UNKNOWN
 
-    # This used to mutate the same object retained by the UNKNOWN record. The older
-    # fingerprint also collapsed int key 1 and str key "1" to the same JSON key.
+    # Source-container mutation after construction must not alter either the request
+    # value object or the coordinator-owned UNKNOWN record. Reconciliation therefore
+    # proceeds with the original value instead of treating source-object mutation as a
+    # change to the admitted request.
     payload[1]["hidden"] = 2
-    with pytest.raises(PersistentAssetViolation, match="originally executed request"):
-        coordinator.reconcile(request, unknown)
-    assert executor.reconcile_calls == 0
+    resolved = coordinator.reconcile(request, unknown)
+    assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
+    assert executor.reconcile_calls == 1
+    assert resolved.outcome.output[1]["hidden"] == 1
+    assert resolved.outcome.output["1"] == "visible"
 
     first = coordinator.execute(
         ExecutionRequest("a2", "read", "topic", {1: "left", "1": "same"})
