@@ -17,6 +17,10 @@ class AuthorityScopeGate:
     Same-owner mutation is allowed. A registered ancestor may govern a descendant only
     when the request carries an explicit governance basis. Upward and sibling mutation
     remain blocked. Reads/non-side-effect work remain outside this write gate.
+
+    `trusted_mutating` lets the execution coordinator supply the capability-derived
+    action classification. The legacy request side-effect field is consulted only when
+    no trusted classification is available (for direct/backward-compatible gate use).
     """
 
     authority_parents: Mapping[str, str] = field(default_factory=dict)
@@ -39,8 +43,19 @@ class AuthorityScopeGate:
             current = parent
         return False
 
-    def require(self, request: ExecutionRequest, *, active_authority: str | None) -> None:
-        if request.side_effect_class.upper() in self.non_mutating_side_effects:
+    def require(
+        self,
+        request: ExecutionRequest,
+        *,
+        active_authority: str | None,
+        trusted_mutating: bool | None = None,
+    ) -> None:
+        mutating = (
+            trusted_mutating
+            if trusted_mutating is not None
+            else request.side_effect_class.upper() not in self.non_mutating_side_effects
+        )
+        if not mutating:
             return
         if active_authority is None or not active_authority.strip():
             raise AuthorityScopeViolation("mutating action requires selected authority context")
