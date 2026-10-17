@@ -4,7 +4,11 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import Any, Mapping, Protocol
 
-from .persistent_assets import CrudOperation, PersistentAssetDescriptor
+from .persistent_assets import (
+    CrudOperation,
+    MutationPersistence,
+    PersistentAssetDescriptor,
+)
 
 
 class ExecutionDisposition(StrEnum):
@@ -52,8 +56,11 @@ class ExecutionRequest:
     requires_background: bool = False
     target_authority: str | None = None
     governance_basis: str | None = None
+    # Caller assertions only. Trusted semantics are derived from the selected
+    # capability's mutation contract and PersistentAssetCatalog.
+    mutation_persistence: MutationPersistence | str | None = None
     persistent_asset: PersistentAssetDescriptor | None = None
-    persistent_operation: CrudOperation | None = None
+    persistent_operation: CrudOperation | str | None = None
 
 
 @dataclass(frozen=True, slots=True)
