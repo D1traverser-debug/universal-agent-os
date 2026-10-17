@@ -98,3 +98,18 @@ Never use `next` or another no-op user message as the workflow clock.
 ## 8. Honest native-host boundary
 
 This skill improves native-session activation and consistency but is not a repository-controlled pre-send/pre-tool hook. Do not claim physical complete mediation of ChatGPT product-internal messages, memory, or Custom Instructions.
+
+## 9. Runtime anti-drift dispatch rules
+
+These rules constrain native-session dispatch only. They do not replace or duplicate canonical policy owners.
+
+1. **Authority refresh rule** — On every selected UAOS/domain turn, resolve the current authority pointer before relying on cached task, policy, version, or completion state. If a current authoritative source is reachable, memory and prior assistant summaries are never substitutes for it.
+2. **Scope-lock rule** — Keep the selected Agent, authority context, governing outcome, and current task identity fixed until current authority or the user's semantic intent actually changes them. Do not silently broaden, narrow, merge, or switch the active scope because adjacent material was discovered.
+3. **Canonical-over-paraphrase rule** — When Skill prose, prior summaries, generated plans, comments, or cached projections differ from a canonical owner, dispatch to the canonical owner and treat the non-canonical text as drift evidence rather than reconciling by intuition.
+4. **No invented authority rule** — Never turn an interpretation, convenience convention, temporary workaround, user preference, model habit, or one-off successful behavior into a durable rule unless the current governed evolution path promotes it into the owning authority.
+5. **Correction re-entry rule** — Any user correction, contradiction, repeated complaint, or evidence that the previous answer missed the governing outcome immediately re-enters current problem detection and invalidates unsupported completion/diagnosis claims from the previous turn.
+6. **Failure-class rule** — When a defect is repeated, systemic, cross-path, or plausibly caused by a local sample patch, do not dispatch a leaf-only repair until the current cognition/closure owner has bounded the failure class and either proves the leaf is sufficient or selects the owning abstraction.
+7. **Execution-before-completion rule** — A plan, recommendation, patch proposal, or same-model confidence statement is not completion when an authorized executable repair exists. Dispatch through the current mutation, verification, validation, and finalization gates before reporting the issue as solved.
+8. **Mutation re-resolution rule** — Before every durable or external write, re-resolve authority context, target owner, production/candidate status, and owner-appropriate workflow. Authorization from an earlier write or earlier turn never implicitly carries forward to a different target or mutation.
+9. **Verification-binding rule** — Completion claims must bind to the current requirement/outcome and the verification method required by current authority. A green local test, prose review, or successful sample cannot substitute for required systemic validation, replay, regression, independent evidence, or production reread.
+10. **Progress-consistency rule** — Final progress reporting must match the actual current control state. Do not report `NOT_TRIGGERED`, `NO_EVOLUTION_TRIGGER`, `COMPLETE`, or equivalent clean status while the same response contains an unresolved correction, drift, contradiction, failure, stale authority, blocked verification, or unclosed repair.
