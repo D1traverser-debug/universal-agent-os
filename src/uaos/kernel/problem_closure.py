@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 from .cognition_case import CognitionCaseReceipt
-from .deliberation import RootScopeReceipt
+from .deliberation import ProblemLayer, RootScopeReceipt
 
 
 class ProblemClosureError(RuntimeError):
@@ -47,6 +47,16 @@ class ProblemClosureSignals:
     terminal_action_candidate_id: str | None = None
     verification_evidence_refs: tuple[str, ...] = ()
     validation_evidence_refs: tuple[str, ...] = ()
+    # Systemic-repair completeness. These refs must be evidence ids already bound to the
+    # CognitionCase verification/validation evidence in controlled finalization.
+    systemic_scope_evidence_refs: tuple[str, ...] = ()
+    failure_class_evidence_ref: str | None = None
+    owning_abstraction_evidence_ref: str | None = None
+    sibling_path_evidence_refs: tuple[str, ...] = ()
+    duplication_or_supersession_evidence_refs: tuple[str, ...] = ()
+    local_scope_bounded_evidence_refs: tuple[str, ...] = ()
+    generalization_evidence_refs: tuple[str, ...] = ()
+    recurrence_detection_evidence_refs: tuple[str, ...] = ()
 
 
 def _present(value: str | None) -> bool:
@@ -98,6 +108,105 @@ def _require_intervention_alignment(signals: ProblemClosureSignals, *, no_change
         )
 
 
+def _require_subset(refs: tuple[str, ...], allowed: tuple[str, ...], label: str) -> None:
+    missing = tuple(ref for ref in refs if ref not in allowed)
+    if missing:
+        raise ProblemClosureError(
+            f"{label} must be bound to already admitted V&V evidence; unbound refs: {', '.join(missing)}"
+        )
+
+
+def _require_systemic_repair_completeness(signals: ProblemClosureSignals) -> None:
+    """Prevent systemic/material repairs from closing on a sample-level patch.
+
+    The gate does not prefer an upstream repair. It requires evidence that the selected
+    intervention covers the failure class. A local intervention remains valid when the
+    evidence proves the class is genuinely bounded to that leaf/path.
+    """
+
+    receipt = signals.cognition_case_receipt
+    if receipt is None or not receipt.systemic:
+        return
+
+    if not signals.systemic_scope_evidence_refs:
+        raise ProblemClosureError(
+            "systemic/material repair requires failure-class scope evidence before closure"
+        )
+    if not _present(signals.failure_class_evidence_ref):
+        raise ProblemClosureError(
+            "systemic/material repair requires an evidence-bound failure-class definition"
+        )
+    if not _present(signals.owning_abstraction_evidence_ref):
+        raise ProblemClosureError(
+            "systemic/material repair requires evidence for the owning abstraction/control point"
+        )
+    if not signals.sibling_path_evidence_refs:
+        raise ProblemClosureError(
+            "systemic/material repair requires adjacent/sibling path coverage evidence"
+        )
+    if not signals.duplication_or_supersession_evidence_refs:
+        raise ProblemClosureError(
+            "systemic/material repair requires duplicate/superseded mechanism scan evidence"
+        )
+    if not signals.generalization_evidence_refs:
+        raise ProblemClosureError(
+            "systemic/material repair requires a post-repair generalization sweep"
+        )
+    if not signals.recurrence_detection_evidence_refs:
+        raise ProblemClosureError(
+            "systemic/material repair requires evidence that recurrence can be detected without waiting for the user to rediscover it"
+        )
+
+    failure_ref = signals.failure_class_evidence_ref or ""
+    owner_ref = signals.owning_abstraction_evidence_ref or ""
+    if failure_ref not in signals.systemic_scope_evidence_refs:
+        raise ProblemClosureError(
+            "failure-class evidence must participate in the systemic scope evidence set"
+        )
+    if owner_ref not in signals.systemic_scope_evidence_refs:
+        raise ProblemClosureError(
+            "owning-abstraction evidence must participate in the systemic scope evidence set"
+        )
+
+    _require_subset(
+        signals.systemic_scope_evidence_refs,
+        signals.verification_evidence_refs,
+        "systemic scope evidence",
+    )
+    _require_subset(
+        signals.sibling_path_evidence_refs,
+        signals.systemic_scope_evidence_refs,
+        "sibling/adjacent path evidence",
+    )
+    _require_subset(
+        signals.duplication_or_supersession_evidence_refs,
+        signals.systemic_scope_evidence_refs,
+        "duplicate/superseded mechanism evidence",
+    )
+    _require_subset(
+        signals.generalization_evidence_refs,
+        signals.validation_evidence_refs,
+        "generalization evidence",
+    )
+    _require_subset(
+        signals.recurrence_detection_evidence_refs,
+        signals.validation_evidence_refs,
+        "recurrence-detection evidence",
+    )
+
+    local_layers = {ProblemLayer.LOCAL_IMPLEMENTATION, ProblemLayer.DOMAIN_WORKFLOW}
+    if receipt.intervention_layer in local_layers:
+        if not signals.local_scope_bounded_evidence_refs:
+            raise ProblemClosureError(
+                "a local intervention may close a systemic/material case only when evidence proves the failure class is genuinely bounded to that leaf/path"
+            )
+        _require_subset(
+            signals.local_scope_bounded_evidence_refs,
+            signals.systemic_scope_evidence_refs,
+            "bounded-local intervention evidence",
+        )
+
+
 def _require_execution_evidence(signals: ProblemClosureSignals) -> None:
     receipt = signals.cognition_case_receipt
     if receipt is None:
@@ -110,6 +219,7 @@ def _require_execution_evidence(signals: ProblemClosureSignals) -> None:
         raise ProblemClosureError(
             "systemic/material repair requires validation evidence in addition to verification"
         )
+    _require_systemic_repair_completeness(signals)
 
 
 def assess_problem_closure(signals: ProblemClosureSignals) -> ProblemClosureDecision:
