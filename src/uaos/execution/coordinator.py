@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 from .approvals import ApprovalGate, ApprovalGrant
 from .authority import AuthorityScopeGate
 from .models import ExecutionDisposition, ExecutionOutcome, ExecutionRequest
+from .persistent_assets import PersistentAssetGate, PersistentAssetRequest, PersistentAssetViolation
 from .registry import CapabilityRegistry, CapabilityRouter, CapabilityUnavailable
 
 
@@ -25,13 +26,31 @@ class ActionCoordinator:
         router: CapabilityRouter | None = None,
         approval_gate: ApprovalGate | None = None,
         authority_gate: AuthorityScopeGate | None = None,
+        persistent_asset_gate: PersistentAssetGate | None = None,
         authority_context: str | None = None,
     ) -> None:
         self.registry = registry
         self.router = router or CapabilityRouter()
         self.approval_gate = approval_gate or ApprovalGate()
         self.authority_gate = authority_gate or AuthorityScopeGate()
+        self.persistent_asset_gate = persistent_asset_gate or PersistentAssetGate()
         self.authority_context = authority_context
+
+    def _require_persistent_asset_admission(self, request: ExecutionRequest) -> None:
+        if request.side_effect_class.upper() in {"NONE", "READ"}:
+            return
+        if request.persistent_asset is None or request.persistent_operation is None:
+            raise PersistentAssetViolation(
+                "mutating ExecutionRequest requires persistent_asset and persistent_operation"
+            )
+        self.persistent_asset_gate.require(
+            PersistentAssetRequest(
+                operation=request.persistent_operation,
+                descriptor=request.persistent_asset,
+                active_authority=self.authority_context,
+                target_authority=request.target_authority,
+            )
+        )
 
     def execute(
         self,
@@ -42,6 +61,7 @@ class ActionCoordinator:
     ) -> CoordinatedExecution:
         now = now or datetime.now(UTC)
         self.authority_gate.require(request, active_authority=self.authority_context)
+        self._require_persistent_asset_admission(request)
         self.approval_gate.require(request, approval, now=now)
         registered = self.router.select(self.registry, request)
         outcome = registered.executor.execute(request)
@@ -61,10 +81,11 @@ class ActionCoordinator:
         approval: ApprovalGrant | None = None,
         now: datetime | None = None,
     ) -> CoordinatedExecution:
-        if request.side_effect_class not in {"NONE", "READ"}:
+        if request.side_effect_class.upper() not in {"NONE", "READ"}:
             return self.execute(request, approval=approval, now=now)
         now = now or datetime.now(UTC)
         self.authority_gate.require(request, active_authority=self.authority_context)
+        self._require_persistent_asset_admission(request)
         self.approval_gate.require(request, approval, now=now)
         ranked = self.router.ranked(self.registry, request)
         if not ranked:
