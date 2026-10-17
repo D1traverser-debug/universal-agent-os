@@ -28,7 +28,7 @@ class LocalWorkspaceExecutor:
     opened with ``O_NOFOLLOW`` and retained as directory descriptors, so changing a
     pathname to a symlink after admission cannot redirect the write outside the bound
     workspace. CREATE is committed with an atomic hard-link no-replace operation;
-    UPDATE replaces only within the already-open parent directory.
+    UPDATE renames only within the already-open parent directory.
 
     Platforms without the required dir-fd/no-follow primitives fail closed rather than
     silently falling back to path-based mutation.
@@ -41,7 +41,7 @@ class LocalWorkspaceExecutor:
 
     @staticmethod
     def _require_secure_fs_primitives() -> None:
-        required = (os.open, os.mkdir, os.unlink, os.stat, os.link, os.replace)
+        required = (os.open, os.mkdir, os.unlink, os.stat, os.link, os.rename)
         if not hasattr(os, "O_NOFOLLOW") or not hasattr(os, "O_DIRECTORY"):
             raise RuntimeError("local workspace requires O_NOFOLLOW and O_DIRECTORY")
         supports = getattr(os, "supports_dir_fd", set())
@@ -160,8 +160,6 @@ class LocalWorkspaceExecutor:
                     error="CREATE expected_current_hash must represent an absent/empty target",
                 )
             temporary = self._write_temp(parent_fd, leaf, content)
-            # link(2) is atomic and never replaces an existing destination. This closes
-            # the check-then-replace race of the previous CREATE implementation.
             os.link(
                 temporary,
                 leaf,
@@ -219,12 +217,6 @@ class LocalWorkspaceExecutor:
 
             content = request.payload["content"].encode("utf-8")
             temporary = self._write_temp(parent_fd, leaf, content)
-
-            # Re-open through the bound parent descriptor immediately before replace and
-            # require the same inode observed during validation. This prevents pathname
-            # redirection and detects ordinary concurrent replacement. The repository
-            # does not claim hostile-system-wide linearizable filesystem CAS; external
-            # writers remain outside UAOS complete-mediation assurance.
             _, latest_info = self._read_regular_file(parent_fd, leaf)
             if (latest_info.st_dev, latest_info.st_ino) != (
                 original_info.st_dev,
@@ -234,7 +226,10 @@ class LocalWorkspaceExecutor:
                     ExecutionDisposition.FAILED,
                     error="UPDATE target identity changed before commit",
                 )
-            os.replace(
+            # POSIX rename within one bound parent directory is atomic replacement.
+            # It cannot follow a swapped parent symlink because both names are resolved
+            # relative to the already-open directory descriptor.
+            os.rename(
                 temporary,
                 leaf,
                 src_dir_fd=parent_fd,
@@ -246,7 +241,7 @@ class LocalWorkspaceExecutor:
             return ExecutionOutcome(
                 ExecutionDisposition.CONFIRMED,
                 output={"path": request.target, "sha256": digest},
-                evidence={"sha256": digest, "commit_semantics": "BOUND_PARENT_ATOMIC_REPLACE"},
+                evidence={"sha256": digest, "commit_semantics": "BOUND_PARENT_ATOMIC_RENAME"},
             )
         except FileNotFoundError:
             return ExecutionOutcome(
