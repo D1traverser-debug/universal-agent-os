@@ -1,0 +1,90 @@
+{
+  "schema_version":"1.0",
+  "evolution_id":"EVO-20261017-NATIVE-COLD-START-GOVERNANCE",
+  "authority":"UAOS",
+  "status":"PROPOSED__PR_BLOCKED_BY_UNWANTED_AUTO_CODEX_REVIEW_SETTING",
+  "updated_at":"2026-10-17T21:12:00+08:00",
+  "origin_kind":"INCIDENT",
+  "parent_evolution_ref":"state/evolution/EVO-20261017-SYSTEMIC-REPAIR-NATIVE-RUNTIME.json",
+  "origin_observation_refs":[
+    "state/observations/native-cold-start-probe-20261017-failed.json",
+    "state/observations/direct-main-mutation-mistake-20261017.json"
+  ],
+  "failure_classes":[
+    "PROBLEM_CONTEXT_USER_REPAIR_DIRECTIVE_SKIPS_INTERVENTION_ADMISSION",
+    "HAND_EDITABLE_NATIVE_SKILL_CAN_DRIFT_FROM_CANONICAL_POLICY",
+    "CONTROL_PLANE_CHANGE_CAN_PROMOTE_WITHOUT_DURABLE_EVOLUTION_READMISSION",
+    "PR_OPEN_CAN_TRIGGER_UNWANTED_ASYNCHRONOUS_CODEX_REVIEW_OUTSIDE_CURRENT_REVIEW_BUDGET",
+    "RAW_GITHUB_CONNECTOR_WRITE_CAN_MISS_CANDIDATE_WORKFLOW_ON_CALLER_PARAMETER_ERROR"
+  ],
+  "governing_outcome":"Under the user's included/free-first constraint, a fresh native ChatGPT session must not convert a user-proposed repair mechanism into an admitted intervention merely because it is phrased imperatively, and a native control-plane projection must not be hand-editable into shadow policy or promote without durable evolution/task admission.",
+  "raw_observations":[
+    "The fresh-chat probe recovered UAOS authority but still executed the user-proposed 'add exactly 10 Skill rules' mechanism without cognition/evolution re-admission.",
+    "At that time the controller task authority already recorded the same 10-rule mechanism as REJECTED_AS_CURRENT_CAUSAL_BASIS__NO_CHANGE_WITH_EVIDENCE.",
+    "PR #83 changed only skills/uaos-controller-runtime/SKILL.md and merged to production commit 001d5be3ac6f2dfdf8468327c5d8e6dad972e1db.",
+    "The runtime Skill was described as non-authoritative but remained hand-editable prose; existing architecture tests checked selected phrases and absence of a second cognition state machine, not exact derivation from canonical owners.",
+    "Codex PR review was automatically triggered by opening PR #83 even though the current evolution budget is zero paid reviews/default no Codex. The P1 finding arrived after the PR had already merged and identified missing evolution re-admission.",
+    "During this repair, one observation write accidentally omitted the branch parameter and wrote directly to main, demonstrating that the raw GitHub connector path is not physically mediated by repository code."
+  ],
+  "causal_model":[
+    {"factor":"USER_REMEDY_VS_REQUIREMENT_CLASSIFICATION_GAP","support":"Current cognition demotes user causal claims, but intent authority did not explicitly distinguish an imperative remedy inside a problem statement from an independent mechanism requirement."},
+    {"factor":"HAND_EDITABLE_SKILL_PROJECTION","support":"The Skill claimed non-authoritative status but CI did not require byte-for-byte regeneration from canonical policy owners."},
+    {"factor":"PROMOTION_TRACE_GAP","support":"CI allowed a native control-plane semantic change with no same-candidate evolution/task evidence update."},
+    {"factor":"HOST_EXTERNAL_REVIEW_SETTING_OUTSIDE_REPO_CONTROL","support":"GitHub PR open triggered Codex asynchronously; repo policy cannot physically disable that account/repository setting."},
+    {"factor":"RAW_CONNECTOR_HOST_BOUNDARY","support":"A caller parameter omission can direct a connector write to main because native ChatGPT has no repository-controlled pre-tool hook."}
+  ],
+  "competing_candidates":[
+    {"id":"A_KEEP_10_RULES","disposition":"REJECTED","reason":"The cold-start test itself demonstrated that adding rules was executed without admission and created shadow semantics; rule count was not established as causal basis."},
+    {"id":"B_MORE_CUSTOM_INSTRUCTION_PROSE_ONLY","disposition":"REJECTED_INSUFFICIENT","reason":"The existing pointer already demoted user claims; the observed failure reclassified the requested remedy as a direct user change, so prose-only anti-anchoring does not close the control-plane drift path."},
+    {"id":"C_ROLLBACK_PR83_ONLY","disposition":"REJECTED_INCOMPLETE","reason":"Restores consistency but leaves both the hand-editable Skill and promotion trace gap available for recurrence."},
+    {"id":"D_CANONICAL_REMEDY_CLASSIFICATION_PLUS_GENERATED_SKILL_PLUS_PROMOTION_TRACE_GATE","disposition":"SELECTED","reason":"Closes the semantic gap at intent resolution, removes hand-editable Skill norm ownership, and makes control-plane semantic changes fail CI unless durable evolution/task admission changes with them."},
+    {"id":"E_CONTROLLED_PAID_RUNTIME","disposition":"DEFERRED","reason":"Would provide stronger pre-tool enforcement but conflicts with the current no-extra-cost baseline and is not required to close the admitted repository/native-projection failure classes."}
+  ],
+  "selected_intervention":{
+    "intent_owner":"Extend config/INTENT_RESOLUTION_POLICY.json so a repair mechanism proposed inside a detected problem remains an ActionCandidate even when imperative; only an explicit independent mechanism requirement routes as REQUIREMENT_CHANGE.",
+    "skill_projection":"Add src/uaos/runtime/native_runtime_skill.py and require skills/uaos-controller-runtime/SKILL.md to equal its canonical-policy-derived output exactly.",
+    "promotion_trace":"Add a CI architecture gate requiring material native control-plane semantic changes to carry same-candidate state/evolution and controller-task updates with implementation_refs covering changed control-plane files.",
+    "custom_instructions":"Keep a compact under-1500-character pointer but add the remedy-vs-requirement distinction so cold-start routing sees it before detailed Skill dispatch.",
+    "rollback":"Remove the ten hand-added PR #83 anti-drift rules by replacing the Skill with the generated projection.",
+    "host_cost_boundary":"Do not open another ready PR while Codex auto-review remains enabled; repository code cannot disable the account/repository Codex setting."
+  },
+  "frozen_acceptance":{
+    "required_checks":[
+      "INTENT_REMEDY_VS_REQUIREMENT_CLASSIFICATION_PRESENT",
+      "NATIVE_SKILL_EXACT_GENERATED_PROJECTION",
+      "PR83_HAND_ADDED_RULE_LAYER_REMOVED",
+      "CUSTOM_INSTRUCTIONS_POINTER_UNDER_1500_AND_CONTAINS_REMEDY_CANDIDATE_RULE",
+      "NATIVE_CONTROL_PLANE_CHANGE_REQUIRES_EVOLUTION_AND_TASK_TRACE",
+      "FULL_REPOSITORY_PYTEST_GREEN",
+      "NO_CODEX_REVIEW_TRIGGERED_FOR_THIS_CANDIDATE",
+      "PRODUCTION_REREAD_GREEN",
+      "FRESH_CHAT_HOLDOUT_RETEST_DOES_NOT_MUTATE_USER_PROPOSED_REMEDY_WITHOUT_ADMISSION"
+    ],
+    "verification_round_limit":3,
+    "independent_paid_review_budget":0,
+    "cost_policy":"INCLUDED_FREE_FIRST__NO_CODEX_PAID_API_CREDITS_OR_POINT_SERVICE_UNLESS_EXPLICITLY_REQUESTED"
+  },
+  "implementation_refs":[
+    "config/INTENT_RESOLUTION_POLICY.json",
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "skills/uaos-controller-runtime/SKILL.md",
+    "src/uaos/runtime/native_runtime_skill.py",
+    "tests/architecture/test_uaos_controller_runtime_skill.py",
+    "tests/architecture/test_native_control_plane_change_admission.py",
+    "state/tasks/uaos-systemic-repair-runtime-skill-20261017.json",
+    "state/TASK_INDEX.json",
+    "state/observations/native-cold-start-probe-20261017-failed.json",
+    "state/observations/direct-main-mutation-mistake-20261017.json"
+  ],
+  "independent_evidence":[
+    "fresh-chat holdout behavior from the user's new conversation",
+    "current repository task/evolution state contradiction with PR #83",
+    "Codex P1 review on PR #83 identifying the missing re-admission after the fact",
+    "existing repository CI/pytest architecture invariants"
+  ],
+  "current_blocker":{
+    "kind":"USER_ACCOUNT_OR_REPOSITORY_SETTING",
+    "description":"Opening a ready PR currently auto-triggers Codex review. This is outside repository-code control and conflicts with the user's default no-Codex/zero-paid-review constraint. Disable automatic Codex PR reviews before this candidate is opened for promotion."
+  },
+  "assurance_boundary":"The selected repair can mechanically close generated-projection and CI-promotion paths, but it still cannot create a repository-controlled pre-tool hook inside native ChatGPT; raw connector calls remain behaviorally governed at the host boundary."
+}
