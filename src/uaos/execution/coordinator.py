@@ -7,6 +7,7 @@ import hashlib
 import json
 import secrets
 from threading import RLock
+from types import MappingProxyType
 from typing import Mapping
 
 from .approvals import ApprovalGate, ApprovalGrant
@@ -60,33 +61,108 @@ class _UnknownExecutionRecord:
 
 
 def _canonical_value(value: object) -> object:
-    """Convert request state to a stable, order-independent JSON-compatible form."""
+    """Encode request state without collapsing Python type identity."""
 
     if isinstance(value, Enum):
-        return value.value
+        return {
+            "__enum__": f"{type(value).__module__}.{type(value).__qualname__}",
+            "value": _canonical_value(value.value),
+        }
     if is_dataclass(value):
         return {
-            field.name: _canonical_value(getattr(value, field.name))
-            for field in fields(value)
+            "__dataclass__": f"{type(value).__module__}.{type(value).__qualname__}",
+            "fields": [
+                [field.name, _canonical_value(getattr(value, field.name))]
+                for field in fields(value)
+            ],
         }
     if isinstance(value, Mapping):
-        return {
-            str(key): _canonical_value(value[key])
-            for key in sorted(value, key=lambda item: str(item))
-        }
+        entries = [
+            [_canonical_value(key), _canonical_value(item)]
+            for key, item in value.items()
+        ]
+        entries.sort(
+            key=lambda item: json.dumps(
+                item[0], sort_keys=True, separators=(",", ":"), ensure_ascii=False
+            )
+        )
+        return {"__mapping__": entries}
+    if isinstance(value, tuple):
+        return {"__tuple__": [_canonical_value(item) for item in value]}
+    if isinstance(value, list):
+        return {"__list__": [_canonical_value(item) for item in value]}
     if isinstance(value, (set, frozenset)):
         normalized = [_canonical_value(item) for item in value]
-        return sorted(
-            normalized,
-            key=lambda item: json.dumps(item, sort_keys=True, separators=(",", ":"), default=repr),
+        normalized.sort(
+            key=lambda item: json.dumps(
+                item, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+            )
         )
-    if isinstance(value, (tuple, list)):
-        return [_canonical_value(item) for item in value]
+        return {
+            "__frozenset__" if isinstance(value, frozenset) else "__set__": normalized
+        }
     if isinstance(value, bytes):
-        return {"__bytes_sha256__": hashlib.sha256(value).hexdigest()}
-    if value is None or isinstance(value, (str, int, float, bool)):
+        return {"__bytes__": value.hex()}
+    if isinstance(value, bytearray):
+        return {"__bytearray__": bytes(value).hex()}
+    if value is None:
+        return {"__none__": True}
+    if isinstance(value, bool):
+        return {"__bool__": value}
+    if isinstance(value, int):
+        return {"__int__": str(value)}
+    if isinstance(value, float):
+        return {"__float__": value.hex()}
+    if isinstance(value, str):
+        return {"__str__": value}
+    raise PersistentAssetViolation(
+        f"request contains unsupported fingerprint value type: {type(value).__module__}.{type(value).__qualname__}"
+    )
+
+
+def _snapshot_value(value: object) -> object:
+    """Detach request data from caller-owned mutable containers."""
+
+    if isinstance(value, Enum) or value is None or isinstance(value, (bool, int, float, str, bytes)):
         return value
-    return repr(value)
+    if isinstance(value, bytearray):
+        return bytes(value)
+    if is_dataclass(value):
+        values = {
+            field.name: _snapshot_value(getattr(value, field.name))
+            for field in fields(value)
+        }
+        try:
+            return type(value)(**values)
+        except TypeError as exc:
+            raise PersistentAssetViolation(
+                f"request dataclass cannot be snapshotted: {type(value).__module__}.{type(value).__qualname__}"
+            ) from exc
+    if isinstance(value, Mapping):
+        snapshot = {
+            _snapshot_value(key): _snapshot_value(item)
+            for key, item in value.items()
+        }
+        return MappingProxyType(snapshot)
+    if isinstance(value, tuple):
+        return tuple(_snapshot_value(item) for item in value)
+    if isinstance(value, list):
+        return tuple(_snapshot_value(item) for item in value)
+    if isinstance(value, (set, frozenset)):
+        return frozenset(_snapshot_value(item) for item in value)
+    raise PersistentAssetViolation(
+        f"request contains unsupported snapshot value type: {type(value).__module__}.{type(value).__qualname__}"
+    )
+
+
+def _snapshot_request(request: ExecutionRequest) -> ExecutionRequest:
+    if not isinstance(request, ExecutionRequest):
+        raise PersistentAssetViolation("execution requires ExecutionRequest")
+    values = {
+        field.name: _snapshot_value(getattr(request, field.name))
+        for field in fields(request)
+    }
+    return ExecutionRequest(**values)
 
 
 def _payload_digest(value: object) -> str:
@@ -142,19 +218,17 @@ def _normalize_outcome(outcome: ExecutionOutcome, *, source: str) -> ExecutionOu
 class ActionCoordinator:
     """Policy boundary around executor adapters, ownership and safe fallback.
 
-    Action mutability and CRUD semantics are capability-owned. The request's legacy
-    ``side_effect_class`` and persistent fields are assertions/context only; they never
-    decide whether mutation gates execute. Durable/external target identity comes from
-    the selected adapter, while a trusted ``PersistentAssetCatalog`` supplies lifecycle,
-    owner, role and operation permissions.
+    Action mutability and CRUD semantics are capability-owned. Request mutation labels are
+    assertions/context only. Execution first snapshots the complete request into detached
+    immutable containers, so admission, execution and later reconciliation all bind the
+    same values even if caller-owned payload objects are subsequently changed.
 
     UNKNOWN reconciliation is coordinator-owned. A caller receives an opaque execution
-    id, but the authoritative original request, admission and outcome remain in the
-    coordinator's internal record. A per-execution reconciliation claim prevents two
-    repair attempts from concurrently entering the same reconciler. This baseline store
-    is process-local and intentionally fails closed after coordinator restart; a host
-    that requires cross-process reconciliation must persist the same record and claim
-    state in its authority store rather than trusting a caller-supplied receipt.
+    id, but the authoritative request snapshot, admission and outcome remain internal. A
+    per-execution reconciliation claim prevents concurrent repair attempts for one id.
+    The baseline record/claim store is process-local and fails closed after restart; a
+    host requiring cross-process reconciliation must persist the same record and atomic
+    claim state in its authority store.
     """
 
     def __init__(
@@ -406,6 +480,7 @@ class ActionCoordinator:
         approval: ApprovalGrant | None = None,
         now: datetime | None = None,
     ) -> CoordinatedExecution:
+        request = _snapshot_request(request)
         now = now or datetime.now(UTC)
         registered = self.router.select(self.registry, request)
         return self._execute_registered(
@@ -422,6 +497,7 @@ class ActionCoordinator:
         approval: ApprovalGrant | None = None,
         now: datetime | None = None,
     ) -> CoordinatedExecution:
+        request = _snapshot_request(request)
         now = now or datetime.now(UTC)
         ranked = self.router.ranked(self.registry, request)
         if not ranked:
@@ -470,6 +546,7 @@ class ActionCoordinator:
         approval: ApprovalGrant | None = None,
         now: datetime | None = None,
     ) -> CoordinatedExecution:
+        request = _snapshot_request(request)
         execution_id = unknown.execution_id
         if not isinstance(execution_id, str) or not execution_id:
             raise PersistentAssetViolation(
