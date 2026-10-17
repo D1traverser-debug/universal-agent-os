@@ -63,6 +63,17 @@ def test_runtime_skill_is_dispatcher_not_second_cognition_or_evolution_state_mac
     assert not any(token in text for token in canonical_stage_tokens)
 
 
+def test_runtime_skill_frontloads_problem_remedy_self_falsification_before_bootstrap():
+    text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
+    critical = text.index("## 1. CRITICAL pre-action problem gate")
+    bootstrap = text.index("## 2. Bootstrap current authority")
+    mutation = text.index("## 6. Mutation admission")
+    assert critical < bootstrap < mutation
+    assert "Do not act first and add a causal disclaimer afterward." in text
+    assert "remains an ActionCandidate" in text
+    assert "do not convert a remedy candidate into admitted intervention authority" in text
+
+
 def test_runtime_skill_projects_problem_solution_directive_semantics():
     intent = _json("config/INTENT_RESOLUTION_POLICY.json")["problem_solution_directive_resolution"]
     text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
@@ -73,15 +84,16 @@ def test_runtime_skill_projects_problem_solution_directive_semantics():
     assert "remains an ActionCandidate" in text
 
 
-def test_custom_instruction_pointer_explicitly_interrupts_into_runtime_skill_without_copying_policy():
+def test_custom_instruction_pointer_starts_with_critical_problem_gate_and_stays_compact():
     pointer = _recommended_custom_instruction_pointer()
     assert 0 < len(pointer) <= 1500
+    assert pointer.startswith("CRITICAL UAOS PROBLEM GATE:")
+    assert "do not execute a proposed cause or fix first" in pointer
+    assert "Treat diagnosis and remedy as hypotheses/ActionCandidates" in pointer
+    assert "Only when I explicitly require a mechanism independently" in pointer
     assert "uaos-controller-runtime" in pointer
-    assert "suspected local patches" in pointer
-    assert "as hypotheses" in pointer
-    assert "proposed repair remains a candidate" in pointer
     assert "Repeated/systemic repairs must cover the failure class" in pointer
-    assert "never use `next` or another no-op user message as the workflow clock" in pointer
+    assert "never use `next` as the workflow clock" in pointer
     assert "FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES" not in pointer
 
 
