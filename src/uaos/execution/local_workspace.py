@@ -27,31 +27,30 @@ from .registry import CapabilityRegistry
 
 
 class LocalWorkspaceExecutor:
-    """Zero-cost file executor confined to one explicit workspace root.
+    """Zero-cost file executor confined to one explicit, physically pinned workspace root.
 
-    Execution uses directory-file-descriptor relative operations. Parent components are
-    opened with ``O_NOFOLLOW`` and retained as directory descriptors, so changing a
-    pathname to a symlink after admission cannot redirect the write outside the bound
-    workspace. CREATE is committed with an atomic hard-link no-replace operation.
-    UPDATE holds an advisory exclusive lock on the already-open parent directory across
-    hash verification and atomic rename; cooperating UAOS writers therefore cannot race
-    an expected-hash compare-and-update sequence.
+    The root directory is opened once at construction by traversing every absolute path
+    component with ``O_NOFOLLOW`` and is retained as a directory descriptor. Every later
+    operation starts from ``dup(root_fd)`` instead of reopening the pathname, so replacing
+    an ancestor pathname after construction cannot redirect a write outside the bound
+    workspace.
 
-    The directory lock is deliberately advisory: it coordinates this executor family,
-    not arbitrary external programs that ignore POSIX locks. Expected-hash updates also
-    re-read immediately before rename to detect non-cooperating changes observed before
-    commit. Platforms without the required dir-fd/no-follow/flock primitives fail closed
-    rather than silently falling back to path-based mutation.
+    Existing parent directories are traversed relative to that descriptor with no-follow
+    semantics. ``local.create_text`` never creates parent directories implicitly: parent
+    provisioning is a separate durable effect and must use its own admitted action if the
+    system adds one. CREATE is atomic no-replace. UPDATE uses an advisory exclusive lock
+    across expected-hash verification and atomic rename for cooperating UAOS writers.
     """
 
     def __init__(self, root: str | Path) -> None:
         self.root = Path(root).resolve()
         self.root.mkdir(parents=True, exist_ok=True)
         self._require_secure_fs_primitives()
+        self._root_fd: int | None = self._open_pinned_absolute_directory(self.root)
 
     @staticmethod
     def _require_secure_fs_primitives() -> None:
-        required = (os.open, os.mkdir, os.unlink, os.stat, os.link, os.rename)
+        required = (os.open, os.unlink, os.stat, os.link, os.rename)
         if not hasattr(os, "O_NOFOLLOW") or not hasattr(os, "O_DIRECTORY"):
             raise RuntimeError("local workspace requires O_NOFOLLOW and O_DIRECTORY")
         if fcntl is None or not hasattr(fcntl, "flock"):
@@ -63,6 +62,39 @@ class LocalWorkspaceExecutor:
                 "local workspace requires dir_fd filesystem primitives: "
                 + ",".join(sorted(missing))
             )
+
+    @staticmethod
+    def _open_pinned_absolute_directory(path: Path) -> int:
+        if not path.is_absolute():
+            raise RuntimeError("workspace root must resolve to an absolute path")
+        flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+        current_fd = os.open(os.path.sep, flags)
+        try:
+            for component in path.parts[1:]:
+                child_fd = os.open(component, flags, dir_fd=current_fd)
+                os.close(current_fd)
+                current_fd = child_fd
+            return current_fd
+        except Exception:
+            os.close(current_fd)
+            raise
+
+    def close(self) -> None:
+        root_fd = self._root_fd
+        self._root_fd = None
+        if root_fd is not None:
+            self._safe_close(root_fd)
+
+    def __del__(self) -> None:  # pragma: no cover - deterministic callers may call close()
+        try:
+            self.close()
+        except Exception:
+            pass
+
+    def _dup_root_fd(self) -> int:
+        if self._root_fd is None:
+            raise RuntimeError("local workspace executor is closed")
+        return os.dup(self._root_fd)
 
     @staticmethod
     def _sha256(content: bytes) -> str:
@@ -88,23 +120,14 @@ class LocalWorkspaceExecutor:
         parts = self._target_parts(target)
         return f"file://{self.root.joinpath(*parts).as_posix()}"
 
-    def _open_parent(self, target: str, *, create_parents: bool) -> tuple[int, str]:
+    def _open_parent(self, target: str) -> tuple[int, str]:
         parts = self._target_parts(target)
         leaf = parts[-1]
         flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
-        current_fd = os.open(self.root, flags)
+        current_fd = self._dup_root_fd()
         try:
             for component in parts[:-1]:
-                try:
-                    child_fd = os.open(component, flags, dir_fd=current_fd)
-                except FileNotFoundError:
-                    if not create_parents:
-                        raise
-                    try:
-                        os.mkdir(component, 0o755, dir_fd=current_fd)
-                    except FileExistsError:
-                        pass
-                    child_fd = os.open(component, flags, dir_fd=current_fd)
+                child_fd = os.open(component, flags, dir_fd=current_fd)
                 previous_fd = current_fd
                 current_fd = child_fd
                 os.close(previous_fd)
@@ -125,8 +148,6 @@ class LocalWorkspaceExecutor:
         try:
             fcntl.flock(parent_fd, fcntl.LOCK_UN)
         except OSError:
-            # Unlock/close does not roll back an already completed filesystem commit.
-            # The operation's durability is established by directory fsync before this.
             pass
 
     @staticmethod
@@ -210,9 +231,9 @@ class LocalWorkspaceExecutor:
         committed = False
         digest = ""
         locked = False
-        commit_semantics = "ATOMIC_CREATE_NO_REPLACE"
+        commit_semantics = "PINNED_ROOT_ATOMIC_CREATE_NO_REPLACE"
         try:
-            parent_fd, leaf = self._open_parent(request.target, create_parents=True)
+            parent_fd, leaf = self._open_parent(request.target)
             self._lock_parent(parent_fd)
             locked = True
             content = request.payload["content"].encode("utf-8")
@@ -241,8 +262,21 @@ class LocalWorkspaceExecutor:
                 evidence={
                     "sha256": digest,
                     "commit_semantics": commit_semantics,
+                    "root_binding": "CONSTRUCTION_PINNED_DIRFD",
                     "concurrency_semantics": "ADVISORY_PARENT_DIRECTORY_LOCK",
                 },
+            )
+        except FileNotFoundError:
+            if committed:
+                return self._post_commit_unknown(
+                    request,
+                    digest=digest,
+                    commit_semantics=commit_semantics,
+                    exc=FileNotFoundError("post-commit durability confirmation failed"),
+                )
+            return ExecutionOutcome(
+                ExecutionDisposition.FAILED,
+                error="CREATE parent directory does not exist; parent provisioning is a separate durable action",
             )
         except FileExistsError:
             if committed:
@@ -292,9 +326,9 @@ class LocalWorkspaceExecutor:
         committed = False
         digest = ""
         locked = False
-        commit_semantics = "LOCKED_COMPARE_AND_ATOMIC_RENAME"
+        commit_semantics = "PINNED_ROOT_LOCKED_COMPARE_AND_ATOMIC_RENAME"
         try:
-            parent_fd, leaf = self._open_parent(request.target, create_parents=False)
+            parent_fd, leaf = self._open_parent(request.target)
             self._lock_parent(parent_fd)
             locked = True
             current, original_info = self._read_regular_file(parent_fd, leaf)
@@ -323,9 +357,6 @@ class LocalWorkspaceExecutor:
                     error="UPDATE target content changed before commit",
                 )
 
-            # The hash check and rename occur while cooperating UAOS writers are
-            # excluded by the parent-directory flock. The final content re-read above
-            # also detects non-cooperating writes that become visible before commit.
             os.rename(
                 temporary,
                 leaf,
@@ -341,6 +372,7 @@ class LocalWorkspaceExecutor:
                 evidence={
                     "sha256": digest,
                     "commit_semantics": commit_semantics,
+                    "root_binding": "CONSTRUCTION_PINNED_DIRFD",
                     "concurrency_semantics": (
                         "ADVISORY_PARENT_DIRECTORY_LOCK__EXPECTED_HASH_RECHECK__ATOMIC_RENAME"
                     ),
@@ -356,7 +388,7 @@ class LocalWorkspaceExecutor:
                 )
             return ExecutionOutcome(
                 ExecutionDisposition.FAILED,
-                error="UPDATE target does not exist",
+                error="UPDATE target or parent does not exist",
             )
         except Exception as exc:
             if committed:
@@ -389,17 +421,17 @@ class LocalWorkspaceExecutor:
         if request.action_name == "local.read_bytes":
             parent_fd = None
             try:
-                parent_fd, leaf = self._open_parent(request.target, create_parents=False)
+                parent_fd, leaf = self._open_parent(request.target)
                 content, _ = self._read_regular_file(parent_fd, leaf)
                 return ExecutionOutcome(
                     ExecutionDisposition.CONFIRMED,
                     output=content,
-                    evidence={"sha256": self._sha256(content)},
+                    evidence={"sha256": self._sha256(content), "root_binding": "CONSTRUCTION_PINNED_DIRFD"},
                 )
             except FileNotFoundError:
                 return ExecutionOutcome(
                     ExecutionDisposition.FAILED,
-                    error="target does not exist",
+                    error="target or parent does not exist",
                 )
             except Exception as exc:
                 return ExecutionOutcome(
