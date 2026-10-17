@@ -215,6 +215,19 @@ def _normalize_outcome(outcome: ExecutionOutcome, *, source: str) -> ExecutionOu
     )
 
 
+def _snapshot_outcome(outcome: ExecutionOutcome) -> ExecutionOutcome:
+    """Create a coordinator-owned outcome instance detached from the public receipt."""
+
+    normalized = _normalize_outcome(outcome, source="outcome snapshot")
+    return ExecutionOutcome(
+        disposition=normalized.disposition,
+        output=normalized.output,
+        provider_ref=normalized.provider_ref,
+        evidence=normalized.evidence,
+        error=normalized.error,
+    )
+
+
 class ActionCoordinator:
     """Policy boundary around executor adapters, ownership and safe fallback.
 
@@ -224,8 +237,9 @@ class ActionCoordinator:
     same values even if caller-owned payload objects are subsequently changed.
 
     UNKNOWN reconciliation is coordinator-owned. A caller receives an opaque execution
-    id, but the authoritative request snapshot, admission and outcome remain internal. A
-    per-execution reconciliation claim prevents concurrent repair attempts for one id.
+    id, while the authoritative request snapshot, admission and a separately constructed
+    outcome snapshot remain internal. Public and internal outcome instances never alias.
+    A per-execution reconciliation claim prevents concurrent repair attempts for one id.
     The baseline record/claim store is process-local and fails closed after restart; a
     host requiring cross-process reconciliation must persist the same record and atomic
     claim state in its authority store.
@@ -435,7 +449,7 @@ class ActionCoordinator:
             capability_id=registered.observation.capability_id,
             request=request,
             admission=admission,
-            outcome=outcome,
+            outcome=_snapshot_outcome(outcome),
         )
         with self._unknown_lock:
             self._unknown_records[execution_id] = record
