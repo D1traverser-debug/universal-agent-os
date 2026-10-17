@@ -210,6 +210,54 @@ def test_terminal_novelty_blocks_saturation_claim():
         require_knowledge_acquisition_admission(_assessment(saturation_rounds=rounds))
 
 
+def test_duplicate_saturation_round_id_cannot_claim_two_rounds():
+    round_one = _assessment().saturation_rounds[0]
+    duplicate_id = SaturationRound(
+        round_one.round_id,
+        (AcquisitionMethod.REPOSITORY_TRAVERSAL,),
+        (),
+        (),
+        (),
+        False,
+        ("repo-sample",),
+    )
+    with pytest.raises(KnowledgeAcquisitionAdmissionError, match="saturation round ids must be unique"):
+        require_knowledge_acquisition_admission(_assessment(saturation_rounds=(round_one, duplicate_id)))
+
+
+def test_terminal_saturation_rounds_must_each_be_expansion_work():
+    rounds = (
+        SaturationRound(
+            "sat-1",
+            (AcquisitionMethod.DIRECT_SEARCH,),
+            (),
+            (),
+            (),
+            False,
+            ("official-guidance",),
+        ),
+        _assessment().saturation_rounds[1],
+    )
+    with pytest.raises(KnowledgeAcquisitionAdmissionError, match="each terminal round to contain expansion work"):
+        require_knowledge_acquisition_admission(_assessment(saturation_rounds=rounds))
+
+
+def test_repeated_terminal_saturation_evidence_cannot_claim_distinct_rounds():
+    repeated = SaturationRound(
+        "sat-2b",
+        (AcquisitionMethod.BACKWARD_REFERENCE,),
+        (),
+        (),
+        (),
+        False,
+        ("benchmark-result",),
+    )
+    with pytest.raises(KnowledgeAcquisitionAdmissionError, match="two distinct terminal expansion rounds"):
+        require_knowledge_acquisition_admission(
+            _assessment(saturation_rounds=(_assessment().saturation_rounds[0], repeated))
+        )
+
+
 def test_narrow_known_need_lookup_can_remain_lightweight():
     assessment = KnowledgeAcquisitionAssessment(
         acquisition_id="knowledge:narrow",
