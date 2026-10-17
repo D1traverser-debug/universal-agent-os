@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0",
+  "projection_role": "COMPILED_EFFECTIVE_RUNTIME_PROJECTION__NON_AUTHORITATIVE",
+  "host": "CHATGPT_GITHUB",
+  "source_authorities": {
+    "session": "config/SESSION_INTERACTION_POLICY.json",
+    "deliberation": "config/DELIBERATION_POLICY.json",
+    "host": "config/HOST_PROFILES.json#profiles.CHATGPT_GITHUB"
+  },
+  "source_versions": {
+    "session": "2.2.0",
+    "deliberation": "2.1.0",
+    "host_schema": "1.8"
+  },
+  "assurance": {
+    "semantic_signals": "BEHAVIORAL_SESSION_SELF_CLASSIFICATION__NO_VERIFIED_REPOSITORY_CONTROLLED_NON_BYPASSABLE_SIGNAL_INJECTOR",
+    "final_response": "SESSION_BOOTSTRAP_PLUS_OBSERVABLE_ASSURANCE__NO_VERIFIED_CHATGPT_PRE_SEND_HOOK",
+    "cost": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
+  },
+  "turn_contract": {
+    "problem_detection": {
+      "scope": "EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_READ_ONLY_TURNS",
+      "checks": [
+        "classify the current user message for correction/failure/contradiction/uncertainty or other problem signals",
+        "classify newly read authority/evidence for defects, drift, knowledge gaps or control-plane gaps",
+        "before reporting NOT_TRIGGERED, verify that no current problem signal was observed",
+        "when a problem is detected, activate the canonical cognition case before selecting or executing a repair"
+      ]
+    },
+    "execution_depth": {
+      "scope": "EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_NON_PROBLEM_RESEARCH_DESIGN_DECISION_AND_READ_ONLY_TURNS",
+      "responsibility": "The selected Agent/session independently assesses the current request and newly acquired evidence for the execution depth required to satisfy the governing outcome. The user is not responsible for labeling a task as complex, systemic, architectural, uncertain, or deep.",
+      "checks": [
+        "derive current semantic evidence for explicit_user_depth_request, material_high_uncertainty, unknown_knowledge, architecture_or_control_plane, repeated_systemic and ordinary_structured_evidence_insufficient rather than relying on keyword aliases",
+        "treat an explicit user request for deeper analysis as a mandatory force signal, not as the only path into Deep Task",
+        "when ordinary STRUCTURED execution remains sufficient, keep the task lightweight and do not manufacture Deep Task ceremony",
+        "when assess_deep_task_requirement requires the profile, activate the current repository Deep Task evidence admission without waiting for the user to diagnose the task type or ask for a better solution",
+        "if new evidence discovered during execution changes the depth classification, re-evaluate before material completion rather than freezing the initial classification"
+      ],
+      "clear_path": "ORDINARY_EXECUTION_DEPTH__CONTINUE_WITH_THE_MINIMUM_SUFFICIENT_CURRENT_SEARCH_MODE",
+      "triggered_path": "ACTIVATE_CURRENT_DELIBERATION_AND_DEEP_TASK_EVIDENCE_PROFILE__NO_SECOND_COGNITION_STATE_MACHINE"
+    },
+    "cognition": {
+      "canonical_ref": "config/DELIBERATION_POLICY.json#cognition_kernel",
+      "hot_path": [
+        "FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES",
+        "EXPAND_CAUSAL_SOLUTION_AND_EVIDENCE_SPACE",
+        "FALSIFY_TRACE_AND_COMPARE",
+        "COMMIT_CAUSAL_MODEL_INTERVENTION_AND_LEARNING",
+        "ACT_VERIFY_VALIDATE_AND_OBSERVE"
+      ],
+      "claim_rule": "A user assertion, including 'the upper layer is the cause' or 'rebuild everything', may seed a factor/candidate but cannot by itself support a causal conclusion or architecture selection.",
+      "search_modes": {
+        "LIGHTWEIGHT": {
+          "use_when": "ONE_OFF_LOCAL_OR_FAMILIAR_PROBLEM_WITHOUT_SYSTEMIC_OR_KNOWLEDGE_UNCERTAINTY_SIGNAL",
+          "minimum": "one evidence-tested causal factor; compact diagnosis and verification",
+          "boundedness": "max 3 causal factors; one deliberation round"
+        },
+        "CONTRASTIVE": {
+          "use_when": "USER_CORRECTION_OR_CHANGE_PROPOSAL_OR_GOAL_PROGRESS_UNCERTAIN_WITHOUT_STRUCTURED_ESCALATION_SIGNAL",
+          "minimum": "at least two competing causal factors and two action candidates with explicit tradeoff evidence; user framing cannot be sole causal support",
+          "boundedness": "max 5 causal factors; max 2 deliberation rounds"
+        },
+        "STRUCTURED": {
+          "use_when": "REPEATED_OR_CROSS_SUBSYSTEM_OR_COMPLEXITY_GROWTH_OR_CONFLICTING_EVIDENCE_OR_UNKNOWN_KNOWLEDGE_ARCHITECTURE_HIGH_RISK_MATERIAL_SIGNAL",
+          "minimum": "at least two causal factors, at least three action candidates, explicit NO_CHANGE baseline, falsification, upstream/architecture reassessment when systemic, typed external/independent evidence, and verification+validation plans",
+          "boundedness": "max 7 causal factors; max 3 deliberation rounds"
+        }
+      }
+    },
+    "problem_closure": {
+      "terminal_states": [
+        "REPAIR_EXECUTED",
+        "BLOCKED_WITH_REASON",
+        "NO_CHANGE_WITH_EVIDENCE"
+      ],
+      "rule": "Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state.",
+      "premature_action_rule": "A repair attempted before causal/intervention admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence."
+    },
+    "mutation": {
+      "scope": "BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT",
+      "checks": [
+        "resolve selected authority context",
+        "resolve target authority/resource and whether it is production authority",
+        "classify read-only versus mutation",
+        "verify the proposed mutation follows the owner-appropriate repository workflow",
+        "verify any detected problem has passed the canonical cognition/action admission before repair mutation"
+      ],
+      "production_rule": "CHATGPT_GITHUB material production changes normally use candidate branch -> pull request -> owner-appropriate checks -> controlled merge/update -> production reread."
+    },
+    "final_progress": {
+      "scope": "EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
+      "fields": [
+        "current_agent",
+        "current_scope_or_task",
+        "authority_context",
+        "status",
+        "current_stage",
+        "next_action_or_blocker",
+        "evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER",
+        "deliberation_state_when_triggered_or_NOT_TRIGGERED",
+        "version_identity",
+        "progress_timestamp"
+      ],
+      "consistency_rule": "A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless the observation is explicitly classified as non-problematic with a reason."
+    }
+  }
+}
