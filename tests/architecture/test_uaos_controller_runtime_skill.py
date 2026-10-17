@@ -93,7 +93,7 @@ def test_custom_instruction_pointer_starts_with_critical_problem_gate_and_stays_
     assert "Only when I explicitly require a mechanism independently" in pointer
     assert "uaos-controller-runtime" in pointer
     assert "Repeated/systemic repairs must cover the failure class" in pointer
-    assert "never use `next` as the workflow clock" in pointer
+    assert "never use `next` or another no-op user message as the workflow clock" in pointer
     assert "FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES" not in pointer
 
 
