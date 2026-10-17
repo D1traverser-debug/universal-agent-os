@@ -149,8 +149,6 @@ def test_even_raw_slot_access_to_public_unknown_cannot_mutate_internal_record():
     unknown = coordinator.execute(request)
     assert unknown.execution_id
 
-    # Bypass ExecutionOutcome's defensive attribute access deliberately. This mutates
-    # the public outcome object's backing containers and reproduces the prior P1.
     raw_evidence = object.__getattribute__(unknown.outcome, "evidence")
     raw_output = object.__getattribute__(unknown.outcome, "output")
     raw_evidence["operation_ref"] = "op:raw-forged"
@@ -164,6 +162,29 @@ def test_even_raw_slot_access_to_public_unknown_cannot_mutate_internal_record():
         "operation_ref": "op:original",
         "nested": {"token": "evidence:original"},
     }
+    assert passed_unknown.output == {"repair": {"token": "output:original"}}
+
+
+def test_no_reconciler_return_is_snapshot_not_internal_unknown_record():
+    coordinator, request, executor = _coordinator()
+    unknown = coordinator.execute(request)
+    assert unknown.execution_id
+
+    original_reconciler = executor.reconcile
+    executor.reconcile = None
+    first_retry = coordinator.reconcile(request, unknown)
+    assert first_retry.outcome.disposition is ExecutionDisposition.UNKNOWN
+
+    raw_evidence = object.__getattribute__(first_retry.outcome, "evidence")
+    raw_output = object.__getattribute__(first_retry.outcome, "output")
+    raw_evidence["operation_ref"] = "op:no-reconciler-forged"
+    raw_output["repair"]["token"] = "output:no-reconciler-forged"
+
+    executor.reconcile = original_reconciler
+    resolved = coordinator.reconcile(request, first_retry)
+    assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
+    passed_unknown = executor.reconcile_calls[0][1]
+    assert passed_unknown.evidence["operation_ref"] == "op:original"
     assert passed_unknown.output == {"repair": {"token": "output:original"}}
 
 
