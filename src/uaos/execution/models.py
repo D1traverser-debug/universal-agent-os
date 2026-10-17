@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import Any, Mapping, Protocol
@@ -65,11 +66,43 @@ class ExecutionRequest:
 
 @dataclass(frozen=True, slots=True)
 class ExecutionOutcome:
+    """Detached value object for executor/reconciler results.
+
+    `frozen=True` protects only field assignment; without detaching mutable `output` or
+    `evidence`, a caller holding the public result can otherwise mutate the same nested
+    objects retained by a coordinator-owned UNKNOWN record. We therefore snapshot both
+    fields at construction and return defensive copies on ordinary attribute access.
+    This keeps UNKNOWN reconciliation truth detached from caller-owned mutable state.
+    """
+
     disposition: ExecutionDisposition
     output: Any = None
     provider_ref: str | None = None
     evidence: Mapping[str, Any] = field(default_factory=dict)
     error: str | None = None
+
+    def __post_init__(self) -> None:
+        try:
+            snap_output = deepcopy(object.__getattribute__(self, "output"))
+            raw_evidence = object.__getattribute__(self, "evidence")
+            snap_evidence = deepcopy(dict(raw_evidence))
+        except Exception as exc:
+            raise TypeError(
+                "ExecutionOutcome output/evidence must support detached snapshot semantics"
+            ) from exc
+        object.__setattr__(self, "output", snap_output)
+        object.__setattr__(self, "evidence", snap_evidence)
+
+    def __getattribute__(self, name: str) -> Any:
+        value = object.__getattribute__(self, name)
+        if name in {"output", "evidence"}:
+            try:
+                return deepcopy(value)
+            except Exception as exc:
+                raise TypeError(
+                    f"ExecutionOutcome.{name} must support defensive-copy access"
+                ) from exc
+        return value
 
 
 @dataclass(frozen=True, slots=True)
