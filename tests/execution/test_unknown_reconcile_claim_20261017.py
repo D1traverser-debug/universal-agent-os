@@ -137,3 +137,27 @@ def test_terminal_reconciliation_consumes_execution_id_against_serial_replay():
     with pytest.raises(PersistentAssetViolation, match="not owned|already|terminal|claim"):
         coordinator.reconcile(request, unknown)
     assert executor.calls == 1
+
+
+def test_reconciler_exception_releases_claim_and_preserves_retryable_unknown():
+    coordinator, request, executor = _fixture()
+    unknown = coordinator.execute(request)
+    calls = 0
+
+    def flaky_reconcile(request: ExecutionRequest, prior: ExecutionOutcome) -> ExecutionOutcome:
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            raise RuntimeError("provider transport failed before reliable disposition")
+        return ExecutionOutcome(ExecutionDisposition.CONFIRMED, output="resolved-after-retry")
+
+    executor.reconcile = flaky_reconcile  # type: ignore[method-assign]
+    with pytest.raises(RuntimeError, match="provider transport failed"):
+        coordinator.reconcile(request, unknown)
+
+    # The first exception must release the single-flight claim without consuming the
+    # coordinator-owned UNKNOWN authority record, so a later explicit retry is legal.
+    resolved = coordinator.reconcile(request, unknown)
+    assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
+    assert resolved.outcome.output == "resolved-after-retry"
+    assert calls == 2
