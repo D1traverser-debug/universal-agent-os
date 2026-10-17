@@ -3,14 +3,14 @@
   "authority":"UAOS",
   "index_role":"DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note":"Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at":"2026-10-17T19:56:00+08:00",
+  "updated_at":"2026-10-17T19:59:00+08:00",
   "controller_tasks":[
     {
       "task_id":"uaos:maintenance:systemic-repair-runtime-skill-20261017",
       "authority_context":"UAOS",
       "task_type":"controller_maintenance",
       "display_name_zh":"总控维护｜稳定认知入口、系统性修复闭环与有限验证收敛",
-      "status":"VERIFIED",
+      "status":"RUNNING",
       "resume_eligible":true,
       "default_resume":true,
       "semantic_summary":"Production-verified systemic-repair/native-activation evolution. Native ChatGPT uses a compact bootstrap pointer plus a non-authoritative uaos-controller-runtime Skill to enter current GitHub cognition/evolution/closure; systemic repairs require failure-class/generalization/recurrence evidence; promotion uses frozen bounded included/free-first verification. Repository production is green; account UI Skill installation and Custom Instructions replacement remain user-owned, followed by native post-promotion observation.",
