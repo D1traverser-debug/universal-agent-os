@@ -144,6 +144,29 @@ def test_public_unknown_nested_mutation_cannot_change_coordinator_owned_reconcil
     assert passed_unknown.output == {"repair": {"token": "output:original"}}
 
 
+def test_even_raw_slot_access_to_public_unknown_cannot_mutate_internal_record():
+    coordinator, request, executor = _coordinator()
+    unknown = coordinator.execute(request)
+    assert unknown.execution_id
+
+    # Bypass ExecutionOutcome's defensive attribute access deliberately. This mutates
+    # the public outcome object's backing containers and reproduces the prior P1.
+    raw_evidence = object.__getattribute__(unknown.outcome, "evidence")
+    raw_output = object.__getattribute__(unknown.outcome, "output")
+    raw_evidence["operation_ref"] = "op:raw-forged"
+    raw_evidence["nested"]["token"] = "evidence:raw-forged"
+    raw_output["repair"]["token"] = "output:raw-forged"
+
+    resolved = coordinator.reconcile(request, unknown)
+    assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
+    passed_unknown = executor.reconcile_calls[0][1]
+    assert passed_unknown.evidence == {
+        "operation_ref": "op:original",
+        "nested": {"token": "evidence:original"},
+    }
+    assert passed_unknown.output == {"repair": {"token": "output:original"}}
+
+
 def test_execution_outcome_snapshots_source_containers_at_construction():
     evidence = {"nested": {"token": "evidence:original"}}
     output = {"nested": ["output:original"]}
