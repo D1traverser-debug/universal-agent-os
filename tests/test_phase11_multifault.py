@@ -24,6 +24,7 @@ def test_provider_outage_plus_ambiguous_fallback_fails_closed_to_reconciliation(
     reg.register(CapabilityObservation('fallback',CapabilityHealth.AVAILABLE,now,('publish',),('write',),0.9,2.0,'provider'),UnknownExecutor())
     external_record=PersistentAssetDescriptor(
         asset_id='remote:item',
+        resource_ref='remote:item',
         surface=PersistentSurface.OTHER_EXTERNAL,
         role=AssetRole.EXTERNAL_RECORD,
         lifecycle=AssetLifecycle.ACTIVE_NON_AUTHORITY,
