@@ -122,16 +122,19 @@ def test_reconcile_ignores_forged_public_unknown_outcome_and_uses_owned_record()
     assert passed_unknown.error == "timeout"
 
 
-def test_public_unknown_nested_mutation_cannot_change_coordinator_owned_reconcile_truth():
+def test_public_unknown_nested_state_is_immutable_and_cannot_change_owned_truth():
     coordinator, request, executor = _coordinator()
     unknown = coordinator.execute(request)
     assert unknown.execution_id
 
     public_evidence = unknown.outcome.evidence
     public_output = unknown.outcome.output
-    public_evidence["operation_ref"] = "op:forged"
-    public_evidence["nested"]["token"] = "evidence:forged"
-    public_output["repair"]["token"] = "output:forged"
+    with pytest.raises(TypeError):
+        public_evidence["operation_ref"] = "op:forged"
+    with pytest.raises(TypeError):
+        public_evidence["nested"]["token"] = "evidence:forged"
+    with pytest.raises(TypeError):
+        public_output["repair"]["token"] = "output:forged"
 
     resolved = coordinator.reconcile(request, unknown)
     assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
@@ -144,16 +147,19 @@ def test_public_unknown_nested_mutation_cannot_change_coordinator_owned_reconcil
     assert passed_unknown.output == {"repair": {"token": "output:original"}}
 
 
-def test_even_raw_slot_access_to_public_unknown_cannot_mutate_internal_record():
+def test_even_raw_slot_access_to_public_unknown_is_structurally_immutable():
     coordinator, request, executor = _coordinator()
     unknown = coordinator.execute(request)
     assert unknown.execution_id
 
     raw_evidence = object.__getattribute__(unknown.outcome, "evidence")
     raw_output = object.__getattribute__(unknown.outcome, "output")
-    raw_evidence["operation_ref"] = "op:raw-forged"
-    raw_evidence["nested"]["token"] = "evidence:raw-forged"
-    raw_output["repair"]["token"] = "output:raw-forged"
+    with pytest.raises(TypeError):
+        raw_evidence["operation_ref"] = "op:raw-forged"
+    with pytest.raises(TypeError):
+        raw_evidence["nested"]["token"] = "evidence:raw-forged"
+    with pytest.raises(TypeError):
+        raw_output["repair"]["token"] = "output:raw-forged"
 
     resolved = coordinator.reconcile(request, unknown)
     assert resolved.outcome.disposition is ExecutionDisposition.CONFIRMED
@@ -189,7 +195,7 @@ def test_public_request_and_admission_mutation_cannot_change_internal_unknown_re
     assert dict(passed_request.payload) == {"content": "x"}
 
 
-def test_no_reconciler_return_is_snapshot_not_internal_unknown_record():
+def test_no_reconciler_return_is_immutable_snapshot_not_internal_unknown_record():
     coordinator, request, executor = _coordinator()
     unknown = coordinator.execute(request)
     assert unknown.execution_id
@@ -201,8 +207,10 @@ def test_no_reconciler_return_is_snapshot_not_internal_unknown_record():
 
     raw_evidence = object.__getattribute__(first_retry.outcome, "evidence")
     raw_output = object.__getattribute__(first_retry.outcome, "output")
-    raw_evidence["operation_ref"] = "op:no-reconciler-forged"
-    raw_output["repair"]["token"] = "output:no-reconciler-forged"
+    with pytest.raises(TypeError):
+        raw_evidence["operation_ref"] = "op:no-reconciler-forged"
+    with pytest.raises(TypeError):
+        raw_output["repair"]["token"] = "output:no-reconciler-forged"
     assert first_retry.original_request is not None
     object.__setattr__(
         first_retry.original_request,
@@ -224,7 +232,7 @@ def test_no_reconciler_return_is_snapshot_not_internal_unknown_record():
     assert passed_unknown.output == {"repair": {"token": "output:original"}}
 
 
-def test_execution_outcome_snapshots_source_containers_at_construction():
+def test_execution_outcome_structurally_snapshots_source_containers_at_construction():
     evidence = {"nested": {"token": "evidence:original"}}
     output = {"nested": ["output:original"]}
     outcome = ExecutionOutcome(
@@ -236,7 +244,9 @@ def test_execution_outcome_snapshots_source_containers_at_construction():
     output["nested"].append("output:mutated")
 
     assert outcome.evidence == {"nested": {"token": "evidence:original"}}
-    assert outcome.output == {"nested": ["output:original"]}
+    assert outcome.output["nested"] == ("output:original",)
+    with pytest.raises(TypeError):
+        outcome.evidence["nested"]["token"] = "forged"
 
 
 def test_reconcile_rejects_unowned_execution_id_even_with_copied_receipt():
