@@ -1,5 +1,5 @@
 {
-  "schema_version":"2.2",
+  "schema_version":"2.3",
   "controller":{
     "repository":"D1traverser-debug/universal-agent-os",
     "entrypoint":"ENTRYPOINT.md",
@@ -16,8 +16,12 @@
     "common_behavior_assurance":"config/COMMON_BEHAVIOR_ASSURANCE.json",
     "authority_write_policy":"config/AUTHORITY_WRITE_POLICY.json",
     "persistent_asset_policy":"config/PERSISTENT_ASSET_POLICY.json",
+    "persistent_asset_policy_activation":"src/uaos/runtime/policy_activation.py#resolve_ref_conditioned_policy_activation",
+    "persistent_asset_catalog":"src/uaos/execution/persistent_assets.py#PersistentAssetCatalog",
     "persistent_asset_admission":"src/uaos/execution/persistent_assets.py#PersistentAssetGate",
-    "persistent_asset_reconciliation":"src/uaos/execution/persistent_assets.py#reconcile_asset_inventory",
+    "persistent_asset_inventory_reconciliation":"src/uaos/execution/persistent_assets.py#reconcile_asset_inventory",
+    "execution_reconciliation":"src/uaos/execution/coordinator.py#ActionCoordinator.reconcile",
+    "action_coordinator":"src/uaos/execution/coordinator.py#ActionCoordinator",
     "deliberation_policy":"config/DELIBERATION_POLICY.json",
     "deep_task_execution_profile":"config/DEEP_TASK_EXECUTION_PROFILE.json",
     "architecture_experience_policy":"config/ARCHITECTURE_EXPERIENCE_POLICY.json",
@@ -47,5 +51,5 @@
     "copilot_ref":".github/copilot-instructions.md"
   },
   "retired_controller":{"repository":"D1traverser-debug/universal-continuity-agent","default_branch_role":"TOMBSTONE_REDIRECT_ONLY","executable_or_recovery_authority":false},
-  "updated_at":"2026-10-17T09:20:00+08:00"
+  "updated_at":"2026-10-17T11:05:28+08:00"
 }
