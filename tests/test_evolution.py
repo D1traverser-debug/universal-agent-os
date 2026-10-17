@@ -11,17 +11,29 @@ def incident(i, fp="same"):
     return Incident(i,"recurring failure",fp,(f"evidence:{i}",))
 
 
-def proposal(delta=ComplexityDelta(), *, added=(), replaced=(), retired=(), why="reuse insufficient", retirement="no overlap exists; reviewed", state=None):
+def proposal(delta=ComplexityDelta(), *, added=(), replaced=(), retired=(), why="reuse insufficient", retirement="no overlap exists; reviewed", state=None, required_acceptance_checks=(), verification_round_limit=3, independent_paid_review_budget=0):
     kwargs={'state': state if state is not None else ProposalState.EVALUATED}
     return ChangeProposal(
         "p1","repair root cause",("f1",),"mechanism X causes failure","kernel",
         added,replaced,retired,why,retirement,"revert commit and schema","eliminate recurrence",
-        ("migration risk",),("scenario:recurrence","scenario:cross-domain"),delta,("incident:f1",),**kwargs
+        ("migration risk",),("scenario:recurrence","scenario:cross-domain"),delta,("incident:f1",),
+        required_acceptance_checks=required_acceptance_checks,
+        verification_round_limit=verification_round_limit,
+        independent_paid_review_budget=independent_paid_review_budget,
+        **kwargs
     )
 
 
-def passed_eval(*, regressions=(), passed=True):
-    return EvaluationResult("e1","p1",("scenario:recurrence","scenario:cross-domain"),{"failure_rate":1.0},{"failure_rate":0.0},{"primary_goal_met": True},regressions,passed,("eval:trace",))
+def passed_eval(*, regressions=(), passed=True, checks=None, verification_round=1, paid_reviews=0, blocking=(), non_blocking=()):
+    return EvaluationResult(
+        "e1","p1",("scenario:recurrence","scenario:cross-domain"),
+        {"failure_rate":1.0},{"failure_rate":0.0},
+        checks or {"primary_goal_met": True},regressions,passed,("eval:trace",),
+        verification_round=verification_round,
+        independent_paid_reviews_used=paid_reviews,
+        blocking_findings=blocking,
+        non_blocking_findings=non_blocking,
+    )
 
 
 def test_repeated_incidents_raise_systemic_failure_class():
@@ -115,3 +127,51 @@ def test_promotion_requires_declared_scenario_coverage():
     d=assess_promotion(p,(narrow,),budget=ComplexityBudget())
     assert not d.approved
     assert any("scenarios missing" in reason for reason in d.reasons)
+
+
+def test_frozen_acceptance_boundary_must_be_covered_before_promotion():
+    p=proposal(required_acceptance_checks=("systemic_closure", "native_activation"))
+    d=assess_promotion(
+        p,
+        (passed_eval(checks={"systemic_closure": True}),),
+        budget=ComplexityBudget(),
+    )
+    assert not d.approved
+    assert any("required acceptance checks missing" in reason for reason in d.reasons)
+
+
+def test_blocking_finding_rejects_but_non_blocking_followup_does_not_reopen_acceptance():
+    p=proposal(required_acceptance_checks=("systemic_closure",))
+    blocked=passed_eval(
+        passed=False,
+        checks={"systemic_closure": True},
+        blocking=("authority bypass remains",),
+    )
+    d1=assess_promotion(p,(blocked,),budget=ComplexityBudget())
+    assert not d1.approved
+    assert "blocking verification findings remain" in d1.reasons
+
+    followup=passed_eval(
+        checks={"systemic_closure": True},
+        non_blocking=("future readability cleanup",),
+    )
+    d2=assess_promotion(p,(followup,),budget=ComplexityBudget())
+    assert d2.approved
+
+
+def test_verification_round_budget_prevents_unbounded_review_loop():
+    p=proposal(verification_round_limit=2)
+    d=assess_promotion(p,(passed_eval(verification_round=3),),budget=ComplexityBudget())
+    assert not d.approved
+    assert "verification round budget exceeded" in d.reasons
+
+
+def test_paid_review_budget_is_zero_by_default_and_must_be_explicitly_admitted():
+    default_budget=proposal()
+    blocked=assess_promotion(default_budget,(passed_eval(paid_reviews=1),),budget=ComplexityBudget())
+    assert not blocked.approved
+    assert "independent paid review budget exceeded" in blocked.reasons
+
+    explicitly_admitted=proposal(independent_paid_review_budget=1)
+    allowed=assess_promotion(explicitly_admitted,(passed_eval(paid_reviews=1),),budget=ComplexityBudget())
+    assert allowed.approved
