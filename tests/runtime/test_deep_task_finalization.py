@@ -106,6 +106,21 @@ def test_explicit_deep_task_finalizes_after_evidence_admission():
     assert receipt.deep_task_receipt.preferred_alternative_id == "a"
 
 
+def test_comprehensive_acquisition_signal_requires_acquisition_evidence_inside_deep_case():
+    with pytest.raises(FinalizationBlocked) as exc:
+        admit_final_response(
+            _report(),
+            FinalizationContext(
+                context_selected=True,
+                deep_task_signals=DeepTaskSignals(
+                    comprehensive_knowledge_acquisition_required=True
+                ),
+                deep_task_case=_case(),
+            ),
+        )
+    assert "MISSING_COMPREHENSIVE_KNOWLEDGE_ACQUISITION_EVIDENCE" in exc.value.reasons
+
+
 def test_deep_task_case_cannot_be_smuggled_into_a_non_deep_turn():
     with pytest.raises(FinalizationBlocked) as exc:
         admit_final_response(
