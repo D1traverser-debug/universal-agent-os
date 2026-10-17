@@ -30,38 +30,14 @@
     "boundary":"A compatible host must produce truthful current semantic signals. Native ChatGPT paths that do not invoke the repository finalization gate or do not supply such signals cannot be claimed as physically fail-closed."
   },
   "depth_dimensions":[
-    {
-      "id":"A_GOVERNING_OUTCOME",
-      "requirement":"Recover the real outcome, distinguish the surface task from the underlying purpose/constraints/failure meaning, and do not preselect a problem layer."
-    },
-    {
-      "id":"B_PROFESSIONAL_PRACTICE_GAP",
-      "requirement":"Identify what top practitioners would investigate, measure, model, challenge or validate that the request did not explicitly ask for. At least one external professional-method source is required; same-model expertise claims alone are insufficient."
-    },
-    {
-      "id":"C_PRIMARY_OR_RAW_MATERIAL",
-      "requirement":"Prefer original logs, raw data, source code, traces, real samples, failed cases, historical versions, user behavior, experiment outputs or original interface results over digested summaries."
-    },
-    {
-      "id":"D_METHODS_AND_TOOLS",
-      "requirement":"Bind conclusions to concrete professional methods/tools/models/databases/tests/simulators or evaluation frameworks; role-play or vocabulary changes are not substitutes."
-    },
-    {
-      "id":"E_UNKNOWN_DISCOVERY",
-      "requirement":"Search beyond the current hypothesis for latent variables, early signals, abnormal samples, uncovered scenarios, hidden constraints and capability gaps. When comprehensive knowledge acquisition is required, supply an admitted KnowledgeAcquisitionAssessment covering declared source roles, more than seed search, competing method families, contradiction handling, documented saturation and a holdout/validation plan."
-    },
-    {
-      "id":"F_COMPETING_ALTERNATIVES_AND_FALSIFICATION",
-      "requirement":"Maintain at least two competing alternatives, state what evidence would make each wrong, and preserve actual falsification/red-team evidence before selecting a current preference."
-    },
-    {
-      "id":"G_STRETCH_WITH_FEASIBILITY",
-      "requirement":"A stretch target is optional. If used, treat it as a search constraint only and require benchmark/engineering/physical/experimental feasibility evidence before calling it achievable."
-    },
-    {
-      "id":"H_INDEPENDENT_JUDGE_AND_VALIDATION",
-      "requirement":"Use evidence outside same-model self-confidence: automatic tests, independent evaluator/tool, holdout data, replay, realistic runtime, benchmark or production observation. Require explicit acceptance criteria."
-    }
+    {"id":"A_GOVERNING_OUTCOME","requirement":"Recover the real outcome, distinguish the surface task from the underlying purpose/constraints/failure meaning, and do not preselect a problem layer."},
+    {"id":"B_PROFESSIONAL_PRACTICE_GAP","requirement":"Identify what top practitioners would investigate, measure, model, challenge or validate that the request did not explicitly ask for. At least one external professional-method source is required; same-model expertise claims alone are insufficient."},
+    {"id":"C_PRIMARY_OR_RAW_MATERIAL","requirement":"Prefer original logs, raw data, source code, traces, real samples, failed cases, historical versions, user behavior, experiment outputs or original interface results over digested summaries."},
+    {"id":"D_METHODS_AND_TOOLS","requirement":"Bind conclusions to concrete professional methods/tools/models/databases/tests/simulators or evaluation frameworks; role-play or vocabulary changes are not substitutes."},
+    {"id":"E_UNKNOWN_DISCOVERY","requirement":"Search beyond the current hypothesis for latent variables, early signals, abnormal samples, uncovered scenarios, hidden constraints and capability gaps. When comprehensive knowledge acquisition is required, supply an admitted KnowledgeAcquisitionAssessment covering declared source roles, more than seed search, competing method families, contradiction handling, documented saturation and a holdout/validation plan."},
+    {"id":"F_COMPETING_ALTERNATIVES_AND_FALSIFICATION","requirement":"Maintain at least two competing alternatives, state what evidence would make each wrong, and preserve actual falsification/red-team evidence before selecting a current preference."},
+    {"id":"G_STRETCH_WITH_FEASIBILITY","requirement":"A stretch target is optional. If used, treat it as a search constraint only and require benchmark/engineering/physical/experimental feasibility evidence before calling it achievable."},
+    {"id":"H_INDEPENDENT_JUDGE_AND_VALIDATION","requirement":"Use evidence outside same-model self-confidence: automatic tests, independent evaluator/tool, holdout data, replay, realistic runtime, benchmark or production observation. Require explicit acceptance criteria."}
   ],
   "coverage_oriented_knowledge_acquisition":{
     "activation":"ONLY_WHEN_comprehensive_knowledge_acquisition_required_IS_TRUE__OR_AN_EQUIVALENT_EXPLICIT_DEEP_RESEARCH_REQUIREMENT_IS_ADMITTED",
@@ -83,7 +59,7 @@
     "Depth is measured by evidence directness, professional method quality, falsifiability, discovery of previously unmodeled factors and independence of validation; not by answer length or number of modules.",
     "The mandatory selected-context entry sentinel is cheap and always-on; Deep Task and comprehensive acquisition are adaptive escalations inside that entry, not conditions for running the entry itself.",
     "Do not create extra Agents, roles, documents, workflows or architecture layers unless their distinct tool/policy/context/output contract is itself evidence-justified.",
-    "The existing DELIBERATION_POLICY remains the sole cognition-stage authority. DeepTaskCase and KnowledgeAcquisitionAssessment are evidence admission profiles, not second cognition/research state machines.",
+    "The existing DELIBERATION_POLICY remains the sole cognition-stage authority. DeepTaskCase is not a second cognition state machine; KnowledgeAcquisitionAssessment is not a second research state machine. Both are evidence-admission profiles.",
     "For problem cases, DeepTaskCase evidence and governing outcome must be consistent with the canonical CognitionCase rather than forming a parallel diagnosis.",
     "If the evidence shows the existing task is already sufficiently deep, or a known narrow lookup is sufficient, record the evidence-backed no-expansion conclusion instead of manufacturing extra work.",
     "When the user requests an A-H report, render those dimensions explicitly; otherwise the protocol may operate internally and the user-facing answer should remain proportional to the task."
