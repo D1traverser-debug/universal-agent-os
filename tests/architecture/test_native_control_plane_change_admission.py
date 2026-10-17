@@ -13,6 +13,7 @@ PROTECTED_NATIVE_CONTROL_PLANE = {
     "config/DELIBERATION_POLICY.json",
     "config/HOST_PROFILES.json",
     "config/NATIVE_SESSION_RUNTIME_PROFILE.json",
+    "config/SYSTEM_MAP.json",
     "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
     "skills/uaos-controller-runtime/SKILL.md",
     "src/uaos/runtime/native_session_profile.py",
