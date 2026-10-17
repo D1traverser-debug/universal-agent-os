@@ -19,8 +19,8 @@ def test_circuit_breaker_opens_then_recovers():
     assert circuit.state("cap",now=13) is CircuitState.CLOSED
 
 def test_read_execution_fails_over_to_second_free_capability():
-    registry=CapabilityRegistry(); registry.register(observation("first","research",0.9),Executor([ExecutionOutcome(ExecutionDisposition.FAILED,error="temporary")]))
-    registry.register(observation("second","research",0.8),Executor([ExecutionOutcome(ExecutionDisposition.CONFIRMED,output="ok")]))
+    registry=CapabilityRegistry(); registry.register(observation("first","research",0.9),Executor([ExecutionOutcome(ExecutionDisposition.FAILED,error="temporary")]),read_only_actions={"research"})
+    registry.register(observation("second","research",0.8),Executor([ExecutionOutcome(ExecutionDisposition.CONFIRMED,output="ok")]),read_only_actions={"research"})
     result=ActionCoordinator(registry).execute_with_fallback(ExecutionRequest("a","research","topic",{},side_effect_class="READ"))
     assert result.capability_id=="second" and result.outcome.output=="ok"
 
@@ -36,6 +36,6 @@ def test_preferred_uses_explicit_fallback_and_marks_degraded():
 
 def test_optional_no_output_can_skip():
     template=WorkflowTemplate("t","optional",(WorkUnitTemplate("optional","Optional",executor_constraints=("missing",),capability_requirement=DependencyClass.OPTIONAL),WorkUnitTemplate("main","Main",dependencies=("optional",),expected_outputs=("x",),executor_constraints=("main",))),(),("x",))
-    registry=CapabilityRegistry(); registry.register(observation("main-cap","main"),Executor([ExecutionOutcome(ExecutionDisposition.CONFIRMED,output="ok")]))
+    registry=CapabilityRegistry(); registry.register(observation("main-cap","main"),Executor([ExecutionOutcome(ExecutionDisposition.CONFIRMED,output="ok")]),read_only_actions={"main"})
     result=LocalWorkflowRunner(ActionCoordinator(registry)).run(template,task_id="task",external_inputs={})
     assert result.status=="COMPLETE_DEGRADED"
