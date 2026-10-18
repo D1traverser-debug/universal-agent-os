@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
-from typing import Callable
+from typing import Callable, Mapping
 
 from uaos.contracts.models import KnowledgeItem
 
@@ -126,6 +126,8 @@ class FinalizationContext:
     controller_selected: bool = False
     controller_epistemic_entry: ControllerEpistemicEntry | None = None
     entry_evidence_verifier: Callable[[str], bool] | None = None
+    authoritative_task_ref: str | None = None
+    read_authoritative_task: Callable[[str], Mapping[str, object] | None] | None = None
     blocked_tool_operation_observed: bool = False
     blocked_operation_continuity: BlockedOperationContinuity | None = None
     governed_product_outcome_completion_requested: bool = False
@@ -408,6 +410,8 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
         cognition_case_receipt=closure.cognition_case_receipt if closure is not None else None,
         evolution_disposition=closure.evolution_disposition if closure is not None else None,
         problem_record_ref=closure.problem_record_ref if closure is not None else None,
+        authoritative_task_ref=context.authoritative_task_ref,
+        read_authoritative_task=context.read_authoritative_task,
     )
     adherence = evaluate_session_progress_response(response, expectation)
     if not adherence.passed:
