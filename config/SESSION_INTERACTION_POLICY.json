@@ -254,6 +254,15 @@
     "completion_rule": "ONE_CURRENT_HEAD_BOUND_EVIDENCE_RECEIPT__FULL_SCOPE_COVERAGE_AND_REQUIRED_SOURCE_ROLES__CAUSAL_AND_ARCHITECTURE_CHALLENGE__REALISTIC_VALIDATION_OR_EXPLICIT_UNVERIFIED__GOVERNED_EVOLUTION_OR_NO_CHANGE",
     "depth_rule": "REQUIRE_DEEP_COVERAGE_FOR_CONTROLLER_REVIEW__NOT_MERE_FILE_LISTING__SOURCE_LEVEL_AND_RUNTIME_OUTCOME_ASSURANCE_SEPARATELY_REPORTED",
     "continuity_rule": "REUSE_state/TASK_INDEX.json#controller_tasks_AND_exact_state_ref__NO_PARALLEL_PLANNER_OR_EVOLUTION_LOOP",
-    "host_boundary": "A repo policy cannot physically force ChatGPT internal pre-send or pre-tool invocation; native conformance must be measured independently."
+    "host_boundary": "A repo policy cannot physically force ChatGPT internal pre-send or pre-tool invocation; native conformance must be measured independently.",
+    "required_dimensions": [
+      "authority_architecture",
+      "requirement_continuity",
+      "execution_admission",
+      "quality_validation",
+      "observability",
+      "evolution_learning"
+    ],
+    "evidence_admission_ref": "src/uaos/assurance/controller_review.py#require_controller_review_admission"
   }
 }
