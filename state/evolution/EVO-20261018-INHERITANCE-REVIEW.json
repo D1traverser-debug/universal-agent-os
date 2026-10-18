@@ -99,7 +99,7 @@
   "transaction_execution_assurance": "CANONICAL_EVOLUTION_TRANSACTION_EVALUATION_TESTED_IN_CI__NO_ASSERTION_OF_PHYSICALLY_ENFORCED_NATIVE_RUN",
   "method_transfer_extension_20261018": {
     "scope": "EVIDENCE_BOUND_COGNITION_METHOD_REUSE_FOR_REPEATED_FAILURES",
-    "status": "PR_CANDIDATE__NOT_VALIDATED_OR_NATIVE_PROVEN",
+    "status": "CONTROLLED_CODE_PROMOTED__MAIN_REREAD_VERIFIED__NATIVE_AND_METHOD_OUTCOME_OPEN",
     "governing_outcome": "Repeated controller problems autonomously compare past method families with current fit/misfit evidence rather than forcing the user to re-teach previous architecture, CI, entry or CRUD lessons.",
     "original_evidence_refs": [
       "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
@@ -121,6 +121,17 @@
       "tests/architecture/test_native_chatgpt_depth_routing.py"
     ],
     "verification_plan": "Candidate CI, production exact-head checks, method transfer counterexamples, cross-session no-reminder trigger, downstream Financial original task and real article/Word outcome separately.",
-    "source_promotion_guard": "METHOD_REUSE_REQUIRES_A_HOST_TRUSTED_KNOWLEDGE_RESOLVER_AT_CONTROLLED_FINALIZATION__NO_RESOLVER_IS_FAIL_CLOSED_FOR_NONEMPTY_CANDIDATES"
+    "source_promotion_guard": "METHOD_REUSE_REQUIRES_A_HOST_TRUSTED_KNOWLEDGE_RESOLVER_AT_CONTROLLED_FINALIZATION__NO_RESOLVER_IS_FAIL_CLOSED_FOR_NONEMPTY_CANDIDATES",
+    "production_evidence": {
+      "pr": 113,
+      "candidate_ci": 653,
+      "ci_result": "583 passed, 1 skipped",
+      "integration_run": 369,
+      "integration_result": "SUCCESS",
+      "merged_main": "2ff8e03190433e213ef8ff9a806cef67f790e3b6",
+      "source_reread": "INDEX_AND_TASKS_AND_METHOD_TRANSFER_AND_FINALIZATION_PRESENT_ON_MAIN",
+      "postmerge_push_ci": "UNVERIFIED"
+    },
+    "acceptance_ceiling": "No executed native Skill trace, independent workflow replay, general knowledge search saturation, or Financial reader outcome. Remains open alongside old deep review; product claim forbidden."
   }
 }
