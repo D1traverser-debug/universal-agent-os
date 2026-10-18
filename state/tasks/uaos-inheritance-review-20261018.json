@@ -1,0 +1,9 @@
+{
+  "task_id": "uaos:maintenance:inheritance-review-20261018",
+  "authority_context": "UAOS",
+  "task_type": "controller_maintenance",
+  "status": "RUNNING",
+  "current_stage": "EXTERNAL_RESEARCH_AND_DESIGN",
+  "next_action": "Compare external systems and create a repo-wide inheritance review protocol",
+  "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
+}
