@@ -14,7 +14,10 @@
     "docs/research/uaos-inheritance-review-20261018/02_management.md",
     "docs/research/uaos-inheritance-review-20261018/03_operations.md",
     "docs/research/uaos-inheritance-review-20261018/04_evolution.md",
-    "docs/research/uaos-inheritance-review-20261018/05_agent_evaluation.md"
+    "docs/research/uaos-inheritance-review-20261018/05_agent_evaluation.md",
+    "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md",
+    "docs/research/uaos-inheritance-review-20261018/07_integrated_review_execution_sop.md",
+    "state/observations/uaos-multicausal-autonomous-learning-20261018.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
   "updated_at": "2026-10-18T15:34:07+08:00",
@@ -41,6 +44,8 @@
     "candidate_evolution_ref": "state/evolution/EVO-20261018-MULTICAUSAL-AUTONOMY-ASSURANCE.json",
     "candidate_gate_ref": "src/uaos/assurance/controller_review.py",
     "known_nonexclusive_factors": 8,
-    "remaining": "Need causal cross-tests, research saturation, genuine independent native selected-chat samples, and cross-owner derived-requirement propagation."
+    "remaining": "Need causal cross-tests, research saturation, genuine independent native selected-chat samples, and cross-owner derived-requirement propagation.",
+    "operational_sop_ref": "docs/research/uaos-inheritance-review-20261018/07_integrated_review_execution_sop.md",
+    "method_assurance": "COMPARATIVE_PRIMARY_SOURCE_STUDY_PARTIAL__RESEARCH_SATURATION_AND_REAL_NATIVE_TRACES_OPEN"
   }
 }
