@@ -3,7 +3,7 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-18T19:31:00+08:00",
+  "updated_at": "2026-10-18T20:46:00+08:00",
   "controller_tasks": [
     {
       "task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
@@ -13,8 +13,8 @@
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume": true,
-      "semantic_summary": "USER_SELECTED_UAOS_PARENT_GOVERNED_FINANCIAL_REHABILITATION. Reconcile UAOS issue #63 and child #45, distinguish child CI repair from NOT_READY real article quality, govern parent+child evidence and actual deliverables. Do not switch active Agent to child or require user repeated reminders. Parent only owns governance task; child remains sole owner of article data.",
-      "current_stage": "PARENT_UPCALL_RECONCILED__PRODUCT_OUTCOME_GAP_IDENTIFIED__RECOVERY_GATE_IN_PROGRESS",
+      "semantic_summary": "UAOS has accepted ownership of Financial whole-system rehabilitation from parent upcall #63. P1-P18 reconciled. Parent product-outcome health gate and existing controlled finalization are production verified PR #107/#108 and CI #629/#631. Financial v3 still RESEARCH, current quality NOT_READY; next UAOS-governed actions W2-W5 require real child replay, source/reader/article/Word delivery and learning evidence. Parent task RUNNING, only default controller task; former five-repo review also RUNNING.",
+      "current_stage": "PARENT_PRODUCT_COMPLETION_CONTROLLED_GATE_PRODUCTION_VERIFIED__FINANCIAL_LIVE_QUALITY_REPLAY_OPEN",
       "state_ref": "state/tasks/uaos-financial-system-governed-recovery-20261018.json"
     },
     {
