@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Controller-first: compare current inherited lessons/knowledge acquisition source roles and practical reuse against actual mechanisms; make bounded owner-native code/test changes, CI/production reread, then register untested native/product open outcomes. Once governed controller task is genuinely complete, restore Financial as only default and resume exact state without new request.",
+  "next_action": "Continue controller-first: validate real trusted method catalog resolution and direct selected-session invocation, broaden knowledge acquisition with independent source roles and saturation/holdout tests, uncover cross-owner paths and consequences without repeated user correction; do not close review based on #113 CI. Preserve exact Financial return, then reactivate it under same UAOS controller after sufficiently bounded controller governing work.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -17,7 +17,9 @@
     "docs/research/uaos-inheritance-review-20261018/05_agent_evaluation.md",
     "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md",
     "docs/research/uaos-inheritance-review-20261018/07_integrated_review_execution_sop.md",
-    "state/observations/uaos-multicausal-autonomous-learning-20261018.json"
+    "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
+    "docs/research/uaos-inheritance-review-20261018/08_operational_method_transfer_taxonomy.md",
+    "https://github.com/D1traverser-debug/universal-agent-os/pull/113"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
   "updated_at": "2026-10-18T22:16:00+08:00",
@@ -122,5 +124,28 @@
     "completion_handoff": "AFTER_EVIDENCE_GROUNDED_CONTROLLER_TASK_CLOSURE_UPDATE_EXISTING_CONTROLLER_INDEX_ONE_DEFAULT_TO_FINANCIAL_AND_REREAD_ITS_EXACT_STATE",
     "native_execution_ceiling": "REPO_CODE_AND_SKILL_DO_NOT_GUARANTEE_NATIVE_CHATGPT_HOOK"
   },
-  "current_focus": "CONTROLLER_FIRST_METHOD_REUSE_AND_DEEP_KNOWLEDGE_AUDIT"
+  "current_focus": "CONTROLLER_FIRST_METHOD_REUSE_AND_DEEP_KNOWLEDGE_AUDIT",
+  "method_transfer_release_20261018": {
+    "status": "CONTROLLED_CODE_PROMOTED__MAIN_SOURCE_REREAD__NATIVE_AND_METHOD_EFFECTIVENESS_UNVERIFIED",
+    "pr": "https://github.com/D1traverser-debug/universal-agent-os/pull/113",
+    "main_commit": "2ff8e03190433e213ef8ff9a806cef67f790e3b6",
+    "candidate_head": "151ee5df657d6285c38ebdd0ae3ae0aa437e4cbb",
+    "candidate_ci_run": 653,
+    "candidate_ci": "583 passed, 1 skipped",
+    "integration_run": 369,
+    "integration_status": "SUCCESS",
+    "postmerge_main_reread": true,
+    "postmerge_push_ci": "UNVERIFIED__GITHUB_CONNECTED_COMMIT_WORKFLOW_ACTION_ONLY_RETURNS_PR_TRIGGERED_RUNS",
+    "method_semantics": "REPEATED_COGNITION_CASE_REQUIRES_REFERENCE_TO_PRIOR_METHOD_OR_EXPLICIT_NO_REUSABLE_METHOD__WHEN_REUSING_CURRENT_TRUSTED_CATALOG_RESOLVER_REQUIRED__METHOD_NOT_ASSUMED_TO_HAVE_RUN_IN_NATIVE_CHATGPT",
+    "open_critical": [
+      "SUSTAINABLE_EXTERNAL_METHOD_CATALOG_LOOKUP_AND_REAL_PROVIDER_TRUST_BINDING",
+      "REAL_NATIVE_SELECTED_AGENT_INVOCATION_TRACES",
+      "MULTI_SOURCE_ACQUISITION_SATURATION_AND_HOLDOUTS",
+      "AUTONOMOUS_UNKNOWN_UNKNOWN_DISCOVERY_WITHOUT_USER_PROMPTS",
+      "CONTROLLER_DEEP_FIVE_REPO_AUDIT_FINAL_OUTCOME",
+      "THEN_FINANCIAL_V3_SOURCE_RESEARCH_DEEP_BROAD_WORD_AND_INDEPENDENT_READER_ACCEPTANCE"
+    ],
+    "handoff_target": "uaos:maintenance:financial-system-governed-recovery-20261018",
+    "assurance": "THIS_IS_REPOSITORY_GATE_VERIFICATION__NOT_USER_PRODUCT_SUCCESS"
+  }
 }
