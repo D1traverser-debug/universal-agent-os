@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "observation_id": "native-account-asset-continuity-20261018",
+  "authority": "UAOS",
+  "scope": "ACCOUNT_DELIVERED_CUSTOM_INSTRUCTIONS_AND_NATIVE_RUNTIME_SKILL__VERSION_AND_RECOVERY",
+  "trigger": "User supplied the two originally delivered files again and warned that ChatGPT Library contents can be deleted at any time.",
+  "provenance": {
+    "user_supplied_files": [
+      {
+        "filename": "SKILL(1).md",
+        "role": "native_runtime_skill",
+        "bytes": 7767,
+        "sha256": "008334cf951a0e44eabd3e0aba66da046c75e9a85c006fc08ecf04e253a221e8",
+        "git_blob_sha": "a244aeafcb204a86ab6825b8e8b277050c2be507",
+        "canonical_repo_path": "skills/uaos-controller-runtime/SKILL.md",
+        "comparison": "EXACT_BYTE_MATCH_WITH_MAIN_SKILL"
+      },
+      {
+        "filename": "UAOS_CUSTOM_INSTRUCTIONS_V3_CANDIDATE_b1f84e8d(1).txt",
+        "role": "chatgpt_custom_instructions",
+        "bytes": 1487,
+        "sha256": "9527dd45ae66249b86b96ecc3a705ace7cdd1b824c24b6eea6f0e3a70b36db87",
+        "git_blob_sha": "a43a4b09d5c63c861f1607e581ae5a40fbd4c758",
+        "canonical_ref": "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md#Recommended Custom Instructions",
+        "delivery_ref": "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt",
+        "comparison": "EXACT_BYTE_MATCH_WITH_CURRENT_CANONICAL_RECOMMENDED_POINTER"
+      }
+    ],
+    "historical_library_results": "An older retained library text with a different custom-instruction pointer was retrieved earlier; Library search result is neither account installation proof nor current system authority.",
+    "installation_status": "NOT_OBSERVABLE_BY_CURRENT_TOOLS__USER_SUPPLIED_BYTES_ARE_CURRENT_GROUND_TRUTH_FOR_DELIVERED_ARTIFACTS"
+  },
+  "diagnosis": {
+    "failure_class": "FC-ACCOUNT-ASSET-RECOVERY-LIBRARY-ASSUMPTION-AND-REPAIR-HANDOFF-20261018",
+    "observations": [
+      "Assistant used old Library artifacts to discuss installed texts before checking user-supplied exact artifacts and authoritative current GitHub projection.",
+      "Assistant described verified repairable native reliability/activation gaps but previously stopped at assurance caveats and suggestions rather than continuing a feasible owner-governed repair.",
+      "User can clear ChatGPT Library; continued availability of old uploaded files is not a valid state-recovery strategy."
+    ],
+    "causal_hypotheses": [
+      {
+        "id": "STALE_LIBRARY_RESULT_USED_AS_INSTALLATION_PROXY",
+        "assessment": "SUPPORTED_FOR_PREVIOUS_ANSWER"
+      },
+      {
+        "id": "CANONICAL_SKILL_OR_V3_POINTER_MISSING_FROM_GITHUB_MAIN",
+        "assessment": "REJECTED__CURRENT_SKILL_AND_RECOMMENDED_POINTER_EXIST"
+      },
+      {
+        "id": "ACCOUNT_SKILL_NOT_INSTALLED",
+        "assessment": "UNKNOWN__ACTUAL_ACCOUNT_UI_UNOBSERVABLE"
+      },
+      {
+        "id": "MISSING_GITHUB_RECOVERABLE_EXACT_CUSTOM_POINTER_EXPORT_AND_REGRESSION",
+        "assessment": "SUPPORTED__REPO_ONLY_EXPOSED_MARKDOWN_RECOMMENDATION_BEFORE_CHANGE"
+      }
+    ],
+    "selected_intervention": "STORE_BYTE_EXACT_V3_CUSTOM_POINTER_EXPORT_IN_GITHUB__REQUIRE_CI_EXACT_EQUALITY_WITH_CANONICAL_RECOMMENDATION__REGRESSION_HOLDOUTS_FOR_ARTIFACT_RECOVERY_AND_REPAIR_CONTINUATION",
+    "rejected": [
+      "TREAT_LIBRARY_AS_PERSISTENT_AUTHORITY",
+      "DECLARE_CHATGPT_ACCOUNT_INSTALLATION_VERIFIED",
+      "ADD_SECOND_COGNITION_OR_EVOLUTION_CONTROL_PLANE",
+      "CLAIM_PHYSICAL_NATIVE_COMPLETE_MEDIATION"
+    ],
+    "owning_layer": "UAOS_CHATGPT_NATIVE_INTEGRATION_AND_DELIVERY_PROJECTION"
+  },
+  "accepted_limits": [
+    "Actual ChatGPT Custom Instructions UI and native uploaded Skill installation cannot be inspected/modified through current GitHub connector.",
+    "GitHub main preserves authoritative references independently of ChatGPT Library deletion; it does not inject or activate them by itself.",
+    "Repository CI can prevent stale exported text but cannot force every future free-form native ChatGPT turn through Skill execution."
+  ],
+  "evidence_links": [
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "skills/uaos-controller-runtime/SKILL.md",
+    "config/NATIVE_SESSION_RUNTIME_PROFILE.json",
+    "state/observations/native-v3-inheritance-postpromotion-20261018.json"
+  ],
+  "required_acceptance": [
+    "candidate CI promotion-gate green",
+    "production main CI promotion-gate green",
+    "production reread exact portable pointer git blob SHA matches user-provided custom file",
+    "production reread skill git blob SHA matches user-provided skill",
+    "native runtime installation remains explicitly unverified without product UI evidence"
+  ],
+  "evolution_disposition": "ROOT_CAUSE_GROUNDED_LOCAL_INTEGRATION_DELIVERY_HARDENING__NO_SECOND_LIFECYCLE__REAL_NATIVE_UI_BEHAVIOR_REMAINS_OBSERVATION",
+  "status": "CANDIDATE_PENDING_VALIDATION"
+}
