@@ -101,7 +101,7 @@
     {
       "id": "W1",
       "name": "Parent outcome-assurance tripwire with negative controls",
-      "state": "CANDIDATE_IMPLEMENTATION"
+      "state": "PARENT_HEALTH_GATE_PRODUCTION_VERIFIED__FINALIZATION_GUARD_CANDIDATE"
     },
     {
       "id": "W2",
@@ -124,8 +124,21 @@
       "state": "OPEN"
     }
   ],
-  "next_action": "Implement and verify parent outcome-assurance admission, resolve W2 against latest source and safe test capability; then govern exact child Current Article Aggregate task through full real product acceptance and follow-through. Do not switch to child Agent context when managing this UAOS maintenance task.",
+  "next_action": "Verify controller-finalization outcome gate candidate and promote with exact CI, then execute parent-governed child article lifecycle adversarial/real-world replay and reader value/Word acceptance. Never close entire task from controlled CI alone; child current business state continues at v3 RESEARCH.",
   "required_user_action_now": "NONE",
   "assurance": "CURRENT_SOURCE_RECONCILED__PARENT_OWNERSHIP_PERSISTENCE_PENDING_PROMOTION__LIVE_PRODUCT_UNVALIDATED",
-  "updated_at": "2026-10-18T19:31:00+08:00"
+  "updated_at": "2026-10-18T19:31:00+08:00",
+  "production_parent_health_evidence": {
+    "pr": 107,
+    "main_sha": "5e50b74d4630b2ee5d0a75fec497c600e8bc014f",
+    "ci_run": 629,
+    "result": "562 passed, 1 skipped",
+    "real_child_product_result": "NOT_VERIFIED"
+  },
+  "controlled_finalization_extension": {
+    "code_ref": "src/uaos/runtime/finalization.py",
+    "test_ref": "tests/runtime/test_governed_product_outcome_finalization.py",
+    "status": "CANDIDATE_CI_PENDING",
+    "physical_native_chatgpt_host_guarantee": false
+  }
 }
