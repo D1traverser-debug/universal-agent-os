@@ -241,7 +241,8 @@ def test_exact_controller_entry_requires_owner_source_and_rejects_false_done():
     with pytest.raises(FinalizationBlocked, match="CONTROLLER_TASK_PROGRESS_READER_MISSING"):
         admit_final_response(report, _context(entry, authoritative_task_ref=ref))
 
-    bound = _context(entry, authoritative_task_ref=ref, read_authoritative_task=lambda _: state,\n                     turn_evolution_coverage=_review(report))
+    bound = _context(entry, authoritative_task_ref=ref, read_authoritative_task=lambda _: state,
+                     turn_evolution_coverage=_review(report))
     assert admit_final_response(report, bound).adherence.passed
     with pytest.raises(FinalizationBlocked, match="AUTHORITATIVE_PROGRESS_MISMATCH"):
         admit_final_response(report.replace(f"状态：{state['status']}", "状态：COMPLETE"), bound)
