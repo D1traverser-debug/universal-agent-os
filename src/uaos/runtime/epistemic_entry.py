@@ -25,6 +25,7 @@ class EntrySignal(StrEnum):
 
 _FACT_KINDS = frozenset({
     EvidenceKind.REPOSITORY_FACT,
+    EvidenceKind.TOOL_RESULT,
     EvidenceKind.TEST_RESULT,
     EvidenceKind.RUNTIME_OBSERVATION,
 })
