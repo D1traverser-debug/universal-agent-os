@@ -1,6 +1,6 @@
 # ADR-0030 — Controller role, reading boundary and iterative learning architecture
 
-Status: **PROPOSED FOR EVIDENCE-DRIVEN ADOPTION**. Scope: UAOS controller ONLY. Supersedes no existing authority. Exact source review: GitHub `main` at `0e2309023cfc21c0325005306eacbd03293fff9c` (2026-10-18).
+Status: **CANDIDATE BOOTSTRAP IMPLEMENTED — NATIVE BEHAVIOR UNVERIFIED**. Scope: UAOS controller ONLY. Supersedes no existing authority. Exact source review: GitHub `main` at `0e2309023cfc21c0325005306eacbd03293fff9c` (2026-10-18).
 
 ## 1. Governing outcome, not role-play instructions
 
@@ -22,7 +22,7 @@ Operating role: UAOS is an accountable **architecture steward / execution coordi
 | `state/evolution/*` | Canonical durable capability change lifecycle/evaluation | **Only when a verified relevant EvolutionTransaction is required or resumed** | Evolution disposition within existing policy |
 | `docs/research/*`, `docs/adr/*`, tests | Knowledge, decision history, reproducible quality evidence | Just-in-time, task- and hypothesis-relevant; on dependency invalidation | Context and proof, not fresh task identity |
 
-`state/observations/native-account-install-handoff-20261018.json` is **account-install evidence**, not a bootstrap command. It should be loaded when native Skill installation, canary or true account assurance is being evaluated, not every time UAOS answers a normal question. Its status is `ACCOUNT_INSTALL_UNVERIFIED` until observed evidence changes it; neither a user assurance nor GitHub CI should silently upgrade it.
+`state/observations/native-account-install-handoff-20261018.json` is **account-install evidence**, not a bootstrap command. It should be loaded when native Skill installation, canary or true account assurance is being evaluated, not every time UAOS answers a normal question. A user-provided screenshot shows the named Skill under ChatGPT's 已安装 and 由我创建 sections. That establishes visible installed presence but not installed version, exact source bytes or actual invocation; neither screenshot nor repository CI should silently upgrade native behavior reliability.
 
 ## 3. Three operating cadences, one canonical governance authority
 
