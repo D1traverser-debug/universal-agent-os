@@ -46,6 +46,14 @@ Google SRE monitoring https://sre.google/sre-book/monitoring-distributed-systems
 UAOS: native session entry, tool selections, evolution stage, duration, root hypotheses, changed files, user-visible result and post-action effects need distinct evidence; lack of host telemetry is not success. PR CI is one narrow service signal.
 Test: a green repository gate with no native trigger or user-facing outcome must remain UNKNOWN / OPEN.
 
+## Independent module: autonomic computing and feedback control
+
+IBM Research original architecture https://research.ibm.com/publications/an-architectural-approach-to-autonomic-computing and IBM Redbooks Autonomic Management Engine https://www.redbooks.ibm.com/redbooks/pdfs/sg246665.pdf (section 6.1.1).
+Core: a self-managing resource must have real sensors and effectors; Monitor, Analyze, Plan, Execute share Knowledge (MAPE-K). A declarative loop without measurable sensor events or executable effector actions is not self-management.
+UAOS: map control-surface sensors (repo revision, native turn trace if accessible, child runtime/outcome, task completion, failure recurrence), analyze with existing cognition, plan via current task/authority, execute via current mutation admission, update knowledge/evolution after an observed effect. The missing actual native ChatGPT sensor/effector mediation remains UNKNOWN/UNSUPPORTED even when repository-side tools work.
+Test: a healthy `main` CI while controller review was not invoked in a native turn means MAPE-K Monitor coverage failed; repository tests cannot silently repair the missing host wiring.
+Adoption: ADAPT as an external *architecture diagnostic lens*, not a second persistent MAPE controller, nor proof of real autonomy.
+
 ## Independent module: agent workflow evaluation
 
 OpenAI agent workflow evaluation https://developers.openai.com/api/docs/guides/agent-evals .
@@ -63,15 +71,16 @@ Test: injected "user says root cause X" and "assistant previously claimed done" 
 | NIST AI RMF + PDCA | Governance, risk, adaptive improvement and follow-up | Mandatory "entire web" scan or native hook | ADAPT current task/evolution owner |
 | Google SRE | User-impact observability, contributory causes, corrective action follow-up | Invisible native tool traces | REUSE domain-health/observation and explicit unknowns |
 | OpenAI workflow eval | Trace-based independent behavioral comparison and regression | Prove uninstrumented ChatGPT always ran Skill | REUSE finalization/holdouts, require actual native observations for native claim |
+| IBM MAPE-K | Sensor/analyzer/planner/effector/shared-knowledge feedback | Supply missing native sensor/effector permissions | ADAPT as missing-instrumentation lens, not a second loop owner |
 | More instructions alone | Immediate textual salience | Physical mediation, root cause and real outcome | REJECT as sole remedy |
 | Full scrape every turn | Potentially broader inventory | Completeness, pertinence, hidden unknowns, latency | REJECT as sole mechanism; retain indexed scope + evidence-driven deepening |
 | New Research OS / Evolution OS | Can centralize brand-new operations | Duplicates existing canonical owners, new shadow authority | REJECT by default |
 
 ## Actual acquisition trace and saturation
 
-Rounds: (1) primary source seed (NASA, SEI, NIST, SRE, MIT, OpenAI); (2) cross-family expansion to systems-theoretic CAST, holistic architecture, incident contributing causes, agent workflow traces and NIST limits; (3) source-specific challenge against current UAOS controller/finalization code.
-**The second round added material method families/failure modes. Saturation has NOT been demonstrated**, and no automated claim of "searched the entire web" or comprehensive-knowledge admission is made.
-Missing next independent passes: MAPE-K/autonomic runtime, double-loop learning/organizational incentive constraints, fault-tree and fault-injection counterfactual designs, diverse review of semantic root selection, and at least two real negative/positive native controller-inheritance traces; distinguish inaccessible host signals from search failure.
+Rounds: (1) primary source seed (NASA, SEI, NIST, SRE, MIT, OpenAI); (2) cross-family expansion to systems-theoretic CAST, holistic architecture, incident contributing causes, agent workflow traces and NIST limits; (3) source-specific challenge against current UAOS controller/finalization code and *new* IBM MAPE-K autonomic control family.
+**The second and third rounds added material method families/failure modes. Saturation has NOT been demonstrated**, and no automated claim of "searched the entire web" or comprehensive-knowledge admission is made.
+Missing next independent passes: double-loop learning/organizational incentive constraints, fault-tree and fault-injection counterfactual designs, diverse review of semantic root selection, and at least two real negative/positive native controller-inheritance traces; distinguish inaccessible host signals from search failure.
 
 ## Synthesis — one evidence-driven chain, not one universal fix
 
