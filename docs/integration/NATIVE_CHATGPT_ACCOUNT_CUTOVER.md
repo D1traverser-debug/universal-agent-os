@@ -1,6 +1,8 @@
 # Native ChatGPT account cutover — owner handoff, evidence and canaries
 
-> **历史部署交接记录（2026-10-18），不是当前安装清单或实时 Skill 哈希来源。** 当前 GitHub Skill 源文件须读取 `main:skills/uaos-controller-runtime/SKILL.md`，其来源哈希和账户安装验证状态须读取 `state/observations/native-account-install-handoff-20261018.json`。本记录中的旧 blob 是当时的快照；不能用于当前安装、继承或运行验收。账户已安装的实际字节仍为 `UNKNOWN`，不因仓库更新而自动同步。\n\n
+> **历史部署交接记录（2026-10-18），不是当前安装清单或实时 Skill 哈希来源。** 当前 GitHub Skill 源文件须读取 `main:skills/uaos-controller-runtime/SKILL.md`，其来源哈希和账户安装验证状态须读取 `state/observations/native-account-install-handoff-20261018.json`。本记录中的旧 blob 是当时的快照；不能用于当前安装、继承或运行验收。账户已安装的实际字节仍为 `UNKNOWN`，不因仓库更新而自动同步。
+
+
 Scope: ChatGPT account-side installation and empirical selected-controller activation. This document is an **operational handoff**, not a second Skill, policy, or system of authority.
 
 ## Current observed account and fresh-chat status (supersedes pending handoff)
