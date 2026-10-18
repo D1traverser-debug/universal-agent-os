@@ -29,7 +29,7 @@ def test_portable_account_pointer_matches_canonical_recommendation_exactly():
             lines.append(line[2:])
     canonical = "\n".join(lines).strip()
     export = (ROOT / "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt").read_text(encoding="utf-8")
-    assert export.strip() == canonical
+    assert export == canonical
     assert "before every substantive response, tool call, or action" in export
     assert "Entry is unconditional; escalation is adaptive" in export
     assert "are work to continue, not blockers" in export
