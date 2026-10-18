@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "UAOS controller continues with governing user-directed source-method learning: next separate repo stablyai/orca, preserve Hindsight source study on main but keep seven methods CANDIDATE pending real use. Existing controller deep audit/native evidence and Financial parked task remain open.",
+  "next_action": "Finish supervised source-dossier promotion for item 2 stablyai/orca; then if completed return to user-ordered item 3 cloudflare/security-audit. Preserve controller deep audit, unverified native behavior and Financial parent task RUNNING parked.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -23,10 +23,11 @@
     "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
     "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md",
     "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
-    "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md"
+    "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md",
+    "docs/research/uaos-inheritance-review-20261018/13_orca_multi_agent_execution_orchestration_source_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T03:13:16.891+08:00",
+  "updated_at": "2026-10-19T03:26:42.093+08:00",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -392,7 +393,7 @@
     "next_action": "Trace any non-probe callers and remote authorization boundary, then choose bounded owner-scoped enforcement or evidence-backed no-change; do not infer unauthorized production deletion from test cleanup."
   },
   "external_skill_study_20261019": {
-    "status": "ITEM_1_SOURCE_DOSSIER_PRODUCTION_VERIFIED__KNOWLEDGE_CANDIDATE__INDEPENDENT_HOLDOUT_OPEN",
+    "status": "ITEM_1_PRODUCTION_VERIFIED__ITEM_2_ORCA_SOURCE_DOSSIER_CANDIDATE__PR_AND_HOLDOUT_OPEN",
     "authority": "UAOS",
     "user_scope": "SCREENSHOT_ORDER_ONE_AT_A_TIME__NOT_AUTO_INSTALL",
     "ordered_sources": [
@@ -404,27 +405,30 @@
     "completed_source_dossiers": [
       "vectorize-io/hindsight"
     ],
-    "current_source": "vectorize-io/hindsight",
-    "current_source_main_sha": "5331da2f4db369528bb122075341a7de9c3df6df",
-    "knowledge_ref": "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md",
-    "knowledge_disposition": "CANDIDATE__SOURCE_AND_IMPLEMENTATION_TRIANGULATED__INDEPENDENT_UAOS_USAGE_NOT_VERIFIED__NOT_CANONICAL",
+    "current_source": "stablyai/orca",
+    "current_source_main_sha": "c7942252b58bca576867ca77f14908519e9a6702",
+    "knowledge_ref": "docs/research/uaos-inheritance-review-20261018/13_orca_multi_agent_execution_orchestration_source_learning.md",
+    "knowledge_disposition": "CANDIDATE__IMPLEMENTATION_TEST_DOC_AND_INDEPENDENT_METHODOLOGY_TRIANGULATED__NO_ORCA_BINARY_HOST_OR_NATIVE_UAOS_VALIDATION__NOT_CANONICAL",
     "method_cards": [
-      "HIN-01",
-      "HIN-02",
-      "HIN-03",
-      "HIN-04",
-      "HIN-05",
-      "HIN-06",
-      "HIN-07"
+      "ORC-01",
+      "ORC-02",
+      "ORC-03",
+      "ORC-04",
+      "ORC-05",
+      "ORC-06",
+      "ORC-07",
+      "ORC-08",
+      "ORC-09"
     ],
     "assurance": [
-      "SOURCE_SKILL_DOC_IMPLEMENTATION_TEST_PAPER_AND_EXTERNAL_CRITIQUE_READ",
-      "NOT_ENTIRE_5837_TREE_LINE_BY_LINE",
-      "NO_HINDSIGHT_SERVER_OR_MCP_DEPLOYED",
-      "NO_BENCHMARK_OR_HOST_SELECTED_CHAT_TRACE",
-      "NO_NEW_TASK_INDEX_OR_SECOND_KNOWLEDGE_AUTHORITY"
+      "ORCA_RUNTIME_DOC_SKILL_SOURCE_IMPLEMENTATION_TEST_AND_EXTERNAL_METHODS_READ",
+      "NOT_ENTIRE_38335_ITEM_TREE_LINE_BY_LINE",
+      "REAL_ORCA_BINARY_AND_CLI_NOT_INSTALLED_OR_EXECUTED",
+      "DEFAULT_SKIP_PERMISSION_LAUNCH_UNSAFE_FOR_UAOS_MUTATIONS",
+      "NO_NATIVE_CHATGPT_ORCA_MULTI_AGENT_EFFECTOR_VERIFIED",
+      "SOURCE_DOSSIER_ADMISSION_PR_OPEN__METHOD_CANDIDATES_NOT_CANONICAL"
     ],
-    "next_action": "When continuing external learning, study screenshot item 2 stablyai/orca as a separate source-pinned dossier; retain Hindsight method candidates pending independent usage/replay evaluation. Do not claim deployed engine.",
+    "next_action": "Validate and promote Orca source dossier through PR exact-head CI, independent review and main reread; then reconcile exact task progress without promoting method cards to CANONICAL. Next ordered source after item 2 is cloudflare/security-audit.",
     "production_evidence": {
       "pr": 129,
       "main_sha": "893033c77b545bcd8ec1d1c1d25f32b177407071",
@@ -433,6 +437,32 @@
       "ci": "635 passed, 2 skipped",
       "review": "COMPLETED_NO_FINDINGS",
       "main_source_reread": true
-    }
+    },
+    "source_dossier_history": [
+      {
+        "source": "vectorize-io/hindsight",
+        "ref": "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md",
+        "status": "PRODUCTION_DOSSIER_VERIFIED__METHODS_CANDIDATE",
+        "pr": 129,
+        "commit": "893033c77b545bcd8ec1d1c1d25f32b177407071"
+      },
+      {
+        "source": "stablyai/orca",
+        "ref": "docs/research/uaos-inheritance-review-20261018/13_orca_multi_agent_execution_orchestration_source_learning.md",
+        "upstream_main_sha": "c7942252b58bca576867ca77f14908519e9a6702",
+        "status": "GOVERNED_SOURCE_DOSSIER_CANDIDATE__PROMOTION_OPEN",
+        "method_cards": [
+          "ORC-01",
+          "ORC-02",
+          "ORC-03",
+          "ORC-04",
+          "ORC-05",
+          "ORC-06",
+          "ORC-07",
+          "ORC-08",
+          "ORC-09"
+        ]
+      }
+    ]
   }
 }
