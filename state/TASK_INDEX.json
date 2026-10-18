@@ -3,7 +3,7 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-18T21:00:00+08:00",
+  "updated_at": "2026-10-18T21:18:00+08:00",
   "controller_tasks": [
     {
       "task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
@@ -13,8 +13,8 @@
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume": true,
-      "semantic_summary": "User requires UAOS itself to embody the Financial Writing professional: intake future writing source materials directly in this controller conversation, read previous user constraints/current child authority, carry out substantive company/policy/economic research, story competition, original Deep/Broad drafting, Word generation, factual/originality/reader acceptance, learn/repair. This is UAOS governed actual business execution with Financial child GitHub as sole article state, NOT parent merely supervising or reassigning user. Current old self-PASS vs user rejection evidence and current v3 RESEARCH investigated; child candidate negative-test write blocked by safety and NOT reproduced. W2-W5 remain open.",
-      "current_stage": "UAOS_AS_FINANCIAL_PROFESSIONAL__FULL_SOURCE_AND_EDITORIAL_PATH_REVIEW__CHILD_NEGATIVE_WRITE_BLOCKED",
+      "semantic_summary": "UAOS explicitly acts as the Financial Writing professional and directly receives material in this controller chat. Parent expert-role/entry/report is source-persisted and code CI verified via PR#110, main 92363544, CI#636 (574 passed, 1 skipped). Historical Word audits and original-source limitations, 267 blob inventory vs incomplete per-file deep certification, user rejection and selected article v3 RESEARCH retained. Still must do real source-grounded current Deep/Broad/Word and non-self-attested outcome; child code test write was blocked, unproven; do not switch Agent to child or ask user to restate known requirements.",
+      "current_stage": "UAOS_FINANCIAL_PROFESSIONAL_ENTRY_PRODUCTION_VERIFIED__CURRENT_CHILD_ARTICLE_AND_STYLE_OUTCOME_OPEN",
       "state_ref": "state/tasks/uaos-financial-system-governed-recovery-20261018.json"
     },
     {
