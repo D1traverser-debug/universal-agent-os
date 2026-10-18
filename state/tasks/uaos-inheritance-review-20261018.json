@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Continue owner/path audit of external durable deletes and provider permissions, direct connector/native mediation and cross-platform snapshot semantics; validate five-repo and independent business outcomes before controller closure. Financial parent-governed task remains RUNNING parked.",
+  "next_action": "Close independently reproduced PR126 root/ancestor symlink regression with PR128 test/review/protected promotion; reconcile exact progress and scope in PR126; continue external provider permissions and five-repository real outcomes. Financial parent task remains RUNNING parked.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -325,7 +325,7 @@
     }
   },
   "snapshot_symlink_race_20261019": {
-    "status": "PRODUCTION_PR125_MERGED__NEGATIVE_TEST_CI_AND_REVIEW_VERIFIED__NATIVE_OPEN",
+    "status": "PR125_NESTED_ARTIFACT_BOUNDARY_PROMOTED__ROOT_ANCESTOR_RACE_CONFIRMED_OPEN__PR128_CANDIDATE",
     "authority_context": "UAOS",
     "owner": "src/uaos/state/snapshot.py",
     "governing_outcome": "Keep untrusted snapshot artifact reads confined beneath the selected snapshot directory across verification and restore staging, with no new global authority.",
@@ -341,7 +341,8 @@
       "WINDOWS_PATH_BASED_FALLBACK_NOT_POSIX_DIRFD_ENFORCED",
       "DIRECT_FILESYSTEM_MUTATION_BY_UNCOOPERATING_WRITERS_UNMEDIATED",
       "CROSS_RESOURCE_CRASH_ATOMICITY_AND_POWER_LOSS_UNPROVEN",
-      "NATIVE_CHATGPT_TOOL_WRITE_HOOKS_NOT_VERIFIED"
+      "NATIVE_CHATGPT_TOOL_WRITE_HOOKS_NOT_VERIFIED",
+      "ROOT_OR_ANCESTOR_SYMLINK_REPLACEMENT_AFTER_CHECK_REPRODUCED_BY_INDEPENDENT_PR126_REVIEW__PR128_REQUIRES_CURRENT_HEAD_REVIEW_AND_PRODUCTION_VERIFY"
     ],
     "next_validation": "Conduct actual host or provider write-path conformance when supported. POSIX no-follow addresses tested symlink substitution but non-POSIX and cross-resource crash atomicity remain open.",
     "release": {
@@ -356,6 +357,12 @@
       "provider_job": "skipped",
       "code_review": "completed, no findings",
       "main_readback": true
+    },
+    "independent_falsification": {
+      "source": "PR126 Codex review thread PRRT_kwDOVHwz086ttO_J",
+      "result": "PR125 passed nested artifact race tests but allowed symlink substitution of the snapshot root between DB and artifact staging",
+      "candidate_fix": "PR128 opens every POSIX ancestor via directory descriptor and adds root-swap/ancestor tests",
+      "status": "UNVERIFIED_UNTIL_PR128_CI_INDEPENDENT_REVIEW_AND_MAIN_READBACK"
     }
   },
   "external_object_delete_probe_20261019": {
