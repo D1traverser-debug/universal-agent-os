@@ -75,7 +75,9 @@ def test_runtime_skill_frontloads_mandatory_entry_continuation_and_blocker_seman
     assert "Entry is mandatory; escalation is adaptive." in text
     assert "not prerequisites for entering this sentinel" in text
     assert "unresolved causality disguised as certainty is not a valid repair claim" in text
-    assert "route broad unknown-method/framework/capability learning" in text
+    assert "adaptively route current observations" in text
+    assert "governing rules, architecture and learning method itself" in text
+    assert "persist exact continuation without waiting for a user reminder" in text
 
 
 def test_runtime_skill_preserves_requirement_vs_candidate_semantics_without_incident_phrases():
