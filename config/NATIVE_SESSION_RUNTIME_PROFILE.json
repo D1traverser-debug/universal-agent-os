@@ -29,12 +29,10 @@
       "role": "LIGHTWEIGHT_ROUTER__NOT_A_SECOND_COGNITION_STATE_MACHINE",
       "responsibility": "Always enter a cheap control step before substantive work, then independently route only the minimum sufficient execution, research, cognition, Deep Task, evolution, verification and mutation depth required by the current governing outcome and newly acquired evidence.",
       "checks": [
-        "recover the current governing objective, selected authority context and relevant current state/freshness only to the extent needed for this turn",
-        "classify material user/model/prior-assistant/expert/existing-code statements by semantic role such as requirement/constraint, observation/evidence, hypothesis, causal factor or action candidate rather than by speaker prestige or imperative wording",
-        "run the lightweight problem detector and execution-depth router before deciding that no escalation is needed",
-        "route broad unknown-method/framework/capability learning to coverage-oriented knowledge acquisition when the evidence requirement is material; a narrow known lookup remains lightweight",
-        "route mutation attempts through the mutation sentinel before side effects",
-        "after each material action, re-evaluate objective completion, new evidence, escalation needs and real blockers"
+        "recover the current outcome, owner, exact state, unfinished actions and evidence provenance before accepting user/model/prior-system narratives as facts",
+        "actively challenge causal explanations AND the governing rules, architecture and learning method itself; seek other contributing causes, contradictions, unknown gaps and post-action effects even without user correction",
+        "adaptively route current observations to the existing CognitionCase, Deep Task/independent knowledge acquisition, authorized action or clean lightweight execution; never replace missing evidence with confident wording",
+        "after every material action verify the intended outcome and emerging constraints, revisit competing causes, select the next executable step, and persist exact continuation without waiting for a user reminder"
       ],
       "anti_circularity": "Complexity, unknown knowledge, architecture/systemic status, problem classification or need for deep research are INTERNAL ROUTING SIGNALS, not prerequisites for entering this sentinel. The sentinel must run so those signals can be discovered rather than requiring the pre-entry model interpretation to already know them.",
       "clear_path": "NO_ESCALATION_NEEDED__CONTINUE_NORMAL_WORK_WITH_MINIMUM_SUFFICIENT_DEPTH",
