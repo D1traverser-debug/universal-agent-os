@@ -143,18 +143,7 @@
     "controller_inheritance_review": {
       "required": true,
       "trigger": "ON_EVERY_EXPLICIT_UAOS_CONTROLLER_SELECTION__INCLUDING_AFTER_RESUME",
-      "scope": "UAOS_CONTROLLER_ONLY__DO_NOT_PROXY_ORDINARY_CHILD_WORK",
-      "minimum_entry": [
-        "Read current ENTRYPOINT/CURRENT_SYSTEM and restore any active controller task.",
-        "Enumerate all registered repository main trees; preserve exact head, path inventory, authoritative owner, source coverage, and omitted/unread paths.",
-        "Inspect every registered repository across authority/architecture, requirements/continuity, execution, quality/outcome verification, observability/drift, and evolution/learning.",
-        "Independently challenge current architecture and prior assistant conclusions; search alternatives, evidence against favored causal models, dormant capabilities and unknown unknowns.",
-        "For material knowledge gaps, study independent architecture, risk/management, SRE, continuous improvement, and Agent-evaluation methods; compare and integrate through existing DeepTask/knowledge-acquisition admission.",
-        "Continue investigation and owner-authorized repairs until evidence-backed terminal disposition; preserve exact resumed progress, remaining gaps and actual tested outputs."
-      ],
-      "coverage_rule": "ALL_REGISTERED_REPOSITORIES_AND_CRITICAL_CONTROL_DIMENSIONS_MUST_BE_VISITED__UNREAD_UNVERIFIED_OR_UNMEASURED_REMAIN_VISIBLE_AND_CANNOT_BE_RELABELED_GREEN",
-      "completion_rule": "ONE_CURRENT_HEAD_BOUND_EVIDENCE_RECEIPT__FULL_SCOPE_COVERAGE_AND_REQUIRED_SOURCE_ROLES__CAUSAL_AND_ARCHITECTURE_CHALLENGE__REALISTIC_VALIDATION_OR_EXPLICIT_UNVERIFIED__GOVERNED_EVOLUTION_OR_NO_CHANGE",
-      "host_boundary": "A repo policy cannot physically force ChatGPT internal pre-send or pre-tool invocation; native conformance must be measured independently."
+      "coverage_rule": "ALL_REGISTERED_REPOSITORIES_AND_CRITICAL_CONTROL_DIMENSIONS_MUST_BE_VISITED__UNREAD_UNVERIFIED_OR_UNMEASURED_REMAIN_VISIBLE_AND_CANNOT_BE_RELABELED_GREEN"
     }
   }
 }
