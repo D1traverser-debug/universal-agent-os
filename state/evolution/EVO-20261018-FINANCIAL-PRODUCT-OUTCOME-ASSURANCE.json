@@ -2,7 +2,7 @@
   "schema_version": "1.5",
   "evolution_id": "EVO-20261018-FINANCIAL-PRODUCT-OUTCOME-ASSURANCE",
   "authority": "UAOS",
-  "status": "CONTROLLED_PARENT_PRODUCT_GATES_VERIFIED__ACTING_FINANCIAL_EXECUTION_REVIEW_CANDIDATE__LIVE_PRODUCT_OPEN",
+  "status": "CONTROLLED_PARENT_PRODUCT_GATES_VERIFIED__ACTING_FINANCIAL_EXECUTION_REVIEW_CANDIDATE__LIVE_CHILD_USER_OUTCOME_OPEN",
   "origin_kind": "PROBLEM",
   "governing_outcome": "UAOS-owned rehabilitation of Financial Writing must not be called completed until requirements produce a real, source-verifiable and accepted current-kernel product and reusable quality improvement, not only green repo CI and closed child code issue.",
   "origin_evidence_refs": [
