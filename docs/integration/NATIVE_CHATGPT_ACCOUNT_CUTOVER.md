@@ -2,6 +2,14 @@
 
 Scope: ChatGPT account-side installation and empirical selected-controller activation. This document is an **operational handoff**, not a second Skill, policy, or system of authority.
 
+## Current observed account and fresh-chat status (supersedes pending handoff)
+
+On 2026-10-18 the user explicitly reported updating the already installed `uaos controller runtime` Skill **before** opening a new ChatGPT conversation, then supplied the new chat's final answer after `继承 → 总控系统`. The first canary therefore **has happened**; account installation does not need repeating. The exact installed file bytes and true Skill loader/tool-call trace are not accessible from that final answer.
+
+The answer matched the current GitHub main task ID/status/head and reported independent source review, but it stopped after a claimed GitHub create-branch tool security block without a durable change. The recorded verdict is **partial recovery, unverified direct tool trace, incomplete autonomous closure**, NOT `NOT_RUN` or full native pass. See `state/observations/native-account-canary-20261018-first-run.json` and the existing canonical handoff record.
+
+**No additional user action is required for this first replay.** UAOS owns replay interpretation, permitted follow-up analysis, regression, protected PR/CI, and durable state synchronization. Do not ask the user to reinstall the same Skill or repeat an identical canary merely to compensate for a missed state update. The original pre-install instructions below are retained solely as historical setup guidance.
+
 ## Grounded baseline, 2026-10-18
 
 GitHub `main` is authoritative. The two installable-source assets are:
@@ -10,7 +18,7 @@ GitHub `main` is authoritative. The two installable-source assets are:
 
 No ChatGPT-account Skill state API/verified auto-sync is available to the UAOS GitHub connector. The browser integration available in the current conversation returned `Browser not connected`. These facts imply **installation state UNKNOWN**, not that the skill is absent.
 
-## Single indispensable account-owner action
+## Historical account-owner installation action (user reports completed)
 
 Replace the old `uaos-controller-runtime` Skill or skill-like upload **in the same account surface where it was originally installed** with the canonical current `SKILL.md`. For eligible ChatGPT Skills users the supported UI path is Plugins > Skills > Create > Upload from your computer, or edit/update the existing Skill; if the original was installed as a GPT's knowledge/instructions resource, replace it there rather than creating a duplicate installed Skill. UI availability varies by account/workspace; the ChatGPT Skills feature is not guaranteed for every plan.
 
@@ -20,7 +28,7 @@ Custom instructions reference: https://help.openai.com/en/articles/8096356-chatg
 
 Do **not** change `protect-main`, install a paid external component, grant browser permissions, or maintain a second master copy in ChatGPT Library.
 
-## Empirical canary — one new-chat owner action
+## Historical first native canary instructions (already attempted)
 
 After the account upload, open one *fresh ChatGPT chat* and send `继承` then `总控系统`. The Agent itself must:
 1. Actually fetch `main:ENTRYPOINT.md`, `CURRENT_SYSTEM.json`, `state/TASK_INDEX.json`, and exact parent task state from GitHub **before a substantive claim**, showing tool-call provenance. Chat transcript statements without tool actions are not accepted.
@@ -37,7 +45,9 @@ Negative controls for later independent fresh chats:
 ## Evidence-state machine — existing owners only
 
 The authoritative tracking record is `state/observations/native-account-install-handoff-20261018.json`. States:
-- `ACCOUNT_INSTALL_UNVERIFIED`: default after source export.
+- `ACCOUNT_SKILL_UPDATE_USER_CONFIRMED__INSTALLED_BYTES_UNVERIFIED`: user has explicitly confirmed updating the installed Skill; exact bytes remain unobservable to this connector.
+- `ATTEMPTED__USER_PASTED_FINAL_RESPONSE__NO_DIRECT_TOOL_TRACE__CLOSURE_INCOMPLETE`: first new-chat test happened and a user-facing result was shared, without raw tool trace or completed authorized repair.
+- `ACCOUNT_INSTALL_UNVERIFIED`: historical default before installation evidence.
 - `ACCOUNT_INSTALL_USER_CONFIRMED__RUNTIME_NOT_TESTED`: only after explicit account-owner confirmation; do not infer from CI.
 - `FRESH_CHAT_CANARY_OBSERVED__LIMITED_SAMPLE`: only after a real visible new-chat tool trace and recorded test outcome with exact source head. Multiple independent scenarios/sessions are still needed for stability claims.
 - `NATIVE_BEHAVIOR_UNVERIFIED_OR_FAIL`: if canary missing/failed or scope cannot be observed.
