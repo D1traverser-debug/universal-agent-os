@@ -304,3 +304,37 @@ def test_snapshot_verify_rejects_symlinked_ancestor_of_snapshot_root(tmp_path):
     alias_parent.symlink_to(tmp_path, target_is_directory=True)
     with pytest.raises(ValueError, match="unsafe|replaced|symlink"):
         manager.verify(alias_parent / location.name)
+
+
+@pytest.mark.skipif(
+    __import__("os").name != "posix" or not (
+        hasattr(__import__("os"), "O_PATH") or hasattr(__import__("os"), "O_SEARCH")
+    ), reason="requires search-only POSIX descriptor support",
+)
+def test_snapshot_verify_with_search_only_ancestor_directory(tmp_path):
+    """Ancestors may permit search without allowing directory listings."""
+    import os
+    import stat
+
+    manager, _, source = _snapshot_fixture(tmp_path)
+    parent = tmp_path / "search-only"
+    parent.mkdir()
+    location = parent / "snapshot"
+    manager.create(
+        sqlite_path=tmp_path / "source.db", artifact_root=source,
+        destination=location, schema_version="1",
+    )
+    original_mode = stat.S_IMODE(parent.stat().st_mode)
+    try:
+        parent.chmod(0o711)
+        assert manager.verify(location).artifacts
+        restored_db = tmp_path / "search-restored.db"
+        restored_artifacts = tmp_path / "search-restored-artifacts"
+        manager.restore(
+            snapshot=location,
+            target_sqlite=restored_db,
+            target_artifact_root=restored_artifacts,
+        )
+        assert (restored_artifacts / "item.txt").read_text() == "new-file"
+    finally:
+        parent.chmod(original_mode)
