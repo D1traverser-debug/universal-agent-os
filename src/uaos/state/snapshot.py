@@ -38,9 +38,39 @@ def _hash_file(path: Path) -> str:
 
 
 
+
+def _open_nofollow_directory(path: Path, *, for_scan: bool = False) -> int:
+    """Anchor every POSIX ancestor while preserving search-only access.
+
+    O_PATH (or O_SEARCH when supported) permits lookup through ancestors
+    without requiring directory listing permission. Only the leaf directory
+    used by scandir needs O_RDONLY. The returned fd pins that directory.
+    """
+    absolute = path.absolute()
+    search_mode = getattr(os, "O_PATH", getattr(os, "O_SEARCH", os.O_RDONLY))
+    search_flags = search_mode | os.O_DIRECTORY | os.O_NOFOLLOW
+    scan_flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    components = absolute.parts[1:]
+    directory_fd = os.open(
+        absolute.anchor, scan_flags if for_scan and not components else search_flags
+    )
+    try:
+        for position, component in enumerate(components):
+            if component in (".", ".."):
+                raise ValueError("noncanonical snapshot root path")
+            flags = scan_flags if for_scan and position == len(components) - 1 else search_flags
+            next_fd = os.open(component, flags, dir_fd=directory_fd)
+            os.close(directory_fd)
+            directory_fd = next_fd
+        return directory_fd
+    except BaseException:
+        os.close(directory_fd)
+        raise
+
+
 @contextmanager
 def _open_regular_beneath(root: Path, relative: PurePosixPath) -> Iterator[BinaryIO]:
-    """Open a regular file under a directory without following POSIX symlinks.
+    """Open a regular file without following POSIX ancestors or leaf symlinks.
 
     For platforms lacking POSIX dir_fd/O_NOFOLLOW, retain a conservative
     path-based compatibility fallback, *not* a cross-platform race guarantee.
@@ -61,7 +91,7 @@ def _open_regular_beneath(root: Path, relative: PurePosixPath) -> Iterator[Binar
     directory_fd: int | None = None
     file_fd: int | None = None
     try:
-        directory_fd = os.open(root, flags)
+        directory_fd = _open_nofollow_directory(root)
         for part in relative.parts[:-1]:
             next_fd = os.open(part, flags, dir_fd=directory_fd)
             os.close(directory_fd)
@@ -145,7 +175,7 @@ def _artifact_names_beneath(root: Path) -> set[str]:
                 else:
                     raise ValueError(f"unexpected or symlinked snapshot entry: {name}")
     try:
-        root_fd = os.open(root, flags)
+        root_fd = _open_nofollow_directory(root, for_scan=True)
         try:
             result: set[str] = set()
             walk(root_fd, "", result)

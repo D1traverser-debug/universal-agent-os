@@ -259,3 +259,82 @@ def test_snapshot_restore_rejects_symlink_swap_during_staging(tmp_path, monkeypa
     assert swapped
     assert not db_target.exists()
     assert not artifacts_target.exists()
+
+
+@pytest.mark.skipif(__import__("os").name != "posix", reason="POSIX ancestor dirfd hardening")
+def test_restore_rejects_snapshot_root_swap_after_database_stage(tmp_path, monkeypatch):
+    """Replacing the snapshot *root* with a symlink must not redirect artifact reads."""
+    import importlib
+    import shutil
+
+    module = importlib.import_module("uaos.state.snapshot")
+    manager, location, _ = _snapshot_fixture(tmp_path)
+    outside = tmp_path / "outside-snapshot"
+    shutil.copytree(location, outside)
+    original_copy = module._copy_artifact_beneath
+    swapped = False
+
+    def root_swap_before_artifact_read(root, relative, destination):
+        nonlocal swapped
+        if root == location / "artifacts" and relative.as_posix() == "item.txt":
+            swapped = True
+            location.rename(tmp_path / "detached-original-snapshot")
+            location.symlink_to(outside, target_is_directory=True)
+        return original_copy(root, relative, destination)
+
+    monkeypatch.setattr(module, "_copy_artifact_beneath", root_swap_before_artifact_read)
+    target_db = tmp_path / "target.db"
+    target_artifacts = tmp_path / "target-artifacts"
+    with pytest.raises(ValueError, match="unsafe|replaced|symlink"):
+        manager.restore(
+            snapshot=location,
+            target_sqlite=target_db,
+            target_artifact_root=target_artifacts,
+        )
+    assert swapped
+    assert not target_db.exists()
+    assert not target_artifacts.exists()
+
+
+@pytest.mark.skipif(__import__("os").name != "posix", reason="POSIX ancestor dirfd hardening")
+def test_snapshot_verify_rejects_symlinked_ancestor_of_snapshot_root(tmp_path):
+    """A parent component must be opened with no-follow, not a compound path."""
+    manager, location, _ = _snapshot_fixture(tmp_path)
+    alias_parent = tmp_path / "alias-parent"
+    alias_parent.symlink_to(tmp_path, target_is_directory=True)
+    with pytest.raises(ValueError, match="unsafe|replaced|symlink"):
+        manager.verify(alias_parent / location.name)
+
+
+@pytest.mark.skipif(
+    __import__("os").name != "posix" or not (
+        hasattr(__import__("os"), "O_PATH") or hasattr(__import__("os"), "O_SEARCH")
+    ), reason="requires search-only POSIX descriptor support",
+)
+def test_snapshot_verify_with_search_only_ancestor_directory(tmp_path):
+    """Ancestors may permit search without allowing directory listings."""
+    import os
+    import stat
+
+    manager, _, source = _snapshot_fixture(tmp_path)
+    parent = tmp_path / "search-only"
+    parent.mkdir()
+    location = parent / "snapshot"
+    manager.create(
+        sqlite_path=tmp_path / "source.db", artifact_root=source,
+        destination=location, schema_version="1",
+    )
+    original_mode = stat.S_IMODE(parent.stat().st_mode)
+    try:
+        parent.chmod(0o711)
+        assert manager.verify(location).artifacts
+        restored_db = tmp_path / "search-restored.db"
+        restored_artifacts = tmp_path / "search-restored-artifacts"
+        manager.restore(
+            snapshot=location,
+            target_sqlite=restored_db,
+            target_artifact_root=restored_artifacts,
+        )
+        assert (restored_artifacts / "item.txt").read_text() == "new-file"
+    finally:
+        parent.chmod(original_mode)
