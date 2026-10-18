@@ -3,7 +3,7 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-19T04:08:58.519+08:00",
+  "updated_at": "2026-10-19T04:21:16.728+08:00",
   "controller_tasks": [
     {
       "task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
@@ -25,8 +25,8 @@
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume": true,
-      "semantic_summary": "CURRENT DEFAULT: UAOS five-repo deep audit, method transfer and real native host verification remain running. User-ordered external skill learning source studies 1/4 Hindsight, 2/4 Orca, and 3/4 Cloudflare Security Audit merged to main as CANDIDATE knowledge; next is 4/4 paperclipai/paperclip. Then return to preserved Financial Writing parent-governed recovery. Source studies are not canonical methods or real native runtime proof.",
-      "current_stage": "EXTERNAL_SKILL_1_TO_3_DOSSIERS_PRODUCTION_VERIFIED__ITEM_4_NEXT__REAL_USAGE_AND_NATIVE_ASSURANCE_OPEN",
+      "semantic_summary": "CURRENT DEFAULT: UAOS five-repo deep audit and real host/native enforcement assurance remain RUNNING. All four user-ordered external skill source dossiers Hindsight/Orca/Cloudflare Security Audit/Paperclip were committed on main, but source-derived method cards are CANDIDATE and real usage, independent holdout and native selected-chat execution remain UNVERIFIED. Preserve Financial Writing governed recovery RUNNING/not default.",
+      "current_stage": "EXTERNAL_SKILL_FOUR_SOURCE_STUDIES_PRODUCTION_VERIFIED__CONTROLLER_DEEP_AUDIT_AND_NATIVE_ASSURANCE_OPEN",
       "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
     },
     {
