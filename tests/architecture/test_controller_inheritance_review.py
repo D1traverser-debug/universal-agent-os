@@ -92,3 +92,26 @@ def test_source_inventory_does_not_claim_unverified_deep_or_native_outcomes():
         cell["assurance"] == "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
         for cell in actual["coverage"]
     )
+
+
+def test_resumable_controller_task_index_cannot_lag_exact_state():
+    index = read_json("state/TASK_INDEX.json")
+    for task in index["controller_tasks"]:
+        if not task["resume_eligible"]:
+            continue
+        exact = read_json(task["state_ref"])
+        assert task["status"] == exact["status"]
+        assert task["current_stage"] == exact["current_stage"]
+        assert task["task_id"] == exact["task_id"]
+
+
+def test_inheritance_production_observation_does_not_close_deep_work():
+    index = read_json("state/TASK_INDEX.json")
+    task = index["controller_tasks"][0]
+    exact = read_json(task["state_ref"])
+    evo = read_json(exact["evolution_ref"])
+    assert exact["production_gate_evidence"]["ci_run"] == 582
+    assert evo["production_evidence"]["main"] == exact["production_gate_evidence"]["merged_sha"]
+    assert exact["status"] == "RUNNING"
+    assert "DEEP_OUTCOMES_OPEN" in evo["status"]
+    assert "DO_NOT_CLOSE_CONTROLLER_TASK" in evo["production_disposition"]

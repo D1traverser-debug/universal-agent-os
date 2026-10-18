@@ -3,7 +3,7 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-18T14:36:00+08:00",
+  "updated_at": "2026-10-18T15:34:07+08:00",
   "controller_tasks": [
     {
       "task_id": "uaos:maintenance:inheritance-review-20261018",
@@ -13,8 +13,8 @@
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume": true,
-      "semantic_summary": "Review all registered repos and control concerns on controller inheritance, independently study external architecture/operations/governance/evolution/agent evaluation methods, persist evidence and adaptation, and verify non-circular review coverage.",
-      "current_stage": "EXTERNAL_RESEARCH_AND_DESIGN",
+      "semantic_summary": "Production PR #93 gate verified at 8fd3c6e, CI #582 (517 passed, 1 skipped); full per-domain deep scenarios and native cross-session assurance remain OPEN. Continue five-repo audit from exact task state, not from chat memory.",
+      "current_stage": "PRODUCTION_REVIEW_GATE_VERIFIED__FIVE_REPO_DEEP_AUDIT_OPEN",
       "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
     },
     {
