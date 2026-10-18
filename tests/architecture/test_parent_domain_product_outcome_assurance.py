@@ -84,10 +84,10 @@ def test_outcome_scope_opt_in_does_not_turn_every_domain_into_financial_writer()
 def test_parent_index_keeps_exactly_one_default_and_financial_outcome_open():
     index = json.loads((ROOT / "state/TASK_INDEX.json").read_text(encoding="utf-8"))
     defaults = [x for x in index["controller_tasks"] if x["resume_eligible"] and x["default_resume"]]
-    assert [d["task_id"] for d in defaults] == [
-        "uaos:maintenance:financial-system-governed-recovery-20261018"
-    ]
-    task = json.loads((ROOT / defaults[0]["state_ref"]).read_text(encoding="utf-8"))
+    assert [d["task_id"] for d in defaults] == ["uaos:maintenance:inheritance-review-20261018"]
+    financial = next(x for x in index["controller_tasks"] if x["task_id"] == index["controller_default_handoff"]["return_task_id"])
+    assert financial["resume_eligible"] and not financial["default_resume"]
+    task = json.loads((ROOT / financial["state_ref"]).read_text(encoding="utf-8"))
     assert task["authority_context"] == "UAOS"
     assert task["status"] == "RUNNING"
     assert "UAOS->registered DOMAIN:financial_writing" in task["ancestry_and_mutation_boundary"]
