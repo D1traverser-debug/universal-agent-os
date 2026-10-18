@@ -44,7 +44,9 @@ def test_review_reuses_exactly_one_existing_controller_task_authority():
     controller = [task for task in index["controller_tasks"] if task["default_resume"]]
     assert len(controller) == 1
     task = controller[0]
-    assert task["task_id"] == "uaos:maintenance:inheritance-review-20261018"
+    assert task["authority_context"] == "UAOS"
+    assert task["task_id"] == "uaos:maintenance:financial-system-governed-recovery-20261018"
+    assert any(x["task_id"] == "uaos:maintenance:inheritance-review-20261018" and x["status"] == "RUNNING" for x in index["controller_tasks"])
     assert task["resume_eligible"] and task["status"] == "RUNNING"
     assert (ROOT / task["state_ref"]).exists()
 
@@ -107,7 +109,7 @@ def test_resumable_controller_task_index_cannot_lag_exact_state():
 
 def test_inheritance_production_observation_does_not_close_deep_work():
     index = read_json("state/TASK_INDEX.json")
-    task = index["controller_tasks"][0]
+    task = next(t for t in index["controller_tasks"] if t["task_id"] == "uaos:maintenance:inheritance-review-20261018")
     exact = read_json(task["state_ref"])
     evo = read_json(exact["evolution_ref"])
     assert exact["production_gate_evidence"]["ci_run"] == 582
