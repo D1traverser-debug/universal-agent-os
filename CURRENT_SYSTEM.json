@@ -135,7 +135,7 @@
     "EXTERNAL_FILESYSTEM_WRITERS_REMAIN_OUTSIDE_UAOS_COMPLETE_MEDIATION__LOCAL_DIRFD_ADVISORY_LOCK_AND_ATOMIC_COMMIT_DEFENSES_DO_NOT_CLAIM_HOSTILE_SYSTEM_WIDE_LINEARIZABILITY",
     "PROCESS_LOCAL_UNKNOWN_EXECUTION_RECORDS_AND_SINGLE_FLIGHT_CLAIMS_FAIL_CLOSED_ACROSS_COORDINATOR_RESTART__HOSTS_REQUIRING_CROSS_PROCESS_RECONCILIATION_MUST_PERSIST_THE_SAME_TRUSTED_RECORD_AND_ATOMIC_CLAIM_STATE_IN_THEIR_AUTHORITY_STORE"
   ],
-  "updated_at": "2026-10-18T22:49:00+08:00",
+  "updated_at": "2026-10-18T23:45:00+08:00",
   "entry_source_evolution_20261018": {
     "status": "CONTROLLED_CODE_PRODUCTION_VERIFIED__NATIVE_ACTIVATION_UNVERIFIED",
     "policy_ref": "config/SESSION_INTERACTION_POLICY.json#mandatory_selected_context_entry",
@@ -152,5 +152,14 @@
       "main_sha": "3a60beb31d4535d5f10bcc44c399391842fd0966",
       "main_source_reread": true
     }
+  },
+  "turn_evolution_coverage_20261018": {
+    "role": "DERIVED_CODE_ASSURANCE__NOT_AN_EVOLUTION_OWNER",
+    "status": "CANDIDATE_CI_OPEN__NATIVE_HOST_EXECUTION_NOT_VERIFIED",
+    "gate": "src/uaos/runtime/epistemic_entry.py#admit_turn_evolution_coverage",
+    "finalization": "src/uaos/runtime/finalization.py#admit_final_response",
+    "owner": "EXISTING_COGNITION_DEEPTASK_EVOLUTION",
+    "claim": "Each host-observed user, assistant, tool or state message receives a sourced signal assessment. Actual assistant draft bytes must match the reviewed draft. Unassessed or unverified content blocks controlled finalization.",
+    "limit": "NATIVE_CHATGPT_ALL_MESSAGE_ENUMERATION_AND_PRE_SEND_MEDIATION_NOT_PROVEN"
   }
 }
