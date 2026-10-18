@@ -270,7 +270,7 @@
     "post_promotion_falsification": "Do not use the real PR CI as evidence native ChatGPT automatically enumerates all messages. The current user repeatedly observed progress omissions without unprompted self-repair."
   },
   "file_lifecycle_write_audit_20261019": {
-    "status": "EVIDENCE_GROUNDED_CANDIDATE__NOT_PROMOTED",
+    "status": "SOURCE_PROMOTED_PR120__CI_AND_MAIN_REREAD_VERIFIED__LIVE_UNIVERSAL_WRITE_COVERAGE_OPEN",
     "scope": "UAOS_CURRENT_MAIN_FILE_INVENTORY_AND_WRITE_EFFECTORS",
     "source_ref": "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
     "causal_factors": [
@@ -287,6 +287,18 @@
       "RESTORE_RENAME_FAILURE_ROLLS_BACK_DB_AND_ARTIFACT_TREE",
       "PR_CI_GREEN_AND_MAIN_READER_REREAD"
     ],
-    "assurance_limit": "NO_UNIVERSAL_WRITE_MEDIATION_OR_POWER_LOSS_CROSS_RESOURCE_ATOMICITY_CLAIM"
+    "assurance_limit": "PR120 source CI/main verified; native/external write mediation, real destructive approval, snapshot race/cross-resource crash recovery and semantic end-user outcome OPEN",
+    "production_evidence": {
+      "pr": 120,
+      "commit": "0466e184d1a39f717a89719c633752a585631f7e",
+      "candidate_head": "6527a5dc1c00dfd182e1541f6bf0b192aed287c9",
+      "candidate_ci": 690,
+      "candidate_ci_conclusion": "success",
+      "integration": 395,
+      "integration_result": "success (OpenAI provider skipped)",
+      "production_ci": 691,
+      "production_ci_conclusion": "success",
+      "main_source_reread": true
+    }
   }
 }
