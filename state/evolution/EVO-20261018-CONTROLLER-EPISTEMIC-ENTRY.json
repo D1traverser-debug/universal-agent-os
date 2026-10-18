@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.5",
+  "evolution_id": "EVO-20261018-CONTROLLER-EPISTEMIC-ENTRY",
+  "authority": "UAOS",
+  "origin_kind": "CAPABILITY_GAP",
+  "status": "EVALUATING_CANDIDATE__PRODUCTION_AND_NATIVE_OPEN",
+  "parent_evolution_ref": "state/evolution/EVO-20261018-MULTICAUSAL-AUTONOMY-ASSURANCE.json",
+  "governing_outcome": "Strengthen the already-mandatory UAOS entry with evidence-based double-loop challenge, adaptive learning, and autonomous continuation without adding duplicated governance owners.",
+  "origin_evidence_refs": [
+    "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
+    "state/observations/native-cognition-progress-replay-20261018.json",
+    "docs/research/uaos-inheritance-review-20261018/08_epistemic_entry_design_decision_20261018.md"
+  ],
+  "competing_interventions": [
+    {
+      "id": "MORE_FORBIDDEN_RULES",
+      "decision": "REJECTED_AS_CONTROL_ARCHITECTURE",
+      "reason": "Known failure suppression does not guarantee activation; adds conflicting, duplicate authority."
+    },
+    {
+      "id": "ALWAYS_EXHAUSTIVE_RESEARCH",
+      "decision": "REJECTED_AS_DEFAULT",
+      "reason": "Context latency and finite evidence; deep acquisition should be demand-driven."
+    },
+    {
+      "id": "EXISTING_ENTRY_WITH_SOURCE_BACKED_ROUTE",
+      "decision": "CANDIDATE_SELECTED",
+      "reason": "Reuse CognitionCase/DeepTask/KnowledgeAcquisitionAssessment and fail closed at controlled finalization."
+    },
+    {
+      "id": "EXTERNAL_PHYSICAL_HOST_HOOK",
+      "decision": "NOT_CURRENTLY_VERIFIED_AVAILABLE",
+      "reason": "GitHub cannot install native ChatGPT pre-send or pre-tool interception."
+    },
+    {
+      "id": "NO_CHANGE",
+      "decision": "REJECTED_FOR_CONFIRMED_CONTROLLED_ADMISSION_GAP",
+      "reason": "Existing finalization did not bind a controlled UAOS entry observation to depth/closure decision."
+    }
+  ],
+  "implementation_refs": [
+    "state/tasks/uaos-epistemic-entry-20261018.json",
+    "state/tasks/uaos-inheritance-review-20261018.json",
+    "config/SESSION_INTERACTION_POLICY.json",
+    "config/NATIVE_SESSION_RUNTIME_PROFILE.json",
+    "skills/uaos-controller-runtime/SKILL.md",
+    "src/uaos/runtime/finalization.py",
+    "src/uaos/runtime/epistemic_entry.py",
+    "tests/runtime/test_controller_epistemic_entry.py",
+    "docs/research/uaos-inheritance-review-20261018/08_epistemic_entry_design_decision_20261018.md"
+  ],
+  "verification_plan": [
+    "Run candidate CI exact head with adversarial user-assistant claim and fact-backed contradiction/knowledge/work scenarios.",
+    "Check compiled session profile and generated Skill exactly match canonical sources within budget.",
+    "Protected PR promotion plus production CI, reread exact task, evidence and artifacts.",
+    "Do not close parent full-system review or claim native product complete mediation."
+  ],
+  "research_assurance": "PRIMARY_SOURCE_COMPARISON_BOUNDED__NOT_WEB_EXHAUSTIVE_OR_SATURATED",
+  "runtime_assurance": "CONTROLLED_FINALIZATION_ONLY_WHEN_HOST_FLAGS_CONTROLLER_AND_SUPPLIES_VERIFIER",
+  "verification_rounds": [],
+  "completion_scope": "BOUNDED_ENTRY_REPAIR_ONLY__AUTONOMOUS_FULL_CROSS_SESSION_BEHAVIOR_REMAINS_OPEN"
+}

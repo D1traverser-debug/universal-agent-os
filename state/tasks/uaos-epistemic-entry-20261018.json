@@ -1,0 +1,19 @@
+{
+  "task_id": "uaos:maintenance:epistemic-entry-20261018",
+  "authority_context": "UAOS",
+  "task_type": "controller_maintenance",
+  "parent_task_id": "uaos:maintenance:inheritance-review-20261018",
+  "subordinate_work_item": true,
+  "status": "RUNNING",
+  "current_stage": "EVIDENCE_AND_CONTROLLED_IMPLEMENTATION_CANDIDATE_CI_PENDING",
+  "evolution_ref": "state/evolution/EVO-20261018-CONTROLLER-EPISTEMIC-ENTRY.json",
+  "governing_outcome": "Strengthen the already-mandatory UAOS entry with evidence-based double-loop challenge, adaptive learning, and autonomous continuation without adding duplicated governance owners.",
+  "source_bases": [
+    "state/tasks/uaos-inheritance-review-20261018.json",
+    "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md",
+    "docs/research/uaos-inheritance-review-20261018/08_epistemic_entry_design_decision_20261018.md"
+  ],
+  "next_action": "Verify candidate CI negative holdouts; promote via protected PR, fresh-read main and production CI, then retain native trigger and knowledge saturation as separate open assurance.",
+  "resume_boundary": "PARENT_MAIN_TASK_REMAINS_SINGLE_DEFAULT_RESUME__THIS_FILE_IS_A_LINKED_IMPLEMENTATION_RECEIPT",
+  "evidence_status": "SOURCE_AND_CONTROLLED_ADMISSION_ONLY__NATIVE_HOST_UNVERIFIED"
+}

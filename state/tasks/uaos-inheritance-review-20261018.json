@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Continue autonomous multi-causal audit from actual registered-repository main heads. Expand independent method learning (organizational double-loop, fault-injection, verified requirement root selection), test cross-factor interaction and tool/state continuity. Do not close until admitted comprehensive research, independently checked owner outcomes, and honest native trigger evidence.",
+  "next_action": "Continue UAOS controller task after candidate entry repair: validate evidence-based self-challenge and repair continuation, then independently deepen source coverage and observed native behavior. Do not treat local CI as full autonomous outcome.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -53,5 +53,14 @@
       "ci": 593,
       "result": "525 passed, 1 skipped"
     }
+  },
+  "epistemic_entry_implementation": {
+    "status": "CANDIDATE_EVALUATION_PENDING",
+    "task_ref": "state/tasks/uaos-epistemic-entry-20261018.json",
+    "evolution_ref": "state/evolution/EVO-20261018-CONTROLLER-EPISTEMIC-ENTRY.json",
+    "governing_scope": "UAOS_CONTROLLER_ONLY__NO_CHILD_REPO_MUTATIONS",
+    "implementation": "Controlled finalization routes evidence-backed epistemic entry, with direct rule/method self-challenge and no second cognition owner.",
+    "native_host": "UNVERIFIED_PRE_SEND_PRE_TOOL_HOOK",
+    "research_saturation": "NOT_ESTABLISHED"
   }
 }
