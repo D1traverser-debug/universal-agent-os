@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "After the user's one-time account Skill update, autonomously execute real fresh-chat selected UAOS canary, record exact GitHub main head and actual tool/action sequence; no claim of native guarantee from repository CI. Independently continue parent research and system audit.",
+  "next_action": "On future controller selection, read main ENTRYPOINT/CURRENT_SYSTEM and exact task then execute next authorized action; verify method selection and side-effects; audit native Skill version after user update and run fresh-chat canary. Keep wider autonomous learning outcome open.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -71,7 +71,7 @@
     "subordinate_task_disposition": "COMPLETE_BOUNDED_REPAIR__PARENT_DEEP_AUDIT_REMAINS_RUNNING"
   },
   "native_account_cutover": {
-    "status": "ACCOUNT_INSTALL_UNVERIFIED__CANARY_NOT_RUN",
+    "status": "ACCOUNT_SKILL_VISIBLE_INSTALLED__INSTALLED_VERSION_UNVERIFIED__CANARY_NOT_RUN",
     "observation_ref": "state/observations/native-account-install-handoff-20261018.json",
     "instructions_ref": "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md",
     "skill_source_sha": "d57a72019c76e58f4a538b5d86e6e7718f34c0ba",
@@ -79,5 +79,14 @@
     "required_user_part": "One-time account UI replace previously uploaded Skill; one fresh chat for a real canary; no other configuration or architecture work transferred to user",
     "agent_part": "Maintain source artifact, CI, observations, negative controls, follow-up fixes and exact state continuity",
     "native_behavior": "UNVERIFIED"
+  },
+  "controller_operating_model": {
+    "status": "CANDIDATE_BOOTSTRAP_ENTRY_WIRED__CI_PENDING",
+    "entry_ref": "ENTRYPOINT.md#uaos-controller-operating-contract",
+    "architecture_ref": "docs/adr/0030-controller-role-state-context-operating-model.md",
+    "owner": "UAOS",
+    "method": "OUTCOME_ROLE_REQUIREMENT_EVIDENCE_LEARNING_ARCHITECTURE_ACTION_VERIFICATION_RECONSIDERATION",
+    "state_reading": "COLD_ENTRY_BOOTSTRAP_INDEX_EXACT_TASK__MATERIAL_ACTION_RELEVANT_EVIDENCE_ONLY",
+    "limit": "Native ChatGPT activation and installed Skill source-version are distinct and unverified."
   }
 }
