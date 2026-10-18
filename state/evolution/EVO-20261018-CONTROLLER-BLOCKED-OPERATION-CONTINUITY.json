@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.5",
+  "evolution_id": "EVO-20261018-CONTROLLER-BLOCKED-OPERATION-CONTINUITY",
+  "authority": "UAOS",
+  "origin_kind": "CAPABILITY_GAP",
+  "status": "FRAMED__CANDIDATE_CI_PENDING",
+  "parent_evolution_ref": "state/evolution/EVO-20261018-MULTICAUSAL-AUTONOMY-ASSURANCE.json",
+  "governing_outcome": "A single denied/blocked GitHub operation must not end an unfinished UAOS task when separate read-only actions remain authorized; no safety-denied mutation may be rerouted through another provider.",
+  "origin_evidence_refs": [
+    "state/observations/native-account-canary-20261018-first-run.json",
+    "src/uaos/kernel/problem_closure.py#assess_problem_closure",
+    "src/uaos/runtime/finalization.py#admit_final_response",
+    "tests/fixtures/native_entry_holdouts.json"
+  ],
+  "hypotheses": [
+    {
+      "id": "A_GLOBAL_TASK_BLOCK_FROM_LOCAL_WRITE_DENIAL",
+      "status": "SUPPORTED_CODE_GAP",
+      "finding": "hard_blocker can return BLOCKED_WITH_REASON without enumerating separate safe work."
+    },
+    {
+      "id": "B_NATIVE_SKILL_MISSING",
+      "status": "UNVERIFIED",
+      "finding": "One pasted new-chat final reply is not a direct Skill invocation trace."
+    },
+    {
+      "id": "C_USER_SKILL_NOT_INSTALLED",
+      "status": "REJECTED",
+      "finding": "User screenshot and confirmed manual update establish installed presence."
+    }
+  ],
+  "competing_interventions": [
+    {
+      "id": "MORE_PROMPT_BANS",
+      "disposition": "REJECTED_AS_SOLE_FIX"
+    },
+    {
+      "id": "BYPASS_SAFETY_BY_SWITCHING_TOOL",
+      "disposition": "PROHIBITED"
+    },
+    {
+      "id": "SECOND_SCHEDULER_OR_GOVERNANCE_OWNER",
+      "disposition": "REJECTED_AS_DUPLICATION"
+    },
+    {
+      "id": "EXISTING_FINALIZATION_GATE_WITH_INDEPENDENT_CONTINUATION_EVIDENCE",
+      "disposition": "SELECTED_FOR_CANDIDATE_TESTING"
+    },
+    {
+      "id": "DO_NOTHING",
+      "disposition": "REJECTED_FOR_CONTROLLED_RUNTIME_GAP"
+    }
+  ],
+  "implementation_refs": [
+    "ENTRYPOINT.md",
+    "src/uaos/runtime/finalization.py",
+    "tests/runtime/test_blocked_operation_continuation.py",
+    "state/tasks/uaos-inheritance-review-20261018.json"
+  ],
+  "acceptance": [
+    "Controlled finalization rejects ending before permitted independent read-only steps are attempted and evidenced.",
+    "Safety-denied mutation does not become allowed by choosing a different provider.",
+    "Genuine global blocker and lightweight clean turns remain possible.",
+    "Existing owner state/evolution semantics retained.",
+    "Candidate PR, exact-head CI, protected merge, production reread, production CI.",
+    "Do not claim native physical Skill invocation or semantic completeness from these tests."
+  ],
+  "assurance_boundary": "Controlled caller must supply authentic tool observations and a trusted evidence verifier. UAOS repo cannot force ChatGPT native tool/event interception. No additional user installation or identical retest required.",
+  "next_observation": "Opportunistic future authentic fresh-chat trace and task continuation outcome, not a synthetic guarantee."
+}
