@@ -217,8 +217,8 @@
       "tests/runtime/test_controller_epistemic_entry.py",
       "tests/runtime/test_governed_product_outcome_finalization.py"
     ],
-    "current_assurance": "CANONICAL_PYTHON_ADMISSION_CANDIDATE__NATIVE_CHATGPT_INSTALL_AND_MESSAGE_TRACE_UNVERIFIED",
-    "mandatory_next": "Run controlled CI negative/positive test scenarios and independent review, promote only green exact-head; reread main; then evaluate native per-turn evidence and cross-problem transfer. UAOS stays default, Financial remains parked RUNNING.",
+    "current_assurance": "CONTROLLED_PYTHON_ADMISSION_MAIN_AND_PUSH_CI_VERIFIED__NATIVE_CHATGPT_INSTALLED_SKILL_AND_MESSAGE_TRACE_UNVERIFIED",
+    "mandatory_next": "Verify actual selected native-session user/assistant/tool message coverage and autonomous unprompted problem detection; compare current real outcomes against controlled gate. Conduct continuing five-repo controller deep audit and method-source saturation; keep UAOS RUNNING and Financial RUNNING/parked until genuinely accepted.",
     "missing_cross_domain_assurance": "DIRECT_DOMAIN_TURNS_REQUIRE_OWNER_APPROPRIATE_INTEGRATION_AFTER_CONTROLLER_VALIDATION",
     "release": {
       "pr": 118,
