@@ -216,7 +216,7 @@
     "business_outcome": "OPEN"
   },
   "turn_evolution_coverage_20261018": {
-    "status": "CANDIDATE_NOT_ADMITTED_FOR_LIVE_PRODUCT",
+    "status": "CONTROLLED_ENTRY_FINALIZATION_CODE_PROMOTED__NATIVE_AND_OUTCOME_VALIDATION_OPEN",
     "origin": "USER_CORRECTION_AND_AGENT_OWN_PROGRESS_OMISSION",
     "governing_outcome": "Every observed user/assistant/tool/state message is reviewed through existing CognitionCase/DeepTask/Evolution; material faults challenge and route, clean messages receive evidence-backed no-change triage, not a new transaction per sentence.",
     "source_evidence_refs": [
@@ -248,6 +248,17 @@
       "Protected CI, main reread, task/financial continuity preserved"
     ],
     "native_assurance": "ACCOUNT_SKILL_BYTES_AND_NATIVE_MESSAGE_TRACING_UNKNOWN",
-    "cross_domain_admission": "NOT_IN_SCOPE_FOR_THIS_CONTROLLER_FIRST_PR__DIRECT_DOMAIN_RUNTIME_ASSURANCE_OPEN"
+    "cross_domain_admission": "NOT_IN_SCOPE_FOR_THIS_CONTROLLER_FIRST_PR__DIRECT_DOMAIN_RUNTIME_ASSURANCE_OPEN",
+    "release": {
+      "pr": 118,
+      "merge_sha": "f379c00c65c2d128688a651fcda1b1c61713f142",
+      "candidate_ci": 681,
+      "ci_result": "609 passed, 1 skipped",
+      "integration": 390,
+      "push_ci": 682,
+      "push_result": "success",
+      "push_verified_at": "2026-10-18T15:58:51Z"
+    },
+    "post_promotion_falsification": "Do not use the real PR CI as evidence native ChatGPT automatically enumerates all messages. The current user repeatedly observed progress omissions without unprompted self-repair."
   }
 }
