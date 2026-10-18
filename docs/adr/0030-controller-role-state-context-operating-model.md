@@ -1,6 +1,6 @@
 # ADR-0030 — Controller role, reading boundary and iterative learning architecture
 
-Status: **CANDIDATE BOOTSTRAP IMPLEMENTED — NATIVE BEHAVIOR UNVERIFIED**. Scope: UAOS controller ONLY. Supersedes no existing authority. Exact source review: GitHub `main` at `0e2309023cfc21c0325005306eacbd03293fff9c` (2026-10-18).
+Status: **ACCEPTED AS CURRENT BOOTSTRAP GUIDANCE — NATIVE BEHAVIOR UNVERIFIED**. Scope: UAOS controller ONLY. Supersedes no existing authority. Exact source review: GitHub `main` at `0e2309023cfc21c0325005306eacbd03293fff9c` (2026-10-18).
 
 ## 1. Governing outcome, not role-play instructions
 
@@ -75,3 +75,7 @@ User: select goal, supply missing preferences where necessary, approve external/
 Agent: own role interpretation, source/provenance bootstrap, exact progress, independent source learning, architecture tradeoffs, repo/CI governance, defect discovery, follow-up repair, fresh-chat canary results when observable, and truthful blocked/unverified state.
 
 Decision disposition: **PROPOSED OPERATING MODEL CLARIFICATION; NO NEW GOVERNING ENTRY POLICY OR SECOND RUNTIME IS INTRODUCED BY THIS ADR.** Parent controller task remains RUNNING until the real larger goal is met or a genuine blocker is observed.
+
+## 8. Production adoption receipt
+
+The concise role/method/context contract was inserted in the canonical `ENTRYPOINT.md` via PR #102, merged to `main` at `c3f17e239c3ff1e49d828d61cbb614fc4684280a`, and passed production CI #612 (542 passed, 1 skipped). This **adopts guidance for source-based controller bootstrap**, not a new lifecycle or proof that the account-installed Skill invoked it. The user-provided ChatGPT Skills UI screenshot confirms a named Skill is installed, but its byte version and actual native tool-call trace remain UNKNOWN.
