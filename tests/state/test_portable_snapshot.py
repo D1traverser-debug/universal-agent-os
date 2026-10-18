@@ -51,7 +51,7 @@ def test_snapshot_rejects_manifest_traversal_and_duplicate_entries(tmp_path):
     manager, location, _ = _snapshot_fixture(tmp_path)
     path = location / "manifest.json"
     original = json.loads(path.read_text(encoding="utf-8"))
-    for name in ("../outside.txt", "/tmp/escape", "x//y.txt", "x/./y.txt", "x/../y.txt", "C:/escape.txt"):
+    for name in ("../outside.txt", "/tmp/escape", "x//y.txt", "x/./y.txt", "x/../y.txt"):
         compromised = json.loads(json.dumps(original))
         compromised["artifacts"][0]["path"] = name
         path.write_text(json.dumps(compromised), encoding="utf-8")
@@ -113,3 +113,36 @@ def test_restore_rejects_snapshot_and_target_overlap(tmp_path):
             target_artifact_root=tmp_path / "safe-root",
             overwrite=True,
         )
+
+
+def test_existing_version_one_posix_colon_artifact_is_still_restorable(tmp_path):
+    import os
+    if os.name == "nt":
+        pytest.skip("colon is a Windows drive separator")
+    manager, location, artifacts = _snapshot_fixture(tmp_path)
+    source = artifacts / "legal:name.txt"
+    source.write_text("previously valid v1 POSIX filename", encoding="utf-8")
+    backup = tmp_path / "old-version-one-snapshot"
+    manager.create(
+        sqlite_path=tmp_path / "source.db", artifact_root=artifacts,
+        destination=backup, schema_version="1",
+    )
+    assert any(name == "legal:name.txt" for name, _, _ in manager.verify(backup).artifacts)
+    restored_db = tmp_path / "target.db"
+    restored_artifacts = tmp_path / "target-artifacts"
+    manager.restore(snapshot=backup, target_sqlite=restored_db,
+                    target_artifact_root=restored_artifacts)
+    assert (restored_artifacts / "legal:name.txt").read_text(encoding="utf-8") == "previously valid v1 POSIX filename"
+
+
+def test_windows_drive_path_is_not_admitted_on_windows(tmp_path):
+    import os, json
+    if os.name != "nt":
+        pytest.skip("POSIX permits colon path components for v1 compatibility")
+    manager, location, _ = _snapshot_fixture(tmp_path)
+    manifest = location / "manifest.json"
+    payload = json.loads(manifest.read_text(encoding="utf-8"))
+    payload["artifacts"][0]["path"] = "C:/escape.txt"
+    manifest.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="Windows snapshot artifact path"):
+        manager.verify(location)
