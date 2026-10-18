@@ -307,6 +307,17 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
         if entry_receipt.work_remaining and not context.work_remaining_without_user_input:
             raise FinalizationBlocked("UNROUTED_UNFINISHED_AUTHORIZED_WORK")
 
+    # When the controller's selected entry identifies an exact task, the
+    # controlled host cannot skip task-to-visible-progress reconciliation by
+    # omitting the resolver. Controller-root/index-only entries have no task.
+    if context.controller_selected and context.controller_epistemic_entry is not None:
+        exact_task_ref = context.controller_epistemic_entry.state_ref
+        if exact_task_ref.startswith("state/tasks/"):
+            if context.authoritative_task_ref != exact_task_ref:
+                raise FinalizationBlocked("CONTROLLER_TASK_PROGRESS_SOURCE_NOT_BOUND")
+            if context.read_authoritative_task is None:
+                raise FinalizationBlocked("CONTROLLER_TASK_PROGRESS_READER_MISSING")
+
     # A tool-level block is an operation-local finding, never automatically a
     # task-global blocker. Continue independently authorized work, but do not
     # reroute safety-denied mutations through another tool/provider.
