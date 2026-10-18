@@ -3,8 +3,8 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "status": "RUNNING",
-  "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Continue UAOS-only empirical selected-controller verification opportunistically on actual future usage. Direct Skill load and raw tool traces remain unverified; current GitHub controlled gate passes CI and no account reinstallation or repeat canary is required. Continue multi-factor architecture learning and source-grounded effects beyond this one fix.",
+  "current_stage": "CONTROLLER_FIRST_SYSTEMIC_METHOD_REUSE_AND_DEEP_KNOWLEDGE_AUDIT__EVALUATION_OPEN",
+  "next_action": "Controller-first: compare current inherited lessons/knowledge acquisition source roles and practical reuse against actual mechanisms; make bounded owner-native code/test changes, CI/production reread, then register untested native/product open outcomes. Once governed controller task is genuinely complete, restore Financial as only default and resume exact state without new request.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -20,7 +20,7 @@
     "state/observations/uaos-multicausal-autonomous-learning-20261018.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-18T16:50:52+08:00",
+  "updated_at": "2026-10-18T22:16:00+08:00",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -113,5 +113,13 @@
       "ci_result": "554 passed, 1 skipped"
     },
     "subordinate_task_status": "COMPLETE_BOUNDED_REPAIR"
+  },
+  "user_directive_20261018": {
+    "controller_first": true,
+    "why": "User demands comprehensive method abstraction from ops/CRUD/inheritance/architecture/CI/cognition/evolution/unknown discovery and reusing past lessons without repeated correction; no one-reply fake total closure.",
+    "mandatory_followup_task": "uaos:maintenance:financial-system-governed-recovery-20261018",
+    "followup_state_ref": "state/tasks/uaos-financial-system-governed-recovery-20261018.json",
+    "completion_handoff": "AFTER_EVIDENCE_GROUNDED_CONTROLLER_TASK_CLOSURE_UPDATE_EXISTING_CONTROLLER_INDEX_ONE_DEFAULT_TO_FINANCIAL_AND_REREAD_ITS_EXACT_STATE",
+    "native_execution_ceiling": "REPO_CODE_AND_SKILL_DO_NOT_GUARANTEE_NATIVE_CHATGPT_HOOK"
   }
 }
