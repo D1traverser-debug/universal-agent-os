@@ -32,8 +32,10 @@ def test_controller_review_is_projected_into_native_hot_path():
     assert compiled == profile
     review = profile["turn_contract"]["controller_inheritance_review"]
     assert review["required"]
-    assert review["minimum_entry"] == session["controller_inheritance_review"]["minimum_entry"]
-    assert "cannot physically force" in review["host_boundary"]
+    assert review["trigger"] == session["controller_inheritance_review"]["trigger"]
+    assert review["coverage_rule"] == session["controller_inheritance_review"]["coverage_rule"]
+    assert len((ROOT / "config/NATIVE_SESSION_RUNTIME_PROFILE.json").read_text(encoding="utf-8")) <= 12000
+    assert "cannot physically force" in session["controller_inheritance_review"]["host_boundary"]
 
 
 def test_review_reuses_exactly_one_existing_controller_task_authority():
