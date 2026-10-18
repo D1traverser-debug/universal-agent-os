@@ -66,7 +66,13 @@ def test_health_index_is_non_authoritative_cache_and_current_system_does_not_dup
         assert _version_tuple(observed["common_behavior_assurance_min"]) >= (1, 3, 0)
         assert observed["production_ci"]["conclusion"] == "success"
         assert "OWNER_NATIVE" in observed["common_behavior_assurance"]
-        assert observed["findings"] == []
+        if domain_id == "financial_writing":
+            finding_types = {item["type"] for item in observed["findings"]}
+            assert finding_types == {"PRODUCT_OUTCOME_VALIDATION_GAP"}
+            assert observed["product_outcome_assurance"]["status"].startswith("OPEN")
+            assert observed["product_outcome_assurance"]["source_revision"] == observed["observed_main_commit"]
+        else:
+            assert observed["findings"] == []
 
     release_floors = {
         "financial_writing": (1, 0, 1),
