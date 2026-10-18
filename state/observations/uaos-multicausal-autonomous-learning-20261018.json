@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.0",
+  "id": "uaos-multicausal-autonomous-learning-20261018",
+  "authority": "UAOS",
+  "status": "MULTI_CAUSAL_ANALYSIS_IN_PROGRESS__PRODUCTION_OUTCOME_UNVERIFIED",
+  "source_head": "b64e8eaa95a522b12035fb45c4d00369ace4d294",
+  "governing_outcome": "Self-triggered controller review without user reminders, multi-factor falsification, comprehensive method acquisition, owner-bound changes, independent verification and durable reusable learning.",
+  "user_observed_failure": "Repeated reminder-driven follow-up, causal premature closure and shallow unverified cross-disciplinary acquisition.",
+  "causal_candidates": [
+    {
+      "id": "SEMANTIC_REQUIREMENT_TO_WORK_ROOT_GAP",
+      "status": "SOURCE_CONFIRMED_PARTIAL_GAP",
+      "evidence": [
+        "src/uaos/contracts/requirements.py",
+        "src/uaos/contracts/planning.py",
+        "tests/kernel/test_replanning.py",
+        "state/observations/uaos-requirement-impact-chain-20261018.json"
+      ],
+      "falsifier": "Independent semantic requirement-to-work-root mapper exists in another owner; full suite shows correct cross-owner mapping."
+    },
+    {
+      "id": "NATIVE_HOST_SEMANTIC_HOOK_ABSENT",
+      "status": "HOST_BOUNDARY_CONFIRMED__ACTUAL_PER_TURN_ACTIVATION_UNKNOWN",
+      "evidence": [
+        "config/HOST_PROFILES.json",
+        "config/SESSION_INTERACTION_POLICY.json",
+        "src/uaos/runtime/finalization.py"
+      ],
+      "falsifier": "Observable product-level pre-send/pre-tool traces prove unavoidable selected-session invocation."
+    },
+    {
+      "id": "AUTONOMOUS_TASK_CONTINUATION_GAP",
+      "status": "VISIBLE_CONVERSATION_FAILURE__SCHEDULER_CAUSE_UNPROVEN",
+      "evidence": [
+        "state/tasks/uaos-inheritance-review-20261018.json",
+        "src/uaos/runtime/finalization.py",
+        "tests/runtime/test_finalization_gate.py"
+      ],
+      "falsifier": "Independent native traces show automatic next-work selection and closure without further user nudge."
+    },
+    {
+      "id": "KNOWLEDGE_BREADTH_AND_SATURATION_NOT_ADMITTED",
+      "status": "EVIDENCE_CONFIRMED__PRIOR_RESEARCH_SHALLOW",
+      "evidence": [
+        "config/DEEP_TASK_EXECUTION_PROFILE.json",
+        "src/uaos/kernel/problem_space.py",
+        "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md"
+      ],
+      "falsifier": "A real source-role, expansion, contradiction, saturation and holdout receipt for the requested deep body of knowledge exists and passes comprehensive admission."
+    },
+    {
+      "id": "AUDIT_COMPLETION_EVIDENCE_WEAK",
+      "status": "CODE_CONFIRMED__CANDIDATE_REPAIR_IN_PROGRESS",
+      "evidence": [
+        "src/uaos/assurance/controller_review.py",
+        "tests/architecture/test_controller_review_admission.py"
+      ],
+      "falsifier": "Full review cannot pass on stale source heads and unadmitted research even when superficial fields are marked deep."
+    },
+    {
+      "id": "POST_PROMOTION_EFFECTS_AND_NEW_REQUIREMENTS_UNOBSERVED",
+      "status": "SUPPORTED_OPEN_EVIDENCE",
+      "evidence": [
+        "state/observations/uaos-controller-five-repo-review-20261018.json",
+        "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json"
+      ],
+      "falsifier": "Fresh runtime/business outcomes, derived constraints and reread evidence are linked to exact action versions across relevant owners."
+    },
+    {
+      "id": "USER_INPUT_TREATED_AS_CAUSAL_AUTHORITY",
+      "status": "VISIBLE_CONVERSATION_FAILURE__INTERNAL_MODEL_CAUSE_UNKNOWN",
+      "evidence": [
+        "config/INTENT_RESOLUTION_POLICY.json",
+        "state/observations/uaos-requirement-impact-chain-20261018.json"
+      ],
+      "falsifier": "Fresh adversarial prompts independently show user mechanism suggestions are challenged even without explicit correction."
+    },
+    {
+      "id": "CONTEXT_COST_OR_TOOL_WRITE_BARRIER",
+      "status": "CONTRIBUTORY_CANDIDATE_NOT_PROVEN",
+      "evidence": [
+        "config/DEEP_TASK_EXECUTION_PROFILE.json",
+        "state/tasks/uaos-inheritance-review-20261018.json"
+      ],
+      "falsifier": "Same failures reproduced with healthy tool access and larger context/time budgets; inspect controlled runs instead of asserting causation."
+    },
+    {
+      "id": "SENSOR_EFFECTOR_FEEDBACK_WIRING_GAP",
+      "status": "RESEARCH_MOTIVATED_HYPOTHESIS__NATIVE_WIRING_UNKNOWN",
+      "evidence": [
+        "IBM https://research.ibm.com/publications/an-architectural-approach-to-autonomic-computing",
+        "config/HOST_PROFILES.json",
+        "src/uaos/runtime/finalization.py"
+      ],
+      "falsifier": "A verified selected-controller native sensor-to-effector-to-observation trace exists for each required transition, without user prompts."
+    }
+  ],
+  "competing_architectures": [
+    {
+      "id": "ONE_ROOT_ONE_LOCAL_PATCH",
+      "decision": "REJECTED",
+      "tradeoff": "Fast but silently ignores contributing factors."
+    },
+    {
+      "id": "FULL_REPO_AND_WEB_REREAD_EVERY_TURN",
+      "decision": "REJECTED_AS_SOLE_METHOD",
+      "tradeoff": "Huge cost without proving unseen host effects or dynamic impacts."
+    },
+    {
+      "id": "ADD_MORE_PROMPT_RULES_OR_NEW_RESEARCH_OS",
+      "decision": "REJECTED_AS_SOLE_METHOD",
+      "tradeoff": "Creates duplicated authority, cannot guarantee native interception."
+    },
+    {
+      "id": "REUSE_CURRENT_KERNEL_COVERAGE_AND_CANONICAL_LEARNING_OWNER_WITH_EVIDENCE_BASED_CONTINUATION",
+      "decision": "SELECTED_CANDIDATE",
+      "tradeoff": "Preserves owners and makes tests stronger; still requires native runtime observation."
+    },
+    {
+      "id": "NO_CHANGE",
+      "decision": "NEGATIVE_CONTROL_ONLY",
+      "tradeoff": "Keeps confirmed weak audit completion assurance."
+    }
+  ],
+  "research": {
+    "method_doc": "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md",
+    "source_families": [
+      "NASA bidirectional traceability",
+      "MIT CAST systems causality",
+      "SEI ATAM and continuous architectural evolution",
+      "NIST AI RMF and PDCA",
+      "Google SRE postmortem, monitoring",
+      "OpenAI agent workflow evals",
+      "IBM autonomic computing MAPE-K (monitor/analyze/plan/execute/knowledge)"
+    ],
+    "method_dispositions": "COMPARE_AND_ADAPT_EXISTING_OWNERS__NO_NEW_COGNITION_RESEARCH_OR_EVOLUTION_OWNER",
+    "source_roles": [
+      "PRIMARY_STANDARD_OR_GUIDANCE",
+      "INDEPENDENT_PROFESSIONAL_METHOD",
+      "CURRENT_REPOSITORY_SOURCE",
+      "REAL_OBSERVED_FAILURE"
+    ],
+    "expansion_rounds_completed": 3,
+    "saturation": "NOT_ESTABLISHED__ROUNDS_2_AND_3_DISCOVERED_NEW_MATERIAL_FAMILIES",
+    "limitations": [
+      "Cannot search every web page or independently verify all extant methods",
+      "Two nonnovel terminal expansion rounds not yet shown",
+      "No fresh product-internal native ChatGPT trace"
+    ],
+    "missing_followup_lenses": [
+      "double-loop organizational learning",
+      "fault-injection and FMEA/STPA differences",
+      "traced native-run independent negative/positive case"
+    ]
+  },
+  "action_evidence": {
+    "candidate_gate": "src/uaos/assurance/controller_review.py",
+    "candidate_tests": "tests/architecture/test_controller_review_admission.py",
+    "tests_required": [
+      "Reject deep-completion with stale/unverified current repository heads",
+      "Reject deep-completion when comprehensive research assessment is missing or shallow",
+      "Positive synthetic gate control distinct from actual native success"
+    ]
+  },
+  "required_followups": [
+    "Independent external-method expansion until evidence-bound saturation, not arbitrary web page counts",
+    "Evaluate additional interacting factors using realistic negative cases",
+    "Instrumented native host trace or honest unobserved status",
+    "Owner-bound requirement derivation/impact and post-action consequence analysis",
+    "Revision-linked status and next steps retained in existing controller task",
+    "Compare MAPE-K sensor/effector requirements against observable native host capabilities and domain review execution; keep physical limitations explicit."
+  ],
+  "conclusion": "NO_UNIVERSAL_ROOT_CAUSE_OR_COMPLETE_RESEARCH_CLAIM__ACTIONABLE_COVERAGE_GATE_DEFECT_UNDER_EVALUATION"
+}
