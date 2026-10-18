@@ -461,23 +461,6 @@
           "review": "COMPLETED_NO_FINDINGS",
           "main_source_reread": true
         }
-      },
-      {
-        "source": "stablyai/orca",
-        "ref": "docs/research/uaos-inheritance-review-20261018/13_orca_multi_agent_execution_orchestration_source_learning.md",
-        "upstream_main_sha": "c7942252b58bca576867ca77f14908519e9a6702",
-        "status": "GOVERNED_SOURCE_DOSSIER_CANDIDATE__PROMOTION_OPEN",
-        "method_cards": [
-          "ORC-01",
-          "ORC-02",
-          "ORC-03",
-          "ORC-04",
-          "ORC-05",
-          "ORC-06",
-          "ORC-07",
-          "ORC-08",
-          "ORC-09"
-        ]
       }
     ],
     "pending_source_dossier": {
@@ -503,7 +486,7 @@
         "DEFAULT_SKIP_PERMISSION_LAUNCH_UNSAFE_FOR_UAOS_MUTATIONS",
         "NO_NATIVE_CHATGPT_ORCA_MULTI_AGENT_EFFECTOR_VERIFIED"
       ],
-      "promotion_rule": "After PR exact-head CI + independent review + main reread, update completed_source_dossiers/source history/current source atomically in a governed continuity change; never couple Hindsight production_evidence to Orca before then."
+      "promotion_rule": "Pending item remains ONLY under pending_source_dossier until current-head PR CI/review and production reread. A separate governed continuity change will append to source_dossier_history, bind Orca's own production_evidence and current source after promotion; historical Hindsight receipt is immutable."
     }
   }
 }
