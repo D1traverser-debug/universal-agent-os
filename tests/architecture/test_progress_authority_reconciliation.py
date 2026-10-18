@@ -131,7 +131,11 @@ def test_progress_identity_requires_exact_match_not_substring_or_negation():
 
 
 def test_status_cli_handles_controller_root_and_still_rejects_two_defaults(tmp_path, monkeypatch):
-    from scripts import uaos_status
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("uaos_status", ROOT / "scripts" / "uaos_status.py")
+    assert spec and spec.loader
+    uaos_status = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(uaos_status)
     monkeypatch.setattr(uaos_status, "ROOT", tmp_path)
     (tmp_path / "state").mkdir()
     (tmp_path / "docs" / "assurance").mkdir(parents=True)
