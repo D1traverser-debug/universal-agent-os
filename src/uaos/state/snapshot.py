@@ -39,8 +39,12 @@ def _safe_artifact_name(name: object) -> PurePosixPath:
     if not isinstance(name, str) or not name or "\\" in name:
         raise ValueError("invalid snapshot artifact path")
     parts = name.split("/")
-    if any(part in ("", ".", "..") or ":" in part for part in parts):
+    if any(part in ("", ".", "..") for part in parts):
         raise ValueError("invalid snapshot artifact path")
+    # Version-1 POSIX snapshots historically allow colons in filenames. Reject
+    # drive-like segments only on Windows where Path interprets them as drives.
+    if os.name == "nt" and any(":" in part for part in parts):
+        raise ValueError("invalid Windows snapshot artifact path")
     relative = PurePosixPath(name)
     if relative.is_absolute() or relative.as_posix() != name:
         raise ValueError("noncanonical snapshot artifact path")
