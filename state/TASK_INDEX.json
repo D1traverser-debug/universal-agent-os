@@ -3,7 +3,7 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-18T21:18:00+08:00",
+  "updated_at": "2026-10-18T22:16:00+08:00",
   "controller_tasks": [
     {
       "task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
@@ -12,8 +12,8 @@
       "display_name_zh": "总控专项｜全权治理财经写作系统的真实质量与结果闭环",
       "status": "RUNNING",
       "resume_eligible": true,
-      "default_resume": true,
-      "semantic_summary": "UAOS explicitly acts as the Financial Writing professional and directly receives material in this controller chat. Parent expert-role/entry/report is source-persisted and code CI verified via PR#110, main 92363544, CI#636 (574 passed, 1 skipped). Historical Word audits and original-source limitations, 267 blob inventory vs incomplete per-file deep certification, user rejection and selected article v3 RESEARCH retained. Still must do real source-grounded current Deep/Broad/Word and non-self-attested outcome; child code test write was blocked, unproven; do not switch Agent to child or ask user to restate known requirements.",
+      "default_resume": false,
+      "semantic_summary": "PRESERVED RUNNING CONTINUATION: Parent UAOS explicitly owns Financial Writing outcome after controller-wide method-first repair. Resume exact state/tasks/uaos-financial-system-governed-recovery-20261018.json when active controller review closes, do not switch to child or create a replacement. Active child cross-border v3 remains RESEARCH, real reader/Word acceptance open.",
       "current_stage": "UAOS_FINANCIAL_PROFESSIONAL_ENTRY_PRODUCTION_VERIFIED__CURRENT_CHILD_ARTICLE_AND_STYLE_OUTCOME_OPEN",
       "state_ref": "state/tasks/uaos-financial-system-governed-recovery-20261018.json"
     },
@@ -24,8 +24,8 @@
       "display_name_zh": "总控继承｜五仓深审与跨学科持续改进",
       "status": "RUNNING",
       "resume_eligible": true,
-      "default_resume": false,
-      "semantic_summary": "UAOS epistemic gate and operating method deployed to main; user confirms installed Skill updated before one native fresh-chat inheritance canary. Response matches current main identity and reports unprompted source review, but no direct Skill/tool trace is available and authorized repair did not reach durable closure after a reported tool write block. Real canary evidence preserved. Parent deep audit remains RUNNING; Agent owns next remediation, no repeated user installation or identical canary required. Explicit UAOS user-governed Financial Writing outcome rehabilitation became the selected controller default; this broader deep system audit stays resumable, not cancelled.",
+      "default_resume": true,
+      "semantic_summary": "CURRENT DEFAULT: UAOS controller-wide methodology, knowledge classification and transfer, autonomous issue-branch discovery and governed implementation before returning to the preserved Financial Writing parent-governed recovery. Source prior five-repo review; code/test/runtime evidence are separate. On completion reselect finance task ID from its exact state and restore one default; no new controller/duplicate state.",
       "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
       "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
     },
@@ -203,5 +203,13 @@
       "current_stage": "READY_FOR_GENERIC_OR_EXPLICIT_CHILD_PROJECT__IDENTITY_DECOUPLED",
       "state_ref": "state/tasks/video-main.json"
     }
-  ]
+  ],
+  "controller_default_handoff": {
+    "active_task_id": "uaos:maintenance:inheritance-review-20261018",
+    "return_task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
+    "user_directive_ref": "UAOS_CURRENT_CHAT_20261018_CONTROLLER_FIRST_THEN_FINANCIAL",
+    "order": "FINISH_CONTROLLER_GOVERNED_REPAIR_AND_EVIDENCE_FIRST__RESTORE_FINANCIAL_DEFAULT_WITH_EXACT_STATE_AFTERWARD",
+    "financial_checkpoint_ref": "state/tasks/uaos-financial-system-governed-recovery-20261018.json",
+    "assurance": "CONTINUITY_METADATA_ONLY__NOT_AUTOMATIC_BACKGROUND_EXECUTION"
+  }
 }
