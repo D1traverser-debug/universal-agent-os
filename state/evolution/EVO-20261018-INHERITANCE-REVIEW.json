@@ -57,7 +57,13 @@
     "docs/research/uaos-inheritance-review-20261018/08_operational_method_transfer_taxonomy.md",
     "tests/kernel/test_method_transfer_admission.py",
     "src/uaos/runtime/finalization.py",
-    "tests/runtime/test_finalization_gate.py"
+    "tests/runtime/test_finalization_gate.py",
+    "ENTRYPOINT.md",
+    "skills/uaos-controller-runtime/SKILL.md",
+    "src/uaos/runtime/epistemic_entry.py",
+    "tests/runtime/test_controller_epistemic_entry.py",
+    "tests/architecture/test_cognition_case_transaction.py",
+    "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -133,5 +139,38 @@
       "postmerge_push_ci": "UNVERIFIED"
     },
     "acceptance_ceiling": "No executed native Skill trace, independent workflow replay, general knowledge search saturation, or Financial reader outcome. Remains open alongside old deep review; product claim forbidden."
+  },
+  "controller_entry_method_delta_20261018": {
+    "status": "CANDIDATE_UNVERIFIED",
+    "origin_kind": "CAPABILITY_GAP",
+    "study_ref": "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
+    "governing_outcome": "UAOS independently routes freshly observed tool evidence and applies source-grounded method recall to first major systemic failures rather than awaiting repeated user corrections",
+    "hypotheses": [
+      {
+        "id": "TOOL_FACT_EXCLUDED_FROM_ENTRY",
+        "assessment": "SOURCE_CONFIRMED"
+      },
+      {
+        "id": "FIRST_SYSTEMIC_NO_METHOD_TRANSFER",
+        "assessment": "SOURCE_CONFIRMED"
+      },
+      {
+        "id": "HOST_NATIVE_INVOCATION",
+        "assessment": "UNVERIFIED_COFACTOR"
+      }
+    ],
+    "no_change_tradeoff": "Leaves tool discoveries and first material systemic failures under-escalated",
+    "alternative_rejected": "Install duplicate manager, standalone memory OS or copied prose rule without enforcement",
+    "acceptance": [
+      "Verified tool-result contradiction triggers controlled cognition",
+      "Material tool-result research gap triggers Deep Task",
+      "User analysis or synthetic scenario cannot self-assert tool fact",
+      "First material systemic failure requires method fit/misfit/no-match",
+      "One-off local case remains low-cost",
+      "Generated Skill and profile equal canonical source",
+      "Candidate CI, protected promotion, main reread",
+      "Native behavior remains unverified until real host trace"
+    ],
+    "assurance": "NO_NATIVE_PHYSICAL_INTERCEPTION_CLAIM"
   }
 }
