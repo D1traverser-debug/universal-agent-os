@@ -21,6 +21,8 @@ def test_holdout_corpus_covers_entry_escalation_autonomy_and_near_misses():
         "narrow_known_lookup",
         "systemic_repeat",
         "no_information_continuation",
+        "previously_delivered_account_assets",
+        "detected_repairable_problem_not_merely_explained",
         "near_miss_non_uaos",
     }
     assert required <= set(cases)
@@ -49,3 +51,23 @@ def test_holdouts_distinguish_comprehensive_learning_from_narrow_known_lookup():
     narrow = " ".join(cases["narrow_known_lookup"]["expected"])
     assert "comprehensive knowledge acquisition required" in broad
     assert "remains lightweight" in narrow
+
+
+def test_holdouts_make_account_asset_recovery_independent_of_library_retention():
+    cases = {item["id"]: item for item in _holdouts()}
+    recovery = cases["previously_delivered_account_assets"]
+    expected = " ".join(recovery["expected"]).lower()
+    forbidden = " ".join(recovery["forbidden"]).lower()
+    assert "previously delivered" in expected
+    assert "canonical github" in expected
+    assert "actual installed account ui" in expected
+    assert "ask user to paste" in forbidden
+
+
+def test_holdouts_require_action_after_repairable_governance_detection():
+    cases = {item["id"]: item for item in _holdouts()}
+    repair = cases["detected_repairable_problem_not_merely_explained"]
+    expected = " ".join(repair["expected"]).lower()
+    forbidden = " ".join(repair["forbidden"]).lower()
+    assert "candidate branch pr checks and production reread" in expected
+    assert "diagnosis and suggestions alone" in forbidden
