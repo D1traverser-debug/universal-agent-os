@@ -42,6 +42,67 @@ class FinalizationBlocked(RuntimeError):
 
 
 @dataclass(frozen=True, slots=True)
+class PermittedContinuationStep:
+    """Host-observed, independently authorized work after one blocked operation.
+
+    A safety-denied write can never be substituted with a differently named write.
+    Reference verification belongs to the controlled host, not the model text.
+    """
+    action_ref: str
+    admission_ref: str
+    read_only: bool
+    attempted: bool = False
+    outcome_evidence_ref: str | None = None
+
+    def __post_init__(self) -> None:
+        if not self.action_ref.strip() or not self.admission_ref.strip():
+            raise ValueError("continuation action requires source-backed authority")
+        if self.attempted != bool(self.outcome_evidence_ref):
+            raise ValueError("continuation attempt and outcome evidence must agree")
+
+
+@dataclass(frozen=True, slots=True)
+class BlockedOperationContinuity:
+    """Evidence to evaluate whether a *specific* operation block truly ends work."""
+    blocked_operation_ref: str
+    blocker_evidence_ref: str
+    checkpoint_ref: str
+    safety_denial: bool
+    remaining_permitted_steps: tuple[PermittedContinuationStep, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not all((
+            self.blocked_operation_ref.strip(),
+            self.blocker_evidence_ref.strip(),
+            self.checkpoint_ref.strip(),
+        )):
+            raise ValueError("blocked operation requires specific evidence and a resumable checkpoint")
+        refs = [step.action_ref for step in self.remaining_permitted_steps]
+        if len(refs) != len(set(refs)):
+            raise ValueError("duplicate continuation step")
+
+
+def _require_blocked_operation_continuity(
+    case: BlockedOperationContinuity,
+    evidence_verifier: Callable[[str], bool],
+) -> None:
+    refs = (
+        case.blocked_operation_ref, case.blocker_evidence_ref, case.checkpoint_ref,
+    )
+    if not all(evidence_verifier(ref) for ref in refs):
+        raise FinalizationBlocked("BLOCKED_OPERATION_EVIDENCE_UNVERIFIED")
+    for step in case.remaining_permitted_steps:
+        if not all(evidence_verifier(ref) for ref in (step.action_ref, step.admission_ref)):
+            raise FinalizationBlocked("BLOCKED_OPERATION_ALTERNATIVE_NOT_ADMITTED")
+        if case.safety_denial and not step.read_only:
+            raise FinalizationBlocked("SAFETY_DENIED_MUTATION_MUST_NOT_BE_REROUTED")
+        if not step.attempted:
+            raise FinalizationBlocked("PERMITTED_INDEPENDENT_WORK_UNATTEMPTED")
+        if not step.outcome_evidence_ref or not evidence_verifier(step.outcome_evidence_ref):
+            raise FinalizationBlocked("PERMITTED_INDEPENDENT_WORK_OUTCOME_UNVERIFIED")
+
+
+@dataclass(frozen=True, slots=True)
 class FinalizationContext:
     """Evidence supplied by the runtime before a response may be finalized."""
 
@@ -57,6 +118,8 @@ class FinalizationContext:
     controller_selected: bool = False
     controller_epistemic_entry: ControllerEpistemicEntry | None = None
     entry_evidence_verifier: Callable[[str], bool] | None = None
+    blocked_tool_operation_observed: bool = False
+    blocked_operation_continuity: BlockedOperationContinuity | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -227,6 +290,20 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
             raise FinalizationBlocked("UNROUTED_MATERIAL_KNOWLEDGE_GAP")
         if entry_receipt.work_remaining and not context.work_remaining_without_user_input:
             raise FinalizationBlocked("UNROUTED_UNFINISHED_AUTHORIZED_WORK")
+
+    # A tool-level block is an operation-local finding, never automatically a
+    # task-global blocker. Continue independently authorized work, but do not
+    # reroute safety-denied mutations through another tool/provider.
+    if context.controller_selected and context.blocked_tool_operation_observed:
+        if context.blocked_operation_continuity is None:
+            raise FinalizationBlocked("MISSING_BLOCKED_OPERATION_CONTINUATION_EVIDENCE")
+        if context.entry_evidence_verifier is None:
+            raise FinalizationBlocked("MISSING_BLOCKED_OPERATION_EVIDENCE_VERIFIER")
+        _require_blocked_operation_continuity(
+            context.blocked_operation_continuity, context.entry_evidence_verifier
+        )
+    elif context.blocked_operation_continuity is not None:
+        raise FinalizationBlocked("BLOCKED_OPERATION_EVIDENCE_WITHOUT_CONTROLLED_TRIGGER")
 
     if context.work_remaining_without_user_input and not context.user_input_required:
         raise FinalizationBlocked("ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT")

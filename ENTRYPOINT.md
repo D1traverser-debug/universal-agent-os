@@ -160,6 +160,10 @@ Normal execution obeys `config/RETRIEVAL_POLICY.json` and uses current authority
 
 Search presence is not authority. Retrieval starts from `config/SYSTEM_MAP.json` -> registry -> selected domain/controller metadata -> current binding/business authority.
 
+## Operation-local blockers
+
+A denied tool call is evidence about that **specific operation**, not proof that the entire UAOS objective is blocked. On a blocked GitHub branch/write: honor the denial and do not retry the same prohibited mutation through another provider or renamed request; independently check which authorized read-only research, current-source verification, alternative causal tests, and checkpoint work remain. Execute and verify those independent actions before declaring a task-level blocker, or preserve a precise resumable checkpoint if none are possible. Controlled callers provide `FinalizationContext.blocked_tool_operation_observed` and `BlockedOperationContinuity` to the **existing** finalization gate; a user-facing error message or policy text does not establish native host mediation. This supplements, rather than replaces, existing safety and action-authority checks.
+
 ## Continuation
 
 - exact current task/project identity wins when explicitly supplied;

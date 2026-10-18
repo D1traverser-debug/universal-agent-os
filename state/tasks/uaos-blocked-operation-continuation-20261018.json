@@ -1,0 +1,19 @@
+{
+  "task_id": "uaos:maintenance:blocked-operation-continuation-20261018",
+  "authority_context": "UAOS",
+  "task_type": "controller_maintenance",
+  "parent_task_id": "uaos:maintenance:inheritance-review-20261018",
+  "default_resume": false,
+  "status": "RUNNING",
+  "current_stage": "CONTROLLED_FINALIZATION_CANDIDATE_CI_REVIEW",
+  "evolution_ref": "state/evolution/EVO-20261018-CONTROLLER-BLOCKED-OPERATION-CONTINUITY.json",
+  "governing_outcome": "Operation-local tool denial cannot falsely terminate an unfinished UAOS controller task while independent permitted work remains, and may not be evaded by changing provider.",
+  "origin_evidence_ref": "state/observations/native-account-canary-20261018-first-run.json",
+  "implementation_refs": [
+    "ENTRYPOINT.md",
+    "src/uaos/runtime/finalization.py",
+    "tests/runtime/test_blocked_operation_continuation.py"
+  ],
+  "next_action": "Continue candidate CI and protected promotion; independently validate safety-denied mutation cannot be rerouted; after production reread mark only this bounded subtask COMPLETE while parent remains RUNNING.",
+  "assurance": "CONTROLLED_HOST_EVIDENCE_ONLY__NOT_NATIVE_CHATGPT_PHYSICAL_TOOL_HOOK"
+}
