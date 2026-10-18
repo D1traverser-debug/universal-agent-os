@@ -460,6 +460,8 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
             raise FinalizationBlocked("UNROUTED_POST_DRAFT_SYSTEM_OR_RULE_CONTRADICTION")
         if review.material_knowledge_gap_observed and not deep_required:
             raise FinalizationBlocked("UNROUTED_POST_DRAFT_KNOWLEDGE_GAP")
+        if review.unfinished_authorized_work_observed and not context.work_remaining_without_user_input:
+            raise FinalizationBlocked("UNROUTED_POST_DRAFT_UNFINISHED_AUTHORIZED_WORK")
         if (
             review.hypothesis_challenge_required
             and not (
