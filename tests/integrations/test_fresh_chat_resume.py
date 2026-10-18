@@ -253,3 +253,49 @@ def test_fresh_chat_binding_validator_schema_contract_covers_all_registered_doma
                 "Parent cognition authority: `config/DELIBERATION_POLICY.json`."
             ),
         )
+
+
+def test_task_index_is_projection_of_exact_task_files_and_unindexed_records_are_historical_children():
+    """No second source of task identity/status/stage may silently drift or be a resume target."""
+    index = _load_json("state/TASK_INDEX.json")
+    items = [*index.get("tasks", []), *index.get("controller_tasks", [])]
+    refs = [item["state_ref"] for item in items]
+    assert len(refs) == len(set(refs))
+    identities = {item["task_id"] for item in items}
+    assert len(identities) == len(items)
+
+    for item in items:
+        ref = item["state_ref"]
+        assert ref.startswith("state/tasks/") and ".." not in Path(ref).parts
+        state = _load_json(ref)
+        for key in ("task_id", "authority_context", "status", "current_stage"):
+            if key in state and key in item:
+                assert item[key] == state[key], (ref, key, item[key], state[key])
+
+    for file in (ROOT / "state" / "tasks").glob("*.json"):
+        relative_ref = file.relative_to(ROOT).as_posix()
+        if relative_ref in refs:
+            continue
+        state = _load_json(relative_ref)
+        # These are linked, completed implementation receipts; NOT competing live
+        # task authorities. An unindexed RUNNING/default target is a release defect.
+        assert state["status"] == "COMPLETE", relative_ref
+        assert state.get("parent_task_id") in identities, relative_ref
+        assert state.get("default_resume") is not True, relative_ref
+        assert state.get("resume_eligible") is not True, relative_ref
+
+
+def test_superseded_design_and_native_install_snapshots_cannot_be_read_as_current_authority():
+    handoff = (ROOT / "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md").read_text(encoding="utf-8")
+    assert "历史部署交接记录" in handoff
+    assert "Historical source baseline" in handoff
+    assert "state/observations/native-account-install-handoff-20261018.json" in handoff
+    assert "not live source identities" in handoff
+
+    handoff_obs = _load_json("state/observations/native-account-install-handoff-20261018.json")
+    assert handoff_obs["latest_repo_skill_generation_20261018"]["installed_skill_blob_status"].startswith("UNKNOWN")
+
+    for version in ("v1", "v1.1"):
+        blueprint = (ROOT / f"docs/architecture/ARCHITECTURE_BLUEPRINT_{version}.md").read_text(encoding="utf-8")
+        assert "Historical" in blueprint.splitlines()[2]
+        assert "CURRENT_SYSTEM.json" in blueprint.splitlines()[2]

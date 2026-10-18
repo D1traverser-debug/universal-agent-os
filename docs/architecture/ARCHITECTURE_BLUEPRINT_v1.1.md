@@ -1,5 +1,7 @@
 # Clean-Slate v4 Architecture Blueprint v1.1 — Local-First Default
 
+> **Historical local-first architecture delta (v1.1), not a competing current execution policy.** This document extends the historical v1.0 design; use `CURRENT_SYSTEM.json`, `config/SYSTEM_MAP.json`, `config/AUTHORITY_WRITE_POLICY.json` and current owner contracts for present-day effects and writes. Frozen Requirements v1.0/v1.1 retain their independent requirement provenance.
+
 Requirements authority: Frozen Requirements v1.0 + v1.1 Z01–Z05.
 
 This document changes deployment defaults only. The control-kernel, Action, WorkUnit, knowledge, assurance and evolution semantics of Architecture Blueprint v1.0 remain in force.
