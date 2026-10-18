@@ -201,7 +201,7 @@ def evaluate_session_progress_response(response: str, expectation: SessionProgre
             )
             if (
                 any(fields.get(report_field) != state[canonical_field] for report_field, canonical_field in bound)
-                or state["task_id"] not in fields.get("current_scope_or_task", "")
+                or fields.get("current_scope_or_task") != state["task_id"]
             ):
                 violations.append(SessionAdherenceViolation.AUTHORITATIVE_PROGRESS_MISMATCH)
 
