@@ -47,6 +47,7 @@ def build_native_session_runtime_profile(
     systemic_closure = _mapping(_value(closure, "systemic_repair_completeness", field="problem_to_action_closure_gate"), field="session_policy.problem_to_action_closure_gate.systemic_repair_completeness")
     mutation = _mapping(_value(session, "always_on_mutation_sentinel", field="session_policy"), field="session_policy.always_on_mutation_sentinel")
     progress = _mapping(_value(session, "inherited_session_progress_report", field="session_policy"), field="session_policy.inherited_session_progress_report")
+    review = _mapping(_value(session, "controller_inheritance_review", field="session_policy"), field="session_policy.controller_inheritance_review")
 
     compiled_modes: dict[str, Any] = {}
     for mode in ("LIGHTWEIGHT", "CONTRASTIVE", "STRUCTURED"):
@@ -83,6 +84,12 @@ def build_native_session_runtime_profile(
             "installation": _value(chatgpt, "native_runtime_skill_installation", field="CHATGPT_GITHUB"),
         },
         "turn_contract": {
+            "controller_inheritance_review": {
+                "required": _value(review, "required", field="controller_inheritance_review"),
+                "trigger": _value(review, "trigger", field="controller_inheritance_review"),
+                "coverage_rule": _value(review, "coverage_rule", field="controller_inheritance_review"),
+                "evidence_admission_ref": _value(review, "evidence_admission_ref", field="controller_inheritance_review"),
+            },
             "mandatory_entry": {
                 "scope": _value(entry, "scope", field="mandatory_selected_context_entry"),
                 "role": _value(entry, "role", field="mandatory_selected_context_entry"),

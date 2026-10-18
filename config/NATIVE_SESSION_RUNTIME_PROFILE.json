@@ -8,7 +8,7 @@
     "host": "config/HOST_PROFILES.json#profiles.CHATGPT_GITHUB"
   },
   "source_versions": {
-    "session": "2.4.0",
+    "session": "2.5.0",
     "deliberation": "2.1.0",
     "host_schema": "2.0"
   },
@@ -139,6 +139,12 @@
         "progress_timestamp"
       ],
       "consistency_rule": "A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless the observation is explicitly classified as non-problematic with a reason."
+    },
+    "controller_inheritance_review": {
+      "required": true,
+      "trigger": "ON_EVERY_EXPLICIT_UAOS_CONTROLLER_SELECTION__INCLUDING_AFTER_RESUME",
+      "coverage_rule": "ALL_REGISTERED_REPOSITORIES_AND_CRITICAL_CONTROL_DIMENSIONS_MUST_BE_VISITED__UNREAD_UNVERIFIED_OR_UNMEASURED_REMAIN_VISIBLE_AND_CANNOT_BE_RELABELED_GREEN",
+      "evidence_admission_ref": "src/uaos/assurance/controller_review.py#require_controller_review_admission"
     }
   }
 }

@@ -1,0 +1,250 @@
+{
+  "schema_version": "1.0",
+  "id": "uaos-controller-five-repo-review-20261018",
+  "status": "SOURCE_PROBES_PARTIAL__DEEP_AUDIT_INCOMPLETE",
+  "source_heads": [
+    {
+      "repo": "universal-agent-os",
+      "head": "26d84c897b98065a330d7ecf2753654e8868ec41"
+    },
+    {
+      "repo": "financial-writing-agent",
+      "head": "f261367eb480c884880890513752afc77d1ef916"
+    },
+    {
+      "repo": "a-share-event-driven-agent",
+      "head": "3182b36027f9f82bd0d4bb6483aeadb0d8f23dce"
+    },
+    {
+      "repo": "novel-writing-agent",
+      "head": "f8bc5cacb9125b0cc7ebac658140fda77e6cd75f"
+    },
+    {
+      "repo": "video-growth-agent",
+      "head": "4632634e5133961b3280dcfc5bc211712c3a1c83"
+    }
+  ],
+  "coverage": [
+    {
+      "repo": "universal-agent-os",
+      "dimension": "authority_architecture",
+      "source": "config/AGENT_REGISTRY.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "universal-agent-os",
+      "dimension": "requirement_continuity",
+      "source": "state/TASK_INDEX.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "universal-agent-os",
+      "dimension": "execution_admission",
+      "source": "src/uaos/execution/coordinator.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "universal-agent-os",
+      "dimension": "quality_validation",
+      "source": "tests/runtime/test_finalization_gate.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "universal-agent-os",
+      "dimension": "observability",
+      "source": "src/uaos/integrations/domain_health_live.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "universal-agent-os",
+      "dimension": "evolution_learning",
+      "source": "config/EVOLUTION_POLICY.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "financial-writing-agent",
+      "dimension": "authority_architecture",
+      "source": ".uaos/MANIFEST.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "financial-writing-agent",
+      "dimension": "requirement_continuity",
+      "source": "workspaces/articles/cross-border-ecommerce-20261016-v3/STATE.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "financial-writing-agent",
+      "dimension": "execution_admission",
+      "source": "financial_writing_agent/current_admission.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "financial-writing-agent",
+      "dimension": "quality_validation",
+      "source": "tests/test_quality_regression.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "financial-writing-agent",
+      "dimension": "observability",
+      "source": "evals/FINANCIAL_UAOS_COGNITION_EVOLUTION_PRODUCT_AUDIT_2026-10-15.md",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "financial-writing-agent",
+      "dimension": "evolution_learning",
+      "source": "evals/EVOLUTION_INDEX.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "a-share-event-driven-agent",
+      "dimension": "authority_architecture",
+      "source": ".uaos/MANIFEST.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "a-share-event-driven-agent",
+      "dimension": "requirement_continuity",
+      "source": "ashare_event_agent/models.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "a-share-event-driven-agent",
+      "dimension": "execution_admission",
+      "source": "config/RUNTIME_AUTHORITY.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "a-share-event-driven-agent",
+      "dimension": "quality_validation",
+      "source": "tests/test_replay.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "a-share-event-driven-agent",
+      "dimension": "observability",
+      "source": "config/RUNTIME_AUTHORITY.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "a-share-event-driven-agent",
+      "dimension": "evolution_learning",
+      "source": "audits/EVOLUTION_INDEX.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "novel-writing-agent",
+      "dimension": "authority_architecture",
+      "source": ".uaos/MANIFEST.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "novel-writing-agent",
+      "dimension": "requirement_continuity",
+      "source": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "novel-writing-agent",
+      "dimension": "execution_admission",
+      "source": "runtime/owner_behavior_admission.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "novel-writing-agent",
+      "dimension": "quality_validation",
+      "source": "tests/test_release_evidence_contract.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "novel-writing-agent",
+      "dimension": "observability",
+      "source": "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "novel-writing-agent",
+      "dimension": "evolution_learning",
+      "source": "audits/EVOLUTION_INDEX.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "video-growth-agent",
+      "dimension": "authority_architecture",
+      "source": ".uaos/MANIFEST.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "video-growth-agent",
+      "dimension": "requirement_continuity",
+      "source": "projects/PROJECT_INDEX.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "video-growth-agent",
+      "dimension": "execution_admission",
+      "source": "video_growth_agent/runtime.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "video-growth-agent",
+      "dimension": "quality_validation",
+      "source": "tests/test_agent_operable_media_os_trajectory.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "video-growth-agent",
+      "dimension": "observability",
+      "source": "video_growth_agent/system_audit.py",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    },
+    {
+      "repo": "video-growth-agent",
+      "dimension": "evolution_learning",
+      "source": "audits/EVOLUTION_INDEX.json",
+      "assurance": "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+    }
+  ],
+  "material_open_findings": [
+    {
+      "repo": "universal-agent-os",
+      "finding": "Native ChatGPT complete-mediation unverified; CI is not native outcome evidence."
+    },
+    {
+      "repo": "financial-writing-agent",
+      "finding": "Live successor article and publication quality remain outcome-open."
+    },
+    {
+      "repo": "a-share-event-driven-agent",
+      "finding": "Hosted runtime disabled; replay, Level2 and live source adapters pending."
+    },
+    {
+      "repo": "novel-writing-agent",
+      "finding": "Exact learning cursor 3914; full masterwork and downstream work are incomplete."
+    },
+    {
+      "repo": "video-growth-agent",
+      "finding": "Repository trajectory test does not validate provider or commercial outcome."
+    }
+  ],
+  "counts": {
+    "registered_repositories": 5,
+    "mapped_dimensions": 30,
+    "deep_validated_dimensions": 0,
+    "native_cross_session_trigger_verification": 0
+  },
+  "method_modules": [
+    "architecture",
+    "management",
+    "operations",
+    "continuous_evolution",
+    "agent_evaluation"
+  ],
+  "limits": [
+    "Mapped source files are not deep semantic, runtime or independent business outcome proof.",
+    "Five discipline studies have no demonstrated saturation, independent assessor or hidden-gaps exhaustive claim.",
+    "Separate native account-installed Skill/custom-instruction state is not introspectable."
+  ],
+  "outcome": "NOT_GREEN__CONTINUE_REVIEW"
+}
