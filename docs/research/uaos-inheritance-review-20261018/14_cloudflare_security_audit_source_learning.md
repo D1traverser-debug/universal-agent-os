@@ -8,7 +8,7 @@
 
 官方 README 说明此 Skill 是其更大型漏洞发现 harness 的**单仓起点**：多阶段、多执行主体、机器可读结果、独立复查、对运行路径和安全边界有严格限制；其官方产品文章描述的 fleet-wide harness **不能等同**此公开 Skill 的可执行能力。官方 MIT 许可证允许研究与改作，但复制实质性原文须保留版权及许可声明；本研究只作原则/流程/方法卡蒸馏，不复制原工程或声称二次部署。见 [README.md](https://github.com/cloudflare/security-audit-skill/blob/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8/README.md)、[LICENSE](https://github.com/cloudflare/security-audit-skill/blob/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8/LICENSE)、[Cloudflare 技术文章](https://blog.cloudflare.com/build-your-own-vulnerability-harness/)。
 
-冻结树共有 24 个条目，其中两个目录、22 个文件；含入口 README/许可证、**16 个 Markdown 方法文件**（SKILL、RECON、HUNT、ATTACK、VALIDATION 及 10 个领域 companion）、1 个 report-schema、2 个 Node validator、2 个对应测试。采集路径：完整审阅中心五段工作流与 README/许可，逐一解析领域 companion 的启用条件、Core discipline、攻击族、Universal moves、Validation rules，检查 schema 三个 verdict 分支，定位校验器实际函数及负向单测名称，并独立交叉核对公开 Issue 与安全工程标准。**没有逐行人工重跑 22 个文件，也没有本地测试执行，不能称为完整动态或形式化证明。**
+冻结树共有 24 个条目，其中两个目录、22 个文件；含入口 README/许可证、**15 个 Markdown 方法文件**（SKILL、RECON、HUNT、ATTACK、VALIDATION 及 10 个领域 companion；根目录 README 另计）、1 个 report-schema、2 个 Node validator、2 个对应测试。采集路径：完整审阅中心五段工作流与 README/许可，逐一解析领域 companion 的启用条件、Core discipline、攻击族、Universal moves、Validation rules，检查 schema 三个 verdict 分支，定位校验器实际函数及负向单测名称，并独立交叉核对公开 Issue 与安全工程标准。**没有逐行人工重跑 22 个文件，也没有本地测试执行，不能称为完整动态或形式化证明。**
 
 ### 1.1 原始资料 / 角色矩阵
 
