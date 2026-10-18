@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "On future controller selection, read main ENTRYPOINT/CURRENT_SYSTEM and exact task then execute next authorized action; verify method selection and side-effects; audit native Skill version after user update and run fresh-chat canary. Keep wider autonomous learning outcome open.",
+  "next_action": "At next selected UAOS controller session, read current ENTRYPOINT/CURRENT_SYSTEM and exact default task, use deployed operating methodology to act on the next source-evidenced work and reassess; independently verify installed Skill version and native execution only after one-time account update/canary. Parent comprehensive review remains RUNNING.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -81,12 +81,20 @@
     "native_behavior": "UNVERIFIED"
   },
   "controller_operating_model": {
-    "status": "CANDIDATE_BOOTSTRAP_ENTRY_WIRED__CI_PENDING",
+    "status": "PRODUCTION_BOOTSTRAP_VERIFIED__NATIVE_EXECUTION_UNVERIFIED",
     "entry_ref": "ENTRYPOINT.md#uaos-controller-operating-contract",
     "architecture_ref": "docs/adr/0030-controller-role-state-context-operating-model.md",
     "owner": "UAOS",
     "method": "OUTCOME_ROLE_REQUIREMENT_EVIDENCE_LEARNING_ARCHITECTURE_ACTION_VERIFICATION_RECONSIDERATION",
     "state_reading": "COLD_ENTRY_BOOTSTRAP_INDEX_EXACT_TASK__MATERIAL_ACTION_RELEVANT_EVIDENCE_ONLY",
-    "limit": "Native ChatGPT activation and installed Skill source-version are distinct and unverified."
+    "limit": "Native ChatGPT activation and installed Skill source-version are distinct and unverified.",
+    "production_evidence": {
+      "pr": 102,
+      "main_sha": "c3f17e239c3ff1e49d828d61cbb614fc4684280a",
+      "ci_run": 612,
+      "ci_status": "success",
+      "result": "542 passed, 1 skipped",
+      "source_readback": "ENTRYPOINT.md and ADR-0030 present on main"
+    }
   }
 }
