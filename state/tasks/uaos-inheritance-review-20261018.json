@@ -27,10 +27,11 @@
     "docs/research/uaos-inheritance-review-20261018/13_orca_multi_agent_execution_orchestration_source_learning.md",
     "docs/research/uaos-inheritance-review-20261018/14_cloudflare_security_audit_source_learning.md",
     "docs/research/uaos-inheritance-review-20261018/15_paperclip_multi_agent_control_plane_source_learning.md",
-    "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md"
+    "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md",
+    "state/observations/uaos-five-repo-binding-20261019.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-18T20:46:56.427Z",
+  "updated_at": "2026-10-18T20:51:01.719Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -617,5 +618,21 @@
       "production_source_reread": true
     },
     "postmerge_observation": "Existing FinalizationContext now binds typed host origin map and gate rejects agent-origin spoof in controlled Python tests. GitHub main proves code availability only; no physical native selected ChatGPT host interception."
+  },
+  "cross_repo_binding_source_audit_20261019": {
+    "status": "SOURCE_SELECTED_STATIC_BINDING_CONSISTENT__FULL_POLICY_AND_NATIVE_RUNTIME_UNVERIFIED",
+    "evidence_ref": "state/observations/uaos-five-repo-binding-20261019.json",
+    "owner": "UAOS_CONTROLLER__SOURCE_OBSERVATION_ONLY__CHILD_ORIGINAL_BUSINESS_STATE_UNMODIFIED",
+    "coverage": "4 of 4 registered children / 16 core binding files / 60 selected static assertions compatible",
+    "contributing_candidates": [
+      "NO_SELECTED_STATIC_BINDING_DRIFT_FOUND",
+      "SILENT_HOST_HANDSHAKE_SKIPPING_REMAINS_UNTESTED",
+      "USER_AGENT_RUNTIME_SEMANTICS_AND_FULL_PARENT_BINDING_GATES_UNVERIFIED"
+    ],
+    "method_choice": "Bounded exact source-read and independent field matrix; DO NOT recast static consistency as end-to-end native behavior proof",
+    "parent_common_contract": "1.7.0",
+    "child_min_common_contract": "1.6.0",
+    "financial_child_status": "RUNNING_NOT_DEFAULT",
+    "next_validation": "Select high-risk cross-owner mutation or actual direct-child host handshake path. Real provider/host evidence and independent business outcome V&V remain required."
   }
 }
