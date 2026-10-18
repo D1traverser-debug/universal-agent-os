@@ -2,7 +2,7 @@
   "schema_version": "1.5",
   "evolution_id": "EVO-20261018-INHERITANCE-REVIEW",
   "authority": "UAOS",
-  "status": "EVALUATED__CANDIDATE_REPOSITORY_GATES__PRODUCTION_AND_NATIVE_OBSERVATION_PENDING",
+  "status": "POLICY_PROMOTED__PRODUCTION_CI_VERIFIED__NATIVE_AND_DEEP_OUTCOMES_OPEN",
   "origin_kind": "CAPABILITY_GAP",
   "governing_outcome": "On explicit UAOS controller selection, review every registered repository and the governance, runtime, quality and evolution concerns; persist independent evidence and findings.",
   "origin_evidence_refs": [
@@ -77,6 +77,17 @@
     ]
   },
   "assurance_boundary": "This record admits investigation, not production promotion or native runtime conformance.",
-  "production_disposition": "NOT_PROMOTED__DO_NOT_CLAIM_NATIVE_CONSISTENCY",
-  "post_promotion_observation": "REQUIRED_AFTER_MAIN_MERGE"
+  "production_disposition": "KEEP_PROMOTED_POLICY_FOR_FURTHER_REAL_OBSERVATION__DO_NOT_CLOSE_CONTROLLER_TASK",
+  "post_promotion_observation": "CURRENT_PRODUCTION_FILES_MATCH_CANDIDATE__NATIVE_INDEPENDENT_FRESH_CHAT_TRACE_NOT_AVAILABLE__DEEP_FIVE_REPO_REVIEW_STILL_OPEN",
+  "production_evidence": {
+    "pr": 93,
+    "head": "1d2ae0f2f72785179e103d59226309f74f55120f",
+    "main": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
+    "ci_run": 582,
+    "ci_status": "success",
+    "test_summary": "517 passed, 1 skipped",
+    "source_profile": "config/NATIVE_SESSION_RUNTIME_PROFILE.json",
+    "source_profile_chars": 11925
+  },
+  "transaction_execution_assurance": "CANONICAL_EVOLUTION_TRANSACTION_EVALUATION_TESTED_IN_CI__NO_ASSERTION_OF_PHYSICALLY_ENFORCED_NATIVE_RUN"
 }
