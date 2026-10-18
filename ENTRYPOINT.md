@@ -1,6 +1,6 @@
 # Universal Agent OS — Entry Point
 
-Status: `CANDIDATE_AUTONOMOUS_MAINTENANCE_BASELINE`
+Status source: `CURRENT_SYSTEM.json#status` (no independent lifecycle/status authority in this entry document)
 System release: `2.8.0`
 Authority updated at: `2026-10-16T23:15:43+08:00`
 

@@ -31,3 +31,33 @@
 5. **Stop condition:** candidate CI/negative tests + code review + PR promotion + production reread prove only **this bounded source-level reconciliation**. The comprehensive user demand ("废旧漂移混乱文件管理与写入都统一了吗") remains **NO** until write paths and active host enforcement have observed coverage, and ongoing drift detection can operate without repeated user instruction.
 
 **Anti-bloat:** no new file database, no second authority; no deletion of valid historical evidence; no secondary progress store. Historical candidate documents get metadata/source-bound demotion, not falsified status rewrites.
+
+
+## 2026-10-19 independent challenge of indiscriminate deletion and historical method transfer
+
+**Trigger:** the user challenged prior assurance ("you say what I say? where is autonomous evolution?") after asking why stale/obsolete files were not deleted. The proposal "delete every old file" is a candidate, **not an asset classification or deletion authorization**. Independently checked current sources and source methods. Current `config/DELIBERATION_POLICY.json` already explicitly makes user-framed causes/repairs non-authoritative; this is a **behavioral activation and V&V failure**, not the absence of that rule.
+
+**Actual source walk:** Full `main` Git file tree (399 tracked blobs before cleanup). Read all 216 source/script/test paths and 183 other paths as UTF-8 where available; searched exact filename, full repository-relative path, and distinctive title for `docs/architecture/REPO_LAYOUT.md`. All non-self results: **0 references**, and no failed reads in the scanned batches. The file itself is titled `Proposed New Repository Layout`; it lists an obsolete proposed in-repository `domains/` model in conflict with today's separately registered child repositories and actual modules. It is **not** the current `config/SYSTEM_MAP.json`, `ENTRYPOINT.md`, frozen requirements, or an accepted design record. Chosen action: versioned-delete this one proven orphan from the *current* tree, preserving its Git commit history. Explicit negative test: any new `# Proposed...` architecture file in current docs must appear in canonical navigation or fail. This is not proof that every other old file is redundant.
+
+**Do not delete counterexamples:** `docs/architecture/ARCHITECTURE_BLUEPRINT_v1[.1].md` have documented frozen-requirement lineage and current README reference; `docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt` is the actual portable account-side pointer, whereas `CHATGPT_CUSTOM_INSTRUCTIONS.md` supplies usage/authority guidance; two `state/tasks` sub-work receipts are completed linked evidence, not independent live tasks. `state/evolution` immutable trial records should not be falsified or purged to make snapshots look clean.
+
+### Five professional systems: concrete transfer or rejection
+
+| Original method/source | What to transfer to UAOS | Non-transfer / independent check |
+|---|---|---|
+| Git versioned deletion [G] | Remove unreferenced obsolete files from the current index/worktree in a reviewed commit, with exact-path negative ref test and recoverable Git history. No new `archive/` duplicate. | Git history preservation does not mean compliance-record retention or restoration access is guaranteed indefinitely; externally retained evidence still needs its owner. |
+| SVN scheduled versioned delete [S] | Deletion is an explicit revisioned operation with controlled commit, not a narrative `DEPRECATED` label. | SVN centralized revision semantics are not a new state database for this Git repository. |
+| uv exact sync [U] | Reconcile actual current artifacts against an owner-selected desired set and remove out-of-set *ephemeral installed packages*; use as an analogy for anti-accumulation. | A live archive/evolution record is not an extraneous package. **Do not run uv sync semantics over historical evidence or delete every file not in TaskIndex.** |
+| Accellera UVM [V] | Independent monitor/scoreboard/coverage thinking: the lifecycle **reference model** (current tree + authoritative refs) and observed runtime/files should match under normal and negative deletion tests. | A model or self-reported coverage is not automatically independent; zero textual references does not prove dynamic links or user audit value; UVM factory reuse is not a replacement for UAOS permission controls. |
+| Agent/Skill tracing + guardrail runtime [A] | Separate skills as behavioral projections, existing current kernel/owner as policy authority, real host tool/turn traces as execution evidence. | `SKILL.md` source, GitHub CI and a claimed successful status cannot prove native ChatGPT invokes a non-bypassable hook; no tool-driven arbitrary write is physically intercepted by this research note. |
+
+Primary sources:
+- [G] https://git-scm.com/docs/git-rm
+- [S] https://svnbook.red-bean.com/en/1.8/svn.ref.svn.c.delete.html
+- [U] https://docs.astral.sh/uv/concepts/projects/sync/
+- [V] https://www.accellera.org/downloads/standards/uvm
+- [A] https://developers.openai.com/api/docs/guides/agents and https://openai.github.io/openai-agents-python/tracing/
+
+**Falsification and release:** Test non-authoritative user deletion framing against actual reverse references and lifecycle; defend existing active/history examples; delete only the selected proposed layout; execute exact-head CI + GitHub protection gate + main reread; verify deleted file absent from current tree but still available in prior commit if retention policy allows; retain controller work open for many other asset classes, native governance and self-started review without user prompting.
+
+**Research admission:** These sources justify transferable ideas but not exhaustive mastery of all Agent, Skill, SVN, Git, uv, and UVM practices. Real no-reminder autonomous invocation and multi-class lifecycle regression remain **OPEN** until observed.

@@ -55,3 +55,12 @@ def test_no_full_document_loading_or_reupload_each_turn():
     entry = _read("ENTRYPOINT.md")
     assert "read `state/observations/*`, evolution transactions, research and ADRs only when" in entry
     assert "not as a mandatory full-document read on every turn" in entry
+
+
+def test_bootstrap_has_no_competing_status_value_after_source_lifecycle_changes():
+    import re
+    current = _j("CURRENT_SYSTEM.json")
+    entry = _read("ENTRYPOINT.md")
+    assert current["status"] == "ACTIVE_PRIMARY_CONTROLLER"
+    assert "Status source: `CURRENT_SYSTEM.json#status`" in entry
+    assert not re.search(r"^Status:\\s+`", entry, flags=re.MULTILINE)
