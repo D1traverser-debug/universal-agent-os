@@ -146,3 +146,33 @@ def test_windows_drive_path_is_not_admitted_on_windows(tmp_path):
     manifest.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(ValueError, match="Windows snapshot artifact path"):
         manager.verify(location)
+
+
+def test_snapshot_parent_symlink_is_rejected_before_any_external_artifact_read(tmp_path, monkeypatch):
+    import importlib
+    snapshot_module = importlib.import_module("uaos.state.snapshot")
+    manager, _, artifact_source = _snapshot_fixture(tmp_path)
+    nested = artifact_source / "nested"
+    nested.mkdir()
+    (nested / "valid.txt").write_text("reference", encoding="utf-8")
+    location = tmp_path / "nested-snapshot"
+    manager.create(
+        sqlite_path=tmp_path / "source.db", artifact_root=artifact_source,
+        destination=location, schema_version="1",
+    )
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    (outside / "valid.txt").write_text("reference", encoding="utf-8")
+    (location / "artifacts" / "nested" / "valid.txt").unlink()
+    (location / "artifacts" / "nested").rmdir()
+    (location / "artifacts" / "nested").symlink_to(outside, target_is_directory=True)
+
+    original_hash = snapshot_module._hash_file
+
+    def guarded_hash(path):
+        assert path.resolve().is_relative_to(location.resolve()), "must not open symlinked outside file"
+        return original_hash(path)
+
+    monkeypatch.setattr(snapshot_module, "_hash_file", guarded_hash)
+    with pytest.raises(ValueError, match="symlink"):
+        manager.verify(location)
