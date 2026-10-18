@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Controller-only: verify candidate all-utterance evolution triage and output-fingerprint admission with independent refs, CI and controlled promotion. Then test native ChatGPT actual traces, unprompted error detection and broader five-repo architecture; preserve Financial task exact return without switching.",
+  "next_action": "Controller-only: independently validate native actual turn-source/assistant-output review and self-detected Progress/unfinished-work failures without user correction, triangulate run traces, and finish five-repo deep architecture/method reuse investigation. Do not mark UAOS complete or switch to Financial before evidence-grounded owner acceptance.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -24,7 +24,7 @@
     "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-18T22:16:00+08:00",
+  "updated_at": "2026-10-18T23:58:51+08:00",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -198,7 +198,7 @@
     "financial_return": "uaos:maintenance:financial-system-governed-recovery-20261018"
   },
   "turn_evolution_coverage_20261018": {
-    "status": "CANDIDATE_ADMISSION_AND_TESTS__NOT_PRODUCTION_PROOF",
+    "status": "CONTROLLED_UAOS_PRODUCTION_VERIFIED__LIVE_NATIVE_COVERAGE_OPEN",
     "current_user_finding": "User again reports assistant omitted the mandatory Progress during Progress governance and only noticed after user intervention; prior repair did not reliably self-observe output.",
     "cause_supported": "Existing selected-context entry only classified caller-supplied observations before generating the final response, and could not prove that actual assistant output was reviewed or that every turn message was included.",
     "alternative_explanations": [
@@ -219,6 +219,21 @@
     ],
     "current_assurance": "CANONICAL_PYTHON_ADMISSION_CANDIDATE__NATIVE_CHATGPT_INSTALL_AND_MESSAGE_TRACE_UNVERIFIED",
     "mandatory_next": "Run controlled CI negative/positive test scenarios and independent review, promote only green exact-head; reread main; then evaluate native per-turn evidence and cross-problem transfer. UAOS stays default, Financial remains parked RUNNING.",
-    "missing_cross_domain_assurance": "DIRECT_DOMAIN_TURNS_REQUIRE_OWNER_APPROPRIATE_INTEGRATION_AFTER_CONTROLLER_VALIDATION"
+    "missing_cross_domain_assurance": "DIRECT_DOMAIN_TURNS_REQUIRE_OWNER_APPROPRIATE_INTEGRATION_AFTER_CONTROLLER_VALIDATION",
+    "release": {
+      "pr": 118,
+      "main_sha": "f379c00c65c2d128688a651fcda1b1c61713f142",
+      "ci": 681,
+      "integration": 390,
+      "push_ci": 682,
+      "push_status": "success"
+    },
+    "open_acceptance": [
+      "PROVE_SELECTED_NATIVE_CHATGPT_ACTUAL_USER_AND_ASSISTANT_UTTERANCE_EVALUATION",
+      "CONFIRM_REAL_TRUSTED_HOST_SOURCE_ENUMERATION_AND_VERIFIER",
+      "VERIFY_AUTONOMOUSLY_DETECTED_ISSUES_WITHOUT_USER_TRIGGER",
+      "DOMAIN_CONTEXT_INTEGRATION_HELD_UNTIL_CONTROLLER_ASSURANCE",
+      "KNOWLEDGE_SATURATION_AND_FIVE_REPO_DEPTH_OPEN"
+    ]
   }
 }
