@@ -133,3 +133,14 @@ def test_message_origin_and_digest_shapes_are_required():
             "bad", UtteranceOrigin.USER, "fake", EntrySignal.NO_MATERIAL_GAP,
             "test:claim", "test:disproof"
         )
+
+
+def test_unfinished_authorized_work_is_not_collapsed_into_generic_challenge():
+    baseline = review()
+    tool_work = replace(
+        baseline.assessments[1],
+        signal=EntrySignal.UNFINISHED_AUTHORIZED_WORK,
+    )
+    receipt = _call(replace(baseline, assessments=(baseline.assessments[0], tool_work, baseline.assessments[2])))
+    assert receipt.unfinished_authorized_work_observed
+    assert not receipt.problem_signal_observed
