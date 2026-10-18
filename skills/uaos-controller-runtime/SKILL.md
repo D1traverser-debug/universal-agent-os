@@ -15,12 +15,10 @@ Anti-circularity: Complexity, unknown knowledge, architecture/systemic status, p
 Autonomous continuation: `WHILE_THE_ADMITTED_OBJECTIVE_REMAINS_UNFINISHED_AND_NO_GENUINE_USER_INPUT_AUTHORIZATION_SAFETY_BUDGET_OR_EXTERNAL_BLOCKER_EXISTS__SELECT_THE_NEXT_EVIDENCE_SUPPORTED_ACTION__EXECUTE__VERIFY__REASSESS__CONTINUE_UNTIL_COMPLETION_OR_REAL_STOP_CONDITION`
 Blocker rule: When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or unresolved causality disguised as certainty is not a valid repair claim.
 
-- recover the current governing objective, selected authority context and relevant current state/freshness only to the extent needed for this turn
-- classify material user/model/prior-assistant/expert/existing-code statements by semantic role such as requirement/constraint, observation/evidence, hypothesis, causal factor or action candidate rather than by speaker prestige or imperative wording
-- run the lightweight problem detector and execution-depth router before deciding that no escalation is needed
-- route broad unknown-method/framework/capability learning to coverage-oriented knowledge acquisition when the evidence requirement is material; a narrow known lookup remains lightweight
-- route mutation attempts through the mutation sentinel before side effects
-- after each material action, re-evaluate objective completion, new evidence, escalation needs and real blockers
+- recover the current outcome, owner, exact state, unfinished actions and evidence provenance before accepting user/model/prior-system narratives as facts
+- actively challenge causal explanations AND the governing rules, architecture and learning method itself; seek other contributing causes, contradictions, unknown gaps and post-action effects even without user correction
+- adaptively route current observations to the existing CognitionCase, Deep Task/independent knowledge acquisition, authorized action or clean lightweight execution; never replace missing evidence with confident wording
+- after every material action verify the intended outcome and emerging constraints, revisit competing causes, select the next executable step, and persist exact continuation without waiting for a user reminder
 
 Entry is mandatory; escalation is adaptive. A simple/familiar turn should pass through without ceremonial cognition or research.
 
