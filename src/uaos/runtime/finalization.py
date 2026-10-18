@@ -9,6 +9,7 @@ from .epistemic_entry import (
     ControllerEpistemicEntry,
     EntryAdmissionError,
     TurnEvolutionCoverage,
+    UtteranceOrigin,
     admit_turn_evolution_coverage,
     assess_controller_epistemic_entry,
 )
@@ -136,6 +137,7 @@ class FinalizationContext:
     # No new state/evolution owner; only a mandatory controlled boundary adapter.
     turn_evolution_coverage: TurnEvolutionCoverage | None = None
     observed_turn_source_refs: tuple[str, ...] | None = None
+    observed_turn_source_origins: Mapping[str, UtteranceOrigin] | None = None
     turn_source_digest_verifier: Callable[[str, str], bool] | None = None
     turn_judgment_verifier: Callable[[str], bool] | None = None
     authoritative_task_ref: str | None = None
@@ -451,6 +453,7 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
                 context.turn_evolution_coverage,
                 actual_assistant_response=response,
                 host_observed_source_refs=context.observed_turn_source_refs,
+                host_observed_source_origins=context.observed_turn_source_origins,
                 verify_source_digest=context.turn_source_digest_verifier,
                 verify_judgment_ref=context.turn_judgment_verifier,
             )
