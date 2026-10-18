@@ -7,6 +7,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import StrEnum
+from hashlib import sha256
+from typing import Callable
 
 from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 
@@ -125,4 +127,133 @@ def assess_controller_epistemic_entry(
         deep_learning_required=learning,
         work_remaining=continuation,
         hypothesis_challenge_required=challenge,
+    )
+
+
+class UtteranceOrigin(StrEnum):
+    USER = "USER"
+    ASSISTANT = "ASSISTANT"
+    TOOL = "TOOL"
+    STATE = "STATE"
+
+
+@dataclass(frozen=True, slots=True)
+class TurnUtteranceAssessment:
+    """Host-bound assessment of a user/assistant/tool/state utterance.
+
+    A classification is a routing judgment, not proof that the message's claim
+    is true or that a durable evolution transaction has been promoted.
+    """
+    source_ref: str
+    origin: UtteranceOrigin
+    source_sha256: str
+    signal: EntrySignal
+    judgment_evidence_ref: str
+    alternative_or_no_gap_reason_ref: str
+
+    def __post_init__(self) -> None:
+        if not all((self.source_ref.strip(), self.judgment_evidence_ref.strip(),
+                    self.alternative_or_no_gap_reason_ref.strip())):
+            raise EntryAdmissionError("every utterance needs source, judgment and self-challenge references")
+        if len(self.source_sha256) != 64 or any(c not in "0123456789abcdef" for c in self.source_sha256):
+            raise EntryAdmissionError("utterance digest must be lowercase sha256")
+
+
+@dataclass(frozen=True, slots=True)
+class TurnEvolutionCoverage:
+    """One turn's all-input/output evolution triage, without an extra evolution owner."""
+    observed_source_refs: tuple[str, ...]
+    assessments: tuple[TurnUtteranceAssessment, ...]
+    assistant_final_ref: str
+    evolution_routing_ref: str
+
+    def __post_init__(self) -> None:
+        if not self.assistant_final_ref.strip() or not self.evolution_routing_ref.strip():
+            raise EntryAdmissionError("turn evolution needs output identity and lifecycle routing")
+        if (
+            not isinstance(self.observed_source_refs, tuple)
+            or not self.observed_source_refs
+            or any(not isinstance(x, str) or not x.strip() for x in self.observed_source_refs)
+        ):
+            raise EntryAdmissionError("turn evolution needs a tuple of actual observed source references")
+
+
+@dataclass(frozen=True, slots=True)
+class TurnEvolutionCoverageReceipt:
+    assessed_count: int
+    covered_sources: tuple[str, ...]
+    problem_signal_observed: bool
+    material_knowledge_gap_observed: bool
+    hypothesis_challenge_required: bool
+    evolution_routing_ref: str
+
+
+def admit_turn_evolution_coverage(
+    review: TurnEvolutionCoverage,
+    *,
+    actual_assistant_response: str,
+    host_observed_source_refs: tuple[str, ...] | None,
+    verify_source_digest: Callable[[str, str], bool] | None,
+    verify_judgment_ref: Callable[[str], bool] | None,
+) -> TurnEvolutionCoverageReceipt:
+    """Every observed utterance is evaluated, including the outgoing assistant text.
+
+    The controlled host must enumerate sources independently of the Agent's
+    classifications and verify message digests and review refs. This detects
+    omissions/false provenance on supplied traces; it cannot hook native
+    ChatGPT or prove semantic completeness of a host-supplied enumeration.
+    """
+
+    if host_observed_source_refs is None or verify_source_digest is None or verify_judgment_ref is None:
+        raise EntryAdmissionError("all-turn evolution requires independently enumerated host sources and verifiers")
+    if not host_observed_source_refs or len(set(host_observed_source_refs)) != len(host_observed_source_refs):
+        raise EntryAdmissionError("host source enumeration must be complete, non-empty and unique")
+    expected = set(host_observed_source_refs)
+    given = review.observed_source_refs
+    if len(given) != len(set(given)) or set(given) != expected:
+        raise EntryAdmissionError("reviewed source enumeration differs from host-observed turn")
+    assessed = {item.source_ref: item for item in review.assessments}
+    if len(assessed) != len(review.assessments) or set(assessed) != expected:
+        raise EntryAdmissionError("not every user/assistant/tool/state utterance was assessed")
+    if review.assistant_final_ref not in assessed:
+        raise EntryAdmissionError("outgoing assistant message is missing from evolution assessment")
+    if assessed[review.assistant_final_ref].origin is not UtteranceOrigin.ASSISTANT:
+        raise EntryAdmissionError("final response must be assessed as assistant output")
+    if not any(item.origin is UtteranceOrigin.USER for item in review.assessments):
+        raise EntryAdmissionError("user input must be included in the turn assessment")
+
+    digest = sha256(actual_assistant_response.encode("utf-8")).hexdigest()
+    if assessed[review.assistant_final_ref].source_sha256 != digest:
+        raise EntryAdmissionError("assistant's actual draft differs from the reviewed output")
+    for item in review.assessments:
+        # The final response bytes are already bound above. Other sources must
+        # be proven by the host, not accepted as agent-supplied content claims.
+        if item.source_ref != review.assistant_final_ref and not verify_source_digest(
+            item.source_ref, item.source_sha256
+        ):
+            raise EntryAdmissionError(f"unverified utterance source: {item.source_ref}")
+        if not (
+            verify_judgment_ref(item.judgment_evidence_ref)
+            and verify_judgment_ref(item.alternative_or_no_gap_reason_ref)
+        ):
+            raise EntryAdmissionError(f"unverified evolution or self-challenge judgment: {item.source_ref}")
+    if not verify_judgment_ref(review.evolution_routing_ref):
+        raise EntryAdmissionError("evolution routing disposition is not backed by host evidence")
+
+    return TurnEvolutionCoverageReceipt(
+        assessed_count=len(assessed),
+        covered_sources=tuple(sorted(expected)),
+        problem_signal_observed=any(
+            item.signal is EntrySignal.SYSTEM_OR_RULE_CONTRADICTION
+            for item in review.assessments
+        ),
+        material_knowledge_gap_observed=any(
+            item.signal is EntrySignal.MATERIAL_KNOWLEDGE_GAP
+            for item in review.assessments
+        ),
+        hypothesis_challenge_required=any(
+            item.signal is not EntrySignal.NO_MATERIAL_GAP
+            for item in review.assessments
+        ),
+        evolution_routing_ref=review.evolution_routing_ref,
     )
