@@ -6,15 +6,18 @@ that native chat or arbitrary external writes pass through ActionCoordinator.
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from hashlib import sha256
 import json
 import os
+import stat
 from pathlib import Path, PurePosixPath
 import shutil
 import sqlite3
 import tempfile
+from typing import BinaryIO, Iterator
 
 
 @dataclass(frozen=True, slots=True)
@@ -32,6 +35,125 @@ def _hash_file(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+
+@contextmanager
+def _open_regular_beneath(root: Path, relative: PurePosixPath) -> Iterator[BinaryIO]:
+    """Open a regular file under a directory without following POSIX symlinks.
+
+    For platforms lacking POSIX dir_fd/O_NOFOLLOW, retain a conservative
+    path-based compatibility fallback, *not* a cross-platform race guarantee.
+    """
+    if os.name != "posix":
+        current = root
+        for component in relative.parts:
+            if current.is_symlink():
+                raise ValueError("symlinked artifact path")
+            current = current / component
+        if current.is_symlink() or not current.is_file():
+            raise ValueError("unsafe artifact path")
+        with current.open("rb") as stream:
+            yield stream
+        return
+
+    flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_DIRECTORY
+    directory_fd: int | None = None
+    file_fd: int | None = None
+    try:
+        directory_fd = os.open(root, flags)
+        for part in relative.parts[:-1]:
+            next_fd = os.open(part, flags, dir_fd=directory_fd)
+            os.close(directory_fd)
+            directory_fd = next_fd
+        file_fd = os.open(
+            relative.parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
+            dir_fd=directory_fd,
+        )
+        if not stat.S_ISREG(os.fstat(file_fd).st_mode):
+            raise ValueError("snapshot artifact is not a regular file")
+        stream = os.fdopen(file_fd, "rb")
+        file_fd = None
+        with stream:
+            yield stream
+    except OSError as exc:
+        raise ValueError(f"unsafe or replaced snapshot path: {relative}") from exc
+    finally:
+        if file_fd is not None:
+            os.close(file_fd)
+        if directory_fd is not None:
+            os.close(directory_fd)
+
+
+def _stable_file_stat(stream: BinaryIO) -> tuple[int, int, int]:
+    info = os.fstat(stream.fileno())
+    return info.st_size, info.st_mtime_ns, info.st_ctime_ns
+
+
+def _hash_artifact_beneath(root: Path, relative: PurePosixPath) -> tuple[str, int]:
+    digest = sha256()
+    size = 0
+    with _open_regular_beneath(root, relative) as stream:
+        before = _stable_file_stat(stream)
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+            size += len(chunk)
+        after = _stable_file_stat(stream)
+        if before != after or size != after[0]:
+            raise ValueError(f"artifact changed while reading: {relative}")
+    return digest.hexdigest(), size
+
+
+def _copy_artifact_beneath(root: Path, relative: PurePosixPath, target: Path) -> None:
+    """Copy by a symlink-resistant file descriptor; validate after staging."""
+    with _open_regular_beneath(root, relative) as source:
+        before = _stable_file_stat(source)
+        with target.open("xb") as output:
+            shutil.copyfileobj(source, output)
+        after = _stable_file_stat(source)
+        if before != after or target.stat().st_size != after[0]:
+            raise ValueError(f"artifact changed during copy: {relative}")
+
+
+def _artifact_names_beneath(root: Path) -> set[str]:
+    """Enumerate files with no-follow directory handles on POSIX."""
+    if os.name != "posix":
+        result: set[str] = set()
+        for entry in root.rglob("*"):
+            if entry.is_symlink():
+                raise ValueError(f"snapshot contains a symlink: {entry}")
+            if entry.is_file():
+                result.add(entry.relative_to(root).as_posix())
+            elif not entry.is_dir():
+                raise ValueError(f"unexpected snapshot artifact type: {entry}")
+        return result
+
+    flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_DIRECTORY
+    def walk(directory_fd: int, prefix: str, found: set[str]) -> None:
+        with os.scandir(directory_fd) as entries:
+            for entry in entries:
+                name = f"{prefix}/{entry.name}" if prefix else entry.name
+                info = entry.stat(follow_symlinks=False)
+                if stat.S_ISREG(info.st_mode):
+                    found.add(name)
+                elif stat.S_ISDIR(info.st_mode):
+                    child_fd = os.open(entry.name, flags, dir_fd=directory_fd)
+                    try:
+                        walk(child_fd, name, found)
+                    finally:
+                        os.close(child_fd)
+                else:
+                    raise ValueError(f"unexpected or symlinked snapshot entry: {name}")
+    try:
+        root_fd = os.open(root, flags)
+        try:
+            result: set[str] = set()
+            walk(root_fd, "", result)
+            return result
+        finally:
+            os.close(root_fd)
+    except OSError as exc:
+        raise ValueError("snapshot artifact tree changed or contains a symlink") from exc
 
 
 def _safe_artifact_name(name: object) -> PurePosixPath:
@@ -56,16 +178,9 @@ def _validated_artifact_tree(
 ) -> tuple[tuple[str, str, int], ...]:
     if root.is_symlink() or not root.is_dir() or not isinstance(items, list):
         raise ValueError("missing snapshot artifact root or malformed manifest")
-    # Scan the *whole* tree for links before following any manifest-selected
-    # path: a symlinked intermediate directory must not be read during hashing.
-    actual: set[str] = set()
-    for artifact in root.rglob("*"):
-        if artifact.is_symlink():
-            raise ValueError(f"snapshot contains a symlink: {artifact}")
-        if artifact.is_file():
-            actual.add(artifact.relative_to(root).as_posix())
-        elif not artifact.is_dir():
-            raise ValueError(f"unexpected snapshot artifact type: {artifact}")
+    # Never descend into a directory symlink, including during a concurrent
+    # swap after the initial stat/manifest inspection.
+    actual = _artifact_names_beneath(root)
     declared: set[str] = set()
     records: list[tuple[str, str, int]] = []
     for item in items:
@@ -87,7 +202,8 @@ def _validated_artifact_tree(
         artifact = root.joinpath(*relative.parts)
         if artifact.is_symlink() or not artifact.is_file():
             raise ValueError(f"artifact missing or symlink: {name}")
-        if _hash_file(artifact) != digest or artifact.stat().st_size != size:
+        observed_digest, observed_size = _hash_artifact_beneath(root, relative)
+        if observed_digest != digest or observed_size != size:
             raise ValueError(f"artifact integrity mismatch: {name}")
         records.append((name, digest, size))
     if actual != declared:
@@ -111,11 +227,8 @@ class PortableSnapshotManager:
             raise FileNotFoundError(sqlite_path)
         if destination.exists() and any(destination.iterdir()):
             raise FileExistsError("snapshot destination must be empty")
-        # Examine all file types, including symlinked directories, before copying.
-        sources = tuple(sorted(artifact_root.rglob("*"))) if artifact_root.exists() else ()
-        for source in sources:
-            if source.is_symlink() or not (source.is_file() or source.is_dir()):
-                raise ValueError(f"unsupported or symlinked artifact: {source}")
+        # Enumeration and file opens never follow intermediate symlinks on POSIX.
+        sources = sorted(_artifact_names_beneath(artifact_root)) if artifact_root.exists() else []
 
         destination.mkdir(parents=True, exist_ok=True)
         db_out = destination / "authority.sqlite3"
@@ -124,15 +237,11 @@ class PortableSnapshotManager:
         root_out = destination / "artifacts"
         root_out.mkdir()
         records: list[tuple[str, str, int]] = []
-        for source in sources:
-            if source.is_dir():
-                continue
-            relative = source.relative_to(artifact_root)
-            portable_name = relative.as_posix()
-            _safe_artifact_name(portable_name)
-            target = root_out / relative
+        for portable_name in sources:
+            relative = _safe_artifact_name(portable_name)
+            target = root_out.joinpath(*relative.parts)
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(source, target)
+            _copy_artifact_beneath(artifact_root, relative, target)
             records.append((portable_name, _hash_file(target), target.stat().st_size))
         manifest = SnapshotManifest(
             self.FORMAT_VERSION, datetime.now(UTC).isoformat(),
@@ -158,7 +267,8 @@ class PortableSnapshotManager:
         db_path = snapshot / "authority.sqlite3"
         if any(path.is_symlink() for path in (snapshot, manifest_path, db_path)):
             raise ValueError("snapshot paths must not be symlinks")
-        raw = json.loads(manifest_path.read_text(encoding="utf-8"))
+        with _open_regular_beneath(snapshot, PurePosixPath("manifest.json")) as stream:
+            raw = json.load(stream)
         if not isinstance(raw, dict) or raw.get("format_version") != self.FORMAT_VERSION:
             raise ValueError("unsupported snapshot format")
         database_hash = raw.get("database_sha256")
@@ -166,7 +276,10 @@ class PortableSnapshotManager:
             char not in "0123456789abcdef" for char in database_hash
         ):
             raise ValueError("invalid snapshot database digest")
-        if _hash_file(db_path) != database_hash:
+        verified_db_hash, _ = _hash_artifact_beneath(
+            snapshot, PurePosixPath("authority.sqlite3")
+        )
+        if verified_db_hash != database_hash:
             raise ValueError("database snapshot hash mismatch")
         records = _validated_artifact_tree(snapshot / "artifacts", raw.get("artifacts"))
         return SnapshotManifest(
@@ -209,12 +322,21 @@ class PortableSnapshotManager:
             db_stage_root, art_stage_root = Path(db_dir), Path(artifacts_dir)
             staged_db = db_stage_root / "new.db"
             staged_artifacts = art_stage_root / "new-artifacts"
-            shutil.copy2(snapshot / "authority.sqlite3", staged_db)
-            shutil.copytree(snapshot / "artifacts", staged_artifacts, symlinks=True)
+            _copy_artifact_beneath(
+                snapshot, PurePosixPath("authority.sqlite3"), staged_db
+            )
+            staged_artifacts.mkdir()
+            for name, _, _ in manifest.artifacts:
+                relative = _safe_artifact_name(name)
+                staged_target = staged_artifacts.joinpath(*relative.parts)
+                staged_target.parent.mkdir(parents=True, exist_ok=True)
+                _copy_artifact_beneath(snapshot / "artifacts", relative, staged_target)
             if _hash_file(staged_db) != manifest.database_sha256:
                 raise ValueError("staged database integrity mismatch")
-            raw = json.loads((snapshot / "manifest.json").read_text(encoding="utf-8"))
-            _validated_artifact_tree(staged_artifacts, raw["artifacts"])
+            _validated_artifact_tree(staged_artifacts, [
+                {"path": name, "sha256": digest, "size": size}
+                for name, digest, size in manifest.artifacts
+            ])
             old_db, old_artifacts = db_stage_root / "old.db", art_stage_root / "old-artifacts"
             backed_db = backed_artifacts = installed_db = installed_artifacts = False
             try:

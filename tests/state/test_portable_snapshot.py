@@ -176,3 +176,86 @@ def test_snapshot_parent_symlink_is_rejected_before_any_external_artifact_read(t
     monkeypatch.setattr(snapshot_module, "_hash_file", guarded_hash)
     with pytest.raises(ValueError, match="symlink"):
         manager.verify(location)
+
+
+@pytest.mark.skipif(__import__("os").name != "posix", reason="dirfd no-follow protection is POSIX-specific")
+def test_snapshot_verify_rejects_check_to_use_symlink_swap(tmp_path, monkeypatch):
+    """A directory substituted after is_file() must not redirect the hash read."""
+    import importlib
+    from pathlib import Path
+
+    module = importlib.import_module("uaos.state.snapshot")
+    manager, _, source = _snapshot_fixture(tmp_path)
+    nested_source = source / "nested"
+    nested_source.mkdir()
+    (nested_source / "payload.txt").write_text("same-bytes", encoding="utf-8")
+    location = tmp_path / "second-snapshot"
+    manager.create(
+        sqlite_path=tmp_path / "source.db", artifact_root=source,
+        destination=location, schema_version="1",
+    )
+
+    snapshot_nested = location / "artifacts" / "nested"
+    victim = snapshot_nested / "payload.txt"
+    outside = tmp_path / "external"
+    outside.mkdir()
+    (outside / "payload.txt").write_text("same-bytes", encoding="utf-8")
+    original_is_file = Path.is_file
+    swapped = False
+
+    def swap_between_check_and_open(path):
+        nonlocal swapped
+        is_file = original_is_file(path)
+        if path == victim and is_file and not swapped:
+            swapped = True
+            snapshot_nested.rename(tmp_path / "detached-original")
+            snapshot_nested.symlink_to(outside, target_is_directory=True)
+        return is_file
+
+    monkeypatch.setattr(Path, "is_file", swap_between_check_and_open)
+    with pytest.raises(ValueError, match="unsafe|replaced|symlink"):
+        manager.verify(location)
+    assert swapped, "exercise the actual stat-to-open race window"
+    assert (outside / "payload.txt").read_text(encoding="utf-8") == "same-bytes"
+
+
+@pytest.mark.skipif(__import__("os").name != "posix", reason="dirfd no-follow protection is POSIX-specific")
+def test_snapshot_restore_rejects_symlink_swap_during_staging(tmp_path, monkeypatch):
+    """Do not copy outside data if an artifact directory moves after verify."""
+    import importlib
+
+    module = importlib.import_module("uaos.state.snapshot")
+    manager, _, source = _snapshot_fixture(tmp_path)
+    (source / "nested").mkdir()
+    (source / "nested" / "payload.txt").write_text("same-bytes", encoding="utf-8")
+    location = tmp_path / "restore-snapshot"
+    manager.create(
+        sqlite_path=tmp_path / "source.db", artifact_root=source,
+        destination=location, schema_version="1",
+    )
+    outside = tmp_path / "external"
+    outside.mkdir()
+    (outside / "payload.txt").write_text("same-bytes", encoding="utf-8")
+    source_nested = location / "artifacts" / "nested"
+    original_copy = module._copy_artifact_beneath
+    swapped = False
+
+    def swap_before_stage_read(root, relative, destination):
+        nonlocal swapped
+        if root == location / "artifacts" and relative.as_posix() == "nested/payload.txt":
+            swapped = True
+            source_nested.rename(tmp_path / "detached-original")
+            source_nested.symlink_to(outside, target_is_directory=True)
+        return original_copy(root, relative, destination)
+
+    monkeypatch.setattr(module, "_copy_artifact_beneath", swap_before_stage_read)
+    db_target = tmp_path / "restored.db"
+    artifacts_target = tmp_path / "restored-artifacts"
+    with pytest.raises(ValueError, match="unsafe|replaced|symlink"):
+        manager.restore(
+            snapshot=location, target_sqlite=db_target,
+            target_artifact_root=artifacts_target,
+        )
+    assert swapped
+    assert not db_target.exists()
+    assert not artifacts_target.exists()
