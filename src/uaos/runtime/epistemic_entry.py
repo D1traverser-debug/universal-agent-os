@@ -8,17 +8,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import StrEnum
 
+from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
+
 
 class EntryAdmissionError(ValueError):
     pass
-
-
-class EntryEvidenceKind(StrEnum):
-    USER_CLAIM = "USER_CLAIM"
-    PRIOR_ASSISTANT_CLAIM = "PRIOR_ASSISTANT_CLAIM"
-    REPOSITORY_FACT = "REPOSITORY_FACT"
-    TEST_RESULT = "TEST_RESULT"
-    RUNTIME_OBSERVATION = "RUNTIME_OBSERVATION"
 
 
 class EntrySignal(StrEnum):
@@ -30,22 +24,20 @@ class EntrySignal(StrEnum):
 
 
 _FACT_KINDS = frozenset({
-    EntryEvidenceKind.REPOSITORY_FACT,
-    EntryEvidenceKind.TEST_RESULT,
-    EntryEvidenceKind.RUNTIME_OBSERVATION,
+    EvidenceKind.REPOSITORY_FACT,
+    EvidenceKind.TEST_RESULT,
+    EvidenceKind.RUNTIME_OBSERVATION,
 })
 
 
 @dataclass(frozen=True, slots=True)
 class EntryObservation:
     signal: EntrySignal
-    evidence_kind: EntryEvidenceKind
-    source_ref: str
-    finding: str
+    evidence: EvidenceItem
 
     def __post_init__(self) -> None:
-        if not self.source_ref.strip() or not self.finding.strip():
-            raise EntryAdmissionError("entry observations require attributable evidence")
+        if not self.evidence.evidence_id.strip() or not self.evidence.source_ref.strip():
+            raise EntryAdmissionError("entry observations require canonical attributable evidence")
 
 
 @dataclass(frozen=True, slots=True)
@@ -97,10 +89,10 @@ def assess_controller_epistemic_entry(
     ref_seen: set[str] = set()
 
     for item in entry.observations:
-        if item.source_ref in ref_seen:
+        if item.evidence.source_ref in ref_seen:
             raise EntryAdmissionError("entry evidence references must be distinct")
-        ref_seen.add(item.source_ref)
-        is_fact = item.evidence_kind in _FACT_KINDS
+        ref_seen.add(item.evidence.source_ref)
+        is_fact = item.evidence.kind in _FACT_KINDS
         if item.signal is EntrySignal.NO_MATERIAL_GAP:
             if any((
                 problems, learning, continuation,
