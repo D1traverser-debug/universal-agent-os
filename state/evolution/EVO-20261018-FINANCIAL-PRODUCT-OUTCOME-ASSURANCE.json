@@ -2,14 +2,15 @@
   "schema_version": "1.5",
   "evolution_id": "EVO-20261018-FINANCIAL-PRODUCT-OUTCOME-ASSURANCE",
   "authority": "UAOS",
-  "status": "PARENT_HEALTH_AND_CONTROLLED_FINALIZATION_PRODUCTION_VERIFIED__LIVE_CHILD_USER_OUTCOME_OPEN",
+  "status": "CONTROLLED_PARENT_PRODUCT_GATES_VERIFIED__ACTING_FINANCIAL_EXECUTION_REVIEW_CANDIDATE__LIVE_PRODUCT_OPEN",
   "origin_kind": "PROBLEM",
   "governing_outcome": "UAOS-owned rehabilitation of Financial Writing must not be called completed until requirements produce a real, source-verifiable and accepted current-kernel product and reusable quality improvement, not only green repo CI and closed child code issue.",
   "origin_evidence_refs": [
     "state/observations/uaos-financial-product-outcome-gap-20261018.json",
     "https://github.com/D1traverser-debug/universal-agent-os/issues/63",
     "https://github.com/D1traverser-debug/financial-writing-agent/issues/45",
-    "state/DOMAIN_HEALTH_INDEX.json"
+    "state/DOMAIN_HEALTH_INDEX.json",
+    "docs/research/uaos-financial-full-role-and-article-system-20261018.md"
   ],
   "causal_hypotheses": [
     {
@@ -85,7 +86,10 @@
     "tests/architecture/test_parent_domain_product_outcome_assurance.py",
     "tests/architecture/test_domain_health_escalation_policy.py",
     "src/uaos/runtime/finalization.py",
-    "tests/runtime/test_governed_product_outcome_finalization.py"
+    "tests/runtime/test_governed_product_outcome_finalization.py",
+    "ENTRYPOINT.md",
+    "docs/research/uaos-financial-full-role-and-article-system-20261018.md",
+    "tests/architecture/test_uaos_financial_embodiment.py"
   ],
   "verification_plan": [
     "Parent source tests reject CI-only/synthetic self-attested/outdated product completion.",
@@ -111,5 +115,24 @@
     "ci_summary": "568 passed, 1 skipped",
     "scope": "CONTROLLED_UAOS_FINAL_RESPONSE_COMPLETION_WHEN_HOST_SUPPLIES_REQUEST"
   },
-  "next_replay": "W2 current Financial guard/provenance plus W3-W5 full currently sourced product scenario; no synthetic acceptance."
+  "next_replay": "W2 current Financial guard/provenance plus W3-W5 full currently sourced product scenario; no synthetic acceptance.",
+  "new_user_correction_20261018": {
+    "statement": "User requested exhaustive finance writing assessment and explicitly instructed UAOS to act as the finance writing system itself; previous controller focused on upcall and governance and failed to perform professional end-to-end writing work. User will supply source materials here.",
+    "distinct_causes": [
+      "MISINTERPRETED_CONTROLLER_ROLE_AS_META_GOVERNANCE_ONLY",
+      "CONFUSED_SUBSYSTEM_REPAIR_CI_WITH_READER_ACCEPTANCE",
+      "WRITING_PASS_CONTRACT_EXISTS_BUT_HOST_EXECUTION_TRAJECTORY_UNPROVEN",
+      "HISTORIC_STYLE_AUDIT_PASS_DID_NOT_PREVENT_NEXT_USER_REJECTION",
+      "FINANCIAL_V3_MATERIAL_AND_ARTICLE_QUALITY_UNTESTED"
+    ],
+    "selected_intervention": "EXPLICIT_PARENT_TASK_SCOPED_UAOS_AS_FINANCE_WRITING_PROFESSIONAL__CURRENT_CHILD_BUSINESS_AUTHORITY_PRESERVED__MATERIAL_INTAKE_AND_E2E_OUTPUT_ADMISSION",
+    "protected_child_mutation": {
+      "target": "D1traverser-debug/financial-writing-agent",
+      "attempt": "create tests/test_parent_governed_current_lineage_20261018.py",
+      "status": "TOOL_LAYER_SAFETY_DENIED",
+      "disposition": "NOT_RETRIED_OR_REROUTED__HYPOTHESIS_ONLY__READ_ONLY_WORK_CONTINUES"
+    },
+    "user_materials_direct_to_UAOS": true,
+    "real_publication_quality": "NOT_VERIFIED"
+  }
 }
