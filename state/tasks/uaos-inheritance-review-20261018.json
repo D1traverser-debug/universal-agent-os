@@ -442,7 +442,7 @@
       {
         "source": "vectorize-io/hindsight",
         "ref": "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md",
-        "status": "PRODUCTION_SOURCE_DOSSIER_VERIFIED__METHODS_CANDIDATE",
+        "status": "PRODUCTION_DOSSIER_VERIFIED__METHODS_CANDIDATE",
         "pr": 129,
         "commit": "893033c77b545bcd8ec1d1c1d25f32b177407071",
         "source_main_sha": "5331da2f4db369528bb122075341a7de9c3df6df",
