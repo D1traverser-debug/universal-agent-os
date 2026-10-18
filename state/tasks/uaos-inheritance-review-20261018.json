@@ -3,8 +3,8 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "status": "RUNNING",
-  "current_stage": "PRODUCTION_REVIEW_GATE_VERIFIED__FIVE_REPO_DEEP_AUDIT_OPEN",
-  "next_action": "Continue the already-open multi-causal audit autonomously. Verify completion gate repair, then challenge other contributing causes, deepen external knowledge acquisition until admission or record a real blocker; preserve exact evidence and do not mark five-repo review complete without realistic validation.",
+  "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
+  "next_action": "Continue autonomous multi-causal audit from actual registered-repository main heads. Expand independent method learning (organizational double-loop, fault-injection, verified requirement root selection), test cross-factor interaction and tool/state continuity. Do not close until admitted comprehensive research, independently checked owner outcomes, and honest native trigger evidence.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -20,7 +20,7 @@
     "state/observations/uaos-multicausal-autonomous-learning-20261018.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-18T15:34:07+08:00",
+  "updated_at": "2026-10-18T16:20:31+08:00",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -38,7 +38,7 @@
     "next_validation": "Compare existing requirement stage invalidation in each child, prove root-selection accuracy with external/source evidence, evaluate typed trace reuse, then decide evolution/no-change using canonical transaction; do not claim universal matching."
   },
   "multicausal_autonomous_learning": {
-    "status": "ACTIVE__CAUSAL_SEARCH_AND_RESEARCH_NOT_SATURATED",
+    "status": "GATE_PRODUCTION_VERIFIED__MULTI_FACTOR_AUDIT_IN_PROGRESS__UNSATURATED",
     "evidence_ref": "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
     "method_comparison_ref": "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md",
     "candidate_evolution_ref": "state/evolution/EVO-20261018-MULTICAUSAL-AUTONOMY-ASSURANCE.json",
@@ -46,6 +46,12 @@
     "known_nonexclusive_factors": 8,
     "remaining": "Need causal cross-tests, research saturation, genuine independent native selected-chat samples, and cross-owner derived-requirement propagation.",
     "operational_sop_ref": "docs/research/uaos-inheritance-review-20261018/07_integrated_review_execution_sop.md",
-    "method_assurance": "COMPARATIVE_PRIMARY_SOURCE_STUDY_PARTIAL__RESEARCH_SATURATION_AND_REAL_NATIVE_TRACES_OPEN"
+    "method_assurance": "COMPARATIVE_PRIMARY_SOURCE_STUDY_PARTIAL__RESEARCH_SATURATION_AND_REAL_NATIVE_TRACES_OPEN",
+    "production_evidence": {
+      "pr": 96,
+      "main_sha": "268b03728970c660e12205fafada71a79e7e7ae9",
+      "ci": 593,
+      "result": "525 passed, 1 skipped"
+    }
   }
 }
