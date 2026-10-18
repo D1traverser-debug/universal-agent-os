@@ -3,7 +3,7 @@
   "evolution_id": "EVO-20261018-CONTROLLER-EPISTEMIC-ENTRY",
   "authority": "UAOS",
   "origin_kind": "CAPABILITY_GAP",
-  "status": "EVALUATING_CANDIDATE__PRODUCTION_AND_NATIVE_OPEN",
+  "status": "CONTROLLED_ENTRY_PROMOTED_AND_VERIFIED__NATIVE_CROSS_SESSION_RESEARCH_OPEN",
   "parent_evolution_ref": "state/evolution/EVO-20261018-MULTICAUSAL-AUTONOMY-ASSURANCE.json",
   "governing_outcome": "Strengthen the already-mandatory UAOS entry with evidence-based double-loop challenge, adaptive learning, and autonomous continuation without adding duplicated governance owners.",
   "origin_evidence_refs": [
@@ -58,5 +58,21 @@
   "research_assurance": "PRIMARY_SOURCE_COMPARISON_BOUNDED__NOT_WEB_EXHAUSTIVE_OR_SATURATED",
   "runtime_assurance": "CONTROLLED_FINALIZATION_ONLY_WHEN_HOST_FLAGS_CONTROLLER_AND_SUPPLIES_VERIFIER",
   "verification_rounds": [],
-  "completion_scope": "BOUNDED_ENTRY_REPAIR_ONLY__AUTONOMOUS_FULL_CROSS_SESSION_BEHAVIOR_REMAINS_OPEN"
+  "completion_scope": "BOUNDED_ENTRY_REPAIR_ONLY__AUTONOMOUS_FULL_CROSS_SESSION_BEHAVIOR_REMAINS_OPEN",
+  "production_evidence": {
+    "pr": 98,
+    "main_sha": "bb98594b347cb0ef445a7f16f5857a2ca4773f7b",
+    "ci_run": 598,
+    "ci_status": "success",
+    "tests": "533 passed, 1 skipped",
+    "skill_version_scope": "GITHUB_SOURCE_ONLY__INSTALLED_ACCOUNT_SKILL_NOT_VERIFIED",
+    "candidate_completion_scope": "SOURCE_POLICY_AND_CONTROLLED_RUNTIME_ADMITTED"
+  },
+  "postpromotion_observation": {
+    "source_verification": "main reread confirms four generated mandatory checks and controlled finalization entry",
+    "source_signal_scope": "WHEN_TRUSTED_HOST_SUPPLIES_CONTROLLER_SELECTION_AND_EVIDENCE_VERIFIER",
+    "verified_success": "UNMODIFIED_SIMPLE_TURN_AND_NEGATIVE_ROUTING_REGRESSION",
+    "unverified": "NATIVE_COMPLETE_MEDIATION__INDEPENDENT_CROSS_SESSION_TRIGGER_RATE__SATURATED_COMPREHENSIVE_RESEARCH__FIVE_REPO_BUSINESS_OUTCOMES"
+  },
+  "evolution_disposition": "BOUNDED_ENTRY_HARDENING_PROMOTED__PARENT_OPEN"
 }
