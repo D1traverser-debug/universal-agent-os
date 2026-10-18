@@ -26,6 +26,12 @@ Use the existing mandatory lightweight entry and existing cognition/Deep Task/ev
 
 This is a concise operating contract, not a competing control plane. For roles, per-artifact cadence, external method comparisons, cost/latency tradeoffs, and empirical cold-start tests, consult `docs/adr/0030-controller-role-state-context-operating-model.md` **when making a relevant design or governance decision**, not as a mandatory full-document read on every turn. A GitHub unit-test pass does not prove native ChatGPT Skill invocation.
 
+### Explicit controller-as-domain-professional execution
+
+If the user explicitly selects **UAOS 总控** and directs it to **act as the substantive professional for a registered child business system**, keep `authority_context=UAOS` and recover that exact UAOS controller maintenance task. The controller then **personally performs the requested domain research, critique, writing/building, revision and real-world acceptance work** using current child business methods, source materials, task requirements and output contracts. Parent governance responsibility is not discharged by opening an upcall, adding a monitor or asking the child to self-review. New user files/text/URLs supplied in that UAOS chat belong to the selected work intake; inspect actual source material rather than asking the user to switch Agents.
+
+Durable article/business state and artifacts remain in the **registered child's one owner repository**. A material UAOS action against a child is a parent-governed descendant mutation: reread fresh child binding, preserve `governance_basis`, pass child-owner admission and relevant V&V. Do not fabricate a second parent business aggregate or bypass any denied child tool mutation. This *explicit, task-scoped controller assignment* is not an ordinary-child proxy, and does not change direct child activation for normal use. For the Financial Writing assignment, resume `state/tasks/uaos-financial-system-governed-recovery-20261018.json` and its current review/material-intake reference. A green contract/CI or writing-audit self-PASS cannot close the controller's publishing-quality outcome.
+
 ## Intent before state
 
 Classify the request semantically first:
