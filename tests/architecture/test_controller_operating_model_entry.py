@@ -43,8 +43,9 @@ def test_operating_model_has_one_owner_and_does_not_shadow_existing_kernel():
 def test_skill_installation_evidence_does_not_prove_source_or_behavior():
     evidence = _j("state/observations/native-account-install-handoff-20261018.json")
     task = _j("state/tasks/uaos-inheritance-review-20261018.json")
-    assert "VISIBLE_INSTALLED" in evidence["record_status"]
-    assert "VERSION_UNVERIFIED" in task["native_account_cutover"]["status"]
+    assert "USER_CONFIRMED" in evidence["record_status"]
+    assert evidence["installation_ui_evidence"]["visible_installed_item"] == "uaos controller runtime"
+    assert "INSTALLED_BYTES_UNVERIFIED" in task["native_account_cutover"]["status"]
     assert evidence["native_reliability"] == "NATIVE_BEHAVIOR_UNVERIFIED"
     assert evidence["canary"]["production_code_ci_is_native_proof"] is False
 
