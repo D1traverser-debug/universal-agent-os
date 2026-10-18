@@ -4,6 +4,7 @@ These tests prove the local admission wiring when invoked. They do NOT prove
 native ChatGPT automatically intercepts every turn.
 """
 from dataclasses import replace
+from hashlib import sha256
 
 import pytest
 
@@ -11,6 +12,9 @@ from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 
 from uaos.runtime.epistemic_entry import (
     ControllerEpistemicEntry,
+    TurnEvolutionCoverage,
+    TurnUtteranceAssessment,
+    UtteranceOrigin,
     EntryAdmissionError,
     EntryObservation,
     EntrySignal,
@@ -56,12 +60,47 @@ Deliberation：NOT_TRIGGERED
 """
 
 
+def _review(response: str):
+    user_text = "controlled synthetic current user input"
+    return TurnEvolutionCoverage(
+        observed_source_refs=("test:current-user", "test:assistant-final"),
+        assessments=(
+            TurnUtteranceAssessment(
+                source_ref="test:current-user", origin=UtteranceOrigin.USER,
+                source_sha256=sha256(user_text.encode()).hexdigest(),
+                signal=EntrySignal.NO_MATERIAL_GAP,
+                judgment_evidence_ref="test:judged-user",
+                alternative_or_no_gap_reason_ref="test:challenge-user",
+            ),
+            TurnUtteranceAssessment(
+                source_ref="test:assistant-final", origin=UtteranceOrigin.ASSISTANT,
+                source_sha256=sha256(response.encode()).hexdigest(),
+                signal=EntrySignal.NO_MATERIAL_GAP,
+                judgment_evidence_ref="test:judged-assistant",
+                alternative_or_no_gap_reason_ref="test:challenge-assistant",
+            ),
+        ),
+        assistant_final_ref="test:assistant-final",
+        evolution_routing_ref="test:no-durable-evolution-trigger",
+    )
+
+
+def _turn_source_verifier(ref: str, digest: str) -> bool:
+    return ref == "test:current-user" and digest == sha256(
+        b"controlled synthetic current user input"
+    ).hexdigest()
+
+
 def _context(entry=None, **overrides):
     base = dict(
         context_selected=True,
         controller_selected=True,
         controller_epistemic_entry=entry,
         entry_evidence_verifier=lambda _ref: True,
+        turn_evolution_coverage=_review(_report()),
+        observed_turn_source_refs=("test:current-user", "test:assistant-final"),
+        turn_source_digest_verifier=_turn_source_verifier,
+        turn_judgment_verifier=lambda ref: ref.startswith("test:"),
     )
     base.update(overrides)
     return FinalizationContext(**base)
@@ -202,7 +241,7 @@ def test_exact_controller_entry_requires_owner_source_and_rejects_false_done():
     with pytest.raises(FinalizationBlocked, match="CONTROLLER_TASK_PROGRESS_READER_MISSING"):
         admit_final_response(report, _context(entry, authoritative_task_ref=ref))
 
-    bound = _context(entry, authoritative_task_ref=ref, read_authoritative_task=lambda _: state)
+    bound = _context(entry, authoritative_task_ref=ref, read_authoritative_task=lambda _: state,\n                     turn_evolution_coverage=_review(report))
     assert admit_final_response(report, bound).adherence.passed
     with pytest.raises(FinalizationBlocked, match="AUTHORITATIVE_PROGRESS_MISMATCH"):
         admit_final_response(report.replace(f"状态：{state['status']}", "状态：COMPLETE"), bound)
