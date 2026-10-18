@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterable, Mapping
+from typing import Callable, Iterable, Mapping
 
 from uaos.kernel.cognition_case import CognitionCaseReceipt
 from uaos.kernel.deliberation import RootScopeReceipt
@@ -69,6 +69,8 @@ class SessionAdherenceViolation(str, Enum):
     CLAIMED_COGNITION_WITHOUT_ROOT_SCOPE_RECEIPT = "CLAIMED_COGNITION_WITHOUT_ROOT_SCOPE_RECEIPT"
     CLAIMED_EVOLUTION_WITHOUT_VERIFIED_DISPOSITION = "CLAIMED_EVOLUTION_WITHOUT_VERIFIED_DISPOSITION"
     MISSING_DURABLE_PROBLEM_RECORD_EVIDENCE = "MISSING_DURABLE_PROBLEM_RECORD_EVIDENCE"
+    UNVERIFIED_PROGRESS_AUTHORITY = "UNVERIFIED_PROGRESS_AUTHORITY"
+    AUTHORITATIVE_PROGRESS_MISMATCH = "AUTHORITATIVE_PROGRESS_MISMATCH"
 
 
 @dataclass(frozen=True, slots=True)
@@ -88,6 +90,10 @@ class SessionProgressExpectation:
     cognition_case_receipt: CognitionCaseReceipt | None = None
     evolution_disposition: EvolutionDisposition | None = None
     problem_record_ref: str | None = None
+    # A trusted host can bind the visible progress projection to the current exact owner.
+    # The resolver must retrieve the authoritative task, not an assistant-written summary.
+    authoritative_task_ref: str | None = None
+    read_authoritative_task: Callable[[str], Mapping[str, object] | None] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -169,6 +175,35 @@ def evaluate_session_progress_response(response: str, expectation: SessionProgre
 
     if any(field in fields and not fields[field].strip() for field in REQUIRED_PROGRESS_FIELDS):
         violations.append(SessionAdherenceViolation.EMPTY_REQUIRED_FIELD)
+
+    # Presence of ten text fields is a format check, not a task-state truth check.
+    # Reuse the owning task's exact state; never create another progress authority.
+    # This path provides an enforceable check only when an external controlled host
+    # supplies a fresh resolver. Native ChatGPT may not call this module at all.
+    if expectation.authoritative_task_ref is not None:
+        reader = expectation.read_authoritative_task
+        try:
+            state = reader(expectation.authoritative_task_ref) if reader is not None else None
+        except (OSError, KeyError, TypeError, ValueError):
+            state = None
+        required = ("task_id", "authority_context", "status", "current_stage", "state_ref")
+        if (
+            not isinstance(state, Mapping)
+            or any(not isinstance(state.get(key), str) or not state[key].strip() for key in required)
+            or state.get("state_ref") != expectation.authoritative_task_ref
+        ):
+            violations.append(SessionAdherenceViolation.UNVERIFIED_PROGRESS_AUTHORITY)
+        else:
+            bound = (
+                ("authority_context", "authority_context"),
+                ("status", "status"),
+                ("current_stage", "current_stage"),
+            )
+            if (
+                any(fields.get(report_field) != state[canonical_field] for report_field, canonical_field in bound)
+                or state["task_id"] not in fields.get("current_scope_or_task", "")
+            ):
+                violations.append(SessionAdherenceViolation.AUTHORITATIVE_PROGRESS_MISMATCH)
 
     if expectation.problem_signal_observed:
         deliberation = fields.get("deliberation_state", "").upper()
