@@ -184,6 +184,7 @@ class TurnEvolutionCoverageReceipt:
     covered_sources: tuple[str, ...]
     problem_signal_observed: bool
     material_knowledge_gap_observed: bool
+    unfinished_authorized_work_observed: bool
     hypothesis_challenge_required: bool
     evolution_routing_ref: str
 
@@ -249,6 +250,10 @@ def admit_turn_evolution_coverage(
         ),
         material_knowledge_gap_observed=any(
             item.signal is EntrySignal.MATERIAL_KNOWLEDGE_GAP
+            for item in review.assessments
+        ),
+        unfinished_authorized_work_observed=any(
+            item.signal is EntrySignal.UNFINISHED_AUTHORIZED_WORK
             for item in review.assessments
         ),
         hypothesis_challenge_required=any(
