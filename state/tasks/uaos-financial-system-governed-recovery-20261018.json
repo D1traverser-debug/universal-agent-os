@@ -4,7 +4,7 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "status": "RUNNING",
-  "current_stage": "PARENT_UPCALL_RECONCILED__PRODUCT_OUTCOME_GAP_IDENTIFIED__RECOVERY_GATE_IN_PROGRESS",
+  "current_stage": "PARENT_PRODUCT_COMPLETION_CONTROLLED_GATE_PRODUCTION_VERIFIED__FINANCIAL_LIVE_QUALITY_REPLAY_OPEN",
   "state_ref": "state/tasks/uaos-financial-system-governed-recovery-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-FINANCIAL-PRODUCT-OUTCOME-ASSURANCE.json",
   "governing_outcome": "UAOS independently coordinates and verifies the entire Financial Writing improvement program until current-kernel requirements produce a genuinely sourced, reader-valuable, non-advisory, original, available Word product with credible external/user-quality evidence, followed by controlled learning and recurrence checks; do not outsource diagnosis, progress or re-reminding to user.",
@@ -96,12 +96,12 @@
     {
       "id": "W0",
       "name": "Reconcile old parent upcalls and child production status",
-      "state": "READ_EVIDENCE"
+      "state": "UPCALLS_P1_P18_RECONCILED__PARENT_ISSUE_63_COMMENTED"
     },
     {
       "id": "W1",
       "name": "Parent outcome-assurance tripwire with negative controls",
-      "state": "PARENT_HEALTH_GATE_PRODUCTION_VERIFIED__FINALIZATION_GUARD_CANDIDATE"
+      "state": "COMPLETE_BOUNDED_CONTROLLED_GATE__REAL_FINANCIAL_OUTCOME_OPEN"
     },
     {
       "id": "W2",
@@ -124,9 +124,9 @@
       "state": "OPEN"
     }
   ],
-  "next_action": "Verify controller-finalization outcome gate candidate and promote with exact CI, then execute parent-governed child article lifecycle adversarial/real-world replay and reader value/Word acceptance. Never close entire task from controlled CI alone; child current business state continues at v3 RESEARCH.",
+  "next_action": "UAOS controller W2: source-backed adversarial replay of Financial current Article Aggregate and delivery, including marker/tamper paths with tool safety respected. W3: govern current v3 RESEARCH with up-to-date official claim sources and all specific requirements. W4: validate real Deep/Broad/Word artifacts and separate reviewer or user evidence. W5: compare methods and promote only real improvement. Parent owner stays UAOS; child article authority stays Financial. No repeated owner instructions needed.",
   "required_user_action_now": "NONE",
-  "assurance": "CURRENT_SOURCE_RECONCILED__PARENT_OWNERSHIP_PERSISTENCE_PENDING_PROMOTION__LIVE_PRODUCT_UNVALIDATED",
+  "assurance": "UAOS_PARENT_GOVERNED_CODE_AND_CONTROLLED_FINALIZATION_VERIFIED__FINANCIAL_CURRENT_ARTICLE_READER_AND_DELIVERY_OUTCOME_OPEN",
   "updated_at": "2026-10-18T19:31:00+08:00",
   "production_parent_health_evidence": {
     "pr": 107,
@@ -138,7 +138,14 @@
   "controlled_finalization_extension": {
     "code_ref": "src/uaos/runtime/finalization.py",
     "test_ref": "tests/runtime/test_governed_product_outcome_finalization.py",
-    "status": "CANDIDATE_CI_PENDING",
-    "physical_native_chatgpt_host_guarantee": false
-  }
+    "status": "PRODUCTION_CI_631_VERIFIED__NATIVE_COMPLETE_MEDIATION_UNPROVEN",
+    "physical_native_chatgpt_host_guarantee": false,
+    "production": {
+      "pr": 108,
+      "main_sha": "052d8abb4f4e7f80e7e10a0cf7688842571503fe",
+      "ci": 631,
+      "pipeline": "568 passed, 1 skipped"
+    }
+  },
+  "current_parent_gate_production_verified": true
 }
