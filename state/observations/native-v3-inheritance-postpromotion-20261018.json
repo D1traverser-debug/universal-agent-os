@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "observation_id": "native-v3-inheritance-postpromotion-20261018",
+  "authority": "UAOS",
+  "observed_at": "2026-10-18T13:14:57+08:00",
+  "context": "POST_PROMOTION_FRESH_CHAT__USER_SUPPLIED_TWO_TURN_TRANSCRIPT",
+  "evidence_provenance": "User supplied full visible responses to bare 继承 and subsequent 总控系统 selection; independently cross-checked current main ENTRYPOINT.md, CURRENT_SYSTEM.json, TASK_INDEX.json and exact controller task and evolution refs. No direct tool-trace introspection of the separate native conversation is available.",
+  "promoted_evolution_ref": "state/evolution/EVO-20261017-KNOWLEDGE-ACQUISITION-NATIVE-ENTRY-V3.json",
+  "production_authority_ref": "main@dca901abb85cf87f4a38fcc593b7397d468ccf69",
+  "expected_behavior": [
+    "Bare 继承 opens the current selector instead of silently assuming UAOS",
+    "Selector includes UAOS and currently resumable domain routers",
+    "Selecting 总控系统 establishes UAOS and resolves exactly one eligible default_resume controller task",
+    "Controller reretrieves current production authority and the exact task state_ref, reconstructing current stage without earlier-chat context",
+    "Reports truthful version, evidence and native-host assurance boundary",
+    "Does not demand unnecessary user reminders or invent a physical pre-send/pre-tool hook"
+  ],
+  "reported_behavior": [
+    "Bare 继承 produced current five-option selector including UAOS, Financial Writing, A-share, novel HOLD and Video",
+    "After 总控系统 selection, resumed uaos:maintenance:systemic-repair-runtime-skill-20261017 at V3_PRODUCTION_PROMOTED__FRESH_CHAT_INHERITANCE_OBSERVATION_PENDING",
+    "Reported UAOS release 2.8.0 and PR #87 production code commit bd7afe4f",
+    "Reported CI #553 success and current persisted state timestamp 2026-10-18 00:50:30 Asia/Shanghai",
+    "No follow-up reminders, previous-chat reconstruction prompts, or extra user information were requested",
+    "Correctly retained native behavioral-only and no physical-hook assurance boundary"
+  ],
+  "independent_corrob": [
+    "Production ENTRYPOINT.md and SESSION_INTERACTION_POLICY.json require generic selector then controller default-resume exact state_ref",
+    "Production TASK_INDEX.json has exactly one RUNNING eligible default_resume controller task matching reported identity/stage",
+    "Production task/evolution state has identical stage and update timestamp",
+    "Production CURRENT_SYSTEM.json confirms native v3 runtime/profile owners and release 2.8.0",
+    "Previous production main CI #553 and #555 reported success from GitHub Actions in prior production verification"
+  ],
+  "result": "PASS_WITH_LIMITATION",
+  "limitations": [
+    "Transcript content is independently corroborated but separate-chat tool-call traces and physical Skill invocation are not introspectable",
+    "This is one visible inheritance observation, not proof of universal error-free operation across future sessions",
+    "Autonomous task execution on a substantive new work item is not itself exercised by this routing/continuity scenario; prior direct-fix holdout independently tested no user handback",
+    "No repository-controlled ChatGPT pre-send or pre-tool hard hook is claimed"
+  ],
+  "disposition": "ACCEPT_POST_PROMOTION_BEHAVIORAL_CONTINUITY__KEEP_V3_PRODUCTION__CLOSE_CURRENT_CONTROLLER_MAINTENANCE__REOPEN_ON_NEW_EVIDENCE_ONLY"
+}
