@@ -1,3 +1,4 @@
+from uaos.kernel.problem_space import MethodTransferAssessment, MethodTransferDisposition
 import json
 from pathlib import Path
 
@@ -134,6 +135,17 @@ def _cognition_case():
         ),
         architecture_reassessment_evidence_ids=("macro", "dogfood-scenario", "recovery-scenario"),
         architecture_experience=_architecture_experience(),
+        method_transfer=MethodTransferAssessment(
+            current_problem_ref="native-chatgpt-user-dependent-depth-routing",
+            target_scope="UAOS",
+            observed_failure_classes=("NATIVE_ROUTING_DEPTH_MISS",),
+            lookup_evidence_refs=("session-gap",),
+            candidates=(),
+            selected_knowledge_id=None,
+            disposition=MethodTransferDisposition.NO_REUSABLE_METHOD,
+            novelty_probe_refs=("unknown-probe",),
+            selection_rationale="The fixture has no certified prior-method analogy; retain that as explicit no-reuse.",
+        ),
     )
 
 

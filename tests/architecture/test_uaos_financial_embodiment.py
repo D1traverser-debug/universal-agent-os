@@ -17,10 +17,13 @@ def test_financial_work_is_parent_owned_as_an_actual_professional_task():
     index = _json("state/TASK_INDEX.json")
     defaults = [t for t in index["controller_tasks"] if t["default_resume"] and t["resume_eligible"]]
     assert len(defaults) == 1
-    task = _json(defaults[0]["state_ref"])
+    assert defaults[0]["task_id"] == "uaos:maintenance:inheritance-review-20261018"
+    finance = next(t for t in index["controller_tasks"] if t["task_id"] == index["controller_default_handoff"]["return_task_id"])
+    assert finance["resume_eligible"] and not finance["default_resume"]
+    task = _json(finance["state_ref"])
     assert task["authority_context"] == "UAOS"
     assert task["task_id"] == "uaos:maintenance:financial-system-governed-recovery-20261018"
-    assert defaults[0]["current_stage"] == task["current_stage"]
+    assert finance["current_stage"] == task["current_stage"]
     assert task["operational_role"].startswith("UAOS_CONTROLLER__PROFESSIONAL_FINANCE_RESEARCH")
     assert task["execution_mandate"]["material_intake_in_this_chat"] is True
     assert task["descendant_business_owner"] == "DOMAIN:financial_writing"
@@ -55,7 +58,7 @@ def test_real_editorial_quality_is_open_despite_positive_repo_ci():
 
 def test_parent_authority_is_not_mistaken_for_financial_article_state():
     index = _json("state/TASK_INDEX.json")
-    default = next(x for x in index["controller_tasks"] if x["default_resume"])
+    default = next(x for x in index["controller_tasks"] if x["task_id"] == index["controller_default_handoff"]["return_task_id"])
     child_router = next(x for x in index["tasks"] if x["domain_id"] == "financial_writing")
     assert default["task_id"] != child_router["task_id"]
     assert default["authority_context"] == "UAOS"

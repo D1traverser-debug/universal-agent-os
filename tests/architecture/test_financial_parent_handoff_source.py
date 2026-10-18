@@ -9,11 +9,14 @@ def _j(p):
     return json.loads((ROOT/p).read_text(encoding="utf-8"))
 
 
-def test_financial_governance_parent_remains_running_and_exactly_default():
+def test_financial_governance_parent_remains_running_and_explicitly_resumable():
     i=_j("state/TASK_INDEX.json")
     selected=[t for t in i["controller_tasks"] if t["default_resume"]]
     assert len(selected)==1
-    t=selected[0]
+    assert selected[0]["task_id"]=="uaos:maintenance:inheritance-review-20261018"
+    assert i["controller_default_handoff"]["return_task_id"]=="uaos:maintenance:financial-system-governed-recovery-20261018"
+    t=next(t for t in i["controller_tasks"] if t["task_id"]==i["controller_default_handoff"]["return_task_id"])
+    assert t["resume_eligible"] and not t["default_resume"]
     task=_j(t["state_ref"])
     assert task["task_id"]==t["task_id"]=="uaos:maintenance:financial-system-governed-recovery-20261018"
     assert t["current_stage"]==task["current_stage"]

@@ -2,6 +2,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
+from typing import Callable
+
+from uaos.contracts.enums import KnowledgeState
+from uaos.contracts.models import KnowledgeItem
 
 
 class CapabilityDiscoveryAdmissionError(RuntimeError):
@@ -385,4 +389,158 @@ def require_knowledge_acquisition_admission(
         method_family_ids=tuple(family_ids),
         evidence_refs=evidence_refs,
         stop_reason=assessment.stop_reason,
+    )
+
+# Method transfer belongs to the existing knowledge-acquisition/cognition owner.
+# It is an admission check, not a knowledge store, autonomous agent, or policy owner.
+class MethodTransferAdmissionError(RuntimeError):
+    pass
+
+
+class MethodTransferDisposition(str, Enum):
+    REUSE_CANONICAL_CANDIDATE = "REUSE_CANONICAL_CANDIDATE"
+    ADAPT_PROVISIONALLY = "ADAPT_PROVISIONALLY"
+    NO_REUSABLE_METHOD = "NO_REUSABLE_METHOD"
+
+
+@dataclass(frozen=True, slots=True)
+class MethodTransferCandidate:
+    """One prior method plus *current-case* evidence for fit and misfit."""
+
+    knowledge: KnowledgeItem
+    method_family: str
+    failure_class: str
+    fit_evidence_refs: tuple[str, ...]
+    misfit_or_falsification_refs: tuple[str, ...]
+    fit_condition: str
+    nonfit_condition: str
+
+    def __post_init__(self) -> None:
+        if not self.method_family.strip() or not self.failure_class.strip():
+            raise ValueError("method family and failure class are required")
+        if any(not isinstance(refs, tuple) or not refs or any(not isinstance(r, str) or not r.strip() for r in refs) for refs in (self.fit_evidence_refs, self.misfit_or_falsification_refs)):
+            raise ValueError("method transfer needs a non-empty tuple of evidence refs for both fit and nonfit")
+        if not self.fit_condition.strip() or not self.nonfit_condition.strip():
+            raise ValueError("method transfer needs explicit fit and nonfit conditions")
+
+
+@dataclass(frozen=True, slots=True)
+class MethodTransferAssessment:
+    """Select a method by analogy *and* disanalogy; no prior action is automatically copied."""
+
+    current_problem_ref: str
+    target_scope: str
+    observed_failure_classes: tuple[str, ...]
+    lookup_evidence_refs: tuple[str, ...]
+    candidates: tuple[MethodTransferCandidate, ...]
+    selected_knowledge_id: str | None
+    disposition: MethodTransferDisposition
+    novelty_probe_refs: tuple[str, ...]
+    selection_rationale: str
+
+    def __post_init__(self) -> None:
+        if not self.current_problem_ref.strip() or not self.target_scope.strip():
+            raise ValueError("method transfer requires current problem and target scope")
+        if not self.observed_failure_classes or not all(x.strip() for x in self.observed_failure_classes):
+            raise ValueError("method transfer requires observed failure classes")
+        for refs in (self.lookup_evidence_refs, self.novelty_probe_refs):
+            if not isinstance(refs, tuple) or not refs or any(not isinstance(x, str) or not x.strip() for x in refs):
+                raise ValueError("method transfer requires a non-empty tuple of evidence refs")
+        if not self.selection_rationale.strip():
+            raise ValueError("method transfer requires a rationale")
+
+
+@dataclass(frozen=True, slots=True)
+class MethodTransferReceipt:
+    problem_ref: str
+    disposition: MethodTransferDisposition
+    selected_knowledge_id: str | None
+    inspected_knowledge_ids: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
+    method_family: str | None
+
+
+def require_method_transfer_admission(
+    assessment: MethodTransferAssessment,
+    *,
+    verify_current_evidence: Callable[[str], bool] | None,
+    resolve_trusted_knowledge: Callable[[str], KnowledgeItem | None] | None = None,
+) -> MethodTransferReceipt:
+    """A repeated/systemic case must consciously reuse, adapt, or reject historical methods.
+
+    Reuses the canonical KnowledgeItem lifecycle; refuses a remembered rule with no
+    current fit/counterexample evidence. This checks bound evidence identity, not
+    semantic truth or live native ChatGPT execution.
+    """
+
+    if verify_current_evidence is None:
+        raise MethodTransferAdmissionError("method transfer requires current-case evidence verification")
+    candidates = assessment.candidates
+    ids = [c.knowledge.knowledge_id for c in candidates]
+    if len(ids) != len(set(ids)):
+        raise MethodTransferAdmissionError("duplicate prior method identities")
+    if len(assessment.observed_failure_classes) != len(set(assessment.observed_failure_classes)):
+        raise MethodTransferAdmissionError("duplicate observed failure class")
+
+    refs = {
+        *assessment.lookup_evidence_refs,
+        *assessment.novelty_probe_refs,
+        *(ref for candidate in candidates for ref in candidate.fit_evidence_refs),
+        *(ref for candidate in candidates for ref in candidate.misfit_or_falsification_refs),
+    }
+    missing = sorted(ref for ref in refs if not verify_current_evidence(ref))
+    if missing:
+        raise MethodTransferAdmissionError(f"method transfer refers to unverified current-case evidence: {missing}")
+
+    if candidates and resolve_trusted_knowledge is None:
+        raise MethodTransferAdmissionError(
+            "prior method candidates require a trusted knowledge resolver, not caller-claimed status"
+        )
+
+    for candidate in candidates:
+        trusted = resolve_trusted_knowledge(candidate.knowledge.knowledge_id) if resolve_trusted_knowledge else None
+        if trusted is None or trusted != candidate.knowledge:
+            raise MethodTransferAdmissionError(
+                "prior method must match current trusted knowledge identity, state, scope, sources and usage"
+            )
+        if candidate.failure_class not in assessment.observed_failure_classes:
+            raise MethodTransferAdmissionError("prior-method analogy references an unobserved failure class")
+        if candidate.knowledge.state is KnowledgeState.RETIRED:
+            raise MethodTransferAdmissionError("retired knowledge cannot be silently reused")
+        if not candidate.knowledge.source_refs:
+            raise MethodTransferAdmissionError("prior knowledge lacks source provenance")
+
+    if assessment.disposition is MethodTransferDisposition.NO_REUSABLE_METHOD:
+        if assessment.selected_knowledge_id is not None:
+            raise MethodTransferAdmissionError("no-reuse disposition cannot select a method")
+        return MethodTransferReceipt(
+            problem_ref=assessment.current_problem_ref,
+            disposition=assessment.disposition,
+            selected_knowledge_id=None,
+            inspected_knowledge_ids=tuple(ids),
+            evidence_refs=tuple(sorted(refs)),
+            method_family=None,
+        )
+
+    selected = next((item for item in candidates if item.knowledge.knowledge_id == assessment.selected_knowledge_id), None)
+    if selected is None:
+        raise MethodTransferAdmissionError("reuse/adaptation requires a known selected method")
+    if selected.knowledge.applicable_scope not in {"GLOBAL", "UAOS", assessment.target_scope}:
+        raise MethodTransferAdmissionError("selected knowledge scope does not match this authority")
+    if assessment.disposition is MethodTransferDisposition.REUSE_CANONICAL_CANDIDATE:
+        if selected.knowledge.state is not KnowledgeState.CANONICAL or not selected.knowledge.usage_links:
+            raise MethodTransferAdmissionError("canonical reuse candidate requires an already promoted method and a prior-use reference; reference reality still needs a trusted host verifier")
+    elif assessment.disposition is MethodTransferDisposition.ADAPT_PROVISIONALLY:
+        if selected.knowledge.state is KnowledgeState.RAW_EVIDENCE:
+            raise MethodTransferAdmissionError("raw unevaluated knowledge may not be transferred as a selected method")
+    else:
+        raise MethodTransferAdmissionError("unsupported method transfer disposition")
+
+    return MethodTransferReceipt(
+        problem_ref=assessment.current_problem_ref,
+        disposition=assessment.disposition,
+        selected_knowledge_id=selected.knowledge.knowledge_id,
+        inspected_knowledge_ids=tuple(ids),
+        evidence_refs=tuple(sorted(refs)),
+        method_family=selected.method_family,
     )

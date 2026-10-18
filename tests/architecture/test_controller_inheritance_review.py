@@ -45,8 +45,11 @@ def test_review_reuses_exactly_one_existing_controller_task_authority():
     assert len(controller) == 1
     task = controller[0]
     assert task["authority_context"] == "UAOS"
-    assert task["task_id"] == "uaos:maintenance:financial-system-governed-recovery-20261018"
-    assert any(x["task_id"] == "uaos:maintenance:inheritance-review-20261018" and x["status"] == "RUNNING" for x in index["controller_tasks"])
+    assert task["task_id"] == "uaos:maintenance:inheritance-review-20261018"
+    financial = next(x for x in index["controller_tasks"] if x["task_id"] == "uaos:maintenance:financial-system-governed-recovery-20261018")
+    assert financial["resume_eligible"] and not financial["default_resume"]
+    assert financial["status"] == "RUNNING"
+    assert index["controller_default_handoff"]["return_task_id"] == financial["task_id"]
     assert task["resume_eligible"] and task["status"] == "RUNNING"
     assert (ROOT / task["state_ref"]).exists()
 

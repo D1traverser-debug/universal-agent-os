@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 import pytest
 
 from uaos.kernel import (
@@ -16,6 +18,9 @@ from uaos.kernel import (
     RootScopeReceipt,
 )
 from uaos.runtime import FinalizationBlocked, FinalizationContext, admit_final_response
+from uaos.contracts.models import KnowledgeItem
+from uaos.contracts.enums import KnowledgeState
+from uaos.kernel.problem_space import MethodTransferAssessment, MethodTransferCandidate, MethodTransferDisposition
 
 
 def _report(*, problem: bool = False, next_action: str = "none") -> str:
@@ -286,3 +291,54 @@ def test_real_user_choice_can_be_a_terminal_blocker_without_fake_cognition_case(
     )
     assert receipt.closure_decision.value == "BLOCKED_WITH_REASON"
     assert receipt.adherence.passed
+
+
+def test_controlled_finalization_rejects_fabricated_prior_method_without_trusted_resolver():
+    prior = KnowledgeItem(
+        knowledge_id="prior:repeated-incident-analysis",
+        content="Compare owner authority, host invocation and conflicting paths before selecting an action.",
+        source_refs=("repo:incident-evidence",),
+        applicable_scope="UAOS",
+        state=KnowledgeState.CANONICAL,
+        confidence=0.8,
+        usage_links=("issue:older-review",),
+    )
+    transfer = MethodTransferAssessment(
+        current_problem_ref="runtime-finalization-case",
+        target_scope="UAOS",
+        observed_failure_classes=("DECLARED_GATE_NOT_EXECUTED",),
+        lookup_evidence_refs=("micro",),
+        candidates=(MethodTransferCandidate(
+            knowledge=prior,
+            method_family="incident-analysis",
+            failure_class="DECLARED_GATE_NOT_EXECUTED",
+            fit_evidence_refs=("action-local",),
+            misfit_or_falsification_refs=("counter",),
+            fit_condition="old and current failure share runtime bypass",
+            nonfit_condition="direct evidence shows the host actually invoked the gate",
+        ),),
+        selected_knowledge_id=prior.knowledge_id,
+        disposition=MethodTransferDisposition.REUSE_CANONICAL_CANDIDATE,
+        novelty_probe_refs=("counter",),
+        selection_rationale="candidate matches only while no counterexample proves native mediation",
+    )
+    case = replace(_cognition_case(), method_transfer=transfer)
+    kwargs = dict(
+        context_selected=True,
+        problem_signal_observed=True,
+        cognition_case=case,
+        closure_signals=_successful_closure(),
+    )
+    with pytest.raises(FinalizationBlocked, match="trusted knowledge resolver"):
+        admit_final_response(_report(problem=True), FinalizationContext(**kwargs))
+    with pytest.raises(FinalizationBlocked, match="must match current trusted knowledge"):
+        admit_final_response(
+            _report(problem=True),
+            FinalizationContext(**kwargs, trusted_knowledge_resolver=lambda _: replace(prior, usage_links=("fake",))),
+        )
+    receipt = admit_final_response(
+        _report(problem=True),
+        FinalizationContext(**kwargs, trusted_knowledge_resolver=lambda identity: prior if identity == prior.knowledge_id else None),
+    )
+    assert receipt.adherence.passed
+    assert receipt.closure_decision.value == "REPAIR_EXECUTED"

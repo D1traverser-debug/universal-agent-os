@@ -1,7 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Callable
+
+from uaos.contracts.models import KnowledgeItem
 from enum import Enum
+
+from .problem_space import (MethodTransferAssessment, MethodTransferAdmissionError, require_method_transfer_admission)
 
 from .architecture_experience import (
     ArchitectureCandidate,
@@ -134,6 +139,7 @@ class CognitionCase:
     engineering_trace: EngineeringTrace
     architecture_reassessment_evidence_ids: tuple[str, ...] = ()
     architecture_experience: ArchitectureExperienceCase | None = None
+    method_transfer: MethodTransferAssessment | None = None
 
     def __post_init__(self) -> None:
         if not self.case_id.strip():
@@ -159,6 +165,8 @@ class CognitionCaseReceipt:
     verification_methods: tuple[str, ...]
     validation_methods: tuple[str, ...]
     systemic: bool
+    method_transfer_disposition: str | None = None
+    transferred_knowledge_id: str | None = None
 
 
 _CAUSAL_EVIDENCE_KINDS = {
@@ -269,7 +277,9 @@ def _admit_architecture_experience(
         )
 
 
-def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceipt:
+def require_cognition_case_admission(
+    case: CognitionCase, *, resolve_trusted_knowledge: Callable[[str], KnowledgeItem | None] | None = None
+) -> CognitionCaseReceipt:
     """Recompute cognition admission from raw case evidence instead of trusting a receipt."""
 
     directive = require_deliberation_admission(case.signals, case.evidence)
@@ -427,6 +437,35 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
         )
         architecture_experience_admitted = True
 
+    # Previous repairs are candidates for method transfer, not proof of fit.
+    # Repeated failures must provide *evidence* of reuse/adaptation or a bounded
+    # no-reusable-method finding. One-off cases do not pay this research cost.
+    method_receipt = None
+    if case.signals.repeated_failure_count >= 2 and case.method_transfer is None:
+        raise CognitionCaseAdmissionError(
+            "repeated failure requires prior-method transfer or an evidence-backed NO_REUSABLE_METHOD disposition"
+        )
+    if case.method_transfer is not None:
+        if case.method_transfer.current_problem_ref != case.case_id:
+            raise CognitionCaseAdmissionError("method transfer problem identity differs from cognition case")
+        try:
+            method_receipt = require_method_transfer_admission(
+                case.method_transfer, verify_current_evidence=lambda ref: (
+                    ref in evidence_by_id and evidence_by_id[ref].kind in {
+                        EvidenceKind.REPOSITORY_FACT,
+                        EvidenceKind.TOOL_RESULT,
+                        EvidenceKind.TEST_RESULT,
+                        EvidenceKind.RUNTIME_OBSERVATION,
+                        EvidenceKind.SCENARIO_RESULT,
+                        EvidenceKind.ANALYSIS_RESULT,
+                    }
+                ),
+                resolve_trusted_knowledge=resolve_trusted_knowledge,
+            )
+        except (MethodTransferAdmissionError, ValueError) as exc:
+            raise CognitionCaseAdmissionError(f"method transfer not admitted: {exc}") from exc
+
+
     used_ids = {
         *(ref for refs in case.evidence.by_dimension.values() for ref in refs),
         *(ref for factor in case.causal_factors for ref in factor.supporting_evidence_ids),
@@ -435,6 +474,7 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
         *(ref for candidate in case.action_candidates for ref in candidate.tradeoff_refs),
         *case.architecture_reassessment_evidence_ids,
         *trace.requirement_or_goal_evidence_ids,
+        *(method_receipt.evidence_refs if method_receipt is not None else ()),
     }
     return CognitionCaseReceipt(
         case_id=case.case_id,
@@ -452,4 +492,6 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
         verification_methods=trace.verification_methods,
         validation_methods=trace.validation_methods,
         systemic=systemic,
+        method_transfer_disposition=method_receipt.disposition.value if method_receipt else None,
+        transferred_knowledge_id=method_receipt.selected_knowledge_id if method_receipt else None,
     )

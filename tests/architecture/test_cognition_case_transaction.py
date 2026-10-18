@@ -1,3 +1,4 @@
+from uaos.kernel.problem_space import MethodTransferAssessment, MethodTransferDisposition
 import pytest
 
 from uaos.kernel import (
@@ -149,6 +150,17 @@ def _case():
         ),
         architecture_reassessment_evidence_ids=("arch", "scenario"),
         architecture_experience=_architecture_experience(),
+        method_transfer=MethodTransferAssessment(
+            current_problem_ref="repeated-user-anchoring",
+            target_scope="UAOS",
+            observed_failure_classes=("USER_ROOT_CAUSAL_ANCHORING",),
+            lookup_evidence_refs=("micro",),
+            candidates=(),
+            selected_knowledge_id=None,
+            disposition=MethodTransferDisposition.NO_REUSABLE_METHOD,
+            novelty_probe_refs=("counter",),
+            selection_rationale="Historical candidate availability remains unverified in this deterministic fixture.",
+        ),
     )
 
 

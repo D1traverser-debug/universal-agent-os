@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, replace
 from typing import Callable
 
+from uaos.contracts.models import KnowledgeItem
+
 from .epistemic_entry import ControllerEpistemicEntry, assess_controller_epistemic_entry
 
 from uaos.kernel.cognition_case import (
@@ -116,6 +118,7 @@ class FinalizationContext:
     user_input_required: bool = False
     work_remaining_without_user_input: bool = False
     cognition_case: CognitionCase | None = None
+    trusted_knowledge_resolver: Callable[[str], KnowledgeItem | None] | None = None
     closure_signals: ProblemClosureSignals | None = None
     deep_task_required: bool = False
     deep_task_signals: DeepTaskSignals | None = None
@@ -178,9 +181,11 @@ def _validate_method_evidence(
 def _bind_and_validate_cognition_case(
     closure: ProblemClosureSignals,
     case: CognitionCase,
+    *,
+    trusted_knowledge_resolver: Callable[[str], KnowledgeItem | None] | None = None,
 ) -> ProblemClosureSignals:
     try:
-        receipt = require_cognition_case_admission(case)
+        receipt = require_cognition_case_admission(case, resolve_trusted_knowledge=trusted_knowledge_resolver)
     except (CognitionCaseAdmissionError, RuntimeError, ValueError) as exc:
         raise FinalizationBlocked(f"COGNITION_CASE_NOT_ADMITTED: {exc}") from exc
 
@@ -376,7 +381,7 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
         if not _blocked_before_cognition(closure):
             if context.cognition_case is None:
                 raise FinalizationBlocked("MISSING_EVIDENCE_TRACED_COGNITION_CASE")
-            closure = _bind_and_validate_cognition_case(closure, context.cognition_case)
+            closure = _bind_and_validate_cognition_case(closure, context.cognition_case, trusted_knowledge_resolver=context.trusted_knowledge_resolver)
 
         try:
             closure_decision = require_problem_finalization_admission(closure)
