@@ -6,7 +6,7 @@
   "current_stage": "EXTERNAL_SKILL_FOUR_SOURCE_STUDIES_PRODUCTION_VERIFIED__CONTROLLER_DEEP_AUDIT_AND_NATIVE_ASSURANCE_OPEN",
   "next_action": "Four requested external skill source studies are merged and main-verified (Hindsight, Orca, Cloudflare Security Audit Skill, Paperclip); method cards remain source-grounded CANDIDATE and holdout/host usage unverified. Resume the RUNNING controller objective: independently assess five-repository architecture, authority enforcement, actual native ChatGPT and tool execution gate visibility, method reuse holdouts and real outcome evidence; choose and execute highest-risk verifiable step. Preserve Financial Writing parent recovery RUNNING/not default until controller closure.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
-  "evolution_ref": "state/evolution/EVO-20261019-TURN-HOST-ORIGIN-FENCING.json",
+  "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
   "evidence_refs": [
     "state/observations/uaos-controller-five-repo-review-20261018.json",
@@ -27,7 +27,6 @@
     "docs/research/uaos-inheritance-review-20261018/13_orca_multi_agent_execution_orchestration_source_learning.md",
     "docs/research/uaos-inheritance-review-20261018/14_cloudflare_security_audit_source_learning.md",
     "docs/research/uaos-inheritance-review-20261018/15_paperclip_multi_agent_control_plane_source_learning.md",
-    "state/evolution/EVO-20261019-TURN-HOST-ORIGIN-FENCING.json",
     "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
@@ -566,9 +565,9 @@
     ]
   },
   "turn_host_origin_fencing_20261019": {
-    "status": "CANDIDATE_CONTROLLED_REPAIR__CI_AND_POSTMERGE_VALIDATION_OPEN",
+    "status": "CANDIDATE_PARENT_EVOLUTION_BOUND__CI_AND_POSTMERGE_VALIDATION_OPEN",
     "prior_evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
-    "evolution_ref": "state/evolution/EVO-20261019-TURN-HOST-ORIGIN-FENCING.json",
+    "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
     "research_ref": "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md",
     "observed": "Host-enumerated source/digests were checked, but nonfinal utterance roles were derived from agent assessments; tool↔user origin swap could falsify USER presence without touching source bytes.",
     "chosen": "Mandatory typed host-observed source role mapping at canonical turn coverage and finalization context",
@@ -603,6 +602,7 @@
     "method_state": "CANDIDATE_ADAPTATION_NOT_CANONICAL",
     "native_assurance": "REAL_NATIVE_CHATGPT_HOST_ORIGIN_FEED_AND_PRE_SEND_INTERCEPTION_UNVERIFIED",
     "financial_child": "RUNNING_PRESERVED_NOT_DEFAULT",
-    "future_task": "Continue controller five-repository deep audit, audit reliable native host evidence availability, and conduct domain-owner real-outcome holdouts before any UAOS system-closure claim."
+    "future_task": "Continue controller five-repository deep audit, audit reliable native host evidence availability, and conduct domain-owner real-outcome holdouts before any UAOS system-closure claim.",
+    "owner_scope": "ONE_EXISTING_EVO_INHERITANCE_REVIEW_EXTENDED_NO_SECOND_EVOLUTION_OWNER"
   }
 }
