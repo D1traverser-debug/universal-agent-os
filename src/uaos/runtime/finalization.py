@@ -5,7 +5,13 @@ from typing import Callable, Mapping
 
 from uaos.contracts.models import KnowledgeItem
 
-from .epistemic_entry import ControllerEpistemicEntry, assess_controller_epistemic_entry
+from .epistemic_entry import (
+    ControllerEpistemicEntry,
+    EntryAdmissionError,
+    TurnEvolutionCoverage,
+    admit_turn_evolution_coverage,
+    assess_controller_epistemic_entry,
+)
 
 from uaos.kernel.cognition_case import (
     CognitionCase,
@@ -126,6 +132,12 @@ class FinalizationContext:
     controller_selected: bool = False
     controller_epistemic_entry: ControllerEpistemicEntry | None = None
     entry_evidence_verifier: Callable[[str], bool] | None = None
+    # Current-turn host enumeration + review, including user AND assistant words.
+    # No new state/evolution owner; only a mandatory controlled boundary adapter.
+    turn_evolution_coverage: TurnEvolutionCoverage | None = None
+    observed_turn_source_refs: tuple[str, ...] | None = None
+    turn_source_digest_verifier: Callable[[str, str], bool] | None = None
+    turn_judgment_verifier: Callable[[str], bool] | None = None
     authoritative_task_ref: str | None = None
     read_authoritative_task: Callable[[str], Mapping[str, object] | None] | None = None
     blocked_tool_operation_observed: bool = False
@@ -428,6 +440,37 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
     if not adherence.passed:
         reasons = tuple(f"SESSION_ADHERENCE:{item.value}" for item in adherence.violations)
         raise FinalizationBlocked(*reasons)
+
+    # Last-stage review is mandatory on a controlled selected controller turn:
+    # inspect the exact outgoing text, not just the user's incoming prompt.
+    if context.controller_selected:
+        if context.turn_evolution_coverage is None:
+            raise FinalizationBlocked("MISSING_ALL_UTTERANCE_EVOLUTION_REVIEW")
+        try:
+            review = admit_turn_evolution_coverage(
+                context.turn_evolution_coverage,
+                actual_assistant_response=response,
+                host_observed_source_refs=context.observed_turn_source_refs,
+                verify_source_digest=context.turn_source_digest_verifier,
+                verify_judgment_ref=context.turn_judgment_verifier,
+            )
+        except EntryAdmissionError as exc:
+            raise FinalizationBlocked(f"TURN_EVOLUTION_COVERAGE_NOT_ADMITTED: {exc}") from exc
+        if review.problem_signal_observed and not context.problem_signal_observed:
+            raise FinalizationBlocked("UNROUTED_POST_DRAFT_SYSTEM_OR_RULE_CONTRADICTION")
+        if review.material_knowledge_gap_observed and not deep_required:
+            raise FinalizationBlocked("UNROUTED_POST_DRAFT_KNOWLEDGE_GAP")
+        if review.unfinished_authorized_work_observed and not context.work_remaining_without_user_input:
+            raise FinalizationBlocked("UNROUTED_POST_DRAFT_UNFINISHED_AUTHORIZED_WORK")
+        if (
+            review.hypothesis_challenge_required
+            and not (
+                entry_receipt.hypothesis_challenge_required
+                or context.problem_signal_observed
+                or deep_required
+            )
+        ):
+            raise FinalizationBlocked("UNROUTED_POST_DRAFT_CHALLENGE_SIGNAL")
 
     return FinalizationReceipt(
         closure_decision=closure_decision,

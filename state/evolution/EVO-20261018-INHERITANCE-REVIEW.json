@@ -66,7 +66,13 @@
     "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
     "src/uaos/observability/session_adherence.py",
     "scripts/uaos_status.py",
-    "tests/architecture/test_progress_authority_reconciliation.py"
+    "tests/architecture/test_progress_authority_reconciliation.py",
+    "tests/runtime/test_turn_evolution_coverage.py",
+    "tests/runtime/test_governed_product_outcome_finalization.py",
+    "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md",
+    "state/observations/native-account-install-handoff-20261018.json",
+    "CURRENT_SYSTEM.json",
+    "tests/runtime/test_blocked_operation_continuation.py"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -208,5 +214,40 @@
     ],
     "native_limit": "UNVERIFIED_NATIVE_CHATGPT_PRE_SEND_INSTRUMENTATION",
     "business_outcome": "OPEN"
+  },
+  "turn_evolution_coverage_20261018": {
+    "status": "CANDIDATE_NOT_ADMITTED_FOR_LIVE_PRODUCT",
+    "origin": "USER_CORRECTION_AND_AGENT_OWN_PROGRESS_OMISSION",
+    "governing_outcome": "Every observed user/assistant/tool/state message is reviewed through existing CognitionCase/DeepTask/Evolution; material faults challenge and route, clean messages receive evidence-backed no-change triage, not a new transaction per sentence.",
+    "source_evidence_refs": [
+      "state/observations/native-cognition-progress-replay-20261018.json",
+      "src/uaos/runtime/epistemic_entry.py",
+      "src/uaos/runtime/finalization.py"
+    ],
+    "competing_causes": [
+      "OUTPUT_UNREVIEWED",
+      "HOST_NATIVE_OBSERVABILITY_GAP",
+      "DECLARATIVE_PROGRESS_VS_ACTUAL_CONTROLLED_GATES",
+      "REPEATED_USER_CORRECTION_IS_SOURCE_SIGNAL_NOT_CAUSAL_PROOF"
+    ],
+    "selected_candidate": "HOST_INDEPENDENT_SOURCE_ENUMERATION_DIGEST_BINDING_AND_CURRENT_OWNER_EVOLUTION_SIGNAL_ROUTING",
+    "rejected": [
+      "SECOND_EVOLUTION_OS_OR_EVENT_DATABASE",
+      "EVERY_SENTENCE_DURABLE_PROMOTION",
+      "CLAIM_ALL_NATIVE_CHATGPT_MESSAGES_INTERCEPTED",
+      "APPEND_MORE_ASSURANCE_PROMISES"
+    ],
+    "acceptance": [
+      "Host-observed user/assistant/tool/state source identity equality",
+      "Final assistant draft digest match",
+      "All observations have evidence and challenge refs",
+      "Omissions, spoofed sources, forged review, post-review changes reject",
+      "Material output signals cannot silently report clean",
+      "Low-signal utterances assessed without forced mutation",
+      "Canonical config and generated Skill projection exact",
+      "Protected CI, main reread, task/financial continuity preserved"
+    ],
+    "native_assurance": "ACCOUNT_SKILL_BYTES_AND_NATIVE_MESSAGE_TRACING_UNKNOWN",
+    "cross_domain_admission": "NOT_IN_SCOPE_FOR_THIS_CONTROLLER_FIRST_PR__DIRECT_DOMAIN_RUNTIME_ASSURANCE_OPEN"
   }
 }

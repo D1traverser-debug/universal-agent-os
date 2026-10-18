@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Controller-only: verify method-recall source truth for NO_REUSABLE_METHOD, independent native selected-chat invocation and real-first-time systemic replay; expand source-role coverage and exact five-repo controller deep audit without copying method owner or asking the user to re-diagnose. Do not enter Financial before controller assurance; preserve exact Financial return pointer.",
+  "next_action": "Controller-only: verify candidate all-utterance evolution triage and output-fingerprint admission with independent refs, CI and controlled promotion. Then test native ChatGPT actual traces, unprompted error detection and broader five-repo architecture; preserve Financial task exact return without switching.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -20,7 +20,8 @@
     "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
     "docs/research/uaos-inheritance-review-20261018/08_operational_method_transfer_taxonomy.md",
     "https://github.com/D1traverser-debug/universal-agent-os/pull/113",
-    "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md"
+    "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
+    "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
   "updated_at": "2026-10-18T22:16:00+08:00",
@@ -195,5 +196,29 @@
     ],
     "parent_remains_running": true,
     "financial_return": "uaos:maintenance:financial-system-governed-recovery-20261018"
+  },
+  "turn_evolution_coverage_20261018": {
+    "status": "CANDIDATE_ADMISSION_AND_TESTS__NOT_PRODUCTION_PROOF",
+    "current_user_finding": "User again reports assistant omitted the mandatory Progress during Progress governance and only noticed after user intervention; prior repair did not reliably self-observe output.",
+    "cause_supported": "Existing selected-context entry only classified caller-supplied observations before generating the final response, and could not prove that actual assistant output was reviewed or that every turn message was included.",
+    "alternative_explanations": [
+      "HOST_NATIVE_MEDIATION_NOT_AVAILABLE",
+      "ASSISTANT_DRAFT_NOT_REVIEWED",
+      "INPUT_SOURCE_ENUMERATION_NOT_VERIFIED",
+      "SEPARATE_PROGRESS_AUTHORITY_ALREADY_REPAIRED_IN_PR117_BUT_NOT_SUFFICIENT"
+    ],
+    "candidate_scope": "UAOS_CONTROLLER_ONLY__NO_CHILD_MUTATION_OR_UNVERIFIED_DOMAIN_CLAIM",
+    "evidence_refs": [
+      "state/observations/native-cognition-progress-replay-20261018.json",
+      "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md"
+    ],
+    "tests": [
+      "tests/runtime/test_turn_evolution_coverage.py",
+      "tests/runtime/test_controller_epistemic_entry.py",
+      "tests/runtime/test_governed_product_outcome_finalization.py"
+    ],
+    "current_assurance": "CANONICAL_PYTHON_ADMISSION_CANDIDATE__NATIVE_CHATGPT_INSTALL_AND_MESSAGE_TRACE_UNVERIFIED",
+    "mandatory_next": "Run controlled CI negative/positive test scenarios and independent review, promote only green exact-head; reread main; then evaluate native per-turn evidence and cross-problem transfer. UAOS stays default, Financial remains parked RUNNING.",
+    "missing_cross_domain_assurance": "DIRECT_DOMAIN_TURNS_REQUIRE_OWNER_APPROPRIATE_INTEGRATION_AFTER_CONTROLLER_VALIDATION"
   }
 }

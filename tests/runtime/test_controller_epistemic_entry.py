@@ -4,6 +4,7 @@ These tests prove the local admission wiring when invoked. They do NOT prove
 native ChatGPT automatically intercepts every turn.
 """
 from dataclasses import replace
+from hashlib import sha256
 
 import pytest
 
@@ -11,6 +12,9 @@ from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 
 from uaos.runtime.epistemic_entry import (
     ControllerEpistemicEntry,
+    TurnEvolutionCoverage,
+    TurnUtteranceAssessment,
+    UtteranceOrigin,
     EntryAdmissionError,
     EntryObservation,
     EntrySignal,
@@ -56,12 +60,47 @@ Deliberation：NOT_TRIGGERED
 """
 
 
+def _review(response: str):
+    user_text = "controlled synthetic current user input"
+    return TurnEvolutionCoverage(
+        observed_source_refs=("test:current-user", "test:assistant-final"),
+        assessments=(
+            TurnUtteranceAssessment(
+                source_ref="test:current-user", origin=UtteranceOrigin.USER,
+                source_sha256=sha256(user_text.encode()).hexdigest(),
+                signal=EntrySignal.NO_MATERIAL_GAP,
+                judgment_evidence_ref="test:judged-user",
+                alternative_or_no_gap_reason_ref="test:challenge-user",
+            ),
+            TurnUtteranceAssessment(
+                source_ref="test:assistant-final", origin=UtteranceOrigin.ASSISTANT,
+                source_sha256=sha256(response.encode()).hexdigest(),
+                signal=EntrySignal.NO_MATERIAL_GAP,
+                judgment_evidence_ref="test:judged-assistant",
+                alternative_or_no_gap_reason_ref="test:challenge-assistant",
+            ),
+        ),
+        assistant_final_ref="test:assistant-final",
+        evolution_routing_ref="test:no-durable-evolution-trigger",
+    )
+
+
+def _turn_source_verifier(ref: str, digest: str) -> bool:
+    return ref == "test:current-user" and digest == sha256(
+        b"controlled synthetic current user input"
+    ).hexdigest()
+
+
 def _context(entry=None, **overrides):
     base = dict(
         context_selected=True,
         controller_selected=True,
         controller_epistemic_entry=entry,
         entry_evidence_verifier=lambda _ref: True,
+        turn_evolution_coverage=_review(_report()),
+        observed_turn_source_refs=("test:current-user", "test:assistant-final"),
+        turn_source_digest_verifier=_turn_source_verifier,
+        turn_judgment_verifier=lambda ref: ref.startswith("test:"),
     )
     base.update(overrides)
     return FinalizationContext(**base)
@@ -202,7 +241,61 @@ def test_exact_controller_entry_requires_owner_source_and_rejects_false_done():
     with pytest.raises(FinalizationBlocked, match="CONTROLLER_TASK_PROGRESS_READER_MISSING"):
         admit_final_response(report, _context(entry, authoritative_task_ref=ref))
 
-    bound = _context(entry, authoritative_task_ref=ref, read_authoritative_task=lambda _: state)
+    bound = _context(entry, authoritative_task_ref=ref, read_authoritative_task=lambda _: state,
+                     turn_evolution_coverage=_review(report))
     assert admit_final_response(report, bound).adherence.passed
     with pytest.raises(FinalizationBlocked, match="AUTHORITATIVE_PROGRESS_MISMATCH"):
         admit_final_response(report.replace(f"状态：{state['status']}", "状态：COMPLETE"), bound)
+
+
+def test_controlled_finalization_requires_evolution_review_of_actual_user_and_assistant_turn():
+    with pytest.raises(FinalizationBlocked, match="MISSING_ALL_UTTERANCE_EVOLUTION_REVIEW"):
+        admit_final_response(
+            _report(), _context(_entry(), turn_evolution_coverage=None)
+        )
+
+    incomplete = replace(
+        _review(_report()),
+        assessments=(_review(_report()).assessments[-1],),
+    )
+    with pytest.raises(FinalizationBlocked, match="not every user/assistant/tool/state utterance"):
+        admit_final_response(
+            _report(), _context(_entry(), turn_evolution_coverage=incomplete)
+        )
+
+
+def test_post_output_new_problem_cannot_be_silently_marked_clean():
+    reviewed = _review(_report())
+    contradictory_assistant = replace(
+        reviewed.assessments[1],
+        signal=EntrySignal.SYSTEM_OR_RULE_CONTRADICTION,
+    )
+    review = replace(reviewed, assessments=(reviewed.assessments[0], contradictory_assistant))
+    with pytest.raises(FinalizationBlocked, match="UNROUTED_POST_DRAFT_SYSTEM_OR_RULE_CONTRADICTION"):
+        admit_final_response(
+            _report(), _context(_entry(), turn_evolution_coverage=review)
+        )
+
+
+def test_user_claim_cannot_pass_as_unquestioned_clean_without_canonical_challenge():
+    reviewed = _review(_report())
+    user_claim = replace(
+        reviewed.assessments[0],
+        signal=EntrySignal.CLAIM_OR_CAUSAL_SUGGESTION,
+    )
+    review = replace(reviewed, assessments=(user_claim, reviewed.assessments[1]))
+    with pytest.raises(FinalizationBlocked, match="UNROUTED_POST_DRAFT_CHALLENGE_SIGNAL"):
+        admit_final_response(
+            _report(), _context(_entry(), turn_evolution_coverage=review)
+        )
+
+
+def test_post_output_unfinished_work_cannot_close_as_clean_challenge():
+    reviewed = _review(_report())
+    output_work = replace(
+        reviewed.assessments[1],
+        signal=EntrySignal.UNFINISHED_AUTHORIZED_WORK,
+    )
+    review = replace(reviewed, assessments=(reviewed.assessments[0], output_work))
+    with pytest.raises(FinalizationBlocked, match="UNROUTED_POST_DRAFT_UNFINISHED_AUTHORIZED_WORK"):
+        admit_final_response(_report(), _context(_entry(), turn_evolution_coverage=review))

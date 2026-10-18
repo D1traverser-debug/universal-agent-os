@@ -1,11 +1,13 @@
 """Blocked tool action != blocked task: controlled finalization negative controls."""
 from dataclasses import replace
+from hashlib import sha256
 
 import pytest
 
 from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 from uaos.runtime.epistemic_entry import (
     ControllerEpistemicEntry, EntryObservation, EntrySignal,
+    TurnEvolutionCoverage, TurnUtteranceAssessment, UtteranceOrigin,
 )
 from uaos.runtime.finalization import (
     BlockedOperationContinuity, FinalizationBlocked, FinalizationContext,
@@ -45,6 +47,30 @@ Deliberation：NOT_TRIGGERED
 """
 
 
+def _turn_coverage():
+    return TurnEvolutionCoverage(
+        observed_source_refs=("test:blocked-user", "test:blocked-agent"),
+        assessments=(
+            TurnUtteranceAssessment(
+                source_ref="test:blocked-user", origin=UtteranceOrigin.USER,
+                source_sha256=sha256(b"blocked operation current user input").hexdigest(),
+                signal=EntrySignal.NO_MATERIAL_GAP,
+                judgment_evidence_ref="test:user-judgment",
+                alternative_or_no_gap_reason_ref="test:user-counterexample",
+            ),
+            TurnUtteranceAssessment(
+                source_ref="test:blocked-agent", origin=UtteranceOrigin.ASSISTANT,
+                source_sha256=sha256(_report().encode()).hexdigest(),
+                signal=EntrySignal.NO_MATERIAL_GAP,
+                judgment_evidence_ref="test:assistant-judgment",
+                alternative_or_no_gap_reason_ref="test:assistant-counterexample",
+            ),
+        ),
+        assistant_final_ref="test:blocked-agent",
+        evolution_routing_ref="test:blocked-operation-evolution-triage",
+    )
+
+
 def _step(*, attempted=False, outcome_ref=None, read_only=True):
     return PermittedContinuationStep(
         action_ref="action:read-current-authority",
@@ -71,6 +97,10 @@ def _ctx(case=None, **changes):
         "controller_selected": True,
         "controller_epistemic_entry": _entry(),
         "entry_evidence_verifier": lambda _: True,
+        "turn_evolution_coverage": _turn_coverage(),
+        "observed_turn_source_refs": ("test:blocked-user", "test:blocked-agent"),
+        "turn_source_digest_verifier": lambda ref, digest: ref == "test:blocked-user" and digest == sha256(b"blocked operation current user input").hexdigest(),
+        "turn_judgment_verifier": lambda ref: ref.startswith("test:"),
         "blocked_tool_operation_observed": True,
         "blocked_operation_continuity": case,
     }

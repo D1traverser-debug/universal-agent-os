@@ -1,8 +1,8 @@
 {
   "schema_version": "2.4",
-  "policy_version": "2.6.0",
+  "policy_version": "2.7.0",
   "authority": "UAOS",
-  "updated_at": "2026-10-18T22:49:00+08:00",
+  "updated_at": "2026-10-18T23:45:00+08:00",
   "bare_inheritance_selector": {
     "trigger": "CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
     "controller_option": {
@@ -88,6 +88,7 @@
       "recover the current outcome, owner, exact state, unfinished actions and evidence provenance before accepting user/model/prior-system narratives as facts",
       "actively challenge causal explanations AND the governing rules, architecture and learning method itself; seek other contributing causes, contradictions, unknown gaps and post-action effects even without user correction",
       "before treating a material system problem as new, examine proven prior failure classes and methods through the current knowledge/evolution owner; test applicability and nonfit against fresh evidence, and record no-reusable-method honestly; simple one-off work stays lightweight",
+      "for selected UAOS controller work, assess every host-observed user utterance, assistant message or draft, tool finding and state observation through the existing cognition/evolution signal triage; challenge claims and the Agent's own output, bind actual outgoing text to that review, and distinguish no-durable-change from an unreviewed turn; direct child/domain runtime coverage remains unverified until owner-appropriate integration, and no sentence is automatically a durable evolution",
       "adaptively route current observations to the existing CognitionCase, Deep Task/independent knowledge acquisition, authorized action or clean lightweight execution; never replace missing evidence with confident wording",
       "after every material action verify the intended outcome and emerging constraints, revisit competing causes, select the next executable step, and persist exact continuation without waiting for a user reminder"
     ],

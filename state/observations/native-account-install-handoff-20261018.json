@@ -12,10 +12,10 @@
     "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md"
   ],
   "source_git_blobs": {
-    "skill": "cb2ecdfac61e712b7270b6b218effa667b45f5d0",
+    "skill": "ad6e646325e5fe0fdbe761ea47c63b2153a410a1",
     "pointer": "a43a4b09d5c63c861f1607e581ae5a40fbd4c758",
     "previously_supplied_skill": "a244aeafcb204a86ab6825b8e8b277050c2be507",
-    "previous_verified_repo_skill": "d57a72019c76e58f4a538b5d86e6e7718f34c0ba"
+    "previous_verified_repo_skill": "cb2ecdfac61e712b7270b6b218effa667b45f5d0"
   },
   "observations": [
     {
@@ -99,17 +99,11 @@
     "limit": "Screenshot does not expose source bytes, Git blob identity, last update version or native invocation trace; uploaded image is in this conversation and not independently archived in GitHub."
   },
   "latest_repo_skill_generation_20261018": {
-    "candidate_pr": 115,
-    "candidate_git_blob": "cb2ecdfac61e712b7270b6b218effa667b45f5d0",
-    "old_repo_git_blob": "d57a72019c76e58f4a538b5d86e6e7718f34c0ba",
-    "installed_skill_blob_status": "UNKNOWN__GITHUB_FILE_CHANGE_NOT_SYNCED_TO_CHATGPT_ACCOUNT_BY_REPO",
-    "status": "PRODUCTION_REPO_SKILL_BYTES_VERIFIED__ACCOUNT_INSTALLED_VERSION_UNVERIFIED",
-    "instruction": "Do not re-request previous installed Skill update or identical test as a substitute for source/code QA. A new user UI sync could be necessary for native product behavior only after tested repo source is finalized; account installed version remains unverified.",
-    "production": {
-      "pr": 115,
-      "repo_main": "3a60beb31d4535d5f10bcc44c399391842fd0966",
-      "source_sha": "cb2ecdfac61e712b7270b6b218effa667b45f5d0",
-      "native_product_install": "NO_VERIFIED_UPDATE"
-    }
+    "candidate": "governance/controller-turn-evolution-coverage-20261018",
+    "candidate_git_blob": "ad6e646325e5fe0fdbe761ea47c63b2153a410a1",
+    "previous_main_git_blob": "cb2ecdfac61e712b7270b6b218effa667b45f5d0",
+    "installed_skill_blob_status": "UNKNOWN__REPO_FILE_CHANGE_NOT_NATIVE_CHATGPT_SKILL_INSTALL",
+    "status": "CANDIDATE_GENERATED_SOURCE_ONLY__NO_NATIVE_EFFECT_PROOF",
+    "scope": "UAOS_CONTROLLER_ONLY__DIRECT_DOMAIN_RUNTIME_COVERAGE_OPEN"
   }
 }

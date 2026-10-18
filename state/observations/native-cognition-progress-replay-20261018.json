@@ -96,5 +96,18 @@
   },
   "evolution_disposition": "EVALUATED_NO_DURABLE_EVOLUTION__OBSERVABILITY_EVIDENCE_AND_STATE_RECONCILIATION_ONLY",
   "result": "NATIVE_STABILITY_UNVERIFIED__CURRENT_CHAT_REPLAY_FAIL_CONFIRMED__REPO_SIDE_REPAIR_UNDER_VERIFICATION",
-  "replay_assistant_excerpt": "当前 Agent：UAOS v2.8.0；状态：机制已部署、稳定性未充分验证；Deliberation：TRIGGERED；Evolution：本轮未发生持久规则变更；当前限制：原生触发缺乏不可绕过的执行保证。"
+  "replay_assistant_excerpt": "当前 Agent：UAOS v2.8.0；状态：机制已部署、稳定性未充分验证；Deliberation：TRIGGERED；Evolution：本轮未发生持久规则变更；当前限制：原生触发缺乏不可绕过的执行保证。",
+  "latest_visible_recurrence_20261018": {
+    "origin": "CURRENT_CHAT_USER_CORRECTION_AND_PRECEDING_ASSISTANT_FINAL__NOT_HOST_GENERATION_TRACE",
+    "evidence": "Immediately prior UAOS controller responses about Progress contained narrative tables and conclusions but omitted the full 10-field mandatory progress block; user corrected assistant repeatedly, including while the assistant was implementing Progress repairs.",
+    "mechanism_hypotheses": [
+      "NO_PRE_SEND_NATIVE_EXECUTION_HOOK",
+      "ASSISTANT_OUTPUT_NOT_INCLUDED_IN_EVOLUTION_ENTRY_OBSERVATIONS",
+      "A_GREEN_CI_TESTS_CONTROLLED_PATH_ONLY"
+    ],
+    "status": "VISIBLE_RECURRING_FAILURE__NO_AUTONOMOUS_PRE_SEND_DETECTION_PROOF",
+    "intervention_candidate": "CURRENT_CONTROLLER_TURN_COVERAGE_WITH_HOST_SOURCE_ENUMERATION_AND_ACTUAL_ASSISTANT_DRAFT_IDENTITY",
+    "current_turn_source_assurance": "RECORDED_FROM_CONVERSATION_NO_INDEPENDENT_PRODUCT_HOST_TRACE",
+    "native_outcome": "OPEN"
+  }
 }

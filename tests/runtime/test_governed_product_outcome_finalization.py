@@ -1,10 +1,12 @@
 """Product acceptance guard is wired into *existing* controlled finalization."""
 import pytest
+from hashlib import sha256
 
 from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 from uaos.kernel.domain_health import DomainObservation, ProductOutcomeEvidence
 from uaos.runtime.epistemic_entry import (
     ControllerEpistemicEntry, EntryObservation, EntrySignal,
+    TurnEvolutionCoverage, TurnUtteranceAssessment, UtteranceOrigin,
 )
 from uaos.runtime.finalization import FinalizationBlocked, FinalizationContext, admit_final_response
 
@@ -38,6 +40,42 @@ Deliberation：NOT_TRIGGERED
 """
 
 
+def _turn_coverage():
+    user_data = b"controlled financial owner request"
+    return TurnEvolutionCoverage(
+        observed_source_refs=("test:financial-user", "test:financial-agent"),
+        assessments=(
+            TurnUtteranceAssessment(
+                source_ref="test:financial-user", origin=UtteranceOrigin.USER,
+                source_sha256=sha256(user_data).hexdigest(),
+                signal=EntrySignal.NO_MATERIAL_GAP,
+                judgment_evidence_ref="test:user-verdict",
+                alternative_or_no_gap_reason_ref="test:user-challenge",
+            ),
+            TurnUtteranceAssessment(
+                source_ref="test:financial-agent", origin=UtteranceOrigin.ASSISTANT,
+                source_sha256=sha256(_reply().encode()).hexdigest(),
+                signal=EntrySignal.NO_MATERIAL_GAP,
+                judgment_evidence_ref="test:assistant-verdict",
+                alternative_or_no_gap_reason_ref="test:assistant-challenge",
+            ),
+        ),
+        assistant_final_ref="test:financial-agent",
+        evolution_routing_ref="test:clean-evolution-evaluated",
+    )
+
+
+def _turn_kwargs():
+    return dict(
+        turn_evolution_coverage=_turn_coverage(),
+        observed_turn_source_refs=("test:financial-user", "test:financial-agent"),
+        turn_source_digest_verifier=lambda ref, digest: (
+            ref == "test:financial-user" and digest == sha256(b"controlled financial owner request").hexdigest()
+        ),
+        turn_judgment_verifier=lambda ref: ref.startswith("test:"),
+    )
+
+
 def _case(**updates):
     data=dict(domain_id="financial_writing",child_revision=HEAD,
               objective_ref="receipt:objective",required_dimensions=DIMS,
@@ -52,6 +90,7 @@ def _ctx(case=None, **updates):
     data=dict(context_selected=True,controller_selected=True,
               controller_epistemic_entry=_entry(),
               entry_evidence_verifier=lambda _: True,
+              **_turn_kwargs(),
               governed_product_outcome_completion_requested=True,
               governed_product_outcome_observation=DomainObservation(
                   domain_id="financial_writing",current_revision=HEAD),
@@ -103,6 +142,7 @@ def test_product_data_not_required_on_normal_clean_controller_turn():
         context_selected=True,controller_selected=True,
         controller_epistemic_entry=_entry(),
         entry_evidence_verifier=lambda _: True,
+        **_turn_kwargs(),
     )
     receipt=admit_final_response(_reply(),no_close)
     assert receipt.adherence.passed
