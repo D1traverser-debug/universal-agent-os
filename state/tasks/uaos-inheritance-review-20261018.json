@@ -207,7 +207,7 @@
       "INPUT_SOURCE_ENUMERATION_NOT_VERIFIED",
       "SEPARATE_PROGRESS_AUTHORITY_ALREADY_REPAIRED_IN_PR117_BUT_NOT_SUFFICIENT"
     ],
-    "candidate_scope": "ONE_EXISTING_EPISTEMIC_ENTRY_AND_FINALIZATION_SEAM__NO_SECOND_EVOLUTION_MANAGER",
+    "candidate_scope": "UAOS_CONTROLLER_ONLY__NO_CHILD_MUTATION_OR_UNVERIFIED_DOMAIN_CLAIM",
     "evidence_refs": [
       "state/observations/native-cognition-progress-replay-20261018.json",
       "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md"
@@ -218,6 +218,7 @@
       "tests/runtime/test_governed_product_outcome_finalization.py"
     ],
     "current_assurance": "CANONICAL_PYTHON_ADMISSION_CANDIDATE__NATIVE_CHATGPT_INSTALL_AND_MESSAGE_TRACE_UNVERIFIED",
-    "mandatory_next": "Run controlled CI negative/positive test scenarios and independent review, promote only green exact-head; reread main; then evaluate native per-turn evidence and cross-problem transfer. UAOS stays default, Financial remains parked RUNNING."
+    "mandatory_next": "Run controlled CI negative/positive test scenarios and independent review, promote only green exact-head; reread main; then evaluate native per-turn evidence and cross-problem transfer. UAOS stays default, Financial remains parked RUNNING.",
+    "missing_cross_domain_assurance": "DIRECT_DOMAIN_TURNS_REQUIRE_OWNER_APPROPRIATE_INTEGRATION_AFTER_CONTROLLER_VALIDATION"
   }
 }
