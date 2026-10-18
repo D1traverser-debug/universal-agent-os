@@ -7,10 +7,11 @@ from dataclasses import replace
 
 import pytest
 
+from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
+
 from uaos.runtime.epistemic_entry import (
     ControllerEpistemicEntry,
     EntryAdmissionError,
-    EntryEvidenceKind,
     EntryObservation,
     EntrySignal,
     assess_controller_epistemic_entry,
@@ -22,15 +23,17 @@ from uaos.runtime.finalization import (
 )
 
 
-def _entry(signal=EntrySignal.NO_MATERIAL_GAP, kind=EntryEvidenceKind.REPOSITORY_FACT):
+def _entry(signal=EntrySignal.NO_MATERIAL_GAP, kind=EvidenceKind.REPOSITORY_FACT):
     return ControllerEpistemicEntry(
         objective_ref="main:state/tasks/controller.json#goal",
         state_ref="main:state/TASK_INDEX.json#controller_tasks",
         observations=(EntryObservation(
             signal=signal,
-            evidence_kind=kind,
-            source_ref="main:config/SESSION_INTERACTION_POLICY.json",
-            finding="Current selected-controller source observation",
+            evidence=EvidenceItem(
+                "entry:current", kind,
+                "Current selected-controller source observation",
+                "main:config/SESSION_INTERACTION_POLICY.json",
+            ),
         ),),
         governing_assumption_review_ref="review:assumptions-vs-evidence",
         next_action_ref="state:next-executable-action",
@@ -81,7 +84,7 @@ def test_selected_controller_needs_verifiable_runtime_observations():
 
 def test_user_proposed_fix_is_not_automatically_a_confirmed_defect():
     item = _entry(
-        EntrySignal.SYSTEM_OR_RULE_CONTRADICTION, EntryEvidenceKind.USER_CLAIM,
+        EntrySignal.SYSTEM_OR_RULE_CONTRADICTION, EvidenceKind.USER_CLAIM,
     )
     receipt = assess_controller_epistemic_entry(item)
     assert receipt.hypothesis_challenge_required
@@ -101,7 +104,7 @@ def test_source_only_governing_rule_contradiction_forces_cognition_without_user_
 
 
 def test_material_knowledge_gap_cannot_be_downgraded_to_simple_query():
-    item = _entry(EntrySignal.MATERIAL_KNOWLEDGE_GAP, EntryEvidenceKind.TEST_RESULT)
+    item = _entry(EntrySignal.MATERIAL_KNOWLEDGE_GAP, EvidenceKind.TEST_RESULT)
     assert assess_controller_epistemic_entry(item).deep_learning_required
     with pytest.raises(FinalizationBlocked, match="UNROUTED_MATERIAL_KNOWLEDGE_GAP"):
         admit_final_response(_report(), _context(item))
@@ -126,11 +129,10 @@ def test_clean_entry_reaches_existing_finalization_without_extra_ceremony():
 
 
 def test_missing_or_conflicting_evidence_cannot_dress_as_clean():
-    with pytest.raises(EntryAdmissionError, match="require attributable evidence"):
+    with pytest.raises(ValueError, match="evidence identity, statement and source_ref"):
         EntryObservation(
             signal=EntrySignal.NO_MATERIAL_GAP,
-            evidence_kind=EntryEvidenceKind.REPOSITORY_FACT,
-            source_ref="", finding="claim",
+            evidence=EvidenceItem("bad", EvidenceKind.REPOSITORY_FACT, "claim", ""),
         )
     base = _entry()
     with pytest.raises(EntryAdmissionError, match="distinct"):
@@ -143,8 +145,11 @@ def test_missing_or_conflicting_evidence_cannot_dress_as_clean():
                 base.observations[0],
                 EntryObservation(
                     EntrySignal.SYSTEM_OR_RULE_CONTRADICTION,
-                    EntryEvidenceKind.TEST_RESULT,
-                    "test://fresh-counterexample", "Actual contradictory contract",
+                    EvidenceItem(
+                        "entry:counterexample", EvidenceKind.TEST_RESULT,
+                        "Actual contradictory contract",
+                        "test://fresh-counterexample",
+                    ),
                 ),
             ))
         )
