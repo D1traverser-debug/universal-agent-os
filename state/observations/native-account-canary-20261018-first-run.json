@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "observation_id": "native-account-canary-20261018-first-run",
+  "authority": "UAOS",
+  "role": "REAL_CHAT_FINAL_RESPONSE_REPLAY_EVIDENCE__NOT_NATIVE_HOST_TOOL_TRACE",
+  "scope": "UAOS_CONTROLLER_ONLY",
+  "sample_source": "USER_PASTED_FINAL_ASSISTANT_RESPONSE_FROM_A_SEPARATE_NEW_CHAT",
+  "sample_observed_at": "2026-10-18",
+  "sample_count": 1,
+  "user_supplied_inputs": {
+    "prior_skill_update": "USER_CONFIRMED_REPLACED_INSTALLED_SKILL_BEFORE_TEST__EXACT_INSTALLED_BYTES_UNATTESTED",
+    "initial_prompt": "继承",
+    "second_prompt": "总控系统",
+    "reported_wait_times": [
+      "思考了 45s",
+      "思考了 4m 13s"
+    ]
+  },
+  "source_consistency": {
+    "reported_agent": "UAOS 总控系统",
+    "reported_version": "2.8.0",
+    "reported_task_id": "uaos:maintenance:inheritance-review-20261018",
+    "reported_task_status": "RUNNING",
+    "reported_main_short_sha": "97e9417",
+    "current_verified_main_sha_at_review": "97e94175a71a2ec22fa79a987ef2a7ac2a88ba34",
+    "reported_phase": "多因果修复门禁已验证，跨领域深度审查仍在进行",
+    "reported_latest_task_state": "2026-10-18 16:50:52（北京时间）",
+    "current_state_match": "TASK_ID_STATUS_HEAD_AND_EARLIER_STAGE_MATCH_MAIN__BUT_REPORT_OMITS_LATER_20261018_OPERATING_MODEL_ADOPTION"
+  },
+  "behavior_evidence": [
+    {
+      "id": "CANARY-A",
+      "behavior": "Native Skills UI screenshot previously showed uaos controller runtime installed; user confirms Skill was updated prior to this fresh chat.",
+      "kind": "DIRECT_USER_REPORT_PLUS_PRIOR_ACCOUNT_SCREENSHOT",
+      "verdict": "ACCOUNT_INSTALLED_AND_UPDATE_SELF_CONFIRMED__INSTALLED_BYTE_VERSION_NOT_ATTESTED"
+    },
+    {
+      "id": "CANARY-B",
+      "behavior": "Fresh chat assistant correctly named default UAOS controller task and main short SHA.",
+      "kind": "PASTED_FINAL_RESPONSE_MATCHES_INDEPENDENT_GITHUB_MAIN",
+      "verdict": "RECOVERY_OUTPUT_CONSISTENT_WITH_REAL_SOURCE__DIRECT_TOOL_TRACE_NOT_SHARED"
+    },
+    {
+      "id": "CANARY-C",
+      "behavior": "Fresh chat says it read main and source code and found a requirement-impact root-selection issue without a new user-supplied root cause.",
+      "kind": "SELF_REPORTED_TOOL_ACTIONS_IN_PASTED_FINAL_RESPONSE",
+      "verdict": "PROACTIVE_DISCOVERY_CLAIM_VISIBLE__TOOL_CALL_PROVENANCE_UNOBSERVED"
+    },
+    {
+      "id": "CANARY-D",
+      "behavior": "Fresh chat says GitHub create-branch tool was blocked by a tool-layer security check; no PR or durable evidence was created; it ended at a suggested next action.",
+      "kind": "USER_PASTED_FINAL_RESPONSE_SELF_REPORT",
+      "verdict": "AUTONOMOUS_ACTION_TO_DURABLE_OUTCOME_NOT_DEMONSTRATED__CLAIMED_TOOL_BLOCKER_UNVERIFIED"
+    },
+    {
+      "id": "CANARY-E",
+      "behavior": "Tool output listing and installed Skill invocation/loader event were not included in pasted user-visible answer.",
+      "kind": "EVIDENCE_ABSENCE",
+      "verdict": "NATIVE_SKILL_INVOCATION_UNVERIFIED__DO_NOT_COUNT_AS_FAILURE_TO_LOAD_OR_SUCCESS"
+    }
+  ],
+  "rubric": {
+    "installation": "USER_CONFIRMED_UPDATED__INSTALLED_BLOB_UNVERIFIED",
+    "fresh_chat_initiation": "OBSERVED_FROM_USER_TRANSCRIPT",
+    "entry_and_identity": "CONSISTENT_WITH_MAIN__DIRECT_SOURCE_CALL_NOT_OBSERVED",
+    "unprompted_cognition": "CLAIMED_WITH_PARTIAL_VISIBLE_SUPPORT__NOT_INDEPENDENTLY_JUDGED",
+    "action_continuation": "NO_DURABLE_FOLLOWTHROUGH_DEMONSTRATED_IN_SAMPLE",
+    "source_write": "REPORTED_BLOCKED__BLOCKER_DETAILS_NOT_AVAILABLE",
+    "Skill_auto_invocation": "UNVERIFIED",
+    "full_native_conformance": "NOT_VERIFIED",
+    "single_canary_overall": "PARTIAL__INCOMPLETE_CLOSURE__NOT_STABILITY_PROOF"
+  },
+  "verification_boundaries": [
+    "The pasted final response is not the raw tool execution trace, so statements about tool invocation, blocked branch creation, and analysis are observations of assistant output, not independently established events.",
+    "An output that matches GitHub main SHA and task can originate from real reads or copied/preexisting information; cannot prove native Skill activation.",
+    "A single 4+ minute session cannot establish reliability probability or comprehensive knowledge acquisition.",
+    "No need to ask the user to reinstall Skill or repeat the identical canary; existing sample is sufficient to file negative results and fix testable repository-side weaknesses."
+  ],
+  "followup_disposition": {
+    "status": "CANDIDATE_PERSISTENCE_AND_COVERAGE_REPAIR",
+    "next_agent_work": [
+      "Persist user-confirmed account install/update and observed canary attempt accurately in canonical handoff owner.",
+      "Convert no-followthrough branch-blocked behavior into a negative-control holdout, requiring permitted read-only progress and exact blocker classification rather than prematurely ending.",
+      "Retain native invocation verification as unproven without host trace; do not claim that GitHub CI tests a product hook.",
+      "Keep existing parent controller task RUNNING and perform owner-authorized next actions without asking user to repeat."
+    ],
+    "user_action_required": "NONE_FOR_THIS_REPLAY"
+  }
+}
