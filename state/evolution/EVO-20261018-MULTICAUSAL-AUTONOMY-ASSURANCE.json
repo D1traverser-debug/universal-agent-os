@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.5",
+  "evolution_id": "EVO-20261018-MULTICAUSAL-AUTONOMY-ASSURANCE",
+  "authority": "UAOS",
+  "status": "FRAMED__CANDIDATE_GATE_CHANGE_UNVERIFIED",
+  "origin_kind": "CAPABILITY_GAP",
+  "parent_evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
+  "governing_outcome": "Prevent false completion of ongoing multi-causal controller review when repository snapshots are stale or comprehensive knowledge was not acquired; maintain autonomous multi-factor investigation as open evidence work.",
+  "origin_evidence_refs": [
+    "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
+    "state/observations/uaos-controller-five-repo-review-20261018.json",
+    "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md"
+  ],
+  "candidate_hypotheses": [
+    {
+      "id": "REVIEW_COMPLETION_CLAIM_CAN_IGNORE_SOURCE_FRESHNESS",
+      "status": "SUPPORTED_BY_BEFORE_CODE",
+      "falsifier": "Find an existing completion branch checking exact current repository revisions."
+    },
+    {
+      "id": "REVIEW_COMPLETION_CLAIM_CAN_IGNORE_RESEARCH_ADMISSION",
+      "status": "SUPPORTED_BY_BEFORE_CODE",
+      "falsifier": "Find a current controller completion branch calling require_knowledge_acquisition_admission."
+    },
+    {
+      "id": "NATIVE_AGENT_ALWAYS_INVOKES_GATE",
+      "status": "NOT_ESTABLISHED",
+      "falsifier": "Independent product-host invocation trace proves it."
+    }
+  ],
+  "interventions": [
+    {
+      "id": "NEW_AUTONOMY_CONTROLLER",
+      "disposition": "REJECTED",
+      "reason": "Duplicates canonical Deep Task, CognitionCase, EvolutionTransaction."
+    },
+    {
+      "id": "REUSE_REVIEW_GATE_AND_EXISTING_KNOWLEDGE_ADMISSION",
+      "disposition": "SELECTED_FOR_CANDIDATE_CI",
+      "reason": "Improves known evidence interface without imposing unsupported native guarantee."
+    },
+    {
+      "id": "DO_NOTHING",
+      "disposition": "REJECTED_FOR_OBSERVED_CODE_DEFECT",
+      "reason": "Allows self-report to skip declared comprehensive research/snapshot freshness."
+    }
+  ],
+  "implementation_refs": [
+    "src/uaos/assurance/controller_review.py",
+    "tests/architecture/test_controller_review_admission.py",
+    "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md",
+    "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
+    "state/tasks/uaos-inheritance-review-20261018.json"
+  ],
+  "acceptance": [
+    "Candidate CI and protected PR promotion green",
+    "Production main CI and exact source reread green",
+    "Premature-completion negative scenarios reject stale/unverified snapshots and shallow research",
+    "Existing parent TaskIndex and canonical knowledge owner preserved",
+    "Native behavior and full web saturation explicitly unverified"
+  ],
+  "verification_rounds": [],
+  "evolution_disposition": "BOUNDED_GATE_HARDENING_CANDIDATE__NOT_SYSTEM_AUTONOMY_COMPLETION",
+  "assurance_boundary": "No product-internal ChatGPT pre-send hook is proven; review research remains unsaturated."
+}
