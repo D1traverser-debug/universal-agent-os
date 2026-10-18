@@ -2,7 +2,7 @@
   "schema_version": "1.5",
   "evolution_id": "EVO-20261018-INHERITANCE-REVIEW",
   "authority": "UAOS",
-  "status": "FRAMED__NOT_AUTHORIZED_FOR_PROMOTION",
+  "status": "EVALUATED__CANDIDATE_REPOSITORY_GATES__PRODUCTION_AND_NATIVE_OBSERVATION_PENDING",
   "origin_kind": "CAPABILITY_GAP",
   "governing_outcome": "On explicit UAOS controller selection, review every registered repository and the governance, runtime, quality and evolution concerns; persist independent evidence and findings.",
   "origin_evidence_refs": [
@@ -46,7 +46,11 @@
     "config/NATIVE_SESSION_RUNTIME_PROFILE.json",
     "src/uaos/runtime/native_session_profile.py",
     "state/tasks/uaos-inheritance-review-20261018.json",
-    "tests/architecture/test_controller_inheritance_review.py"
+    "tests/architecture/test_controller_inheritance_review.py",
+    "src/uaos/assurance/controller_review.py",
+    "state/observations/uaos-controller-five-repo-review-20261018.json",
+    "tests/architecture/test_controller_review_admission.py",
+    "tests/evolution/test_controller_inheritance_evolution_admission.py"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -57,14 +61,22 @@
     "ACTUAL_USER_FACING_BEHAVIOR_CLAIM_BOUNDED"
   ],
   "evaluation": {
-    "round": 1,
+    "round": 2,
     "head": "732a689f1bc8866ca8863fb619dc2a34c3f6a1cc",
-    "status": "FAILED",
+    "status": "REPOSITORY_CANDIDATE_VALIDATED__NATIVE_AND_BUSINESS_OUTCOMES_UNVERIFIED",
     "failure_evidence": [
       "promotion-gate missing linked evolution and exceeds native budget",
       "postgres-dbos exceeds native budget"
     ],
-    "independent_judge": "GitHub CI for deterministic repository invariants only"
+    "independent_judge": "GitHub CI for deterministic repository invariants only",
+    "evidence": [
+      "CI candidate promotion-gate green before final status record, 513 passed 1 skipped",
+      "Canonical EvolutionTransaction discovers/proposes/evaluates the gap in deterministic test",
+      "Review admission requires dynamic registered repository coverage and independently verified evidence for any deep completion",
+      "Native Skill/custom-instructions activation in other chats not observed"
+    ]
   },
-  "assurance_boundary": "This record admits investigation, not production promotion or native runtime conformance."
+  "assurance_boundary": "This record admits investigation, not production promotion or native runtime conformance.",
+  "production_disposition": "NOT_PROMOTED__DO_NOT_CLAIM_NATIVE_CONSISTENCY",
+  "post_promotion_observation": "REQUIRED_AFTER_MAIN_MERGE"
 }
