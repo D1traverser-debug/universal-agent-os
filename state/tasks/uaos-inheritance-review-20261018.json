@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Complete protected review/CI for POSIX snapshot no-follow race candidate, then main reread and verify negative injected races; continue external provider deletes, non-POSIX/host write enforcement and five-repo deep outcome audit. Financial parent-governed recovery remains RUNNING but parked.",
+  "next_action": "Continue external S3 provider permission and durable DELETE owner admission, non-POSIX snapshot concurrency, real host/native tool mediation, and five-repository deep outcomes. Financial parent-governed task remains RUNNING parked.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -25,7 +25,7 @@
     "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-18T23:58:51+08:00",
+  "updated_at": "2026-10-19T02:43:32.942+08:00",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -325,7 +325,7 @@
     }
   },
   "snapshot_symlink_race_20261019": {
-    "status": "SOURCE_HARDENING_CANDIDATE__CI_AND_PROMOTION_OPEN",
+    "status": "PR125_NESTED_ARTIFACT_BOUNDARY_PROMOTED__PR128_POSIX_ROOT_ANCESTOR_PRODUCTION_VERIFIED__NON_POSIX_AND_NATIVE_OPEN",
     "authority_context": "UAOS",
     "owner": "src/uaos/state/snapshot.py",
     "governing_outcome": "Keep untrusted snapshot artifact reads confined beneath the selected snapshot directory across verification and restore staging, with no new global authority.",
@@ -341,8 +341,53 @@
       "WINDOWS_PATH_BASED_FALLBACK_NOT_POSIX_DIRFD_ENFORCED",
       "DIRECT_FILESYSTEM_MUTATION_BY_UNCOOPERATING_WRITERS_UNMEDIATED",
       "CROSS_RESOURCE_CRASH_ATOMICITY_AND_POWER_LOSS_UNPROVEN",
-      "NATIVE_CHATGPT_TOOL_WRITE_HOOKS_NOT_VERIFIED"
+      "NATIVE_CHATGPT_TOOL_WRITE_HOOKS_NOT_VERIFIED",
+      "POSIX_ROOT_ANCESTOR_SWAP_NEGATIVE_TESTS_GREEN__UNCOOPERATING_MOUNT_OR_CONTENT_REWRITERS_UNPROVEN"
     ],
-    "next_validation": "Run full CI with negative injection and original roundtrip, assess independent review, then protected promotion/readback; continue non-POSIX and concurrent storage investigation."
+    "next_validation": "Conduct actual host or provider write-path conformance when supported. POSIX no-follow addresses tested symlink substitution but non-POSIX and cross-resource crash atomicity remain open.",
+    "release": {
+      "pr": 125,
+      "merge_sha": "b5da5747adea9aa41027997a991bc56cfbae2f3a",
+      "head": "17fecfad8ffcf883572ddbe7e3db16cd4ca47971",
+      "ci_run": 700,
+      "ci": "622 passed, 2 skipped",
+      "live_integration_run": 396,
+      "postgres_tests": "624 passed, 1 skipped",
+      "object_store_job": "success",
+      "provider_job": "skipped",
+      "code_review": "completed, no findings",
+      "main_readback": true
+    },
+    "independent_falsification": {
+      "source": "PR126 Codex review thread PRRT_kwDOVHwz086ttO_J",
+      "result": "PR125 passed nested artifact race tests but allowed symlink substitution of the snapshot root between DB and artifact staging",
+      "candidate_fix": "PR128 opens every POSIX ancestor via directory descriptor and adds root-swap/ancestor tests",
+      "status": "PRODUCTION_SOURCE_AND_NEGATIVE_TEST_REREAD__NATIVE_PRODUCTION_STILL_UNVERIFIED"
+    },
+    "root_ancestor_release": {
+      "pr": 128,
+      "main_sha": "06df7e5f8a927dcc1f072fe6211436ba8bba479b",
+      "candidate_head": "a471b6c054ec304a12b12106e8d4540cfbe59c74",
+      "ci_run": 709,
+      "ci": "635 passed, 2 skipped",
+      "integration_run": 400,
+      "integration": "success",
+      "independent_review": "search-only ancestor regression independently identified on prior revision; resolved with O_PATH/O_SEARCH and new test; no independent zero-findings receipt for final head",
+      "production_main_reread": true
+    }
+  },
+  "external_object_delete_probe_20261019": {
+    "status": "SOURCE_TRACED__PROVIDER_LIVE_AUTHORIZATION_UNVERIFIED",
+    "scope": "UAOS_OBJECT_STORE_ADAPTER_NOT_GENERAL_CHATGPT_EXTERNAL_CONNECTOR",
+    "direct_delete": "src/uaos/state/s3_artifacts.py#S3ContentAddressedStore.delete_hash",
+    "observed_caller": "src/uaos/live/object_store_probe.py#run_object_store_probe uses prefix live-probe, fresh SHA256 probe bytes, delete_hash(expected), then head_object absence verification",
+    "positive_evidence": "PR125 live-integration object-store job success with OpenAI provider job skipped",
+    "unproven": [
+      "PRODUCTION_BUCKET_IAM_AND_RETENTION_RULES",
+      "S3_DELETE_AS_TRUSTED_CATALOG_OPERATION_FOR_NON_PROBE_CALLERS",
+      "ARBITRARY_NATIVE_CONNECTOR_MUTATION_INTERCEPTION",
+      "CROSS_PLATFORM_SNAPSHOT_DIRFD_PROTECTION"
+    ],
+    "next_action": "Trace any non-probe callers and remote authorization boundary, then choose bounded owner-scoped enforcement or evidence-backed no-change; do not infer unauthorized production deletion from test cleanup."
   }
 }
