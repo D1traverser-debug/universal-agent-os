@@ -56,6 +56,16 @@ def _validated_artifact_tree(
 ) -> tuple[tuple[str, str, int], ...]:
     if root.is_symlink() or not root.is_dir() or not isinstance(items, list):
         raise ValueError("missing snapshot artifact root or malformed manifest")
+    # Scan the *whole* tree for links before following any manifest-selected
+    # path: a symlinked intermediate directory must not be read during hashing.
+    actual: set[str] = set()
+    for artifact in root.rglob("*"):
+        if artifact.is_symlink():
+            raise ValueError(f"snapshot contains a symlink: {artifact}")
+        if artifact.is_file():
+            actual.add(artifact.relative_to(root).as_posix())
+        elif not artifact.is_dir():
+            raise ValueError(f"unexpected snapshot artifact type: {artifact}")
     declared: set[str] = set()
     records: list[tuple[str, str, int]] = []
     for item in items:
@@ -80,14 +90,6 @@ def _validated_artifact_tree(
         if _hash_file(artifact) != digest or artifact.stat().st_size != size:
             raise ValueError(f"artifact integrity mismatch: {name}")
         records.append((name, digest, size))
-    actual: set[str] = set()
-    for artifact in root.rglob("*"):
-        if artifact.is_symlink():
-            raise ValueError(f"snapshot contains a symlink: {artifact}")
-        if artifact.is_file():
-            actual.add(artifact.relative_to(root).as_posix())
-        elif not artifact.is_dir():
-            raise ValueError(f"unexpected snapshot artifact type: {artifact}")
     if actual != declared:
         raise ValueError(f"snapshot contains unmanifested or missing artifacts: {sorted(actual ^ declared)}")
     return tuple(records)
