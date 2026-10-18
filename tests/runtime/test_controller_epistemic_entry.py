@@ -181,3 +181,28 @@ def test_model_only_analysis_or_synthetic_scenario_cannot_self_certify_tool_find
         receipt = assess_controller_epistemic_entry(item)
         assert not receipt.problem_signal_observed
         assert receipt.hypothesis_challenge_required
+
+
+def test_exact_controller_entry_requires_owner_source_and_rejects_false_done():
+    import json
+    from pathlib import Path
+    ref = "state/tasks/uaos-inheritance-review-20261018.json"
+    state = json.loads((Path(__file__).resolve().parents[2] / ref).read_text(encoding="utf-8"))
+    entry = replace(_entry(), state_ref=ref)
+    report = _report().replace(
+        "当前范围或任务：controlled epistemic entry test",
+        f"当前范围或任务：{state['task_id']}",
+    ).replace("状态：VERIFIED_CONTROLLED_ONLY", f"状态：{state['status']}").replace(
+        "当前阶段：FINALIZATION", f"当前阶段：{state['current_stage']}"
+    )
+
+    with pytest.raises(FinalizationBlocked, match="CONTROLLER_TASK_PROGRESS_SOURCE_NOT_BOUND"):
+        admit_final_response(report, _context(entry))
+
+    with pytest.raises(FinalizationBlocked, match="CONTROLLER_TASK_PROGRESS_READER_MISSING"):
+        admit_final_response(report, _context(entry, authoritative_task_ref=ref))
+
+    bound = _context(entry, authoritative_task_ref=ref, read_authoritative_task=lambda _: state)
+    assert admit_final_response(report, bound).adherence.passed
+    with pytest.raises(FinalizationBlocked, match="AUTHORITATIVE_PROGRESS_MISMATCH"):
+        admit_final_response(report.replace(f"状态：{state['status']}", "状态：COMPLETE"), bound)

@@ -63,7 +63,10 @@
     "src/uaos/runtime/epistemic_entry.py",
     "tests/runtime/test_controller_epistemic_entry.py",
     "tests/architecture/test_cognition_case_transaction.py",
-    "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md"
+    "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
+    "src/uaos/observability/session_adherence.py",
+    "scripts/uaos_status.py",
+    "tests/architecture/test_progress_authority_reconciliation.py"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -181,5 +184,29 @@
       "main_sha": "3a60beb31d4535d5f10bcc44c399391842fd0966",
       "readback": true
     }
+  },
+  "progress_truth_reconciliation_20261018": {
+    "status": "CANDIDATE__CI_AND_REAL_HOST_OUTCOME_OPEN",
+    "current_root_evidence": [
+      "session_adherence.py validates format, not task values",
+      "task native account SHA stale vs observation",
+      "status CLI reads historical readiness snapshot rather than exact active task"
+    ],
+    "selected": "NO_NEW_STATUS_STORE__READ_EXISTING_TASK_OWNER_AT_CONTROLLED_OUTPUT_BOUNDARY__FIX_LEGACY_CLI_SEMANTICS__REMOVE_STALE_MIRROR",
+    "rejected": [
+      "MORE_PROGRESS_FIELD_REMINDERS",
+      "ADDING_ANOTHER_PROGRESS_DASHBOARD_OR_CONTROLLER",
+      "REPORT_STRING_AS_EVIDENCE_OF_COMPLETE"
+    ],
+    "falsification": [
+      "fake DONE vs owner RUNNING must block",
+      "fake stage/context must block",
+      "missing trusted reader must block",
+      "valid task state must pass",
+      "historical readiness labelled non-current",
+      "default UAOS controller task and Financial handoff unaffected"
+    ],
+    "native_limit": "UNVERIFIED_NATIVE_CHATGPT_PRE_SEND_INSTRUMENTATION",
+    "business_outcome": "OPEN"
   }
 }

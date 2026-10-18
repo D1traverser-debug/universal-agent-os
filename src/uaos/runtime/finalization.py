@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
-from typing import Callable
+from typing import Callable, Mapping
 
 from uaos.contracts.models import KnowledgeItem
 
@@ -126,6 +126,8 @@ class FinalizationContext:
     controller_selected: bool = False
     controller_epistemic_entry: ControllerEpistemicEntry | None = None
     entry_evidence_verifier: Callable[[str], bool] | None = None
+    authoritative_task_ref: str | None = None
+    read_authoritative_task: Callable[[str], Mapping[str, object] | None] | None = None
     blocked_tool_operation_observed: bool = False
     blocked_operation_continuity: BlockedOperationContinuity | None = None
     governed_product_outcome_completion_requested: bool = False
@@ -305,6 +307,17 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
         if entry_receipt.work_remaining and not context.work_remaining_without_user_input:
             raise FinalizationBlocked("UNROUTED_UNFINISHED_AUTHORIZED_WORK")
 
+    # When the controller's selected entry identifies an exact task, the
+    # controlled host cannot skip task-to-visible-progress reconciliation by
+    # omitting the resolver. Controller-root/index-only entries have no task.
+    if context.controller_selected and context.controller_epistemic_entry is not None:
+        exact_task_ref = context.controller_epistemic_entry.state_ref
+        if exact_task_ref.startswith("state/tasks/"):
+            if context.authoritative_task_ref != exact_task_ref:
+                raise FinalizationBlocked("CONTROLLER_TASK_PROGRESS_SOURCE_NOT_BOUND")
+            if context.read_authoritative_task is None:
+                raise FinalizationBlocked("CONTROLLER_TASK_PROGRESS_READER_MISSING")
+
     # A tool-level block is an operation-local finding, never automatically a
     # task-global blocker. Continue independently authorized work, but do not
     # reroute safety-denied mutations through another tool/provider.
@@ -408,6 +421,8 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
         cognition_case_receipt=closure.cognition_case_receipt if closure is not None else None,
         evolution_disposition=closure.evolution_disposition if closure is not None else None,
         problem_record_ref=closure.problem_record_ref if closure is not None else None,
+        authoritative_task_ref=context.authoritative_task_ref,
+        read_authoritative_task=context.read_authoritative_task,
     )
     adherence = evaluate_session_progress_response(response, expectation)
     if not adherence.passed:
