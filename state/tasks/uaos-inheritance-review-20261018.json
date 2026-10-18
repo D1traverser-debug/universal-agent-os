@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Finish existing UAOS file authority candidate CI, negative restore and index tests, protected promotion and main reread. Then verify actual host-mediated write paths and periodic drift detection, avoiding deletion of useful historical evidence. Keep controller RUNNING/default and Financial parked RUNNING; no child modification.",
+  "next_action": "UAOS controller only: continue bounded file authority/writes audit beyond PR120; run real direct connector and native/host write-path conformance, prevent unauthorized writes; verify snapshot concurrency and external asset deletes; continue broader autonomous controller review. Keep exact Financial task parked and unchanged until controller genuinely accepted.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -238,7 +238,7 @@
     ]
   },
   "file_lifecycle_write_audit_20261019": {
-    "status": "BOUNDED_SOURCE_AUDIT_AND_CANDIDATE_REPAIR__CI_AND_LIVE_WRITE_COVERAGE_OPEN",
+    "status": "SOURCE_PROMOTED_PR120__CI_AND_MAIN_REREAD_VERIFIED__LIVE_UNIVERSAL_WRITE_COVERAGE_OPEN",
     "inventory": {
       "github_blobs": 398,
       "state_files": 75,
@@ -262,13 +262,25 @@
     ],
     "research_ref": "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
     "open": [
-      "PR_CI_AND_REVIEW",
       "REAL_NATIVE_OR_EXTERNAL_CONNECTOR_MUTATION_GATE",
       "OBJECT_STORE_DELETE_AND_RESTORE_OP_PERMISSIONS",
       "POWER_LOSS_ATOMICITY_FOR_DATABASE_AND_ARTIFACTS",
       "RUNTIME_SNAPSHOT_RACE_OR_SYMLINK_CONCURRENCY",
-      "FRESH_CHILD_VERSION_CACHE_RECONCILIATION_AS_NEEDED"
+      "FRESH_CHILD_VERSION_CACHE_RECONCILIATION_AS_NEEDED",
+      "PR120_COVERAGE_LIMIT__NATIVE_AND_EXTERNAL_WRITE_HOST_PATHS_UNVERIFIED"
     ],
-    "finance_status": "RUNNING_PRESERVED_NOT_SELECTED"
+    "finance_status": "RUNNING_PRESERVED_NOT_SELECTED",
+    "production_evidence": {
+      "pr": 120,
+      "commit": "0466e184d1a39f717a89719c633752a585631f7e",
+      "candidate_head": "6527a5dc1c00dfd182e1541f6bf0b192aed287c9",
+      "candidate_ci": 690,
+      "candidate_ci_conclusion": "success",
+      "integration": 395,
+      "integration_result": "success (OpenAI provider skipped)",
+      "production_ci": 691,
+      "production_ci_conclusion": "success",
+      "main_source_reread": true
+    }
   }
 }
