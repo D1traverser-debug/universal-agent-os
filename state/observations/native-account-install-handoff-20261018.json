@@ -12,7 +12,7 @@
     "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md"
   ],
   "source_git_blobs": {
-    "skill": "ac72b97ed508871bb91f334c84fb2acb79a48a00",
+    "skill": "ad6e646325e5fe0fdbe761ea47c63b2153a410a1",
     "pointer": "a43a4b09d5c63c861f1607e581ae5a40fbd4c758",
     "previously_supplied_skill": "a244aeafcb204a86ab6825b8e8b277050c2be507",
     "previous_verified_repo_skill": "cb2ecdfac61e712b7270b6b218effa667b45f5d0"
@@ -100,9 +100,10 @@
   },
   "latest_repo_skill_generation_20261018": {
     "candidate": "governance/controller-turn-evolution-coverage-20261018",
-    "candidate_git_blob": "ac72b97ed508871bb91f334c84fb2acb79a48a00",
+    "candidate_git_blob": "ad6e646325e5fe0fdbe761ea47c63b2153a410a1",
     "previous_main_git_blob": "cb2ecdfac61e712b7270b6b218effa667b45f5d0",
     "installed_skill_blob_status": "UNKNOWN__REPO_FILE_CHANGE_NOT_NATIVE_CHATGPT_SKILL_INSTALL",
-    "status": "CANDIDATE_GENERATED_SOURCE_ONLY__NO_NATIVE_EFFECT_PROOF"
+    "status": "CANDIDATE_GENERATED_SOURCE_ONLY__NO_NATIVE_EFFECT_PROOF",
+    "scope": "UAOS_CONTROLLER_ONLY__DIRECT_DOMAIN_RUNTIME_COVERAGE_OPEN"
   }
 }
