@@ -56,3 +56,38 @@ def test_domain_work_plane_remains_direct_and_unproxied():
     assert any("directly" in rule for rule in rules)
     review = session["controller_inheritance_review"]
     assert "DO_NOT_PROXY_ORDINARY_CHILD_WORK" in review["scope"]
+
+
+
+def test_review_source_inventory_tracks_all_registered_domains_not_fixed_names():
+    registry = read_json("config/AGENT_REGISTRY.json")
+    actual = read_json("state/observations/uaos-controller-five-repo-review-20261018.json")
+    expected = {"universal-agent-os"} | {
+        agent["repository"].split("/")[-1] for agent in registry["agents"]
+    }
+    recorded = {entry["repo"] for entry in actual["source_heads"]}
+    assert recorded == expected
+
+    required = set(actual["dimensions"]) if "dimensions" in actual else {
+        "authority_architecture", "requirement_continuity", "execution_admission",
+        "quality_validation", "observability", "evolution_learning",
+    }
+    assert len(required) == 6
+    for repository in recorded:
+        observations = {
+            cell["dimension"] for cell in actual["coverage"]
+            if cell["repo"] == repository and cell["source"]
+        }
+        assert observations == required
+
+
+def test_source_inventory_does_not_claim_unverified_deep_or_native_outcomes():
+    actual = read_json("state/observations/uaos-controller-five-repo-review-20261018.json")
+    assert actual["status"] == "SOURCE_PROBES_PARTIAL__DEEP_AUDIT_INCOMPLETE"
+    assert actual["counts"]["deep_validated_dimensions"] == 0
+    assert actual["counts"]["native_cross_session_trigger_verification"] == 0
+    assert actual["outcome"].startswith("NOT_GREEN")
+    assert all(
+        cell["assurance"] == "SOURCE_IDENTIFIED__NOT_RUNTIME_VERIFIED"
+        for cell in actual["coverage"]
+    )
