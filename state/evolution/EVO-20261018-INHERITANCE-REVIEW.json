@@ -72,7 +72,15 @@
     "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md",
     "state/observations/native-account-install-handoff-20261018.json",
     "CURRENT_SYSTEM.json",
-    "tests/runtime/test_blocked_operation_continuation.py"
+    "tests/runtime/test_blocked_operation_continuation.py",
+    "state/TASK_INDEX.json",
+    "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md",
+    "docs/architecture/ARCHITECTURE_BLUEPRINT_v1.md",
+    "docs/architecture/ARCHITECTURE_BLUEPRINT_v1.1.md",
+    "src/uaos/state/snapshot.py",
+    "tests/state/test_portable_snapshot.py",
+    "tests/integrations/test_fresh_chat_resume.py",
+    "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -260,5 +268,25 @@
       "push_verified_at": "2026-10-18T15:58:51Z"
     },
     "post_promotion_falsification": "Do not use the real PR CI as evidence native ChatGPT automatically enumerates all messages. The current user repeatedly observed progress omissions without unprompted self-repair."
+  },
+  "file_lifecycle_write_audit_20261019": {
+    "status": "EVIDENCE_GROUNDED_CANDIDATE__NOT_PROMOTED",
+    "scope": "UAOS_CURRENT_MAIN_FILE_INVENTORY_AND_WRITE_EFFECTORS",
+    "source_ref": "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
+    "causal_factors": [
+      "INDEX_SHADOW_FIELD_DRIFT",
+      "HISTORICAL_DOC_AS_CURRENT_SKILL_HASH",
+      "DIFFERENT_STORAGE_ADAPTERS_NOT_PHYSICALLY_ONE_MEDIATED_EFFCTOR",
+      "SNAPSHOT_MANIFEST_AND_RESTORE_SAFETY_GAP"
+    ],
+    "accepted_intervention": "TARGETED_INDEX_RECONCILIATION__HISTORICAL_ROLE_LABELS__SNAPSHOT_PATH_MANIFEST_VERIFICATION_AND_ROLLBACK__BOUND_REGRESSION",
+    "validation": [
+      "INDEXED_TASK_SOURCE_EXACT_STAGE_ID_AND_STATUS",
+      "UNINDEXED_COMPLETE_RECEIPTS_NOT_DEFAULT",
+      "SNAPSHOT_EXTRA_OR_TRAVERSAL_OR_SYMLINK_REJECTED",
+      "RESTORE_RENAME_FAILURE_ROLLS_BACK_DB_AND_ARTIFACT_TREE",
+      "PR_CI_GREEN_AND_MAIN_READER_REREAD"
+    ],
+    "assurance_limit": "NO_UNIVERSAL_WRITE_MEDIATION_OR_POWER_LOSS_CROSS_RESOURCE_ATOMICITY_CLAIM"
   }
 }
