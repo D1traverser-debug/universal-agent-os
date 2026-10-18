@@ -1,9 +1,9 @@
 {
-  "schema_version":"1.4",
+  "schema_version":"1.5",
   "evolution_id":"EVO-20261017-KNOWLEDGE-ACQUISITION-NATIVE-ENTRY-V3",
   "authority":"UAOS",
-  "status":"PROMOTED__POST_PROMOTION_INHERITANCE_OBSERVATION_PENDING",
-  "updated_at":"2026-10-18T00:50:30+08:00",
+  "status":"OBSERVED__KEEP_WITH_BOUNDED_NATIVE_ASSURANCE",
+  "updated_at":"2026-10-18T13:14:57+08:00",
   "origin_kind":"EVALUATED_KNOWLEDGE",
   "parent_evolution_ref":"state/evolution/EVO-20261017-NATIVE-COLD-START-GOVERNANCE.json",
   "governing_outcome":"Make native UAOS entry reliably mandatory-but-lightweight, make depth/research/evolution internal routing decisions rather than pre-entry conditions, and turn broad learning into a reusable coverage-oriented evidence-acquisition capability that can discover, compare, falsify, integrate, stop and validate without creating a second cognition or research operating system.",
@@ -164,7 +164,7 @@
     "production_commit":"bd7afe4f32e2eca912869846b89dad3b1242da04",
     "production_ci":553,
     "production_ci_result":"PASS",
-    "post_promotion_inheritance_observation":"PENDING"
+    "post_promotion_inheritance_observation":"PASS_WITH_LIMITATION__USER_TRANSCRIPT_CORROBORATED"
   },
   "promotion_evidence":{
     "pull_request":87,
@@ -174,6 +174,7 @@
     "production_ci_run":553,
     "production_ci_result":"SUCCESS"
   },
-  "next_action":"RUN_FRESH_CHAT_INHERITANCE_OBSERVATION__BARE_INHERIT_SELECTOR__SELECT_UAOS__VERIFY_DEFAULT_CONTROLLER_TASK_RECOVERY_CURRENT_PRODUCTION_AUTHORITY_AND_AUTONOMOUS_CONTINUATION__THEN_CLOSE_IF_PASS",
+  "post_promotion_observation":{"observation_ref":"state/observations/native-v3-inheritance-postpromotion-20261018.json","result":"PASS_WITH_LIMITATION","disposition":"KEEP_PRODUCTION","assurance":"VISIBLE_SEMANTIC_CONTINUITY_ONLY__NATIVE_TOOL_TRACE_AND_PHYSICAL_COMPLETE_MEDIATION_NOT_CLAIMED","production_reread":"PASS"},
+  "next_action":"NONE__EVOLUTION_OBSERVED_KEEP__REOPEN_ONLY_ON_NEW_MATERIAL_EVIDENCE",
   "assurance_boundary":"This evolution improves native behavioral routing and controlled-runtime evidence admission. It cannot create a repository-controlled native ChatGPT pre-send/pre-tool hook. The pre-promotion holdout validated account-projection activation/autonomous recovery but not unpromoted candidate canonical-owner behavior; post-promotion observation is required for closure."
 }
