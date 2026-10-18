@@ -74,7 +74,7 @@
       "resume_eligible": false,
       "default_resume": false,
       "semantic_summary": "Completed governed-evolution architecture rebuild: UAOS 2.7.0 now uses one canonical EvolutionTransaction for incident, capability-gap and evaluated-knowledge origins. Capability gaps are first-class; proactive material evolution binds governing outcome, raw evidence, professional methods/tools, novelty probes, independent judge evidence and post-promotion observation. Repository promotion is production verified; real periodic triggering is host-owned and configured separately.",
-      "current_stage": "PRODUCTION_VERIFIED_CLOSED__HOST_AUTOMATION_CONFIGURATION_EXTERNAL_TO_REPO",
+      "current_stage": "PRODUCTION_VERIFIED_CLOSED__PROACTIVE_HOST_TRIGGER_CONFIGURATION_FOLLOWS_OUTSIDE_REPOSITORY",
       "state_ref": "state/tasks/uaos-proactive-capability-evolution-audit-20261016.json"
     },
     {
