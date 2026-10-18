@@ -23,6 +23,13 @@ class S3ContentAddressedStore:
         self.prefix = prefix.strip("/")
 
     def key_for(self, content_hash: str) -> str:
+        # A content-addressed object key must never be derived from caller
+        # supplied arbitrary paths or noncanonical identifiers. This bounds
+        # the adapter namespace; lifecycle/DELETE authorization is separate.
+        if type(content_hash) is not str or len(content_hash) != 64 or any(
+            char not in "0123456789abcdef" for char in content_hash
+        ):
+            raise ValueError("content_hash must be a lowercase SHA-256 hex digest")
         leaf = f"{content_hash[:2]}/{content_hash[2:]}"
         return f"{self.prefix}/{leaf}" if self.prefix else leaf
 
