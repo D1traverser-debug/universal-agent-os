@@ -39,19 +39,26 @@ def _hash_file(path: Path) -> str:
 
 
 
-def _open_nofollow_directory(path: Path) -> int:
-    """Open each POSIX ancestor from the filesystem anchor, never by compound path.
+def _open_nofollow_directory(path: Path, *, for_scan: bool = False) -> int:
+    """Anchor every POSIX ancestor while preserving search-only access.
 
-    The returned descriptor pins the directory inode for subsequent relative
-    opens even if a concurrent writer renames or replaces its pathname.
+    O_PATH (or O_SEARCH when supported) permits lookup through ancestors
+    without requiring directory listing permission. Only the leaf directory
+    used by scandir needs O_RDONLY. The returned fd pins that directory.
     """
     absolute = path.absolute()
-    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
-    directory_fd = os.open(absolute.anchor, flags)
+    search_mode = getattr(os, "O_PATH", getattr(os, "O_SEARCH", os.O_RDONLY))
+    search_flags = search_mode | os.O_DIRECTORY | os.O_NOFOLLOW
+    scan_flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    components = absolute.parts[1:]
+    directory_fd = os.open(
+        absolute.anchor, scan_flags if for_scan and not components else search_flags
+    )
     try:
-        for component in absolute.parts[1:]:
+        for position, component in enumerate(components):
             if component in (".", ".."):
                 raise ValueError("noncanonical snapshot root path")
+            flags = scan_flags if for_scan and position == len(components) - 1 else search_flags
             next_fd = os.open(component, flags, dir_fd=directory_fd)
             os.close(directory_fd)
             directory_fd = next_fd
@@ -168,7 +175,7 @@ def _artifact_names_beneath(root: Path) -> set[str]:
                 else:
                     raise ValueError(f"unexpected or symlinked snapshot entry: {name}")
     try:
-        root_fd = _open_nofollow_directory(root)
+        root_fd = _open_nofollow_directory(root, for_scan=True)
         try:
             result: set[str] = set()
             walk(root_fd, "", result)
