@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+from typing import Callable
+
+from .epistemic_entry import ControllerEpistemicEntry, assess_controller_epistemic_entry
 
 from uaos.kernel.cognition_case import (
     CognitionCase,
@@ -51,6 +54,9 @@ class FinalizationContext:
     deep_task_required: bool = False
     deep_task_signals: DeepTaskSignals | None = None
     deep_task_case: DeepTaskCase | None = None
+    controller_selected: bool = False
+    controller_epistemic_entry: ControllerEpistemicEntry | None = None
+    entry_evidence_verifier: Callable[[str], bool] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -194,6 +200,33 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
     semantic signals when supplied. Native hosts that do not invoke this gate or do not
     supply current semantic signals remain outside the physical complete-mediation claim.
     """
+
+    # Controlled UAOS route: a genuine entry receipt is required before the
+    # existing cognition, Deep Task and finalization owners can close a turn.
+    # Native ChatGPT is not physically intercepted by this repository code.
+    if context.controller_selected:
+        if not context.context_selected:
+            raise FinalizationBlocked("CONTROLLER_ENTRY_WITHOUT_SELECTED_CONTEXT")
+        if context.controller_epistemic_entry is None:
+            raise FinalizationBlocked("MISSING_CONTROLLER_EPISTEMIC_ENTRY")
+        if context.entry_evidence_verifier is None:
+            raise FinalizationBlocked("MISSING_CONTROLLER_ENTRY_EVIDENCE_VERIFIER")
+        entry_receipt = assess_controller_epistemic_entry(context.controller_epistemic_entry)
+        refs = (
+            *entry_receipt.evidence_refs,
+            context.controller_epistemic_entry.objective_ref,
+            context.controller_epistemic_entry.state_ref,
+            context.controller_epistemic_entry.governing_assumption_review_ref,
+            context.controller_epistemic_entry.next_action_ref,
+        )
+        if not all(context.entry_evidence_verifier(ref) for ref in refs):
+            raise FinalizationBlocked("CONTROLLER_ENTRY_EVIDENCE_UNVERIFIED")
+        if entry_receipt.problem_signal_observed and not context.problem_signal_observed:
+            raise FinalizationBlocked("UNROUTED_RULE_OR_SYSTEM_CONTRADICTION")
+        if entry_receipt.deep_learning_required and not _deep_task_required(context):
+            raise FinalizationBlocked("UNROUTED_MATERIAL_KNOWLEDGE_GAP")
+        if entry_receipt.work_remaining and not context.work_remaining_without_user_input:
+            raise FinalizationBlocked("UNROUTED_UNFINISHED_AUTHORIZED_WORK")
 
     if context.work_remaining_without_user_input and not context.user_input_required:
         raise FinalizationBlocked("ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT")
