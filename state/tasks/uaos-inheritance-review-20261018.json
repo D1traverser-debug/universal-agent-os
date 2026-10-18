@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Continue UAOS-only autonomous work: verify controlled blocked-operation continuation and safety boundary by CI, promote through protected PR, inspect resulting source and outcomes. Native Skill invocation remains unmeasured; don't require another user re-install.",
+  "next_action": "Continue UAOS-only empirical selected-controller verification opportunistically on actual future usage. Direct Skill load and raw tool traces remain unverified; current GitHub controlled gate passes CI and no account reinstallation or repeat canary is required. Continue multi-factor architecture learning and source-grounded effects beyond this one fix.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -99,12 +99,19 @@
     }
   },
   "blocked_operation_continuation": {
-    "status": "CONTROLLED_GATE_CANDIDATE_UNVERIFIED",
+    "status": "CONTROLLED_FINALIZATION_PROMOTED__NATIVE_AUTONOMY_OPEN",
     "reason": "FIRST_NATIVE_CANARY_REPORTS_A_SINGLE_BRANCH_CREATION_BLOCK_AND_NO_DURABLE_FOLLOWTHROUGH",
     "source_ref": "state/observations/native-account-canary-20261018-first-run.json",
     "runtime_ref": "src/uaos/runtime/finalization.py#_require_blocked_operation_continuity",
     "evolution_ref": "state/evolution/EVO-20261018-CONTROLLER-BLOCKED-OPERATION-CONTINUITY.json",
     "host_boundary": "NATIVE_SKILL_INVOCATION_AND_TOOL_TRACE_NOT_INSTRUMENTED",
-    "next_step": "Run candidate tests/CI, preserve parent RUNNING, reread production after protected merge; use actual future selected-chat traces as independent holdouts."
+    "next_step": "Run candidate tests/CI, preserve parent RUNNING, reread production after protected merge; use actual future selected-chat traces as independent holdouts.",
+    "production_evidence": {
+      "pr": 105,
+      "main_sha": "76f4ba7cc3ae0dda491cd6989d341e96a76cc4be",
+      "ci_run": 622,
+      "ci_result": "554 passed, 1 skipped"
+    },
+    "subordinate_task_status": "COMPLETE_BOUNDED_REPAIR"
   }
 }
