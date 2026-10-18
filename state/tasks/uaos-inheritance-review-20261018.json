@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Controller-only: independently validate native actual turn-source/assistant-output review and self-detected Progress/unfinished-work failures without user correction, triangulate run traces, and finish five-repo deep architecture/method reuse investigation. Do not mark UAOS complete or switch to Financial before evidence-grounded owner acceptance.",
+  "next_action": "Finish existing UAOS file authority candidate CI, negative restore and index tests, protected promotion and main reread. Then verify actual host-mediated write paths and periodic drift detection, avoiding deletion of useful historical evidence. Keep controller RUNNING/default and Financial parked RUNNING; no child modification.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -21,7 +21,8 @@
     "docs/research/uaos-inheritance-review-20261018/08_operational_method_transfer_taxonomy.md",
     "https://github.com/D1traverser-debug/universal-agent-os/pull/113",
     "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
-    "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md"
+    "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md",
+    "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
   "updated_at": "2026-10-18T23:58:51+08:00",
@@ -235,5 +236,39 @@
       "DOMAIN_CONTEXT_INTEGRATION_HELD_UNTIL_CONTROLLER_ASSURANCE",
       "KNOWLEDGE_SATURATION_AND_FIVE_REPO_DEPTH_OPEN"
     ]
+  },
+  "file_lifecycle_write_audit_20261019": {
+    "status": "BOUNDED_SOURCE_AUDIT_AND_CANDIDATE_REPAIR__CI_AND_LIVE_WRITE_COVERAGE_OPEN",
+    "inventory": {
+      "github_blobs": 398,
+      "state_files": 75,
+      "config_files": 18,
+      "controller_python_and_script_files_lexically_inspected": 96,
+      "task_file_count": 15,
+      "evolution_and_observation_files": 45
+    },
+    "confirmed_findings": [
+      "TASK_INDEX_COMPLETED_TASK_STAGE_DRIFT_ONE",
+      "TWO_UNINDEXED_TASK_FILES_ARE_COMPLETED_PARENT_LINKED_WORK_RECEIPTS_NOT_GARBAGE",
+      "NATIVE_ACCOUNT_HANDOFF_CURRENT_SKILL_HASH_OVERSTATED_BY_HISTORICAL_DOCUMENT",
+      "DESIGN_BLUEPRINT_V1_AND_V1_1_HISTORICAL_NOT_CURRENT_RUNTIME_POLICY",
+      "SNAPSHOT_RESTORE_SEPARATE_DESTRUCTIVE_EFFECTOR_WITH_INCOMPLETE_MANIFEST_AND_NO_ORDINARY_FAILURE_ROLLBACK"
+    ],
+    "selected_remedy": "RECONCILE_EXISTING_INDEX_AND_HISTORICAL_LABELS__HARDEN_EXISTING_SNAPSHOT_RESTORE__ADD_SOURCE_ROLE_REGRESSION__NO_NEW_STATUS_OWNER",
+    "rejected": [
+      "DELETE_HISTORY_WITHOUT_CITATION_GRAPH",
+      "DECLARE_ALL_PHYSICAL_WRITES_MEDIATED_BY_ACTION_COORDINATOR",
+      "TREAT_398_BLOBS_OR_LEXICAL_SCAN_AS_FULL_DYNAMIC_PROOF"
+    ],
+    "research_ref": "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
+    "open": [
+      "PR_CI_AND_REVIEW",
+      "REAL_NATIVE_OR_EXTERNAL_CONNECTOR_MUTATION_GATE",
+      "OBJECT_STORE_DELETE_AND_RESTORE_OP_PERMISSIONS",
+      "POWER_LOSS_ATOMICITY_FOR_DATABASE_AND_ARTIFACTS",
+      "RUNTIME_SNAPSHOT_RACE_OR_SYMLINK_CONCURRENCY",
+      "FRESH_CHILD_VERSION_CACHE_RECONCILIATION_AS_NEEDED"
+    ],
+    "finance_status": "RUNNING_PRESERVED_NOT_SELECTED"
   }
 }
