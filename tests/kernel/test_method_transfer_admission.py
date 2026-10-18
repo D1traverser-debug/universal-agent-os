@@ -66,8 +66,14 @@ def verify(ref):
     return ref in ALL_REF
 
 
+def trusted(knowledge_id):
+    if knowledge_id == "method:causal-boundary-analysis":
+        return method()
+    return None
+
+
 def test_promoted_prior_method_can_be_transferred_as_bounded_candidate_not_live_proof():
-    receipt = require_method_transfer_admission(assessment(), verify_current_evidence=verify)
+    receipt = require_method_transfer_admission(assessment(), verify_current_evidence=verify, resolve_trusted_knowledge=trusted)
     assert receipt.selected_knowledge_id == "method:causal-boundary-analysis"
     assert receipt.disposition is MethodTransferDisposition.REUSE_CANONICAL_CANDIDATE
     assert "scenario:counterexample" in receipt.evidence_refs
@@ -77,7 +83,7 @@ def test_rejects_declared_inheritance_without_current_source_checks():
     with pytest.raises(MethodTransferAdmissionError, match="verification"):
         require_method_transfer_admission(assessment(), verify_current_evidence=None)
     with pytest.raises(MethodTransferAdmissionError, match="unverified"):
-        require_method_transfer_admission(assessment(), verify_current_evidence=lambda x: x != "scenario:counterexample")
+        require_method_transfer_admission(assessment(), verify_current_evidence=lambda x: x != "scenario:counterexample", resolve_trusted_knowledge=trusted)
 
 
 def test_rejects_wrong_scope_retired_and_uncertified_methods():
@@ -88,7 +94,7 @@ def test_rejects_wrong_scope_retired_and_uncertified_methods():
         candidate(knowledge=method(usages=())),
     ):
         with pytest.raises(MethodTransferAdmissionError):
-            require_method_transfer_admission(assessment(candidates=(bad,)), verify_current_evidence=verify)
+            require_method_transfer_admission(assessment(candidates=(bad,)), verify_current_evidence=verify, resolve_trusted_knowledge=trusted)
 
 
 def test_adaptation_is_provisional_and_raw_rules_cannot_be_selected():
@@ -113,7 +119,7 @@ def test_no_analogue_is_a_documented_outcome_not_a_invented_reuse():
         candidates=(),
         selection_rationale="prior-method index read and novelty probe found no adequate fit",
     )
-    receipt = require_method_transfer_admission(no_reuse, verify_current_evidence=verify)
+    receipt = require_method_transfer_admission(no_reuse, verify_current_evidence=verify, resolve_trusted_knowledge=trusted)
     assert receipt.selected_knowledge_id is None
     with pytest.raises(MethodTransferAdmissionError, match="cannot select"):
         require_method_transfer_admission(
@@ -138,3 +144,15 @@ def test_malformed_string_evidence_is_rejected_instead_of_iterated_as_characters
         candidate(misfit_or_falsification_refs="scenario:counterexample")
     with pytest.raises(ValueError, match="tuple of evidence refs"):
         assessment(lookup_evidence_refs="repo:prior-method-lookup")
+
+
+def test_method_claim_is_not_an_authority_without_trusted_catalog_resolution():
+    with pytest.raises(MethodTransferAdmissionError, match="trusted knowledge resolver"):
+        require_method_transfer_admission(assessment(), verify_current_evidence=verify)
+    spoofed = method(usages=("fabricated-use",))
+    with pytest.raises(MethodTransferAdmissionError, match="must match current trusted knowledge"):
+        require_method_transfer_admission(
+            assessment(candidates=(candidate(knowledge=spoofed),)),
+            verify_current_evidence=verify,
+            resolve_trusted_knowledge=trusted,
+        )
