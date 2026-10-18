@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "PRODUCTION_REVIEW_GATE_VERIFIED__FIVE_REPO_DEEP_AUDIT_OPEN",
-  "next_action": "Continue five-repo deep audit with newly verified requirement-to-action impact gap. Before system-wide mutation, evaluate requirements lineage, derivative constraints, root selection and post-action verification across owners.",
+  "next_action": "Continue the already-open multi-causal audit autonomously. Verify completion gate repair, then challenge other contributing causes, deepen external knowledge acquisition until admission or record a real blocker; preserve exact evidence and do not mark five-repo review complete without realistic validation.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -33,5 +33,14 @@
     "regression_ref": "tests/architecture/test_requirement_impact_chain_audit.py",
     "critical_gap": "SEMANTIC_REQUIREMENT_TO_AFFECTED_WORK_ROOT_PLUS_CROSS_OWNER_DERIVED_REQUIREMENT_PROVENANCE",
     "next_validation": "Compare existing requirement stage invalidation in each child, prove root-selection accuracy with external/source evidence, evaluate typed trace reuse, then decide evolution/no-change using canonical transaction; do not claim universal matching."
+  },
+  "multicausal_autonomous_learning": {
+    "status": "ACTIVE__CAUSAL_SEARCH_AND_RESEARCH_NOT_SATURATED",
+    "evidence_ref": "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
+    "method_comparison_ref": "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md",
+    "candidate_evolution_ref": "state/evolution/EVO-20261018-MULTICAUSAL-AUTONOMY-ASSURANCE.json",
+    "candidate_gate_ref": "src/uaos/assurance/controller_review.py",
+    "known_nonexclusive_factors": 8,
+    "remaining": "Need causal cross-tests, research saturation, genuine independent native selected-chat samples, and cross-owner derived-requirement propagation."
   }
 }
