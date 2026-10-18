@@ -83,6 +83,16 @@
         "state/tasks/uaos-inheritance-review-20261018.json"
       ],
       "falsifier": "Same failures reproduced with healthy tool access and larger context/time budgets; inspect controlled runs instead of asserting causation."
+    },
+    {
+      "id": "SENSOR_EFFECTOR_FEEDBACK_WIRING_GAP",
+      "status": "RESEARCH_MOTIVATED_HYPOTHESIS__NATIVE_WIRING_UNKNOWN",
+      "evidence": [
+        "IBM https://research.ibm.com/publications/an-architectural-approach-to-autonomic-computing",
+        "config/HOST_PROFILES.json",
+        "src/uaos/runtime/finalization.py"
+      ],
+      "falsifier": "A verified selected-controller native sensor-to-effector-to-observation trace exists for each required transition, without user prompts."
     }
   ],
   "competing_architectures": [
@@ -120,7 +130,8 @@
       "SEI ATAM and continuous architectural evolution",
       "NIST AI RMF and PDCA",
       "Google SRE postmortem, monitoring",
-      "OpenAI agent workflow evals"
+      "OpenAI agent workflow evals",
+      "IBM autonomic computing MAPE-K (monitor/analyze/plan/execute/knowledge)"
     ],
     "method_dispositions": "COMPARE_AND_ADAPT_EXISTING_OWNERS__NO_NEW_COGNITION_RESEARCH_OR_EVOLUTION_OWNER",
     "source_roles": [
@@ -129,12 +140,17 @@
       "CURRENT_REPOSITORY_SOURCE",
       "REAL_OBSERVED_FAILURE"
     ],
-    "expansion_rounds_completed": 2,
-    "saturation": "NOT_ESTABLISHED__SECOND_ROUND_FOUND_MATERIAL_CAUSAL_AND_METHOD_FAMILIES",
+    "expansion_rounds_completed": 3,
+    "saturation": "NOT_ESTABLISHED__ROUNDS_2_AND_3_DISCOVERED_NEW_MATERIAL_FAMILIES",
     "limitations": [
       "Cannot search every web page or independently verify all extant methods",
       "Two nonnovel terminal expansion rounds not yet shown",
       "No fresh product-internal native ChatGPT trace"
+    ],
+    "missing_followup_lenses": [
+      "double-loop organizational learning",
+      "fault-injection and FMEA/STPA differences",
+      "traced native-run independent negative/positive case"
     ]
   },
   "action_evidence": {
@@ -151,7 +167,8 @@
     "Evaluate additional interacting factors using realistic negative cases",
     "Instrumented native host trace or honest unobserved status",
     "Owner-bound requirement derivation/impact and post-action consequence analysis",
-    "Revision-linked status and next steps retained in existing controller task"
+    "Revision-linked status and next steps retained in existing controller task",
+    "Compare MAPE-K sensor/effector requirements against observable native host capabilities and domain review execution; keep physical limitations explicit."
   ],
   "conclusion": "NO_UNIVERSAL_ROOT_CAUSE_OR_COMPLETE_RESEARCH_CLAIM__ACTIONABLE_COVERAGE_GATE_DEFECT_UNDER_EVALUATION"
 }
