@@ -143,7 +143,8 @@
     "controller_inheritance_review": {
       "required": true,
       "trigger": "ON_EVERY_EXPLICIT_UAOS_CONTROLLER_SELECTION__INCLUDING_AFTER_RESUME",
-      "coverage_rule": "ALL_REGISTERED_REPOSITORIES_AND_CRITICAL_CONTROL_DIMENSIONS_MUST_BE_VISITED__UNREAD_UNVERIFIED_OR_UNMEASURED_REMAIN_VISIBLE_AND_CANNOT_BE_RELABELED_GREEN"
+      "coverage_rule": "ALL_REGISTERED_REPOSITORIES_AND_CRITICAL_CONTROL_DIMENSIONS_MUST_BE_VISITED__UNREAD_UNVERIFIED_OR_UNMEASURED_REMAIN_VISIBLE_AND_CANNOT_BE_RELABELED_GREEN",
+      "evidence_admission_ref": "src/uaos/assurance/controller_review.py#require_controller_review_admission"
     }
   }
 }
