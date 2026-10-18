@@ -30,7 +30,7 @@
     "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-18T20:41:36.141Z",
+  "updated_at": "2026-10-18T20:46:56.427Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -565,7 +565,7 @@
     ]
   },
   "turn_host_origin_fencing_20261019": {
-    "status": "CANDIDATE_PARENT_EVOLUTION_BOUND__CI_AND_POSTMERGE_VALIDATION_OPEN",
+    "status": "CONTROLLED_SOURCE_PROMOTED__CI_AND_POSTMERGE_MAIN_REREAD_VERIFIED__NATIVE_HOST_NOT_VERIFIED",
     "prior_evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
     "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
     "research_ref": "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md",
@@ -603,6 +603,19 @@
     "native_assurance": "REAL_NATIVE_CHATGPT_HOST_ORIGIN_FEED_AND_PRE_SEND_INTERCEPTION_UNVERIFIED",
     "financial_child": "RUNNING_PRESERVED_NOT_DEFAULT",
     "future_task": "Continue controller five-repository deep audit, audit reliable native host evidence availability, and conduct domain-owner real-outcome holdouts before any UAOS system-closure claim.",
-    "owner_scope": "ONE_EXISTING_EVO_INHERITANCE_REVIEW_EXTENDED_NO_SECOND_EVOLUTION_OWNER"
+    "owner_scope": "ONE_EXISTING_EVO_INHERITANCE_REVIEW_EXTENDED_NO_SECOND_EVOLUTION_OWNER",
+    "release": {
+      "pr": 137,
+      "candidate_head": "1f08c083ee34405fc0f0b4f0a7bc13f29a99808d",
+      "merged_main": "5f150a47a432a2b77c042e648bb112bb88b9e96f",
+      "candidate_ci": 39164636449,
+      "pytest": "639 passed, 2 skipped",
+      "live_integration": 39164636448,
+      "postgres": "success",
+      "object_store": "success",
+      "openai_provider": "skipped",
+      "production_source_reread": true
+    },
+    "postmerge_observation": "Existing FinalizationContext now binds typed host origin map and gate rejects agent-origin spoof in controlled Python tests. GitHub main proves code availability only; no physical native selected ChatGPT host interception."
   }
 }
