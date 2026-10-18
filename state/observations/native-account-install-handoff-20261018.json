@@ -4,7 +4,7 @@
   "authority": "UAOS",
   "role": "ACCOUNT_INSTALL_AND_FRESH_CHAT_CANARY_EVIDENCE__NOT_CANONICAL_SKILL_OWNER",
   "repository": "D1traverser-debug/universal-agent-os",
-  "record_status": "ACCOUNT_INSTALL_UNVERIFIED",
+  "record_status": "ACCOUNT_SKILL_VISIBLE_INSTALLED__INSTALLED_VERSION_UNVERIFIED",
   "native_reliability": "NATIVE_BEHAVIOR_UNVERIFIED",
   "source_refs": [
     "skills/uaos-controller-runtime/SKILL.md",
@@ -36,10 +36,15 @@
       "kind": "PRODUCT_CAPABILITY",
       "finding": "ChatGPT Skills installation/update depends on eligible account/workspace and UI surface; Custom Instructions settings can be user-edited.",
       "evidence": "https://help.openai.com/en/articles/20001066-skills-in-chatgpt"
+    },
+    {
+      "kind": "ACCOUNT_UI_VISIBLE_INSTALL",
+      "finding": "The current user supplied a screenshot of the ChatGPT Skills UI with uaos controller runtime under 已安装 and 由我创建. Installed presence is supported; installed version and call behavior remain unverified.",
+      "evidence": "Screenshot provided in the 2026-10-18 user conversation; account content inaccessible to GitHub connector."
     }
   ],
   "required_user_actions": [
-    "Replace previously installed uaos-controller-runtime Skill or resource with current canonical version in same account UI where it was originally installed; if account has an eligible Skills UI use that surface.",
+    "When ready, UPDATE the already installed uaos controller runtime skill in its existing account UI with the current canonical skill version; do not create a second copy.",
     "Open one fresh selected-controller chat for a real canary when ready; simply enter 继承 → 总控系统, with no problem diagnosis."
   ],
   "no_user_actions_needed": [
@@ -72,5 +77,13 @@
   },
   "continued_parent_task_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "exact_scope": "UAOS_CONTROLLER_ONLY__CHILD_REPOS_UNMODIFIED",
-  "disposition": "SOURCE_READY__ACCOUNT_INSTALL_AND_NATIVE_CANARY_OWNER_ACTION_OUTSTANDING__AGENT_RETAINS_GOVERNANCE"
+  "disposition": "ACCOUNT_SKILL_PRESENT__SOURCE_VERSION_UNVERIFIED__CANARY_OUTSTANDING__AGENT_OWNS_REST",
+  "installation_ui_evidence": {
+    "type": "USER_PROVIDED_CHATGPT_SKILLS_UI_SCREENSHOT",
+    "observed_at": "2026-10-18",
+    "visible_installed_item": "uaos controller runtime",
+    "visible_created_by_me_item": "uaos controller runtime",
+    "inference": "A named skill is installed and appears as user-created; not evidence of two independent installations.",
+    "limit": "Screenshot does not expose source bytes, Git blob identity, last update version or native invocation trace; uploaded image is in this conversation and not independently archived in GitHub."
+  }
 }
