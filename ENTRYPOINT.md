@@ -189,7 +189,7 @@ For Financial Writing, `financial-writing:main` is a UAOS selector/router entry,
 
 ## Inherited-session progress reporting
 
-After a controller/task/project is selected, every final assistant response ends with the compact progress block defined by `config/SESSION_INTERACTION_POLICY.json`: current Agent, current scope/task, authority context, lifecycle status/stage, next action/blocker, evolution state, deliberation state, version identity and freshest authoritative timestamp.
+A progress block is **only a view** of current owner state, never independent proof of completion. For a controlled runtime with an exact selected task, bind progress status/stage/authority/task identity to a fresh host-resolved `state/tasks/<id>.json` via `SessionProgressExpectation` and reject contradictory or unverified claims. Separate global/historical production readiness from active task lifecycle. A native ChatGPT reply without that host-bound verifier must not claim checked progress merely because it uses the expected format.\n\nAfter a controller/task/project is selected, every final assistant response ends with the compact progress block defined by `config/SESSION_INTERACTION_POLICY.json`: current Agent, current scope/task, authority context, lifecycle status/stage, next action/blocker, evolution state, deliberation state, version identity and freshest authoritative timestamp.
 
 If the response itself reports a detected defect, contradiction, drift, failure, user correction or unreliable-goal signal, it must not simultaneously report `Deliberation: NOT_TRIGGERED` or `Evolution: NO_EVOLUTION_TRIGGER` unless the observation is explicitly classified as non-problematic with a reason.
 
