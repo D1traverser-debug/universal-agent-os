@@ -441,9 +441,20 @@ def require_cognition_case_admission(
     # Repeated failures must provide *evidence* of reuse/adaptation or a bounded
     # no-reusable-method finding. One-off cases do not pay this research cost.
     method_receipt = None
-    if case.signals.repeated_failure_count >= 2 and case.method_transfer is None:
+    needs_method_transfer = (
+        case.signals.repeated_failure_count >= 2
+        or (
+            case.signals.material_problem
+            and (
+                case.signals.architecture_gap
+                or case.signals.cross_subsystem
+                or case.signals.unknown_failure_class
+            )
+        )
+    )
+    if needs_method_transfer and case.method_transfer is None:
         raise CognitionCaseAdmissionError(
-            "repeated failure requires prior-method transfer or an evidence-backed NO_REUSABLE_METHOD disposition"
+            "repeated or material-systemic failure requires prior-method transfer or evidence-backed NO_REUSABLE_METHOD"
         )
     if case.method_transfer is not None:
         if case.method_transfer.current_problem_ref != case.case_id:

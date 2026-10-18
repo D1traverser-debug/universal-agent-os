@@ -17,6 +17,7 @@ Blocker rule: When repair cannot proceed, identify the actual blocker or require
 
 - recover the current outcome, owner, exact state, unfinished actions and evidence provenance before accepting user/model/prior-system narratives as facts
 - actively challenge causal explanations AND the governing rules, architecture and learning method itself; seek other contributing causes, contradictions, unknown gaps and post-action effects even without user correction
+- before treating a material system problem as new, examine proven prior failure classes and methods through the current knowledge/evolution owner; test applicability and nonfit against fresh evidence, and record no-reusable-method honestly; simple one-off work stays lightweight
 - adaptively route current observations to the existing CognitionCase, Deep Task/independent knowledge acquisition, authorized action or clean lightweight execution; never replace missing evidence with confident wording
 - after every material action verify the intended outcome and emerging constraints, revisit competing causes, select the next executable step, and persist exact continuation without waiting for a user reminder
 

@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Continue controller-first: validate real trusted method catalog resolution and direct selected-session invocation, broaden knowledge acquisition with independent source roles and saturation/holdout tests, uncover cross-owner paths and consequences without repeated user correction; do not close review based on #113 CI. Preserve exact Financial return, then reactivate it under same UAOS controller after sufficiently bounded controller governing work.",
+  "next_action": "Verify controller-only typed TOOL_RESULT epistemic routing, first-time material systemic method recall and lightweight one-off; run exact CI and independent review, promote only after green, reread current main. Then continue wider unsaturated controller methodology/architecture and native invocation tests while preserving Financial return task; do not switch yet.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -19,7 +19,8 @@
     "docs/research/uaos-inheritance-review-20261018/07_integrated_review_execution_sop.md",
     "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
     "docs/research/uaos-inheritance-review-20261018/08_operational_method_transfer_taxonomy.md",
-    "https://github.com/D1traverser-debug/universal-agent-os/pull/113"
+    "https://github.com/D1traverser-debug/universal-agent-os/pull/113",
+    "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
   "updated_at": "2026-10-18T22:16:00+08:00",
@@ -147,5 +148,27 @@
     ],
     "handoff_target": "uaos:maintenance:financial-system-governed-recovery-20261018",
     "assurance": "THIS_IS_REPOSITORY_GATE_VERIFICATION__NOT_USER_PRODUCT_SUCCESS"
+  },
+  "controller_entry_method_delta_20261018": {
+    "status": "SOURCE_REPRODUCED__CANDIDATE_GATES_AWAIT_CI_AND_REAL_RUNTIME_EVIDENCE",
+    "observations": [
+      "Controller epistemic entry excluded verified TOOL_RESULT from its fact kind allowlist",
+      "Method transfer triggered only repeated_failure_count >= 2, missing first major material systemic fault",
+      "Selected context skill inherited routing policy but lacked explicit source-grounded historical method fit/misfit"
+    ],
+    "selected_intervention": "EXPAND_VERIFIED_TOOL_FACTS_AND_FIRST_SYSTEMIC_METHOD_TRANSFER_PLUS_CANONICAL_ENTRY_PROJECTION",
+    "study_ref": "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
+    "governing_boundary": "UAOS_ONLY__NO_CHILD_MUTATION__FINANCIAL_STAYS_RUNNING_NOT_DEFAULT",
+    "blocked_success_claims": [
+      "NATIVE_CHATGPT_SKILL_AUTOINVOCATION_NOT_VERIFIED",
+      "SOURCE_AND_POLICY_PROJECTION_DOES_NOT_PROVE_REAL_BEHAVIOR",
+      "KNOWLEDGE_ACQUISITION_SATURATION_OPEN",
+      "FIVE_REPO_DEEP_REVIEW_AND_FINANCIAL_OUTCOME_OPEN"
+    ],
+    "tests": [
+      "tests/runtime/test_controller_epistemic_entry.py",
+      "tests/architecture/test_cognition_case_transaction.py"
+    ],
+    "return_target": "uaos:maintenance:financial-system-governed-recovery-20261018"
   }
 }

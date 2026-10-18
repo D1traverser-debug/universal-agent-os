@@ -280,3 +280,37 @@ def test_structured_cognition_requires_validation_plan_not_only_unit_verificatio
     )
     with pytest.raises(CognitionCaseAdmissionError, match="validation method"):
         require_cognition_case_admission(bad)
+
+def test_first_time_material_architecture_problem_must_consider_prior_methods():
+    # First serious architecture failure must not wait for a second user complaint.
+    from dataclasses import replace
+    base = _case()
+    first = replace(
+        base,
+        signals=DeliberationSignals(
+            material_problem=True, architecture_gap=True, repeated_failure_count=0,
+        ),
+        method_transfer=None,
+    )
+    with pytest.raises(CognitionCaseAdmissionError, match="material-systemic"):
+        require_cognition_case_admission(first)
+    assessed = replace(first, method_transfer=replace(
+        base.method_transfer,
+        current_problem_ref=first.case_id,
+    ))
+    admitted = require_cognition_case_admission(assessed)
+    assert admitted.method_transfer_disposition == "NO_REUSABLE_METHOD"
+    assert admitted.systemic
+
+
+def test_one_off_local_problem_does_not_require_old_method_catalog():
+    from dataclasses import replace
+    base = _case()
+    light = replace(
+        base,
+        signals=DeliberationSignals(user_correction=True),
+        method_transfer=None,
+    )
+    # Existing architecture test fixture still supplies sufficient direct evidence.
+    receipt = require_cognition_case_admission(light)
+    assert receipt.method_transfer_disposition is None

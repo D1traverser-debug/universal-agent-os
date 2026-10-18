@@ -153,3 +153,31 @@ def test_missing_or_conflicting_evidence_cannot_dress_as_clean():
                 ),
             ))
         )
+
+def test_fresh_tool_observation_escalates_unprompted_system_failure():
+    # Tool observations are a first-class fact when the host verifies provenance.
+    contradiction = _entry(EntrySignal.SYSTEM_OR_RULE_CONTRADICTION, EvidenceKind.TOOL_RESULT)
+    receipt = assess_controller_epistemic_entry(contradiction)
+    assert receipt.problem_signal_observed and receipt.hypothesis_challenge_required
+    with pytest.raises(FinalizationBlocked, match="UNROUTED_RULE_OR_SYSTEM_CONTRADICTION"):
+        admit_final_response(_report(), _context(contradiction))
+    with pytest.raises(FinalizationBlocked, match="CONTROLLER_ENTRY_EVIDENCE_UNVERIFIED"):
+        admit_final_response(
+            _report(), _context(contradiction, entry_evidence_verifier=lambda ref: not ref.startswith("main:config")),
+        )
+
+
+def test_tool_found_material_method_gap_forces_deep_research_without_user_request():
+    gap = _entry(EntrySignal.MATERIAL_KNOWLEDGE_GAP, EvidenceKind.TOOL_RESULT)
+    receipt = assess_controller_epistemic_entry(gap)
+    assert receipt.deep_learning_required and not receipt.problem_signal_observed
+    with pytest.raises(FinalizationBlocked, match="UNROUTED_MATERIAL_KNOWLEDGE_GAP"):
+        admit_final_response(_report(), _context(gap))
+
+
+def test_model_only_analysis_or_synthetic_scenario_cannot_self_certify_tool_findings():
+    for kind in (EvidenceKind.ANALYSIS_RESULT, EvidenceKind.SCENARIO_RESULT, EvidenceKind.USER_CLAIM):
+        item = _entry(EntrySignal.SYSTEM_OR_RULE_CONTRADICTION, kind)
+        receipt = assess_controller_epistemic_entry(item)
+        assert not receipt.problem_signal_observed
+        assert receipt.hypothesis_challenge_required
