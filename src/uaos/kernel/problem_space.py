@@ -398,7 +398,7 @@ class MethodTransferAdmissionError(RuntimeError):
 
 
 class MethodTransferDisposition(str, Enum):
-    REUSE_VERIFIED = "REUSE_VERIFIED"
+    REUSE_CANONICAL_CANDIDATE = "REUSE_CANONICAL_CANDIDATE"
     ADAPT_PROVISIONALLY = "ADAPT_PROVISIONALLY"
     NO_REUSABLE_METHOD = "NO_REUSABLE_METHOD"
 
@@ -516,9 +516,9 @@ def require_method_transfer_admission(
         raise MethodTransferAdmissionError("reuse/adaptation requires a known selected method")
     if selected.knowledge.applicable_scope not in {"GLOBAL", "UAOS", assessment.target_scope}:
         raise MethodTransferAdmissionError("selected knowledge scope does not match this authority")
-    if assessment.disposition is MethodTransferDisposition.REUSE_VERIFIED:
+    if assessment.disposition is MethodTransferDisposition.REUSE_CANONICAL_CANDIDATE:
         if selected.knowledge.state is not KnowledgeState.CANONICAL or not selected.knowledge.usage_links:
-            raise MethodTransferAdmissionError("verified reuse requires canonical knowledge with observed prior use")
+            raise MethodTransferAdmissionError("canonical reuse candidate requires an already promoted method and a prior-use reference; reference reality still needs a trusted host verifier")
     elif assessment.disposition is MethodTransferDisposition.ADAPT_PROVISIONALLY:
         if selected.knowledge.state is KnowledgeState.RAW_EVIDENCE:
             raise MethodTransferAdmissionError("raw unevaluated knowledge may not be transferred as a selected method")
