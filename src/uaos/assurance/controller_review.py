@@ -9,6 +9,12 @@ from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from typing import Any
 
+from uaos.kernel.problem_space import (
+    KnowledgeAcquisitionAdmissionError,
+    KnowledgeAcquisitionAssessment,
+    require_knowledge_acquisition_admission,
+)
+
 
 class ControllerReviewAdmissionError(ValueError):
     pass
@@ -30,6 +36,8 @@ def require_controller_review_admission(
     observation: Mapping[str, Any],
     completion_requested: bool = False,
     verify_evidence: Callable[[str], bool] | None = None,
+    current_repository_heads: Mapping[str, str] | None = None,
+    knowledge_acquisition_assessment: KnowledgeAcquisitionAssessment | None = None,
 ) -> ControllerReviewReceipt:
     if review_policy.get("required") is not True:
         raise ControllerReviewAdmissionError("controller review is not enabled")
@@ -81,6 +89,29 @@ def require_controller_review_admission(
         )
         if not all(verify_evidence(ref) for ref in references):
             raise ControllerReviewAdmissionError("review completion has unverified evidence")
+        # Current revisions and comprehensive learning must be independently supplied
+        # by the controlled caller. A historic pinned snapshot is not current coverage.
+        if current_repository_heads is None:
+            raise ControllerReviewAdmissionError(
+                "review completion requires freshly verified registered repository heads"
+            )
+        pinned_heads = {row["repo"]: row["head"] for row in heads}
+        if dict(current_repository_heads) != pinned_heads:
+            raise ControllerReviewAdmissionError(
+                "review completion source heads differ from current registered revisions"
+            )
+        if knowledge_acquisition_assessment is None:
+            raise ControllerReviewAdmissionError(
+                "review completion requires canonical comprehensive knowledge acquisition assessment"
+            )
+        try:
+            require_knowledge_acquisition_admission(
+                knowledge_acquisition_assessment, comprehensive=True
+            )
+        except (KnowledgeAcquisitionAdmissionError, ValueError) as exc:
+            raise ControllerReviewAdmissionError(
+                f"comprehensive controller learning not admitted: {exc}"
+            ) from exc
     return ControllerReviewReceipt(
         recorded_repositories=tuple(sorted(expected)),
         dimensions=dimensions,
