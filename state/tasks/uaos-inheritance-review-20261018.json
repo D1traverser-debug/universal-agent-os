@@ -433,7 +433,7 @@
       "LEDGER_ARTIFACT_PATH_VALIDATION_DOES_NOT_ESTABLISH_REAL_FILE_EXISTENCE",
       "CLI_OS_NOFOLLOW_AND_NONBLOCK_FAIL_CLOSED_MAY_LIMIT_WINDOWS",
       "TWELVE_METHOD_CARDS_CANDIDATE_TWENTY_HOLDOUTS_TEST_SPEC_ONLY",
-      "NO_CLOUDFARE_RUNTIME_OR_UAOS_NATIVE_EFFECTOR_TEST_PERFORMED"
+      "NO_CLOUDFLARE_RUNTIME_OR_UAOS_NATIVE_EFFECTOR_TEST_PERFORMED"
     ],
     "next_action": "Learn paperclipai/paperclip as standalone source #4/4, then independently evaluate candidate method reuse and exact-source holdouts before any canonical promotion. Parent controller task stays RUNNING, and Financial Writing owner must be resumed only after controller closure.",
     "production_evidence": {
