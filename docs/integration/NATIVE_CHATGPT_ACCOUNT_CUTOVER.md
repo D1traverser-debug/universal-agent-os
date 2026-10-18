@@ -1,5 +1,6 @@
 # Native ChatGPT account cutover — owner handoff, evidence and canaries
 
+> **历史部署交接记录（2026-10-18），不是当前安装清单或实时 Skill 哈希来源。** 当前 GitHub Skill 源文件须读取 `main:skills/uaos-controller-runtime/SKILL.md`，其来源哈希和账户安装验证状态须读取 `state/observations/native-account-install-handoff-20261018.json`。本记录中的旧 blob 是当时的快照；不能用于当前安装、继承或运行验收。账户已安装的实际字节仍为 `UNKNOWN`，不因仓库更新而自动同步。\n\n
 Scope: ChatGPT account-side installation and empirical selected-controller activation. This document is an **operational handoff**, not a second Skill, policy, or system of authority.
 
 ## Current observed account and fresh-chat status (supersedes pending handoff)
@@ -10,9 +11,9 @@ The answer matched the current GitHub main task ID/status/head and reported inde
 
 **No additional user action is required for this first replay.** UAOS owns replay interpretation, permitted follow-up analysis, regression, protected PR/CI, and durable state synchronization. Do not ask the user to reinstall the same Skill or repeat an identical canary merely to compensate for a missed state update. The original pre-install instructions below are retained solely as historical setup guidance.
 
-## Grounded baseline, 2026-10-18
+## Historical source baseline, 2026-10-18（superseded for current hashes）
 
-GitHub `main` is authoritative. The two installable-source assets are:
+GitHub `main` is authoritative; the following are **historical source snapshots from 2026-10-18**, not live source identities:
 - `skills/uaos-controller-runtime/SKILL.md` (Git blob `d57a72019c76e58f4a538b5d86e6e7718f34c0ba`). This differs from the previous supplied and uploaded account file (`a244aeafcb204a86ab6825b8e8b277050c2be507`) **only in the generated mandatory-entry checklist** (six old lines replaced by four self-questioning/continuation lines).
 - `docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt` (Git blob `a43a4b09d5c63c861f1607e581ae5a40fbd4c758`). This is byte-for-byte unchanged from the user's last confirmed V3 text; no account edit is necessary if it remains installed.
 
