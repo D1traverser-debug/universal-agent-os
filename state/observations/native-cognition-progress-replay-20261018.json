@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0",
+  "observation_id": "native-cognition-progress-replay-20261018",
+  "authority": "UAOS",
+  "source_kind": "CURRENT_CHAT_VISIBLE_ASSISTANT_OUTPUT__REPOSITORY_CODE_AND_PRODUCTION_METADATA",
+  "scope": "NATIVE_DIALOGUE_COGNITION_TRIGGER__REPAIR_CONTINUATION__PROGRESS_ADHERENCE",
+  "governing_outcome": "Selected UAOS turns autonomously challenge assumptions, continue any authorized remedy, verify it, and report a complete current progress block, without requiring the user to remind the Agent.",
+  "triggering_signal": "User repeatedly questioned whether the system had actually been tried/verified and explicitly asked where mandatory progress had gone.",
+  "observations": [
+    {
+      "id": "NATIVE-LIVE-01",
+      "evidence": "Earlier assistant response claimed UAOS cognition/evolution triggering architecture was present and CI green, while reporting native stability unverified; no independent real fresh-chat repeated trigger evaluation was run.",
+      "classification": "FAIL_EVIDENCE_SUFFICIENCY__CI_GREEN_NOT_NATIVE_BEHAVIOR_PROOF",
+      "falsification": "CI confirms source gates when invoked, not every native turn is mediated; a true independent native multi-session experiment could rebut the unverified stability position."
+    },
+    {
+      "id": "NATIVE-LIVE-02",
+      "evidence": "The previous assistant concluded '机制已部署、稳定性未充分验证' after seeing gaps but did not execute a new authorized evidence-gathering or closure step before the user corrected it again.",
+      "classification": "FAIL_AUTONOMOUS_REPAIR_CONTINUATION",
+      "falsification": "Repository finalization blocks remaining authorized work when invoked; absence of native host interception leaves the conversation path uncovered."
+    },
+    {
+      "id": "NATIVE-LIVE-03",
+      "evidence": "Exact preceding response excerpt: '当前 Agent：UAOS v2.8.0；状态：机制已部署、稳定性未充分验证；Deliberation：TRIGGERED；Evolution：本轮未发生持久规则变更；当前限制：原生触发缺乏不可绕过的执行保证。' This lacks the individually parsable 10 required progress fields.",
+      "classification": "FAIL_MANDATORY_PROGRESS_FORMAT",
+      "verification_method": "Run existing uaos.observability.session_adherence evaluator on captured exact excerpt; expect MISSING_REQUIRED_FIELD."
+    },
+    {
+      "id": "NATIVE-LIVE-04",
+      "evidence": "PR #91 production CI #561 succeeded, but state/observations/native-account-asset-continuity-20261018.json still carried CANDIDATE_PENDING_VALIDATION after production merge.",
+      "classification": "FAIL_DURABLE_OBSERVATION_RECONCILIATION",
+      "verification_method": "GitHub reread main #91 production SHA and CI; correct observation and add guard for stale status."
+    }
+  ],
+  "causal_candidates": [
+    {
+      "id": "HOST_COMPLETE_MEDIATION_GAP",
+      "disposition": "SUPPORTED_EXPLANATION_FOR_NATIVE_BEHAVIORAL_GUARANTEE_LIMIT",
+      "evidence": "config/HOST_PROFILES.json declares native ChatGPT no verified non-bypassable pre-send/pre-tool hook, raw connector outside Python interception."
+    },
+    {
+      "id": "MISSING_CONTROLLED_COGNITION_OR_FINALIZATION_GATES",
+      "disposition": "REJECTED",
+      "evidence": "src/uaos/runtime/finalization.py and tests/runtime/test_finalization_gate.py enforce cognition admission, no premature finalization, and progress when explicitly invoked."
+    },
+    {
+      "id": "OUTPUT_FORMAT_AND_EVIDENCE_GAP_WAS_ONLY_A_ONE_OFF_MISTAKE",
+      "disposition": "NOT_PROVEN__SEVERAL_PRIOR_CORRECTIONS_OBSERVED",
+      "evidence": "Repeated user corrections and current same-chat omission contradict one-off-only certainty; no broad cross-session sample has been collected."
+    },
+    {
+      "id": "POSTPROMOTION_OBSERVATION_OWNERSHIP_GAP",
+      "disposition": "SUPPORTED_FOR_PR91",
+      "evidence": "status CANDIDATE_PENDING_VALIDATION persisted in main after CI #561 PASS."
+    }
+  ],
+  "intervention_candidates": [
+    {
+      "id": "DO_NOTHING",
+      "disposition": "REJECTED",
+      "reason": "Leaves confirmed stale production state and unmeasured current-chat failure unrecorded."
+    },
+    {
+      "id": "ADD_MORE_INSTRUCTIONS",
+      "disposition": "REJECTED_FOR_THIS_FAILURE_CLASS",
+      "reason": "Canonical pointer and Skill already contain unconditional routing and closure; adding prompt prose cannot force native pre-send mediation."
+    },
+    {
+      "id": "RECONCILE_PRODUCTION_OBSERVATION_AND_RUN_REAL_RESPONSE_REPLAY_WITH_NEGATIVE_CONTROLS",
+      "disposition": "SELECTED",
+      "reason": "Fixes demonstrable repository evidence gap and operationalizes objective replay without claiming that native activation is physically enforced."
+    },
+    {
+      "id": "BUILD_NATIVE_CHATGPT_INTERCEPTOR_IN_REPOSITORY",
+      "disposition": "BLOCKED_BY_HOST_BOUNDARY_NOT_PROVEN_AVAILABLE",
+      "reason": "Repository code cannot intercept product-internal ChatGPT user-visible messages/tools."
+    }
+  ],
+  "selected_intervention": "RECONCILE_PRODUCTION_OBSERVATION_AND_RUN_REAL_RESPONSE_REPLAY_WITH_NEGATIVE_CONTROLS",
+  "verification_plan": [
+    "Use actual preceding assistant progress excerpt as a negative input to the existing executable SessionAdherence evaluator; assert MISSING_REQUIRED_FIELD.",
+    "Use a complete structurally valid synthetic progress block as a positive parser control, but do not count it as native behavioral success.",
+    "CI assert last PR #91 production observation is not still marked candidate and pinned CI success on exact merged SHA.",
+    "Run candidate promotion-gate and reread production after a protected main merge."
+  ],
+  "verification_boundary": {
+    "positive_native_trigger_proof": "NOT_ESTABLISHED",
+    "measured_native_sample": "ONE_VISIBLE_EXISTING_LONG_CHAT_FAILURE__NOT_A_FRESH_CHAT_RANDOMIZED_SAMPLE",
+    "regression_suite_scope": "PYTHON_PROGRESS_PARSER_AND_STATIC_OBSERVATION_CONSISTENCY",
+    "independent_judge": "GITHUB_CI_AS_TOOL_BASED_DETERMINISTIC_EVIDENCE_FOR_REPO_CHECKS_ONLY",
+    "other_known_boundaries": [
+      "Tests that introspect a fixture definition are not evidence a native ChatGPT turn fired the Skill.",
+      "A repo-side CI pass does not establish native ChatGPT runtime conformance.",
+      "A separate fresh-session sample and product-host tool trace would be needed for stronger claims; product-internal tracing not available with existing connector."
+    ]
+  },
+  "evolution_disposition": "EVALUATED_NO_DURABLE_EVOLUTION__OBSERVABILITY_EVIDENCE_AND_STATE_RECONCILIATION_ONLY",
+  "result": "NATIVE_STABILITY_UNVERIFIED__CURRENT_CHAT_REPLAY_FAIL_CONFIRMED__REPO_SIDE_REPAIR_UNDER_VERIFICATION",
+  "replay_assistant_excerpt": "当前 Agent：UAOS v2.8.0；状态：机制已部署、稳定性未充分验证；Deliberation：TRIGGERED；Evolution：本轮未发生持久规则变更；当前限制：原生触发缺乏不可绕过的执行保证。"
+}
