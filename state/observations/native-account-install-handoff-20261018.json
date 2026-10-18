@@ -4,8 +4,8 @@
   "authority": "UAOS",
   "role": "ACCOUNT_INSTALL_AND_FRESH_CHAT_CANARY_EVIDENCE__NOT_CANONICAL_SKILL_OWNER",
   "repository": "D1traverser-debug/universal-agent-os",
-  "record_status": "ACCOUNT_SKILL_VISIBLE_INSTALLED__INSTALLED_VERSION_UNVERIFIED",
-  "native_reliability": "NATIVE_BEHAVIOR_UNVERIFIED",
+  "record_status": "ACCOUNT_SKILL_UPDATE_USER_CONFIRMED__INSTALLED_BYTES_UNVERIFIED",
+  "native_reliability": "ONE_FRESH_CHAT_CANARY_PARTIAL__SKILL_INVOCATION_AND_FULL_AUTONOMY_UNVERIFIED",
   "source_refs": [
     "skills/uaos-controller-runtime/SKILL.md",
     "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt",
@@ -41,17 +41,26 @@
       "kind": "ACCOUNT_UI_VISIBLE_INSTALL",
       "finding": "The current user supplied a screenshot of the ChatGPT Skills UI with uaos controller runtime under 已安装 and 由我创建. Installed presence is supported; installed version and call behavior remain unverified.",
       "evidence": "Screenshot provided in the 2026-10-18 user conversation; account content inaccessible to GitHub connector."
+    },
+    {
+      "kind": "USER_CONFIRMED_ACCOUNT_SKILL_UPDATE",
+      "finding": "The user explicitly confirms replacing/updating the existing installed UAOS Skill before the fresh-chat test. Installation recopy is not required; exact installed bytes cannot be independently read.",
+      "evidence": "Direct message in current conversation on 2026-10-18."
+    },
+    {
+      "kind": "USER_PASTED_REAL_COLD_START_CANARY",
+      "finding": "A new-chat user-visible reply reports UAOS task recovery and source investigation; its closure is incomplete after a claimed GitHub branch creation block. No direct tool trace was supplied; no proof of actual Skill invocation.",
+      "evidence": "state/observations/native-account-canary-20261018-first-run.json"
     }
   ],
-  "required_user_actions": [
-    "When ready, UPDATE the already installed uaos controller runtime skill in its existing account UI with the current canonical skill version; do not create a second copy.",
-    "Open one fresh selected-controller chat for a real canary when ready; simply enter 继承 → 总控系统, with no problem diagnosis."
-  ],
+  "required_user_actions": [],
   "no_user_actions_needed": [
     "Do not reenter V3 custom instructions if unchanged.",
     "Do not modify GitHub main branch protection.",
     "Do not maintain ChatGPT Library backup.",
-    "Do not manually inspect repository checks/CI or diagnose faults."
+    "Do not manually inspect repository checks/CI or diagnose faults.",
+    "Do not reinstall or reupload the Skill: update was already user-confirmed before this sample.",
+    "Do not repeat an identical test merely to fix the system's missing evidence record; the Agent should own follow-up evaluation."
   ],
   "agent_actions": [
     "Maintain byte-verified installable source at GitHub main and one-time export.",
@@ -60,7 +69,7 @@
     "Persist verdict and source head, record failures as falsifiers and continue owner-authorized repairs."
   ],
   "canary": {
-    "status": "NOT_RUN__REQUIRES_FRESH_CHAT_AND_ACCOUNT_INSTALL",
+    "status": "ATTEMPTED__USER_PASTED_FINAL_RESPONSE__NO_DIRECT_TOOL_TRACE__CLOSURE_INCOMPLETE",
     "selected_context_prompt": "继承 → 总控系统",
     "proof_required": [
       "real fresh-chat tool calls to GitHub current main",
@@ -73,11 +82,13 @@
       "uses retired state or installed skill snapshot over live main",
       "stops at diagnosis although authorized next action remains"
     ],
-    "production_code_ci_is_native_proof": false
+    "production_code_ci_is_native_proof": false,
+    "first_run_observation_ref": "state/observations/native-account-canary-20261018-first-run.json",
+    "outcome": "CONTEXT_RECOVERY_CONSISTENT__REPORTED_AUTONOMOUS_DISCOVERY__NO_DURABLE_CHANGE__NATIVE_SKILL_CALL_UNVERIFIED"
   },
   "continued_parent_task_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "exact_scope": "UAOS_CONTROLLER_ONLY__CHILD_REPOS_UNMODIFIED",
-  "disposition": "ACCOUNT_SKILL_PRESENT__SOURCE_VERSION_UNVERIFIED__CANARY_OUTSTANDING__AGENT_OWNS_REST",
+  "disposition": "ACCOUNT_INSTALL_USER_CONFIRMED__CANARY_ATTEMPTED_PARTIAL__AGENT_FIXES_CONTINUATION__NATIVE_SKILL_TRACE_UNVERIFIED",
   "installation_ui_evidence": {
     "type": "USER_PROVIDED_CHATGPT_SKILLS_UI_SCREENSHOT",
     "observed_at": "2026-10-18",

@@ -26,12 +26,12 @@ def test_account_handoff_tracks_real_current_source_blobs():
 
 def test_account_install_is_not_self_certified_from_git_ci():
     evidence = _read("state/observations/native-account-install-handoff-20261018.json")
-    assert evidence["record_status"] == "ACCOUNT_SKILL_VISIBLE_INSTALLED__INSTALLED_VERSION_UNVERIFIED"
+    assert evidence["record_status"] == "ACCOUNT_SKILL_UPDATE_USER_CONFIRMED__INSTALLED_BYTES_UNVERIFIED"
     assert evidence["installation_ui_evidence"]["visible_installed_item"] == "uaos controller runtime"
     assert evidence["installation_ui_evidence"]["visible_created_by_me_item"] == "uaos controller runtime"
     assert "not evidence of two" in evidence["installation_ui_evidence"]["inference"]
-    assert evidence["native_reliability"] == "NATIVE_BEHAVIOR_UNVERIFIED"
-    assert evidence["canary"]["status"].startswith("NOT_RUN")
+    assert evidence["native_reliability"].startswith("ONE_FRESH_CHAT_CANARY_PARTIAL")
+    assert evidence["canary"]["status"].startswith("ATTEMPTED")
     assert evidence["canary"]["production_code_ci_is_native_proof"] is False
 
 

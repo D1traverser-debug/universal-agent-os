@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "At next selected UAOS controller session, read current ENTRYPOINT/CURRENT_SYSTEM and exact default task, use deployed operating methodology to act on the next source-evidenced work and reassess; independently verify installed Skill version and native execution only after one-time account update/canary. Parent comprehensive review remains RUNNING.",
+  "next_action": "Continue UAOS controller governance after a real fresh-chat canary: inspect and repair the premature diagnosis-only stopping path and blocker handling, use the existing task/observation/evolution owners, and validate real progress with CI. Account Skill update is already user-confirmed; no more UI action required for this replay.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -71,14 +71,15 @@
     "subordinate_task_disposition": "COMPLETE_BOUNDED_REPAIR__PARENT_DEEP_AUDIT_REMAINS_RUNNING"
   },
   "native_account_cutover": {
-    "status": "ACCOUNT_SKILL_VISIBLE_INSTALLED__INSTALLED_VERSION_UNVERIFIED__CANARY_NOT_RUN",
+    "status": "ACCOUNT_SKILL_UPDATE_USER_CONFIRMED__FIRST_CANARY_PARTIAL__INSTALLED_BYTES_UNVERIFIED",
     "observation_ref": "state/observations/native-account-install-handoff-20261018.json",
     "instructions_ref": "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md",
     "skill_source_sha": "d57a72019c76e58f4a538b5d86e6e7718f34c0ba",
     "pointer_unchanged": "a43a4b09d5c63c861f1607e581ae5a40fbd4c758",
-    "required_user_part": "One-time account UI replace previously uploaded Skill; one fresh chat for a real canary; no other configuration or architecture work transferred to user",
-    "agent_part": "Maintain source artifact, CI, observations, negative controls, follow-up fixes and exact state continuity",
-    "native_behavior": "UNVERIFIED"
+    "required_user_part": "NONE__USER_ALREADY_UPDATED_SKILL_AND_COMPLETED_ONE_FRESH_CHAT_CANARY",
+    "agent_part": "Analyze native canary, persist outcome, repair bounded continuation/holdouts, execute permitted follow-up work and ensure production readback without requesting repeated user testing.",
+    "native_behavior": "RECOVERY_OUTPUT_CONSISTENT__SOURCE_TOOL_TRACE_NOT_VISIBLE__NO_DURABLE_FOLLOWTHROUGH",
+    "canary_observation_ref": "state/observations/native-account-canary-20261018-first-run.json"
   },
   "controller_operating_model": {
     "status": "PRODUCTION_BOOTSTRAP_VERIFIED__NATIVE_EXECUTION_UNVERIFIED",
