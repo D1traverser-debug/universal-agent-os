@@ -2,7 +2,7 @@
   "schema_version": "1.5",
   "evolution_id": "EVO-20261018-MULTICAUSAL-AUTONOMY-ASSURANCE",
   "authority": "UAOS",
-  "status": "FRAMED__CANDIDATE_GATE_CHANGE_UNVERIFIED",
+  "status": "EVALUATED_CANDIDATE_GATE__NATIVE_AND_COMPREHENSIVE_RESEARCH_OPEN",
   "origin_kind": "CAPABILITY_GAP",
   "parent_evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "governing_outcome": "Prevent false completion of ongoing multi-causal controller review when repository snapshots are stale or comprehensive knowledge was not acquired; maintain autonomous multi-factor investigation as open evidence work.",
@@ -50,7 +50,8 @@
     "tests/architecture/test_controller_review_admission.py",
     "docs/research/uaos-inheritance-review-20261018/06_multicausal_autonomy_method_comparison.md",
     "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
-    "state/tasks/uaos-inheritance-review-20261018.json"
+    "state/tasks/uaos-inheritance-review-20261018.json",
+    "docs/research/uaos-inheritance-review-20261018/07_integrated_review_execution_sop.md"
   ],
   "acceptance": [
     "Candidate CI and protected PR promotion green",
@@ -61,5 +62,20 @@
   ],
   "verification_rounds": [],
   "evolution_disposition": "BOUNDED_GATE_HARDENING_CANDIDATE__NOT_SYSTEM_AUTONOMY_COMPLETION",
-  "assurance_boundary": "No product-internal ChatGPT pre-send hook is proven; review research remains unsaturated."
+  "assurance_boundary": "No product-internal ChatGPT pre-send hook is proven; review research remains unsaturated.",
+  "candidate_evidence": {
+    "promotion_gate_current_candidate": "RECHECK_EXACT_FINAL_HEAD_AFTER_ALL_COMMITS",
+    "research_saturation": "NOT_ESTABLISHED",
+    "known_code_scenarios": "stale head, missing head, shallow source-only research, synthetic positive controls",
+    "external_methods": [
+      "NASA",
+      "MIT CAST",
+      "CMU SEI",
+      "NIST RMF",
+      "ASQ PDCA",
+      "Google SRE",
+      "IBM MAPE-K",
+      "OpenAI agent workflow evals"
+    ]
+  }
 }
