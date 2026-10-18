@@ -102,6 +102,7 @@ def test_adaptation_is_provisional_and_raw_rules_cannot_be_selected():
     receipt = require_method_transfer_admission(
         assessment(candidates=(provisional,), disposition=MethodTransferDisposition.ADAPT_PROVISIONALLY),
         verify_current_evidence=verify,
+        resolve_trusted_knowledge=lambda _: method(state=KnowledgeState.EVALUATED),
     )
     assert receipt.disposition is MethodTransferDisposition.ADAPT_PROVISIONALLY
     with pytest.raises(MethodTransferAdmissionError, match="raw"):
@@ -109,6 +110,7 @@ def test_adaptation_is_provisional_and_raw_rules_cannot_be_selected():
             assessment(candidates=(candidate(knowledge=method(state=KnowledgeState.RAW_EVIDENCE)),),
                        disposition=MethodTransferDisposition.ADAPT_PROVISIONALLY),
             verify_current_evidence=verify,
+            resolve_trusted_knowledge=lambda _: method(state=KnowledgeState.RAW_EVIDENCE),
         )
 
 
@@ -131,11 +133,11 @@ def test_no_analogue_is_a_documented_outcome_not_a_invented_reuse():
 def test_analogy_cannot_conjure_a_failure_class_and_candidate_ids_are_unique():
     with pytest.raises(MethodTransferAdmissionError, match="unobserved"):
         require_method_transfer_admission(
-            assessment(candidates=(candidate(failure_class="NEVER_OBSERVED"),)), verify_current_evidence=verify
+            assessment(candidates=(candidate(failure_class="NEVER_OBSERVED"),)), verify_current_evidence=verify, resolve_trusted_knowledge=trusted
         )
     with pytest.raises(MethodTransferAdmissionError, match="duplicate"):
         require_method_transfer_admission(
-            assessment(candidates=(candidate(), candidate())), verify_current_evidence=verify
+            assessment(candidates=(candidate(), candidate())), verify_current_evidence=verify, resolve_trusted_knowledge=trusted
         )
 
 
