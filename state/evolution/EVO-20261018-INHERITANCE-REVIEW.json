@@ -71,7 +71,8 @@
     "tests/runtime/test_governed_product_outcome_finalization.py",
     "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md",
     "state/observations/native-account-install-handoff-20261018.json",
-    "CURRENT_SYSTEM.json"
+    "CURRENT_SYSTEM.json",
+    "tests/runtime/test_blocked_operation_continuation.py"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -246,6 +247,7 @@
       "Canonical config and generated Skill projection exact",
       "Protected CI, main reread, task/financial continuity preserved"
     ],
-    "native_assurance": "ACCOUNT_SKILL_BYTES_AND_NATIVE_MESSAGE_TRACING_UNKNOWN"
+    "native_assurance": "ACCOUNT_SKILL_BYTES_AND_NATIVE_MESSAGE_TRACING_UNKNOWN",
+    "cross_domain_admission": "NOT_IN_SCOPE_FOR_THIS_CONTROLLER_FIRST_PR__DIRECT_DOMAIN_RUNTIME_ASSURANCE_OPEN"
   }
 }
