@@ -1,5 +1,7 @@
 # Clean-Slate v4 Architecture Blueprint v1.0
 
+> **Historical design baseline (v1.0), not the current UAOS 2.8 runtime authority.** Consult `CURRENT_SYSTEM.json`, `config/SYSTEM_MAP.json` and the current canonical owner policies before making execution, write or resume decisions. This note does **not** retire the separate Frozen Requirements v1.0 baseline.
+
 Status: BASELINE ACCEPTED / PHASE 0 BOOTSTRAP
 Requirements authority: Frozen Requirements v1.0 (A–J, X01–X15)
 
