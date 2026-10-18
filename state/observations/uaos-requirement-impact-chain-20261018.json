@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "observation_id": "uaos-requirement-change-impact-chain-20261018",
+  "authority": "UAOS",
+  "role": "SYSTEM_REQUIREMENT_IMPACT_COGNITION_EVIDENCE__NOT_A_NEW_POLICY_OR_REQUIREMENT_OWNER",
+  "analysis_status": "CONFIRMED_PARTIAL_CHAIN__END_TO_END_AND_UNIVERSAL_EVOLUTION_NOT_VERIFIED",
+  "pinned_main": "01f01a44b6ea5c647932f593b135c6c7f81df4fe",
+  "governing_outcome": "For any admitted requirement or discovered design-derived requirement, identify justified owner and scope, necessary actions, affected downstream and cross-boundary assets, validation obligations, unknown risks and explicit NO_EVOLUTION vs governed EvolutionTransaction without relying on user or assistant causal guesses.",
+  "verified_components": [
+    {
+      "source": "src/uaos/contracts/models.py#RequirementRecord",
+      "finding": "Requirement identity, scope, lifecycle and supersession exist; no direct work-unit/artifact/verification dependency mapping in this type."
+    },
+    {
+      "source": "src/uaos/contracts/requirements.py#supersede_requirement",
+      "finding": "Supersedes same-scope ACTIVE record but contains no impact-root derivation."
+    },
+    {
+      "source": "src/uaos/contracts/planning.py#transitive_dependents",
+      "finding": "Given known work-unit roots, transitive downstream closure is deterministic; it does not infer affected roots from changed requirement meaning."
+    },
+    {
+      "source": "tests/kernel/test_replanning.py#test_requirement_change_invalidates_only_impacted_subgraph",
+      "finding": "Test manually passes {'outline'} to invalidation, so it validates downstream closure only, not semantic impact root selection."
+    },
+    {
+      "source": "src/uaos/kernel/topology.py#TopologyRegistry.impact_closure",
+      "finding": "Supports known subsystem dependency reachability; no requirement->topology causal binding verified."
+    },
+    {
+      "source": "src/uaos/assurance/gate.py#AssuranceGate.assess",
+      "finding": "Checks supplied required ids and evidence; not a checker that the supplied list captures all current requirements."
+    },
+    {
+      "source": "docs/assurance/FROZEN_SCENARIO_COVERAGE.json",
+      "finding": "20 legacy v1.0 scenario entries, live_e2e all OPEN or OPEN_BACKGROUND_RUNTIME_REQUIRED; not requirement coverage for v1.1-v2.2."
+    },
+    {
+      "source": "docs/requirements/FROZEN_REQUIREMENTS_v1.0.md",
+      "finding": "Frozen core requirement authority, preserved independently of later additive deltas."
+    },
+    {
+      "source": "docs/requirements/FROZEN_REQUIREMENTS_v2.2.md",
+      "finding": "Most recent frozen delta explicitly requires causal problem cognition and evolution before repair/no-change."
+    },
+    {
+      "source": "docs/adr/0004-planning-and-replanning.md",
+      "finding": "Explicitly says choosing the work roots impacted by semantic requirement changes is a separate impact-analysis responsibility."
+    },
+    {
+      "source": "financial-writing-agent@f261367e:financial_writing_agent/task_requirements.py#apply_requirement_changes",
+      "finding": "Child-owned task requirement updates can return affected workflow stages, and current_admission uses satisfied evidence; this is partial specialized implementation, not proof of parent-wide propagation."
+    },
+    {
+      "source": "a-share-event-driven-agent@3182b360:config/RUNTIME_AUTHORITY.json",
+      "finding": "Hosted runtime authority remains disabled with 7 real promotion gates pending."
+    },
+    {
+      "source": "novel-writing-agent@f8bc5cac:runtime/learning_transfer_admission.py",
+      "finding": "Domain-specific multi-work knowledge transfer needs evidence; is not generic requirement impact trace."
+    },
+    {
+      "source": "video-growth-agent@4632634e:video_growth_agent/continuity.py",
+      "finding": "Continuity has explicit change/expect/preserve constraints but is child-specific."
+    }
+  ],
+  "external_methods": [
+    {
+      "url": "https://www.nasa.gov/reference/6-2-requirements-management/",
+      "method": "baseline/revision management; derived-requirement attribution; bidirectional traceability; approval and compliance/verification mapping"
+    },
+    {
+      "url": "https://swehb.nasa.gov/pages/viewpage.action?pageId=16453143",
+      "method": "trace requirements to design, implementation and verification in both directions; detect orphan work and evaluate change impact"
+    }
+  ],
+  "conflicting_hypotheses": [
+    {
+      "id": "ALL_CHAIN_MISSING",
+      "disposition": "REJECTED",
+      "reason": "Known impact closure and Financial task requirement invalidation already exist."
+    },
+    {
+      "id": "FULL_CHAIN_ALREADY_PROVEN",
+      "disposition": "REJECTED",
+      "reason": "Existing tests assume impacted roots; RequirementRecord has no typed cross-layer edges; legacy assurance uses only v1.0 scenarios."
+    },
+    {
+      "id": "MISSING_SEMANTIC_ROOT_SELECTION_AND_CROSS_OWNER_IMPACT_TRACE",
+      "disposition": "SUPPORTED_WITH_BOUNDED_SCOPE",
+      "reason": "No end-to-end demand-to-root binding established in inspected parent requirement/replanning/assurance contract and domain samples."
+    },
+    {
+      "id": "FULL_FILE_TRAVERSAL_IMPLICITLY_IDENTIFIES_ALL_DERIVED_REQUIREMENTS",
+      "disposition": "NOT_ESTABLISHED",
+      "reason": "Inventory can miss runtime-only side effects, hidden platform semantics and new failure modes."
+    }
+  ],
+  "competing_interventions": [
+    {
+      "id": "A_FORCE_ALL_REQUIREMENTS_INTO_EVOLUTION",
+      "decision": "REJECTED",
+      "reason": "Conflates legitimate task changes with reusable systemic capability improvements."
+    },
+    {
+      "id": "B_REWRITE_ALL_REQUIREMENT_AND_ACTION_SYSTEMS",
+      "decision": "REJECTED_AS_DEFAULT",
+      "reason": "Duplicates specialized child owners and risks breaking known good dependency and continuity contracts."
+    },
+    {
+      "id": "C_BIND_CURRENT_REQUIREMENT_AUTHORITY_TO_EXISTING_PLANNING_TOPOLOGY_ASSURANCE_AND_EVOLUTION_WITH_TRACEABLE_CAUSAL_IMPACT",
+      "decision": "CANDIDATE__REQUIRES_WIDER_EVIDENCE_AND_VALIDATION",
+      "reason": "Reuse existing models, dependency closure and owner-led evaluation rather than a new evolution owner."
+    },
+    {
+      "id": "D_NO_CHANGE",
+      "decision": "REJECTED_FOR_LONG_TERM_GOAL__PRESERVE_AS_NEGATIVE_CONTROL",
+      "reason": "Existing contracts cannot independently demonstrate semantic impact root selection or derived requirement provenance."
+    }
+  ],
+  "change_classification": "INTENT_OR_REQUIREMENT_CHANGE__CANDIDATE_ACTION__EVIDENCE_CONFIRMED_DERIVED_REQUIREMENT__IMPACT_GAP__EVOLUTION_DISPOSITION_DISTINCT",
+  "required_validation_scenarios": [
+    "Parent user requirement changed: infer affected root work units from evidence and verify transitive outputs, tests and owner boundaries; do not accept a hardcoded root as causal proof.",
+    "Child-only requirements changed: preserve exact child owner and avoid cross-domain propagation without material evidence.",
+    "Architecture action produces a derived constraint: link it to source rationale, review scope, and new validation obligation rather than silently treating it as new user instruction.",
+    "Changed requirement has no mapped owner or dependent: flag UNKNOWN/UNMAPPED rather than report full coverage.",
+    "Unknown side effects, unavailable host traces and cyclic parent-child dependence: preserve unresolved risk and refuse full completion.",
+    "Cross-domain recurring defects: compare independence, confounds and owner-level evidence before promoting common evolution.",
+    "Pure formatting preference: validate within business task without forcing EvolutionTransaction.",
+    "Negative input: user or assistant proposes direct fix and preselects root cause; classify action as candidate, not admitted system requirement."
+  ],
+  "required_evidence": [
+    "Machine-checkable bidirectional requirement->action/derived-constraint->work/asset/test link",
+    "Proof of completeness relative to registered owners and declared requirement baselines",
+    "Independent verifier for declared semantic root and trace accuracy",
+    "Observable invalidation/approval/validation receipts at each affected owner",
+    "Deterministic no-change/evolution disposition with rationale and post-promotion checks"
+  ],
+  "limits": [
+    "This is evidence review, not a universal classifier of all future unknown impacts.",
+    "No independent production cross-session native entry evaluation.",
+    "No exhaustive semantic traversal of 13 frozen requirement documents and child requirement universes.",
+    "Source-level omissions do not prove no uninspected downstream adapter exists."
+  ],
+  "disposition": "ROOT_GAP_CONFIRMED__NEW_SYSTEM_WIDE_INTERVENTION_NOT_YET_ADMITTED",
+  "owner_task": "state/tasks/uaos-inheritance-review-20261018.json"
+}
