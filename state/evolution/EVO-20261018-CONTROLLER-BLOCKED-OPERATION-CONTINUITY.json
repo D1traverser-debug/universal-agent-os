@@ -55,7 +55,8 @@
     "ENTRYPOINT.md",
     "src/uaos/runtime/finalization.py",
     "tests/runtime/test_blocked_operation_continuation.py",
-    "state/tasks/uaos-inheritance-review-20261018.json"
+    "state/tasks/uaos-inheritance-review-20261018.json",
+    "state/tasks/uaos-blocked-operation-continuation-20261018.json"
   ],
   "acceptance": [
     "Controlled finalization rejects ending before permitted independent read-only steps are attempted and evidenced.",
