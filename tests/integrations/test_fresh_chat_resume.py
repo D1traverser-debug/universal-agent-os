@@ -299,3 +299,18 @@ def test_superseded_design_and_native_install_snapshots_cannot_be_read_as_curren
         blueprint = (ROOT / f"docs/architecture/ARCHITECTURE_BLUEPRINT_{version}.md").read_text(encoding="utf-8")
         assert "Historical" in blueprint.splitlines()[2]
         assert "CURRENT_SYSTEM.json" in blueprint.splitlines()[2]
+
+
+def test_orphaned_proposed_architecture_docs_do_not_masquerade_as_live_layout():
+    """No second repository layout map: current navigation must opt into active proposals."""
+    canonical_navigation = "\n".join(
+        _read(path) for path in ("README.md", "ENTRYPOINT.md", "CURRENT_SYSTEM.json", "config/SYSTEM_MAP.json")
+    )
+    for candidate in (ROOT / "docs" / "architecture").glob("*.md"):
+        first_line = candidate.read_text(encoding="utf-8").splitlines()[0].strip()
+        if first_line.lower().startswith("# proposed"):
+            path = candidate.relative_to(ROOT).as_posix()
+            assert path in canonical_navigation, (
+                "unreferenced proposed architecture document must be removed from "
+                f"the current tree or deliberately linked by current authority: {path}"
+            )
