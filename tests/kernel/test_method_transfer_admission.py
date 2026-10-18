@@ -32,7 +32,7 @@ def candidate(**changes):
         "method_family": "systems-causal-analysis",
         "failure_class": "DECLARED_VS_EXECUTED",
         "fit_evidence_refs": ("repo:current-gate-bypass",),
-        "misfit_or_falsification_refs": ("scenario:counterexample"),
+        "misfit_or_falsification_refs": ("scenario:counterexample",),
         "fit_condition": "current behavior bypasses installed gate",
         "nonfit_condition": "gate was actually mediated and failure came from stale source data",
     }
@@ -131,3 +131,10 @@ def test_analogy_cannot_conjure_a_failure_class_and_candidate_ids_are_unique():
         require_method_transfer_admission(
             assessment(candidates=(candidate(), candidate())), verify_current_evidence=verify
         )
+
+
+def test_malformed_string_evidence_is_rejected_instead_of_iterated_as_characters():
+    with pytest.raises(ValueError, match="tuple of evidence refs"):
+        candidate(misfit_or_falsification_refs="scenario:counterexample")
+    with pytest.raises(ValueError, match="tuple of evidence refs"):
+        assessment(lookup_evidence_refs="repo:prior-method-lookup")
