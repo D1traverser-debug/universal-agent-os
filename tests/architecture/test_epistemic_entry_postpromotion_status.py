@@ -26,6 +26,9 @@ def test_bounded_epistemic_repair_and_parent_have_distinct_outcomes():
 
     eligible = [task for task in index["controller_tasks"] if task["default_resume"]]
     assert len(eligible) == 1
-    assert eligible[0]["task_id"] == parent["task_id"]
+    assert eligible[0]["authority_context"] == "UAOS"
     assert eligible[0]["status"] == "RUNNING"
-    assert eligible[0]["current_stage"] == parent["current_stage"]
+    inherited = [task for task in index["controller_tasks"] if task["task_id"] == parent["task_id"]]
+    assert len(inherited) == 1
+    assert inherited[0]["status"] == "RUNNING"
+    assert inherited[0]["current_stage"] == parent["current_stage"]

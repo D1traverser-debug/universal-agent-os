@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "policy_version": "1.1.0",
+  "policy_version": "1.2.0",
   "authority": "UAOS",
   "updated_at": "2026-10-16T10:09:00+08:00",
   "purpose": "Make child inheritance operationally observable, discover parent/child drift before user correction, bulkhead multiple child upcalls, and discover external capabilities without assuming every useful need was already known.",
@@ -19,14 +19,16 @@
       "BINDING_AND_AUTHORITY_CONTRADICTIONS",
       "OPEN_MATERIAL_EVOLUTION_OR_PARENT_GUIDANCE_REFERENCES",
       "MATERIAL_CHANGE_FAILURE_RECOVERY_SCENARIOS",
-      "REPEATED_OR_CROSS_DOMAIN_FAILURE_CLASS_CLUSTERING"
+      "REPEATED_OR_CROSS_DOMAIN_FAILURE_CLASS_CLUSTERING",
+      "USER_PRODUCT_OUTCOME_EVIDENCE_SEPARATE_FROM_COMPONENT_CI"
     ],
     "activation": [
       "BEFORE_MATERIAL_DOMAIN_EXECUTION",
       "BEFORE_PARENT_GOVERNED_DESCENDANT_MUTATION",
       "AFTER_CHILD_RELEASE_OR_PROFILE_CHANGE_WHEN_OBSERVED",
       "WHEN_A_CHILD_UPCALL_IS_RECEIVED",
-      "DURING_UAOS_MAINTENANCE_OR_HEALTH_AUDIT"
+      "DURING_UAOS_MAINTENANCE_OR_HEALTH_AUDIT",
+      "WHEN_CODE_REPAIR_CLOSES_BUT_USER_GOAL_OR_CHILD_QUALITY_EVIDENCE_REMAINS_OPEN"
     ],
     "unknown_unknowns_rule": "Static checks and scenario analysis find only a subset of failures. Material reliability claims also require owner-appropriate replay, failure/recovery experiments or live observation proportional to risk.",
     "assurance_rule": "Do not report a domain or common behavior as CURRENT_VERIFIED solely because a cached parent snapshot or configuration declaration is internally consistent."
@@ -41,9 +43,15 @@
       "OPEN_PARENT_GUIDANCE",
       "REPEATED_FAILURE_CLASS",
       "CROSS_DOMAIN_FAILURE_CLUSTER",
-      "SCENARIO_OR_RECOVERY_GAP"
+      "SCENARIO_OR_RECOVERY_GAP",
+      "PRODUCT_OUTCOME_VALIDATION_GAP"
     ],
-    "severity": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+    "severity": [
+      "LOW",
+      "MEDIUM",
+      "HIGH",
+      "CRITICAL"
+    ],
     "freshness_semantics": "A parent observation is a cache. Current child authority wins; mismatch creates a health finding rather than silently redefining child state."
   },
   "parent_upcall_envelope": {
@@ -72,7 +80,13 @@
   },
   "triage_and_bulkheading": {
     "principle": "MULTIPLE_UPCALLS_COEXIST__NONCONFLICTING_PARENT_WORK_MAY_PROGRESS_CONCURRENTLY",
-    "priority_dimensions": ["severity", "blast_radius", "user_or_business_impact", "urgency", "cross_domain_commonality"],
+    "priority_dimensions": [
+      "severity",
+      "blast_radius",
+      "user_or_business_impact",
+      "urgency",
+      "cross_domain_commonality"
+    ],
     "serialization_rule": "Serialize only items that conflict on a declared shared resource/authority or have a causal dependency. A blocked item does not create a global FIFO lock.",
     "child_continuation_rule": "If a child explicitly reports can_continue_unaffected_work=true and no common hard invariant is violated, unrelated child work remains eligible.",
     "suspected_common_failure_rule": "Suspected common cause triggers clustering and diagnosis, not automatic global blocking. Escalate blocking scope only with evidence of a hard shared dependency or unsafe common invariant.",
@@ -127,5 +141,20 @@
     "src/uaos/kernel/domain_health.py",
     "src/uaos/kernel/problem_space.py",
     "src/uaos/kernel/scheduling.py"
-  ]
+  ],
+  "product_outcome_assurance": {
+    "status": "SUPPORTED_AS_AN_EXISTING_DOMAIN_HEALTH_CHECK__NOT_NEW_TASK_OR_CONTROLLER",
+    "guard_ref": "src/uaos/kernel/domain_health.py#require_product_outcome_completion",
+    "scope": "ONLY_WHEN_UAOS_HAS_MATERIAL_PARENT_GOVERNED_USER_PRODUCT_OUTCOME_TO_VALIDATE__OTHER_DOMAIN_ROUTING_UNCHANGED",
+    "input": "Current child owner revision + source-bounded per-goal evidence dimension refs + independent actual outcome/ref + unresolved user rejection evidence",
+    "admission": "Controller caller supplies trusted evidence verifier; no verifier/no independent adjudication/current revision mismatch/required dimension missing/unresolved rejection => PRODUCT_OUTCOME_VALIDATION_GAP and cannot close parent product task.",
+    "non_goals": [
+      "NO_USER_ACCEPTANCE_FABRICATION",
+      "NO_CODE_CI_AS_PRODUCT_JUDGE",
+      "NO_PARENT_COPY_OF_CHILD_ARTICLE_STATE",
+      "NO_NEW_CHILD_TASK_INDEX_OR_GLOBAL_WRITING_SCHEMA",
+      "NO_CLAIM_OF_NATIVE_CHATGPT_COMPLETE_MEDIATION"
+    ],
+    "completion_rule": "SUBSYSTEM_CONTROL_REPAIR_CAN_BE_CODE_COMPLETE_WHILE_USER_PRODUCT_OUTCOME_REMAINS_OPEN__NEVER_CLOSE_PARENT_GOAL_UNTIL_PRODUCT_EVIDENCE_ADMITTED"
+  }
 }

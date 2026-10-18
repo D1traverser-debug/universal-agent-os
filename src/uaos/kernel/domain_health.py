@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass
+from typing import Callable
 from enum import Enum
 
 from .problem_space import CapabilityDiscoveryReceipt
@@ -14,6 +15,7 @@ class HealthFindingType(str, Enum):
     DECLARED_WITHOUT_OPERATIONAL_EVIDENCE = "DECLARED_WITHOUT_OPERATIONAL_EVIDENCE"
     CANONICAL_EVOLUTION_INTERFACE_MISSING = "CANONICAL_EVOLUTION_INTERFACE_MISSING"
     SCENARIO_OR_RECOVERY_GAP = "SCENARIO_OR_RECOVERY_GAP"
+    PRODUCT_OUTCOME_VALIDATION_GAP = "PRODUCT_OUTCOME_VALIDATION_GAP"
 
 
 class Severity(str, Enum):
@@ -69,6 +71,99 @@ class DomainHealthReceipt:
     @property
     def healthy(self) -> bool:
         return not self.findings
+
+
+@dataclass(frozen=True, slots=True)
+class ProductOutcomeEvidence:
+    """Owner-sourced validation record, separate from passing code/CI verification.
+
+    This is an optional *governing outcome* check provided by a trusted parent
+    caller after reading the live child source. It is not a universal requirement
+    for all registered domains and cannot infer user satisfaction from a test run.
+    """
+    domain_id: str
+    child_revision: str
+    objective_ref: str
+    required_dimensions: tuple[str, ...]
+    dimension_evidence: tuple[tuple[str, str], ...] = ()
+    independently_adjudicated_outcome_ref: str | None = None
+    open_rejection_refs: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not self.domain_id.strip() or not self.child_revision.strip() or not self.objective_ref.strip():
+            raise ValueError("product outcome must identify domain, revision and objective")
+        if not self.required_dimensions or len(set(self.required_dimensions)) != len(self.required_dimensions):
+            raise ValueError("product outcome requires unique acceptance dimensions")
+        names = [dimension for dimension, _ in self.dimension_evidence]
+        if len(names) != len(set(names)) or any(not name.strip() or not ref.strip() for name, ref in self.dimension_evidence):
+            raise ValueError("product outcome evidence requires unique dimension names and refs")
+
+
+def assess_product_outcome(
+    observation: DomainObservation,
+    product: ProductOutcomeEvidence,
+    *,
+    verify_evidence: Callable[[str], bool] | None,
+) -> DomainHealthReceipt:
+    """Fail the *outcome assurance* claim until current independent evidence exists.
+
+    A child repair can be production verified while this outcome remains OPEN.
+    The verifier must resolve refs against source/host receipts independently of
+    caller-provided PASS strings. Product declarations have no blanket authority.
+    """
+    if product.domain_id != observation.domain_id:
+        raise ValueError("product outcome domain mismatch")
+    findings: list[DomainHealthFinding] = []
+    reasons: list[str] = []
+    if product.child_revision != observation.current_revision:
+        reasons.append("outcome proof is not bound to the current child revision")
+    observed = dict(product.dimension_evidence)
+    expected = set(product.required_dimensions)
+    extras = sorted(set(observed) - expected)
+    missing = sorted(expected - set(observed))
+    if missing:
+        reasons.append(f"required outcome dimensions missing: {missing}")
+    if extras:
+        reasons.append(f"unrecognized outcome dimensions: {extras}")
+    if product.open_rejection_refs:
+        reasons.append("open user rejection or material failure is not adjudicated")
+    if product.independently_adjudicated_outcome_ref is None:
+        reasons.append("no independent or real user outcome adjudication")
+    refs = (product.objective_ref, *observed.values())
+    if product.independently_adjudicated_outcome_ref is not None:
+        refs += (product.independently_adjudicated_outcome_ref,)
+    if verify_evidence is None:
+        reasons.append("trusted evidence verifier absent")
+    else:
+        for ref in refs:
+            try:
+                verified = bool(verify_evidence(ref))
+            except Exception:
+                verified = False
+            if not verified:
+                reasons.append(f"outcome evidence not independently verified: {ref}")
+    if reasons:
+        findings.append(DomainHealthFinding(
+            observation.domain_id,
+            HealthFindingType.PRODUCT_OUTCOME_VALIDATION_GAP,
+            Severity.HIGH,
+            "; ".join(reasons),
+            capability_id="outcome_validation",
+        ))
+    return DomainHealthReceipt(observation.domain_id, tuple(findings))
+
+
+def require_product_outcome_completion(
+    observation: DomainObservation,
+    product: ProductOutcomeEvidence,
+    *,
+    verify_evidence: Callable[[str], bool] | None,
+) -> DomainHealthReceipt:
+    """Controlled parent completion admission; never conflate product and CI."""
+    receipt = assess_product_outcome(observation, product, verify_evidence=verify_evidence)
+    if not receipt.healthy:
+        raise ValueError(f"product outcome not validated: {receipt.findings[0].summary}")
+    return receipt
 
 
 def assess_domain_health(observation: DomainObservation) -> DomainHealthReceipt:

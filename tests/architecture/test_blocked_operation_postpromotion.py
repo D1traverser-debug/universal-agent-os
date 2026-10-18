@@ -21,8 +21,11 @@ def test_blocked_operation_production_state_preserves_native_boundary():
     assert "NATIVE_AUTONOMY_OPEN" in parent["blocked_operation_continuation"]["status"]
     assert "UNVERIFIED_DIRECT_TRACE" in evo["post_promotion_observation"]["native_skill_autoload"]
     default = [t for t in index["controller_tasks"] if t["default_resume"]]
-    assert len(default) == 1 and default[0]["task_id"] == parent["task_id"]
-    assert default[0]["current_stage"] == parent["current_stage"]
+    assert len(default) == 1 and default[0]["authority_context"] == "UAOS"
+    inherited = [t for t in index["controller_tasks"] if t["task_id"] == parent["task_id"]]
+    assert len(inherited) == 1
+    assert inherited[0]["status"] == parent["status"]
+    assert inherited[0]["current_stage"] == parent["current_stage"]
 
 
 def test_bootstrap_describes_operation_local_safety_and_independent_work():

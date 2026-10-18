@@ -3,8 +3,20 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-18T18:23:00+08:00",
+  "updated_at": "2026-10-18T19:31:00+08:00",
   "controller_tasks": [
+    {
+      "task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
+      "authority_context": "UAOS",
+      "task_type": "controller_maintenance",
+      "display_name_zh": "总控专项｜全权治理财经写作系统的真实质量与结果闭环",
+      "status": "RUNNING",
+      "resume_eligible": true,
+      "default_resume": true,
+      "semantic_summary": "USER_SELECTED_UAOS_PARENT_GOVERNED_FINANCIAL_REHABILITATION. Reconcile UAOS issue #63 and child #45, distinguish child CI repair from NOT_READY real article quality, govern parent+child evidence and actual deliverables. Do not switch active Agent to child or require user repeated reminders. Parent only owns governance task; child remains sole owner of article data.",
+      "current_stage": "PARENT_UPCALL_RECONCILED__PRODUCT_OUTCOME_GAP_IDENTIFIED__RECOVERY_GATE_IN_PROGRESS",
+      "state_ref": "state/tasks/uaos-financial-system-governed-recovery-20261018.json"
+    },
     {
       "task_id": "uaos:maintenance:inheritance-review-20261018",
       "authority_context": "UAOS",
@@ -12,8 +24,8 @@
       "display_name_zh": "总控继承｜五仓深审与跨学科持续改进",
       "status": "RUNNING",
       "resume_eligible": true,
-      "default_resume": true,
-      "semantic_summary": "UAOS epistemic gate and operating method deployed to main; user confirms installed Skill updated before one native fresh-chat inheritance canary. Response matches current main identity and reports unprompted source review, but no direct Skill/tool trace is available and authorized repair did not reach durable closure after a reported tool write block. Real canary evidence preserved. Parent deep audit remains RUNNING; Agent owns next remediation, no repeated user installation or identical canary required.",
+      "default_resume": false,
+      "semantic_summary": "UAOS epistemic gate and operating method deployed to main; user confirms installed Skill updated before one native fresh-chat inheritance canary. Response matches current main identity and reports unprompted source review, but no direct Skill/tool trace is available and authorized repair did not reach durable closure after a reported tool write block. Real canary evidence preserved. Parent deep audit remains RUNNING; Agent owns next remediation, no repeated user installation or identical canary required. Explicit UAOS user-governed Financial Writing outcome rehabilitation became the selected controller default; this broader deep system audit stays resumable, not cancelled.",
       "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
       "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
     },

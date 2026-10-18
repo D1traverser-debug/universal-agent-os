@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0",
+  "task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
+  "authority_context": "UAOS",
+  "task_type": "controller_maintenance",
+  "status": "RUNNING",
+  "current_stage": "PARENT_UPCALL_RECONCILED__PRODUCT_OUTCOME_GAP_IDENTIFIED__RECOVERY_GATE_IN_PROGRESS",
+  "state_ref": "state/tasks/uaos-financial-system-governed-recovery-20261018.json",
+  "evolution_ref": "state/evolution/EVO-20261018-FINANCIAL-PRODUCT-OUTCOME-ASSURANCE.json",
+  "governing_outcome": "UAOS independently coordinates and verifies the entire Financial Writing improvement program until current-kernel requirements produce a genuinely sourced, reader-valuable, non-advisory, original, available Word product with credible external/user-quality evidence, followed by controlled learning and recurrence checks; do not outsource diagnosis, progress or re-reminding to user.",
+  "scope_owner": "UAOS",
+  "descendant_business_owner": "DOMAIN:financial_writing",
+  "registered_descendant_repo": "D1traverser-debug/financial-writing-agent",
+  "governance_basis": "User explicitly transferred ownership of the Financial Writing system-wide rehabilitation task to UAOS after repeat incomplete outcome despite repairs; pre-existing parent upcall #63 with P1–P18; parent-owned common behavior/completion assurance plus registered descendant governed changes subject to current child authority.",
+  "ancestry_and_mutation_boundary": "UAOS->registered DOMAIN:financial_writing GOVERNED_DESCENDANT_CHANGE_ONLY_AFTER_CURRENT_CHILD_AUTHORITY_READ__OWNER_CODE_ARTICLE_STATE_STAYS_CHILD__NO_PARENT_COPY_OF_BUSINESS_STATE",
+  "source_revision_at_intake": {
+    "parent_main": "216bfa25f1b0f3d2fcc1b44d2dfb6defd7374210",
+    "child_main": "e580cd4dfda8db47674803451c9adfff9e3cf975"
+  },
+  "evidence_refs": [
+    "https://github.com/D1traverser-debug/universal-agent-os/issues/63",
+    "https://github.com/D1traverser-debug/financial-writing-agent/issues/45",
+    "D1traverser-debug/financial-writing-agent@e580cd4dfda8db47674803451c9adfff9e3cf975:evals/FINANCIAL_WHOLE_SYSTEM_OWNER_REVIEW_20261018.md",
+    "D1traverser-debug/financial-writing-agent@e580cd4dfda8db47674803451c9adfff9e3cf975:evals/quality_regression.json",
+    "D1traverser-debug/financial-writing-agent@e580cd4dfda8db47674803451c9adfff9e3cf975:workspaces/articles/cross-border-ecommerce-20261016-v3/STATE.json",
+    "state/DOMAIN_HEALTH_INDEX.json"
+  ],
+  "causal_factors": [
+    {
+      "id": "REPEATED_USER_CORRECTION_AS_DETECTION",
+      "status": "SUPPORTED_USER_OBSERVATION",
+      "owner": "UAOS_AND_CHILD"
+    },
+    {
+      "id": "CONFIG_AND_TEST_EVIDENCE_MISTAKEN_FOR_PRODUCT_VALIDATION",
+      "status": "SUPPORTED_CONTRACT_QUALITY_READINESS_GAP",
+      "owner": "UAOS"
+    },
+    {
+      "id": "NATIVE_FINALIZATION_PATH_NOT_PHYSICALLY_ENFORCED",
+      "status": "SUPPORTED_PARENT_UPCALL_P18",
+      "owner": "UAOS_HOST_LIMITATION"
+    },
+    {
+      "id": "LIVE_CHILD_TASK_NOT_FULLY_MIGRATED",
+      "status": "HISTORICAL_CONFIRMED_PARTIALLY_REPAIRED",
+      "owner": "DOMAIN:financial_writing"
+    },
+    {
+      "id": "CURRENT_WRITING_KERNEL_QUALITY_PROMOTION_NOT_READY",
+      "status": "SUPPORTED_CURRENT_CHILD_EVIDENCE",
+      "owner": "DOMAIN:financial_writing"
+    },
+    {
+      "id": "MISSING_OR_INCORRECT_SPECIFIC_USER_REQUIREMENTS",
+      "status": "POSSIBLE_QUESTIONED__DO_NOT_PRESUME",
+      "owner": "CROSS_LEVEL"
+    },
+    {
+      "id": "PERMISSIVE_HISTORICAL_ROUTE_AFTER_CURRENT_MARKER_TAMPER",
+      "status": "HYPOTHESIS__TEST_WRITE_WAS_BLOCKED__NOT_REPRODUCED",
+      "owner": "DOMAIN:financial_writing"
+    }
+  ],
+  "acceptance_contract": {
+    "verification_vs_validation": "Repository CI proves admitted implemented properties, never end-user reader-value success.",
+    "must_trace": [
+      "exact_user_requirement_and_priority",
+      "current_policy_and_independent_research_sources",
+      "research_judgment_and_alternatives",
+      "article_passage_and_company_causal_expression",
+      "current_interdependent_draft_and_quality_decision",
+      "current Word binary availability_and_formatting",
+      "real_reviewer_or_user_outcome",
+      "feedback_to_next_article_learning_and_falsification"
+    ],
+    "never_false_close": [
+      "product_quality_not_ready",
+      "current_v3_at_RESEARCH",
+      "no_external_current_quality_evaluation",
+      "user_unaccepted_result",
+      "historical_project_only"
+    ],
+    "positive_closure_requires": [
+      "authenticated_current_financial_state",
+      "source_freshness_at_publication",
+      "complete_current_kernel_trajectory",
+      "genuine_distinct_quality_review_or_explicit_scope_limit",
+      "file_binary_delivery_verified",
+      "outcome_evidence_not_just_tests",
+      "post_repair_recurrence_assessment"
+    ],
+    "prior_domain_repair_status": "CODE_AND_CI_FINISHED__PRODUCT_OUTCOME_UNVALIDATED"
+  },
+  "workstreams": [
+    {
+      "id": "W0",
+      "name": "Reconcile old parent upcalls and child production status",
+      "state": "READ_EVIDENCE"
+    },
+    {
+      "id": "W1",
+      "name": "Parent outcome-assurance tripwire with negative controls",
+      "state": "CANDIDATE_IMPLEMENTATION"
+    },
+    {
+      "id": "W2",
+      "name": "Current financial mutation/delivery historical marker adversarial replay",
+      "state": "OPEN"
+    },
+    {
+      "id": "W3",
+      "name": "Deep independently sourced current financial research and dual-reader article comparison",
+      "state": "OPEN"
+    },
+    {
+      "id": "W4",
+      "name": "Real Word artifact and reader-acceptance/rejection evaluation",
+      "state": "OPEN"
+    },
+    {
+      "id": "W5",
+      "name": "Method distillation, architecture reduction and forward outcome learning",
+      "state": "OPEN"
+    }
+  ],
+  "next_action": "Implement and verify parent outcome-assurance admission, resolve W2 against latest source and safe test capability; then govern exact child Current Article Aggregate task through full real product acceptance and follow-through. Do not switch to child Agent context when managing this UAOS maintenance task.",
+  "required_user_action_now": "NONE",
+  "assurance": "CURRENT_SOURCE_RECONCILED__PARENT_OWNERSHIP_PERSISTENCE_PENDING_PROMOTION__LIVE_PRODUCT_UNVALIDATED",
+  "updated_at": "2026-10-18T19:31:00+08:00"
+}
