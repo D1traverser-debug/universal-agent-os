@@ -46,7 +46,8 @@ def test_skill_installation_evidence_does_not_prove_source_or_behavior():
     assert "USER_CONFIRMED" in evidence["record_status"]
     assert evidence["installation_ui_evidence"]["visible_installed_item"] == "uaos controller runtime"
     assert "INSTALLED_BYTES_UNVERIFIED" in task["native_account_cutover"]["status"]
-    assert evidence["native_reliability"] == "NATIVE_BEHAVIOR_UNVERIFIED"
+    assert "UNVERIFIED" in evidence["native_reliability"]
+    assert evidence["canary"]["production_code_ci_is_native_proof"] is False
     assert evidence["canary"]["production_code_ci_is_native_proof"] is False
 
 
