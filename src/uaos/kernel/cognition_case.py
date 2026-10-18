@@ -301,33 +301,6 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
                 "independent verification must bind to repository/tool/test/runtime/scenario evidence"
             )
 
-    # Previous repairs are candidates for method transfer, not proof of fit.
-    # Repeated failures must provide *evidence* of reuse/adaptation or a bounded
-    # no-reusable-method finding. One-off cases do not pay this research cost.
-    method_receipt = None
-    if case.signals.repeated_failure_count >= 2 and case.method_transfer is None:
-        raise CognitionCaseAdmissionError(
-            "repeated failure requires prior-method transfer or an evidence-backed NO_REUSABLE_METHOD disposition"
-        )
-    if case.method_transfer is not None:
-        if case.method_transfer.current_problem_ref != case.case_id:
-            raise CognitionCaseAdmissionError("method transfer problem identity differs from cognition case")
-        try:
-            method_receipt = require_method_transfer_admission(
-                case.method_transfer, verify_current_evidence=lambda ref: (
-                    ref in evidence_by_id and evidence_by_id[ref].kind in {
-                        EvidenceKind.REPOSITORY_FACT,
-                        EvidenceKind.TOOL_RESULT,
-                        EvidenceKind.TEST_RESULT,
-                        EvidenceKind.RUNTIME_OBSERVATION,
-                        EvidenceKind.SCENARIO_RESULT,
-                        EvidenceKind.ANALYSIS_RESULT,
-                    }
-                ),
-            )
-        except (MethodTransferAdmissionError, ValueError) as exc:
-            raise CognitionCaseAdmissionError(f"method transfer not admitted: {exc}") from exc
-
     if not case.causal_factors:
         raise CognitionCaseAdmissionError("cognition case requires causal factors")
     if len({item.factor_id for item in case.causal_factors}) != len(case.causal_factors):
@@ -458,6 +431,34 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
             selected_action.candidate_id,
         )
         architecture_experience_admitted = True
+
+    # Previous repairs are candidates for method transfer, not proof of fit.
+    # Repeated failures must provide *evidence* of reuse/adaptation or a bounded
+    # no-reusable-method finding. One-off cases do not pay this research cost.
+    method_receipt = None
+    if case.signals.repeated_failure_count >= 2 and case.method_transfer is None:
+        raise CognitionCaseAdmissionError(
+            "repeated failure requires prior-method transfer or an evidence-backed NO_REUSABLE_METHOD disposition"
+        )
+    if case.method_transfer is not None:
+        if case.method_transfer.current_problem_ref != case.case_id:
+            raise CognitionCaseAdmissionError("method transfer problem identity differs from cognition case")
+        try:
+            method_receipt = require_method_transfer_admission(
+                case.method_transfer, verify_current_evidence=lambda ref: (
+                    ref in evidence_by_id and evidence_by_id[ref].kind in {
+                        EvidenceKind.REPOSITORY_FACT,
+                        EvidenceKind.TOOL_RESULT,
+                        EvidenceKind.TEST_RESULT,
+                        EvidenceKind.RUNTIME_OBSERVATION,
+                        EvidenceKind.SCENARIO_RESULT,
+                        EvidenceKind.ANALYSIS_RESULT,
+                    }
+                ),
+            )
+        except (MethodTransferAdmissionError, ValueError) as exc:
+            raise CognitionCaseAdmissionError(f"method transfer not admitted: {exc}") from exc
+
 
     used_ids = {
         *(ref for refs in case.evidence.by_dimension.values() for ref in refs),
