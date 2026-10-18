@@ -106,3 +106,25 @@ def test_parent_task_does_not_duplicate_mutable_skill_source_sha():
     assert "skill_source_sha" not in active["native_account_cutover"]
     assert observation["source_git_blobs"]["skill"] != observation["source_git_blobs"]["previously_supplied_skill"]
     assert observation["latest_repo_skill_generation_20261018"]["installed_skill_blob_status"].startswith("UNKNOWN")
+
+
+def test_progress_identity_requires_exact_match_not_substring_or_negation():
+    current = task()
+    bad_labels = (
+        f"not {current['task_id']}",
+        f"another-task (see {current['task_id']})",
+        f"{current['task_id']}/copy",
+    )
+    for label in bad_labels:
+        fake = report().replace(
+            f"当前范围或任务：{current['task_id']}",
+            f"当前范围或任务：{label}",
+        )
+        receipt = evaluate_session_progress_response(
+            fake,
+            SessionProgressExpectation(
+                context_selected=True, authoritative_task_ref=TASK_REF,
+                read_authoritative_task=trusted_reader,
+            ),
+        )
+        assert SessionAdherenceViolation.AUTHORITATIVE_PROGRESS_MISMATCH in receipt.violations
