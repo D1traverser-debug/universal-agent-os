@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "observation_id": "native-account-install-handoff-20261018",
+  "authority": "UAOS",
+  "role": "ACCOUNT_INSTALL_AND_FRESH_CHAT_CANARY_EVIDENCE__NOT_CANONICAL_SKILL_OWNER",
+  "repository": "D1traverser-debug/universal-agent-os",
+  "record_status": "ACCOUNT_INSTALL_UNVERIFIED",
+  "native_reliability": "NATIVE_BEHAVIOR_UNVERIFIED",
+  "source_refs": [
+    "skills/uaos-controller-runtime/SKILL.md",
+    "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt",
+    "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md"
+  ],
+  "source_git_blobs": {
+    "skill": "d57a72019c76e58f4a538b5d86e6e7718f34c0ba",
+    "pointer": "a43a4b09d5c63c861f1607e581ae5a40fbd4c758",
+    "previously_supplied_skill": "a244aeafcb204a86ab6825b8e8b277050c2be507"
+  },
+  "observations": [
+    {
+      "kind": "SOURCE_VERIFIED",
+      "finding": "Current generated repo Skill differs from the user's last uploaded skill, while V3 custom instructions match exactly.",
+      "evidence": "GitHub main source blob and exact recovered uploaded file git blob checks"
+    },
+    {
+      "kind": "HOST_BOUNDARY",
+      "finding": "Native ChatGPT account Skill installed version could not be inspected or overwritten by GitHub repository tools.",
+      "evidence": "Host profile installation boundary and absence of current account management action"
+    },
+    {
+      "kind": "BROWSER_UNAVAILABLE",
+      "finding": "User's Opera browser connector list-tabs failed with Browser not connected.",
+      "evidence": "Current conversation connector invocation; not proof account Skill absent"
+    },
+    {
+      "kind": "PRODUCT_CAPABILITY",
+      "finding": "ChatGPT Skills installation/update depends on eligible account/workspace and UI surface; Custom Instructions settings can be user-edited.",
+      "evidence": "https://help.openai.com/en/articles/20001066-skills-in-chatgpt"
+    }
+  ],
+  "required_user_actions": [
+    "Replace previously installed uaos-controller-runtime Skill or resource with current canonical version in same account UI where it was originally installed; if account has an eligible Skills UI use that surface.",
+    "Open one fresh selected-controller chat for a real canary when ready; simply enter 继承 → 总控系统, with no problem diagnosis."
+  ],
+  "no_user_actions_needed": [
+    "Do not reenter V3 custom instructions if unchanged.",
+    "Do not modify GitHub main branch protection.",
+    "Do not maintain ChatGPT Library backup.",
+    "Do not manually inspect repository checks/CI or diagnose faults."
+  ],
+  "agent_actions": [
+    "Maintain byte-verified installable source at GitHub main and one-time export.",
+    "Use exact-head GitHub PR/CI for any source changes.",
+    "Collect/interpret actual native canary execution trace rather than rely on claim.",
+    "Persist verdict and source head, record failures as falsifiers and continue owner-authorized repairs."
+  ],
+  "canary": {
+    "status": "NOT_RUN__REQUIRES_FRESH_CHAT_AND_ACCOUNT_INSTALL",
+    "selected_context_prompt": "继承 → 总控系统",
+    "proof_required": [
+      "real fresh-chat tool calls to GitHub current main",
+      "current controller task state recovered from source",
+      "unprompted self-check and actual next-action attempt or precise blocker",
+      "honest progress report"
+    ],
+    "fail_conditions": [
+      "claim of invocation with no actual tool trace",
+      "uses retired state or installed skill snapshot over live main",
+      "stops at diagnosis although authorized next action remains"
+    ],
+    "production_code_ci_is_native_proof": false
+  },
+  "continued_parent_task_ref": "state/tasks/uaos-inheritance-review-20261018.json",
+  "exact_scope": "UAOS_CONTROLLER_ONLY__CHILD_REPOS_UNMODIFIED",
+  "disposition": "SOURCE_READY__ACCOUNT_INSTALL_AND_NATIVE_CANARY_OWNER_ACTION_OUTSTANDING__AGENT_RETAINS_GOVERNANCE"
+}
