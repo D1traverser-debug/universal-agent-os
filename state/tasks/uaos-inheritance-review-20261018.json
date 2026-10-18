@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Verify controller-only typed TOOL_RESULT epistemic routing, first-time material systemic method recall and lightweight one-off; run exact CI and independent review, promote only after green, reread current main. Then continue wider unsaturated controller methodology/architecture and native invocation tests while preserving Financial return task; do not switch yet.",
+  "next_action": "Controller-only: verify method-recall source truth for NO_REUSABLE_METHOD, independent native selected-chat invocation and real-first-time systemic replay; expand source-role coverage and exact five-repo controller deep audit without copying method owner or asking the user to re-diagnose. Do not enter Financial before controller assurance; preserve exact Financial return pointer.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -150,7 +150,7 @@
     "assurance": "THIS_IS_REPOSITORY_GATE_VERIFICATION__NOT_USER_PRODUCT_SUCCESS"
   },
   "controller_entry_method_delta_20261018": {
-    "status": "SOURCE_REPRODUCED__CANDIDATE_GATES_AWAIT_CI_AND_REAL_RUNTIME_EVIDENCE",
+    "status": "PROMOTED_TO_MAIN__CONTROLLED_CI_AND_SOURCE_VERIFIED__NATIVE_AND_LEARNING_OUTCOME_OPEN",
     "observations": [
       "Controller epistemic entry excluded verified TOOL_RESULT from its fact kind allowlist",
       "Method transfer triggered only repeated_failure_count >= 2, missing first major material systemic fault",
@@ -169,6 +169,15 @@
       "tests/runtime/test_controller_epistemic_entry.py",
       "tests/architecture/test_cognition_case_transaction.py"
     ],
-    "return_target": "uaos:maintenance:financial-system-governed-recovery-20261018"
+    "return_target": "uaos:maintenance:financial-system-governed-recovery-20261018",
+    "production": {
+      "pr": 115,
+      "main_sha": "3a60beb31d4535d5f10bcc44c399391842fd0966",
+      "candidate_ci": 658,
+      "candidate_ci_result": "588 passed, 1 skipped",
+      "integration": 371,
+      "main_readback": true
+    },
+    "next_falsification": "Native ChatGPT fresh selected-session trace for actual Skill invocation + historically grounded first-time systemic repair; false NO_REUSABLE_METHOD evidence and unknown method families remain open."
   }
 }
