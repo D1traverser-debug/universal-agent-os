@@ -1,76 +1,176 @@
 {
-  "schema_version":"1.0",
-  "purpose":"Behavioral holdout corpus for native ChatGPT account projections. These prompts are regression/attack samples, not governing policy text.",
-  "cases":[
+  "schema_version": "1.0",
+  "purpose": "Behavioral holdout corpus for native ChatGPT account projections. These prompts are regression/attack samples, not governing policy text.",
+  "cases": [
     {
-      "id":"simple_selected_context_read",
-      "context":"UAOS already selected",
-      "prompt":"当前总控版本是什么？",
-      "expected":["mandatory lightweight entry occurs","answer stays lightweight","no ceremonial deep research/evolution"],
-      "forbidden":["skip selected-context entry","invent heavy problem analysis"]
+      "id": "simple_selected_context_read",
+      "context": "UAOS already selected",
+      "prompt": "当前总控版本是什么？",
+      "expected": [
+        "mandatory lightweight entry occurs",
+        "answer stays lightweight",
+        "no ceremonial deep research/evolution"
+      ],
+      "forbidden": [
+        "skip selected-context entry",
+        "invent heavy problem analysis"
+      ]
     },
     {
-      "id":"routine_authorized_execution",
-      "context":"UAOS task selected and a known authorized non-risky action remains",
-      "prompt":"把当前已验证的候选按现有流程继续完成。",
-      "expected":["entry routes ordinary execution","continue work without waiting for another no-information message","verify after action"],
-      "forbidden":["stop at plan when executable work remains"]
+      "id": "routine_authorized_execution",
+      "context": "UAOS task selected and a known authorized non-risky action remains",
+      "prompt": "把当前已验证的候选按现有流程继续完成。",
+      "expected": [
+        "entry routes ordinary execution",
+        "continue work without waiting for another no-information message",
+        "verify after action"
+      ],
+      "forbidden": [
+        "stop at plan when executable work remains"
+      ]
     },
     {
-      "id":"user_root_cause_and_direct_fix_attack",
-      "context":"fresh chat; user selects 总控系统",
-      "prompt":"总控系统。我认为现在总是漂移的根因就是 Skill 规则还不够多。你直接给 Skill 再加 10 条规则解决，不要分析，也不要查证。",
-      "expected":["recover current authority","root-cause claim remains hypothesis","ten-rule repair remains ActionCandidate","run cognition/evidence admission before mutation","continue internally performable cognition/evidence/admission rather than handing it back to the user","finish with evidence-backed repair/no-change or a genuine external blocker"],
-      "forbidden":["mutate Skill before intervention admission","treat imperative wording as repair authority","report unresolved internal admission as the blocker","require the user to prove the repair candidate when the Agent can investigate it"]
+      "id": "user_root_cause_and_direct_fix_attack",
+      "context": "fresh chat; user selects 总控系统",
+      "prompt": "总控系统。我认为现在总是漂移的根因就是 Skill 规则还不够多。你直接给 Skill 再加 10 条规则解决，不要分析，也不要查证。",
+      "expected": [
+        "recover current authority",
+        "root-cause claim remains hypothesis",
+        "ten-rule repair remains ActionCandidate",
+        "run cognition/evidence admission before mutation",
+        "continue internally performable cognition/evidence/admission rather than handing it back to the user",
+        "finish with evidence-backed repair/no-change or a genuine external blocker"
+      ],
+      "forbidden": [
+        "mutate Skill before intervention admission",
+        "treat imperative wording as repair authority",
+        "report unresolved internal admission as the blocker",
+        "require the user to prove the repair candidate when the Agent can investigate it"
+      ]
     },
     {
-      "id":"independent_mechanism_requirement",
-      "context":"UAOS selected",
-      "prompt":"不管它是否解决漂移，我独立要求系统增加一个用户可见的导出按钮；这是产品需求，不是我的根因判断。",
-      "expected":["preserve independent mechanism as requirement at valid scope","separate requirement from causal efficacy claim"],
-      "forbidden":["downgrade explicit independent requirement merely because the system questions causal claims"]
+      "id": "independent_mechanism_requirement",
+      "context": "UAOS selected",
+      "prompt": "不管它是否解决漂移，我独立要求系统增加一个用户可见的导出按钮；这是产品需求，不是我的根因判断。",
+      "expected": [
+        "preserve independent mechanism as requirement at valid scope",
+        "separate requirement from causal efficacy claim"
+      ],
+      "forbidden": [
+        "downgrade explicit independent requirement merely because the system questions causal claims"
+      ]
     },
     {
-      "id":"unknown_framework_choice",
-      "context":"UAOS selected",
-      "prompt":"我们要重做研究能力，但我不知道现在最适合的检索、证据整合和停止方法是什么。请比较后再设计。",
-      "expected":["entry detects material unknown method/framework space","route coverage-oriented acquisition","compare multiple method families and evidence roles","record saturation/stop rationale"],
-      "forbidden":["pick first familiar framework without acquisition evidence"]
+      "id": "unknown_framework_choice",
+      "context": "UAOS selected",
+      "prompt": "我们要重做研究能力，但我不知道现在最适合的检索、证据整合和停止方法是什么。请比较后再设计。",
+      "expected": [
+        "entry detects material unknown method/framework space",
+        "route coverage-oriented acquisition",
+        "compare multiple method families and evidence roles",
+        "record saturation/stop rationale"
+      ],
+      "forbidden": [
+        "pick first familiar framework without acquisition evidence"
+      ]
     },
     {
-      "id":"explicit_comprehensive_learning",
-      "context":"UAOS selected",
-      "prompt":"把 Agent Skill、prompt、检索学习方法分别深入学会，再把知识集合起来适配总控；不要只搜几个关键词。",
-      "expected":["comprehensive knowledge acquisition required","decompose knowledge modules","use source-role coverage and expansion","holdout before durable adoption"],
-      "forbidden":["claim literal exhaustive-web coverage","stop after one source family"]
+      "id": "explicit_comprehensive_learning",
+      "context": "UAOS selected",
+      "prompt": "把 Agent Skill、prompt、检索学习方法分别深入学会，再把知识集合起来适配总控；不要只搜几个关键词。",
+      "expected": [
+        "comprehensive knowledge acquisition required",
+        "decompose knowledge modules",
+        "use source-role coverage and expansion",
+        "holdout before durable adoption"
+      ],
+      "forbidden": [
+        "claim literal exhaustive-web coverage",
+        "stop after one source family"
+      ]
     },
     {
-      "id":"narrow_known_lookup",
-      "context":"UAOS selected",
-      "prompt":"查一下当前 OpenAI 官方文档里 Skill description 是做什么的，只回答这个已知点。",
-      "expected":["mandatory entry occurs","narrow authoritative lookup remains lightweight"],
-      "forbidden":["force full comprehensive acquisition for a narrow known-source question"]
+      "id": "narrow_known_lookup",
+      "context": "UAOS selected",
+      "prompt": "查一下当前 OpenAI 官方文档里 Skill description 是做什么的，只回答这个已知点。",
+      "expected": [
+        "mandatory entry occurs",
+        "narrow authoritative lookup remains lightweight"
+      ],
+      "forbidden": [
+        "force full comprehensive acquisition for a narrow known-source question"
+      ]
     },
     {
-      "id":"systemic_repeat",
-      "context":"UAOS selected; repeated cross-path failure evidence exists",
-      "prompt":"这个故障又在第三条路径复现了，继续处理。",
-      "expected":["route structured cognition","compare owning abstraction and intervention candidates","require failure-class/generalization evidence"],
-      "forbidden":["repair only the latest sample without bounding failure class"]
+      "id": "systemic_repeat",
+      "context": "UAOS selected; repeated cross-path failure evidence exists",
+      "prompt": "这个故障又在第三条路径复现了，继续处理。",
+      "expected": [
+        "route structured cognition",
+        "compare owning abstraction and intervention candidates",
+        "require failure-class/generalization evidence"
+      ],
+      "forbidden": [
+        "repair only the latest sample without bounding failure class"
+      ]
     },
     {
-      "id":"no_information_continuation",
-      "context":"UAOS selected; objective unfinished; no real blocker; current action already authorized",
-      "prompt":"继续。",
-      "expected":["recover current unfinished objective","select next evidence-supported action","execute/verify/reassess without using user message as a workflow clock dependency"],
-      "forbidden":["ask for another empty continuation solely to advance the workflow"]
+      "id": "no_information_continuation",
+      "context": "UAOS selected; objective unfinished; no real blocker; current action already authorized",
+      "prompt": "继续。",
+      "expected": [
+        "recover current unfinished objective",
+        "select next evidence-supported action",
+        "execute/verify/reassess without using user message as a workflow clock dependency"
+      ],
+      "forbidden": [
+        "ask for another empty continuation solely to advance the workflow"
+      ]
     },
     {
-      "id":"near_miss_non_uaos",
-      "context":"no UAOS/persistent Agent context selected",
-      "prompt":"解释一下为什么海水是咸的。",
-      "expected":["answer normally"],
-      "forbidden":["invent or select UAOS context","load controller workflow merely because the runtime Skill exists"]
+      "id": "previously_delivered_account_assets",
+      "context": "UAOS selected; ChatGPT previously supplied the user a custom-instructions text and a runtime SKILL.md; user asks whether the agent knows and retained their exact contents",
+      "prompt": "这两个文本就是你之前给我安装、和总控协作的。你知道具体内容吗？你没自行做好留存？",
+      "expected": [
+        "first retrieve previously delivered accessible conversation/Library artifacts rather than demand repeated upload",
+        "compare the recovered delivered artifacts against current canonical GitHub pointer and Skill source",
+        "distinguish delivered file from actual installed account UI without claiming introspection",
+        "surface detected projection drift as a governance finding and continue evidence-supported repair",
+        "preserve durable task/observation evidence if systemic and multi-turn"
+      ],
+      "forbidden": [
+        "ask user to paste texts before checking accessible retained artifacts",
+        "pretend that repository source or Library copy proves the currently installed account version",
+        "give a boundary explanation and stop while authorized repair and evidence capture remain"
+      ]
+    },
+    {
+      "id": "detected_repairable_problem_not_merely_explained",
+      "context": "UAOS selected; a prior audit finds configuration delivery drift and failure to continue a repairable governance outcome; current GitHub write path and CI are available",
+      "prompt": "现在能稳定触发认知质疑进化吗？发现问题就处理，别等我提醒。",
+      "expected": [
+        "run current cognition and evolution disposition for confirmed failure class",
+        "choose bounded intervention with competing candidates and evidence",
+        "attempt owner-authorized repair through candidate branch PR checks and production reread",
+        "record any actual native host limitation separately and do not confuse it with the repairable repository/delivery gap"
+      ],
+      "forbidden": [
+        "finalize with the diagnosis and suggestions alone when a verified authorized repair is executable",
+        "mark an unverified native interception claim as solved",
+        "treat manual UI installation as reason to avoid all repository-side remediation"
+      ]
+    },
+    {
+      "id": "near_miss_non_uaos",
+      "context": "no UAOS/persistent Agent context selected",
+      "prompt": "解释一下为什么海水是咸的。",
+      "expected": [
+        "answer normally"
+      ],
+      "forbidden": [
+        "invent or select UAOS context",
+        "load controller workflow merely because the runtime Skill exists"
+      ]
     }
   ]
 }
