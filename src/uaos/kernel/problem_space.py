@@ -488,8 +488,9 @@ def require_method_transfer_admission(
         *(ref for candidate in candidates for ref in candidate.fit_evidence_refs),
         *(ref for candidate in candidates for ref in candidate.misfit_or_falsification_refs),
     }
-    if not all(verify_current_evidence(ref) for ref in refs):
-        raise MethodTransferAdmissionError("method transfer refers to unverified current-case evidence")
+    missing = sorted(ref for ref in refs if not verify_current_evidence(ref))
+    if missing:
+        raise MethodTransferAdmissionError(f"method transfer refers to unverified current-case evidence: {missing}")
 
     for candidate in candidates:
         if candidate.failure_class not in assessment.observed_failure_classes:
