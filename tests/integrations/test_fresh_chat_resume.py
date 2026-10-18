@@ -304,7 +304,7 @@ def test_superseded_design_and_native_install_snapshots_cannot_be_read_as_curren
 def test_orphaned_proposed_architecture_docs_do_not_masquerade_as_live_layout():
     """No second repository layout map: current navigation must opt into active proposals."""
     canonical_navigation = "\n".join(
-        _read(path) for path in ("README.md", "ENTRYPOINT.md", "CURRENT_SYSTEM.json", "config/SYSTEM_MAP.json")
+        (ROOT / path).read_text(encoding="utf-8") for path in ("README.md", "ENTRYPOINT.md", "CURRENT_SYSTEM.json", "config/SYSTEM_MAP.json")
     )
     for candidate in (ROOT / "docs" / "architecture").glob("*.md"):
         first_line = candidate.read_text(encoding="utf-8").splitlines()[0].strip()
