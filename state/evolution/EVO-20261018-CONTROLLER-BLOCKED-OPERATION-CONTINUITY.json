@@ -3,7 +3,7 @@
   "evolution_id": "EVO-20261018-CONTROLLER-BLOCKED-OPERATION-CONTINUITY",
   "authority": "UAOS",
   "origin_kind": "CAPABILITY_GAP",
-  "status": "FRAMED__CANDIDATE_CI_PENDING",
+  "status": "BOUNDED_CONTROLLED_GATE_PRODUCTION_VERIFIED__NATIVE_BEHAVIOR_OPEN",
   "parent_evolution_ref": "state/evolution/EVO-20261018-MULTICAUSAL-AUTONOMY-ASSURANCE.json",
   "governing_outcome": "A single denied/blocked GitHub operation must not end an unfinished UAOS task when separate read-only actions remain authorized; no safety-denied mutation may be rerouted through another provider.",
   "origin_evidence_refs": [
@@ -67,5 +67,21 @@
     "Do not claim native physical Skill invocation or semantic completeness from these tests."
   ],
   "assurance_boundary": "Controlled caller must supply authentic tool observations and a trusted evidence verifier. UAOS repo cannot force ChatGPT native tool/event interception. No additional user installation or identical retest required.",
-  "next_observation": "Opportunistic future authentic fresh-chat trace and task continuation outcome, not a synthetic guarantee."
+  "next_observation": "Opportunistic future authentic fresh-chat trace and task continuation outcome, not a synthetic guarantee.",
+  "production_evidence": {
+    "pr": 105,
+    "main_sha": "76f4ba7cc3ae0dda491cd6989d341e96a76cc4be",
+    "ci_run": 622,
+    "ci_result": "success",
+    "passed": 554,
+    "skipped": 1,
+    "source_ref": "src/uaos/runtime/finalization.py#_require_blocked_operation_continuity",
+    "startup_ref": "ENTRYPOINT.md#operation-local-blockers"
+  },
+  "post_promotion_observation": {
+    "result": "CONTROLLED_END_OF_TURN_GATE_VERIFIED_IN_DETERMINISTIC_TESTS",
+    "native_skill_autoload": "UNVERIFIED_DIRECT_TRACE",
+    "native_tool_block_fallback": "FIRST_CANARY_FAILED_OR_INCOMPLETE__FUTURE_INDEPENDENT_BEHAVIOR_NEEDED",
+    "user_steps": "NONE_REQUIRED_TO_REPEAT_IDENTICAL_INSTALL_OR_TEST"
+  }
 }
