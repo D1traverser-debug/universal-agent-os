@@ -21,6 +21,11 @@ USER = "Every utterance should be reviewed, including assistant progress claims.
 ASSISTANT = "Current controller task RUNNING; controlled progress review remains open."
 TOOL = "GitHub source inspection reports a task/progress status mismatch."
 REFS = ("session:user-1", "session:tool-1", "session:assistant-final")
+HOST_ORIGINS = {
+    REFS[0]: UtteranceOrigin.USER,
+    REFS[1]: UtteranceOrigin.TOOL,
+    REFS[2]: UtteranceOrigin.ASSISTANT,
+}
 
 
 def digest(text):
@@ -59,6 +64,7 @@ def _call(input_review, **kwargs):
         input_review,
         actual_assistant_response=kwargs.get("response", ASSISTANT),
         host_observed_source_refs=kwargs.get("observed", REFS),
+        host_observed_source_origins=kwargs.get("origin_map", HOST_ORIGINS),
         verify_source_digest=kwargs.get("source_verifier", _verify_source),
         verify_judgment_ref=kwargs.get("judgment_verifier", lambda ref: ref.startswith("test:")),
     )
@@ -144,3 +150,48 @@ def test_unfinished_authorized_work_is_not_collapsed_into_generic_challenge():
     receipt = _call(replace(baseline, assessments=(baseline.assessments[0], tool_work, baseline.assessments[2])))
     assert receipt.unfinished_authorized_work_observed
     assert not receipt.problem_signal_observed
+
+
+def test_host_origin_contract_rejects_swapped_user_and_tool_roles_even_with_valid_digests():
+    # Every ref and digest is real: only agent-supplied origin labels are forged.
+    baseline = review()
+    swapped = replace(
+        baseline,
+        assessments=(
+            replace(baseline.assessments[0], origin=UtteranceOrigin.TOOL),
+            replace(baseline.assessments[1], origin=UtteranceOrigin.USER),
+            baseline.assessments[2],
+        ),
+    )
+    with pytest.raises(EntryAdmissionError, match="origin mismatch"):
+        _call(swapped)
+
+
+def test_host_origin_contract_is_required_and_must_cover_exact_observed_sources():
+    with pytest.raises(EntryAdmissionError, match="independently observed host origins"):
+        _call(review(), origin_map=None)
+    with pytest.raises(EntryAdmissionError, match="origin enumeration"):
+        _call(review(), origin_map={REFS[0]: UtteranceOrigin.USER, REFS[2]: UtteranceOrigin.ASSISTANT})
+    with pytest.raises(EntryAdmissionError, match="origin enumeration"):
+        _call(review(), origin_map={**HOST_ORIGINS, "session:unseen": UtteranceOrigin.TOOL})
+    with pytest.raises(EntryAdmissionError, match="typed origins"):
+        _call(review(), origin_map={**HOST_ORIGINS, REFS[0]: "USER"})
+
+
+def test_host_origin_contract_cannot_forge_user_presence_with_tool_only_messages():
+    # The host actually saw tool+assistant, not a user. The agent cannot
+    # claim the tool transcript as USER to satisfy the user-presence invariant.
+    forged = replace(
+        review(),
+        observed_source_refs=REFS[1:],
+        assessments=(
+            replace(review().assessments[1], origin=UtteranceOrigin.USER),
+            review().assessments[2],
+        ),
+    )
+    with pytest.raises(EntryAdmissionError, match="origin mismatch"):
+        _call(
+            forged,
+            observed=REFS[1:],
+            origin_map={REFS[1]: UtteranceOrigin.TOOL, REFS[2]: UtteranceOrigin.ASSISTANT},
+        )

@@ -99,6 +99,7 @@ def _ctx(case=None, **changes):
         "entry_evidence_verifier": lambda _: True,
         "turn_evolution_coverage": _turn_coverage(),
         "observed_turn_source_refs": ("test:blocked-user", "test:blocked-agent"),
+        "observed_turn_source_origins": {"test:blocked-user": UtteranceOrigin.USER, "test:blocked-agent": UtteranceOrigin.ASSISTANT},
         "turn_source_digest_verifier": lambda ref, digest: ref == "test:blocked-user" and digest == sha256(b"blocked operation current user input").hexdigest(),
         "turn_judgment_verifier": lambda ref: ref.startswith("test:"),
         "blocked_tool_operation_observed": True,

@@ -99,6 +99,7 @@ def _context(entry=None, **overrides):
         entry_evidence_verifier=lambda _ref: True,
         turn_evolution_coverage=_review(_report()),
         observed_turn_source_refs=("test:current-user", "test:assistant-final"),
+        observed_turn_source_origins={"test:current-user": UtteranceOrigin.USER, "test:assistant-final": UtteranceOrigin.ASSISTANT},
         turn_source_digest_verifier=_turn_source_verifier,
         turn_judgment_verifier=lambda ref: ref.startswith("test:"),
     )
@@ -299,3 +300,13 @@ def test_post_output_unfinished_work_cannot_close_as_clean_challenge():
     review = replace(reviewed, assessments=(reviewed.assessments[0], output_work))
     with pytest.raises(FinalizationBlocked, match="UNROUTED_POST_DRAFT_UNFINISHED_AUTHORIZED_WORK"):
         admit_final_response(_report(), _context(_entry(), turn_evolution_coverage=review))
+
+
+def test_controlled_finalization_requires_host_bound_origins_not_agent_roles():
+    with pytest.raises(FinalizationBlocked, match="independently observed host origins"):
+        admit_final_response(_report(), _context(_entry(), observed_turn_source_origins=None))
+    with pytest.raises(FinalizationBlocked, match="host origin mismatch"):
+        admit_final_response(_report(), _context(_entry(), observed_turn_source_origins={
+            "test:current-user": UtteranceOrigin.TOOL,
+            "test:assistant-final": UtteranceOrigin.ASSISTANT,
+        }))

@@ -26,10 +26,11 @@
     "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md",
     "docs/research/uaos-inheritance-review-20261018/13_orca_multi_agent_execution_orchestration_source_learning.md",
     "docs/research/uaos-inheritance-review-20261018/14_cloudflare_security_audit_source_learning.md",
-    "docs/research/uaos-inheritance-review-20261018/15_paperclip_multi_agent_control_plane_source_learning.md"
+    "docs/research/uaos-inheritance-review-20261018/15_paperclip_multi_agent_control_plane_source_learning.md",
+    "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T04:21:16.728+08:00",
+  "updated_at": "2026-10-18T20:41:36.141Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -562,5 +563,46 @@
         }
       }
     ]
+  },
+  "turn_host_origin_fencing_20261019": {
+    "status": "CANDIDATE_PARENT_EVOLUTION_BOUND__CI_AND_POSTMERGE_VALIDATION_OPEN",
+    "prior_evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
+    "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
+    "research_ref": "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md",
+    "observed": "Host-enumerated source/digests were checked, but nonfinal utterance roles were derived from agent assessments; tool↔user origin swap could falsify USER presence without touching source bytes.",
+    "chosen": "Mandatory typed host-observed source role mapping at canonical turn coverage and finalization context",
+    "alternatives": [
+      "NO_CHANGE_HASH_ONLY_REJECTED",
+      "SECOND_MONITOR_REJECTED",
+      "NATIVE_HOOK_NOT_AVAILABLE_IN_GITHUB",
+      "USE_EXISTING_GATE_AND_CROSS_MODULE_CONTEXT_SELECTED"
+    ],
+    "tests": [
+      "tests/runtime/test_turn_evolution_coverage.py",
+      "tests/runtime/test_controller_epistemic_entry.py",
+      "tests/runtime/test_blocked_operation_continuation.py",
+      "tests/runtime/test_governed_product_outcome_finalization.py"
+    ],
+    "red_ci": {
+      "run": 39163876309,
+      "conclusion": "failure",
+      "summary": "11 failed 627 passed 2 skipped; first commit intentionally lacked interface"
+    },
+    "intermediate_ci": {
+      "run": 39164125135,
+      "conclusion": "failure",
+      "summary": "638 passed 2 skipped; missing durable EvolutionTransaction admission"
+    },
+    "frozen_acceptance": "HTO-01..HTO-10 in linked research document",
+    "method_refs": [
+      "CSA-10",
+      "PAP-01",
+      "PAP-12"
+    ],
+    "method_state": "CANDIDATE_ADAPTATION_NOT_CANONICAL",
+    "native_assurance": "REAL_NATIVE_CHATGPT_HOST_ORIGIN_FEED_AND_PRE_SEND_INTERCEPTION_UNVERIFIED",
+    "financial_child": "RUNNING_PRESERVED_NOT_DEFAULT",
+    "future_task": "Continue controller five-repository deep audit, audit reliable native host evidence availability, and conduct domain-owner real-outcome holdouts before any UAOS system-closure claim.",
+    "owner_scope": "ONE_EXISTING_EVO_INHERITANCE_REVIEW_EXTENDED_NO_SECOND_EVOLUTION_OWNER"
   }
 }

@@ -8,7 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import StrEnum
 from hashlib import sha256
-from typing import Callable
+from typing import Callable, Mapping
 
 from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 
@@ -196,12 +196,15 @@ def admit_turn_evolution_coverage(
     host_observed_source_refs: tuple[str, ...] | None,
     verify_source_digest: Callable[[str, str], bool] | None,
     verify_judgment_ref: Callable[[str], bool] | None,
+    host_observed_source_origins: Mapping[str, UtteranceOrigin] | None = None,
 ) -> TurnEvolutionCoverageReceipt:
     """Every observed utterance is evaluated, including the outgoing assistant text.
 
     The controlled host must enumerate sources independently of the Agent's
-    classifications and verify message digests and review refs. This detects
-    omissions/false provenance on supplied traces; it cannot hook native
+    classifications and verify message digests, original message roles and
+    review refs. A host-authoritative role map must not come from the agent's
+    self-reported assessments. This detects omissions/role spoofing on supplied
+    traces; it cannot hook native
     ChatGPT or prove semantic completeness of a host-supplied enumeration.
     """
 
@@ -226,6 +229,15 @@ def admit_turn_evolution_coverage(
     digest = sha256(actual_assistant_response.encode("utf-8")).hexdigest()
     if assessed[review.assistant_final_ref].source_sha256 != digest:
         raise EntryAdmissionError("assistant's actual draft differs from the reviewed output")
+    if host_observed_source_origins is None or not isinstance(host_observed_source_origins, Mapping):
+        raise EntryAdmissionError("turn evolution requires independently observed host origins")
+    if set(host_observed_source_origins) != expected:
+        raise EntryAdmissionError("host origin enumeration must match observed turn sources")
+    if any(not isinstance(origin, UtteranceOrigin) for origin in host_observed_source_origins.values()):
+        raise EntryAdmissionError("host origin records require typed origins")
+    for source_ref, record in assessed.items():
+        if record.origin is not host_observed_source_origins[source_ref]:
+            raise EntryAdmissionError(f"host origin mismatch for utterance: {source_ref}")
     for item in review.assessments:
         # The final response bytes are already bound above. Other sources must
         # be proven by the host, not accepted as agent-supplied content claims.
