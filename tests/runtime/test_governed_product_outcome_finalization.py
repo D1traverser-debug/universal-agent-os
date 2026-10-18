@@ -69,6 +69,7 @@ def _turn_kwargs():
     return dict(
         turn_evolution_coverage=_turn_coverage(),
         observed_turn_source_refs=("test:financial-user", "test:financial-agent"),
+        observed_turn_source_origins={"test:financial-user": UtteranceOrigin.USER, "test:financial-agent": UtteranceOrigin.ASSISTANT},
         turn_source_digest_verifier=lambda ref, digest: (
             ref == "test:financial-user" and digest == sha256(b"controlled financial owner request").hexdigest()
         ),
