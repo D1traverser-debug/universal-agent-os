@@ -50,7 +50,12 @@
     "src/uaos/assurance/controller_review.py",
     "state/observations/uaos-controller-five-repo-review-20261018.json",
     "tests/architecture/test_controller_review_admission.py",
-    "tests/evolution/test_controller_inheritance_evolution_admission.py"
+    "tests/evolution/test_controller_inheritance_evolution_admission.py",
+    "src/uaos/kernel/problem_space.py",
+    "src/uaos/kernel/cognition_case.py",
+    "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
+    "docs/research/uaos-inheritance-review-20261018/08_operational_method_transfer_taxonomy.md",
+    "tests/kernel/test_method_transfer_admission.py"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -89,5 +94,30 @@
     "source_profile": "config/NATIVE_SESSION_RUNTIME_PROFILE.json",
     "source_profile_chars": 11925
   },
-  "transaction_execution_assurance": "CANONICAL_EVOLUTION_TRANSACTION_EVALUATION_TESTED_IN_CI__NO_ASSERTION_OF_PHYSICALLY_ENFORCED_NATIVE_RUN"
+  "transaction_execution_assurance": "CANONICAL_EVOLUTION_TRANSACTION_EVALUATION_TESTED_IN_CI__NO_ASSERTION_OF_PHYSICALLY_ENFORCED_NATIVE_RUN",
+  "method_transfer_extension_20261018": {
+    "scope": "EVIDENCE_BOUND_COGNITION_METHOD_REUSE_FOR_REPEATED_FAILURES",
+    "status": "PR_CANDIDATE__NOT_VALIDATED_OR_NATIVE_PROVEN",
+    "governing_outcome": "Repeated controller problems autonomously compare past method families with current fit/misfit evidence rather than forcing the user to re-teach previous architecture, CI, entry or CRUD lessons.",
+    "original_evidence_refs": [
+      "state/observations/uaos-multicausal-autonomous-learning-20261018.json",
+      "docs/research/uaos-inheritance-review-20261018/08_operational_method_transfer_taxonomy.md",
+      "https://github.com/D1traverser-debug/universal-agent-os/issues/63#issuecomment-6250711763"
+    ],
+    "admitted_actions": [
+      "CANDIDATE_OWNED_BY_EXISTING_PROBLEM_SPACE_AND_COGNITION_CASE",
+      "ONE_EXISTING_TASK_INDEX_PRIORITY_SWAP_WITH_EXACT_RETURN_POINTER"
+    ],
+    "blocked_claims": [
+      "CURRENT_NATIVE_CHATGPT_PHYSICAL_INSTRUMENTATION",
+      "FULL_WEB_KNOWLEDGE_SATURATION",
+      "FINANCIAL_WRITING_END_USER_OUTCOME"
+    ],
+    "candidate_tests": [
+      "tests/kernel/test_method_transfer_admission.py",
+      "tests/architecture/test_cognition_case_transaction.py",
+      "tests/architecture/test_native_chatgpt_depth_routing.py"
+    ],
+    "verification_plan": "Candidate CI, production exact-head checks, method transfer counterexamples, cross-session no-reminder trigger, downstream Financial original task and real article/Word outcome separately."
+  }
 }
