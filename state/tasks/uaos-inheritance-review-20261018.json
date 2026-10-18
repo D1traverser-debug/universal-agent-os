@@ -3,7 +3,7 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "status": "RUNNING",
-  "current_stage": "CONTROLLER_FIRST_SYSTEMIC_METHOD_REUSE_AND_DEEP_KNOWLEDGE_AUDIT__EVALUATION_OPEN",
+  "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
   "next_action": "Controller-first: compare current inherited lessons/knowledge acquisition source roles and practical reuse against actual mechanisms; make bounded owner-native code/test changes, CI/production reread, then register untested native/product open outcomes. Once governed controller task is genuinely complete, restore Financial as only default and resume exact state without new request.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
@@ -121,5 +121,6 @@
     "followup_state_ref": "state/tasks/uaos-financial-system-governed-recovery-20261018.json",
     "completion_handoff": "AFTER_EVIDENCE_GROUNDED_CONTROLLER_TASK_CLOSURE_UPDATE_EXISTING_CONTROLLER_INDEX_ONE_DEFAULT_TO_FINANCIAL_AND_REREAD_ITS_EXACT_STATE",
     "native_execution_ceiling": "REPO_CODE_AND_SKILL_DO_NOT_GUARANTEE_NATIVE_CHATGPT_HOOK"
-  }
+  },
+  "current_focus": "CONTROLLER_FIRST_METHOD_REUSE_AND_DEEP_KNOWLEDGE_AUDIT"
 }
