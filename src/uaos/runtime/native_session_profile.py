@@ -87,11 +87,7 @@ def build_native_session_runtime_profile(
             "controller_inheritance_review": {
                 "required": _value(review, "required", field="controller_inheritance_review"),
                 "trigger": _value(review, "trigger", field="controller_inheritance_review"),
-                "scope": _value(review, "scope", field="controller_inheritance_review"),
-                "minimum_entry": _value(review, "minimum_entry", field="controller_inheritance_review"),
                 "coverage_rule": _value(review, "coverage_rule", field="controller_inheritance_review"),
-                "completion_rule": _value(review, "completion_rule", field="controller_inheritance_review"),
-                "host_boundary": _value(review, "host_boundary", field="controller_inheritance_review"),
             },
             "mandatory_entry": {
                 "scope": _value(entry, "scope", field="mandatory_selected_context_entry"),
