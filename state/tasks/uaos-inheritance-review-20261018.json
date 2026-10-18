@@ -405,30 +405,27 @@
     "completed_source_dossiers": [
       "vectorize-io/hindsight"
     ],
-    "current_source": "stablyai/orca",
-    "current_source_main_sha": "c7942252b58bca576867ca77f14908519e9a6702",
-    "knowledge_ref": "docs/research/uaos-inheritance-review-20261018/13_orca_multi_agent_execution_orchestration_source_learning.md",
-    "knowledge_disposition": "CANDIDATE__IMPLEMENTATION_TEST_DOC_AND_INDEPENDENT_METHODOLOGY_TRIANGULATED__NO_ORCA_BINARY_HOST_OR_NATIVE_UAOS_VALIDATION__NOT_CANONICAL",
+    "current_source": "vectorize-io/hindsight",
+    "current_source_main_sha": "5331da2f4db369528bb122075341a7de9c3df6df",
+    "knowledge_ref": "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md",
+    "knowledge_disposition": "CANDIDATE__SOURCE_AND_IMPLEMENTATION_TRIANGULATED__INDEPENDENT_UAOS_USAGE_NOT_VERIFIED__NOT_CANONICAL",
     "method_cards": [
-      "ORC-01",
-      "ORC-02",
-      "ORC-03",
-      "ORC-04",
-      "ORC-05",
-      "ORC-06",
-      "ORC-07",
-      "ORC-08",
-      "ORC-09"
+      "HIN-01",
+      "HIN-02",
+      "HIN-03",
+      "HIN-04",
+      "HIN-05",
+      "HIN-06",
+      "HIN-07"
     ],
     "assurance": [
-      "ORCA_RUNTIME_DOC_SKILL_SOURCE_IMPLEMENTATION_TEST_AND_EXTERNAL_METHODS_READ",
-      "NOT_ENTIRE_38335_ITEM_TREE_LINE_BY_LINE",
-      "REAL_ORCA_BINARY_AND_CLI_NOT_INSTALLED_OR_EXECUTED",
-      "DEFAULT_SKIP_PERMISSION_LAUNCH_UNSAFE_FOR_UAOS_MUTATIONS",
-      "NO_NATIVE_CHATGPT_ORCA_MULTI_AGENT_EFFECTOR_VERIFIED",
-      "SOURCE_DOSSIER_ADMISSION_PR_OPEN__METHOD_CANDIDATES_NOT_CANONICAL"
+      "SOURCE_SKILL_DOC_IMPLEMENTATION_TEST_PAPER_AND_EXTERNAL_CRITIQUE_READ",
+      "NOT_ENTIRE_5837_TREE_LINE_BY_LINE",
+      "NO_HINDSIGHT_SERVER_OR_MCP_DEPLOYED",
+      "NO_BENCHMARK_OR_HOST_SELECTED_CHAT_TRACE",
+      "NO_NEW_TASK_INDEX_OR_SECOND_KNOWLEDGE_AUTHORITY"
     ],
-    "next_action": "Validate and promote Orca source dossier through PR exact-head CI, independent review and main reread; then reconcile exact task progress without promoting method cards to CANONICAL. Next ordered source after item 2 is cloudflare/security-audit.",
+    "next_action": "Complete Orca candidate PR and main reread first. Then reconcile Orca promotion with its own PR evidence, preserving Hindsight historical production evidence, and keep method cards CANDIDATE. Next ordered source cloudflare/security-audit.",
     "production_evidence": {
       "pr": 129,
       "main_sha": "893033c77b545bcd8ec1d1c1d25f32b177407071",
@@ -444,7 +441,26 @@
         "ref": "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md",
         "status": "PRODUCTION_DOSSIER_VERIFIED__METHODS_CANDIDATE",
         "pr": 129,
-        "commit": "893033c77b545bcd8ec1d1c1d25f32b177407071"
+        "commit": "893033c77b545bcd8ec1d1c1d25f32b177407071",
+        "source_main_sha": "5331da2f4db369528bb122075341a7de9c3df6df",
+        "method_cards": [
+          "HIN-01",
+          "HIN-02",
+          "HIN-03",
+          "HIN-04",
+          "HIN-05",
+          "HIN-06",
+          "HIN-07"
+        ],
+        "production_evidence": {
+          "pr": 129,
+          "main_sha": "893033c77b545bcd8ec1d1c1d25f32b177407071",
+          "candidate_head": "8983babe2c455c4ccca657750b1f99c3e6187a42",
+          "ci_run": 714,
+          "ci": "635 passed, 2 skipped",
+          "review": "COMPLETED_NO_FINDINGS",
+          "main_source_reread": true
+        }
       },
       {
         "source": "stablyai/orca",
@@ -463,6 +479,31 @@
           "ORC-09"
         ]
       }
-    ]
+    ],
+    "pending_source_dossier": {
+      "source": "stablyai/orca",
+      "upstream_commit": "c7942252b58bca576867ca77f14908519e9a6702",
+      "knowledge_ref": "docs/research/uaos-inheritance-review-20261018/13_orca_multi_agent_execution_orchestration_source_learning.md",
+      "method_cards": [
+        "ORC-01",
+        "ORC-02",
+        "ORC-03",
+        "ORC-04",
+        "ORC-05",
+        "ORC-06",
+        "ORC-07",
+        "ORC-08",
+        "ORC-09"
+      ],
+      "status": "SOURCE_RESEARCH_CANDIDATE_ONLY__NOT_CURRENT_NOT_PROMOTED",
+      "assurance": [
+        "ORCA_RUNTIME_DOC_SKILL_SOURCE_IMPLEMENTATION_TEST_AND_EXTERNAL_METHODS_READ",
+        "NOT_ENTIRE_38335_ITEM_TREE_LINE_BY_LINE",
+        "REAL_ORCA_BINARY_CLI_NOT_INSTALLED_OR_EXECUTED",
+        "DEFAULT_SKIP_PERMISSION_LAUNCH_UNSAFE_FOR_UAOS_MUTATIONS",
+        "NO_NATIVE_CHATGPT_ORCA_MULTI_AGENT_EFFECTOR_VERIFIED"
+      ],
+      "promotion_rule": "After PR exact-head CI + independent review + main reread, update completed_source_dossiers/source history/current source atomically in a governed continuity change; never couple Hindsight production_evidence to Orca before then."
+    }
   }
 }
