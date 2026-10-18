@@ -2,7 +2,7 @@
   "schema_version": "1.5",
   "evolution_id": "EVO-20261018-FINANCIAL-PRODUCT-OUTCOME-ASSURANCE",
   "authority": "UAOS",
-  "status": "CONTROLLED_PARENT_PRODUCT_GATES_VERIFIED__ACTING_FINANCIAL_EXECUTION_REVIEW_CANDIDATE__LIVE_CHILD_USER_OUTCOME_OPEN",
+  "status": "UAOS_FINANCIAL_PROFESSIONAL_ROLE_PRODUCTION_VERIFIED__LIVE_CHILD_USER_OUTCOME_OPEN",
   "origin_kind": "PROBLEM",
   "governing_outcome": "UAOS-owned rehabilitation of Financial Writing must not be called completed until requirements produce a real, source-verifiable and accepted current-kernel product and reusable quality improvement, not only green repo CI and closed child code issue.",
   "origin_evidence_refs": [
@@ -99,7 +99,7 @@
     "Later real Financial v3 replay with primary claims and Word actual file availability; independent/user outcome remains open until observed."
   ],
   "assurance_boundary": "Controlled ProductOutcomeEvidence admission invoked by parent caller with genuine independent verifier. No universal host hook; GitHub commit is not live product validation. Child business state authority remains financial-writing-agent.",
-  "post_promotion_observation": "UAOS main has product-health outcome gap and finalization gate, while current child v3 article remains at RESEARCH and independent live outcome/Word files remain unverified. Parent issue #63 still open.",
+  "post_promotion_observation": "New UAOS task explicitly acts as Financial expert, writing materials directly accepted in controller chat; GitHub parent entry and indexed state readback consistent. Current financial v3 still RESEARCH; independent quality/Word/current source acceptance OPEN. Child mutation safety denial not bypassed.",
   "production_20261018_health_evidence": {
     "pr": 107,
     "main_sha": "5e50b74d4630b2ee5d0a75fec497c600e8bc014f",
@@ -134,5 +134,13 @@
     },
     "user_materials_direct_to_UAOS": true,
     "real_publication_quality": "NOT_VERIFIED"
+  },
+  "professional_entry_promotion": {
+    "pr": 110,
+    "head": "8ff8933f8a351d3e7acc2bb4d26e4ed9f2c5e7c5",
+    "main": "92363544b42c64b09b1c08cd59321d51335cdd2b",
+    "ci_run": 636,
+    "tests": "574 passed, 1 skipped",
+    "evidence_boundary": "ROLE_AND_OPERATING_SOURCE_PERSISTED_NOT_NATIVE_PHYSICAL_SKILL_OR_REAL_PUBLISHED_ARTICLE"
   }
 }
