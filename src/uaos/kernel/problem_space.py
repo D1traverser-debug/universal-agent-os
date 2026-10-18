@@ -418,8 +418,8 @@ class MethodTransferCandidate:
     def __post_init__(self) -> None:
         if not self.method_family.strip() or not self.failure_class.strip():
             raise ValueError("method family and failure class are required")
-        if not self.fit_evidence_refs or not self.misfit_or_falsification_refs:
-            raise ValueError("method transfer needs current evidence for both fit and nonfit")
+        if any(not isinstance(refs, tuple) or not refs or any(not isinstance(r, str) or not r.strip() for r in refs) for refs in (self.fit_evidence_refs, self.misfit_or_falsification_refs)):
+            raise ValueError("method transfer needs a non-empty tuple of evidence refs for both fit and nonfit")
         if not self.fit_condition.strip() or not self.nonfit_condition.strip():
             raise ValueError("method transfer needs explicit fit and nonfit conditions")
 
@@ -443,10 +443,9 @@ class MethodTransferAssessment:
             raise ValueError("method transfer requires current problem and target scope")
         if not self.observed_failure_classes or not all(x.strip() for x in self.observed_failure_classes):
             raise ValueError("method transfer requires observed failure classes")
-        if not self.lookup_evidence_refs or not all(x.strip() for x in self.lookup_evidence_refs):
-            raise ValueError("method transfer requires real prior-method lookup evidence")
-        if not self.novelty_probe_refs or not all(x.strip() for x in self.novelty_probe_refs):
-            raise ValueError("method transfer requires a probe beyond familiar known failures")
+        for refs in (self.lookup_evidence_refs, self.novelty_probe_refs):
+            if not isinstance(refs, tuple) or not refs or any(not isinstance(x, str) or not x.strip() for x in refs):
+                raise ValueError("method transfer requires a non-empty tuple of evidence refs")
         if not self.selection_rationale.strip():
             raise ValueError("method transfer requires a rationale")
 
