@@ -45,3 +45,12 @@ Competing causes remain: controller host invocation, incorrect semantic classifi
 Search rounds revisited NIST, Argyris, SEI, IBM, Google SRE and OpenAI workflow evaluation. They yielded a bounded, cross-family method comparison, not an exhaustive web traversal or two terminal zero-novelty saturation rounds. Consequently comprehensive study remains OPEN and no genuine native trace reliability percentage is asserted.
 
 Acceptance for this patch: exact generated projections, candidate+production CI green, controlled negative and positive route tests, task/evolution continuity, no child repo edits, and truthful host assurance boundary. Subsequent direct native observations remain a separate task.
+
+
+## Post-promotion double-loop observation — evidence-model reuse
+
+Observed after PR #98/#99: the new controlled entry adapter duplicated five evidence-kind labels in a custom `EntryEvidenceKind` even though canonical `src/uaos/kernel/cognition_case.py#EvidenceKind` and `EvidenceItem` already provide source identity, statement and category. This increased representation overlap and potential future semantic drift. The original fix had satisfied runtime-routing tests but had NOT independently challenged its own evidence schema, a genuine first-pass architecture omission.
+
+Alternatives: leave the duplicate enum (rejected: shadow vocabulary); create a global `EntryEvidenceRegistry` (rejected: second evidence authority); or reuse the existing `EvidenceItem` as the payload of a small entry-specific `EntryObservation` signal adapter (selected). The adapter remains necessary to bind source facts to runtime routing before the full CognitionCase is opened; it does not create a second cognition stage, evidence lifecycle, task index or evolution owner.
+
+Validation: rerun original eight entry negative/positive cases and existing cognition/finalization suite; a test that a malformed EvidenceItem fails at its canonical constructor; no code changes in child repositories; review candidate/production CI. Unlike more MUST/NEVER statements, this change removes a redundant abstraction while preserving safety.
