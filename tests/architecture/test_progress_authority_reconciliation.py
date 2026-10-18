@@ -128,3 +128,30 @@ def test_progress_identity_requires_exact_match_not_substring_or_negation():
             ),
         )
         assert SessionAdherenceViolation.AUTHORITATIVE_PROGRESS_MISMATCH in receipt.violations
+
+
+def test_status_cli_handles_controller_root_and_still_rejects_two_defaults(tmp_path, monkeypatch):
+    from scripts import uaos_status
+    monkeypatch.setattr(uaos_status, "ROOT", tmp_path)
+    (tmp_path / "state").mkdir()
+    (tmp_path / "docs" / "assurance").mkdir(parents=True)
+    (tmp_path / "CURRENT_SYSTEM.json").write_text(
+        json.dumps({"system_release_version": "test"}), encoding="utf-8"
+    )
+    (tmp_path / "docs" / "assurance" / "PRODUCTION_READINESS.json").write_text(
+        json.dumps({"status": "historical-only"}), encoding="utf-8"
+    )
+    index_path = tmp_path / "state" / "TASK_INDEX.json"
+    index_path.write_text(json.dumps({"controller_tasks": []}), encoding="utf-8")
+    result = uaos_status.current_status()
+    assert result["current_task"] is None
+    assert result["readiness_snapshot"]["status"] == "historical-only"
+
+    entries = [
+        {"task_id": name, "resume_eligible": True, "default_resume": True}
+        for name in ("test-one", "test-two")
+    ]
+    index_path.write_text(json.dumps({"controller_tasks": entries}), encoding="utf-8")
+    import pytest
+    with pytest.raises(ValueError, match="ambiguous"):
+        uaos_status.current_status()
