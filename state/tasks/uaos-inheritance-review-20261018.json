@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Verify evidence-bounded retirement candidate: exact-head protected CI and independent review; main readback must confirm obsolete proposed layout absent, entry status source pointer present, canonical task/finance continuation intact. Continue UAOS self-initiated method-transfer and file-lifecycle evaluation; do not claim complete autonomous evolution.",
+  "next_action": "Complete protected review/CI for POSIX snapshot no-follow race candidate, then main reread and verify negative injected races; continue external provider deletes, non-POSIX/host write enforcement and five-repo deep outcome audit. Financial parent-governed recovery remains RUNNING but parked.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -284,7 +284,7 @@
     }
   },
   "file_lifecycle_independent_deletion_20261019": {
-    "status": "EVIDENCE_GROUNDED_CANDIDATE__PR_AND_ACTIVE_READBACK_OPEN",
+    "status": "PRODUCTION_PR122_MERGED__CI_620_PASSED_2_SKIPPED__MAIN_SOURCE_REREAD",
     "governing_outcome": "Remove obsolete competing visible file authority from current tree, not destroy required audit evidence or blindly obey a deletion suggestion.",
     "observed": [
       "User deletion instruction is not causal fact or mutation permission despite repeated assistant agreement.",
@@ -309,10 +309,40 @@
     "open": [
       "ACTIVE_DEPENDENCY_SCAN_IS_TEXTUAL_NOT_COMPLETE_RUNTIME_DYNAMIC_PROOF",
       "HOST_NATIVE_ACTIVATION_AND_AUTONOMOUS_SELF_INITIATION_UNVERIFIED",
-      "PR_CI_PROTECTED_PROMOTION_AND_MAIN_REREAD_OPEN",
       "CROSS_DOMAIN_OWNER_AND_OTHER_FILE_LIFECYCLE_OUTCOMES_OPEN"
     ],
     "evidence_strength": "399_TRACKED_FILE_SNAPSHOT_READ_FOR_FILENAME_PATH_DISTINCTIVE_TITLE__OTHER_INBOUND_MATCHES_ZERO",
-    "user_agreement_not_evidence": true
+    "user_agreement_not_evidence": true,
+    "release": {
+      "pr": 122,
+      "merge_sha": "0ae09f96a90dfa3e1ad18dc18eefeeffa4441526",
+      "candidate_head": "089ba3ca858e8ab33d822721c99916eec8846d8b",
+      "run_id": 39149662760,
+      "ci": "620 passed, 2 skipped",
+      "main_reread": true,
+      "obsolete_file_absent": true,
+      "entry_status_pointer_present": true
+    }
+  },
+  "snapshot_symlink_race_20261019": {
+    "status": "SOURCE_HARDENING_CANDIDATE__CI_AND_PROMOTION_OPEN",
+    "authority_context": "UAOS",
+    "owner": "src/uaos/state/snapshot.py",
+    "governing_outcome": "Keep untrusted snapshot artifact reads confined beneath the selected snapshot directory across verification and restore staging, with no new global authority.",
+    "source_observation": "Manifest scan and per-file Path.is_file preceded Path.open/shutil.copytree, allowing symlink substitution between check and read on POSIX; race outcome not proven in native production.",
+    "intervention": "USE_POSIX_DIRFD_O_NOFOLLOW_ON_EACH_DIRECTORY_COMPONENT_AND_LEAF_FOR_ARTIFACT_HASH_COPY_AND_MANIFEST_DATABASE_READ__NO_NEW_OWNER",
+    "tests": [
+      "tests/state/test_portable_snapshot.py#test_snapshot_verify_rejects_check_to_use_symlink_swap",
+      "tests/state/test_portable_snapshot.py#test_snapshot_restore_rejects_symlink_swap_during_staging",
+      "tests/state/test_portable_snapshot.py#test_portable_snapshot_roundtrip_and_integrity",
+      "tests/state/test_portable_snapshot.py#test_restore_overwrite_rolls_back_database_and_artifacts_if_rename_fails"
+    ],
+    "limits": [
+      "WINDOWS_PATH_BASED_FALLBACK_NOT_POSIX_DIRFD_ENFORCED",
+      "DIRECT_FILESYSTEM_MUTATION_BY_UNCOOPERATING_WRITERS_UNMEDIATED",
+      "CROSS_RESOURCE_CRASH_ATOMICITY_AND_POWER_LOSS_UNPROVEN",
+      "NATIVE_CHATGPT_TOOL_WRITE_HOOKS_NOT_VERIFIED"
+    ],
+    "next_validation": "Run full CI with negative injection and original roundtrip, assess independent review, then protected promotion/readback; continue non-POSIX and concurrent storage investigation."
   }
 }
