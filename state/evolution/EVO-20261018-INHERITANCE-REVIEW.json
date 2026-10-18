@@ -347,7 +347,7 @@
     "live_verification_limit": "Retirement effective for GitHub main working tree only; user-facing references, copies, installed agent sources and third-party caches have not been enumerated."
   },
   "host_origin_fencing_20261019": {
-    "status": "CANDIDATE__FROZEN_ACCEPTANCE_PENDING_GREEN_CI_AND_MAIN_REREAD",
+    "status": "CONTROLLED_CODE_PROMOTED__PR137_CI_AND_MAIN_REREAD_VERIFIED__NATIVE_UNVERIFIED",
     "origin_kind": "INCIDENT",
     "owner": "EXISTING_CONTROLLER_EVOLUTION_TRANSACTION__NO_SECOND_STATUS_OWNER",
     "governing_outcome": "Bind every host-observed user/tool/state/assistant message to host-authenticated source role; reject agent-origin role spoof even when bytes and digests match.",
@@ -396,10 +396,23 @@
         "run": 39164125135,
         "result": "638 passed, 2 skipped; governance link then missing"
       },
-      "evaluation": "CURRENT_CANDIDATE_PR137_CI_PENDING"
+      "evaluation": "CURRENT_CANDIDATE_PR137_CI_PENDING",
+      "final": {
+        "pr": 137,
+        "head": "1f08c083ee34405fc0f0b4f0a7bc13f29a99808d",
+        "promotion_gate_run": 39164636449,
+        "pytest": "639 passed, 2 skipped",
+        "integration_run": 39164636448,
+        "postgres_dbo": "success",
+        "object_store": "success",
+        "openai_provider": "skipped",
+        "merge_sha": "5f150a47a432a2b77c042e648bb112bb88b9e96f",
+        "main_files_reread": true
+      }
     },
     "rollback": "Revert bounded PR if functional head/host equivalence regressions; preserve original trusted fact/source/assistant binding.",
     "assurance": "CONTROLLED_PYTHON_HOST_ONLY__NATIVE_CHATGPT_ACTUAL_HOST_ENUMERATION_UNVERIFIED__NO_FINANCIAL_CHILD_WRITE",
-    "post_promotion": "PENDING_HEAD_CI_AND_PRODUCTION_OBSERVATION"
+    "post_promotion": "MAIN_SOURCE_AND_EXACT_TASK_AND_EVOLUTION_REREAD_SUCCESS__CONTROLLED_HOST_ONLY__FRESH_NATIVE_CHATGPT_HOST_ORIGIN_CAPTURE_UNAVAILABLE",
+    "assurance_ceiling": "TRUSTED_HOST_PYTHON_RECEIVER_ORIGIN_FENCING__NO_ACTUAL_NATIVE_CHATGPT_INTERCEPTOR__NO_REAL_HOST_ORIGIN_FEED_IN_THIS_SESSION__NO_CHILD_DOMAIN_COVERAGE_CLAIM"
   }
 }
