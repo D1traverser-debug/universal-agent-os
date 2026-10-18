@@ -288,3 +288,14 @@ def test_user_claim_cannot_pass_as_unquestioned_clean_without_canonical_challeng
         admit_final_response(
             _report(), _context(_entry(), turn_evolution_coverage=review)
         )
+
+
+def test_post_output_unfinished_work_cannot_close_as_clean_challenge():
+    reviewed = _review(_report())
+    output_work = replace(
+        reviewed.assessments[1],
+        signal=EntrySignal.UNFINISHED_AUTHORIZED_WORK,
+    )
+    review = replace(reviewed, assessments=(reviewed.assessments[0], output_work))
+    with pytest.raises(FinalizationBlocked, match="UNROUTED_POST_DRAFT_UNFINISHED_AUTHORIZED_WORK"):
+        admit_final_response(_report(), _context(_entry(), turn_evolution_coverage=review))
