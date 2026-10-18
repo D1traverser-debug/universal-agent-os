@@ -245,3 +245,45 @@ def test_exact_controller_entry_requires_owner_source_and_rejects_false_done():
     assert admit_final_response(report, bound).adherence.passed
     with pytest.raises(FinalizationBlocked, match="AUTHORITATIVE_PROGRESS_MISMATCH"):
         admit_final_response(report.replace(f"状态：{state['status']}", "状态：COMPLETE"), bound)
+
+
+def test_controlled_finalization_requires_evolution_review_of_actual_user_and_assistant_turn():
+    with pytest.raises(FinalizationBlocked, match="MISSING_ALL_UTTERANCE_EVOLUTION_REVIEW"):
+        admit_final_response(
+            _report(), _context(_entry(), turn_evolution_coverage=None)
+        )
+
+    incomplete = replace(
+        _review(_report()),
+        assessments=(_review(_report()).assessments[-1],),
+    )
+    with pytest.raises(FinalizationBlocked, match="not every user/assistant/tool/state utterance"):
+        admit_final_response(
+            _report(), _context(_entry(), turn_evolution_coverage=incomplete)
+        )
+
+
+def test_post_output_new_problem_cannot_be_silently_marked_clean():
+    reviewed = _review(_report())
+    contradictory_assistant = replace(
+        reviewed.assessments[1],
+        signal=EntrySignal.SYSTEM_OR_RULE_CONTRADICTION,
+    )
+    review = replace(reviewed, assessments=(reviewed.assessments[0], contradictory_assistant))
+    with pytest.raises(FinalizationBlocked, match="UNROUTED_POST_DRAFT_SYSTEM_OR_RULE_CONTRADICTION"):
+        admit_final_response(
+            _report(), _context(_entry(), turn_evolution_coverage=review)
+        )
+
+
+def test_user_claim_cannot_pass_as_unquestioned_clean_without_canonical_challenge():
+    reviewed = _review(_report())
+    user_claim = replace(
+        reviewed.assessments[0],
+        signal=EntrySignal.CLAIM_OR_CAUSAL_SUGGESTION,
+    )
+    review = replace(reviewed, assessments=(user_claim, reviewed.assessments[1]))
+    with pytest.raises(FinalizationBlocked, match="UNROUTED_POST_DRAFT_CHALLENGE_SIGNAL"):
+        admit_final_response(
+            _report(), _context(_entry(), turn_evolution_coverage=review)
+        )
