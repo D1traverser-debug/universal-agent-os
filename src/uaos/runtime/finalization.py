@@ -12,6 +12,11 @@ from uaos.kernel.cognition_case import (
     EvidenceItem,
     require_cognition_case_admission,
 )
+from uaos.kernel.domain_health import (
+    DomainObservation,
+    ProductOutcomeEvidence,
+    require_product_outcome_completion,
+)
 from uaos.kernel.deep_task import (
     DeepTaskAdmissionError,
     DeepTaskCase,
@@ -120,6 +125,10 @@ class FinalizationContext:
     entry_evidence_verifier: Callable[[str], bool] | None = None
     blocked_tool_operation_observed: bool = False
     blocked_operation_continuity: BlockedOperationContinuity | None = None
+    governed_product_outcome_completion_requested: bool = False
+    governed_product_outcome_observation: DomainObservation | None = None
+    governed_product_outcome_evidence: ProductOutcomeEvidence | None = None
+    governed_product_outcome_verifier: Callable[[str], bool] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -304,6 +313,33 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
         )
     elif context.blocked_operation_continuity is not None:
         raise FinalizationBlocked("BLOCKED_OPERATION_EVIDENCE_WITHOUT_CONTROLLED_TRIGGER")
+
+    # Product-outcome closure is a UAOS controller action. Technical CI success
+    # and source-only receipts cannot certify a delivered reader/customer result.
+    # This is enforced for controlled callers that explicitly attempt such closure;
+    # native ChatGPT responses are not physically mediated by repository code.
+    if context.governed_product_outcome_completion_requested:
+        if not context.controller_selected:
+            raise FinalizationBlocked("PRODUCT_OUTCOME_COMPLETION_REQUIRES_CONTROLLER_AUTHORITY")
+        if (
+            context.governed_product_outcome_observation is None
+            or context.governed_product_outcome_evidence is None
+        ):
+            raise FinalizationBlocked("MISSING_CURRENT_PRODUCT_OUTCOME_EVIDENCE")
+        try:
+            require_product_outcome_completion(
+                context.governed_product_outcome_observation,
+                context.governed_product_outcome_evidence,
+                verify_evidence=context.governed_product_outcome_verifier,
+            )
+        except ValueError as exc:
+            raise FinalizationBlocked(f"PRODUCT_OUTCOME_NOT_VALIDATED: {exc}") from exc
+    elif any((
+        context.governed_product_outcome_observation is not None,
+        context.governed_product_outcome_evidence is not None,
+        context.governed_product_outcome_verifier is not None,
+    )):
+        raise FinalizationBlocked("UNSOLICITED_PRODUCT_OUTCOME_CLOSURE_EVIDENCE")
 
     if context.work_remaining_without_user_input and not context.user_input_required:
         raise FinalizationBlocked("ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT")
