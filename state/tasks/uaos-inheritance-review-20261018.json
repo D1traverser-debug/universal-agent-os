@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Continue UAOS controller task after candidate entry repair: validate evidence-based self-challenge and repair continuation, then independently deepen source coverage and observed native behavior. Do not treat local CI as full autonomous outcome.",
+  "next_action": "Continue UAOS-only parent deep review: independently test native selected-session entry and genuine research saturation; broaden rule-assumption falsification, novel fault discovery and effects trace. Do not treat controlled gate CI as proof of native always-on autonomy.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -20,7 +20,7 @@
     "state/observations/uaos-multicausal-autonomous-learning-20261018.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-18T16:20:31+08:00",
+  "updated_at": "2026-10-18T16:50:52+08:00",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -55,12 +55,19 @@
     }
   },
   "epistemic_entry_implementation": {
-    "status": "CANDIDATE_EVALUATION_PENDING",
+    "status": "CONTROLLED_GATE_PRODUCTION_VERIFIED__NATIVE_STABILITY_UNVERIFIED",
     "task_ref": "state/tasks/uaos-epistemic-entry-20261018.json",
     "evolution_ref": "state/evolution/EVO-20261018-CONTROLLER-EPISTEMIC-ENTRY.json",
     "governing_scope": "UAOS_CONTROLLER_ONLY__NO_CHILD_REPO_MUTATIONS",
     "implementation": "Controlled finalization routes evidence-backed epistemic entry, with direct rule/method self-challenge and no second cognition owner.",
     "native_host": "UNVERIFIED_PRE_SEND_PRE_TOOL_HOOK",
-    "research_saturation": "NOT_ESTABLISHED"
+    "research_saturation": "NOT_ESTABLISHED",
+    "production_evidence": {
+      "pr": 98,
+      "main_sha": "bb98594b347cb0ef445a7f16f5857a2ca4773f7b",
+      "ci_run": 598,
+      "result": "533 passed, 1 skipped"
+    },
+    "subordinate_task_disposition": "COMPLETE_BOUNDED_REPAIR__PARENT_DEEP_AUDIT_REMAINS_RUNNING"
   }
 }
