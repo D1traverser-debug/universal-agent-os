@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Continue UAOS controller governance after a real fresh-chat canary: inspect and repair the premature diagnosis-only stopping path and blocker handling, use the existing task/observation/evolution owners, and validate real progress with CI. Account Skill update is already user-confirmed; no more UI action required for this replay.",
+  "next_action": "Continue UAOS-only autonomous work: verify controlled blocked-operation continuation and safety boundary by CI, promote through protected PR, inspect resulting source and outcomes. Native Skill invocation remains unmeasured; don't require another user re-install.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -97,5 +97,14 @@
       "result": "542 passed, 1 skipped",
       "source_readback": "ENTRYPOINT.md and ADR-0030 present on main"
     }
+  },
+  "blocked_operation_continuation": {
+    "status": "CONTROLLED_GATE_CANDIDATE_UNVERIFIED",
+    "reason": "FIRST_NATIVE_CANARY_REPORTS_A_SINGLE_BRANCH_CREATION_BLOCK_AND_NO_DURABLE_FOLLOWTHROUGH",
+    "source_ref": "state/observations/native-account-canary-20261018-first-run.json",
+    "runtime_ref": "src/uaos/runtime/finalization.py#_require_blocked_operation_continuity",
+    "evolution_ref": "state/evolution/EVO-20261018-CONTROLLER-BLOCKED-OPERATION-CONTINUITY.json",
+    "host_boundary": "NATIVE_SKILL_INVOCATION_AND_TOOL_TRACE_NOT_INSTRUMENTED",
+    "next_step": "Run candidate tests/CI, preserve parent RUNNING, reread production after protected merge; use actual future selected-chat traces as independent holdouts."
   }
 }
