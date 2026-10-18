@@ -1,25 +1,37 @@
 {
-  "schema_version":"2.4",
-  "policy_version":"2.4.0",
-  "authority":"UAOS",
-  "updated_at":"2026-10-17T22:30:00+08:00",
-  "bare_inheritance_selector":{
-    "trigger":"CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
-    "controller_option":{
-      "option_id":"uaos:controller",
-      "display_name_zh":"总控系统",
-      "intent":"SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY",
-      "creates_business_task":false,
-      "authority_context":"UAOS",
-      "controller_task_source":"state/TASK_INDEX.json#controller_tasks",
-      "on_select":"ESTABLISH_UAOS__THEN_RESOLVE_ONE_UNAMBIGUOUS_ELIGIBLE_DEFAULT_CONTROLLER_TASK_IF_PRESENT__ELSE_REMAIN_AT_CONTROLLER_ROOT",
-      "state_rule":"WHEN_A_CONTROLLER_TASK_IS_SELECTED_REREAD_ITS_state_ref_BEFORE_REPORTING_PROGRESS_OR_ACTING"
+  "schema_version": "2.4",
+  "policy_version": "2.5.0",
+  "authority": "UAOS",
+  "updated_at": "2026-10-17T22:30:00+08:00",
+  "bare_inheritance_selector": {
+    "trigger": "CONTINUE_OR_INHERIT_WITHOUT_RESOLVED_DOMAIN_OR_EXACT_TASK",
+    "controller_option": {
+      "option_id": "uaos:controller",
+      "display_name_zh": "总控系统",
+      "intent": "SYSTEM_MAINTENANCE_OR_CONTROLLER_QUERY",
+      "creates_business_task": false,
+      "authority_context": "UAOS",
+      "controller_task_source": "state/TASK_INDEX.json#controller_tasks",
+      "on_select": "ESTABLISH_UAOS__THEN_RESOLVE_ONE_UNAMBIGUOUS_ELIGIBLE_DEFAULT_CONTROLLER_TASK_IF_PRESENT__ELSE_REMAIN_AT_CONTROLLER_ROOT",
+      "state_rule": "WHEN_A_CONTROLLER_TASK_IS_SELECTED_REREAD_ITS_state_ref_BEFORE_REPORTING_PROGRESS_OR_ACTING"
     },
-    "task_source":"state/TASK_INDEX.json#tasks",
-    "include_task_when":"resume_eligible == true",
-    "ordering":["controller_option_first","RUNNING_default_resume_tasks","HOLD_default_resume_tasks","explicit_only_resume_tasks"],
-    "display_fields":["display_name_zh","task_id","domain_id","status","current_stage","default_resume_within_domain"],
-    "rules":[
+    "task_source": "state/TASK_INDEX.json#tasks",
+    "include_task_when": "resume_eligible == true",
+    "ordering": [
+      "controller_option_first",
+      "RUNNING_default_resume_tasks",
+      "HOLD_default_resume_tasks",
+      "explicit_only_resume_tasks"
+    ],
+    "display_fields": [
+      "display_name_zh",
+      "task_id",
+      "domain_id",
+      "status",
+      "current_stage",
+      "default_resume_within_domain"
+    ],
+    "rules": [
       "The selector is derived from current authority on every invocation; it is not a hard-coded alias menu.",
       "Selecting an option does not create or mutate aliases.",
       "Explicit-only or HOLD tasks must be visibly labelled and never silently selected by a bare inheritance request.",
@@ -29,47 +41,50 @@
       "Controller maintenance tasks are nested under the controller option and are not rendered again as domain task choices."
     ]
   },
-  "controller_maintenance_continuity":{
-    "authority":"UAOS",
-    "index_ref":"state/TASK_INDEX.json#controller_tasks",
-    "state_root":"state/tasks",
-    "task_owner_value":"UAOS",
-    "resumable_task_type":"controller_maintenance",
-    "persistence_admission":"WHEN_SYSTEM_MAINTENANCE_IS_MATERIAL_OR_EXPECTED_TO_SPAN_MULTIPLE_TURNS_OR_SESSIONS__CREATE_OR_UPDATE_A_CONTROLLER_TASK_INDEX_ENTRY_AND_EXACT_state_ref_BEFORE_RELYING_ON_CHAT_CONTEXT",
-    "non_persistent_cases":["READ_ONLY_CONTROLLER_QUERY","TRIVIAL_ONE_TURN_MAINTENANCE_WITH_NO_MATERIAL_SIDE_EFFECT_OR_RESUME_RISK"],
-    "selection_rule":"EXACT_CONTROLLER_TASK_ID_WINS__ELSE_ONE_ELIGIBLE_default_resume_WINS__ELSE_ONE_ELIGIBLE_TASK_WINS__MULTIPLE_MATCHES_FAIL_CLOSED__NONE_RETURNS_CONTROLLER_ROOT",
-    "completion_rule":"COMPLETE_OR_CANCELLED_CONTROLLER_TASKS_MUST_NOT_REMAIN_resume_eligible_OR_default_resume; historical state may remain as evidence.",
-    "anti_duplication":"REUSE_TASK_INDEX_AND_state/tasks__DO_NOT_CREATE_A_SECOND_CONTROLLER_INDEX_LEASE_RESUME_EPOCH_OR_PARALLEL_CONTINUITY_PROTOCOL"
+  "controller_maintenance_continuity": {
+    "authority": "UAOS",
+    "index_ref": "state/TASK_INDEX.json#controller_tasks",
+    "state_root": "state/tasks",
+    "task_owner_value": "UAOS",
+    "resumable_task_type": "controller_maintenance",
+    "persistence_admission": "WHEN_SYSTEM_MAINTENANCE_IS_MATERIAL_OR_EXPECTED_TO_SPAN_MULTIPLE_TURNS_OR_SESSIONS__CREATE_OR_UPDATE_A_CONTROLLER_TASK_INDEX_ENTRY_AND_EXACT_state_ref_BEFORE_RELYING_ON_CHAT_CONTEXT",
+    "non_persistent_cases": [
+      "READ_ONLY_CONTROLLER_QUERY",
+      "TRIVIAL_ONE_TURN_MAINTENANCE_WITH_NO_MATERIAL_SIDE_EFFECT_OR_RESUME_RISK"
+    ],
+    "selection_rule": "EXACT_CONTROLLER_TASK_ID_WINS__ELSE_ONE_ELIGIBLE_default_resume_WINS__ELSE_ONE_ELIGIBLE_TASK_WINS__MULTIPLE_MATCHES_FAIL_CLOSED__NONE_RETURNS_CONTROLLER_ROOT",
+    "completion_rule": "COMPLETE_OR_CANCELLED_CONTROLLER_TASKS_MUST_NOT_REMAIN_resume_eligible_OR_default_resume; historical state may remain as evidence.",
+    "anti_duplication": "REUSE_TASK_INDEX_AND_state/tasks__DO_NOT_CREATE_A_SECOND_CONTROLLER_INDEX_LEASE_RESUME_EPOCH_OR_PARALLEL_CONTINUITY_PROTOCOL"
   },
-  "domain_session_activation":{
-    "model":"DIRECT_DOMAIN_WORK_PLANE_WITH_PARENT_CONTROL_PLANE",
-    "rules":[
+  "domain_session_activation": {
+    "model": "DIRECT_DOMAIN_WORK_PLANE_WITH_PARENT_CONTROL_PLANE",
+    "rules": [
       "A registered domain may be selected directly in a fresh chat through the inheritance/bootstrap selector; the user does not need to first enter or remain in a UAOS controller conversation.",
       "After domain selection, that domain is the current Agent and normal business turns execute directly under DOMAIN:<domain_id> using the domain's own business authority.",
       "UAOS bootstrap/registry/policy loading is control-plane initialization, not a mandatory per-turn business proxy or gateway.",
       "The parent may provide common capabilities, governance, continuity and ParentGuidance without taking ownership of the child's business task, identity, workflow or state.",
       "A child invokes parent upcall only for actual parent-level diagnosis, scope arbitration, cross-domain impact, common-governance change or other declared escalation conditions; normal business execution does not traverse a live UAOS proxy."
     ],
-    "forbidden":[
+    "forbidden": [
       "REQUIRE_USER_TO_START_IN_UAOS_CONTROLLER_CHAT_BEFORE_USING_A_REGISTERED_CHILD",
       "CREATE_PARENT_BUSINESS_IDENTITY_AS_A_PREREQUISITE_FOR_CHILD_NORMAL_WORK",
       "PROXY_EVERY_CHILD_BUSINESS_TURN_THROUGH_UAOS",
       "EQUATE_PARENT_CONTROLLER_TASK_ID_WITH_CHILD_BUSINESS_IDENTITY"
     ]
   },
-  "authority_context":{
-    "write_policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
-    "controller_context":"UAOS",
-    "domain_context_format":"DOMAIN:<domain_id>",
-    "hierarchy":"UAOS_PARENT_OF_REGISTERED_DOMAINS",
-    "parent_upcall_rule":"A child may invoke UAOS guidance without replacing the selected child task authority; parent consultation is not a hidden child privilege escalation."
+  "authority_context": {
+    "write_policy_ref": "config/AUTHORITY_WRITE_POLICY.json",
+    "controller_context": "UAOS",
+    "domain_context_format": "DOMAIN:<domain_id>",
+    "hierarchy": "UAOS_PARENT_OF_REGISTERED_DOMAINS",
+    "parent_upcall_rule": "A child may invoke UAOS guidance without replacing the selected child task authority; parent consultation is not a hidden child privilege escalation."
   },
-  "mandatory_selected_context_entry":{
-    "required":true,
-    "scope":"BEFORE_EVERY_SUBSTANTIVE_RESPONSE_TOOL_CALL_OR_ACTION_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED",
-    "role":"LIGHTWEIGHT_ROUTER__NOT_A_SECOND_COGNITION_STATE_MACHINE",
-    "responsibility":"Always enter a cheap control step before substantive work, then independently route only the minimum sufficient execution, research, cognition, Deep Task, evolution, verification and mutation depth required by the current governing outcome and newly acquired evidence.",
-    "checks":[
+  "mandatory_selected_context_entry": {
+    "required": true,
+    "scope": "BEFORE_EVERY_SUBSTANTIVE_RESPONSE_TOOL_CALL_OR_ACTION_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED",
+    "role": "LIGHTWEIGHT_ROUTER__NOT_A_SECOND_COGNITION_STATE_MACHINE",
+    "responsibility": "Always enter a cheap control step before substantive work, then independently route only the minimum sufficient execution, research, cognition, Deep Task, evolution, verification and mutation depth required by the current governing outcome and newly acquired evidence.",
+    "checks": [
       "recover the current governing objective, selected authority context and relevant current state/freshness only to the extent needed for this turn",
       "classify material user/model/prior-assistant/expert/existing-code statements by semantic role such as requirement/constraint, observation/evidence, hypothesis, causal factor or action candidate rather than by speaker prestige or imperative wording",
       "run the lightweight problem detector and execution-depth router before deciding that no escalation is needed",
@@ -77,66 +92,70 @@
       "route mutation attempts through the mutation sentinel before side effects",
       "after each material action, re-evaluate objective completion, new evidence, escalation needs and real blockers"
     ],
-    "anti_circularity":"Complexity, unknown knowledge, architecture/systemic status, problem classification or need for deep research are INTERNAL ROUTING SIGNALS, not prerequisites for entering this sentinel. The sentinel must run so those signals can be discovered rather than requiring the pre-entry model interpretation to already know them.",
-    "clear_path":"NO_ESCALATION_NEEDED__CONTINUE_NORMAL_WORK_WITH_MINIMUM_SUFFICIENT_DEPTH",
-    "autonomous_goal_loop":"WHILE_THE_ADMITTED_OBJECTIVE_REMAINS_UNFINISHED_AND_NO_GENUINE_USER_INPUT_AUTHORIZATION_SAFETY_BUDGET_OR_EXTERNAL_BLOCKER_EXISTS__SELECT_THE_NEXT_EVIDENCE_SUPPORTED_ACTION__EXECUTE__VERIFY__REASSESS__CONTINUE_UNTIL_COMPLETION_OR_REAL_STOP_CONDITION",
-    "anti_bloat":"Mandatory entry is cheap routing, not mandatory heavy deliberation, web research, Deep Task or Evolution. Simple/familiar turns should pass through quickly.",
-    "native_chatgpt_boundary":"Native ChatGPT execution of this entry remains behavioral; there is no verified repository-controlled pre-send/pre-tool hook."
+    "anti_circularity": "Complexity, unknown knowledge, architecture/systemic status, problem classification or need for deep research are INTERNAL ROUTING SIGNALS, not prerequisites for entering this sentinel. The sentinel must run so those signals can be discovered rather than requiring the pre-entry model interpretation to already know them.",
+    "clear_path": "NO_ESCALATION_NEEDED__CONTINUE_NORMAL_WORK_WITH_MINIMUM_SUFFICIENT_DEPTH",
+    "autonomous_goal_loop": "WHILE_THE_ADMITTED_OBJECTIVE_REMAINS_UNFINISHED_AND_NO_GENUINE_USER_INPUT_AUTHORIZATION_SAFETY_BUDGET_OR_EXTERNAL_BLOCKER_EXISTS__SELECT_THE_NEXT_EVIDENCE_SUPPORTED_ACTION__EXECUTE__VERIFY__REASSESS__CONTINUE_UNTIL_COMPLETION_OR_REAL_STOP_CONDITION",
+    "anti_bloat": "Mandatory entry is cheap routing, not mandatory heavy deliberation, web research, Deep Task or Evolution. Simple/familiar turns should pass through quickly.",
+    "native_chatgpt_boundary": "Native ChatGPT execution of this entry remains behavioral; there is no verified repository-controlled pre-send/pre-tool hook."
   },
-  "always_on_problem_detection_sentinel":{
-    "required":true,
-    "scope":"EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_READ_ONLY_TURNS",
-    "policy_ref":"config/DELIBERATION_POLICY.json",
-    "checks":[
+  "always_on_problem_detection_sentinel": {
+    "required": true,
+    "scope": "EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_READ_ONLY_TURNS",
+    "policy_ref": "config/DELIBERATION_POLICY.json",
+    "checks": [
       "classify the current user message for correction/failure/contradiction/uncertainty or other problem signals",
       "classify newly read authority/evidence for defects, drift, knowledge gaps or control-plane gaps",
       "classify repeated correction/failure, duplicate or shadow mechanisms, and evidence that the current repair may be only a local sample patch",
       "before reporting NOT_TRIGGERED, verify that no current problem signal was observed",
       "when a problem is detected, activate the canonical cognition case before selecting or executing a repair"
     ],
-    "anti_bloat":"The detector is always-on and lightweight; deeper evidence collection is activated only at the depth required by current signals."
+    "anti_bloat": "The detector is always-on and lightweight; deeper evidence collection is activated only at the depth required by current signals."
   },
-  "always_on_execution_depth_sentinel":{
-    "required":true,
-    "scope":"EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_NON_PROBLEM_RESEARCH_DESIGN_DECISION_AND_READ_ONLY_TURNS",
-    "policy_ref":"config/DELIBERATION_POLICY.json#deep_task_execution_profile",
-    "signal_type_ref":"src/uaos/kernel/deep_task.py#DeepTaskSignals",
-    "assessment_ref":"src/uaos/kernel/deep_task.py#assess_deep_task_requirement",
-    "responsibility":"The selected Agent/session independently assesses the current request and newly acquired evidence for the execution depth required to satisfy the governing outcome. The user is not responsible for labeling a task as complex, systemic, architectural, uncertain, deep or comprehensively researched.",
-    "checks":[
+  "always_on_execution_depth_sentinel": {
+    "required": true,
+    "scope": "EVERY_ASSISTANT_TURN_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED__INCLUDING_NON_PROBLEM_RESEARCH_DESIGN_DECISION_AND_READ_ONLY_TURNS",
+    "policy_ref": "config/DELIBERATION_POLICY.json#deep_task_execution_profile",
+    "signal_type_ref": "src/uaos/kernel/deep_task.py#DeepTaskSignals",
+    "assessment_ref": "src/uaos/kernel/deep_task.py#assess_deep_task_requirement",
+    "responsibility": "The selected Agent/session independently assesses the current request and newly acquired evidence for the execution depth required to satisfy the governing outcome. The user is not responsible for labeling a task as complex, systemic, architectural, uncertain, deep or comprehensively researched.",
+    "checks": [
       "derive current semantic evidence for explicit_user_depth_request, material_high_uncertainty, unknown_knowledge, architecture_or_control_plane, repeated_systemic, ordinary_structured_evidence_insufficient and comprehensive_knowledge_acquisition_required rather than relying on keyword aliases",
       "treat an explicit user request for deeper analysis or comprehensive learning as a mandatory force signal for the relevant evidence profile, not as the only path into it",
       "when ordinary STRUCTURED execution remains sufficient, keep the task lightweight and do not manufacture Deep Task or broad-research ceremony",
       "when assess_deep_task_requirement requires the profile, activate the current repository Deep Task evidence admission without waiting for the user to diagnose the task type or ask for a better solution",
       "if new evidence discovered during execution changes the depth classification, re-evaluate before material completion rather than freezing the initial classification"
     ],
-    "clear_path":"ORDINARY_EXECUTION_DEPTH__CONTINUE_WITH_THE_MINIMUM_SUFFICIENT_CURRENT_SEARCH_MODE",
-    "triggered_path":"ACTIVATE_CURRENT_DELIBERATION_AND_DEEP_TASK_EVIDENCE_PROFILE__NO_SECOND_COGNITION_STATE_MACHINE",
-    "anti_bloat":"Always-on means always-on lightweight depth routing, not permanent deep research. Simple/familiar/low-uncertainty tasks remain lightweight.",
-    "native_chatgpt_boundary":"This is a behavioral session responsibility. Native ChatGPT still has no verified repository-controlled non-bypassable semantic-signal injector or pre-send/pre-tool hook."
+    "clear_path": "ORDINARY_EXECUTION_DEPTH__CONTINUE_WITH_THE_MINIMUM_SUFFICIENT_CURRENT_SEARCH_MODE",
+    "triggered_path": "ACTIVATE_CURRENT_DELIBERATION_AND_DEEP_TASK_EVIDENCE_PROFILE__NO_SECOND_COGNITION_STATE_MACHINE",
+    "anti_bloat": "Always-on means always-on lightweight depth routing, not permanent deep research. Simple/familiar/low-uncertainty tasks remain lightweight.",
+    "native_chatgpt_boundary": "This is a behavioral session responsibility. Native ChatGPT still has no verified repository-controlled non-bypassable semantic-signal injector or pre-send/pre-tool hook."
   },
-  "problem_cognition_action_transaction":{
-    "required":true,
-    "scope":"EVERY_DETECTED_PROBLEM_BEFORE_REPAIR_NO_CHANGE_OR_MATERIAL_CLOSURE",
-    "canonical_cognition_policy_ref":"config/DELIBERATION_POLICY.json#cognition_kernel",
-    "common_assurance_ref":"config/COMMON_BEHAVIOR_ASSURANCE.json",
-    "cognition_case_executable_ref":"src/uaos/kernel/cognition_case.py#require_cognition_case_admission",
-    "legacy_root_scope_ref":"src/uaos/kernel/deliberation.py#require_root_scope_admission",
-    "outside_in_discovery_executable_ref":"src/uaos/kernel/problem_space.py",
-    "action_executable_ref":"src/uaos/kernel/problem_closure.py",
-    "finalization_executable_ref":"src/uaos/runtime/finalization.py#admit_final_response",
-    "session_role":"ACTIVATE_THE_CANONICAL_KERNEL_AND_REPORT_EVIDENCE_STATE__DO_NOT_MAINTAIN_A_SECOND_ORDERED_COGNITION_STATE_MACHINE_HERE",
-    "causality_rule":"ALLOW_MULTIPLE_EVIDENCE_SUPPORTED_CONTRIBUTING_CAUSES__DO_NOT_PREFER_LOCAL_OR_UPSTREAM_BY_DEFAULT__SELECT_ONE_BOUNDED_INTERVENTION_SEPARATELY",
-    "receipt_rule":"CONTROLLED_FINALIZATION_RECOMPUTES_COGNITION_CASE_ADMISSION__LEGACY_PRECOMPUTED_ROOT_SCOPE_RECEIPT_IS_NOT_SUFFICIENT"
+  "problem_cognition_action_transaction": {
+    "required": true,
+    "scope": "EVERY_DETECTED_PROBLEM_BEFORE_REPAIR_NO_CHANGE_OR_MATERIAL_CLOSURE",
+    "canonical_cognition_policy_ref": "config/DELIBERATION_POLICY.json#cognition_kernel",
+    "common_assurance_ref": "config/COMMON_BEHAVIOR_ASSURANCE.json",
+    "cognition_case_executable_ref": "src/uaos/kernel/cognition_case.py#require_cognition_case_admission",
+    "legacy_root_scope_ref": "src/uaos/kernel/deliberation.py#require_root_scope_admission",
+    "outside_in_discovery_executable_ref": "src/uaos/kernel/problem_space.py",
+    "action_executable_ref": "src/uaos/kernel/problem_closure.py",
+    "finalization_executable_ref": "src/uaos/runtime/finalization.py#admit_final_response",
+    "session_role": "ACTIVATE_THE_CANONICAL_KERNEL_AND_REPORT_EVIDENCE_STATE__DO_NOT_MAINTAIN_A_SECOND_ORDERED_COGNITION_STATE_MACHINE_HERE",
+    "causality_rule": "ALLOW_MULTIPLE_EVIDENCE_SUPPORTED_CONTRIBUTING_CAUSES__DO_NOT_PREFER_LOCAL_OR_UPSTREAM_BY_DEFAULT__SELECT_ONE_BOUNDED_INTERVENTION_SEPARATELY",
+    "receipt_rule": "CONTROLLED_FINALIZATION_RECOMPUTES_COGNITION_CASE_ADMISSION__LEGACY_PRECOMPUTED_ROOT_SCOPE_RECEIPT_IS_NOT_SUFFICIENT"
   },
-  "problem_to_action_closure_gate":{
-    "required":true,
-    "scope":"EVERY_DETECTED_PROBLEM_BEFORE_FINAL_RESPONSE_HANDOFF_OR_MAINTENANCE_CLOSURE",
-    "executable_ref":"src/uaos/kernel/problem_closure.py",
-    "common_contract_ref":"config/COMMON_BEHAVIOR_ASSURANCE.json",
-    "terminal_states":["REPAIR_EXECUTED","BLOCKED_WITH_REASON","NO_CHANGE_WITH_EVIDENCE"],
-    "rule":"Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state. For systemic/material cases, choose and verify the smallest complete intervention that covers the admitted failure class rather than equating the smallest code diff with the smallest justified repair.",
-    "repair_now_conditions":[
+  "problem_to_action_closure_gate": {
+    "required": true,
+    "scope": "EVERY_DETECTED_PROBLEM_BEFORE_FINAL_RESPONSE_HANDOFF_OR_MAINTENANCE_CLOSURE",
+    "executable_ref": "src/uaos/kernel/problem_closure.py",
+    "common_contract_ref": "config/COMMON_BEHAVIOR_ASSURANCE.json",
+    "terminal_states": [
+      "REPAIR_EXECUTED",
+      "BLOCKED_WITH_REASON",
+      "NO_CHANGE_WITH_EVIDENCE"
+    ],
+    "rule": "Only after canonical causal/intervention admission and evolution disposition, a feasible authorized repair must be attempted in the current work cycle when no missing user fact/approval/authorization/safety-sensitive choice blocks it. Recommendation-only is not a terminal state. For systemic/material cases, choose and verify the smallest complete intervention that covers the admitted failure class rather than equating the smallest code diff with the smallest justified repair.",
+    "repair_now_conditions": [
       "a CognitionCase admission exists from current raw signals/evidence in controlled paths",
       "supported causal factors are not justified solely by user/model/prior-assistant/external-authority framing",
       "one bounded intervention/no-change candidate is selected separately from causal explanation",
@@ -147,9 +166,9 @@
       "the required tools/capabilities are available",
       "no explicit user fact, approval, authorization or safety-sensitive choice is required"
     ],
-    "systemic_repair_completeness":{
-      "activation":"COGNITION_CASE_RECEIPT.systemic == true AND REPAIR_EXECUTED_CLOSURE",
-      "required_evidence":[
+    "systemic_repair_completeness": {
+      "activation": "COGNITION_CASE_RECEIPT.systemic == true AND REPAIR_EXECUTED_CLOSURE",
+      "required_evidence": [
         "failure-class scope and definition",
         "owning abstraction/control point",
         "adjacent/sibling execution-path coverage",
@@ -157,54 +176,84 @@
         "post-repair generalization across the admitted failure class",
         "recurrence detection/regression able to catch the next occurrence without waiting for the user to rediscover it"
       ],
-      "local_intervention_exception":"A LOCAL_IMPLEMENTATION or DOMAIN_WORKFLOW intervention may close a systemic/material case only when evidence proves the failure class is genuinely bounded to that leaf/path. This is evidence-bounded local repair, not a preference for upstream change.",
-      "selection_principle":"SMALLEST_COMPLETE_INTERVENTION__NOT_SMALLEST_DIFF__NO_DEFAULT_PREFERENCE_FOR_LOCAL_OR_UPSTREAM_LAYER",
-      "executable_ref":"src/uaos/kernel/problem_closure.py#_require_systemic_repair_completeness"
+      "local_intervention_exception": "A LOCAL_IMPLEMENTATION or DOMAIN_WORKFLOW intervention may close a systemic/material case only when evidence proves the failure class is genuinely bounded to that leaf/path. This is evidence-bounded local repair, not a preference for upstream change.",
+      "selection_principle": "SMALLEST_COMPLETE_INTERVENTION__NOT_SMALLEST_DIFF__NO_DEFAULT_PREFERENCE_FOR_LOCAL_OR_UPSTREAM_LAYER",
+      "executable_ref": "src/uaos/kernel/problem_closure.py#_require_systemic_repair_completeness"
     },
-    "verification_rule":"On the CognitionCase path, repair_verified=true is insufficient without concrete verification_evidence_refs bound to typed evidence. Systemic/material repairs also require validation_evidence_refs plus evidence-bound failure-class scope, generalization and recurrence detection per systemic_repair_completeness.",
-    "premature_action_rule":"A repair attempted before causal/intervention admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence.",
-    "blocker_rule":"When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or unresolved causality disguised as certainty is not a valid repair claim.",
-    "no_change_rule":"When no change is selected, preserve the admitted causal model, selected NO_CHANGE intervention and evidence/counterexample/tradeoff rationale.",
-    "response_consistency_rule":"A final response that reports a confirmed repairable problem and only recommends future repair violates this gate unless it reports a verified blocker. A response also violates this gate if it reports repair execution without prior cognition/evolution admission and required V&V/systemic-completeness evidence.",
-    "assurance_boundary":"This policy and kernel gates are executable/regression-testable but do not claim host-level physical interception of every natural-language response."
+    "verification_rule": "On the CognitionCase path, repair_verified=true is insufficient without concrete verification_evidence_refs bound to typed evidence. Systemic/material repairs also require validation_evidence_refs plus evidence-bound failure-class scope, generalization and recurrence detection per systemic_repair_completeness.",
+    "premature_action_rule": "A repair attempted before causal/intervention admission is not made valid by succeeding; treat it as process failure evidence and re-enter cognition from current evidence.",
+    "blocker_rule": "When repair cannot proceed, identify the actual blocker or required user choice. Lack of initiative, convenience, or unresolved causality disguised as certainty is not a valid repair claim.",
+    "no_change_rule": "When no change is selected, preserve the admitted causal model, selected NO_CHANGE intervention and evidence/counterexample/tradeoff rationale.",
+    "response_consistency_rule": "A final response that reports a confirmed repairable problem and only recommends future repair violates this gate unless it reports a verified blocker. A response also violates this gate if it reports repair execution without prior cognition/evolution admission and required V&V/systemic-completeness evidence.",
+    "assurance_boundary": "This policy and kernel gates are executable/regression-testable but do not claim host-level physical interception of every natural-language response."
   },
-  "always_on_mutation_sentinel":{
-    "required":true,
-    "scope":"BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT",
-    "policy_ref":"config/AUTHORITY_WRITE_POLICY.json",
-    "checks":[
+  "always_on_mutation_sentinel": {
+    "required": true,
+    "scope": "BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT",
+    "policy_ref": "config/AUTHORITY_WRITE_POLICY.json",
+    "checks": [
       "resolve selected authority context",
       "resolve target authority/resource and whether it is production authority",
       "classify read-only versus mutation",
       "verify the proposed mutation follows the owner-appropriate repository workflow",
       "verify any detected problem has passed the canonical cognition/action admission before repair mutation"
     ],
-    "production_rule":"CHATGPT_GITHUB material production changes normally use candidate branch -> pull request -> owner-appropriate checks -> controlled merge/update -> production reread.",
-    "depth_rule":"SENTINEL_ALWAYS_ON__DEEP_DELIBERATION_TRIGGERED_ONLY",
-    "failure_rule":"Do not claim physical non-bypassability unless remote enforcement is actually verified; absence of that optional assurance does not by itself block normal autonomous maintenance."
+    "production_rule": "CHATGPT_GITHUB material production changes normally use candidate branch -> pull request -> owner-appropriate checks -> controlled merge/update -> production reread.",
+    "depth_rule": "SENTINEL_ALWAYS_ON__DEEP_DELIBERATION_TRIGGERED_ONLY",
+    "failure_rule": "Do not claim physical non-bypassability unless remote enforcement is actually verified; absence of that optional assurance does not by itself block normal autonomous maintenance."
   },
-  "adaptive_deliberation":{
-    "canonical_policy_ref":"config/DELIBERATION_POLICY.json",
-    "visibility":"REPORT_WHEN_MATERIALLY_TRIGGERED",
-    "session_role":"ACTIVATE_AND_REPORT_THE_CANONICAL_COGNITION_KERNEL__DO_NOT_RESTATE_ITS_STAGE_SEMANTICS",
-    "execution_depth_routing_ref":"always_on_execution_depth_sentinel",
-    "material_change_admission":"FAIL_CLOSED_PER_DELIBERATION_POLICY_BEFORE_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_MUTATION"
+  "adaptive_deliberation": {
+    "canonical_policy_ref": "config/DELIBERATION_POLICY.json",
+    "visibility": "REPORT_WHEN_MATERIALLY_TRIGGERED",
+    "session_role": "ACTIVATE_AND_REPORT_THE_CANONICAL_COGNITION_KERNEL__DO_NOT_RESTATE_ITS_STAGE_SEMANTICS",
+    "execution_depth_routing_ref": "always_on_execution_depth_sentinel",
+    "material_change_admission": "FAIL_CLOSED_PER_DELIBERATION_POLICY_BEFORE_MATERIAL_ARCHITECTURE_OR_GOVERNANCE_MUTATION"
   },
-  "inherited_session_progress_report":{
-    "scope":"EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
-    "required":true,
-    "placement":"END_OF_FINAL_RESPONSE",
-    "format":"COMPACT_AGENT_PROGRESS_BLOCK",
-    "fields":["current_agent","current_scope_or_task","authority_context","status","current_stage","next_action_or_blocker","evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER","deliberation_state_when_triggered_or_NOT_TRIGGERED","version_identity","progress_timestamp"],
-    "timestamp_rule":"Use the timestamp of the freshest authoritative state actually used for the report; do not substitute the response clock when authority freshness is known.",
-    "timestamp_timezone":"Asia/Shanghai",
-    "timestamp_display_format":"YYYY-MM-DD HH:mm:ss（北京时间）",
-    "timestamp_timezone_rule":"Render the user-visible progress_timestamp in Beijing time using the human-readable format YYYY-MM-DD HH:mm:ss（北京时间）. Do not show ISO-8601 separators such as T or a numeric UTC offset such as +08:00 in the user-visible field. Preserve the authoritative instant by converting the freshest authoritative timestamp to Asia/Shanghai; do not replace it with the response clock merely to obtain the requested timezone or display format.",
-    "version_rule":"Report system/domain/task version identities that materially govern the current action. Schema version alone is not a release version.",
-    "evolution_rule":"If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id. If evaluated without durable promotion, report EVALUATED_NO_DURABLE_EVOLUTION. Use NO_EVOLUTION_TRIGGER only when no problem/evolution trigger was detected in the current turn.",
-    "deliberation_rule":"When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the evidence/control escalation used without exposing private chain-of-thought.",
-    "consistency_rule":"A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless the observation is explicitly classified as non-problematic with a reason.",
-    "action_closure_rule":"A response that reports repair/no-change must be consistent with admitted causal/intervention evidence and evolution disposition; a cognitively admitted authorized repair cannot stop at recommendation-only.",
-    "assurance_rule":"If progress, authority scope, cognition/evolution state, assurance level or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
+  "inherited_session_progress_report": {
+    "scope": "EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION",
+    "required": true,
+    "placement": "END_OF_FINAL_RESPONSE",
+    "format": "COMPACT_AGENT_PROGRESS_BLOCK",
+    "fields": [
+      "current_agent",
+      "current_scope_or_task",
+      "authority_context",
+      "status",
+      "current_stage",
+      "next_action_or_blocker",
+      "evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER",
+      "deliberation_state_when_triggered_or_NOT_TRIGGERED",
+      "version_identity",
+      "progress_timestamp"
+    ],
+    "timestamp_rule": "Use the timestamp of the freshest authoritative state actually used for the report; do not substitute the response clock when authority freshness is known.",
+    "timestamp_timezone": "Asia/Shanghai",
+    "timestamp_display_format": "YYYY-MM-DD HH:mm:ss（北京时间）",
+    "timestamp_timezone_rule": "Render the user-visible progress_timestamp in Beijing time using the human-readable format YYYY-MM-DD HH:mm:ss（北京时间）. Do not show ISO-8601 separators such as T or a numeric UTC offset such as +08:00 in the user-visible field. Preserve the authoritative instant by converting the freshest authoritative timestamp to Asia/Shanghai; do not replace it with the response clock merely to obtain the requested timezone or display format.",
+    "version_rule": "Report system/domain/task version identities that materially govern the current action. Schema version alone is not a release version.",
+    "evolution_rule": "If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id. If evaluated without durable promotion, report EVALUATED_NO_DURABLE_EVOLUTION. Use NO_EVOLUTION_TRIGGER only when no problem/evolution trigger was detected in the current turn.",
+    "deliberation_rule": "When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the evidence/control escalation used without exposing private chain-of-thought.",
+    "consistency_rule": "A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless the observation is explicitly classified as non-problematic with a reason.",
+    "action_closure_rule": "A response that reports repair/no-change must be consistent with admitted causal/intervention evidence and evolution disposition; a cognitively admitted authorized repair cannot stop at recommendation-only.",
+    "assurance_rule": "If progress, authority scope, cognition/evolution state, assurance level or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
+  },
+  "controller_inheritance_review": {
+    "required": true,
+    "trigger": "ON_EVERY_EXPLICIT_UAOS_CONTROLLER_SELECTION__INCLUDING_AFTER_RESUME",
+    "scope": "UAOS_CONTROLLER_ONLY__DO_NOT_PROXY_ORDINARY_CHILD_WORK",
+    "owner": "UAOS__REUSE_EXISTING_TASK_INDEX_COGNITION_DEEP_TASK_EVOLUTION_OWNERS",
+    "minimum_entry": [
+      "Read current ENTRYPOINT/CURRENT_SYSTEM and restore any active controller task.",
+      "Enumerate all registered repository main trees; preserve exact head, path inventory, authoritative owner, source coverage, and omitted/unread paths.",
+      "Inspect every registered repository across authority/architecture, requirements/continuity, execution, quality/outcome verification, observability/drift, and evolution/learning.",
+      "Independently challenge current architecture and prior assistant conclusions; search alternatives, evidence against favored causal models, dormant capabilities and unknown unknowns.",
+      "For material knowledge gaps, study independent architecture, risk/management, SRE, continuous improvement, and Agent-evaluation methods; compare and integrate through existing DeepTask/knowledge-acquisition admission.",
+      "Continue investigation and owner-authorized repairs until evidence-backed terminal disposition; preserve exact resumed progress, remaining gaps and actual tested outputs."
+    ],
+    "coverage_rule": "ALL_REGISTERED_REPOSITORIES_AND_CRITICAL_CONTROL_DIMENSIONS_MUST_BE_VISITED__UNREAD_UNVERIFIED_OR_UNMEASURED_REMAIN_VISIBLE_AND_CANNOT_BE_RELABELED_GREEN",
+    "completion_rule": "ONE_CURRENT_HEAD_BOUND_EVIDENCE_RECEIPT__FULL_SCOPE_COVERAGE_AND_REQUIRED_SOURCE_ROLES__CAUSAL_AND_ARCHITECTURE_CHALLENGE__REALISTIC_VALIDATION_OR_EXPLICIT_UNVERIFIED__GOVERNED_EVOLUTION_OR_NO_CHANGE",
+    "depth_rule": "REQUIRE_DEEP_COVERAGE_FOR_CONTROLLER_REVIEW__NOT_MERE_FILE_LISTING__SOURCE_LEVEL_AND_RUNTIME_OUTCOME_ASSURANCE_SEPARATELY_REPORTED",
+    "continuity_rule": "REUSE_state/TASK_INDEX.json#controller_tasks_AND_exact_state_ref__NO_PARALLEL_PLANNER_OR_EVOLUTION_LOOP",
+    "host_boundary": "A repo policy cannot physically force ChatGPT internal pre-send or pre-tool invocation; native conformance must be measured independently."
   }
 }
