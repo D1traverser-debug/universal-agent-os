@@ -137,10 +137,20 @@
   ],
   "updated_at": "2026-10-18T22:49:00+08:00",
   "entry_source_evolution_20261018": {
-    "status": "CANDIDATE_CONTROLLER_ONLY__NATIVE_ACTIVATION_NOT_ATTESTED",
+    "status": "CONTROLLED_CODE_PRODUCTION_VERIFIED__NATIVE_ACTIVATION_UNVERIFIED",
     "policy_ref": "config/SESSION_INTERACTION_POLICY.json#mandatory_selected_context_entry",
     "code_ref": "src/uaos/runtime/epistemic_entry.py",
     "effect": "SOURCE_VERIFIED_TOOL_RESULT_MAY_ROUTE_MATERIAL_ISSUE_AND_CURRENT_METHOD_FIT_IS_PROBED_FOR_FIRST_SYSTEMIC_FAILURE",
-    "native_assurance": "GITHUB_GENERATED_SKILL_DIFFERENT_FROM_INSTALLED_UI_BYTES_UNKNOWN"
+    "native_assurance": "GITHUB_GENERATED_SKILL_DIFFERENT_FROM_INSTALLED_UI_BYTES_UNKNOWN",
+    "release": {
+      "pr": 115,
+      "head": "8fd3afdf0a5d3274e8494b9f18fcc90d9c2a69ef",
+      "ci_run": 658,
+      "ci_result": "588 passed, 1 skipped",
+      "integration_run": 371,
+      "integration_result": "SUCCESS",
+      "main_sha": "3a60beb31d4535d5f10bcc44c399391842fd0966",
+      "main_source_reread": true
+    }
   }
 }

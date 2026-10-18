@@ -141,7 +141,7 @@
     "acceptance_ceiling": "No executed native Skill trace, independent workflow replay, general knowledge search saturation, or Financial reader outcome. Remains open alongside old deep review; product claim forbidden."
   },
   "controller_entry_method_delta_20261018": {
-    "status": "CANDIDATE_UNVERIFIED",
+    "status": "PROMOTED_CONTROLLABLE_ENTRY_GATES__RUNTIME_AND_EXTERNAL_OUTCOME_OPEN",
     "origin_kind": "CAPABILITY_GAP",
     "study_ref": "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
     "governing_outcome": "UAOS independently routes freshly observed tool evidence and applies source-grounded method recall to first major systemic failures rather than awaiting repeated user corrections",
@@ -171,6 +171,15 @@
       "Candidate CI, protected promotion, main reread",
       "Native behavior remains unverified until real host trace"
     ],
-    "assurance": "NO_NATIVE_PHYSICAL_INTERCEPTION_CLAIM"
+    "assurance": "NO_NATIVE_PHYSICAL_INTERCEPTION_CLAIM",
+    "release_evidence": {
+      "pr": 115,
+      "candidate_head": "8fd3afdf0a5d3274e8494b9f18fcc90d9c2a69ef",
+      "ci_run": 658,
+      "result": "588 passed, 1 skipped",
+      "integration_run": 371,
+      "main_sha": "3a60beb31d4535d5f10bcc44c399391842fd0966",
+      "readback": true
+    }
   }
 }
