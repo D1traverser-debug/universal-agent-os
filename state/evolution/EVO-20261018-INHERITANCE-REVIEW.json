@@ -300,5 +300,38 @@
       "production_ci_conclusion": "success",
       "main_source_reread": true
     }
+  },
+  "decommissioned_layout_case_20261019": {
+    "status": "CANDIDATE_DELETION_PENDING_PROTECTED_PR_VALIDATION",
+    "source_ref": "docs/architecture/REPO_LAYOUT.md",
+    "original_git_blob": "f565e39faacc0b7ba694dee68387eaffafc38618",
+    "observed_fact": "Proposed v4 directory skeleton is not the actual 2.8.0 topology. Full 399-blob source/config/docs/test/task scan found no other file referencing REPO_LAYOUT.md or its full path. This is source text/reference coverage only, not hidden external consumer proof.",
+    "user_input_role": "User's demand to delete obsolete files initiated independent lifecycle review, not an instruction to delete all historical records.",
+    "options": {
+      "retain_with_label": "Low risk but leaves obsolete plan in active docs discovery; already tried and did not solve clutter.",
+      "duplicate_archive_copy": "Rejected: increases competing discoverable copies.",
+      "delete_from_current_worktree": "Selected for this specific unreferenced proposed layout; Git history and revert preserve recoverability.",
+      "rewrite_into_live_authority": "Rejected: config/SYSTEM_MAP.json and actual repository tree already own topology."
+    },
+    "method_transfer": {
+      "git": "Delete tracked obsolete content from current index/tree and retain previous revisions as provenance; PR and required checks are promotion boundary.",
+      "svn": "Versioned deletion and retained revisions illustrate equivalent lifecycle separation; no SVN runtime owner is introduced.",
+      "agent_skills": "Progressive-disclosure routing: stale architecture prose should not compete with actual active entry/Skill manifests.",
+      "uvm": "Factory override/context precedence is an analogy for explicit authority binding; it does NOT authorize duplicating every UVM mechanism into UAOS or mass deletion."
+    },
+    "scope": "ONE_RETIRED_PROPOSED_LAYOUT_ONLY__NO_CHANGE_TO_REQUIREMENTS_ADRS_TASK_HISTORY_OR_SKILL_CODE",
+    "acceptance": [
+      "No repo-local text references in source/scripts/tests/config/docs/state",
+      "File absent from candidate tree and later main tree",
+      "Current real bootstrap/architecture authority remains",
+      "CI/integration pass on exact candidate head",
+      "Production reread and separate user-outcome validation"
+    ],
+    "limits": [
+      "External non-GitHub links/copies/installed account sources not exhaustively observable",
+      "Absence of in-repo textual refs does not itself prove no external consumer",
+      "Knowledge research across methods is targeted, not entire-web saturation",
+      "Deletion alone does not prove cognition/evolution or native host invocation effectiveness"
+    ]
   }
 }
