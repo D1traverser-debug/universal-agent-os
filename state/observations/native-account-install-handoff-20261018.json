@@ -103,7 +103,14 @@
     "candidate_git_blob": "ad6e646325e5fe0fdbe761ea47c63b2153a410a1",
     "previous_main_git_blob": "cb2ecdfac61e712b7270b6b218effa667b45f5d0",
     "installed_skill_blob_status": "UNKNOWN__REPO_FILE_CHANGE_NOT_NATIVE_CHATGPT_SKILL_INSTALL",
-    "status": "CANDIDATE_GENERATED_SOURCE_ONLY__NO_NATIVE_EFFECT_PROOF",
-    "scope": "UAOS_CONTROLLER_ONLY__DIRECT_DOMAIN_RUNTIME_COVERAGE_OPEN"
+    "status": "PRODUCTION_REPO_SKILL_SOURCE_VERIFIED__ACCOUNT_INSTALLED_BYTES_UNVERIFIED",
+    "scope": "UAOS_CONTROLLER_ONLY__DIRECT_DOMAIN_RUNTIME_COVERAGE_OPEN",
+    "production": {
+      "pr": 118,
+      "commit": "f379c00c65c2d128688a651fcda1b1c61713f142",
+      "ci": 682,
+      "status": "success",
+      "source_git_blob": "ad6e646325e5fe0fdbe761ea47c63b2153a410a1"
+    }
   }
 }
