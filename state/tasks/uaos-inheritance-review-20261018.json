@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "UAOS controller only: continue bounded file authority/writes audit beyond PR120; run real direct connector and native/host write-path conformance, prevent unauthorized writes; verify snapshot concurrency and external asset deletes; continue broader autonomous controller review. Keep exact Financial task parked and unchanged until controller genuinely accepted.",
+  "next_action": "Verify evidence-bounded retirement candidate: exact-head protected CI and independent review; main readback must confirm obsolete proposed layout absent, entry status source pointer present, canonical task/finance continuation intact. Continue UAOS self-initiated method-transfer and file-lifecycle evaluation; do not claim complete autonomous evolution.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -282,5 +282,37 @@
       "production_ci_conclusion": "success",
       "main_source_reread": true
     }
+  },
+  "file_lifecycle_independent_deletion_20261019": {
+    "status": "EVIDENCE_GROUNDED_CANDIDATE__PR_AND_ACTIVE_READBACK_OPEN",
+    "governing_outcome": "Remove obsolete competing visible file authority from current tree, not destroy required audit evidence or blindly obey a deletion suggestion.",
+    "observed": [
+      "User deletion instruction is not causal fact or mutation permission despite repeated assistant agreement.",
+      "Proposed 2205-byte REPO_LAYOUT documented nonexistent in-repository domains model; no active reverse references found across source/tests/docs/state/config tree.",
+      "ENTRYPOINT contained literal old CANDIDATE status while CURRENT_SYSTEM owns current ACTIVE_PRIMARY_CONTROLLER status."
+    ],
+    "independent_methods": [
+      "GIT_VERSIONED_CURRENT_TREE_DELETE",
+      "SVN_COMMIT_RECORDED_REMOVAL",
+      "UV_EXACT_SYNC_ANALOGY_APPLICABLE_ONLY_TO_REBUILDABLE_ENVIRONMENTS",
+      "UVM_INDEPENDENT_REFERENCE_MONITOR_COVERAGE",
+      "AGENT_SKILL_TRACING_CURRENT_HOST_BOUNDARY"
+    ],
+    "selected": "DELETE_PROVEN_ORPHAN_PROPOSED_LAYOUT_FROM_CURRENT_TREE__POINT_BOOTSTRAP_STATUS_TO_CURRENT_SYSTEM__VERIFY_WITH_GENERIC_PROPOSAL_ORPHAN_AND_STATUS_OWNER_REGRESSIONS",
+    "preserved": [
+      "FROZEN_REQUIREMENTS_AND_HISTORICAL_ARCHITECTURE_LINEAGE",
+      "PORTABLE_ACCOUNT_CUSTOM_INSTRUCTIONS_PAYLOAD_AND_SEPARATE_OPERATOR_GUIDE",
+      "TWO_COMPLETE_PARENT_LINKED_WORK_RECEIPTS",
+      "IMMUTABLE_EVOLUTION_AND_PR_EVIDENCE"
+    ],
+    "research_ref": "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
+    "open": [
+      "ACTIVE_DEPENDENCY_SCAN_IS_TEXTUAL_NOT_COMPLETE_RUNTIME_DYNAMIC_PROOF",
+      "HOST_NATIVE_ACTIVATION_AND_AUTONOMOUS_SELF_INITIATION_UNVERIFIED",
+      "PR_CI_PROTECTED_PROMOTION_AND_MAIN_REREAD_OPEN",
+      "CROSS_DOMAIN_OWNER_AND_OTHER_FILE_LIFECYCLE_OUTCOMES_OPEN"
+    ],
+    "evidence_strength": "399_TRACKED_FILE_SNAPSHOT_READ_FOR_FILENAME_PATH_DISTINCTIVE_TITLE__OTHER_INBOUND_MATCHES_ZERO",
+    "user_agreement_not_evidence": true
   }
 }
