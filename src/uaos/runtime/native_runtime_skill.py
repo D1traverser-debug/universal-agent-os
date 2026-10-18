@@ -51,6 +51,7 @@ def build_native_runtime_skill(
 
     entry = _mapping(_value(session, "mandatory_selected_context_entry", field="session_policy"), field="session_policy.mandatory_selected_context_entry")
     problem = _mapping(_value(session, "always_on_problem_detection_sentinel", field="session_policy"), field="session_policy.always_on_problem_detection_sentinel")
+    review = _mapping(_value(session, "controller_inheritance_review", field="session_policy"), field="session_policy.controller_inheritance_review")
     depth = _mapping(_value(session, "always_on_execution_depth_sentinel", field="session_policy"), field="session_policy.always_on_execution_depth_sentinel")
     closure = _mapping(_value(session, "problem_to_action_closure_gate", field="session_policy"), field="session_policy.problem_to_action_closure_gate")
     systemic = _mapping(_value(closure, "systemic_repair_completeness", field="problem_to_action_closure_gate"), field="session_policy.problem_to_action_closure_gate.systemic_repair_completeness")
@@ -84,6 +85,7 @@ def build_native_runtime_skill(
         "",
         "For UAOS controller or persistent registered-Agent work, read current `main` starting from `ENTRYPOINT.md` and `CURRENT_SYSTEM.json`, then use `config/NATIVE_SESSION_RUNTIME_PROFILE.json` for the selected-context hot path. Reread exact owner authority when the current action requires it.",
         "Never reconstruct current task identity or authoritative state from chat memory, prior assistant conclusions, historical branches, or retired files.",
+        f"Controller selection deep review: on each explicit UAOS controller selection, { _value(review, 'coverage_rule', field='controller_inheritance_review') }. Inspect authority, requirements, execution, outcome verification, observability and learning across all registered repos; preserve incompleteness and continue the current resumable task.",
         "",
         "## 3. Route adaptively",
         "",
