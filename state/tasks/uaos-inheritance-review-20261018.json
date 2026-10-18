@@ -3,7 +3,8 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "status": "RUNNING",
-  "current_stage": "EXTERNAL_RESEARCH_AND_DESIGN",
-  "next_action": "Compare external systems and create a repo-wide inheritance review protocol",
-  "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
+  "current_stage": "CANDIDATE_CI_BLOCKERS_ADMITTED",
+  "next_action": "Resolve profile budget and validate all five repository evidence domains without native host overclaim",
+  "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
+  "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json"
 }
