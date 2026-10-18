@@ -80,7 +80,8 @@
     "src/uaos/state/snapshot.py",
     "tests/state/test_portable_snapshot.py",
     "tests/integrations/test_fresh_chat_resume.py",
-    "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md"
+    "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
+    "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -344,5 +345,61 @@
       "verified_main_tree_absence": true
     },
     "live_verification_limit": "Retirement effective for GitHub main working tree only; user-facing references, copies, installed agent sources and third-party caches have not been enumerated."
+  },
+  "host_origin_fencing_20261019": {
+    "status": "CANDIDATE__FROZEN_ACCEPTANCE_PENDING_GREEN_CI_AND_MAIN_REREAD",
+    "origin_kind": "INCIDENT",
+    "owner": "EXISTING_CONTROLLER_EVOLUTION_TRANSACTION__NO_SECOND_STATUS_OWNER",
+    "governing_outcome": "Bind every host-observed user/tool/state/assistant message to host-authenticated source role; reject agent-origin role spoof even when bytes and digests match.",
+    "observed_facts": [
+      "Host source-ref set and source digest checked but TurnUtteranceAssessment.origin was agent-supplied and was not independently verified",
+      "Existing USER presence assertion relied on a submitted origin label",
+      "FinalizationContext lacked source role mapping and must remain the only integration owner"
+    ],
+    "competing_interventions": [
+      "REJECT_REMINDER_ONLY",
+      "REJECT_DUPLICATE_CONTROLLER_OR_EVENT_MONITOR",
+      "REJECT_HASH_ONLY_ALREADY_EXISTS",
+      "SELECT_TYPED_HOST_ORIGIN_MAP_AT_CANONICAL_GATE",
+      "NATIVE_CHATGPT_HOST_HOOK_UNVERIFIED_NOT_CLAIMED"
+    ],
+    "source_refs": [
+      "src/uaos/runtime/epistemic_entry.py#admit_turn_evolution_coverage",
+      "src/uaos/runtime/finalization.py#admit_final_response",
+      "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md"
+    ],
+    "prior_method_candidate_refs": [
+      "CSA-10",
+      "PAP-01",
+      "PAP-12"
+    ],
+    "method_disposition": "SOURCE_GROUNDED_CANDIDATE_ADAPTATION__NOT_KNOWLEDGE_CANONICAL",
+    "selected_intervention": "Require exact independent host role map (ref→UtteranceOrigin), check typed enum, reject mismatch; pass through current FinalizationContext and retain original error priority.",
+    "frozen_acceptance": [
+      "HTO-01_ORIGIN_SWAP_DIGEST_VALID_REJECT",
+      "HTO-02_TOOL_ONLY_FALSE_USER_REJECT",
+      "HTO-03_MISSING_HOST_MAP_REJECT",
+      "HTO-04_HOST_MAP_EXACT_SET",
+      "HTO-05_TYPED_ENUM_ONLY",
+      "HTO-06_NORMAL_CONTROLLED_PATH_GREEN",
+      "HTO-07_OLD_DIGEST_AND_MESSAGE_REGRESSIONS",
+      "HTO-08_ALL_CONTROLLED_FINALIZATION_REGRESSIONS",
+      "HTO-09_NATIVE_CEILING_EXPLICIT",
+      "HTO-10_CANDIDATE_GREEN_MERGED_MAIN_REREAD"
+    ],
+    "test_evidence": {
+      "red": {
+        "run": 39163876309,
+        "result": "11 failed, 627 passed, 2 skipped; new interface absent not exploit proof"
+      },
+      "functional": {
+        "run": 39164125135,
+        "result": "638 passed, 2 skipped; governance link then missing"
+      },
+      "evaluation": "CURRENT_CANDIDATE_PR137_CI_PENDING"
+    },
+    "rollback": "Revert bounded PR if functional head/host equivalence regressions; preserve original trusted fact/source/assistant binding.",
+    "assurance": "CONTROLLED_PYTHON_HOST_ONLY__NATIVE_CHATGPT_ACTUAL_HOST_ENUMERATION_UNVERIFIED__NO_FINANCIAL_CHILD_WRITE",
+    "post_promotion": "PENDING_HEAD_CI_AND_PRODUCTION_OBSERVATION"
   }
 }
