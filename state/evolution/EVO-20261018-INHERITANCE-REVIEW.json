@@ -55,7 +55,9 @@
     "src/uaos/kernel/cognition_case.py",
     "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
     "docs/research/uaos-inheritance-review-20261018/08_operational_method_transfer_taxonomy.md",
-    "tests/kernel/test_method_transfer_admission.py"
+    "tests/kernel/test_method_transfer_admission.py",
+    "src/uaos/runtime/finalization.py",
+    "tests/runtime/test_finalization_gate.py"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -118,6 +120,7 @@
       "tests/architecture/test_cognition_case_transaction.py",
       "tests/architecture/test_native_chatgpt_depth_routing.py"
     ],
-    "verification_plan": "Candidate CI, production exact-head checks, method transfer counterexamples, cross-session no-reminder trigger, downstream Financial original task and real article/Word outcome separately."
+    "verification_plan": "Candidate CI, production exact-head checks, method transfer counterexamples, cross-session no-reminder trigger, downstream Financial original task and real article/Word outcome separately.",
+    "source_promotion_guard": "METHOD_REUSE_REQUIRES_A_HOST_TRUSTED_KNOWLEDGE_RESOLVER_AT_CONTROLLED_FINALIZATION__NO_RESOLVER_IS_FAIL_CLOSED_FOR_NONEMPTY_CANDIDATES"
   }
 }
