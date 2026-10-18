@@ -464,6 +464,7 @@ def require_method_transfer_admission(
     assessment: MethodTransferAssessment,
     *,
     verify_current_evidence: Callable[[str], bool] | None,
+    resolve_trusted_knowledge: Callable[[str], KnowledgeItem | None] | None = None,
 ) -> MethodTransferReceipt:
     """A repeated/systemic case must consciously reuse, adapt, or reject historical methods.
 
@@ -491,7 +492,17 @@ def require_method_transfer_admission(
     if missing:
         raise MethodTransferAdmissionError(f"method transfer refers to unverified current-case evidence: {missing}")
 
+    if candidates and resolve_trusted_knowledge is None:
+        raise MethodTransferAdmissionError(
+            "prior method candidates require a trusted knowledge resolver, not caller-claimed status"
+        )
+
     for candidate in candidates:
+        trusted = resolve_trusted_knowledge(candidate.knowledge.knowledge_id) if resolve_trusted_knowledge else None
+        if trusted is None or trusted != candidate.knowledge:
+            raise MethodTransferAdmissionError(
+                "prior method must match current trusted knowledge identity, state, scope, sources and usage"
+            )
         if candidate.failure_class not in assessment.observed_failure_classes:
             raise MethodTransferAdmissionError("prior-method analogy references an unobserved failure class")
         if candidate.knowledge.state is KnowledgeState.RETIRED:
