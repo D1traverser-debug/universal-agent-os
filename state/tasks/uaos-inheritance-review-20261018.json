@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
-  "next_action": "Continue external S3 provider permission and durable DELETE owner admission, non-POSIX snapshot concurrency, real host/native tool mediation, and five-repository deep outcomes. Financial parent-governed task remains RUNNING parked.",
+  "next_action": "Finish governed knowledge dossier admission for Hindsight, then source-evaluate second screenshot item stablyai/orca separately. Existing controller deep audit, native conformance and Financial parked task remain RUNNING/open.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -22,10 +22,11 @@
     "https://github.com/D1traverser-debug/universal-agent-os/pull/113",
     "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
     "docs/research/uaos-inheritance-review-20261018/10_all_utterance_evolution_and_output_trace_admission.md",
-    "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md"
+    "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
+    "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T02:43:32.942+08:00",
+  "updated_at": "2026-10-19T03:09:06.394+08:00",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -389,5 +390,40 @@
       "CROSS_PLATFORM_SNAPSHOT_DIRFD_PROTECTION"
     ],
     "next_action": "Trace any non-probe callers and remote authorization boundary, then choose bounded owner-scoped enforcement or evidence-backed no-change; do not infer unauthorized production deletion from test cleanup."
+  },
+  "external_skill_study_20261019": {
+    "status": "ITEM_1_SOURCE_STUDY_PERSISTENCE_CANDIDATE__PROMOTION_AND_INDEPENDENT_UAOS_HOLDOUT_OPEN",
+    "authority": "UAOS",
+    "user_scope": "SCREENSHOT_ORDER_ONE_AT_A_TIME__NOT_AUTO_INSTALL",
+    "ordered_sources": [
+      "vectorize-io/hindsight",
+      "stablyai/orca",
+      "cloudflare/security-audit",
+      "paperclipai/paperclip"
+    ],
+    "completed_source_dossiers": [
+      "vectorize-io/hindsight"
+    ],
+    "current_source": "vectorize-io/hindsight",
+    "current_source_main_sha": "5331da2f4db369528bb122075341a7de9c3df6df",
+    "knowledge_ref": "docs/research/uaos-inheritance-review-20261018/12_hindsight_agent_memory_source_learning.md",
+    "knowledge_disposition": "CANDIDATE__SOURCE_AND_IMPLEMENTATION_TRIANGULATED__INDEPENDENT_UAOS_USAGE_NOT_VERIFIED__NOT_CANONICAL",
+    "method_cards": [
+      "HIN-01",
+      "HIN-02",
+      "HIN-03",
+      "HIN-04",
+      "HIN-05",
+      "HIN-06",
+      "HIN-07"
+    ],
+    "assurance": [
+      "SOURCE_SKILL_DOC_IMPLEMENTATION_TEST_PAPER_AND_EXTERNAL_CRITIQUE_READ",
+      "NOT_ENTIRE_5837_TREE_LINE_BY_LINE",
+      "NO_HINDSIGHT_SERVER_OR_MCP_DEPLOYED",
+      "NO_BENCHMARK_OR_HOST_SELECTED_CHAT_TRACE",
+      "NO_NEW_TASK_INDEX_OR_SECOND_KNOWLEDGE_AUTHORITY"
+    ],
+    "next_action": "Promote source dossier after PR checks and production reread. After item 1 source study acceptance, move to item 2 only as separate learning and fit/misfit; do not install or promote external rules based on vendor scores alone."
   }
 }
