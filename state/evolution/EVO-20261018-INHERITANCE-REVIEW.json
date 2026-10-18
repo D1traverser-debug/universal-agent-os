@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.5",
+  "evolution_id": "EVO-20261018-INHERITANCE-REVIEW",
+  "authority": "UAOS",
+  "status": "FRAMED__NOT_AUTHORIZED_FOR_PROMOTION",
+  "origin_kind": "CAPABILITY_GAP",
+  "governing_outcome": "On explicit UAOS controller selection, review every registered repository and the governance, runtime, quality and evolution concerns; persist independent evidence and findings.",
+  "origin_evidence_refs": [
+    "ENTRYPOINT.md",
+    "config/SESSION_INTERACTION_POLICY.json",
+    "state/observations/native-cognition-progress-replay-20261018.json"
+  ],
+  "hypotheses": [
+    {
+      "id": "RESUME_ONLY",
+      "assessment": "SUPPORTED",
+      "evidence": "ENTRYPOINT.md resumes tasks or returns controller root without all-domain analysis."
+    },
+    {
+      "id": "MISSING_EVOLUTION_KERNEL",
+      "assessment": "REJECTED",
+      "evidence": "config/EVOLUTION_POLICY.json has CAPABILITY_GAP and EVALUATED_KNOWLEDGE origins."
+    },
+    {
+      "id": "NATIVE_HOOK_REQUIRED_FOR_REPOSITORY_REVIEW",
+      "assessment": "REJECTED_AS_ONLY_CAUSE",
+      "evidence": "Repository-side review can be performed after explicit controller selection despite lacking ChatGPT pre-send interception."
+    }
+  ],
+  "candidates": [
+    {
+      "id": "NO_CHANGE",
+      "disposition": "REJECTED"
+    },
+    {
+      "id": "PROMPT_BLOAT_OR_SECOND_OS",
+      "disposition": "REJECTED"
+    },
+    {
+      "id": "CANONICAL_INHERITANCE_REVIEW_GATE",
+      "disposition": "CANDIDATE_UNVERIFIED"
+    }
+  ],
+  "implementation_refs": [
+    "config/SESSION_INTERACTION_POLICY.json",
+    "config/NATIVE_SESSION_RUNTIME_PROFILE.json",
+    "src/uaos/runtime/native_session_profile.py",
+    "state/tasks/uaos-inheritance-review-20261018.json",
+    "tests/architecture/test_controller_inheritance_review.py"
+  ],
+  "frozen_acceptance": [
+    "ALL_FIVE_REPOSITORIES_EVIDENCED",
+    "INDEPENDENT_METHOD_STUDIES",
+    "CURRENT_NATIVE_PROFILE_BUDGET",
+    "EXISTING_OWNER_REUSED",
+    "GITHUB_PROMOTION_GATE_GREEN",
+    "ACTUAL_USER_FACING_BEHAVIOR_CLAIM_BOUNDED"
+  ],
+  "evaluation": {
+    "round": 1,
+    "head": "732a689f1bc8866ca8863fb619dc2a34c3f6a1cc",
+    "status": "FAILED",
+    "failure_evidence": [
+      "promotion-gate missing linked evolution and exceeds native budget",
+      "postgres-dbos exceeds native budget"
+    ],
+    "independent_judge": "GitHub CI for deterministic repository invariants only"
+  },
+  "assurance_boundary": "This record admits investigation, not production promotion or native runtime conformance."
+}
