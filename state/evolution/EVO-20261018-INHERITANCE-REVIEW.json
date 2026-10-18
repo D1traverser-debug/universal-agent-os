@@ -302,7 +302,6 @@
     }
   },
   "decommissioned_layout_case_20261019": {
-    "status": "CANDIDATE_DELETION_PENDING_PROTECTED_PR_VALIDATION",
     "source_ref": "docs/architecture/REPO_LAYOUT.md",
     "original_git_blob": "f565e39faacc0b7ba694dee68387eaffafc38618",
     "observed_fact": "Proposed v4 directory skeleton is not the actual 2.8.0 topology. Full 399-blob source/config/docs/test/task scan found no other file referencing REPO_LAYOUT.md or its full path. This is source text/reference coverage only, not hidden external consumer proof.",
@@ -324,7 +323,7 @@
       "No repo-local text references in source/scripts/tests/config/docs/state",
       "File absent from candidate tree and later main tree",
       "Current real bootstrap/architecture authority remains",
-      "CI/integration pass on exact candidate head",
+      "Protected PR gate tests pass on exact candidate head; no separate live integration claimed",
       "Production reread and separate user-outcome validation"
     ],
     "limits": [
@@ -332,6 +331,18 @@
       "Absence of in-repo textual refs does not itself prove no external consumer",
       "Knowledge research across methods is targeted, not entire-web saturation",
       "Deletion alone does not prove cognition/evolution or native host invocation effectiveness"
-    ]
+    ],
+    "authoritative_effect_rule": "RESOLVE_AT_READ_TIME__IF_GIT_MAIN_TREE_CONTAINS_SOURCE_FILE_THEN_RETIREMENT_NOT_EFFECTIVE__IF_ABSENT_AND_IMMUTABLE_MERGE_COMMIT_EXISTS_THEN_REMOVED_FROM_ACTIVE_REF__NO_COPIED_PROMOTION_STATUS",
+    "release_evidence": {
+      "pr": 123,
+      "candidate_sha": "3b4e4a347f0e054a633a9ee36a086d7d73e8b0db",
+      "merge_sha": "45db5548a8fd5aff77184f4dab0ca01177856aa9",
+      "protected_pr_gate_run": 696,
+      "protected_pr_gate_outcome": "618 passed, 2 skipped",
+      "production_push_ci": 697,
+      "production_push_conclusion": "success",
+      "verified_main_tree_absence": true
+    },
+    "live_verification_limit": "Retirement effective for GitHub main working tree only; user-facing references, copies, installed agent sources and third-party caches have not been enumerated."
   }
 }
