@@ -3,7 +3,7 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-18T16:50:52+08:00",
+  "updated_at": "2026-10-18T18:23:00+08:00",
   "controller_tasks": [
     {
       "task_id": "uaos:maintenance:inheritance-review-20261018",
@@ -13,7 +13,7 @@
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume": true,
-      "semantic_summary": "Bounded UAOS epistemic gate improvement promoted by PR #98 at bb98594, production CI #598 (533 passed, 1 skipped). Single mandatory entry checklist consolidated; controlled selected-UAOS finalization now requires evidence-backed rule/method self-challenge and routes knowledge/work signals into existing owners. Parent multi-causal deep audit and genuine native-host activation/research saturation remain RUNNING.",
+      "semantic_summary": "UAOS epistemic gate and operating method deployed to main; user confirms installed Skill updated before one native fresh-chat inheritance canary. Response matches current main identity and reports unprompted source review, but no direct Skill/tool trace is available and authorized repair did not reach durable closure after a reported tool write block. Real canary evidence preserved. Parent deep audit remains RUNNING; Agent owns next remediation, no repeated user installation or identical canary required.",
       "current_stage": "MULTICAUSAL_GATE_PRODUCTION_VERIFIED__CROSS_DOMAIN_DEEP_RESEARCH_AND_NATIVE_PROOF_OPEN",
       "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
     },
