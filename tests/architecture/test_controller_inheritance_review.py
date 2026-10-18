@@ -34,6 +34,7 @@ def test_controller_review_is_projected_into_native_hot_path():
     assert review["required"]
     assert review["trigger"] == session["controller_inheritance_review"]["trigger"]
     assert review["coverage_rule"] == session["controller_inheritance_review"]["coverage_rule"]
+    assert review["evidence_admission_ref"] == session["controller_inheritance_review"]["evidence_admission_ref"]
     assert len((ROOT / "config/NATIVE_SESSION_RUNTIME_PROFILE.json").read_text(encoding="utf-8")) <= 12000
     assert "cannot physically force" in session["controller_inheritance_review"]["host_boundary"]
 
