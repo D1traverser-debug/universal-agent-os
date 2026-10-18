@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Callable
+
+from uaos.contracts.models import KnowledgeItem
 from enum import Enum
 
 from .problem_space import (MethodTransferAssessment, MethodTransferAdmissionError, require_method_transfer_admission)
@@ -274,7 +277,9 @@ def _admit_architecture_experience(
         )
 
 
-def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceipt:
+def require_cognition_case_admission(
+    case: CognitionCase, *, resolve_trusted_knowledge: Callable[[str], KnowledgeItem | None] | None = None
+) -> CognitionCaseReceipt:
     """Recompute cognition admission from raw case evidence instead of trusting a receipt."""
 
     directive = require_deliberation_admission(case.signals, case.evidence)
@@ -455,6 +460,7 @@ def require_cognition_case_admission(case: CognitionCase) -> CognitionCaseReceip
                         EvidenceKind.ANALYSIS_RESULT,
                     }
                 ),
+                resolve_trusted_knowledge=resolve_trusted_knowledge,
             )
         except (MethodTransferAdmissionError, ValueError) as exc:
             raise CognitionCaseAdmissionError(f"method transfer not admitted: {exc}") from exc
