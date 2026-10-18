@@ -88,6 +88,7 @@ def build_native_session_runtime_profile(
                 "required": _value(review, "required", field="controller_inheritance_review"),
                 "trigger": _value(review, "trigger", field="controller_inheritance_review"),
                 "coverage_rule": _value(review, "coverage_rule", field="controller_inheritance_review"),
+                "evidence_admission_ref": _value(review, "evidence_admission_ref", field="controller_inheritance_review"),
             },
             "mandatory_entry": {
                 "scope": _value(entry, "scope", field="mandatory_selected_context_entry"),
