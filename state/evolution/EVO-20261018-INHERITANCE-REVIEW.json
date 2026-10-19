@@ -558,7 +558,7 @@
     "assurance": "GITHUB_SOURCE_VERIFIED_WHEN_GREEN__CANNOT_ASSERT_CURRENT_CHATGPT_REAL_PRE_SEND_PROGRESS_CHECK_OR_AUTONOMOUS_DISCOVERY"
   },
   "goal_referent_substitution_20261019": {
-    "status": "CANDIDATE__ORIGINAL_SELF_GOVERNANCE_GOAL_RESTORED__NATIVE_SEMANTIC_REPAIR_UNVERIFIED",
+    "status": "GOAL_REFERENT_POLICY_SOURCE_PROMOTED__BEHAVIORAL_OUTCOME_UNVERIFIED",
     "origin_kind": "USER_OBSERVED_CONTROLLER_FAILURE_RECURRENT",
     "governing_outcome": "Controller must identify own failing capability, independently improve its understanding/diagnosis and repair loop, and continue normal system governance; not restrict adjacent work to simulate accountability.",
     "incident_ref": "state/observations/native-cognition-progress-replay-20261018.json#recurrence_20261019_goal_substitution",
@@ -632,7 +632,19 @@
       "candidate_ci": "PENDING",
       "main_readback": "PENDING",
       "native_host_semantic_holdout": "OPEN_NO_REAL_NATIVE_TRACE",
-      "confidence_scope": "SOURCE_AND_CONTROLLED_CASE_ONLY"
+      "confidence_scope": "SOURCE_AND_CONTROLLED_CASE_ONLY",
+      "release": {
+        "pr": 145,
+        "main_sha": "921e2174099bf8f32cb9c284eb8d58f39997f14f",
+        "candidate_head": "0c93c12a63b1724fef16e70cc853e5f60c1fb2f2",
+        "ci": 39192683161,
+        "pytest": "652 passed, 2 skipped",
+        "integration_run": 39192683135,
+        "integration": "postgres-dbos success, object-store success; openai-provider skipped",
+        "main_readback": true,
+        "native_behavior": "UNKNOWN__NO_ACTUAL_SELECTED_CHAT_HOST_TRACES_OR_INSTALLED_SKILL_BYTES"
+      },
+      "actual_native_semantic_holdout": "NOT_EXECUTED__NOT_SELF_CERTIFIED"
     },
     "assurance": "THIS_IS_BOUNDARY_SOURCE_FIX_AND_WRONG_TASK_STATE_RETRACTION_NOT_NATIVE_CHATGPT_CORRECTION_PROOF",
     "next_action": "Independently observe selected ChatGPT goal preservation, self-diagnosis and autonomous repair across varied tasks; continue legitimate parallel audits and business outcomes."

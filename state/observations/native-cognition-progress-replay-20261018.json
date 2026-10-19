@@ -246,6 +246,17 @@
       "Real cold-chat semantic holdout: controller confronted with own unreliability chooses self-improvement action without requiring user to specify fix; positive native evidence not yet available",
       "Pre-send autonomous detection and verified real end-user behavior remain unverified until actual host traces or genuinely independent observation"
     ],
-    "status": "SOURCE_CANDIDATE__PR_CI_MAIN_REREAD_OPEN__NATIVE_BEHAVIOR_OPEN"
+    "status": "SOURCE_REMEDY_PR145_MAIN_VERIFIED__NATIVE_SEMANTIC_HOLDOUT_OPEN",
+    "release": {
+      "pr": 145,
+      "main_sha": "921e2174099bf8f32cb9c284eb8d58f39997f14f",
+      "candidate_head": "0c93c12a63b1724fef16e70cc853e5f60c1fb2f2",
+      "ci": 39192683161,
+      "pytest": "652 passed, 2 skipped",
+      "integration_run": 39192683135,
+      "integration": "postgres-dbos success, object-store success; openai-provider skipped",
+      "main_readback": true,
+      "native_behavior": "UNKNOWN__NO_ACTUAL_SELECTED_CHAT_HOST_TRACES_OR_INSTALLED_SKILL_BYTES"
+    }
   }
 }
