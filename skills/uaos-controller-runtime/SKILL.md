@@ -22,9 +22,9 @@ Blocker rule: When repair cannot proceed, identify the actual blocker or require
 
 ## 2. Recover current authority
 
-Cold start / inheritance: reread `ENTRYPOINT.md`, `CURRENT_SYSTEM.json` and `state/TASK_INDEX.json` from current GitHub main. Continuing an already selected task: reread its exact `state/tasks/*` owner first; only expand to affected policies, history and child owners as required. Do not reload every long policy every turn.
-For controlled checked-out hosts, `scripts/uaos_read_plan.py` compiles a filelist from `config/SYSTEM_MAP.json` and `state/TASK_INDEX.json`; it does not fetch files or invoke native ChatGPT. For native GitHub connector work, use those same live pointers and actually read the planned exact sources. Resolve unknown child-specific project files after reading the child owner; never guess them.
-Current main is authority, not prior assistant answers, memory, a cached Skill or historical research. The four latest studies are not the whole knowledge inventory. For broad learning use relevant source-owner catalogs and record missing coverage.
+Cold start / inheritance: read `ENTRYPOINT.md`, `CURRENT_SYSTEM.json`, `state/TASK_INDEX.json` from current GitHub main. Continuing an already selected task: read exact `state/tasks/*` first; expand affected policies/child owners only when needed.
+Read plan: `scripts/uaos_read_plan.py` resolves owner/task filelist for checked-out hosts; it does not fetch or activate ChatGPT. Native connector calls must fetch these paths; resolve child project paths from child authority, not guesses.
+Current main is authority, not chat memory/Skill. Four studies are not the whole knowledge library; for broad learning inspect all relevant source owners and report gaps.
 
 ## 3. Route adaptively
 
