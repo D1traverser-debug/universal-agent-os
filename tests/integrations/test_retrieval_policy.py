@@ -150,3 +150,10 @@ def test_knowledge_scope_policy_preserves_original_owner_and_never_publicizes_ex
     kinds = {item["surface"] for item in guide["source_roles"]["optional_connected_historical_surfaces"]}
     assert kinds == {"GOOGLE_DRIVE", "NOTION", "CHATGPT_LIBRARY", "PRIOR_CONVERSATIONS"}
     assert "NATIVE" in guide["native_limit"]
+
+
+def test_bootstrap_explicitly_routes_full_knowledge_questions_to_existing_retrieval_owner():
+    entry = (ROOT / "ENTRYPOINT.md").read_text(encoding="utf-8")
+    assert "config/RETRIEVAL_POLICY.json#knowledge_inventory_routing" in entry
+    assert "A four-skill source-study list is never proof" in entry
+    assert "no claim of native ChatGPT non-bypassable invocation" in entry
