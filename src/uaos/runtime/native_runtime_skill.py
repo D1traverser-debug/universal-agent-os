@@ -55,8 +55,27 @@ def build_native_runtime_skill(
     closure = _mapping(_value(session, "problem_to_action_closure_gate", field="session_policy"), field="session_policy.problem_to_action_closure_gate")
     systemic = _mapping(_value(closure, "systemic_repair_completeness", field="problem_to_action_closure_gate"), field="session_policy.problem_to_action_closure_gate.systemic_repair_completeness")
     mutation = _mapping(_value(session, "always_on_mutation_sentinel", field="session_policy"), field="session_policy.always_on_mutation_sentinel")
+    progress = _mapping(_value(session, "inherited_session_progress_report", field="session_policy"), field="session_policy.inherited_session_progress_report")
+    progress_fields = _strings(_value(progress, "fields", field="inherited_session_progress_report"), field="inherited_session_progress_report.fields")
     solution_directive = _mapping(_value(intent, "problem_solution_directive_resolution", field="intent_policy"), field="intent_policy.problem_solution_directive_resolution")
     bounded = _mapping(_value(evolution, "bounded_verification_and_promotion", field="evolution_policy"), field="evolution_policy.bounded_verification_and_promotion")
+
+    expected_progress_labels = {
+        "current_agent": "当前 Agent",
+        "current_scope_or_task": "当前任务",
+        "authority_context": "Authority",
+        "status": "状态",
+        "current_stage": "当前阶段",
+        "next_action_or_blocker": "下一动作",
+        "evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER": "Evolution",
+        "deliberation_state_when_triggered_or_NOT_TRIGGERED": "Deliberation",
+        "version_identity": "版本",
+        "progress_timestamp": "进度时间",
+    }
+    if tuple(progress_fields) != tuple(expected_progress_labels):
+        raise NativeRuntimeSkillError("inherited session Progress field contract drift")
+    if _value(progress, "required", field="inherited_session_progress_report") is not True:
+        raise NativeRuntimeSkillError("selected-context Progress must remain mandatory")
 
     lines: list[str] = [
         "---",
@@ -114,7 +133,21 @@ def build_native_runtime_skill(
         f"Mutation scope: `{_value(mutation, 'scope', field='always_on_mutation_sentinel')}`",
         f"Production mutation: {_value(mutation, 'production_rule', field='always_on_mutation_sentinel')}",
         "",
-        "## 7. Host boundary",
+
+        "## 7. Mandatory final Progress and self-observation",
+        "",
+        f"Scope: `{_value(progress, 'scope', field='inherited_session_progress_report')}`",
+        f"Placement: `{_value(progress, 'placement', field='inherited_session_progress_report')}`",
+        "Before releasing each selected-context final reply, inspect the actual proposed response for missing fields, stale task values, unsupported completion claims and any newly observed failure (including the assistant's own output). Trigger canonical cognition/evolution routing on material problems; do not silently mark an observed defect clean.",
+        "Append these ten labeled fields as individual lines at the end of the final answer (not merely a prose table or a claimed Progress check):",
+        *[f"- {expected_progress_labels[field]}: {field}" for field in progress_fields],
+        f"Timestamp rule: {_value(progress, 'timestamp_rule', field='inherited_session_progress_report')}",
+        f"Timezone/display: {_value(progress, 'timestamp_display_format', field='inherited_session_progress_report')}",
+        f"Evolution rule: {_value(progress, 'evolution_rule', field='inherited_session_progress_report')}",
+        f"Deliberation rule: {_value(progress, 'deliberation_rule', field='inherited_session_progress_report')}",
+        "Missing or contradictory Progress is a behavioral failure, not a reason to claim success after CI. A self-review without a trusted host trace is not independent native enforcement.",
+        "",
+        "## 8. Host boundary",
         "",
         f"Role: `{_value(chatgpt, 'native_runtime_skill_role', field='CHATGPT_GITHUB')}`",
         f"Activation: `{_value(chatgpt, 'native_runtime_skill_activation', field='CHATGPT_GITHUB')}`",

@@ -12,7 +12,7 @@
     "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md"
   ],
   "source_git_blobs": {
-    "skill": "ad6e646325e5fe0fdbe761ea47c63b2153a410a1",
+    "skill": "b9d2e395cde7b6f0616265416bdbf526f906b6cd",
     "pointer": "a43a4b09d5c63c861f1607e581ae5a40fbd4c758",
     "previously_supplied_skill": "a244aeafcb204a86ab6825b8e8b277050c2be507",
     "previous_verified_repo_skill": "cb2ecdfac61e712b7270b6b218effa667b45f5d0"
@@ -112,5 +112,13 @@
       "status": "success",
       "source_git_blob": "ad6e646325e5fe0fdbe761ea47c63b2153a410a1"
     }
+  },
+  "latest_repo_skill_generation_20261019": {
+    "candidate_branch": "fix/progress-drift-native-projection-and-evidence-20261019",
+    "candidate_source_blob": "b9d2e395cde7b6f0616265416bdbf526f906b6cd",
+    "historical_previous_source_blob": "ad6e646325e5fe0fdbe761ea47c63b2153a410a1",
+    "scope": "REGENERATED_REPO_SKILL_SOURCE_ONLY__ACCOUNT_INSTALLED_SKILL_BYTES_UNVERIFIED",
+    "assurance": "PR_CANDIDATE_CI_PENDING__NO_ACCOUNT_UPDATE_INFERRED",
+    "user_actions": "NO_REINSTALL_REQUESTED_BY_AGENT_ON_UNVERIFIED_ACCOUNT_STATE"
   }
 }

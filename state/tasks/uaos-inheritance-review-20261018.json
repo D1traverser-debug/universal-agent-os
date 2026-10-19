@@ -29,10 +29,11 @@
     "docs/research/uaos-inheritance-review-20261018/15_paperclip_multi_agent_control_plane_source_learning.md",
     "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md",
     "state/observations/uaos-five-repo-binding-20261019.json",
-    "state/observations/knowledge-retrieval-recency-drift-20261019.json"
+    "state/observations/knowledge-retrieval-recency-drift-20261019.json",
+    "state/observations/native-cognition-progress-replay-20261018.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T01:27:37.512Z",
+  "updated_at": "2026-10-19T01:54:02.557Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -658,5 +659,21 @@
       "main_reread": true,
       "verification_scope": "SOURCE_AND_CONTROLLED_RETRIEVAL_CONTRACT_ONLY"
     }
+  },
+  "progress_behavioral_recurrence_20261019": {
+    "status": "CURRENT_SELECTED_CHAT_PROGRESS_ADHERENCE_FAILED__SOURCE_PROJECTION_CANDIDATE_PENDING_CI",
+    "evidence": "state/observations/native-cognition-progress-replay-20261018.json",
+    "existing_evolution_owner": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
+    "observed": "Two selected-UAOS prior response excerpts lacked the 10-field final Progress, after older 2026-10-16/18 incidents already recorded the same behavior; self-discovery did not happen before user correction.",
+    "independent_source_finding": "Generated runtime dispatcher omitted canonical Progress fields while compiled NATIVE_SESSION_RUNTIME_PROFILE included them; entrypoint had literal escaped newline string.",
+    "selected_work": "Patch native Skill compiler/current projection, test all ten fields & real visible negative excerpts, retain host limitation and continuity.",
+    "blocked_claims": [
+      "NATIVE_CHATGPT_PHYSICAL_ALL_OUTPUT_INTERCEPTION",
+      "AGENT_AUTONOMOUS_PRE_SEND_CONFORMANCE",
+      "PR_CI_PROVES_PROBLEM_CLOSED",
+      "ALL_FIVE_BUSINESS_OUTCOMES_VERIFIED"
+    ],
+    "child_financial": "RUNNING_NOT_DEFAULT_UNCHANGED",
+    "next_evidence": "Candidate CI and main reread; native pre-send instrumentation still needs actual product host channel/independent selected-context trace"
   }
 }

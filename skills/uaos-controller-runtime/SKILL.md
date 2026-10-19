@@ -58,7 +58,29 @@ Evolution stop condition: `FROZEN_ACCEPTANCE_GREEN__HEAD_FROZEN__PROMOTE__PRODUC
 Mutation scope: `BEFORE_EVERY_EXTERNAL_OR_DURABLE_MUTATION_ATTEMPT`
 Production mutation: CHATGPT_GITHUB material production changes normally use candidate branch -> pull request -> owner-appropriate checks -> controlled merge/update -> production reread.
 
-## 7. Host boundary
+## 7. Mandatory final Progress and self-observation
+
+Scope: `EVERY_FINAL_ASSISTANT_RESPONSE_AFTER_A_CONTROLLER_OR_TASK_HAS_BEEN_SELECTED_FOR_THE_CURRENT_CONVERSATION`
+Placement: `END_OF_FINAL_RESPONSE`
+Before releasing each selected-context final reply, inspect the actual proposed response for missing fields, stale task values, unsupported completion claims and any newly observed failure (including the assistant's own output). Trigger canonical cognition/evolution routing on material problems; do not silently mark an observed defect clean.
+Append these ten labeled fields as individual lines at the end of the final answer (not merely a prose table or a claimed Progress check):
+- 当前 Agent: current_agent
+- 当前任务: current_scope_or_task
+- Authority: authority_context
+- 状态: status
+- 当前阶段: current_stage
+- 下一动作: next_action_or_blocker
+- Evolution: evolution_state_when_triggered_or_NO_EVOLUTION_TRIGGER
+- Deliberation: deliberation_state_when_triggered_or_NOT_TRIGGERED
+- 版本: version_identity
+- 进度时间: progress_timestamp
+Timestamp rule: Use the timestamp of the freshest authoritative state actually used for the report; do not substitute the response clock when authority freshness is known.
+Timezone/display: YYYY-MM-DD HH:mm:ss（北京时间）
+Evolution rule: If a user correction/failure/maintenance finding triggered governed evolution, report the actual durable lifecycle state and evolution_id. If evaluated without durable promotion, report EVALUATED_NO_DURABLE_EVOLUTION. Use NO_EVOLUTION_TRIGGER only when no problem/evolution trigger was detected in the current turn.
+Deliberation rule: When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the evidence/control escalation used without exposing private chain-of-thought.
+Missing or contradictory Progress is a behavioral failure, not a reason to claim success after CI. A self-review without a trusted host trace is not independent native enforcement.
+
+## 8. Host boundary
 
 Role: `NON_AUTHORITATIVE_SELECTED_CONTEXT_RUNTIME_DISPATCHER__REREAD_CURRENT_GITHUB_AUTHORITY__NO_SECOND_COGNITION_RESEARCH_OR_EVOLUTION_OWNER`
 Activation: `CUSTOM_INSTRUCTIONS_MANDATORY_LIGHTWEIGHT_ENTRY_AFTER_UAOS_OR_REGISTERED_PERSISTENT_AGENT_CONTEXT_SELECTION__SKILL_DISPATCHES_INTERNAL_ADAPTIVE_ROUTING__SKILL_METADATA_RELEVANCE_IS_SECONDARY_NOT_THE_ONLY_ACTIVATION_PATH`

@@ -109,5 +109,86 @@
     "intervention_candidate": "CURRENT_CONTROLLER_TURN_COVERAGE_WITH_HOST_SOURCE_ENUMERATION_AND_ACTUAL_ASSISTANT_DRAFT_IDENTITY",
     "current_turn_source_assurance": "RECORDED_FROM_CONVERSATION_NO_INDEPENDENT_PRODUCT_HOST_TRACE",
     "native_outcome": "OPEN"
+  },
+  "latest_visible_recurrence_20261019": {
+    "scope": "SELECTED_UAOS_CONTROLLER_REPLIES_AFTER_PRIOR_GOVERNANCE_PROMOTIONS",
+    "source_assurance": "CONVERSATION_VISIBLE_ASSISTANT_FINAL_EXCERPTS__NOT_INDEPENDENT_NATIVE_PRODUCT_TRANSCRIPT",
+    "observed": [
+      "At least two selected-controller final response excerpts omitted all ten mandatory separately parseable Progress fields; existing evaluator negative replay is test_session_progress_adherence.py",
+      "After previous user correction over partial four-skill inventory, controller pursued PR140/141 and re-reported CI as success without exposing the obligatory final Progress, escalating a scope miss into a self-observation failure",
+      "Existing 2026-10-16 conversational-adherence and 2026-10-18 live replay documents already record the same failure class; a new user reminder was needed",
+      "Independent source inspection found built skills/uaos-controller-runtime/SKILL.md omitted the inherited_session_progress_report requirements even though canonical session policy and native profile include them",
+      "Independent sibling scan found an ENTRYPOINT.md escaped literal newline separator left by an earlier knowledge retrieval edit"
+    ],
+    "causal_assessment": [
+      {
+        "id": "NATIVE_COMPLETE_MEDIATION",
+        "status": "CONFIRMED_MISSING_ENFORCEMENT_BOUNDARY",
+        "basis": "CHATGPT_GITHUB host profile declares NO_VERIFIED_CHATGPT_PRE_SEND_HOOK, controlled FinalizationContext callable not on native path"
+      },
+      {
+        "id": "NATIVE_SKILL_PROJECTION_GAP",
+        "status": "SOURCE_CONFIRMED",
+        "basis": "native_runtime_skill.py compiler never read inherited_session_progress_report and generated SKILL.md lacked any explicit Progress fields"
+      },
+      {
+        "id": "CONTROLLED_PROGRESS_PARSER_MISSING",
+        "status": "REJECTED",
+        "basis": "session_adherence.py already has MISSING_PROGRESS_REPORT, 10-field parser and selected-context test"
+      },
+      {
+        "id": "BAD_METHOD_DISPOSITION_FROM_GREEN_CI",
+        "status": "REPEAT_CONFIRMED",
+        "basis": "PR-only success treated as governed outcome despite no live session self-check or native output mediation"
+      },
+      {
+        "id": "ASSISTANT_CURRENT_OUTPUT_SELF_TRIAGE",
+        "status": "NOT_OBSERVED_AS_AN_INDEPENDENT_CHECK",
+        "basis": "Native host turn source/generation trace not available to repo-controlled verifier"
+      }
+    ],
+    "candidates": [
+      {
+        "id": "PROMISE_TO_REMEMBER_REPORT",
+        "disposition": "REJECT",
+        "reason": "Does not constrain future native outputs"
+      },
+      {
+        "id": "ADD_PARALLEL_MONITOR_OR_NEW_SYSTEM",
+        "disposition": "REJECT",
+        "reason": "Duplicate authority without native host access; feedback needn't wait for user"
+      },
+      {
+        "id": "EXTEND_EXISTING_GENERATED_SKILL_PROJECTION",
+        "disposition": "BOUNDED_ACTION",
+        "reason": "Closes demonstrable mismatch between canonical progress owner and current generated dispatcher, with exact equality CI and two observed replay negatives"
+      },
+      {
+        "id": "TRUE_NATIVE_PRESEND_TELEMETRY_AND_GUARD",
+        "disposition": "UNAVAILABLE_FOR_REPO_ONLY_IMPLEMENTATION",
+        "reason": "No host API or raw final-response stream provided here; cannot claim complete mediation"
+      },
+      {
+        "id": "NO_CHANGE",
+        "disposition": "REJECT",
+        "reason": "Leaves source-level projection gap and malformed entrypoint escape"
+      }
+    ],
+    "acceptance": [
+      "Compiler refuses absent or disabled required Progress policy",
+      "Compiled SKILL contains all 10 canonical Progress fields, timestamp/provenance, and explicit output self-observation",
+      "Generated Skill exactly equals canonical builder output in CI",
+      "Two observed (sanitized) controller-response excerpts fail existing 10-field evaluator",
+      "Previous session-adherence positive/negative controls remain green",
+      "ENTRYPOINT newline corruption removed and regression added",
+      "Existing evolution and exact task track failed native assurance separately",
+      "PR CI plus main reread prove bounded source correction, not future native-chat adherence"
+    ],
+    "owner_refs": [
+      "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
+      "state/tasks/uaos-inheritance-review-20261018.json"
+    ],
+    "outcome": "SOURCE_FIX_IN_CANDIDATE__NATIVE_CHATGPT_SELECTED_SESSION_AUTOMATIC_OUTPUT_GUARD_STILL_UNVERIFIED",
+    "caveat": "User's report triggered current repair. Do not mislabel as independent pre-send auto-detection. Independent side finding: compiled runtime Skill omission and escaped markdown separator."
   }
 }

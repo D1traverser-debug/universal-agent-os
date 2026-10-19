@@ -281,3 +281,26 @@ def test_session_policy_requires_causal_intervention_before_problem_closure():
     assert "causal/intervention admission" in closure["rule"]
     assert "evolution disposition" in closure["rule"]
     assert "current work cycle" in closure["rule"]
+
+
+def test_two_visible_selected_controller_final_reply_excerpts_fail_progress_contract():
+    # Observed in the 2026-10-19 selected-UAOS chat; sanitized excerpts only.
+    # This is a transcript-replay negative, NOT a native pre-send interception receipt.
+    excerpts = (
+        "本轮继承执行结果：四项外部技能的源码研究与知识蒸馏完成。下一阶段回到 UAOS 原定总控目标。",
+        "当前的准确结论是：你的知识体系分布于 GitHub 五仓、Google Drive、Notion、ChatGPT Library 及历史对话。",
+    )
+    results = [
+        evaluate_session_progress_response(
+            excerpt, SessionProgressExpectation(context_selected=True, problem_signal_observed=True)
+        )
+        for excerpt in excerpts
+    ]
+    assert all(SessionAdherenceViolation.MISSING_PROGRESS_REPORT in result.violations for result in results)
+    summary = summarize_session_adherence(
+        (excerpt, SessionProgressExpectation(context_selected=True, problem_signal_observed=True))
+        for excerpt in excerpts
+    )
+    assert summary.required_report_count == 2
+    assert summary.missing_report_count == 2
+    assert summary.pass_count == 0
