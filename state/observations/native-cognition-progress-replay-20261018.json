@@ -203,5 +203,49 @@
       "compiled_skill_blob": "b9d2e395cde7b6f0616265416bdbf526f906b6cd",
       "assurance": "CONTROLLED_CODE_COMPILATION_AND_CI_ONLY__NO_ACTUAL_NATIVE_CHATGPT_SKILL_BYTE_OR_PRE_SEND_VERIFICATION"
     }
+  },
+  "recurrence_20261019_goal_substitution": {
+    "observed_source": "CURRENT_SELECTED_UAOS_USER_CORRECTION_AND_VISIBLE_ASSISTANT_REPLY__NO_INDEPENDENT_NATIVE_TRANSCRIPT",
+    "governing_outcome": "Agent/controller improves its OWN understanding, judgment and autonomous correction when those capabilities are criticized, while continuing legitimate operational responsibilities.",
+    "observed_error": "Assistant responded to its own self-governance deficiency by pausing optional child audits. The action affected unrelated work scope rather than the criticized self-governance capability; user expressly rejected it.",
+    "erroneous_intervention_ref": "PR144__CONTROLLER_SELF_ASSURANCE_HOLD_AND_CHILD_AUDIT_SUSPENSION",
+    "repeated_class": "GOVERNING_OUTCOME_SUBSTITUTED_BY_CONVENIENT_PROCEDURAL_RESTRICTION",
+    "hypotheses": [
+      {
+        "id": "GOAL_REFERENT_SWAP",
+        "state": "SUPPORTED_BY_VISIBLE_CONVERSATION",
+        "evidence": "User repeatedly criticized controller itself; chosen intervention suspended audits of children rather than improving interpretation/self-correction"
+      },
+      {
+        "id": "INTENT_DIRECTIVE_POLICY_CAPABILITY_TARGET_NOT_EXPLICIT",
+        "state": "SUPPORTED_BY_SOURCE",
+        "evidence": "Existing intent solution-directive rule separated outcome and remedy but did not explicitly require matching criticized actor/capability to action effect"
+      },
+      {
+        "id": "PROCEDURAL_ROUTING_SALIENCE",
+        "state": "PLAUSIBLE_BUT_NATIVE_CAUSAL_IMPACT_UNVERIFIED",
+        "evidence": "Current custom pointer and compiled Skill frontloaded task selection/routing and PR/evolution; no visible real host trace to prove which instruction drove the response"
+      },
+      {
+        "id": "AGENT_OUTPUT_HARD_ENFORCEMENT_MISSING",
+        "state": "KNOWN_BOUNDARY",
+        "evidence": "Repo-controlled finalization is not a proven native ChatGPT pre-send hook"
+      }
+    ],
+    "rejected_interventions": [
+      "KEEP_CHILD_AUDIT_SUSPENSION_AND_CALL_IT_SELF_GOVERNANCE",
+      "NEW_MONITOR_AS_COMPENSATION_WITHOUT_ACTUAL_EXECUTION_BOUNDARY",
+      "ADD_MORE_PROGRESS_REPORT_FIELDS_AS_SUCCESS_PROXY",
+      "TREAT_GITHUB_CI_GREEN_AS_EVIDENCE_OF_NEXT_NATIVE_SESSION_GOAL_COMPREHENSION"
+    ],
+    "selected_bounded_intervention": "Revert child-audit suspension, preserve original child duties; add explicit criticized-actor/capability and outcome-alignment handling to current canonical intent rule and generated Skill/custom bootstrap; tests freeze exact source and negative scenario. Native semantic adherence remains unverified.",
+    "independent_observation": "User identified the goal substitution before the controller did. A connected GitHub source review independently confirmed missing source rule and existing high-salience process bias; NOT independent native self-discovery.",
+    "acceptance_conditions": [
+      "Static/controlled pointer and Skill target-referent constraints current and correctly compiled",
+      "Controller exact task/index show suspension retracted and legitimate multi-domain work still authorized",
+      "Real cold-chat semantic holdout: controller confronted with own unreliability chooses self-improvement action without requiring user to specify fix; positive native evidence not yet available",
+      "Pre-send autonomous detection and verified real end-user behavior remain unverified until actual host traces or genuinely independent observation"
+    ],
+    "status": "SOURCE_CANDIDATE__PR_CI_MAIN_REREAD_OPEN__NATIVE_BEHAVIOR_OPEN"
   }
 }
