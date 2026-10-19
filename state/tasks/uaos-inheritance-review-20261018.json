@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T08:22:05.401Z",
+  "updated_at": "2026-10-19T08:35:36.257Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -71,19 +71,7 @@
   },
   "epistemic_entry_implementation": {
     "status": "CONTROLLED_GATE_PRODUCTION_VERIFIED__NATIVE_STABILITY_UNVERIFIED",
-    "task_ref": "state/tasks/uaos-epistemic-entry-20261018.json",
-    "evolution_ref": "state/evolution/EVO-20261018-CONTROLLER-EPISTEMIC-ENTRY.json",
-    "governing_scope": "UAOS_CONTROLLER_ONLY__NO_CHILD_REPO_MUTATIONS",
-    "implementation": "Controlled finalization routes evidence-backed epistemic entry, with direct rule/method self-challenge and no second cognition owner.",
-    "native_host": "UNVERIFIED_PRE_SEND_PRE_TOOL_HOOK",
-    "research_saturation": "NOT_ESTABLISHED",
-    "production_evidence": {
-      "pr": 98,
-      "main_sha": "bb98594b347cb0ef445a7f16f5857a2ca4773f7b",
-      "ci_run": 598,
-      "result": "533 passed, 1 skipped"
-    },
-    "subordinate_task_disposition": "COMPLETE_BOUNDED_REPAIR__PARENT_DEEP_AUDIT_REMAINS_RUNNING"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#epistemic_entry_implementation"
   },
   "native_account_cutover": {
     "status": "ACCOUNT_SKILL_UPDATE_USER_CONFIRMED__FIRST_CANARY_PARTIAL__INSTALLED_BYTES_UNVERIFIED",
@@ -114,19 +102,7 @@
   },
   "blocked_operation_continuation": {
     "status": "CONTROLLED_FINALIZATION_PROMOTED__NATIVE_AUTONOMY_OPEN",
-    "reason": "FIRST_NATIVE_CANARY_REPORTS_A_SINGLE_BRANCH_CREATION_BLOCK_AND_NO_DURABLE_FOLLOWTHROUGH",
-    "source_ref": "state/observations/native-account-canary-20261018-first-run.json",
-    "runtime_ref": "src/uaos/runtime/finalization.py#_require_blocked_operation_continuity",
-    "evolution_ref": "state/evolution/EVO-20261018-CONTROLLER-BLOCKED-OPERATION-CONTINUITY.json",
-    "host_boundary": "NATIVE_SKILL_INVOCATION_AND_TOOL_TRACE_NOT_INSTRUMENTED",
-    "next_step": "Run candidate tests/CI, preserve parent RUNNING, reread production after protected merge; use actual future selected-chat traces as independent holdouts.",
-    "production_evidence": {
-      "pr": 105,
-      "main_sha": "76f4ba7cc3ae0dda491cd6989d341e96a76cc4be",
-      "ci_run": 622,
-      "ci_result": "554 passed, 1 skipped"
-    },
-    "subordinate_task_status": "COMPLETE_BOUNDED_REPAIR"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#blocked_operation_continuation"
   },
   "user_directive_20261018": {
     "controller_first": true,
@@ -139,32 +115,11 @@
   "current_focus": "CONTROLLER_FIRST_METHOD_REUSE_AND_DEEP_KNOWLEDGE_AUDIT",
   "method_transfer_release_20261018": {
     "status": "CONTROLLED_CODE_PROMOTED__MAIN_SOURCE_REREAD__NATIVE_AND_METHOD_EFFECTIVENESS_UNVERIFIED",
-    "pr": "https://github.com/D1traverser-debug/universal-agent-os/pull/113",
-    "main_commit": "2ff8e03190433e213ef8ff9a806cef67f790e3b6",
-    "candidate_head": "151ee5df657d6285c38ebdd0ae3ae0aa437e4cbb",
-    "candidate_ci_run": 653,
-    "candidate_ci": "583 passed, 1 skipped",
-    "integration_run": 369,
-    "integration_status": "SUCCESS",
-    "postmerge_main_reread": true,
-    "postmerge_push_ci": "UNVERIFIED__GITHUB_CONNECTED_COMMIT_WORKFLOW_ACTION_ONLY_RETURNS_PR_TRIGGERED_RUNS",
-    "method_semantics": "REPEATED_COGNITION_CASE_REQUIRES_REFERENCE_TO_PRIOR_METHOD_OR_EXPLICIT_NO_REUSABLE_METHOD__WHEN_REUSING_CURRENT_TRUSTED_CATALOG_RESOLVER_REQUIRED__METHOD_NOT_ASSUMED_TO_HAVE_RUN_IN_NATIVE_CHATGPT",
-    "open_critical": [
-      "SUSTAINABLE_EXTERNAL_METHOD_CATALOG_LOOKUP_AND_REAL_PROVIDER_TRUST_BINDING",
-      "REAL_NATIVE_SELECTED_AGENT_INVOCATION_TRACES",
-      "MULTI_SOURCE_ACQUISITION_SATURATION_AND_HOLDOUTS",
-      "AUTONOMOUS_UNKNOWN_UNKNOWN_DISCOVERY_WITHOUT_USER_PROMPTS",
-      "CONTROLLER_DEEP_FIVE_REPO_AUDIT_FINAL_OUTCOME",
-      "THEN_FINANCIAL_V3_SOURCE_RESEARCH_DEEP_BROAD_WORD_AND_INDEPENDENT_READER_ACCEPTANCE"
-    ],
-    "handoff_target": "uaos:maintenance:financial-system-governed-recovery-20261018",
-    "assurance": "THIS_IS_REPOSITORY_GATE_VERIFICATION__NOT_USER_PRODUCT_SUCCESS"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#method_transfer_release_20261018"
   },
   "controller_entry_method_delta_20261018": {
     "status": "PROMOTED_TO_MAIN__CONTROLLED_CI_AND_SOURCE_VERIFIED__NATIVE_AND_LEARNING_OUTCOME_OPEN",
-    "study_ref": "docs/research/uaos-inheritance-review-20261018/09_controller_entry_tool_evidence_and_first_failure_transfer.md",
-    "next_falsification": "Native ChatGPT fresh selected-session trace for actual Skill invocation + historically grounded first-time systemic repair; false NO_REUSABLE_METHOD evidence and unknown method families remain open.",
-    "historical_detail_ref": "D1traverser-debug/universal-agent-os@d15dfcc885c1684915202a252add13b202f1e3e4:state/tasks/uaos-inheritance-review-20261018.json#controller_entry_method_delta_20261018"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#controller_entry_method_delta_20261018"
   },
   "progress_truth_reconciliation_20261018": {
     "status": "CANDIDATE__CONTROLLED_BINDING_AND_STATUS_CLI_VERIFICATION_OPEN",
@@ -185,79 +140,31 @@
   },
   "turn_evolution_coverage_20261018": {
     "status": "CONTROLLED_UAOS_PRODUCTION_VERIFIED__LIVE_NATIVE_COVERAGE_OPEN",
-    "open_acceptance": [
-      "PROVE_SELECTED_NATIVE_CHATGPT_ACTUAL_USER_AND_ASSISTANT_UTTERANCE_EVALUATION",
-      "CONFIRM_REAL_TRUSTED_HOST_SOURCE_ENUMERATION_AND_VERIFIER",
-      "VERIFY_AUTONOMOUSLY_DETECTED_ISSUES_WITHOUT_USER_TRIGGER",
-      "DOMAIN_CONTEXT_INTEGRATION_HELD_UNTIL_CONTROLLER_ASSURANCE",
-      "KNOWLEDGE_SATURATION_AND_FIVE_REPO_DEPTH_OPEN"
-    ],
-    "missing_cross_domain_assurance": "DIRECT_DOMAIN_TURNS_REQUIRE_OWNER_APPROPRIATE_INTEGRATION_AFTER_CONTROLLER_VALIDATION",
-    "historical_detail_ref": "D1traverser-debug/universal-agent-os@d15dfcc885c1684915202a252add13b202f1e3e4:state/tasks/uaos-inheritance-review-20261018.json#turn_evolution_coverage_20261018"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#turn_evolution_coverage_20261018"
   },
   "file_lifecycle_write_audit_20261019": {
     "status": "SOURCE_PROMOTED_PR120__CI_AND_MAIN_REREAD_VERIFIED__LIVE_UNIVERSAL_WRITE_COVERAGE_OPEN",
-    "research_ref": "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
-    "open": [
-      "REAL_NATIVE_OR_EXTERNAL_CONNECTOR_MUTATION_GATE",
-      "OBJECT_STORE_DELETE_AND_RESTORE_OP_PERMISSIONS",
-      "POWER_LOSS_ATOMICITY_FOR_DATABASE_AND_ARTIFACTS",
-      "RUNTIME_SNAPSHOT_RACE_OR_SYMLINK_CONCURRENCY",
-      "FRESH_CHILD_VERSION_CACHE_RECONCILIATION_AS_NEEDED",
-      "PR120_COVERAGE_LIMIT__NATIVE_AND_EXTERNAL_WRITE_HOST_PATHS_UNVERIFIED"
-    ],
-    "release_pr": 120,
-    "historical_detail_ref": "D1traverser-debug/universal-agent-os@d15dfcc885c1684915202a252add13b202f1e3e4:state/tasks/uaos-inheritance-review-20261018.json#file_lifecycle_write_audit_20261019"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#file_lifecycle_write_audit_20261019"
   },
   "file_lifecycle_independent_deletion_20261019": {
     "status": "PRODUCTION_PR122_MERGED__CI_620_PASSED_2_SKIPPED__MAIN_SOURCE_REREAD",
-    "research_ref": "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
-    "open": [
-      "ACTIVE_DEPENDENCY_SCAN_IS_TEXTUAL_NOT_COMPLETE_RUNTIME_DYNAMIC_PROOF",
-      "HOST_NATIVE_ACTIVATION_AND_AUTONOMOUS_SELF_INITIATION_UNVERIFIED",
-      "CROSS_DOMAIN_OWNER_AND_OTHER_FILE_LIFECYCLE_OUTCOMES_OPEN"
-    ],
-    "release_pr": 122,
-    "historical_detail_ref": "D1traverser-debug/universal-agent-os@d15dfcc885c1684915202a252add13b202f1e3e4:state/tasks/uaos-inheritance-review-20261018.json#file_lifecycle_independent_deletion_20261019"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#file_lifecycle_independent_deletion_20261019"
   },
   "snapshot_symlink_race_20261019": {
     "status": "PR125_NESTED_ARTIFACT_BOUNDARY_PROMOTED__PR128_POSIX_ROOT_ANCESTOR_PRODUCTION_VERIFIED__NON_POSIX_AND_NATIVE_OPEN",
-    "limits": [
-      "WINDOWS_FALLBACK_NOT_POSIX_DIRFD",
-      "CROSS_RESOURCE_CRASH_ATOMICITY_UNPROVEN",
-      "NATIVE_HOST_WRITE_INTERCEPTION_UNVERIFIED"
-    ],
-    "next_validation": "Real provider/host-path conformance, non-POSIX and crash validation.",
-    "release_pr": 128,
-    "historical_detail_ref": "D1traverser-debug/universal-agent-os@d15dfcc885c1684915202a252add13b202f1e3e4:state/tasks/uaos-inheritance-review-20261018.json#snapshot_symlink_race_20261019"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#snapshot_symlink_race_20261019"
   },
   "external_object_delete_probe_20261019": {
     "status": "SOURCE_TRACED__PROVIDER_LIVE_AUTHORIZATION_UNVERIFIED",
-    "scope": "UAOS_OBJECT_STORE_ADAPTER_NOT_GENERAL_CHATGPT_EXTERNAL_CONNECTOR",
-    "direct_delete": "src/uaos/state/s3_artifacts.py#S3ContentAddressedStore.delete_hash",
-    "observed_caller": "src/uaos/live/object_store_probe.py#run_object_store_probe uses prefix live-probe, fresh SHA256 probe bytes, delete_hash(expected), then head_object absence verification",
-    "positive_evidence": "PR125 live-integration object-store job success with OpenAI provider job skipped",
-    "unproven": [
-      "PRODUCTION_BUCKET_IAM_AND_RETENTION_RULES",
-      "S3_DELETE_AS_TRUSTED_CATALOG_OPERATION_FOR_NON_PROBE_CALLERS",
-      "ARBITRARY_NATIVE_CONNECTOR_MUTATION_INTERCEPTION",
-      "CROSS_PLATFORM_SNAPSHOT_DIRFD_PROTECTION"
-    ],
-    "next_action": "Trace any non-probe callers and remote authorization boundary, then choose bounded owner-scoped enforcement or evidence-backed no-change; do not infer unauthorized production deletion from test cleanup."
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#external_object_delete_probe_20261019"
   },
   "external_skill_study_20261019": {
     "status": "ALL_FOUR_SOURCE_DOSSIERS_PRODUCTION_VERIFIED__CANDIDATE_METHODS_ONLY__INDEPENDENT_HOLDOUT_AND_NATIVE_PROOF_OPEN",
-    "knowledge_ref": "docs/research/uaos-inheritance-review-20261018/15_paperclip_multi_agent_control_plane_source_learning.md",
-    "knowledge_disposition": "CANDIDATE_ONLY__NOT_CANONICAL",
-    "next_action": "Independent holdouts and real native transfer before promotion; preserve financial child.",
-    "historical_detail_ref": "D1traverser-debug/universal-agent-os@d15dfcc885c1684915202a252add13b202f1e3e4:state/tasks/uaos-inheritance-review-20261018.json#external_skill_study_20261019"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#external_skill_study_20261019"
   },
   "turn_host_origin_fencing_20261019": {
     "status": "CONTROLLED_SOURCE_PROMOTED__CI_AND_POSTMERGE_MAIN_REREAD_VERIFIED__NATIVE_HOST_NOT_VERIFIED",
-    "research_ref": "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md",
-    "native_assurance": "REAL_NATIVE_CHATGPT_HOST_ORIGIN_FEED_AND_PRE_SEND_INTERCEPTION_UNVERIFIED",
-    "release_pr": 137,
-    "historical_detail_ref": "D1traverser-debug/universal-agent-os@d15dfcc885c1684915202a252add13b202f1e3e4:state/tasks/uaos-inheritance-review-20261018.json#turn_host_origin_fencing_20261019"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#turn_host_origin_fencing_20261019"
   },
   "cross_repo_binding_source_audit_20261019": {
     "status": "SOURCE_SELECTED_STATIC_BINDING_CONSISTENT__FULL_POLICY_AND_NATIVE_RUNTIME_UNVERIFIED",
@@ -277,84 +184,15 @@
   },
   "knowledge_inventory_scope_drift_20261019": {
     "status": "CONTROLLED_RETRIEVAL_POLICY_PROMOTED__PR140_CI_MAIN_REREAD__NATIVE_UNVERIFIED",
-    "origin": "state/observations/knowledge-retrieval-recency-drift-20261019.json",
-    "diagnosis": "Assistant misreported a 4-item recent source-study queue as the full personal knowledge system; current registered domains and relevant historical connected sources were not enumerated.",
-    "intervention": [
-      "ENTRYPOINT.md#broad_knowledge_route",
-      "config/RETRIEVAL_POLICY.json#knowledge_inventory_routing",
-      "src/uaos/integrations/retrieval.py#RetrievalPolicy.admit_broad_knowledge_inventory",
-      "tests/integrations/test_retrieval_policy.py"
-    ],
-    "acceptance": "Controlled test must reject recent-only broad inventory, missing GitHub child owner, unverified historical source, or hidden not-connected source; status still not evidence of native ChatGPT invocation.",
-    "privacy": "NO_PERSONAL_EXTERNAL_CONNECTOR_DOCUMENT_URLS_OR_IDENTIFIERS_ADDED_TO_PUBLIC_GITHUB",
-    "past_project_status": "Older project-study names from prior conversations are not automatically certified as persisted artifacts without locating original source.",
-    "native_limit": "UNVERIFIED_NATIVE_CHATGPT_AUTO_RETRIEVAL_AND_FULL_HISTORY_PRESENCE",
-    "release": {
-      "pr": 140,
-      "merge_sha": "855bb7653bad114064209ee2d9812efcb9216162",
-      "promotion_gate_ci": 39185321990,
-      "pytest": "645 passed, 2 skipped",
-      "main_reread": true,
-      "verification_scope": "SOURCE_AND_CONTROLLED_RETRIEVAL_CONTRACT_ONLY"
-    }
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#knowledge_inventory_scope_drift_20261019"
   },
   "progress_behavioral_recurrence_20261019": {
     "status": "SOURCE_PROJECTION_PROMOTED__LIVE_SELECTED_CHAT_PROGRESS_SELF_ADHERENCE_UNVERIFIED",
-    "evidence": "state/observations/native-cognition-progress-replay-20261018.json",
-    "existing_evolution_owner": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
-    "observed": "Two selected-UAOS prior response excerpts lacked the 10-field final Progress, after older 2026-10-16/18 incidents already recorded the same behavior; self-discovery did not happen before user correction.",
-    "independent_source_finding": "Generated runtime dispatcher omitted canonical Progress fields while compiled NATIVE_SESSION_RUNTIME_PROFILE included them; entrypoint had literal escaped newline string.",
-    "selected_work": "Patch native Skill compiler/current projection, test all ten fields & real visible negative excerpts, retain host limitation and continuity.",
-    "blocked_claims": [
-      "NATIVE_CHATGPT_PHYSICAL_ALL_OUTPUT_INTERCEPTION",
-      "AGENT_AUTONOMOUS_PRE_SEND_CONFORMANCE",
-      "PR_CI_PROVES_PROBLEM_CLOSED",
-      "ALL_FIVE_BUSINESS_OUTCOMES_VERIFIED"
-    ],
-    "child_financial": "RUNNING_NOT_DEFAULT_UNCHANGED",
-    "next_evidence": "Candidate CI and main reread; native pre-send instrumentation still needs actual product host channel/independent selected-context trace",
-    "release": {
-      "pr": 142,
-      "merged_main": "a90ea756b0d8a6a85cb642d074cd6d36944576f8",
-      "candidate_head": "9dc5f52924ec42dae0fa0de142b79b85d8599707",
-      "promotion_gate": 39187649744,
-      "pytest": "649 passed, 2 skipped",
-      "integration_run": 39187649462,
-      "integration_conclusion": "success",
-      "openai_provider": "skipped",
-      "main_readback": true,
-      "compiled_skill_blob": "b9d2e395cde7b6f0616265416bdbf526f906b6cd",
-      "assurance": "CONTROLLED_CODE_COMPILATION_AND_CI_ONLY__NO_ACTUAL_NATIVE_CHATGPT_SKILL_BYTE_OR_PRE_SEND_VERIFICATION"
-    }
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#progress_behavioral_recurrence_20261019"
   },
   "self_assurance_priority_gate_20261019": {
     "status": "RETRACTED_AND_PRODUCTION_MAIN_VERIFIED__UNRELATED_CHILD_AUDIT_HOLD_CANCELLED",
-    "reason": "The user's complaint was controller self-understanding/self-governance reliability; suspending subordinate inspections does not repair the criticized capability and was not requested.",
-    "evidence_refs": [
-      "state/observations/native-cognition-progress-replay-20261018.json",
-      "state/evolution/EVO-20261016-CONVERSATIONAL-ADHERENCE-OBSERVABILITY.json",
-      "state/observations/uaos-five-repo-binding-20261019.json",
-      "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json"
-    ],
-    "allowed_scope": "CONTROLLER_SELF_IMPROVEMENT_AND_AUTHORIZED_CROSS_DOMAIN_SYSTEM_WORK_BOTH_ACTIVE",
-    "suspended_scope": "NONE__NORMAL_AUTHORIZED_WORK_CONTINUES",
-    "existing_child_evidence": "PRESERVE_STATIC_READS_WITH_STATIC_ONLY_ASSURANCE__DO_NOT_RECLASSIFY_AS_NATIVE_EFFECTIVE",
-    "release_requirements": [
-      "Selected controller recognizes actor/capability of criticism and refrains from replacing self-repair with unrelated workload restrictions",
-      "Current and independent holdout counterexamples demonstrate target-aligned decision selection, not merely policy phrase presence",
-      "Real native selected-session autonomous diagnosis/repair and Progress still need independent behavioral evidence; current scope not passed",
-      "Cross-domain governance continues with evidence-appropriate assurance; no green claims from static tests alone"
-    ],
-    "non_claims": [
-      "SOURCE_PATCH_IS_NOT_NATIVE_SELF_ADHERENCE",
-      "PR_CI_IS_NOT_CHILD_GOVERNANCE_EFFECTIVENESS",
-      "MODEL_SELF_REPORT_IS_NOT_INDEPENDENT_FAILURE_DETECTION"
-    ],
-    "parent_task_remains": "RUNNING",
-    "financial_child_status": "RUNNING_NOT_DEFAULT__UNMODIFIED",
-    "next_resume": "CORRECT_CONTROLLER_GOAL_INTERPRETATION_AND_SELF_GOVERNANCE__CONTINUE_OTHER_DUTIES",
-    "disposition": "PREVIOUS_ACTION_TARGETED_UNRELATED_WORK_INSTEAD_OF_REPAIRING_CONTROLLER_UNDERSTANDING__ROLLED_BACK",
-    "correction_provenance": "USER_2026-10-19_EXPLICITLY_REJECTED_CHILD_WORK_SUSPENSION_AS_WRONG_TARGET"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#self_assurance_priority_gate_20261019"
   },
   "controller_goal_fidelity_20261019": {
     "status": "SOURCE_POLICY_POINTER_SKILL_PROMOTED__PR145_MAIN_REREAD__NATIVE_SELF_CORRECTION_UNVERIFIED",
@@ -501,35 +339,7 @@
   },
   "native_dispatcher_context_refactor_20261019": {
     "status": "COMPACT_RUNTIME_SKILL_SOURCE_PROMOTED__PR150__ACCOUNT_INSTALLED_BYTES_UNVERIFIED",
-    "old_skill_bytes": 11270,
-    "new_skill_bytes": 7870,
-    "goal": "Reduce always-loaded policy repetition while retaining native selected-context goal fidelity, source retrieval, actual tools, controlled mutation and mandatory Progress.",
-    "bounded_evidence": [
-      "Current Skill duplicated multiple long policy rules across eight sections",
-      "Canonical policy source and compiled NATIVE_SESSION_RUNTIME_PROFILE already exist separately",
-      "GitHub connector bypasses Python, so Skill is guidance and must not falsely assert intercept",
-      "OpenAI SDK controlled output gate refactored in PR149 and separate from native ChatGPT"
-    ],
-    "intervention": "Rebuild current generated Skill as thin high-signal dispatcher: cold start/continuation source selection, actor/goal/claims, material work to canonical owners, tool-action feedback, ten Progress lines, honest host boundary; keep detailed rules in current canonical owners.",
-    "verification": [
-      "Exact generated Skill equality test",
-      "All inherited regressions for mandatory entry, latest intent, deep routing, authority, evolution, completion, Progress and host uncertainty",
-      "Hard native Skill budget <=8000 characters",
-      "User-account installed Skill bytes NOT asserted current"
-    ],
-    "further_work": "Real prompt/trace A-B test for native current account when host instrumentation exists; independently verify actual user-visible behavior instead of relying on generator tests.",
-    "release": {
-      "pr": 150,
-      "main": "51308cf85558f6dd99f45f95e51f60b5bc0c77b4",
-      "gate_run": 39209447382,
-      "gate": "660 passed, 2 skipped",
-      "live_run": 39209447381,
-      "live": "success, OpenAI provider skipped",
-      "skill_bytes_before": 11270,
-      "skill_bytes_after": 7870,
-      "skill_sha": "f86fffcb7179a57ff4c664ca34ca1a30ae0031ed",
-      "test_assurance": "COMPILED_SOURCE_CHECKED__ACCOUNT_INSTALLED_BYTES_NOT_OBSERVED"
-    }
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#native_dispatcher_context_refactor_20261019"
   },
   "source_read_plan_20261019": {
     "status": "SOURCE_FILELIST_RESOLVER_PROMOTED__PR152__HOST_FETCH_AND_SEMANTIC_APPLICATION_UNVERIFIED",
@@ -588,17 +398,25 @@
   },
   "historical_case_compaction_20261019": {
     "role": "HISTORICAL_EVIDENCE_PIN_NOT_NEW_AUTHORITY",
-    "source_archive_ref": "D1traverser-debug/universal-agent-os@d15dfcc885c1684915202a252add13b202f1e3e4:state/tasks/uaos-inheritance-review-20261018.json",
+    "source_archive_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json",
     "compacted_keys": [
-      "external_skill_study_20261019",
-      "snapshot_symlink_race_20261019",
-      "file_lifecycle_independent_deletion_20261019",
-      "turn_host_origin_fencing_20261019",
-      "file_lifecycle_write_audit_20261019",
+      "epistemic_entry_implementation",
+      "blocked_operation_continuation",
+      "method_transfer_release_20261018",
       "controller_entry_method_delta_20261018",
-      "turn_evolution_coverage_20261018"
+      "turn_evolution_coverage_20261018",
+      "file_lifecycle_write_audit_20261019",
+      "file_lifecycle_independent_deletion_20261019",
+      "snapshot_symlink_race_20261019",
+      "external_object_delete_probe_20261019",
+      "external_skill_study_20261019",
+      "turn_host_origin_fencing_20261019",
+      "knowledge_inventory_scope_drift_20261019",
+      "progress_behavioral_recurrence_20261019",
+      "self_assurance_priority_gate_20261019",
+      "native_dispatcher_context_refactor_20261019"
     ],
-    "rule": "Retain active statuses/open acceptance and owner references; historical incident narratives remain available from immutable Git history and original research/evolution. Do not expand these older histories on normal turn bootstrap.",
+    "rule": "Only current state stays hot; full prior payload is retrievable at the pinned immutable commit.",
     "native_behavior": "NOT_CERTIFIED_BY_COMPACTION",
     "release": {
       "pr": 155,
