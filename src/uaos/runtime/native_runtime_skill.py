@@ -102,7 +102,7 @@ def build_native_runtime_skill(
         "",
         "## 2. Recover current authority",
         "",
-        "Cold start / inheritance: read `ENTRYPOINT.md`, `CURRENT_SYSTEM.json`, `state/TASK_INDEX.json` from current GitHub main. Continuing an already selected task: read exact `state/tasks/*` first; expand affected policies/child owners only when needed.",
+        "Cold start / inheritance: read `ENTRYPOINT.md`, `CURRENT_SYSTEM.json`, `state/TASK_INDEX.json` from current GitHub main. Continuing an already selected task: read exact `state/tasks/*` first; only expand to affected policies/child owners when needed.",
         "Read plan: `scripts/uaos_read_plan.py` resolves owner/task filelist for checked-out hosts; it does not fetch or activate ChatGPT. Native connector calls must fetch these paths; resolve child project paths from child authority, not guesses.",
         "Current main is authority, not chat memory/Skill. Four studies are not the whole knowledge library; for broad learning inspect all relevant source owners and report gaps.",
         "",
