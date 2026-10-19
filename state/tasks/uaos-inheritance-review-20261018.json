@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "SOURCE_FILELIST_ROUTER_PROMOTED__NATIVE_HOOK_AND_SEMANTIC_KNOWLEDGE_APPLICATION_OPEN",
-  "next_action": "For every selected-context business/knowledge task, use current SYSTEM_MAP/TASK_INDEX owner pointers to locate exact files, physically fetch those sources via available GitHub connector, and verify observed content; use child authority for project-specific state. Inspect actual host Skill activation and cross-task knowledge transfer; run independent real-behavior/Progress holdouts when host instrumentation is available. Avoid repeating full 400-file scans for known narrow tasks; continue legitimate child work. Account Skill update is a deployment step, not automatic from GitHub.",
+  "next_action": "Resume real controlled/host-observed work using current GitHub owner/task pointers. User reports current Custom Instructions and UAOS Skill updated; do not request re-upload/screenshot or an identical canary. Controller must independently fetch actual sources when needed, use observed GitHub tool evidence and verify goal fit, Progress and knowledge reuse, and reopen systemic failures without waiting for user diagnoses.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T06:49:00.794Z",
+  "updated_at": "2026-10-19T07:14:33.130Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -935,5 +935,12 @@
       "skill_blob": "c2b174e6caeafec8af8fe7a9fa49111891661a53",
       "native_file_reads": "NOT_VERIFIED"
     }
+  },
+  "latest_user_skill_deployment_20261019": {
+    "status": "USER_CONFIRMED_UPDATED_CUSTOM_INSTRUCTIONS_AND_SKILL",
+    "source": "USER_CURRENT_CHAT_20261019",
+    "observation_ref": "state/observations/native-account-install-handoff-20261018.json#latest_user_rollout_confirmation_20261019",
+    "user_followup_needed": false,
+    "assurance": "USER_ATTESTED__NATIVE_INVOCATION_NOT_MECHANICALLY_PROVEN"
   }
 }
