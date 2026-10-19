@@ -5,6 +5,7 @@ from hashlib import sha256
 from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 from uaos.kernel.domain_health import DomainObservation, ProductOutcomeEvidence
 from uaos.runtime.epistemic_entry import (
+    FullDimensionStudy, DimensionResearch, FULL_RESEARCH_AXES, FULL_RESEARCH_CONCERNS,
     ControllerEpistemicEntry, EntryObservation, EntrySignal,
     TurnEvolutionCoverage, TurnUtteranceAssessment, UtteranceOrigin,
 )
@@ -87,8 +88,31 @@ def _case(**updates):
     return ProductOutcomeEvidence(**data)
 
 
+
+def _full_dimension_study():
+    return FullDimensionStudy(
+        studies=tuple(
+            DimensionResearch(
+                axis=axis,
+                local_evidence_refs=(f"test:{axis}:current", f"test:{axis}:historical"),
+                independent_method_refs=(f"test:{axis}:method-a", f"test:{axis}:method-b"),
+                counterexample_refs=(f"test:{axis}:falsifier",),
+                outcome_verification_refs=(f"test:{axis}:outcome",),
+                finding=f"Observed and researched {axis} as a separate system dimension.",
+                alternative=f"Independent alternative to the first {axis} interpretation.",
+                task_implication=f"Check {axis} interactions against actual task outcome.",
+                covered_concerns=FULL_RESEARCH_CONCERNS if i == 0 else (FULL_RESEARCH_CONCERNS[i],),
+                cross_axes=tuple(x for x in FULL_RESEARCH_AXES if x != axis)[:2],
+            )
+            for i, axis in enumerate(FULL_RESEARCH_AXES)
+        ),
+        emerging_unknowns=("Unexpected boundary between tools and governing objectives",),
+    )
+
+
 def _ctx(case=None, **updates):
     data=dict(context_selected=True,controller_selected=True,
+              full_dimension_study=_full_dimension_study(),
               controller_epistemic_entry=_entry(),
               entry_evidence_verifier=lambda _: True,
               **_turn_kwargs(),
@@ -141,6 +165,7 @@ def test_product_closure_cannot_execute_as_ordinary_child_without_parent_authori
 def test_product_data_not_required_on_normal_clean_controller_turn():
     no_close=FinalizationContext(
         context_selected=True,controller_selected=True,
+        full_dimension_study=_full_dimension_study(),
         controller_epistemic_entry=_entry(),
         entry_evidence_verifier=lambda _: True,
         **_turn_kwargs(),

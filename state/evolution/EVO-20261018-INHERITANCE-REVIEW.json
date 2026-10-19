@@ -101,7 +101,8 @@
     "tests/architecture/test_finalization_enforcement_topology.py",
     "docs/adr/0031-host-collaboration-output-gate-and-compact-runtime.md",
     "scripts/uaos_read_plan.py",
-    "tests/architecture/test_controller_operating_model_entry.py"
+    "tests/architecture/test_controller_operating_model_entry.py",
+    "config/DEEP_TASK_EXECUTION_PROFILE.json"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -889,5 +890,41 @@
       "task_now": 44288
     },
     "assurance": "CURRENT_SOURCE_BUDGET_AND_CONTROLLED_REGRESSION_ONLY__NATIVE_SESSION_ACTIVATION_AND_SEMANTIC_BEHAVIOR_UNVERIFIED"
+  },
+  "full_dimension_research_20261019": {
+    "status": "CANDIDATE_EVALUATION_IN_PROGRESS__NO_INDEPENDENT_TRANSFER_OR_NATIVE_HOST_PROOF",
+    "authority": "UAOS",
+    "goal": "Every selected controller turn substantively studies six dimensions and 15 baseline concerns while retaining actual cross-context task result quality.",
+    "observed_failure": "User identified that old adaptive depth allowed mandatory full-dimensional study to be shallow or skipped. Prior absence of Progress and repeated local patches also recorded.",
+    "competing_hypotheses": [
+      "A separate monitor or large prompt cannot physically enforce native invocation",
+      "Controlled boundary may enforce trace completeness but host-provided references need semantic verification",
+      "Uniform deep research may degrade simple tasks via overthinking/latency, requiring actual matched A/B outcomes"
+    ],
+    "alternatives": [
+      "NO_CHANGE_OLD_ADAPTIVE_DEPTH",
+      "COPY_MORE_PROMPT_ONLY",
+      "SECOND_SUPERVISOR_REJECT_DUPLICATE",
+      "EXTEND_EXISTING_EPISTEMIC_AND_FINALIZATION_BOUNDARY_SELECTED_FOR_CONTROLLED_TEST"
+    ],
+    "primary_sources": [
+      "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+      "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC7839230/",
+      "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "https://aclanthology.org/2026.findings-acl.1199/"
+    ],
+    "frozen_acceptance": [
+      "one substantive evidence set per each of six axes",
+      "all 15 work concerns covered",
+      "cross-axis connections and unknown discovery",
+      "real host evidence verifier required",
+      "old blocked operation and domain outcome positive/negative tests pass",
+      "generated profile exact source equality",
+      "native or direct child behavior never claimed from repository CI",
+      "matched held-out practical tasks assess cost accuracy hallucination and latency"
+    ],
+    "native_boundary": "NO_NATIVE_CHATGPT_COMPLETE_MEDIATION_PROOF__CONTROLLED_CALLER_ONLY",
+    "method_reuse": "Existing DeepTask, KnowledgeAcquisition, CognitionCase and one EvolutionTransaction, no parallel controller or memory owner."
   }
 }

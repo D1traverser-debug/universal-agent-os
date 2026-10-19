@@ -48,6 +48,7 @@ def build_native_session_runtime_profile(
     mutation = _mapping(_value(session, "always_on_mutation_sentinel", field="session_policy"), field="session_policy.always_on_mutation_sentinel")
     progress = _mapping(_value(session, "inherited_session_progress_report", field="session_policy"), field="session_policy.inherited_session_progress_report")
     review = _mapping(_value(session, "controller_inheritance_review", field="session_policy"), field="session_policy.controller_inheritance_review")
+    full_study = _mapping(_value(session, "full_dimension_deep_study", field="session_policy"), field="session_policy.full_dimension_deep_study")
 
     compiled_modes: dict[str, Any] = {}
     for mode in ("LIGHTWEIGHT", "CONTRASTIVE", "STRUCTURED"):
@@ -84,6 +85,12 @@ def build_native_session_runtime_profile(
             "installation": _value(chatgpt, "native_runtime_skill_installation", field="CHATGPT_GITHUB"),
         },
         "turn_contract": {
+            "full_dimension_deep_study": {
+                "required": _value(full_study, "required", field="full_dimension_deep_study"),
+                "scope": _value(full_study, "scope", field="full_dimension_deep_study"),
+                "source_ref": "config/SESSION_INTERACTION_POLICY.json#full_dimension_deep_study",
+                "controlled_admission_ref": _value(full_study, "controlled_admission_ref", field="full_dimension_deep_study"),
+            },
             "controller_inheritance_review": {
                 "required": _value(review, "required", field="controller_inheritance_review"),
                 "trigger": _value(review, "trigger", field="controller_inheritance_review"),

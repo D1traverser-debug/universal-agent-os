@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "SOURCE_FILELIST_ROUTER_PROMOTED__NATIVE_HOOK_AND_SEMANTIC_KNOWLEDGE_APPLICATION_OPEN",
-  "next_action": "Execute the current selected controller's independently authorized work despite one blocked operation; test the source-derived continuation/method-transfer candidate on unfamiliar cross-owner and true-user-choice cases with real host/tool receipts, record outcome and errors; keep the separate Python gate candidate unpromoted without full tests and keep the Financial handoff unchanged.",
+  "next_action": "Complete and prove six-axis deep-research admission on controlled controller path without bypassing historic coverage/quality/authority tests; compare every-turn forced-depth vs prior baseline, verify final output and independent outcome, then evaluate native/direct-child host extension using actual observed traces.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T09:54:12.227Z",
+  "updated_at": "2026-10-19T10:20:40.754Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -438,5 +438,19 @@
       "ci": "671 passed, 2 skipped",
       "state": "VERIFIED_ON_MAIN__LIVE_USE_UNVERIFIED"
     }
+  },
+  "full_dimension_research_20261019": {
+    "status": "CONTROLLED_HOST_SIX_AXES_FIFTEEN_CONCERNS_CANDIDATE__CI_PENDING__NATIVE_AND_INDEPENDENT_TRIAL_OPEN",
+    "governing_outcome": "Every selected controller turn studies all axes deeply and covers all baseline work concerns, with evidence-backed cross-links and later task-outcome validation; no shallow scan substitution.",
+    "canonical_scope": "config/SESSION_INTERACTION_POLICY.json#full_dimension_deep_study",
+    "code_owner": "src/uaos/runtime/epistemic_entry.py#admit_full_dimension_study",
+    "research_basis": [
+      "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+      "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC7839230/",
+      "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "https://aclanthology.org/2026.findings-acl.1199/"
+    ],
+    "open": "Actual native session invocation, direct child compatibility, honest semantic evidence verification, per-turn latency/cost and cross-task outcome comparison."
   }
 }

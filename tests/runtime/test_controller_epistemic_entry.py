@@ -11,6 +11,8 @@ import pytest
 from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 
 from uaos.runtime.epistemic_entry import (
+    FullDimensionStudy, DimensionResearch, FULL_RESEARCH_AXES, FULL_RESEARCH_CONCERNS,
+    admit_full_dimension_study,
     ControllerEpistemicEntry,
     TurnEvolutionCoverage,
     TurnUtteranceAssessment,
@@ -91,10 +93,33 @@ def _turn_source_verifier(ref: str, digest: str) -> bool:
     ).hexdigest()
 
 
+
+def _full_dimension_study():
+    return FullDimensionStudy(
+        studies=tuple(
+            DimensionResearch(
+                axis=axis,
+                local_evidence_refs=(f"test:{axis}:current", f"test:{axis}:historical"),
+                independent_method_refs=(f"test:{axis}:method-a", f"test:{axis}:method-b"),
+                counterexample_refs=(f"test:{axis}:falsifier",),
+                outcome_verification_refs=(f"test:{axis}:outcome",),
+                finding=f"Observed and researched {axis} as a separate system dimension.",
+                alternative=f"Independent alternative to the first {axis} interpretation.",
+                task_implication=f"Check {axis} interactions against actual task outcome.",
+                covered_concerns=FULL_RESEARCH_CONCERNS if i == 0 else (FULL_RESEARCH_CONCERNS[i],),
+                cross_axes=tuple(x for x in FULL_RESEARCH_AXES if x != axis)[:2],
+            )
+            for i, axis in enumerate(FULL_RESEARCH_AXES)
+        ),
+        emerging_unknowns=("Unexpected boundary between tools and governing objectives",),
+    )
+
+
 def _context(entry=None, **overrides):
     base = dict(
         context_selected=True,
         controller_selected=True,
+        full_dimension_study=_full_dimension_study(),
         controller_epistemic_entry=entry,
         entry_evidence_verifier=lambda _ref: True,
         turn_evolution_coverage=_review(_report()),
@@ -105,6 +130,43 @@ def _context(entry=None, **overrides):
     )
     base.update(overrides)
     return FinalizationContext(**base)
+
+
+
+def test_all_dimensions_must_have_qualified_sources():
+    study = _full_dimension_study()
+    admit_full_dimension_study(study, verify_evidence=lambda _ref: True)
+    with pytest.raises(EntryAdmissionError, match="every axis"):
+        admit_full_dimension_study(
+            replace(study, studies=study.studies[:-1]),
+            verify_evidence=lambda _ref: True,
+        )
+    with pytest.raises(EntryAdmissionError, match="unverified local evidence"):
+        admit_full_dimension_study(
+            study,
+            verify_evidence=lambda ref: not ref.endswith(":current"),
+        )
+
+
+def test_missing_concerns_and_cross_axis_links_are_rejected():
+    study = _full_dimension_study()
+    first = replace(study.studies[0], covered_concerns=("GOALS_REQUIREMENTS",))
+    with pytest.raises(EntryAdmissionError, match="omits baseline work concerns"):
+        admit_full_dimension_study(
+            replace(study, studies=(first, *study.studies[1:])),
+            verify_evidence=lambda _: True,
+        )
+    first = replace(study.studies[0], cross_axes=("TIME",))
+    with pytest.raises(EntryAdmissionError, match="cross-dimension connections"):
+        admit_full_dimension_study(
+            replace(study, studies=(first, *study.studies[1:])),
+            verify_evidence=lambda _: True,
+        )
+
+
+def test_selected_controller_must_submit_dimensional_study():
+    with pytest.raises(FinalizationBlocked, match="MISSING_FULL_DIMENSION_RESEARCH"):
+        admit_final_response(_report(), _context(_entry(), full_dimension_study=None))
 
 
 def test_selected_controller_cannot_skip_the_canonical_entry():

@@ -7,7 +7,9 @@ from uaos.contracts.models import KnowledgeItem
 
 from .epistemic_entry import (
     ControllerEpistemicEntry,
+    FullDimensionStudy,
     EntryAdmissionError,
+    admit_full_dimension_study,
     TurnEvolutionCoverage,
     UtteranceOrigin,
     admit_turn_evolution_coverage,
@@ -132,6 +134,7 @@ class FinalizationContext:
     deep_task_case: DeepTaskCase | None = None
     controller_selected: bool = False
     controller_epistemic_entry: ControllerEpistemicEntry | None = None
+    full_dimension_study: FullDimensionStudy | None = None
     entry_evidence_verifier: Callable[[str], bool] | None = None
     # Current-turn host enumeration + review, including user AND assistant words.
     # No new state/evolution owner; only a mandatory controlled boundary adapter.
@@ -474,6 +477,21 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
             )
         ):
             raise FinalizationBlocked("UNROUTED_POST_DRAFT_CHALLENGE_SIGNAL")
+
+    # Full-dimensional study is a property of the existing selected-controller
+    # finalization, not another task, knowledge or evolution authority.
+    if context.controller_selected:
+        if context.full_dimension_study is None:
+            raise FinalizationBlocked("MISSING_FULL_DIMENSION_RESEARCH")
+        try:
+            admit_full_dimension_study(
+                context.full_dimension_study,
+                verify_evidence=context.entry_evidence_verifier,
+            )
+        except EntryAdmissionError as exc:
+            raise FinalizationBlocked(f"FULL_DIMENSION_RESEARCH_NOT_ADMITTED: {exc}") from exc
+    elif context.full_dimension_study is not None:
+        raise FinalizationBlocked("UNSOLICITED_CONTROLLER_FULL_DIMENSION_RESEARCH")
 
     return FinalizationReceipt(
         closure_decision=closure_decision,

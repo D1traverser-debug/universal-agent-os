@@ -130,6 +130,96 @@ def assess_controller_epistemic_entry(
     )
 
 
+# Baseline cross-lens dimensions and concerns; new, evidenced concerns can be
+# added through the canonical policy rather than claiming a closed ontology.
+FULL_RESEARCH_AXES = (
+    "OBJECT", "EVENT", "CAPABILITY", "EVALUATION", "RELATION", "TIME",
+)
+FULL_RESEARCH_CONCERNS = (
+    "GOALS_REQUIREMENTS", "NORMAL_TASK_WORK", "INCIDENTS_FAILURES",
+    "LATENT_FAULT_DISCOVERY", "CAPABILITY_OPPORTUNITIES", "KNOWLEDGE_LEARNING",
+    "COGNITION_DECISION", "ARCHITECTURE_OPTIMIZATION", "EXECUTION_COORDINATION",
+    "VALIDATION_QUALITY", "FEEDBACK_CORRECTION", "EXPERIENCE_TRANSFER",
+    "GOVERNANCE", "CONTINUITY_RECOVERY", "SYSTEM_EVOLUTION",
+)
+
+
+@dataclass(frozen=True, slots=True)
+class DimensionResearch:
+    """Source-backed study of one dimension, not a shallow PASS checkbox."""
+    axis: str
+    local_evidence_refs: tuple[str, ...]
+    independent_method_refs: tuple[str, ...]
+    counterexample_refs: tuple[str, ...]
+    outcome_verification_refs: tuple[str, ...]
+    finding: str
+    alternative: str
+    task_implication: str
+    covered_concerns: tuple[str, ...]
+    cross_axes: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class FullDimensionStudy:
+    """One research evidence bundle inside the existing selected-controller gate."""
+    studies: tuple[DimensionResearch, ...]
+    emerging_unknowns: tuple[str, ...]
+    unresolved_source_gaps: tuple[str, ...] = ()
+
+
+def admit_full_dimension_study(
+    study: FullDimensionStudy,
+    *,
+    verify_evidence: Callable[[str], bool] | None,
+) -> None:
+    """Check six substantive studies, all fifteen concerns and cross-links.
+
+    This only enforces source-bound coverage in a controlled host. It cannot
+    adjudicate method correctness or run automatically inside native ChatGPT.
+    """
+    if verify_evidence is None:
+        raise EntryAdmissionError("full dimension research requires host evidence verification")
+    if len(study.studies) != len(FULL_RESEARCH_AXES):
+        raise EntryAdmissionError("full dimension research requires every axis")
+    found = [part.axis for part in study.studies]
+    if set(found) != set(FULL_RESEARCH_AXES) or len(set(found)) != len(found):
+        raise EntryAdmissionError("full dimension research has missing or duplicate axes")
+    covered: set[str] = set()
+    primary_sources: set[str] = set()
+    for part in study.studies:
+        groups = (
+            (part.local_evidence_refs, 2, "local evidence"),
+            (part.independent_method_refs, 2, "independent method evidence"),
+            (part.counterexample_refs, 1, "counterexample"),
+            (part.outcome_verification_refs, 1, "outcome verification"),
+        )
+        for refs, minimum, label in groups:
+            if len(refs) < minimum or len(set(refs)) != len(refs):
+                raise EntryAdmissionError(f"{part.axis} requires distinct {label}")
+            if any(not isinstance(ref, str) or not ref.strip() or not verify_evidence(ref) for ref in refs):
+                raise EntryAdmissionError(f"{part.axis} has unverified {label}")
+        if not all(isinstance(v, str) and v.strip() for v in (
+            part.finding, part.alternative, part.task_implication,
+        )):
+            raise EntryAdmissionError(f"{part.axis} requires finding, alternative and task implication")
+        if len(part.covered_concerns) == 0 or len(set(part.covered_concerns)) != len(part.covered_concerns):
+            raise EntryAdmissionError(f"{part.axis} requires distinct concern coverage")
+        if not set(part.covered_concerns) <= set(FULL_RESEARCH_CONCERNS):
+            raise EntryAdmissionError(f"{part.axis} contains unknown concerns")
+        covered.update(part.covered_concerns)
+        if not (len(part.cross_axes) >= 2 and len(set(part.cross_axes)) == len(part.cross_axes)
+                and set(part.cross_axes) <= (set(FULL_RESEARCH_AXES) - {part.axis})):
+            raise EntryAdmissionError(f"{part.axis} requires two cross-dimension connections")
+        primary = part.local_evidence_refs[0]
+        if primary in primary_sources:
+            raise EntryAdmissionError("each axis must have a distinct primary observation")
+        primary_sources.add(primary)
+    if covered != set(FULL_RESEARCH_CONCERNS):
+        raise EntryAdmissionError("full dimension research omits baseline work concerns")
+    if not study.emerging_unknowns or not all(x.strip() for x in study.emerging_unknowns):
+        raise EntryAdmissionError("full dimension research requires unknown-discovery observations")
+
+
 class UtteranceOrigin(StrEnum):
     USER = "USER"
     ASSISTANT = "ASSISTANT"
