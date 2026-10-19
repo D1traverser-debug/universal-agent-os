@@ -141,6 +141,18 @@
     "last_recorded_repo_skill_blob": "b9d2e395cde7b6f0616265416bdbf526f906b6cd",
     "installed_skill_bytes": "UNKNOWN__GITHUB_SOURCE_UPDATE_IS_NOT_ACCOUNT_INSTALL",
     "installed_custom_instruction_text": "UNKNOWN__GITHUB_FILE_UPDATE_IS_NOT_ACCOUNT_SETTINGS_CHANGE",
-    "native_behavior": "SELF_GOVERNANCE_IMPROVEMENT_UNVERIFIED__SOURCE_PROJECTION_ONLY"
+    "native_behavior": "SELF_GOVERNANCE_IMPROVEMENT_UNVERIFIED__SOURCE_PROJECTION_ONLY",
+    "repo_source_status": "MAIN_PR145_VERIFIED__NATIVE_ACCOUNT_INSTALLED_VERSION_NOT_OBSERVED",
+    "release": {
+      "pr": 145,
+      "main_sha": "921e2174099bf8f32cb9c284eb8d58f39997f14f",
+      "candidate_head": "0c93c12a63b1724fef16e70cc853e5f60c1fb2f2",
+      "ci": 39192683161,
+      "pytest": "652 passed, 2 skipped",
+      "integration_run": 39192683135,
+      "integration": "postgres-dbos success, object-store success; openai-provider skipped",
+      "main_readback": true,
+      "native_behavior": "UNKNOWN__NO_ACTUAL_SELECTED_CHAT_HOST_TRACES_OR_INSTALLED_SKILL_BYTES"
+    }
   }
 }
