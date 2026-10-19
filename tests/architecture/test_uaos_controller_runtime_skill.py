@@ -185,3 +185,42 @@ def test_current_entry_does_not_contain_literal_escaped_newline_shadow_separator
     assert entry.count(marker) == 1
     assert entry.split(marker, 1)[0].endswith(chr(10) + chr(10))
     assert chr(92) + "n" + chr(92) + "n" + marker not in entry
+
+
+def test_self_correction_target_and_outcome_fit_are_projected_before_routing_not_buried_in_procedure():
+    intent = _json("config/INTENT_RESOLUTION_POLICY.json")
+    rules = intent["problem_solution_directive_resolution"]
+    skill = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
+    pointer = _recommended_custom_instruction_pointer()
+    assert "Agent/controller's own interpretation" in rules["correction_target_rule"]
+    assert "unrelated work" in rules["correction_target_rule"]
+    assert "actual complained-of capability" in rules["intervention_outcome_alignment_rule"]
+    first_section = skill.split("## 2. Recover current authority", 1)[0]
+    assert rules["correction_target_rule"] in first_section
+    assert rules["intervention_outcome_alignment_rule"] in first_section
+    assert skill.index("Agent self-correction target:") < skill.index("## 2. Recover current authority")
+    assert skill.index("Intervention-to-outcome alignment:") < skill.index("## 2. Recover current authority")
+    assert "identify and improve the failing capability" in pointer
+    assert "do not substitute stopping unrelated work for self-repair" in pointer
+
+
+def test_goal_fidelity_repair_retracts_child_work_suspension_in_exact_current_task_and_selector():
+    task = _json("state/tasks/uaos-inheritance-review-20261018.json")
+    index = _json("state/TASK_INDEX.json")
+    record = task["self_assurance_priority_gate_20261019"]
+    assert record["status"].startswith("RETRACTED")
+    assert record["suspended_scope"] == "NONE__NORMAL_AUTHORIZED_WORK_CONTINUES"
+    assert "SUSPENDED" not in task["current_stage"]
+    assert "GOAL_FIDELITY" in task["current_stage"]
+    assert task["controller_goal_fidelity_20261019"]["erroneous_intervention"] == "SUSPEND_DISCRETIONARY_CHILD_AUDITS"
+    current = [entry for entry in index["controller_tasks"] if entry["default_resume"]]
+    assert len(current) == 1
+    assert current[0]["task_id"] == task["task_id"]
+    assert current[0]["current_stage"] == task["current_stage"]
+
+
+def test_compiled_self_repair_language_is_not_the_same_as_a_proven_native_behavioral_result():
+    skill = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
+    assert "A self-review without a trusted host trace is not independent native enforcement." in skill
+    task = _json("state/tasks/uaos-inheritance-review-20261018.json")
+    assert "NATIVE_CHATGPT_SELF_GOVERNANCE_UNVERIFIED" in task["controller_goal_fidelity_20261019"]["assurance"]
