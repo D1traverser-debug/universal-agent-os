@@ -709,7 +709,14 @@
       "NOVEL_CASE_GENERALIZATION_AND_METHOD_TRANSFER",
       "INDEPENDENT_NATIVE_CHATGPT_CONFORMANCE"
     ],
-    "assurance": "PARTIAL_TRIGGER_RESTORED_AND_RESEARCH_RECORDED__NATIVE_CAPABILITY_NOT_PROVEN"
+    "assurance": "PARTIAL_TRIGGER_RESTORED_AND_RESEARCH_RECORDED__NATIVE_CAPABILITY_NOT_PROVEN",
+    "source_method_transfer_update_20261019": {
+      "status": "SOURCE_STUDY_PROMOTED_TO_MAIN__METHOD_APPLICATION_CANDIDATE__NATIVE_GENERALIZATION_OPEN",
+      "source_ref": "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md",
+      "method_candidate": "MT-20261019-INDEPENDENT-CONTINUATION",
+      "release_pr": 161,
+      "assurance": "Only a selected user-triggered session source/action sample; no independent transfer or native output hook verification"
+    }
   },
   "host_collaboration_architecture_refactor_20261019": {
     "status": "CONTROLLED_SDK_RUNTIME_GATE_PROMOTED__NATIVE_HOST_AND_REAL_CALLER_OUTCOMES_OPEN",
