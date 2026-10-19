@@ -3,8 +3,8 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "status": "RUNNING",
-  "current_stage": "CONTROLLED_SDK_FINALIZATION_AND_COMPACT_NATIVE_ENTRY_PROMOTED__NATIVE_BEHAVIOR_AND_GITHUB_HOST_BOUNDARY_OPEN",
-  "next_action": "Continue genuine GPT↔GitHub host cooperation: verify account-installed Skill bytes or actual invocation when a supported host provides them; obtain independent selected-chat and controlled-SDK run traces; measure real semantic goal-fit, proactive discovery, action effects and knowledge transfer in unseen tasks, including negative controls; do not call PR/CI native assurance. Continue normal child domain work and restore true source-evidence continuity. ADR-0031 is the selected architecture contract.",
+  "current_stage": "SOURCE_FILELIST_ROUTER_PROMOTED__NATIVE_HOOK_AND_SEMANTIC_KNOWLEDGE_APPLICATION_OPEN",
+  "next_action": "For every selected-context business/knowledge task, use current SYSTEM_MAP/TASK_INDEX owner pointers to locate exact files, physically fetch those sources via available GitHub connector, and verify observed content; use child authority for project-specific state. Inspect actual host Skill activation and cross-task knowledge transfer; run independent real-behavior/Progress holdouts when host instrumentation is available. Avoid repeating full 400-file scans for known narrow tasks; continue legitimate child work. Account Skill update is a deployment step, not automatic from GitHub.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T06:45:40.386Z",
+  "updated_at": "2026-10-19T06:49:00.794Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -896,7 +896,7 @@
     }
   },
   "source_read_plan_20261019": {
-    "status": "CANDIDATE_SAME_OWNER_FILELIST_RESOLVER__CI_PENDING__NATIVE_HOST_FETCH_UNVERIFIED",
+    "status": "SOURCE_FILELIST_RESOLVER_PROMOTED__PR152__HOST_FETCH_AND_SEMANTIC_APPLICATION_UNVERIFIED",
     "goal": "Resolve which current registered repository and exact task files a request needs, distinguish cold/bootstrap/continuation/domain/broad knowledge, and prevent silent reliance on recent studies only.",
     "architecture": "No separate dispatcher or task state machine. Existing RetrievalPolicy selects exact source paths from SYSTEM_MAP and TASK_INDEX; script exports a read-only JSON plan; native tool calls still must execute reads.",
     "alternatives": [
@@ -919,6 +919,21 @@
       "Invalid ambiguous controller selection or unsafe source path fails closed",
       "Generated Skill remains < 8000 chars and includes exact runnable filelist path",
       "Scope remains SOURCE_PLANNING_ONLY with actual native ChatGPT invocation/fetch/knowledge application separately unverified"
-    ]
+    ],
+    "release": {
+      "pr": 152,
+      "main_sha": "41423c61830dd3cc74bef690ed756f553894014a",
+      "promotion_run": 39211830150,
+      "pytest": "670 passed, 2 skipped",
+      "integration_run": 39211829890,
+      "integration": "postgres-dbos and object-store success; OpenAI provider skipped",
+      "files": [
+        "src/uaos/integrations/retrieval.py",
+        "scripts/uaos_read_plan.py",
+        "skills/uaos-controller-runtime/SKILL.md"
+      ],
+      "skill_blob": "c2b174e6caeafec8af8fe7a9fa49111891661a53",
+      "native_file_reads": "NOT_VERIFIED"
+    }
   }
 }
