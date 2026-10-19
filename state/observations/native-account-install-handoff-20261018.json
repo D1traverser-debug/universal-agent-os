@@ -12,7 +12,7 @@
     "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md"
   ],
   "source_git_blobs": {
-    "skill": "f86fffcb7179a57ff4c664ca34ca1a30ae0031ed",
+    "skill": "c2b174e6caeafec8af8fe7a9fa49111891661a53",
     "pointer": "814ed5d8e7c1bb37c6aba2eb43d042235e183196",
     "previously_supplied_skill": "a244aeafcb204a86ab6825b8e8b277050c2be507",
     "previous_verified_repo_skill": "cb2ecdfac61e712b7270b6b218effa667b45f5d0"
@@ -174,5 +174,12 @@
       "skill_sha": "f86fffcb7179a57ff4c664ca34ca1a30ae0031ed",
       "test_assurance": "COMPILED_SOURCE_CHECKED__ACCOUNT_INSTALLED_BYTES_NOT_OBSERVED"
     }
+  },
+  "filelist_runtime_source_20261019": {
+    "candidate_skill_git_blob": "c2b174e6caeafec8af8fe7a9fa49111891661a53",
+    "repo_branch": "feat/host-filelist-read-plan-20261019",
+    "deployed_account_bytes": "NOT_OBSERVED",
+    "native_tool_file_fetch": "NOT_AUTOMATIC",
+    "source_assurance": "CURRENT_GITHUB_CANDIDATE_ONLY"
   }
 }
