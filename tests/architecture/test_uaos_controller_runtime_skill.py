@@ -227,3 +227,30 @@ def test_compiled_self_repair_language_is_not_the_same_as_a_proven_native_behavi
     assert "A self-review without a trusted host trace is not independent native enforcement." in skill
     task = _json("state/tasks/uaos-inheritance-review-20261018.json")
     assert "NATIVE_CHATGPT_SELF_GOVERNANCE_UNVERIFIED" in task["controller_goal_fidelity_20261019"]["assurance"]
+
+
+def test_native_dispatcher_is_a_small_actionable_entry_not_eight_policy_dumps():
+    skill = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
+    assert len(skill) <= 8000
+    assert "Cold start / inheritance" in skill
+    assert "Continuing an already selected task" in skill
+    assert "only expand to affected policies" in skill
+    assert "state/TASK_INDEX.json" in skill
+    assert "Current main is authority" in skill
+    assert "Only current tool/host evidence proves an action happened" in skill
+    assert "Native ChatGPT + raw GitHub connector calls are not intercepted" in skill
+    assert "current GitHub main" in skill
+    assert "Append all ten fields at the end" in skill
+
+
+def test_native_dispatcher_preserves_all_canonical_referents_without_copying_policy_state_machine():
+    intent = _json("config/INTENT_RESOLUTION_POLICY.json")["problem_solution_directive_resolution"]
+    session = _json("config/SESSION_INTERACTION_POLICY.json")
+    skill = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
+    assert intent["correction_target_rule"] in skill
+    assert intent["intervention_outcome_alignment_rule"] in skill
+    assert session["inherited_session_progress_report"]["timestamp_rule"] in skill
+    assert session["problem_to_action_closure_gate"]["rule"] in skill
+    assert "config/EVOLUTION_POLICY.json" in skill
+    assert "config/AUTHORITY_WRITE_POLICY.json" in skill
+    assert "src/uaos/kernel/problem_space.py" in skill

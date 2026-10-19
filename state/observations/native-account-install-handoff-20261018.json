@@ -12,7 +12,7 @@
     "docs/integration/NATIVE_CHATGPT_ACCOUNT_CUTOVER.md"
   ],
   "source_git_blobs": {
-    "skill": "1550f9a516cc7fc6001d3ddaa390033962e81369",
+    "skill": "f86fffcb7179a57ff4c664ca34ca1a30ae0031ed",
     "pointer": "814ed5d8e7c1bb37c6aba2eb43d042235e183196",
     "previously_supplied_skill": "a244aeafcb204a86ab6825b8e8b277050c2be507",
     "previous_verified_repo_skill": "cb2ecdfac61e712b7270b6b218effa667b45f5d0"
@@ -154,5 +154,12 @@
       "main_readback": true,
       "native_behavior": "UNKNOWN__NO_ACTUAL_SELECTED_CHAT_HOST_TRACES_OR_INSTALLED_SKILL_BYTES"
     }
+  },
+  "compacted_runtime_source_20261019": {
+    "candidate_skill_blob": "f86fffcb7179a57ff4c664ca34ca1a30ae0031ed",
+    "candidate_branch": "refactor/compact-runtime-20261019",
+    "bytes": 7870,
+    "installed_in_account": "UNVERIFIED",
+    "source_change_does_not_install_skill": true
   }
 }
