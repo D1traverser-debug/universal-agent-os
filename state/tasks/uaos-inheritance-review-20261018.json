@@ -3,8 +3,8 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "status": "RUNNING",
-  "current_stage": "CONTROLLER_DEEP_AUDIT_RUNNING__PROGRESS_NATIVE_BEHAVIOR_FAILURE_OPEN__SOURCE_PROJECTION_PROMOTED",
-  "next_action": "Prioritize real user-visible selected-controller adherence and self-observation: collect native actual output/host invocation evidence when a compatible host supplies it; do not claim physical automatic Progress interception from GitHub. Independently review future selected-controller replies for exact 10-field current-task bound Progress, triage own defects before user correction, and continue five-repo deep outcome assurance. Financial recovery preserved RUNNING/not default.",
+  "current_stage": "SELF_BEHAVIOR_ASSURANCE_FIRST__PROACTIVE_CHILD_AUDIT_SUSPENDED__NATIVE_VALIDATION_OPEN",
+  "next_action": "Priority gate: first validate the controller's own observed selected-session behavior (mandatory source-bound ten-field Progress, detecting user-visible self-errors before user correction, source-to-action continuity, no PR-as-native-proof) with independent transcript/host evidence if available. Until evidence supports this across realistic turns, pause discretionary proactive cross-repository child audits and forbid child governance-effective/complete claims. Keep existing 4 child source observations as static only; preserve explicitly requested child work and urgent safety exception under original authority. Do not create a second monitor or treat self-authored report as independent proof. Controller remains RUNNING; Financial Writing remains RUNNING/not default.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -33,7 +33,7 @@
     "state/observations/native-cognition-progress-replay-20261018.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T01:59:58.729Z",
+  "updated_at": "2026-10-19T02:41:16.080Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -688,5 +688,33 @@
       "compiled_skill_blob": "b9d2e395cde7b6f0616265416bdbf526f906b6cd",
       "assurance": "CONTROLLED_CODE_COMPILATION_AND_CI_ONLY__NO_ACTUAL_NATIVE_CHATGPT_SKILL_BYTE_OR_PRE_SEND_VERIFICATION"
     }
+  },
+  "self_assurance_priority_gate_20261019": {
+    "status": "ACTIVE_PRIORITY_HOLD__NATIVE_CONTROLLER_SELF_CONFORMANCE_UNVERIFIED",
+    "reason": "Repeated user-visible controller self-adherence failures (Progress omissions, no autonomous discovery, PR-only outcome substitution) while discretionary cross-repo source reviews continued.",
+    "evidence_refs": [
+      "state/observations/native-cognition-progress-replay-20261018.json",
+      "state/evolution/EVO-20261016-CONVERSATIONAL-ADHERENCE-OBSERVABILITY.json",
+      "state/observations/uaos-five-repo-binding-20261019.json",
+      "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json"
+    ],
+    "allowed_scope": "CONTROLLER_OWN_SELF_DIAGNOSIS_REPLAY_VERIFICATION_AND_REAL_FAILURE_CLOSURE__EXPLICIT_USER_DIRECTED_CHILD_WORK_OR_URGENT_SAFETY_EXCEPTION_ONLY",
+    "suspended_scope": "NEW_DISCRETIONARY_PROACTIVE_CHILD_REPO_AUDITS_AND_ALL_CHILD_GOVERNANCE_EFFICACY_COMPLETION_CLAIMS",
+    "existing_child_evidence": "PRESERVE_STATIC_READS_WITH_STATIC_ONLY_ASSURANCE__DO_NOT_RECLASSIFY_AS_NATIVE_EFFECTIVE",
+    "release_requirements": [
+      "Observe actual selected-controller final messages against mandatory 10-field Progress with current source-backed task truth",
+      "Demonstrate independent detection/triage of its own material visible errors without waiting for user correction",
+      "Demonstrate admitted action continuation and verification not ending at PR/CI",
+      "Have real host or independent external verifier evidence appropriate to asserted native scope; if unavailable mark UNVERIFIED rather than PASS"
+    ],
+    "non_claims": [
+      "SOURCE_PATCH_IS_NOT_NATIVE_SELF_ADHERENCE",
+      "PR_CI_IS_NOT_CHILD_GOVERNANCE_EFFECTIVENESS",
+      "MODEL_SELF_REPORT_IS_NOT_INDEPENDENT_FAILURE_DETECTION"
+    ],
+    "parent_task_remains": "RUNNING",
+    "financial_child_status": "RUNNING_NOT_DEFAULT__UNMODIFIED",
+    "next_resume": "SELF_BEHAVIOR_ASSURANCE_REAL_OBSERVATION_FIRST",
+    "disposition": "REPRIORITIZATION_OF_EXISTING_OWNER__NOT_NEW_MONITOR_OR_RUNTIME"
   }
 }
