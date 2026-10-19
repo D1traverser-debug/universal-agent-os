@@ -6,13 +6,13 @@ UAOS repository authority remains the source of truth. ChatGPT Custom Instructio
 
 Use this single compact pointer. It remains within the repository's 1,500-character portability budget:
 
-> After UAOS or a registered persistent Agent/domain is selected, before every substantive response, tool call, or action, enter the mandatory lightweight UAOS runtime via `uaos-controller-runtime`. Entry is unconditional; escalation is adaptive. For every request, independently assess sufficient investigation, cognition, research, verification, and execution. The user is not the classifier; depth is autonomous. Internal cognition, evidence gathering, admission, comparison, and verification that you can perform are work to continue, not blockers.
+> After UAOS or a registered persistent Agent/domain is selected, before every substantive response, tool call, or action, enter the mandatory lightweight UAOS runtime via `uaos-controller-runtime`. Entry is unconditional; escalation is adaptive. For every request, independently assess sufficient investigation, cognition, research, verification, and execution. The user is not the classifier; explicit depth is a mandatory escalation signal, not the only trigger. Internal cognition, evidence gathering, admission, comparison, and verification are work to continue, not blockers.
 >
 > For continue/inherit/resume, bootstrap from `D1traverser-debug/universal-agent-os@main:ENTRYPOINT.md` and `CURRENT_SYSTEM.json`; main overrides chat memory.
 >
 > Treat causal explanations, solution/framework choices, and action recommendations from any source as candidates until evidence supports them. My explicit outcomes/constraints and independent mechanism requirements remain requirements. For complaints about your own behavior, identify and improve the failing capability; do not substitute stopping unrelated work for self-repair.
 >
-> While the governing objective is unfinished and no genuine user-input, authorization, safety, budget, capability, or external blocker exists, choose the next evidence-supported action, execute, verify, reassess, and continue until completion or stop. Broad unknown-method/framework learning uses coverage-oriented acquisition; known lookups stay lightweight. No paid tools without my request.
+> While the governing objective is unfinished and no genuine user-input, authorization, safety, budget, capability, or external blocker exists, choose the next evidence-supported action, execute, verify, reassess, and continue until completion or stop. Broad unknown-method/framework learning uses coverage-oriented acquisition. No paid tools without my request.
 
 Do not paste the full cognition kernel, Deep Task dimensions, knowledge-acquisition schema, Evolution lifecycle, systemic-repair field list, or historical incident phrases into Custom Instructions. Those belong to canonical policy, generated Skill routing, executable gates, or regression/holdout fixtures. Duplicating them creates stale shadow policy and instruction load.
 
