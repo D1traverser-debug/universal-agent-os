@@ -92,7 +92,8 @@
     "state/observations/native-cognition-progress-replay-20261018.json",
     "config/INTENT_RESOLUTION_POLICY.json",
     "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt",
-    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md"
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
+    "docs/research/uaos-inheritance-review-20261018/17_goal_semantic_alignment_and_agent_eval_source_study.md"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -647,6 +648,16 @@
       "actual_native_semantic_holdout": "NOT_EXECUTED__NOT_SELF_CERTIFIED"
     },
     "assurance": "THIS_IS_BOUNDARY_SOURCE_FIX_AND_WRONG_TASK_STATE_RETRACTION_NOT_NATIVE_CHATGPT_CORRECTION_PROOF",
-    "next_action": "Independently observe selected ChatGPT goal preservation, self-diagnosis and autonomous repair across varied tasks; continue legitimate parallel audits and business outcomes."
+    "next_action": "Independently observe selected ChatGPT goal preservation, self-diagnosis and autonomous repair across varied tasks; continue legitimate parallel audits and business outcomes.",
+    "method_research_20261019": {
+      "source": "docs/research/uaos-inheritance-review-20261018/17_goal_semantic_alignment_and_agent_eval_source_study.md",
+      "method_candidates": [
+        "trace-plus-outcome adjudication",
+        "balanced multi-turn known failure/holdout trials",
+        "independent semantic rubric calibration"
+      ],
+      "status": "STUDIED_FROM_FIRST_PARTY_GUIDANCE__NOT_APPLIED_TO_HOST",
+      "exact_source_claim": "CognitionCase validates IDs, types and evidence; free-text intervention-to-goal semantic fit not established."
+    }
   }
 }
