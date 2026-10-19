@@ -211,7 +211,10 @@ def test_goal_fidelity_repair_retracts_child_work_suspension_in_exact_current_ta
     assert record["status"].startswith("RETRACTED")
     assert record["suspended_scope"] == "NONE__NORMAL_AUTHORIZED_WORK_CONTINUES"
     assert "SUSPENDED" not in task["current_stage"]
-    assert "GOAL_FIDELITY" in task["current_stage"]
+    # An ongoing controller stage can advance to autonomous evolution without
+    # losing the independently governed goal-fidelity repair or restoring the freeze.
+    assert "SUSPENDED" not in task["current_stage"]
+    assert task["controller_goal_fidelity_20261019"]["status"] != "COMPLETE"
     assert task["controller_goal_fidelity_20261019"]["erroneous_intervention"] == "SUSPEND_DISCRETIONARY_CHILD_AUDITS"
     current = [entry for entry in index["controller_tasks"] if entry["default_resume"]]
     assert len(current) == 1
