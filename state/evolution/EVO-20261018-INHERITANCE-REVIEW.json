@@ -94,7 +94,11 @@
     "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt",
     "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
     "docs/research/uaos-inheritance-review-20261018/17_goal_semantic_alignment_and_agent_eval_source_study.md",
-    "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
+    "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md",
+    "src/uaos/execution/openai_agents.py",
+    "config/HOST_PROFILES.json",
+    "tests/execution/test_openai_agents.py",
+    "tests/architecture/test_finalization_enforcement_topology.py"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -703,5 +707,57 @@
       "INDEPENDENT_NATIVE_CHATGPT_CONFORMANCE"
     ],
     "assurance": "PARTIAL_TRIGGER_RESTORED_AND_RESEARCH_RECORDED__NATIVE_CAPABILITY_NOT_PROVEN"
+  },
+  "host_collaboration_architecture_refactor_20261019": {
+    "status": "CANDIDATE__CONTROLLABLE_HOST_BOUNDARY_NOT_NATIVE_CHATGPT",
+    "governing_outcome": "Replace disconnected promises with a real controllable GPT-host output admission boundary that checks the outgoing text and host evidence; keep GitHub authoritative, one controller, simple internal use and working child tasks.",
+    "causal_evidence": [
+      "src/uaos/execution/openai_agents.py returned CONFIRMED directly unless caller optionally attached guardrail",
+      "config/HOST_PROFILES.json documented optional output guardrail",
+      "src/uaos/runtime/finalization.py controlled gate was already authoritative",
+      "raw GitHub connector and native ChatGPT tool paths explicitly outside Python's execution mediation"
+    ],
+    "alternatives": [
+      {
+        "id": "NO_CHANGE",
+        "disposition": "REJECTED_OPEN_BYPASS"
+      },
+      {
+        "id": "ADD_MORE_NATIVE_POLICY_TEXT",
+        "disposition": "REJECTED_NOT_EXECUTABLE"
+      },
+      {
+        "id": "SECOND_CONTROLLER",
+        "disposition": "REJECTED_DUPLICATE_AUTHORITY"
+      },
+      {
+        "id": "INLINE_EXISTING_FINALIZATION_IN_OWNED_SDK_DELIVERY_PATH",
+        "disposition": "SELECTED_TESTABLE_COMPLETE_INTERVENTION"
+      },
+      {
+        "id": "CLAIM_NATIVE_CHATGPT_INTERCEPTION",
+        "disposition": "REJECTED_UNSUPPORTED"
+      }
+    ],
+    "frozen_acceptance": [
+      "User-visible controlled SDK adapter cannot instantiate without trusted FinalizationContext provider",
+      "Actual SDK result is checked inline before CONFIRMED delivery",
+      "Missing 10-field Progress, unfinished work or failed context provider blocks delivery and does not return model text",
+      "Internal read-only reasoning remains functional with explicit INTERNAL_ONLY receipt",
+      "Existing host native/chatgpt direct connector paths retain honest unverified boundary",
+      "CI and protected PR/main reread, real native cross-session behavior evaluation remains OPEN"
+    ],
+    "selected_files": [
+      "src/uaos/execution/openai_agents.py",
+      "config/HOST_PROFILES.json",
+      "tests/execution/test_openai_agents.py",
+      "tests/architecture/test_finalization_enforcement_topology.py"
+    ],
+    "evaluation": {
+      "candidate_ci": "PENDING",
+      "main_readback": "PENDING",
+      "native_selected_chat_end_to_end": "NOT_INTERCEPTED_BY_THIS_CODE"
+    },
+    "assurance": "CONTROLLED_ADAPTER_ONLY__DO_NOT_CONFLATE_SOURCE_OR_CI_WITH_PRODUCT_NATIVE_BEHAVIOR"
   }
 }

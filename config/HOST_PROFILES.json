@@ -32,7 +32,11 @@
       "uaos_finalization_gate_ref": "src/uaos/runtime/finalization.py",
       "custom_instructions_role": "BOOTSTRAP_ONLY__NON_AUTHORITATIVE",
       "custom_instructions_bootstrap_behavior": "AFTER_UAOS_OR_REGISTERED_PERSISTENT_AGENT_CONTEXT_SELECTION__MANDATORY_LIGHTWEIGHT_HANDOFF_TO_uaos-controller-runtime_BEFORE_SUBSTANTIVE_RESPONSE_TOOL_OR_ACTION__RECOVER_CURRENT_AUTHORITY_AS_NEEDED__DO_NOT_COPY_DETAILED_POLICY",
-      "optional_remote_hardening": ["GITHUB_RULESET", "BRANCH_PROTECTION", "MANDATORY_REVIEW"],
+      "optional_remote_hardening": [
+        "GITHUB_RULESET",
+        "BRANCH_PROTECTION",
+        "MANDATORY_REVIEW"
+      ],
       "background_execution": "AVAILABLE_ONLY_WHEN_A_REAL_CHATGPT_AUTOMATION_OR_EQUIVALENT_HOST_SCHEDULER_IS_CONFIGURED",
       "maintenance_mode_without_background": "OPPORTUNISTIC_ON_NEXT_INVOCATION",
       "cost_policy": "INCLUDED_FREE_FIRST__PAID_AND_UNKNOWN_DENY_BY_DEFAULT"
@@ -43,11 +47,12 @@
       "canonical_evolution_transaction": "src/uaos/evolution/transaction.py#EvolutionTransaction",
       "proactive_evolution_trigger": "CALLER_SCHEDULER_IF_CONFIGURED",
       "uaos_finalization_gate_ref": "src/uaos/runtime/finalization.py",
-      "final_response_enforcement": "BLOCKING_OUTPUT_GUARDRAIL_WHEN_UAOS_GUARDRAIL_IS_ATTACHED",
+      "final_response_enforcement": "USER_VISIBLE_ADAPTER_INLINE_FINALIZATION_MANDATORY__SDK_GUARDRAIL_OPTIONAL_DEFENSE_IN_DEPTH",
       "output_guardrail_builder": "src/uaos/execution/openai_agents.py#build_uaos_output_guardrail",
-      "enforcement_scope": "THE_AGENT_RUN_PATH_THAT_ATTACHES_THE_OUTPUT_GUARDRAIL",
+      "enforcement_scope": "ONLY_USER_VISIBLE_RUNS_DECLARED_ON_THIS_ADAPTER__NOT_NATIVE_CHATGPT_OR_RAW_CONNECTOR_CALLS",
       "tool_side_effects": "DISABLED_IN_BASELINE_OPENAI_AGENTS_EXECUTOR",
-      "cost_policy": "CALLER_GOVERNED"
+      "cost_policy": "CALLER_GOVERNED",
+      "user_visible_delivery_contract": "OpenAIAgentsExecutor(user_visible=True, finalization_context_provider=trusted_host_callback) runs admit_final_response inline and does not emit rejected model output. Internal-only default outputs are not approved for direct user delivery."
     },
     "LOCAL": {
       "state_authority": "SQLITE_CAS",

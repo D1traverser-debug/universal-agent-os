@@ -50,23 +50,47 @@ def build_uaos_output_guardrail(
 
 
 class OpenAIAgentsExecutor:
-    """Bounded reasoning/generation adapter over OpenAI Agents SDK.
+    """Reasoning-only SDK adapter with explicit, mandatory user-visible admission.
 
-    This baseline adapter intentionally receives no side-effecting tools. UAOS
-    durable task state, approvals, artifact identity and authoritative effects
-    remain outside the Agents SDK run. Callers that use this executor for a final
-    user-visible answer may attach the UAOS output guardrail through OpenAIAgentSpec.
+    For internal model results, default behavior remains read-only and lightweight.
+    A caller delivering the SDK output to a user MUST opt into user_visible=True,
+    provide a trusted FinalizationContext callback, and pass UAOS finalization
+    *inside this adapter* before a CONFIRMED output is returned. SDK guardrails
+    may provide another check but are not a substitute for this emission gate.
+    This only mediates invocations using this adapter; it does not intercept
+    ChatGPT product-native responses or raw GitHub connector calls.
     """
 
-    def __init__(self, *, agent_spec: OpenAIAgentSpec, agent_factory: Callable[..., Any], runner: Any) -> None:
+    def __init__(
+        self, *,
+        agent_spec: OpenAIAgentSpec,
+        agent_factory: Callable[..., Any],
+        runner: Any,
+        user_visible: bool = False,
+        finalization_context_provider: Callable[[ExecutionRequest, Any], FinalizationContext] | None = None,
+    ) -> None:
+        if user_visible and finalization_context_provider is None:
+            raise ValueError("USER_VISIBLE_REQUIRES_FINALIZATION_CONTEXT_PROVIDER")
+        if not user_visible and finalization_context_provider is not None:
+            raise ValueError("FINALIZATION_CONTEXT_ONLY_ALLOWED_FOR_USER_VISIBLE")
         self.agent_spec = agent_spec
         self._agent_factory = agent_factory
         self._runner = runner
+        self._user_visible = user_visible
+        self._finalization_context_provider = finalization_context_provider
 
     @classmethod
-    def from_installed(cls, *, agent_spec: OpenAIAgentSpec) -> "OpenAIAgentsExecutor":
+    def from_installed(
+        cls, *,
+        agent_spec: OpenAIAgentSpec,
+        user_visible: bool = False,
+        finalization_context_provider: Callable[[ExecutionRequest, Any], FinalizationContext] | None = None,
+    ) -> "OpenAIAgentsExecutor":
         from agents import Agent, Runner
-        return cls(agent_spec=agent_spec, agent_factory=Agent, runner=Runner)
+        return cls(
+            agent_spec=agent_spec, agent_factory=Agent, runner=Runner,
+            user_visible=user_visible, finalization_context_provider=finalization_context_provider,
+        )
 
     def execute(self, request: ExecutionRequest) -> ExecutionOutcome:
         if request.side_effect_class.upper() not in {"READ", "NONE"}:
@@ -90,8 +114,31 @@ class OpenAIAgentsExecutor:
                 disposition=ExecutionDisposition.FAILED,
                 error=f"{type(exc).__name__}: {exc}",
             )
+        evidence: dict[str, Any] = {
+            "last_agent": getattr(getattr(result, "last_agent", None), "name", None),
+            "delivery_scope": "USER_VISIBLE" if self._user_visible else "INTERNAL_ONLY",
+        }
+        if self._user_visible:
+            # The trusted caller must derive context from observed host facts, not
+            # from the model's own statements about completion or Progress.
+            assert self._finalization_context_provider is not None
+            try:
+                context = self._finalization_context_provider(request, result)
+                if not isinstance(context, FinalizationContext):
+                    raise TypeError("INVALID_FINALIZATION_CONTEXT")
+                receipt = admit_final_response(str(result.final_output), context)
+            except Exception as exc:
+                # Fail closed: an output may not escape simply because its checker
+                # crashed or rejected it. No potentially unvalidated model output
+                # is attached to the failure receipt.
+                return ExecutionOutcome(
+                    disposition=ExecutionDisposition.FAILED,
+                    error=f"USER_VISIBLE_FINALIZATION_REJECTED:{type(exc).__name__}:{exc}",
+                )
+            evidence["uaos_finalization"] = "ADMITTED"
+            evidence["closure_decision"] = receipt.closure_decision.value
         return ExecutionOutcome(
             disposition=ExecutionDisposition.CONFIRMED,
             output=result.final_output,
-            evidence={"last_agent": getattr(getattr(result, "last_agent", None), "name", None)},
+            evidence=evidence,
         )

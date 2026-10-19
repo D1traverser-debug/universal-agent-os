@@ -15,7 +15,9 @@ def test_chatgpt_host_does_not_claim_a_verified_pre_send_gate():
 def test_openai_agents_host_exposes_blocking_output_guardrail_path():
     profiles = json.loads((ROOT / "config/HOST_PROFILES.json").read_text(encoding="utf-8"))["profiles"]
     agents = profiles["OPENAI_AGENTS_SDK"]
-    assert agents["final_response_enforcement"] == "BLOCKING_OUTPUT_GUARDRAIL_WHEN_UAOS_GUARDRAIL_IS_ATTACHED"
+    assert agents["final_response_enforcement"] == "USER_VISIBLE_ADAPTER_INLINE_FINALIZATION_MANDATORY__SDK_GUARDRAIL_OPTIONAL_DEFENSE_IN_DEPTH"
+    assert "NOT_NATIVE_CHATGPT" in agents["enforcement_scope"]
+    assert "user_visible=True" in agents["user_visible_delivery_contract"]
     assert agents["output_guardrail_builder"].endswith("#build_uaos_output_guardrail")
 
 
