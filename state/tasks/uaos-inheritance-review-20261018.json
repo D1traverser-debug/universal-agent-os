@@ -30,10 +30,11 @@
     "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md",
     "state/observations/uaos-five-repo-binding-20261019.json",
     "state/observations/knowledge-retrieval-recency-drift-20261019.json",
-    "state/observations/native-cognition-progress-replay-20261018.json"
+    "state/observations/native-cognition-progress-replay-20261018.json",
+    "docs/research/uaos-inheritance-review-20261018/17_goal_semantic_alignment_and_agent_eval_source_study.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T03:04:05.897Z",
+  "updated_at": "2026-10-19T03:22:37.509Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -744,5 +745,25 @@
       "main_readback": true,
       "native_behavior": "UNKNOWN__NO_ACTUAL_SELECTED_CHAT_HOST_TRACES_OR_INSTALLED_SKILL_BYTES"
     }
+  },
+  "goal_semantic_evaluation_study_20261019": {
+    "status": "CANDIDATE_SOURCE_AND_EXTERNAL_METHOD_STUDY_COMPLETED__NATIVE_OUTCOME_EVAL_NOT_RUN",
+    "document_ref": "docs/research/uaos-inheritance-review-20261018/17_goal_semantic_alignment_and_agent_eval_source_study.md",
+    "owner": "ORIGINAL_UAOS_CONTROLLER_TASK",
+    "checked": [
+      "CognitionCase goal evidence/candidate refs",
+      "Finalization controlled host limitations",
+      "Progress adherence structural checks",
+      "Native generated-Skill and CI lexical tests",
+      "OpenAI trace-grading guidance",
+      "Anthropic repeated-trial outcome/trace eval guidance"
+    ],
+    "key_finding": "Existing controlled gate does not establish semantic relevance of selected intervention to actual criticized user capability. Existing negative source/policy tests are not independent semantic behavior tests.",
+    "remaining": [
+      "run actual current-Agent native multi-turn variants with independent transcript/outcome grader where available",
+      "bound source code correction to scenario-generalized behavior; don't replace with text checks",
+      "retain real source freshness, compare cold-start behavior and preserve false failures"
+    ],
+    "assurance": "RESEARCH_COMPLETED_FOR_DECLARED_SCOPE__FULL_405_FILE_STUDY_NOT_DONE__LIVE_NATIVE_BEHAVIOR_UNVERIFIED"
   }
 }
