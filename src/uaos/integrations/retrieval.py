@@ -2,10 +2,14 @@ from __future__ import annotations
 
 import fnmatch
 import json
+from datetime import datetime, timezone
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
 from typing import Callable, Mapping
+
+from uaos.contracts.enums import IntentType, TaskStatus
+from uaos.kernel.control import ControlCommand, ControlResolutionError, TaskCandidate, resolve_control_target
 
 
 class RetrievalPurpose(StrEnum):
@@ -164,6 +168,58 @@ class RetrievalPolicy:
         )
 
 
+def _selected_index_row(task_index: Mapping[str, object], domain_id: str | None) -> Mapping[str, object]:
+    """One selector owns task eligibility and default/fallback precedence."""
+    controller = domain_id is None
+    rows = task_index.get("controller_tasks" if controller else "tasks")
+    if not isinstance(rows, list):
+        raise RetrievalDenied("controller task index missing" if controller else "domain task index missing")
+    candidates: list[TaskCandidate] = []
+    indexed: dict[str, Mapping[str, object]] = {}
+    for row in rows:
+        if not isinstance(row, Mapping):
+            raise RetrievalDenied("task index contains malformed entry")
+        if not controller and row.get("domain_id") != domain_id:
+            continue
+        task_id = row.get("task_id")
+        task_type = row.get("task_type")
+        if not isinstance(task_id, str) or not task_id or not isinstance(task_type, str) or not task_type:
+            raise RetrievalDenied("task identity or type missing")
+        if task_id in indexed:
+            raise RetrievalDenied("duplicate task identity")
+        if controller and (row.get("authority_context") != "UAOS" or task_type != "controller_maintenance"):
+            raise RetrievalDenied("controller task authority or type invalid")
+        status = row.get("status")
+        try:
+            task_status = TaskStatus(status)
+        except (ValueError, TypeError):
+            raise RetrievalDenied("invalid task status") from None
+        resume = row.get("resume_eligible")
+        default = row.get("default_resume" if controller else "default_resume_within_domain")
+        if type(resume) is not bool or type(default) is not bool:
+            raise RetrievalDenied("task eligibility/default must be boolean")
+        if default and (not resume or task_status in {TaskStatus.COMPLETE, TaskStatus.CANCELLED}):
+            raise RetrievalDenied("default task is not resumable")
+        indexed[task_id] = row
+        candidates.append(TaskCandidate(
+            task_id=task_id, owner_domain="UAOS" if controller else domain_id,
+            task_type=task_type, status=task_status,
+            updated_at=datetime.fromtimestamp(0, timezone.utc),
+            resume_eligible=resume, default_resume=default,
+        ))
+    command = ControlCommand(
+        IntentType.SYSTEM_MAINTENANCE if controller else IntentType.CONTINUE,
+        domain_hint=domain_id,
+    )
+    try:
+        selected = resolve_control_target(command, tuple(candidates))
+    except ControlResolutionError as exc:
+        raise RetrievalDenied("task selection failed: " + str(exc)) from exc
+    if selected.task_id is None or selected.task_id not in indexed:
+        raise RetrievalDenied("no selected resumable task")
+    return indexed[selected.task_id]
+
+
 @dataclass(frozen=True, slots=True)
 class PlannedSourceRead:
     repository: str
@@ -231,20 +287,7 @@ def build_source_read_plan(
     add(parent, str(owner.get("task_index", "")), "AUTHORITY", "exact task selection")
 
     if selected_domain is None:
-        tasks = task_index.get("controller_tasks")
-        if not isinstance(tasks, list):
-            raise RetrievalDenied("controller task index missing")
-        selected = [t for t in tasks if isinstance(t, Mapping) and t.get("default_resume") is True]
-        if len(selected) != 1:
-            raise RetrievalDenied("expected exactly one active default controller task")
-        task = selected[0]
-        if (
-            task.get("authority_context") != "UAOS"
-            or task.get("task_type") != "controller_maintenance"
-            or task.get("resume_eligible") is not True
-            or task.get("status") not in {"RUNNING", "HOLD"}
-        ):
-            raise RetrievalDenied("selected controller task authority, type, eligibility or status invalid")
+        task = _selected_index_row(task_index, None)
         task_ref = task.get("state_ref")
         if not isinstance(task_ref, str) or not task_ref.startswith("state/tasks/"):
             raise RetrievalDenied("controller state reference unresolved")
@@ -253,13 +296,8 @@ def build_source_read_plan(
         domain = domains[selected_domain]
         if not isinstance(domain, Mapping):
             raise RetrievalDenied("registered domain mapping malformed")
-        children = task_index.get("tasks")
-        if not isinstance(children, list):
-            raise RetrievalDenied("domain task index missing")
-        bound = [row for row in children if isinstance(row, Mapping) and row.get("domain_id") == selected_domain]
-        if len(bound) != 1:
-            raise RetrievalDenied("domain owner task missing or ambiguous")
-        parent_ref = bound[0].get("state_ref")
+        router = _selected_index_row(task_index, selected_domain)
+        parent_ref = router.get("state_ref")
         if not isinstance(parent_ref, str) or not parent_ref.startswith("state/tasks/"):
             raise RetrievalDenied("parent domain router state reference unresolved")
         add(parent, parent_ref, "CURRENT_TASK", "parent router pointer, not child business state")
@@ -278,7 +316,6 @@ def build_source_read_plan(
             discovery.append((child_repo, root.rstrip("/") + "/"))
 
     if broad_knowledge:
-        all_sources: list[tuple[str, Mapping[str, object]]] = [(parent, owner)]
         for name, domain in domains.items():
             if not isinstance(domain, Mapping):
                 raise RetrievalDenied("malformed domain in broad inventory")
@@ -286,7 +323,6 @@ def build_source_read_plan(
             entry = domain.get("entrypoint")
             if not isinstance(repo, str) or not isinstance(entry, str):
                 raise RetrievalDenied("unresolved domain in broad inventory")
-            all_sources.append((repo, domain))
             add(repo, entry, "KNOWLEDGE_OWNER", "source owner first; study content is not automatically canonical")
         roots = retrieval_policy.knowledge_inventory_routing.get("source_roles", {})
         child = roots.get("registered_child_git", {}) if isinstance(roots, Mapping) else {}

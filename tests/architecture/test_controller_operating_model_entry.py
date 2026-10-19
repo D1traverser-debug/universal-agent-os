@@ -48,7 +48,6 @@ def test_skill_installation_evidence_does_not_prove_source_or_behavior():
     assert "INSTALLED_BYTES_UNVERIFIED" in task["native_account_cutover"]["status"]
     assert "UNVERIFIED" in evidence["native_reliability"]
     assert evidence["canary"]["production_code_ci_is_native_proof"] is False
-    assert evidence["canary"]["production_code_ci_is_native_proof"] is False
 
 
 def test_no_full_document_loading_or_reupload_each_turn():

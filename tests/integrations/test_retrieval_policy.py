@@ -234,27 +234,27 @@ def test_read_plan_rejects_wrong_domain_and_ambiguous_default_instead_of_guessin
     changed = dict(index)
     changed["controller_tasks"] = [dict(t) for t in index["controller_tasks"]]
     next(t for t in changed["controller_tasks"] if t["default_resume"])["default_resume"] = False
-    with pytest.raises(RetrievalDenied, match="exactly one"):
+    with pytest.raises(RetrievalDenied, match="multiple resumable"):
         build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY)
 
 
 @pytest.mark.parametrize(
-    "field,invalid_value",
+    "field,invalid_value,error",
     [
-        ("resume_eligible", False),
-        ("resume_eligible", None),
-        ("task_type", "article_workspace_router"),
-        ("authority_context", "DOMAIN:video"),
-        ("status", "COMPLETE"),
+        ("resume_eligible", False, "default task is not resumable"),
+        ("resume_eligible", None, "must be boolean"),
+        ("task_type", "article_workspace_router", "authority or type invalid"),
+        ("authority_context", "DOMAIN:video", "authority or type invalid"),
+        ("status", "COMPLETE", "default task is not resumable"),
     ],
 )
-def test_controller_source_plan_rejects_ineligible_or_noncontroller_default(field, invalid_value):
+def test_controller_source_plan_rejects_ineligible_or_noncontroller_default(field, invalid_value, error):
     system, index = _current_read_plan_source()
     changed = dict(index)
     changed["controller_tasks"] = [dict(t) for t in index["controller_tasks"]]
     target = next(t for t in changed["controller_tasks"] if t["default_resume"])
     target[field] = invalid_value
-    with pytest.raises(RetrievalDenied, match="controller task authority, type, eligibility or status"):
+    with pytest.raises(RetrievalDenied, match=error):
         build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY)
 
 
@@ -268,11 +268,51 @@ def test_read_plan_rejects_unsafe_task_refs_and_missing_children_instead_of_sear
         build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY)
     changed = dict(index)
     changed["tasks"] = [t for t in index["tasks"] if t["domain_id"] != "video"]
-    with pytest.raises(RetrievalDenied, match="missing or ambiguous"):
+    with pytest.raises(RetrievalDenied, match="task selection failed"):
         build_source_read_plan(
             system_map=system, task_index=changed, retrieval_policy=POLICY,
             selected_domain="video",
         )
+
+
+def test_source_read_plan_uses_core_selector_single_eligible_controller_fallback():
+    from uaos.kernel import ControlCommand, TaskCandidate, resolve_control_target
+    from uaos.contracts.enums import IntentType, TaskStatus
+    from datetime import UTC, datetime
+
+    system, index = _current_read_plan_source()
+    changed = dict(index)
+    changed["controller_tasks"] = [dict(t) for t in index["controller_tasks"]]
+    for task in changed["controller_tasks"]:
+        task["default_resume"] = False
+        if task["task_id"] == "uaos:maintenance:financial-system-governed-recovery-20261018":
+            task["resume_eligible"] = False
+    sole = next(t for t in changed["controller_tasks"] if t["resume_eligible"])
+    canonical = resolve_control_target(
+        ControlCommand(IntentType.SYSTEM_MAINTENANCE),
+        (TaskCandidate(
+            task_id=sole["task_id"], owner_domain="UAOS", task_type=sole["task_type"],
+            status=TaskStatus(sole["status"]), updated_at=datetime.now(UTC),
+            resume_eligible=True, default_resume=False,
+        ),),
+    )
+    plan = build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY)
+    assert canonical.task_id == sole["task_id"]
+    assert plan.reads[-1].path == sole["state_ref"]
+
+
+def test_source_read_plan_domain_eligibility_is_not_a_parallel_selector():
+    system, index = _current_read_plan_source()
+    changed = dict(index)
+    changed["tasks"] = [dict(row) for row in index["tasks"]]
+    target = next(row for row in changed["tasks"] if row["domain_id"] == "video")
+    target["resume_eligible"] = False
+    with pytest.raises(RetrievalDenied, match="default task is not resumable"):
+        build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY, selected_domain="video")
+    target["resume_eligible"] = True
+    target["status"] = "COMPLETE"
+    with pytest.raises(RetrievalDenied, match="default task is not resumable"):
+        build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY, selected_domain="video")
 
 
 def test_source_plan_is_not_a_state_machine_or_a_host_fetch_receipt():
