@@ -202,6 +202,22 @@ def test_user_visible_sdk_unfinished_work_blocks_clean_progress_output():
     assert response.output is None
 
 
+def test_sdk_keeps_independent_work_open_despite_unrelated_user_choice():
+    executor = OpenAIAgentsExecutor(
+        agent_spec=OpenAIAgentSpec("Researcher", "x"), agent_factory=Agent,
+        runner=UserVisibleRunner, user_visible=True,
+        finalization_context_provider=lambda _request, _run: FinalizationContext(
+            context_selected=True,
+            user_input_required=True,
+            work_remaining_without_user_input=True,
+        ),
+    )
+    response = executor.execute(ExecutionRequest("parallel-work", "read", "repo", "x"))
+    assert response.disposition is ExecutionDisposition.FAILED
+    assert "ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT" in response.error
+    assert response.output is None
+
+
 def test_user_visible_sdk_rejects_failed_or_untrusted_context_provider():
     for provider in (
         lambda _request, _run: None,
