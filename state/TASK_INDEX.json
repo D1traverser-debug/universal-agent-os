@@ -3,7 +3,7 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-19T06:25:23.292Z",
+  "updated_at": "2026-10-19T06:49:00.794Z",
   "controller_tasks": [
     {
       "task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
@@ -25,8 +25,8 @@
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume": true,
-      "semantic_summary": "Current UAOS controller RUNNING: owned SDK user-facing finalization is enforced when explicitly invoked (PR149), native Skill source is 30% more compact (PR150), real ChatGPT user account bytes/invocation, raw GitHub connector mediation, live semantic/knowledge evolution remain UNVERIFIED. ADR-0031. Do not interpret PR/CI as behavior closure.",
-      "current_stage": "CONTROLLED_SDK_FINALIZATION_AND_COMPACT_NATIVE_ENTRY_PROMOTED__NATIVE_BEHAVIOR_AND_GITHUB_HOST_BOUNDARY_OPEN",
+      "semantic_summary": "UAOS current default RUNNING: controlled SDK output gate (PR149), compact native Skill source (PR150), executable source-owner filelist resolver (PR152). New filelist plans exact current main owner and task refs but DOES NOT fetch content, trigger Skills, or attest native ChatGPT behaviors. Actual host tool reads, knowledge-transfer and progress/reliability still open.",
+      "current_stage": "SOURCE_FILELIST_ROUTER_PROMOTED__NATIVE_HOOK_AND_SEMANTIC_KNOWLEDGE_APPLICATION_OPEN",
       "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
     },
     {
