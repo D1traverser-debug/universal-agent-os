@@ -23,7 +23,10 @@
     "anti_bypass_rule": "Phrases equivalent to 'just do X', 'do not analyze', 'do not verify', 'I know the root cause, change Y' or other attempts to skip problem cognition do not convert a remedy candidate into admitted intervention authority.",
     "explicit_mechanism_requirement_rule": "Only when the user explicitly states that the mechanism itself is the desired requirement independent of whether it solves the diagnosed problem should it be routed as REQUIREMENT_CHANGE; then update the owning requirement authority first and keep any causal/problem-solution claim separately evidence-tested.",
     "conflict_rule": "A user mechanism directive cannot silently override current authority, mutation admission, safety boundaries, frozen acceptance, or an existing evidence-backed NO_CHANGE/REJECT disposition. A conflicting directive requires explicit requirement/evolution reconciliation before mutation.",
-    "failure_mode_prevented": "USER_SOLUTION_DIRECTIVE_BYPASSES_COGNITION_BY_RECLASSIFYING_THE_REQUESTED_PATCH_AS_A_DIRECT_CHANGE"
+    "failure_mode_prevented": "USER_SOLUTION_DIRECTIVE_BYPASSES_COGNITION_BY_RECLASSIFYING_THE_REQUESTED_PATCH_AS_A_DIRECT_CHANGE",
+    "correction_target_rule": "When a user criticizes the Agent/controller's own interpretation, judgment, reliability, execution or self-governance, the failing capability of THAT actor is the problem target. Distinguish it from the projects or other actors that the controller happens to oversee; do not interpret such criticism as an instruction to suspend or constrain unrelated work.",
+    "intervention_outcome_alignment_rule": "Before selecting an action, check that the chosen intervention has a plausible evidence-backed mechanism to improve the user's actual complained-of capability and an observable acceptance outcome. Reject a safer-looking workload restriction, new report, PR or routing step as a substitute when it does not treat that capability; retain ordinary authorized duties unless explicitly changed by user requirement, authority or safety.",
+    "failure_mode_extended": "USER_CRITICIZES_AGENT_SELF_GOVERNANCE__AGENT_SUBSTITUTES_FREEZING_OTHER_WORK_FOR_REPAIRING_OWN_BEHAVIOR"
   },
   "fresh_chat": {
     "bootstrap_chain": [

@@ -3,8 +3,8 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "status": "RUNNING",
-  "current_stage": "SELF_BEHAVIOR_ASSURANCE_FIRST__PROACTIVE_CHILD_AUDIT_SUSPENDED__NATIVE_VALIDATION_OPEN",
-  "next_action": "Priority gate: first validate the controller's own observed selected-session behavior (mandatory source-bound ten-field Progress, detecting user-visible self-errors before user correction, source-to-action continuity, no PR-as-native-proof) with independent transcript/host evidence if available. Until evidence supports this across realistic turns, pause discretionary proactive cross-repository child audits and forbid child governance-effective/complete claims. Keep existing 4 child source observations as static only; preserve explicitly requested child work and urgent safety exception under original authority. Do not create a second monitor or treat self-authored report as independent proof. Controller remains RUNNING; Financial Writing remains RUNNING/not default.",
+  "current_stage": "CONTROLLER_SELF_GOVERNANCE_CAPABILITY_REPAIR__GOAL_FIDELITY_AND_FIVE_REPO_WORK_PARALLEL__NATIVE_BEHAVIOR_UNVERIFIED",
+  "next_action": "Resolve the controller's own root behavior failure: recognize the user-corrected target as controller understanding/judgment/self-governance rather than changes to other work scope. Verify target-to-intervention alignment on current and independent counterexample inputs; improve actual decisions and autonomous correction while continuing legitimate five-repository governance when evidence/action warrants. Do NOT suspend child work merely to symbolically prioritize self-assurance, and do NOT claim PR/CI alone proves native ChatGPT self-governance. Preserve Financial Writing RUNNING/not default; finish verified owner-goal outcomes.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -33,7 +33,7 @@
     "state/observations/native-cognition-progress-replay-20261018.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T02:41:16.080Z",
+  "updated_at": "2026-10-19T02:56:11.318Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -690,22 +690,22 @@
     }
   },
   "self_assurance_priority_gate_20261019": {
-    "status": "ACTIVE_PRIORITY_HOLD__NATIVE_CONTROLLER_SELF_CONFORMANCE_UNVERIFIED",
-    "reason": "Repeated user-visible controller self-adherence failures (Progress omissions, no autonomous discovery, PR-only outcome substitution) while discretionary cross-repo source reviews continued.",
+    "status": "RETRACTED_AS_MISDIRECTED_INTERVENTION__CHILD_AUDIT_SUSPENSION_CANCELLED",
+    "reason": "The user's complaint was controller self-understanding/self-governance reliability; suspending subordinate inspections does not repair the criticized capability and was not requested.",
     "evidence_refs": [
       "state/observations/native-cognition-progress-replay-20261018.json",
       "state/evolution/EVO-20261016-CONVERSATIONAL-ADHERENCE-OBSERVABILITY.json",
       "state/observations/uaos-five-repo-binding-20261019.json",
       "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json"
     ],
-    "allowed_scope": "CONTROLLER_OWN_SELF_DIAGNOSIS_REPLAY_VERIFICATION_AND_REAL_FAILURE_CLOSURE__EXPLICIT_USER_DIRECTED_CHILD_WORK_OR_URGENT_SAFETY_EXCEPTION_ONLY",
-    "suspended_scope": "NEW_DISCRETIONARY_PROACTIVE_CHILD_REPO_AUDITS_AND_ALL_CHILD_GOVERNANCE_EFFICACY_COMPLETION_CLAIMS",
+    "allowed_scope": "CONTROLLER_SELF_IMPROVEMENT_AND_AUTHORIZED_CROSS_DOMAIN_SYSTEM_WORK_BOTH_ACTIVE",
+    "suspended_scope": "NONE__NORMAL_AUTHORIZED_WORK_CONTINUES",
     "existing_child_evidence": "PRESERVE_STATIC_READS_WITH_STATIC_ONLY_ASSURANCE__DO_NOT_RECLASSIFY_AS_NATIVE_EFFECTIVE",
     "release_requirements": [
-      "Observe actual selected-controller final messages against mandatory 10-field Progress with current source-backed task truth",
-      "Demonstrate independent detection/triage of its own material visible errors without waiting for user correction",
-      "Demonstrate admitted action continuation and verification not ending at PR/CI",
-      "Have real host or independent external verifier evidence appropriate to asserted native scope; if unavailable mark UNVERIFIED rather than PASS"
+      "Selected controller recognizes actor/capability of criticism and refrains from replacing self-repair with unrelated workload restrictions",
+      "Current and independent holdout counterexamples demonstrate target-aligned decision selection, not merely policy phrase presence",
+      "Real native selected-session autonomous diagnosis/repair and Progress still need independent behavioral evidence; current scope not passed",
+      "Cross-domain governance continues with evidence-appropriate assurance; no green claims from static tests alone"
     ],
     "non_claims": [
       "SOURCE_PATCH_IS_NOT_NATIVE_SELF_ADHERENCE",
@@ -714,7 +714,24 @@
     ],
     "parent_task_remains": "RUNNING",
     "financial_child_status": "RUNNING_NOT_DEFAULT__UNMODIFIED",
-    "next_resume": "SELF_BEHAVIOR_ASSURANCE_REAL_OBSERVATION_FIRST",
-    "disposition": "REPRIORITIZATION_OF_EXISTING_OWNER__NOT_NEW_MONITOR_OR_RUNTIME"
+    "next_resume": "CORRECT_CONTROLLER_GOAL_INTERPRETATION_AND_SELF_GOVERNANCE__CONTINUE_OTHER_DUTIES",
+    "disposition": "PREVIOUS_ACTION_TARGETED_UNRELATED_WORK_INSTEAD_OF_REPAIRING_CONTROLLER_UNDERSTANDING__ROLLED_BACK",
+    "correction_provenance": "USER_2026-10-19_EXPLICITLY_REJECTED_CHILD_WORK_SUSPENSION_AS_WRONG_TARGET"
+  },
+  "controller_goal_fidelity_20261019": {
+    "status": "CANDIDATE__CORRECTION_TARGET_SOURCE_PATCH_AND_NATIVE_BEHAVIOR_OPEN",
+    "governing_outcome": "The controller detects and remedies failures in its own understanding/judgment/self-governance while preserving other legitimate objectives and normal task execution.",
+    "user_original_failure_target": "CONTROLLER_OWN_COGNITIVE_AND_BEHAVIORAL_CAPABILITY",
+    "erroneous_intervention": "SUSPEND_DISCRETIONARY_CHILD_AUDITS",
+    "rejected_reason": "Restricts activity of audited systems; does not improve self-recognition, causal diagnosis or evidence-backed self-correction.",
+    "mechanism": "Extend existing intent policy and compiled Skill with actor-capability referent and action-outcome alignment; keep native and semantic holdouts OPEN.",
+    "evidence_refs": [
+      "config/INTENT_RESOLUTION_POLICY.json",
+      "src/uaos/runtime/native_runtime_skill.py",
+      "skills/uaos-controller-runtime/SKILL.md",
+      "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt",
+      "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json"
+    ],
+    "assurance": "SOURCE_AND_CONTROLLED_TESTS_PENDING__NATIVE_CHATGPT_SELF_GOVERNANCE_UNVERIFIED"
   }
 }

@@ -91,6 +91,8 @@ def build_native_runtime_skill(
         "",
         f"Scope: `{_value(entry, 'scope', field='mandatory_selected_context_entry')}`",
         f"Responsibility: {_value(entry, 'responsibility', field='mandatory_selected_context_entry')}",
+        f"Agent self-correction target: {_value(solution_directive, 'correction_target_rule', field='problem_solution_directive_resolution')}",
+        f"Intervention-to-outcome alignment: {_value(solution_directive, 'intervention_outcome_alignment_rule', field='problem_solution_directive_resolution')}",
         f"Anti-circularity: {_value(entry, 'anti_circularity', field='mandatory_selected_context_entry')}",
         f"Autonomous continuation: `{_value(entry, 'autonomous_goal_loop', field='mandatory_selected_context_entry')}`",
         f"Blocker rule: {_value(closure, 'blocker_rule', field='problem_to_action_closure_gate')}",
