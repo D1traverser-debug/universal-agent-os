@@ -862,60 +862,25 @@
     }
   },
   "controller_hot_path_compaction_20261019": {
-    "status": "CANDIDATE__STRUCTURAL_DEDUPLICATION__CI_PENDING__NATIVE_RELIABILITY_UNVERIFIED",
-    "governing_outcome": "Reduce simultaneous active authority/context weight and make challenge, independent learning, intervention, feedback and evolution one adaptive loop rather than more documents/staged promises.",
-    "evidence": [
-      "ENTRYPOINT.md was 28,398 bytes and repeated five cognitive stage descriptions plus deep research and capability discovery canonical owners.",
-      "Exact controller task was 55,794 bytes and embedded seven long historical incident dossiers despite existing research/evolution/Git history.",
-      "Raw repository had 409 blob files, 2,447,621 bytes; file existence is not invocation.",
-      "ChatGPT-native still has no repo-owned non-bypassable skill/Progress gate."
+    "status": "SOURCE_CONTEXT_COMPACTION_PROMOTED_PR155__NATIVE_BEHAVIOR_UNVERIFIED",
+    "goal": "One adaptive Observe→Challenge→Recall/Learn→Act→Verify/Reflect loop using canonical owners only on demand, not five ceremonial always-on workflows.",
+    "observed": "Before: ENTRYPOINT 28,398 chars; exact controller task 55,794 chars; old cases duplicated in active task.",
+    "selected": "Reduce repeated hot-path text; replace seven historical task case bodies with current status, unfinished follow-ups and pinned prior main revision, not a new state machine.",
+    "rejected": "Extra rules/monitor; all-file/all-web scan per turn; forgetting old evidence.",
+    "sources": [
+      "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+      "https://developers.openai.com/cookbook/examples/agents_sdk/building_reliable_agents_memory_compaction",
+      "https://developers.openai.com/api/docs/guides/agent-evals"
     ],
-    "alternatives": [
-      {
-        "id": "COPY_MORE_RULES",
-        "decision": "REJECT_DUPLICATE_CONTEXT"
-      },
-      {
-        "id": "NEW_REFLECTION_MONITOR_AGENT",
-        "decision": "REJECT_SECOND_AUTHORITY"
-      },
-      {
-        "id": "DELETE_HISTORY_WITHOUT_POINTER",
-        "decision": "REJECT_EVIDENCE_LOSS"
-      },
-      {
-        "id": "COMPACT_ENTRY_AND_PIN_HISTORICAL_TASK_DETAILS",
-        "decision": "SELECT_BOUNDED_COMPLETE_SUBCHANGE"
-      },
-      {
-        "id": "EXPECT_FULL_WEB_AND_ALL_REPO_SCAN_EACH_TURN",
-        "decision": "REJECT_COST_AND_RELEVANCE"
-      }
-    ],
-    "source_methods": [
-      "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview (progressive-disclosure, source on demand)",
-      "https://developers.openai.com/cookbook/examples/agents_sdk/building_reliable_agents_memory_compaction (compaction vs memory role distinction)",
-      "https://developers.openai.com/api/docs/guides/agent-evals (trace and outcome-based evidence)"
-    ],
-    "intervention": "Make ENTRYPOINT one lightweight adaptive loop anchored in canonical cognition, knowledge and evolution. Compact seven preexisting historical task dossiers to status, open follow-up and immutable prior Git ref, without creating a new live state store. Keep source details available in main evolution/research and pinned historical Git revision.",
-    "source_ref": "D1traverser-debug/universal-agent-os@d15dfcc885c1684915202a252add13b202f1e3e4:state/tasks/uaos-inheritance-review-20261018.json",
-    "changed": [
-      "ENTRYPOINT.md",
-      "state/tasks/uaos-inheritance-review-20261018.json",
-      "tests/architecture/test_controller_operating_model_entry.py"
-    ],
-    "acceptance": [
-      "Entry smaller than 22KB and previously required authorities/mutation/progress/selector remain discoverable",
-      "Controller task smaller than 45KB, with all ongoing statuses and exact past committed source re-accessible",
-      "No removed historical fields promoted into new active alternate authority",
-      "Existing tests remain green including user intent, cold bootstrap, progress and mutation safety",
-      "No native account version or native autonomous self-critique result claimed from source compaction"
-    ],
-    "evaluation": {
-      "candidate_tests": "PENDING",
-      "main_readback": "PENDING",
-      "native_behavioral_trace": "NOT_OBSERVED"
+    "release": {
+      "pr": 155,
+      "main": "c8739dcf9eb82dfe71a4d30efeb9d3b6a82e95a7",
+      "ci_run": 39217240249,
+      "tests": "671 passed, 2 skipped",
+      "postpromotion_main_readback": true,
+      "entry_now": 21663,
+      "task_now": 44288
     },
-    "assurance": "SOURCE_CONTEXT_COMPACTION_ONLY__ADAPTIVE_LOOP_NOT_NATIVE_CHATGPT_ENFORCEMENT"
+    "assurance": "CURRENT_SOURCE_BUDGET_AND_CONTROLLED_REGRESSION_ONLY__NATIVE_SESSION_ACTIVATION_AND_SEMANTIC_BEHAVIOR_UNVERIFIED"
   }
 }

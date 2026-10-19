@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T07:34:21.406Z",
+  "updated_at": "2026-10-19T07:40:39.960Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -672,6 +672,12 @@
       "turn_evolution_coverage_20261018"
     ],
     "rule": "Retain active statuses/open acceptance and owner references; historical incident narratives remain available from immutable Git history and original research/evolution. Do not expand these older histories on normal turn bootstrap.",
-    "native_behavior": "NOT_CERTIFIED_BY_COMPACTION"
+    "native_behavior": "NOT_CERTIFIED_BY_COMPACTION",
+    "release": {
+      "pr": 155,
+      "main": "c8739dcf9eb82dfe71a4d30efeb9d3b6a82e95a7",
+      "ci": "671 passed, 2 skipped",
+      "state": "VERIFIED_ON_MAIN__LIVE_USE_UNVERIFIED"
+    }
   }
 }
