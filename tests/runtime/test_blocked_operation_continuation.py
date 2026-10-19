@@ -7,6 +7,7 @@ import pytest
 from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 from uaos.runtime.epistemic_entry import (
     ControllerEpistemicEntry, EntryObservation, EntrySignal,
+    FullDimensionStudy, DimensionResearch, FULL_RESEARCH_AXES, FULL_RESEARCH_CONCERNS,
     TurnEvolutionCoverage, TurnUtteranceAssessment, UtteranceOrigin,
 )
 from uaos.runtime.finalization import (
@@ -91,10 +92,32 @@ def _case(*steps, safety_denial=True):
     )
 
 
+def _study():
+    return FullDimensionStudy(
+        studies=tuple(
+            DimensionResearch(
+                axis=axis,
+                local_evidence_refs=(f"test:{axis}:observed", f"test:{axis}:historical"),
+                independent_method_refs=(f"test:{axis}:method-a", f"test:{axis}:method-b"),
+                counterexample_refs=(f"test:{axis}:challenge",),
+                outcome_verification_refs=(f"test:{axis}:verification",),
+                finding="Controller investigated this dimension using host-verified sources.",
+                alternative="An alternative source-backed explanation was evaluated.",
+                task_implication="Apply findings to the admitted task and verify the outcome.",
+                covered_concerns=FULL_RESEARCH_CONCERNS if index == 0 else (FULL_RESEARCH_CONCERNS[index],),
+                cross_axes=tuple(other for other in FULL_RESEARCH_AXES if other != axis)[:2],
+            )
+            for index, axis in enumerate(FULL_RESEARCH_AXES)
+        ),
+        emerging_unknowns=("A new unmodeled operation-level interaction was checked.",),
+    )
+
+
 def _ctx(case=None, **changes):
     values = {
         "context_selected": True,
         "controller_selected": True,
+        "full_dimension_study": _study(),
         "controller_epistemic_entry": _entry(),
         "entry_evidence_verifier": lambda _: True,
         "turn_evolution_coverage": _turn_coverage(),
