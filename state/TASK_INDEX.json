@@ -3,7 +3,7 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-19T01:59:58.729Z",
+  "updated_at": "2026-10-19T02:41:16.080Z",
   "controller_tasks": [
     {
       "task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
@@ -25,8 +25,8 @@
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume": true,
-      "semantic_summary": "CURRENT DEFAULT: UAOS five-repo deep audit RUNNING. Repeated selected-controller Progress omission is real native behavioral failure; source compiler and generated Skill projection fixed in PR142, but actual ChatGPT native pre-send self-observation, installed bytes, output/Skill invocation remains UNVERIFIED. Four prior skill studies are only CANDIDATE knowledge. Financial Writing governed recovery stays RUNNING/not default.",
-      "current_stage": "CONTROLLER_DEEP_AUDIT_RUNNING__PROGRESS_NATIVE_BEHAVIOR_FAILURE_OPEN__SOURCE_PROJECTION_PROMOTED",
+      "semantic_summary": "CURRENT DEFAULT: UAOS self-behavior assurance FIRST. Repeated selected-chat Progress and autonomous self-observation failures remain UNVERIFIED in native host, despite GitHub source fixes. Proactive child audits are paused; prior five-repo static evidence retained only as static, not actual governance capability. Do not claim total system/child audit success from CI. Financial Writing governed recovery RUNNING/not default.",
+      "current_stage": "SELF_BEHAVIOR_ASSURANCE_FIRST__PROACTIVE_CHILD_AUDIT_SUSPENDED__NATIVE_VALIDATION_OPEN",
       "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
     },
     {
