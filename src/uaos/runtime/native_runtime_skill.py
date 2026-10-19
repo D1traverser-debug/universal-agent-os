@@ -118,6 +118,8 @@ def build_native_runtime_skill(
         "Causal explanations, framework choices, solution proposals, and action recommendations from any source remain candidates until current evidence admits them at the required risk/depth level.",
         "A remedy proposed inside a problem statement remains an ActionCandidate until current cognition/evidence selects it; imperative wording does not change that epistemic role.",
         f"Independent-mechanism requirement rule: {_value(solution_directive, 'explicit_mechanism_requirement_rule', field='problem_solution_directive_resolution')}",
+        f"Agent self-correction target: {_value(solution_directive, 'correction_target_rule', field='problem_solution_directive_resolution')}",
+        f"Intervention-to-outcome alignment: {_value(solution_directive, 'intervention_outcome_alignment_rule', field='problem_solution_directive_resolution')}",
         "",
         "## 5. Execute toward the governing objective",
         "",
