@@ -12,6 +12,7 @@ from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 
 from uaos.runtime.epistemic_entry import (
     FullDimensionStudy, DimensionResearch, FULL_RESEARCH_AXES, FULL_RESEARCH_CONCERNS,
+    admit_full_dimension_study,
     ControllerEpistemicEntry,
     TurnEvolutionCoverage,
     TurnUtteranceAssessment,
@@ -129,6 +130,27 @@ def _context(entry=None, **overrides):
     )
     base.update(overrides)
     return FinalizationContext(**base)
+
+
+
+def test_all_dimensions_must_have_qualified_sources():
+    study = _full_dimension_study()
+    admit_full_dimension_study(study, verify_evidence=lambda _ref: True)
+    with pytest.raises(EntryAdmissionError, match="every axis"):
+        admit_full_dimension_study(
+            replace(study, studies=study.studies[:-1]),
+            verify_evidence=lambda _ref: True,
+        )
+    with pytest.raises(EntryAdmissionError, match="unverified local evidence"):
+        admit_full_dimension_study(
+            study,
+            verify_evidence=lambda ref: not ref.endswith(":current"),
+        )
+
+
+def test_selected_controller_must_submit_dimensional_study():
+    with pytest.raises(FinalizationBlocked, match="MISSING_FULL_DIMENSION_RESEARCH"):
+        admit_final_response(_report(), _context(_entry(), full_dimension_study=None))
 
 
 def test_selected_controller_cannot_skip_the_canonical_entry():
