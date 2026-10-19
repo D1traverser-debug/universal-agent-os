@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "authority": "UAOS",
+  "observation_id": "knowledge-retrieval-recency-scope-drift-20261019",
+  "observed_on": "2026-10-19",
+  "status": "SOURCE_BREADTH_PROVEN__NATIVE_RETRIEVAL_ROUTING_UNVERIFIED",
+  "governing_outcome": "When asked about a user's entire historical knowledge or past studies, route to current knowledge owners plus relevant historical sources, not just the most recently learned four open-source skills.",
+  "observed_failure": "The assistant answered a broad question about where the user's knowledge library lives using only the four recently completed source studies. It omitted existing business knowledge roots and connected historical libraries.",
+  "facts": {
+    "current_registered_repos": [
+      "D1traverser-debug/universal-agent-os",
+      "D1traverser-debug/financial-writing-agent",
+      "D1traverser-debug/a-share-event-driven-agent",
+      "D1traverser-debug/novel-writing-agent",
+      "D1traverser-debug/video-growth-agent"
+    ],
+    "source_tree_observed": {
+      "controller_research_root": "docs/research/",
+      "financial_roots": [
+        "knowledge/",
+        "references/",
+        "evals/"
+      ],
+      "ashare_roots": [
+        "references/",
+        "audits/"
+      ],
+      "novel_roots": [
+        "research/masterworks/",
+        "protocols/"
+      ],
+      "video_roots": [
+        "projects/",
+        "skills/video-growth-agent/references/"
+      ]
+    },
+    "external_sources_verified_by_connected_search": [
+      "GOOGLE_DRIVE: prior domain document/knowledge collections present",
+      "NOTION: structured long-term business/method entries present",
+      "CHATGPT_LIBRARY: prior uploaded original corpus and governance research present"
+    ],
+    "prior_conversation_research": "Older named open-source project studies have been referenced in historical conversation context; current durable imported-file coverage across all projects NOT established.",
+    "source_roles": "Historical external document locations are provenance/read surfaces, never replacements for current owner authority. No private external document IDs or URLs published in this public repository."
+  },
+  "causal_candidates": [
+    {
+      "id": "RECENCY_BIAS",
+      "assessment": "OBSERVED",
+      "reason": "Answer scope equated new four-item external-skill list with overall knowledge."
+    },
+    {
+      "id": "MISSING_CURRENT_KNOWLEDGE_OWNER_DISCOVERY",
+      "assessment": "SUPPORTED_BY_CURRENT_REPO_TREES",
+      "reason": "All 4 child repositories contain knowledge/research/reference roots that were omitted."
+    },
+    {
+      "id": "CONNECTED_HISTORY_NOT_SCANNED",
+      "assessment": "SUPPORTED_BY_CONNECTOR_SEARCH",
+      "reason": "Google Drive and Notion search confirmed earlier knowledge surfaces not checked in prior answer."
+    },
+    {
+      "id": "NATIVE_NON_BYPASSABLE_ROUTING_ABSENT",
+      "assessment": "OPEN",
+      "reason": "Controlled Python retrieval admission cannot guarantee native ChatGPT invokes it automatically."
+    }
+  ],
+  "intervention": "Extend existing RetrievalPolicy with explicit multi-owner and historical-source coverage constraints and controlled host-verifiable admission. No new global knowledge store or replacement of child business knowledge authority.",
+  "options_rejected": [
+    "ADD_SECOND_KNOWLEDGE_DATABASE",
+    "TAKE_RECENT_FOUR_AS_WHOLE",
+    "ASSUME_EVERY_PRIOR_CHAT_PROJECT_WAS_DURABLY_IMPORTed",
+    "TREAT_GOOGLE_DRIVE_LEGACY_PAGES_AS_CURRENT_SYSTEM_RULE"
+  ],
+  "frozen_acceptance": [
+    "generic broad knowledge query requires all registered repository owners from live SYSTEM_MAP",
+    "only recent four source studies rejected as insufficient for broad inventory",
+    "prior-work query must disposition Google Drive, Notion, ChatGPT Library, and prior conversations",
+    "searched external surfaces require trusted source-read ref; unavailable surfaced as unverified",
+    "current authority prevails over historical/migrated pages",
+    "no private connector doc IDs or URLs committed to public GitHub",
+    "normal narrowly scoped retrieval remains lightweight",
+    "controlled CI green and main readback; native ChatGPT invocation still unverified"
+  ],
+  "proposed_changes": [
+    "config/RETRIEVAL_POLICY.json",
+    "src/uaos/integrations/retrieval.py",
+    "tests/integrations/test_retrieval_policy.py"
+  ],
+  "assurance_boundary": "THIS_FIX_COVERS_CONTROLLED_POLICY_AND_TEST_PATHS_ONLY__NATIVE_CHATGPT_NO_NON_BYPASSABLE_RETRIEVAL_INTERCEPT__NO_INVENTED_FULL_LIBRARY_COVERAGE",
+  "next_action": "Run PR CI, reread current main; apply source-first knowledge retrieval on next broad user request, quantify still-unindexed historical project studies without assuming old materials were imported."
+}
