@@ -238,8 +238,13 @@ def build_source_read_plan(
         if len(selected) != 1:
             raise RetrievalDenied("expected exactly one active default controller task")
         task = selected[0]
-        if task.get("authority_context") != "UAOS" or task.get("status") not in {"RUNNING", "HOLD"}:
-            raise RetrievalDenied("selected controller authority or status invalid")
+        if (
+            task.get("authority_context") != "UAOS"
+            or task.get("task_type") != "controller_maintenance"
+            or task.get("resume_eligible") is not True
+            or task.get("status") not in {"RUNNING", "HOLD"}
+        ):
+            raise RetrievalDenied("selected controller task authority, type, eligibility or status invalid")
         task_ref = task.get("state_ref")
         if not isinstance(task_ref, str) or not task_ref.startswith("state/tasks/"):
             raise RetrievalDenied("controller state reference unresolved")
