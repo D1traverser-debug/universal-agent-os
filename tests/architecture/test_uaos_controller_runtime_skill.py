@@ -133,3 +133,53 @@ def test_compiled_profile_exposes_complete_systemic_repair_not_smallest_diff_rul
     assert projected["local_intervention_exception"] == source["local_intervention_exception"]
     assert "SMALLEST_COMPLETE_INTERVENTION" in projected["selection_principle"]
     assert "SMALLEST_DIFF" in projected["selection_principle"]
+
+
+def test_native_dispatcher_projects_all_ten_progress_fields_from_canonical_session_authority():
+    session = _json("config/SESSION_INTERACTION_POLICY.json")
+    progress = session["inherited_session_progress_report"]
+    text = (ROOT / "skills/uaos-controller-runtime/SKILL.md").read_text(encoding="utf-8")
+    assert progress["required"] is True
+    assert progress["scope"] in text
+    assert progress["placement"] in text
+    assert "Before releasing each selected-context final reply" in text
+    assert "including the assistant's own output" in text
+    assert progress["timestamp_display_format"] in text
+    assert progress["evolution_rule"] in text
+    assert progress["deliberation_rule"] in text
+    aliases = (
+        "当前 Agent", "当前任务", "Authority", "状态", "当前阶段",
+        "下一动作", "Evolution", "Deliberation", "版本", "进度时间",
+    )
+    for label, field in zip(aliases, progress["fields"], strict=True):
+        assert f"- {label}: {field}" in text
+    assert len(aliases) == 10
+
+
+def test_native_dispatcher_refuses_silent_loss_of_mandatory_progress_contract():
+    import pytest
+    from uaos.runtime.native_runtime_skill import NativeRuntimeSkillError
+
+    policies = dict(
+        intent_policy=_json("config/INTENT_RESOLUTION_POLICY.json"),
+        session_policy=_json("config/SESSION_INTERACTION_POLICY.json"),
+        deliberation_policy=_json("config/DELIBERATION_POLICY.json"),
+        evolution_policy=_json("config/EVOLUTION_POLICY.json"),
+        host_profiles=_json("config/HOST_PROFILES.json"),
+    )
+    modified = dict(policies["session_policy"])
+    modified.pop("inherited_session_progress_report")
+    with pytest.raises(NativeRuntimeSkillError, match="inherited_session_progress_report"):
+        build_native_runtime_skill(**(policies | {"session_policy": modified}))
+    modified = dict(policies["session_policy"])
+    modified["inherited_session_progress_report"] = {
+        **modified["inherited_session_progress_report"], "required": False,
+    }
+    with pytest.raises(NativeRuntimeSkillError, match="must remain mandatory"):
+        build_native_runtime_skill(**(policies | {"session_policy": modified}))
+
+
+def test_current_entry_does_not_contain_literal_escaped_newline_shadow_separator():
+    entry = (ROOT / "ENTRYPOINT.md").read_text(encoding="utf-8")
+    assert "\\\\n\\\\n**Context reads are role-specific**" not in entry
+    assert "\\n\\n**Context reads are role-specific**" in entry
