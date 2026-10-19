@@ -181,7 +181,7 @@ def test_native_dispatcher_refuses_silent_loss_of_mandatory_progress_contract():
 
 def test_current_entry_does_not_contain_literal_escaped_newline_shadow_separator():
     entry = (ROOT / "ENTRYPOINT.md").read_text(encoding="utf-8")
-    marker = "**Context reads are role-specific**"
+    marker = "**Context reads are role-specific, not exhaustive**"
     assert entry.count(marker) == 1
     assert entry.split(marker, 1)[0].endswith(chr(10) + chr(10))
     assert chr(92) + "n" + chr(92) + "n" + marker not in entry
