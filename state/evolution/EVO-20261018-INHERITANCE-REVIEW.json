@@ -824,7 +824,7 @@
     }
   },
   "source_read_plan_architecture_20261019": {
-    "status": "CANDIDATE__PR_CHECKS_PENDING",
+    "status": "OWNER_RESOLVED_READ_PLAN_SOURCE_PROMOTED__REAL_HOST_TOOL_RETRIEVAL_AND_COGNITION_STILL_OPEN",
     "original_owner": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
     "governing_outcome": "Resolve which current registered repository and exact task files a request needs, distinguish cold/bootstrap/continuation/domain/broad knowledge, and prevent silent reliance on recent studies only.",
     "initial_finding": "Existing SYSTEM_MAP/TASK_INDEX/RETRIEVAL_POLICY are authoritative but model-native source reads had no single executable filelist projection; unlike HDL synthesis filelist, discovering paths is not executing the files.",
@@ -841,7 +841,23 @@
     "evaluation": {
       "candidate_ci": "PENDING",
       "real_host_tool_fetch": "UNVERIFIED",
-      "blind_semantic_knowledge_reuse": "NOT_RUN"
+      "blind_semantic_knowledge_reuse": "NOT_RUN",
+      "release": {
+        "pr": 152,
+        "main_sha": "41423c61830dd3cc74bef690ed756f553894014a",
+        "promotion_run": 39211830150,
+        "pytest": "670 passed, 2 skipped",
+        "integration_run": 39211829890,
+        "integration": "postgres-dbos and object-store success; OpenAI provider skipped",
+        "files": [
+          "src/uaos/integrations/retrieval.py",
+          "scripts/uaos_read_plan.py",
+          "skills/uaos-controller-runtime/SKILL.md"
+        ],
+        "skill_blob": "c2b174e6caeafec8af8fe7a9fa49111891661a53",
+        "native_file_reads": "NOT_VERIFIED"
+      },
+      "postpromotion_main_readback": "VERIFIED"
     }
   }
 }
