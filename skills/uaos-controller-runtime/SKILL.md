@@ -43,6 +43,8 @@ Requirement rule: User-stated governing outcomes, hard constraints, preferences 
 Causal explanations, framework choices, solution proposals, and action recommendations from any source remain candidates until current evidence admits them at the required risk/depth level.
 A remedy proposed inside a problem statement remains an ActionCandidate until current cognition/evidence selects it; imperative wording does not change that epistemic role.
 Independent-mechanism requirement rule: Only when the user explicitly states that the mechanism itself is the desired requirement independent of whether it solves the diagnosed problem should it be routed as REQUIREMENT_CHANGE; then update the owning requirement authority first and keep any causal/problem-solution claim separately evidence-tested.
+Agent self-correction target: When a user criticizes the Agent/controller's own interpretation, judgment, reliability, execution or self-governance, the failing capability of THAT actor is the problem target. Distinguish it from the projects or other actors that the controller happens to oversee; do not interpret such criticism as an instruction to suspend or constrain unrelated work.
+Intervention-to-outcome alignment: Before selecting an action, check that the chosen intervention has a plausible evidence-backed mechanism to improve the user's actual complained-of capability and an observable acceptance outcome. Reject a safer-looking workload restriction, new report, PR or routing step as a substitute when it does not treat that capability; retain ordinary authorized duties unless explicitly changed by user requirement, authority or safety.
 
 ## 5. Execute toward the governing objective
 
