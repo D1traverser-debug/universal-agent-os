@@ -157,3 +157,108 @@ def test_bootstrap_explicitly_routes_full_knowledge_questions_to_existing_retrie
     assert "config/RETRIEVAL_POLICY.json#knowledge_inventory_routing" in entry
     assert "A four-skill source-study list is never proof" in entry
     assert "no claim of native ChatGPT non-bypassable invocation" in entry
+
+
+from uaos.integrations.retrieval import build_source_read_plan
+
+
+def _current_read_plan_source():
+    return (
+        json.loads((ROOT / "config/SYSTEM_MAP.json").read_text(encoding="utf-8")),
+        json.loads((ROOT / "state/TASK_INDEX.json").read_text(encoding="utf-8")),
+    )
+
+
+def test_controller_resume_reads_exact_default_task_and_not_large_cold_entry():
+    system, index = _current_read_plan_source()
+    plan = build_source_read_plan(system_map=system, task_index=index, retrieval_policy=POLICY)
+    paths = [(item.repository, item.path) for item in plan.reads]
+    parent = system["controller"]["repository"]
+    assert paths == [
+        (parent, "config/SYSTEM_MAP.json"),
+        (parent, "state/TASK_INDEX.json"),
+        (parent, index["controller_tasks"][0]["state_ref"]),
+    ]
+    assert "NO_FILES_FETCHED_OR_NATIVE_ACTIVATION" in plan.assurance
+
+
+def test_cold_controller_bootstrap_is_distinct_from_every_turn_task_read():
+    system, index = _current_read_plan_source()
+    plan = build_source_read_plan(
+        system_map=system, task_index=index, retrieval_policy=POLICY, cold_start=True,
+    )
+    paths = [item.path for item in plan.reads]
+    assert paths[:4] == [
+        "ENTRYPOINT.md", "CURRENT_SYSTEM.json", "config/SYSTEM_MAP.json", "state/TASK_INDEX.json"
+    ]
+    assert paths[-1] == "state/tasks/uaos-inheritance-review-20261018.json"
+
+
+@pytest.mark.parametrize("domain", ["financial_writing", "ashare", "novel", "video"])
+def test_domain_plan_uses_registered_child_entry_and_never_guesses_business_project(domain):
+    system, index = _current_read_plan_source()
+    plan = build_source_read_plan(
+        system_map=system, task_index=index, retrieval_policy=POLICY, selected_domain=domain,
+    )
+    child = system["domains"][domain]
+    paths = {(item.repository, item.path) for item in plan.reads}
+    assert (child["repository"], child["entrypoint"]) in paths
+    assert (child["repository"], ".uaos/MANIFEST.json") in paths
+    assert (child["repository"], ".uaos/ADAPTER.json") in paths
+    assert (child["repository"], ".uaos/CAPABILITIES.json") in paths
+    assert all(not path.startswith("projects/") for _, path in paths)
+    assert all(repo == child["repository"] for repo, _ in plan.discovery_roots)
+
+
+def test_broad_knowledge_plan_resolves_all_five_owners_and_root_discovery_not_fake_files():
+    system, index = _current_read_plan_source()
+    plan = build_source_read_plan(
+        system_map=system, task_index=index, retrieval_policy=POLICY, broad_knowledge=True,
+    )
+    expected = {system["controller"]["repository"]} | {
+        item["repository"] for item in system["domains"].values()
+    }
+    observed = {item.repository for item in plan.reads}
+    assert observed == expected
+    assert {repo for repo, _ in plan.discovery_roots} == expected
+    assert all(path.endswith("/") for _, path in plan.discovery_roots)
+    assert "NO_FILES_FETCHED" in plan.assurance
+
+
+def test_read_plan_rejects_wrong_domain_and_ambiguous_default_instead_of_guessing():
+    system, index = _current_read_plan_source()
+    with pytest.raises(RetrievalDenied, match="not registered"):
+        build_source_read_plan(
+            system_map=system, task_index=index, retrieval_policy=POLICY, selected_domain="made-up",
+        )
+    changed = dict(index)
+    changed["controller_tasks"] = [dict(t) for t in index["controller_tasks"]]
+    changed["controller_tasks"][0]["default_resume"] = False
+    with pytest.raises(RetrievalDenied, match="exactly one"):
+        build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY)
+
+
+def test_read_plan_rejects_unsafe_task_refs_and_missing_children_instead_of_search_guess():
+    system, index = _current_read_plan_source()
+    changed = dict(index)
+    changed["controller_tasks"] = [dict(t) for t in index["controller_tasks"]]
+    target = next(t for t in changed["controller_tasks"] if t["default_resume"])
+    target["state_ref"] = "state/tasks/../PRIVATE.json"
+    with pytest.raises(RetrievalDenied, match="unsafe"):
+        build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY)
+    changed = dict(index)
+    changed["tasks"] = [t for t in index["tasks"] if t["domain_id"] != "video"]
+    with pytest.raises(RetrievalDenied, match="missing or ambiguous"):
+        build_source_read_plan(
+            system_map=system, task_index=changed, retrieval_policy=POLICY,
+            selected_domain="video",
+        )
+
+
+def test_source_plan_is_not_a_state_machine_or_a_host_fetch_receipt():
+    system, index = _current_read_plan_source()
+    plan = build_source_read_plan(system_map=system, task_index=index, retrieval_policy=POLICY)
+    assert plan.selected_domain is None
+    assert not hasattr(plan, "completed")
+    assert not hasattr(plan, "fetch")
+    assert "NATIVE_ACTIVATION" in plan.assurance
