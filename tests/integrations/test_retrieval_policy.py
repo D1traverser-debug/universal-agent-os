@@ -177,7 +177,7 @@ def test_controller_resume_reads_exact_default_task_and_not_large_cold_entry():
     assert paths == [
         (parent, "config/SYSTEM_MAP.json"),
         (parent, "state/TASK_INDEX.json"),
-        (parent, index["controller_tasks"][0]["state_ref"]),
+        (parent, next(t for t in index["controller_tasks"] if t["default_resume"])["state_ref"]),
     ]
     assert "NO_FILES_FETCHED_OR_NATIVE_ACTIVATION" in plan.assurance
 
@@ -233,7 +233,7 @@ def test_read_plan_rejects_wrong_domain_and_ambiguous_default_instead_of_guessin
         )
     changed = dict(index)
     changed["controller_tasks"] = [dict(t) for t in index["controller_tasks"]]
-    changed["controller_tasks"][0]["default_resume"] = False
+    next(t for t in changed["controller_tasks"] if t["default_resume"])["default_resume"] = False
     with pytest.raises(RetrievalDenied, match="exactly one"):
         build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY)
 
