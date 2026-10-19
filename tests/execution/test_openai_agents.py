@@ -135,3 +135,92 @@ def test_reasoning_executor_refuses_authoritative_side_effects():
     result = executor.execute(ExecutionRequest("a", "publish", "target", "input", side_effect_class="WRITE"))
     assert result.disposition is ExecutionDisposition.FAILED
     assert "cannot perform authoritative side effects" in result.error
+
+
+class UserVisibleRunner:
+    @staticmethod
+    def run_sync(agent, payload):
+        return SimpleNamespace(final_output=_clean_progress_report(), last_agent=SimpleNamespace(name="Researcher"))
+
+
+def test_user_visible_host_requires_real_finalization_context():
+    import pytest
+    with pytest.raises(ValueError, match="USER_VISIBLE_REQUIRES_FINALIZATION_CONTEXT_PROVIDER"):
+        OpenAIAgentsExecutor(
+            agent_spec=OpenAIAgentSpec("Researcher", "x"),
+            agent_factory=Agent, runner=Runner, user_visible=True,
+        )
+    with pytest.raises(ValueError, match="FINALIZATION_CONTEXT_ONLY_ALLOWED_FOR_USER_VISIBLE"):
+        OpenAIAgentsExecutor(
+            agent_spec=OpenAIAgentSpec("Researcher", "x"),
+            agent_factory=Agent, runner=Runner,
+            finalization_context_provider=lambda _request, _run: FinalizationContext(context_selected=True),
+        )
+
+
+def test_user_visible_sdk_success_requires_actual_finalization_admission():
+    seen = []
+    def provide(request, result):
+        seen.append((request.action_id, "当前 Agent" in result.final_output))
+        return FinalizationContext(context_selected=True)
+    executor = OpenAIAgentsExecutor(
+        agent_spec=OpenAIAgentSpec("Researcher", "x"), agent_factory=Agent,
+        runner=UserVisibleRunner, user_visible=True,
+        finalization_context_provider=provide,
+    )
+    response = executor.execute(ExecutionRequest("real-user-run", "read", "repo", "x"))
+    assert seen == [("real-user-run", True)]
+    assert response.disposition is ExecutionDisposition.CONFIRMED
+    assert response.evidence["uaos_finalization"] == "ADMITTED"
+    assert response.evidence["delivery_scope"] == "USER_VISIBLE"
+
+
+def test_user_visible_sdk_missing_progress_fails_before_delivery_even_if_sdk_runner_returns():
+    executor = OpenAIAgentsExecutor(
+        agent_spec=OpenAIAgentSpec("Researcher", "x"), agent_factory=Agent,
+        runner=Runner, user_visible=True,
+        finalization_context_provider=lambda _request, _run: FinalizationContext(context_selected=True),
+    )
+    response = executor.execute(ExecutionRequest("miss-progress", "read", "repo", "input"))
+    assert response.disposition is ExecutionDisposition.FAILED
+    assert "USER_VISIBLE_FINALIZATION_REJECTED" in response.error
+    assert "MISSING_PROGRESS_REPORT" in response.error
+    assert response.output is None
+
+
+def test_user_visible_sdk_unfinished_work_blocks_clean_progress_output():
+    executor = OpenAIAgentsExecutor(
+        agent_spec=OpenAIAgentSpec("Researcher", "x"), agent_factory=Agent,
+        runner=UserVisibleRunner, user_visible=True,
+        finalization_context_provider=lambda _request, _run: FinalizationContext(
+            context_selected=True, work_remaining_without_user_input=True,
+        ),
+    )
+    response = executor.execute(ExecutionRequest("unfinished", "read", "repo", "x"))
+    assert response.disposition is ExecutionDisposition.FAILED
+    assert "ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT" in response.error
+    assert response.output is None
+
+
+def test_user_visible_sdk_rejects_failed_or_untrusted_context_provider():
+    for provider in (
+        lambda _request, _run: None,
+        lambda _request, _run: (_ for _ in ()).throw(RuntimeError("context unavailable")),
+    ):
+        executor = OpenAIAgentsExecutor(
+            agent_spec=OpenAIAgentSpec("Researcher", "x"), agent_factory=Agent,
+            runner=UserVisibleRunner, user_visible=True, finalization_context_provider=provider,
+        )
+        response = executor.execute(ExecutionRequest("bad-context", "read", "repo", "x"))
+        assert response.disposition is ExecutionDisposition.FAILED
+        assert "USER_VISIBLE_FINALIZATION_REJECTED" in response.error
+        assert response.output is None
+
+
+def test_internal_sdk_result_remains_allowed_as_internal_only():
+    executor = OpenAIAgentsExecutor(
+        agent_spec=OpenAIAgentSpec("Researcher", "x"), agent_factory=Agent, runner=Runner,
+    )
+    response = executor.execute(ExecutionRequest("internal", "read", "repo", "x"))
+    assert response.disposition is ExecutionDisposition.CONFIRMED
+    assert response.evidence["delivery_scope"] == "INTERNAL_ONLY"
