@@ -11,6 +11,7 @@ import pytest
 from uaos.kernel.cognition_case import EvidenceItem, EvidenceKind
 
 from uaos.runtime.epistemic_entry import (
+    FullDimensionStudy, DimensionResearch, FULL_RESEARCH_AXES, FULL_RESEARCH_CONCERNS,
     ControllerEpistemicEntry,
     TurnEvolutionCoverage,
     TurnUtteranceAssessment,
@@ -91,10 +92,33 @@ def _turn_source_verifier(ref: str, digest: str) -> bool:
     ).hexdigest()
 
 
+
+def _full_dimension_study():
+    return FullDimensionStudy(
+        studies=tuple(
+            DimensionResearch(
+                axis=axis,
+                local_evidence_refs=(f"test:{axis}:current", f"test:{axis}:historical"),
+                independent_method_refs=(f"test:{axis}:method-a", f"test:{axis}:method-b"),
+                counterexample_refs=(f"test:{axis}:falsifier",),
+                outcome_verification_refs=(f"test:{axis}:outcome",),
+                finding=f"Observed and researched {axis} as a separate system dimension.",
+                alternative=f"Independent alternative to the first {axis} interpretation.",
+                task_implication=f"Check {axis} interactions against actual task outcome.",
+                covered_concerns=FULL_RESEARCH_CONCERNS if i == 0 else (FULL_RESEARCH_CONCERNS[i],),
+                cross_axes=tuple(x for x in FULL_RESEARCH_AXES if x != axis)[:2],
+            )
+            for i, axis in enumerate(FULL_RESEARCH_AXES)
+        ),
+        emerging_unknowns=("Unexpected boundary between tools and governing objectives",),
+    )
+
+
 def _context(entry=None, **overrides):
     base = dict(
         context_selected=True,
         controller_selected=True,
+        full_dimension_study=_full_dimension_study(),
         controller_epistemic_entry=entry,
         entry_evidence_verifier=lambda _ref: True,
         turn_evolution_coverage=_review(_report()),
