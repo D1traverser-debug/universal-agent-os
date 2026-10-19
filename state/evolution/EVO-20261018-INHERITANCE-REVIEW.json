@@ -85,7 +85,11 @@
     "config/RETRIEVAL_POLICY.json",
     "src/uaos/integrations/retrieval.py",
     "tests/integrations/test_retrieval_policy.py",
-    "state/observations/knowledge-retrieval-recency-drift-20261019.json"
+    "state/observations/knowledge-retrieval-recency-drift-20261019.json",
+    "src/uaos/runtime/native_runtime_skill.py",
+    "tests/architecture/test_uaos_controller_runtime_skill.py",
+    "tests/architecture/test_session_progress_adherence.py",
+    "state/observations/native-cognition-progress-replay-20261018.json"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -475,5 +479,65 @@
     },
     "post_promotion_observation": "GITHUB_MAIN_CODE_AND_POLICY_READBACK_TRUE__CONTROLLER_STILL_RUNNING__NATIVE_AUTO_INVOCATION_AND_FULL_PRIOR_PROJECT_IMPORT_OPEN",
     "native_limit": "NO_VERIFIED_CHATGPT_HOST_COMPLETE_MEDIATION_OR_CROSS_SESSION_RETRIEVAL_AUTO_INVOCATION"
+  },
+  "progress_behavioral_recurrence_20261019": {
+    "status": "CANDIDATE_SOURCE_PROJECTION_REPAIR__NATIVE_OUTPUT_BEHAVIOR_STILL_FAILING_OR_UNVERIFIED",
+    "origin_kind": "INCIDENT__LIVE_USER_CORRECTION__REPEATED_PRIOR_20261016_20261018",
+    "governing_outcome": "Independently detect and correct own controller behavior drift, enforce mandatory final selected-context 10-field Progress, validate root governance outcome instead of PR closure.",
+    "incident_ref": "state/observations/native-cognition-progress-replay-20261018.json",
+    "observed_failure_class": "Existing progress parser detects output missing report when called; native selected ChatGPT bypasses repo-controlled finalization. Compiler-generated dispatcher also omitted canonical Progress projection.",
+    "source_confirmed_factors": [
+      "PARENT_SESSION_POLICY_REQUIRES_PROGRESS_BUT_SKILL_COMPILER_OMITS_IT",
+      "NATIVE_CHATGPT_HOST_NO_VERIFIED_NON_BYPASSABLE_FINAL_RESPONSE_INTERCEPT",
+      "CONTROLLED_PARSER_PRESENT_BUT_NO_PROVEN_NATIVE_CALLER",
+      "LOCAL_CI_VALIDATION_WAS_CONFUSED_WITH_CROSS_SESSION_BEHAVIORAL_VALIDATION",
+      "PREVIOUSLY_DETECTED_PROGRESS_FAILURE_RECURRED_AFTER_SEVERAL_LOCAL_RELEASES"
+    ],
+    "selected_intervention": "Add exact source-derived Progress projection to existing runtime Skill compiler, regenerate current Skill, regression-check user-visible prior samples, correct malformed entrypoint separator; keep native closed only on independent actual host trace.",
+    "alternatives": [
+      {
+        "id": "PROMPT_ONLY_REMINDER",
+        "decision": "REJECT_AS_COMPLETE"
+      },
+      {
+        "id": "SECOND_PROGRESS_MONITOR",
+        "decision": "REJECT_DUPLICATE_AUTHORITY"
+      },
+      {
+        "id": "REMOVE_PROGRESS_REQUIREMENT",
+        "decision": "REJECT_USER_HARD_CONSTRAINT"
+      },
+      {
+        "id": "GENERATED_SKILL_PROJECTION_PLUS_HOST_REALITY_HOLDOUT",
+        "decision": "SELECT_BOUNDED_FEASIBLE_PART"
+      },
+      {
+        "id": "NATIVE_HARD_HOOK_IN_GITHUB",
+        "decision": "BLOCKED_NO_PRODUCT_HOST_API"
+      }
+    ],
+    "method_origin_refs": [
+      "state/evolution/EVO-20261016-CONVERSATIONAL-ADHERENCE-OBSERVABILITY.json",
+      "state/observations/native-cognition-progress-replay-20261018.json",
+      "docs/adr/0030-controller-role-state-context-operating-model.md"
+    ],
+    "frozen_acceptance": [
+      "ALL_10_PROGRESS_FIELDS_EXPLICIT_IN_NATIVE_SKILL_FROM_CANONICAL_POLICY",
+      "MISSING_OR_DISABLED_PROGRESS_POLICY_FAILS_SKILL_BUILD",
+      "COMMITTED_SKILL_EQUALS_BUILDER",
+      "TWO_OBSERVED_SELECTED_CONTROLLER_OUTPUT_EXCERPTS_REPLAY_MISSING_PROGRESS_FAIL",
+      "SELF_CHALLENGE_ACTUAL_FINAL_RESPONSE_IN_DISPATCHER_WITH_HOST_UNVERIFIED_CEILING",
+      "ESCAPED_ENTRYPOINT_SEPARATOR_SIBLING_REGRESSION",
+      "NO_DUPLICATE_STATE_OR_BUSINESS_OWNER",
+      "CI_PROMOTION_MAIN_READBACK_SEPARATE_FROM_NATIVE_REAL_BEHAVIORAL_HOLDOUT"
+    ],
+    "evaluation": {
+      "candidate_head_ci": "PENDING",
+      "production_reread": "PENDING",
+      "native_cold_chat_samples": "NONE_INDEPENDENT",
+      "real_recurrence": "OBSERVED_VISIBLE"
+    },
+    "rollback": "If generated Skill equality, normal selected-context handling, or precise progress regression fails, reject candidate; revert source/Skill together without reducing canonical Progress requirement.",
+    "assurance": "GITHUB_SOURCE_VERIFIED_WHEN_GREEN__CANNOT_ASSERT_CURRENT_CHATGPT_REAL_PRE_SEND_PROGRESS_CHECK_OR_AUTONOMOUS_DISCOVERY"
   }
 }
