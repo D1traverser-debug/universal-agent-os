@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T03:36:14.115Z",
+  "updated_at": "2026-10-19T06:12:44.470Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -811,5 +811,47 @@
       ]
     },
     "no_false_claim": "ENABLED_JOB_IS_REAL_CONFIGURATION_NOT_EXECUTION_OR_SEMANTIC_LEARNING_PROOF"
+  },
+  "host_cooperation_refactor_20261019": {
+    "status": "CANDIDATE_CONTROLLED_SDK_DELIVERY_GATE__CI_PENDING__NATIVE_CHATGPT_BOUNDARY_OPEN",
+    "governing_outcome": "Replace disconnected promises with a real controllable GPT-host output admission boundary that checks the outgoing text and host evidence; keep GitHub authoritative, one controller, simple internal use and working child tasks.",
+    "architecture_factors": [
+      {
+        "cause": "MODEL_NATIVE_CHATGPT_HOST_PATH_NOT_INTERCEPTED",
+        "assurance": "SOURCE_CONFIRMED_BOUNDARY__CANNOT_PATCH_IN_REPOSITORY"
+      },
+      {
+        "cause": "OWNED_SDK_OUTPUT_CHECK_PREVIOUSLY_OPTIONAL",
+        "assurance": "SOURCE_CONFIRMED_AND_RUNTIME_REPAIRED_IN_CANDIDATE"
+      },
+      {
+        "cause": "MULTIPLE_LONG_POLICY_PROJECTIONS_AND_CONTEXT_BLOAT",
+        "assurance": "POTENTIAL__NEEDS_ABLATION_NOT_CLAIMED_FIXED"
+      },
+      {
+        "cause": "USER_OBJECTIVE_TO_SEMANTIC_ACTION_FIT",
+        "assurance": "REMAINS_UNVERIFIED_IN_NATIVE_AND_CONTROLLED_RUNTIME"
+      }
+    ],
+    "selected_architecture": "SHARED_CANONICAL_GATE_FOR_CONTROLLED_USER_VISIBLE_SDK_OUTPUT__INTERNAL_REASONING_EXPLICITLY_NOT_USER_DELIVERABLE",
+    "implementation_refs": [
+      "src/uaos/execution/openai_agents.py",
+      "config/HOST_PROFILES.json",
+      "tests/execution/test_openai_agents.py",
+      "tests/architecture/test_finalization_enforcement_topology.py"
+    ],
+    "exit_criteria": [
+      "User-visible controlled SDK adapter cannot instantiate without trusted FinalizationContext provider",
+      "Actual SDK result is checked inline before CONFIRMED delivery",
+      "Missing 10-field Progress, unfinished work or failed context provider blocks delivery and does not return model text",
+      "Internal read-only reasoning remains functional with explicit INTERNAL_ONLY receipt",
+      "Existing host native/chatgpt direct connector paths retain honest unverified boundary",
+      "CI and protected PR/main reread, real native cross-session behavior evaluation remains OPEN"
+    ],
+    "postrelease_needed": [
+      "Observe real controlled SDK adapter plugged into a deployed caller rather than fake runner",
+      "Optimize native Skill/context without dropping safety/authority semantics",
+      "Demonstrate actual ChatGPT-host activation or stop claiming it"
+    ]
   }
 }
