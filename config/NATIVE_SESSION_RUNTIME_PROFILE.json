@@ -149,45 +149,8 @@
     "full_dimension_deep_study": {
       "required": true,
       "scope": "EVERY_SELECTED_CONTROLLER_RESPONSE__INCLUDING_CLEAN_QUERY_AND_READ_ONLY_TURNS",
-      "objective": "EVERY_TURN_SUBSTANTIVE_DEEP_RESEARCH_ACROSS_EVERY_DIMENSION_AND_ALL_BASELINE_CONCERNS__CROSS_LINKS__UNKNOWN_DISCOVERY__NO_SHALLOW_SCAN_SUBSTITUTION",
-      "dimensions": [
-        "OBJECT",
-        "EVENT",
-        "CAPABILITY",
-        "EVALUATION",
-        "RELATION",
-        "TIME"
-      ],
-      "baseline_work_concerns": [
-        "GOALS_REQUIREMENTS",
-        "NORMAL_TASK_WORK",
-        "INCIDENTS_FAILURES",
-        "LATENT_FAULT_DISCOVERY",
-        "CAPABILITY_OPPORTUNITIES",
-        "KNOWLEDGE_LEARNING",
-        "COGNITION_DECISION",
-        "ARCHITECTURE_OPTIMIZATION",
-        "EXECUTION_COORDINATION",
-        "VALIDATION_QUALITY",
-        "FEEDBACK_CORRECTION",
-        "EXPERIENCE_TRANSFER",
-        "GOVERNANCE",
-        "CONTINUITY_RECOVERY",
-        "SYSTEM_EVOLUTION"
-      ],
-      "required_per_dimension": [
-        "at least two independently verifiable local observations",
-        "at least two independently verifiable professional method sources",
-        "at least one falsification/counterexample source",
-        "at least one task-outcome verification source",
-        "explicit competing explanation and effect on the real user goal",
-        "links to at least two other dimensions"
-      ],
-      "unknown_discovery": "STATE_NEW_OR_UNKNOWN_CONCERNS_AND_SOURCE_GAPS_EXPLICITLY__DO_NOT_CLAIM_SIX_OR_FIFTEEN_IS_AN_EXHAUSTIVE_WORLD_ONTOLOGY",
-      "controlled_admission_ref": "src/uaos/runtime/epistemic_entry.py#admit_full_dimension_study",
-      "controlled_finalization_ref": "src/uaos/runtime/finalization.py#admit_final_response",
-      "output_rule": "DEEP_INTERNAL_RESEARCH_EVERY_SELECTED_CONTROLLER_TURN__VISIBLE_REPORT_MAY_REMAIN_FOCUSED__DO_NOT_CLAIM_COMPLETED_IF_ANY_DIMENSION_UNVERIFIED",
-      "native_assurance": "BEHAVIORAL_NATIVE_CHATGPT__NO_NON_BYPASSABLE_PRE_SEND_OR_INDEPENDENT_SEMANTIC_JUDGE"
+      "source_ref": "config/SESSION_INTERACTION_POLICY.json#full_dimension_deep_study",
+      "controlled_admission_ref": "src/uaos/runtime/epistemic_entry.py#admit_full_dimension_study"
     }
   }
 }
