@@ -76,7 +76,7 @@ def test_current_entry_and_selected_task_have_bounded_runtime_context_and_pinned
     assert "Continue authorized work" in entry
     assert "native" in entry.lower()
     archive = task["historical_case_compaction_20261019"]["source_archive_ref"]
-    assert "@d15dfcc885c1684915202a252add13b202f1e3e4:" in archive
+    assert "@b11a2a86ef99085678dac1f73c345b19c245f92b:" in archive
     assert archive.endswith("state/tasks/uaos-inheritance-review-20261018.json")
     for key in task["historical_case_compaction_20261019"]["compacted_keys"]:
         current = task[key]
