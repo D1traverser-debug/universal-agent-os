@@ -89,7 +89,10 @@
     "src/uaos/runtime/native_runtime_skill.py",
     "tests/architecture/test_uaos_controller_runtime_skill.py",
     "tests/architecture/test_session_progress_adherence.py",
-    "state/observations/native-cognition-progress-replay-20261018.json"
+    "state/observations/native-cognition-progress-replay-20261018.json",
+    "config/INTENT_RESOLUTION_POLICY.json",
+    "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt",
+    "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -553,5 +556,85 @@
     },
     "rollback": "If generated Skill equality, normal selected-context handling, or precise progress regression fails, reject candidate; revert source/Skill together without reducing canonical Progress requirement.",
     "assurance": "GITHUB_SOURCE_VERIFIED_WHEN_GREEN__CANNOT_ASSERT_CURRENT_CHATGPT_REAL_PRE_SEND_PROGRESS_CHECK_OR_AUTONOMOUS_DISCOVERY"
+  },
+  "goal_referent_substitution_20261019": {
+    "status": "CANDIDATE__ORIGINAL_SELF_GOVERNANCE_GOAL_RESTORED__NATIVE_SEMANTIC_REPAIR_UNVERIFIED",
+    "origin_kind": "USER_OBSERVED_CONTROLLER_FAILURE_RECURRENT",
+    "governing_outcome": "Controller must identify own failing capability, independently improve its understanding/diagnosis and repair loop, and continue normal system governance; not restrict adjacent work to simulate accountability.",
+    "incident_ref": "state/observations/native-cognition-progress-replay-20261018.json#recurrence_20261019_goal_substitution",
+    "competing_causes": [
+      {
+        "name": "USER_AMBIGUITY",
+        "verdict": "REJECTED_FOR_CURRENT_CASE",
+        "evidence": "User specifically emphasized self-governance failure, not child work ban"
+      },
+      {
+        "name": "PROCEDURAL_GOAL_SUBSTITUTION",
+        "verdict": "SUPPORTED",
+        "evidence": "Prior assistant selected suspension of child audits as 'self-assurance first'; this does not improve controller judgment"
+      },
+      {
+        "name": "POLICY_TARGET_REFERENT_NOT_EXPLICIT",
+        "verdict": "SUPPORTED_SOURCE_GAP",
+        "evidence": "Current intent source covered user remedy vs goal but not criticizing actor/capability vs unrelated activity"
+      },
+      {
+        "name": "NATIVE_SKILL_SALIENCE",
+        "verdict": "POSSIBLE",
+        "evidence": "Runtime Skill/custom pointer emphasize routing; no independent native prompt-attention causality evidence"
+      },
+      {
+        "name": "HARD_NATIVE_BEHAVIOR_BOUNDARY",
+        "verdict": "OPEN",
+        "evidence": "No trusted ChatGPT pre-send intercept / actual installed Skill bytes known"
+      }
+    ],
+    "interventions": [
+      {
+        "id": "DO_NOTHING",
+        "disposition": "REJECT",
+        "why": "Leaves actual misdirected suspension and policy/pointer gap"
+      },
+      {
+        "id": "PRESERVE_AUDIT_SUSPENSION",
+        "disposition": "REJECT",
+        "why": "Targets unrelated work rather than criticized capability"
+      },
+      {
+        "id": "SECOND_MONITOR_OR_SUPER_AGENT",
+        "disposition": "REJECT",
+        "why": "Duplicates authority, does not prove native decision behavior"
+      },
+      {
+        "id": "CANONICAL_INTENT_TARGET_ALIGNMENT_AND_SKILL_PROJECTION",
+        "disposition": "SELECT_BOUNDARY_REPAIR",
+        "why": "Corrects root intent-semantic missing referent and high-salience native source projection while retaining one authority"
+      },
+      {
+        "id": "HOST_NATIVE_BEHAVIORAL_SELF_CORRECTION",
+        "disposition": "REMAINS_UNVERIFIED",
+        "why": "Native host invocation and independent session behavior outside GitHub-controlled code"
+      }
+    ],
+    "frozen_acceptance": [
+      "intended_actor_is_controller_own_capability_not_child_review_scope",
+      "retract_PR144_child_audit_suspension_in_exact_task_and_index",
+      "user_criticism_and_repair_target_rule_one_canonical_intent_source",
+      "generated_Skill_compiled_exact_from_new_intent_rule_and_frontloaded",
+      "recommended_pointer_and_export_both_match_and_under_1500_chars",
+      "keep_user_explicit_requirements_and_no_paid_cost_policy",
+      "tests_hold_negative_current_case_and_source_provenance",
+      "all_relevant_existing_ci_green_exact_candidate_head",
+      "main_reread_confirms_retracted_governance_hold",
+      "native_cold_chat_semantic_behaviour_and_self_discovery_UNVERIFIED_UNTIL_ACTUAL_OBSERVATION"
+    ],
+    "evaluation": {
+      "candidate_ci": "PENDING",
+      "main_readback": "PENDING",
+      "native_host_semantic_holdout": "OPEN_NO_REAL_NATIVE_TRACE",
+      "confidence_scope": "SOURCE_AND_CONTROLLED_CASE_ONLY"
+    },
+    "assurance": "THIS_IS_BOUNDARY_SOURCE_FIX_AND_WRONG_TASK_STATE_RETRACTION_NOT_NATIVE_CHATGPT_CORRECTION_PROOF",
+    "next_action": "Independently observe selected ChatGPT goal preservation, self-diagnosis and autonomous repair across varied tasks; continue legitimate parallel audits and business outcomes."
   }
 }
