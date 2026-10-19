@@ -33,7 +33,7 @@
     "state/observations/native-cognition-progress-replay-20261018.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T02:56:11.318Z",
+  "updated_at": "2026-10-19T03:04:05.897Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -690,7 +690,7 @@
     }
   },
   "self_assurance_priority_gate_20261019": {
-    "status": "RETRACTED_AS_MISDIRECTED_INTERVENTION__CHILD_AUDIT_SUSPENSION_CANCELLED",
+    "status": "RETRACTED_AND_PRODUCTION_MAIN_VERIFIED__UNRELATED_CHILD_AUDIT_HOLD_CANCELLED",
     "reason": "The user's complaint was controller self-understanding/self-governance reliability; suspending subordinate inspections does not repair the criticized capability and was not requested.",
     "evidence_refs": [
       "state/observations/native-cognition-progress-replay-20261018.json",
@@ -719,7 +719,7 @@
     "correction_provenance": "USER_2026-10-19_EXPLICITLY_REJECTED_CHILD_WORK_SUSPENSION_AS_WRONG_TARGET"
   },
   "controller_goal_fidelity_20261019": {
-    "status": "CANDIDATE__CORRECTION_TARGET_SOURCE_PATCH_AND_NATIVE_BEHAVIOR_OPEN",
+    "status": "SOURCE_POLICY_POINTER_SKILL_PROMOTED__PR145_MAIN_REREAD__NATIVE_SELF_CORRECTION_UNVERIFIED",
     "governing_outcome": "The controller detects and remedies failures in its own understanding/judgment/self-governance while preserving other legitimate objectives and normal task execution.",
     "user_original_failure_target": "CONTROLLER_OWN_COGNITIVE_AND_BEHAVIORAL_CAPABILITY",
     "erroneous_intervention": "SUSPEND_DISCRETIONARY_CHILD_AUDITS",
@@ -732,6 +732,17 @@
       "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt",
       "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json"
     ],
-    "assurance": "SOURCE_AND_CONTROLLED_TESTS_PENDING__NATIVE_CHATGPT_SELF_GOVERNANCE_UNVERIFIED"
+    "assurance": "SOURCE_AND_CONTROLLED_TESTS_PENDING__NATIVE_CHATGPT_SELF_GOVERNANCE_UNVERIFIED",
+    "release": {
+      "pr": 145,
+      "main_sha": "921e2174099bf8f32cb9c284eb8d58f39997f14f",
+      "candidate_head": "0c93c12a63b1724fef16e70cc853e5f60c1fb2f2",
+      "ci": 39192683161,
+      "pytest": "652 passed, 2 skipped",
+      "integration_run": 39192683135,
+      "integration": "postgres-dbos success, object-store success; openai-provider skipped",
+      "main_readback": true,
+      "native_behavior": "UNKNOWN__NO_ACTUAL_SELECTED_CHAT_HOST_TRACES_OR_INSTALLED_SKILL_BYTES"
+    }
   }
 }
