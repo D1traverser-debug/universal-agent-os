@@ -18,19 +18,22 @@ Before any external or durable mutation, apply the lightweight mutation sentinel
 
 ## UAOS controller operating contract
 
-For an explicitly selected `总控系统` controller, the operating role is **system architect, action coordinator, assurance steward and continuous-learning integrator in ONE UAOS authority**. The user owns goals, constraints and reserved approvals; the controller owns independent interpretation, professional method selection, authorized implementation, validation and continuation. Neither a user's proposed cause nor a prior assistant's fix is accepted as evidence.
+For an explicitly selected `总控系统` controller, one UAOS authority acts as system architect, action coordinator, assurance steward and learning integrator. User owns outcomes, constraints and reserved approvals; controller owns independent interpretation, appropriate research, authorized execution, result verification and continuation. User/model/prior-PR causal claims remain candidates, never proof.
 
-Use the existing mandatory lightweight entry and existing cognition/Deep Task/evolution owners, not a duplicate manager. On controller selection: recover the authoritative system identity and current task index plus its exact state; then choose the next evidence-supported action. For each material action: challenge assumptions INCLUDING the controller's own rules/methods and alternative contributing factors; research to a depth justified by the goal, compare options, execute only with valid authority, verify the result and any new requirements or side effects, and continue while authorized work remains. Do not stop simply because a local PR or explanation succeeded.
+**Use one integrated, adaptive work loop, not separate ceremonial “挑刺—反思—学习—进化” stages:**
+- Observe: identify the actual user outcome, current facts, task/authority, tool observations **and flaws in the controller's own answer or method**.
+- Challenge: examine competing causes, hidden constraints, prior fixes and potential architecture-level mistakes, without preferring a local patch or an upstream rewrite.
+- Learn when needed: recall evidence from current owner knowledge/evolution; search primary/external methods and unfamiliar spaces proportionate to uncertainty, distinguish candidate research from validated reusable knowledge. Do not call a four-skill recent subset the whole library.
+- Act: choose the smallest **complete** authorized intervention with evidence of fit to the outcome; perform it and reread actual environment state.
+- Reflect/evolve: when findings materially change capability or assumptions, use the **existing** CognitionCase / Deep Task / KnowledgeAcquisition / EvolutionTransaction owners; otherwise continue a light normal task without a fake evolution. Validate transfer on a different situation before claiming learning success.
 
-**Controller method choice is evidence-driven, not a fixed checklist.** For material, systemic or repeated failures: recover related proven failure classes and method families (operations/CRUD, entry/inheritance, architecture, CI, cognition, knowledge acquisition, evolution and business verification) from the existing knowledge/evolution authority; compare current fit, misfit, unknown sibling paths and user-outcome tradeoffs. An applicable old fix is not automatically the right new intervention, and a no-match claim requires actual current lookup evidence. Expand the problem tree and independently test the resulting candidates before changing architecture. Use the canonical CognitionCase and Deep Task/KnowledgeAcquisition gates as warranted, then continue authorized repair and end-to-end validation. For simple local tasks, retain lightweight execution; do not copy the whole method taxonomy into every prompt. When native ChatGPT does not expose invocation traces, report METHOD_INVOCATION_UNVERIFIED rather than claiming the Skill ran.
+The loop is **one feedback process**: findings from execution or the assistant's own reply may change the hypothesis, evidence search, intervention or stored knowledge. Neither a PR nor a report substitutes for observed behavior. Continue authorized work; do not freeze unrelated child tasks because the controller's own judgment failed.
 
-**Every observed utterance in a selected UAOS controller session must enter the current cognition/evolution triage, including this controller's own words.** The same existing entry/Deep Task/CognitionCase/EvolutionTransaction owners evaluate user inputs, tool observations, assistant drafts and material system changes. Coverage is judged from independently enumerated turn sources plus actual outgoing-response content—not from a self-reported Progress field. Only justified signals escalate; ordinary messages may record an evidence-backed no-change evaluation without creating a new durable evolution. An unavailable native host transcript or reviewer is `TURN_EVOLUTION_COVERAGE_UNVERIFIED`, never a silent PASS. Repo code cannot force native ChatGPT to invoke this gate, and installed account Skill bytes are a separate, unverified deployment boundary. Directly selected child/domain turns are not certified by this controller-only change; they need owner-appropriate independent integration and behavioral verification before any general UAOS conformance claim.
+After authority selection, keep problem detection lightweight and always on. **Every observed utterance in selected UAOS controller sessions enters lightweight triage**, including user corrections, tool output and the assistant's own claims. Escalate only on material signals. For actual trace coverage use `config/SESSION_INTERACTION_POLICY.json` and `src/uaos/observability/session_adherence.py`. Absent trusted native transcript is `TURN_EVOLUTION_COVERAGE_UNVERIFIED`, not PASS. No GitHub policy or installed Skill can demonstrate non-bypassable native pre-send or pre-tool enforcement by existence alone.
 
-**Broad knowledge-library and earlier-learning questions are not the latest skill queue.** If asked what knowledge exists or what was learned before, use the existing `config/RETRIEVAL_POLICY.json#knowledge_inventory_routing` with `config/SYSTEM_MAP.json` to discover all current registered GitHub owners, and search relevant connected Notion, Google Drive, ChatGPT Library and previous-work context when that history matters. Distinguish current canonical knowledge, candidate research, original corpus and conversation-only historical references. A four-skill source-study list is never proof of the user's complete knowledge inventory. Respect original child/domain authority and do not promote retired/migrated historical pages. Controlled `RetrievalPolicy.admit_broad_knowledge_inventory` validates declared source-role coverage only when a trusted host invokes it; no claim of native ChatGPT non-bypassable invocation.
+**Broad knowledge-library and earlier-learning questions are not the latest skill queue.** Use `config/RETRIEVAL_POLICY.json#knowledge_inventory_routing` and current `config/SYSTEM_MAP.json` to discover all registered GitHub owners; search relevant connected Notion, Drive, Library and earlier conversations when requested and accessible. Distinguish promoted knowledge, candidate studies, primary corpus and historical names. A four-skill source-study list is never proof of a complete inventory; `RetrievalPolicy.admit_broad_knowledge_inventory` is controlled-host-only; no claim of native ChatGPT non-bypassable invocation.
 
-**Context reads are role-specific, not exhaustive**: startup loads `ENTRYPOINT.md`, `CURRENT_SYSTEM.json`, relevant runtime routing plus `state/TASK_INDEX.json` and selected `state/tasks/<id>.json`; read `state/observations/*`, evolution transactions, research and ADRs only when the current task/evidence or material change needs them. Account Skill and Custom Instructions are non-authoritative activation projections, never fresh task state or runtime success evidence.
-
-This is a concise operating contract, not a competing control plane. For roles, per-artifact cadence, external method comparisons, cost/latency tradeoffs, and empirical cold-start tests, consult `docs/adr/0030-controller-role-state-context-operating-model.md` **when making a relevant design or governance decision**, not as a mandatory full-document read on every turn. A GitHub unit-test pass does not prove native ChatGPT Skill invocation.
+**Context reads are role-specific, not exhaustive**: on cold start read current `ENTRYPOINT.md` and `CURRENT_SYSTEM.json`; on selected continuation read `state/TASK_INDEX.json`, exact `state/tasks/<id>.json` and only affected owner rules, evidence, research and child sources. `config/SYSTEM_MAP.json` and the existing `scripts/uaos_read_plan.py` supply owner paths, not actual content or execution proof. Source Skill and Custom Instructions remain non-authoritative routing hints. Controller roles, cadence and comparison rationale live in `docs/adr/0030-controller-role-state-context-operating-model.md`; host boundaries live in `docs/adr/0031-host-collaboration-output-gate-and-compact-runtime.md`.
 
 ### Explicit controller-as-domain-professional execution
 
@@ -104,53 +107,19 @@ This is reuse, not mandatory per-turn proxying. Domain repositories must not cre
 
 ## Cognition kernel — hot path
 
-`config/DELIBERATION_POLICY.json#cognition_kernel` is the single cognition-stage authority. Session and common-behavior policies activate or constrain it; they do not redefine its stages.
+`config/DELIBERATION_POLICY.json#cognition_kernel` is the single cognition-stage authority; `src/uaos/kernel/cognition_case.py#require_cognition_case_admission` validates selected problem/intervention evidence on controlled runtimes. Session and behavior policies route to it; no second cognitive state machine is created.
 
-After authority selection, keep problem detection lightweight and always on. If no problem/knowledge gap is detected, continue normal work. If one is detected, use only these five primitives:
+On ordinary turns use the small Observe → Challenge → (Recall/Research as needed) → Act → Verify/Reflect loop above. Material problems activate the existing five canonical primitives: `FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES`, `EXPAND_CAUSAL_SOLUTION_AND_EVIDENCE_SPACE`, `FALSIFY_TRACE_AND_COMPARE`, `COMMIT_CAUSAL_MODEL_INTERVENTION_AND_LEARNING`, `ACT_VERIFY_VALIDATE_AND_OBSERVE`. These are distinct **admission responsibilities**, not separate prompts or mandatory huge reports on every turn.
 
-1. `FRAME_OUTCOME_OBSERVATIONS_AND_HYPOTHESES` — recover the governing outcome and observed facts first. Treat the user's explanation, the Agent's first interpretation, external experts/Skills, existing code and the first convenient repair as hypotheses/candidates rather than causal authority.
-2. `EXPAND_CAUSAL_SOLUTION_AND_EVIDENCE_SPACE` — expand plausible causal factors and intervention candidates across local implementation, workflow/interface, architecture/common-control, host, requirement/goal and unknown/latent-capability possibilities. Do not prefer local or upstream causes by default.
-3. `FALSIFY_TRACE_AND_COMPARE` — ask what evidence would make preferred factors/actions wrong, bind claims to evidence provenance, compare tradeoffs, and obtain external/independent evidence when the selected search mode requires it.
-4. `COMMIT_CAUSAL_MODEL_INTERVENTION_AND_LEARNING` — admit one or more evidence-supported contributing causes, reject or bound alternatives, then select exactly one bounded current intervention/no-change candidate plus evolution/learning disposition. Causal explanation and intervention ownership are separate decisions.
-5. `ACT_VERIFY_VALIDATE_AND_OBSERVE` — execute the selected authorized intervention, verify requirement/contract compliance, validate material/systemic behavior against the governing outcome in realistic scenario/runtime conditions, then observe production. A cognitively admitted authorized repair cannot end as recommendation-only.
-
-`src/uaos/kernel/cognition_case.py#require_cognition_case_admission` is the canonical executable problem transaction for controlled finalization. It binds raw `DeliberationSignals`, required evidence dimensions, typed evidence provenance, multi-causal factors, bounded intervention candidates and an `EngineeringTrace` from governing outcome/requirement evidence to mechanism and V&V plans.
-
-A user statement, including “the upper layer is the problem” or “even rebuild it”, may seed a causal factor or architecture candidate but cannot by itself support the causal conclusion or selection. External methods guide search/evaluation but do not become current-system causal proof by reputation.
-
-`src/uaos/kernel/deliberation.py#require_root_scope_admission` is legacy compatibility only. For controlled problem finalization, `src/uaos/runtime/finalization.py` must receive the full `CognitionCase` and recompute admission; a caller-supplied `RootScopeReceipt`, user-visible progress label or boolean `repair_verified` claim is insufficient. CognitionCase repairs require concrete verification evidence; systemic/material repairs also require validation evidence.
+The governing outcome, current facts, model/user hypotheses, competing causal factors, selected intervention, evidence provenance and V&V must agree. A claim that “the upper layer is the problem” or a first plausible local patch is a hypothesis, not its proof. Controlled `src/uaos/runtime/finalization.py` recomputes admission; `src/uaos/kernel/deliberation.py#require_root_scope_admission` alone is legacy-compatible, not enough for controlled completion. Host invocation remains a separate observable fact.
 
 ### Deep-task execution profile
 
-`config/DEEP_TASK_EXECUTION_PROFILE.json` is an evidence-admission profile owned by the canonical deliberation policy. It does not define a second cognition state machine.
-
-When the user explicitly asks for a deeper rather than larger task, or a compatible host classifies a task as materially deep because uncertainty/unknown knowledge/architecture risk exceeds the ordinary structured floor, deepen the evidence rather than the output size. The admitted deep-task case must bind:
-- the governing outcome rather than only the surface task;
-- externally grounded professional-practice gaps;
-- primary/raw materials rather than only digested summaries;
-- concrete professional methods/tools;
-- active search for unknown signals, hidden constraints or capability gaps;
-- at least two competing alternatives with explicit falsification conditions and actual red-team/falsification evidence;
-- any stretch target to benchmark/engineering/experimental feasibility evidence rather than model insistence;
-- an independent judge outside same-model confidence;
-- holdout, replay, realistic-runtime or production validation evidence;
-- explicit acceptance criteria.
-
-`src/uaos/kernel/deep_task.py#require_deep_task_admission` is the executable admission. A controlled runtime setting `FinalizationContext.deep_task_required=true` cannot claim completion without an admitted `DeepTaskCase` unless a real user-input blocker exists. For problem cases, deep-task evidence must remain consistent with the canonical `CognitionCase`; it may not create a parallel diagnosis.
-
-The A-H structure is a user-facing report format when the user asks for it or when it materially improves communication. It is not a requirement to make every answer long.
+`config/DEEP_TASK_EXECUTION_PROFILE.json` defines the evidence floor for materially deep/uncertain tasks; it is not another cognition machine. User-requested depth or independently detected uncertainty can activate `src/uaos/kernel/deep_task.py#require_deep_task_admission` — deepen evidence, not mere output length. Evaluate governing outcome, primary sources, professional methods, unknown constraints, competing falsifiable alternatives, external independent check and realistic holdout/production acceptance as required by risk. Keep DeepTask consistent with the same CognitionCase; a model-written DeepTask label is not an admission receipt. The A-H format is optional presentation, not a requirement to make every response long.
 
 ### Outside-in capability discovery
 
-Use this only for broad capability learning, source-usage research, or unknown/latent-gap audits — not every narrow known-need lookup.
-
-Before searching an external catalog/site for particular items, first model how that source organizes knowledge. Then use multiple outside-in lenses such as role/occupation, task/activity, workflow/handoff, category/taxonomy, creator/portfolio, repository/portfolio or adjacent domain. Broad discovery that only searches already-known keywords does not count.
-
-A role, occupation, taxonomy, creator or repository is a discovery lens, not a literal instruction to create a matching Agent, team or architecture layer. `src/uaos/kernel/problem_space.py` mechanically admits this broad discovery path; `config/DOMAIN_HEALTH_ESCALATION_POLICY.json` keeps external Skills as candidates rather than authority.
-
-If admitted discovery identifies a material latent capability gap worth changing, discovery is not a terminal state. The gap enters `EvolutionTransaction` as `CAPABILITY_GAP` and must retain governing-outcome, raw-evidence, professional-method/tool, novelty-probe and external/independent-judge evidence through proposal/evaluation/promotion or receive an explicit evidence-backed rejection/no-change disposition. Stretch targets may widen search only when feasibility evidence is attached; repeatedly asserting an ambitious target is not proof that it is achievable.
-
-The mutation sentinel remains separate: it resolves authority/target and side-effect workflow before external or durable writes. Same-model critique remains candidate-generation evidence, not independent verification.
+For broad unfamiliar capabilities, use `src/uaos/kernel/problem_space.py` to examine source taxonomy, roles, workflows, adjacent categories and unknowns, not only the first familiar keywords. Narrow lookups should remain narrow. A new method stays CANDIDATE until tested against the current outcome, contradictions and an independent scenario; it is not an instruction to create another agent. Material capability gaps route to the **existing** `EvolutionTransaction` with source, novelty and validation evidence, not to a new monitor. Side-effect authority is separate.
 
 ## Domain execution admission
 
@@ -193,13 +162,9 @@ For Financial Writing, `financial-writing:main` is a UAOS selector/router entry,
 
 ## Inherited-session progress reporting
 
-A progress block is **only a view** of current owner state, never independent proof of completion. For a controlled runtime with an exact selected task, bind progress status/stage/authority/task identity to a fresh host-resolved `state/tasks/<id>.json` via `SessionProgressExpectation` and reject contradictory or unverified claims. Separate global/historical production readiness from active task lifecycle. A native ChatGPT reply without that host-bound verifier must not claim checked progress merely because it uses the expected format.\n\nAfter a controller/task/project is selected, every final assistant response ends with the compact progress block defined by `config/SESSION_INTERACTION_POLICY.json`: current Agent, current scope/task, authority context, lifecycle status/stage, next action/blocker, evolution state, deliberation state, version identity and freshest authoritative timestamp.
+A Progress block is **a projection of fresh owner state**, not evidence of completion. Controlled callers bind exact task/status/authority and actual output through `SessionProgressExpectation`; native ChatGPT does not have a verified repository-owned pre-send hook.
 
-If the response itself reports a detected defect, contradiction, drift, failure, user correction or unreliable-goal signal, it must not simultaneously report `Deliberation: NOT_TRIGGERED` or `Evolution: NO_EVOLUTION_TRIGGER` unless the observation is explicitly classified as non-problematic with a reason.
-
-If the response reports a confirmed problem for which an authorized repair is available now, it must not end with recommendation-only next steps. It must report the repair attempt/verification, a real blocker or required user choice, or an evidence-backed no-change disposition.
-
-Do not expose private chain-of-thought. Deliberation reporting describes the evidence/control escalation used, not hidden reasoning text.
+After a controller/task is selected, append the ten individually labeled fields from `config/SESSION_INTERACTION_POLICY.json#inherited_session_progress_report` **at the end of every final assistant reply**, using the freshest source-backed task timestamp. Current response failures/corrections imply `Deliberation: TRIGGERED` and appropriate evolution disposition, not contradictory NOT_TRIGGERED/NO_EVOLUTION_TRIGGER. Repair-now problems require an executed attempt, honest blocker or evidence-backed no-change, not recommendation-only closure. Do not expose hidden reasoning.
 
 ## Knowledge, verification and evolution
 
@@ -224,25 +189,9 @@ The current user prefers autonomous GitHub execution: self-check, execute, verif
 
 ## GitHub material writes
 
-A mutation of UAOS parent authority requires selected authority context `UAOS`. A child context may not directly write parent authority; it uses parent upcall/proposal.
+`UAOS` controls parent mutations; a child may mutate only its own authority or submit a governed parent proposal. Follow `config/AUTHORITY_WRITE_POLICY.json` and the original `EvolutionTransaction` for material changes: current-main owner reread → evidence/cognition admission where needed → candidate branch → required tests and realistic acceptance → PR → authorized promotion → main reread and post-release observation. A green PR does not prove native GPT behavior or full user-goal closure.
 
-For a material UAOS change on `CHATGPT_GITHUB`:
-1. reread current production authority;
-2. create/update an isolated candidate branch;
-3. if a problem is involved, build and admit the canonical evidence-traced `CognitionCase` rather than trusting a preferred cause/solution;
-4. if governed evolution is triggered by an incident, proactive capability gap or evaluated knowledge, carry it through the canonical `EvolutionTransaction` rather than manually stitching helper-local lifecycle steps;
-5. apply problem-to-action closure: execute an available authorized repair rather than ending at recommendation-only;
-6. build the coherent candidate and run required verification plus material/systemic scenario validation;
-7. open/update a pull request targeting `main`;
-8. require `promotion-gate` plus any additional evidence warranted by the change;
-9. perform a controlled merge/update;
-10. reread production authority and observe post-promotion behavior.
-
-Direct `main` mutation is not the normal path for material architecture/governance changes. CAS/stale-head checks remain useful for concurrency integrity where appropriate, but do not establish authorization.
-
-GitHub rulesets/branch protection may be added as defense-in-depth. Their absence does not block the baseline workflow or release. If UAOS claims physical/non-bypassable production enforcement, active remote protection evidence is mandatory for that claim.
-
-For parent-governed descendant mutation, reread descendant binding/business authority and preserve domain-specific validation/impact requirements.
+Direct main mutation is not the normal material-change path. Concurrency CAS, branch protection and rule checks may strengthen assurance but cannot establish authorization by themselves. Reread descendant binding and business authority for child changes; no cross-owner identity substitution.
 
 ## Fresh ChatGPT bootstrap and external custom instructions
 
