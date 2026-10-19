@@ -3,8 +3,8 @@
   "authority_context": "UAOS",
   "task_type": "controller_maintenance",
   "status": "RUNNING",
-  "current_stage": "EXTERNAL_SKILL_FOUR_SOURCE_STUDIES_PRODUCTION_VERIFIED__CONTROLLER_DEEP_AUDIT_AND_NATIVE_ASSURANCE_OPEN",
-  "next_action": "Four requested external skill source studies are merged and main-verified (Hindsight, Orca, Cloudflare Security Audit Skill, Paperclip); method cards remain source-grounded CANDIDATE and holdout/host usage unverified. Resume the RUNNING controller objective: independently assess five-repository architecture, authority enforcement, actual native ChatGPT and tool execution gate visibility, method reuse holdouts and real outcome evidence; choose and execute highest-risk verifiable step. Preserve Financial Writing parent recovery RUNNING/not default until controller closure.",
+  "current_stage": "CONTROLLER_DEEP_AUDIT_RUNNING__PROGRESS_NATIVE_BEHAVIOR_FAILURE_OPEN__SOURCE_PROJECTION_PROMOTED",
+  "next_action": "Prioritize real user-visible selected-controller adherence and self-observation: collect native actual output/host invocation evidence when a compatible host supplies it; do not claim physical automatic Progress interception from GitHub. Independently review future selected-controller replies for exact 10-field current-task bound Progress, triage own defects before user correction, and continue five-repo deep outcome assurance. Financial recovery preserved RUNNING/not default.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -33,7 +33,7 @@
     "state/observations/native-cognition-progress-replay-20261018.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T01:54:02.557Z",
+  "updated_at": "2026-10-19T01:59:58.729Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -661,7 +661,7 @@
     }
   },
   "progress_behavioral_recurrence_20261019": {
-    "status": "CURRENT_SELECTED_CHAT_PROGRESS_ADHERENCE_FAILED__SOURCE_PROJECTION_CANDIDATE_PENDING_CI",
+    "status": "SOURCE_PROJECTION_PROMOTED__LIVE_SELECTED_CHAT_PROGRESS_SELF_ADHERENCE_UNVERIFIED",
     "evidence": "state/observations/native-cognition-progress-replay-20261018.json",
     "existing_evolution_owner": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
     "observed": "Two selected-UAOS prior response excerpts lacked the 10-field final Progress, after older 2026-10-16/18 incidents already recorded the same behavior; self-discovery did not happen before user correction.",
@@ -674,6 +674,19 @@
       "ALL_FIVE_BUSINESS_OUTCOMES_VERIFIED"
     ],
     "child_financial": "RUNNING_NOT_DEFAULT_UNCHANGED",
-    "next_evidence": "Candidate CI and main reread; native pre-send instrumentation still needs actual product host channel/independent selected-context trace"
+    "next_evidence": "Candidate CI and main reread; native pre-send instrumentation still needs actual product host channel/independent selected-context trace",
+    "release": {
+      "pr": 142,
+      "merged_main": "a90ea756b0d8a6a85cb642d074cd6d36944576f8",
+      "candidate_head": "9dc5f52924ec42dae0fa0de142b79b85d8599707",
+      "promotion_gate": 39187649744,
+      "pytest": "649 passed, 2 skipped",
+      "integration_run": 39187649462,
+      "integration_conclusion": "success",
+      "openai_provider": "skipped",
+      "main_readback": true,
+      "compiled_skill_blob": "b9d2e395cde7b6f0616265416bdbf526f906b6cd",
+      "assurance": "CONTROLLED_CODE_COMPILATION_AND_CI_ONLY__NO_ACTUAL_NATIVE_CHATGPT_SKILL_BYTE_OR_PRE_SEND_VERIFICATION"
+    }
   }
 }
