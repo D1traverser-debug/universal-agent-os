@@ -950,5 +950,47 @@
       "cross-domain method holdouts",
       "real business outcome, cost and latency compare"
     ]
+  },
+  "meta_knowledge_fusion_20261019": {
+    "status": "SOURCE_COMPARISON_AND_GUIDED_SOURCE_USE__CANDIDATE_METHODS__INDEPENDENT_HOST_TRANSFER_OPEN",
+    "research_ref": "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/08_meta_knowledge_fusion_hierarchy_index_application.md",
+    "index_ref": "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/README.md",
+    "sources": [
+      "W3C SKOS",
+      "W3C PROV-O",
+      "RAPTOR",
+      "Microsoft GraphRAG/DRIFT",
+      "Anthropic Contextual Retrieval",
+      "Agent Skills",
+      "AWM",
+      "Realist Synthesis CMO",
+      "OpenAI Agents SDK",
+      "2026 faceted-analysis abstract only"
+    ],
+    "reused_owners": [
+      "KnowledgeItem",
+      "KnowledgeCatalog",
+      "MethodTransferAssessment",
+      "CognitionCase",
+      "existing task and EvolutionTransaction"
+    ],
+    "hypotheses": [
+      "Index and contextual fit facilitate retrieval, not semantic truth",
+      "Source-derived cross-topic methods can improve new task selection if judged against independent outcomes",
+      "More storage or labels alone do not cause live native host cognition"
+    ],
+    "alternatives": [
+      "NO_CHANGE",
+      "extend existing cold source navigation and holdout (current)",
+      "modify existing retrieval or semantic eval only with measured failure evidence",
+      "new graph database/new manager rejected absent unique demonstrated contract"
+    ],
+    "open_validation": [
+      "correct method recalled in unseen case",
+      "wrong method rejected with current-context misfit evidence",
+      "native/controlled host actually invoked",
+      "user goal and business outcomes improved without violating owner permissions"
+    ],
+    "native_host_assurance": "UNVERIFIED"
   }
 }

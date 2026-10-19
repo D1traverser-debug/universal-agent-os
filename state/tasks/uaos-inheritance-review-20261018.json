@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "SOURCE_FILELIST_ROUTER_PROMOTED__NATIVE_HOOK_AND_SEMANTIC_KNOWLEDGE_APPLICATION_OPEN",
-  "next_action": "Use source-grounded topic library and existing UAOS knowledge/evolution owner to compare requirements, product, architecture, software, workflow, cognitive methods, tools/plugins, and evaluation on real held-out task traces. Find semantically wrong yet structurally passing PR#163 cases; test alternate designs and true outcomes before any new gate/rewrite, preserve child authority and no-extra-paid-services boundary.",
+  "next_action": "Apply and compare knowledge methods on genuinely unfamiliar task/host/child-owner cases: demonstrate source-to-context-to-mechanism-to-outcome method selection, wrong-method rejection, authorized tool orchestration, and actual result against baseline. Do not add new knowledge owners or accept PR#163's structural gate as a semantic judge.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T12:01:25.219Z",
+  "updated_at": "2026-10-19T12:25:10.583Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -440,7 +440,7 @@
     }
   },
   "full_dimension_research_20261019": {
-    "status": "CONTROLLED_HOST_SIX_AXES_FIFTEEN_CONCERNS_CANDIDATE__CI_PENDING__NATIVE_AND_INDEPENDENT_TRIAL_OPEN",
+    "status": "CONTROLLED_GATE_PR163_PRODUCTION_CI_VERIFIED__SEMANTIC_HOLDOUT_PR165_XFAILED__NATIVE_AND_OUTCOME_OPEN",
     "governing_outcome": "Every selected controller turn studies all axes deeply and covers all baseline work concerns, with evidence-backed cross-links and later task-outcome validation; no shallow scan substitution.",
     "canonical_scope": "config/SESSION_INTERACTION_POLICY.json#full_dimension_deep_study",
     "code_owner": "src/uaos/runtime/epistemic_entry.py#admit_full_dimension_study",
@@ -451,13 +451,13 @@
       "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
       "https://aclanthology.org/2026.findings-acl.1199/"
     ],
-    "open": "Actual native session invocation, direct child compatibility, honest semantic evidence verification, per-turn latency/cost and cross-task outcome comparison."
+    "open": "PR165 xfailed proves a structurally complete but semantically irrelevant study can be admitted; native host invocation, child compatibility, independent semantic judge, real impact/latency/cost remain open."
   },
   "outside_in_multidisciplinary_study_20261019": {
-    "status": "EIGHT_SOURCE_STUDY_DOCUMENTS_CANDIDATE__BEHAVIORAL_HOLDOUT_OPEN",
+    "status": "EIGHT_TOPIC_MODULES_AND_INDEX__META_METHODS_CANDIDATE__INDEPENDENT_USE_OPEN",
     "owner_ref": "EVO-20261018-INHERITANCE-REVIEW",
     "knowledge_index_ref": "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/README.md",
-    "module_count": 7,
+    "module_count": 8,
     "declared_method_roles": [
       "requirements_product_system",
       "architecture_interactions_formal",
@@ -465,9 +465,22 @@
       "management_workflow",
       "tools_plugins_security",
       "evaluation_governance_search",
-      "integrated_synthesis_holdouts"
+      "integrated_synthesis_holdouts",
+      "meta_knowledge_hierarchy_provenance_index_applicability_orchestration"
     ],
     "evidence_limits": "Source study is not web exhaustion, full copyrighted standard access, installed native skill, independent semantic behavior or business outcome success",
-    "next_validation": "Evaluate PR#163 semantic-passing-but-wrong example plus native continuation/new-domain holdouts before material architecture changes"
+    "next_validation": "Evaluate PR#163 semantic-passing-but-wrong example plus native continuation/new-domain holdouts before material architecture changes",
+    "meta_study_ref": "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/08_meta_knowledge_fusion_hierarchy_index_application.md",
+    "application_sample": {
+      "status": "USER_TRIGGERED_SOURCE_TO_TASK_READING__NOT_INDEPENDENT_TRANSFER",
+      "sources_read": [
+        "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/02_architecture_code_interactions_formal_models.md",
+        "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/03_cognition_learning_distillation_transfer.md",
+        "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/05_tools_plugins_capability_routing.md",
+        "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/06_evaluation_governance_research_method.md"
+      ],
+      "observed_use": "Compared native-controller early stop, semantically irrelevant six-axis evidence, and parent-vs-child outcome using genuine original owner sources; no native autonomous recall receipt",
+      "unverified": "Goal-driven recall on unseen tasks, correct method-fit classification, actual action orchestration and outcome gains"
+    }
   }
 }
