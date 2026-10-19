@@ -17,8 +17,9 @@
 | [05 工具—插件—多路径能力](05_tools_plugins_capability_routing.md) | 什么能力真正可用、如何选路、如何不越权 | MCP、Agent architecture、NIST、AWS、OWASP、OpenAI agent safety | 插件能力匹配；候选替代不能绕过拒绝 |
 | [06 评价—治理—系统研究](06_evaluation_governance_research_method.md) | 怎样证明不是做表面功夫、怎样系统检索、如何独立反证 | Agent Evals、Promptflow、NIST AI RMF、PRISMA-S、ACTS、ATAM | 多层证据与真实结果；研究覆盖可复核 |
 | [07 融合综合与竞争方案](07_unified_research_synthesis_and_holdouts.md) | 怎么把前六库用于一个总目标，形成真实能力 | 上述跨源交叉证据与当前 UAOS 源码 | 目标驱动知识/行动/结果网；PR#163 是受控结构门禁而非智能完成 |
+| [08 元知识工程与知识运用](08_meta_knowledge_fusion_hierarchy_index_application.md) | 如何概括、细分、链接、索引、蒸馏、检索、选择、编排与反证 | W3C SKOS/PROV、RAPTOR、GraphRAG/DRIFT、Contextual Retrieval、AWM、CMO、Agents SDK | 先验证上下文/机制/结果，再选择有证据的方法与所属组件 |
 
-这是**六个专题库加一个整合研究文档**；不是六个业务 Agent、六个知识权威或六个独立 SOP。目录随发现新专业问题扩展，不能固化为“已知所有知识”。
+这是**六个基础专题库、一个整合研究和一个元知识专题**；不是六个业务 Agent、六个知识权威或六个独立 SOP。目录随发现新专业问题扩展，不能固化为“已知所有知识”。
 
 ## 二、本次研究覆盖范围及实际搜索策略
 
@@ -75,7 +76,7 @@ S6 权限/新未知方法族扩展：`OWASP excessive agency`、`OpenAI agent pr
 
 **本轮明确不做**：新建监控 Agent、第二知识库权威、第二进化任务、修改 PR #163 的代码逻辑、假称原生 Hook、批准付费或跳过授权。新的行动只在真正比较候选和独立评价后进入已有受控 PR 流程。
 
-## 六、验收状态说明
+## 五、验收状态说明（原研究阶段）
 
 - [x] 已有主仓历史研究及当前 authority 确认；
 - [x] 各专题包含一手资料、方法机理、适用/失效、UAOS 映射、反例、候选蒸馏；
@@ -88,3 +89,22 @@ S6 权限/新未知方法族扩展：`OWASP excessive agency`、`OpenAI agent pr
 - [ ] 新知识经真实跨任务验证成为 canonical reusable method。
 
 当前阶段是**可独立复核的综合专业研究成果**，不是系统进化最终完成。
+
+## 六、按真实问题检索知识（导航投射，不是新权威）
+
+不能按“属于哪个唯一类别”选择知识，也不能看到一个标题就认定已学习。以下是**多对多的入口映射**；使用时必须读取链接中的实际内容、当前事实、竞争解释与不适用条件，随后由既有 KnowledgeItem/MethodTransfer/CognitionCase 所有者决定是否应用。
+
+| 当前观察或目标 | 第一层定位（总体与机制） | 第二层下钻（专业/行动） | 必须核查的反例 |
+|---|---|---|---|
+| Agent 遇一个工具错误就停止 | [08 元知识工程](08_meta_knowledge_fusion_hierarchy_index_application.md) + [02 形式化交互](02_architecture_code_interactions_formal_models.md) | [04 恢复工作流](04_management_sop_workflows_execution.md) + [05 插件和权限](05_tools_plugins_capability_routing.md) | 原操作被安全拒绝时绝不借其他写接口绕行；有独立合法只读工作就不得无故冻结 |
+| 资料多但 Agent 仍选错方法 | [08 层级/索引/CMO](08_meta_knowledge_fusion_hierarchy_index_application.md) + [03 蒸馏迁移](03_cognition_learning_distillation_transfer.md) | [01 用户目标和真实需求](01_goal_product_requirements_systems.md) + [06 语义结果验收](06_evaluation_governance_research_method.md) | 关键词相关不等于原始方法适用；论文作者的 benchmark 不是 UAOS outcome |
+| 六维研究“全绿”但因果错 | [07 总体设计](07_unified_research_synthesis_and_holdouts.md) + [08 来源/关系/反证](08_meta_knowledge_fusion_hierarchy_index_application.md) | [01 目标](01_goal_product_requirements_systems.md) + [06 红队样本](06_evaluation_governance_research_method.md) | `tests/runtime/test_full_dimensional_semantic_holdout.py` 的已知 `xfail` |
+| 子域产品未验收，父仓 CI 已绿 | [01 需求/产品](01_goal_product_requirements_systems.md) + [07 权威边界](07_unified_research_synthesis_and_holdouts.md) | [05 真实工具](05_tools_plugins_capability_routing.md) + [06 结果评价](06_evaluation_governance_research_method.md) | 不得把父仓受控代码或研究摘要冒充四个子域成果 |
+| 用户提出未在知识库列出的新方法/专业 | [08 领域/概念/来源扩展](08_meta_knowledge_fusion_hierarchy_index_application.md) + [06 系统检索](06_evaluation_governance_research_method.md) | 与现有术语建立 `broader/narrower/related`，然后阅读一手新源和反证 | 无法归类时记录开放未知，不能把未知强行改为“已覆盖” |
+
+**上钻/下钻**：从上述导航可向上到 [07](07_unified_research_synthesis_and_holdouts.md) 的目标/关系模型，向下到专题来源与具体仓库/测试；被摘要省略的适用条件必须回查原始源。**吸收**：经独立新任务验证后才进入原有知识生命周期；文档链接本身不是动态方法调用证明。
+
+## 七、本次元知识扩展的真实边界
+
+[08](08_meta_knowledge_fusion_hierarchy_index_application.md) 使用 W3C 语义映射与来源追踪、层级摘要、GraphRAG、上下文检索、Agent 方法记忆和 CMO 适用性分析提出组合方法。它们是互补概念，不需要同时安装各框架。已执行的是原始资料比较、当前 GitHub 知识所有者核查及上述应用映射，**尚无**可靠 native ChatGPT 自动加载、冷库知识晋级或陌生任务成功率改善证明。
+
