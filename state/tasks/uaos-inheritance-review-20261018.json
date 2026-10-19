@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T06:12:44.470Z",
+  "updated_at": "2026-10-19T06:20:54.052Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -853,5 +853,25 @@
       "Optimize native Skill/context without dropping safety/authority semantics",
       "Demonstrate actual ChatGPT-host activation or stop claiming it"
     ]
+  },
+  "native_dispatcher_context_refactor_20261019": {
+    "status": "CANDIDATE_COMPACT_RUNTIME_DISPATCHER__CI_PENDING__NATIVE_INSTALLED_VERSION_UNKNOWN",
+    "old_skill_bytes": 11270,
+    "new_skill_bytes": 7870,
+    "goal": "Reduce always-loaded policy repetition while retaining native selected-context goal fidelity, source retrieval, actual tools, controlled mutation and mandatory Progress.",
+    "bounded_evidence": [
+      "Current Skill duplicated multiple long policy rules across eight sections",
+      "Canonical policy source and compiled NATIVE_SESSION_RUNTIME_PROFILE already exist separately",
+      "GitHub connector bypasses Python, so Skill is guidance and must not falsely assert intercept",
+      "OpenAI SDK controlled output gate refactored in PR149 and separate from native ChatGPT"
+    ],
+    "intervention": "Rebuild current generated Skill as thin high-signal dispatcher: cold start/continuation source selection, actor/goal/claims, material work to canonical owners, tool-action feedback, ten Progress lines, honest host boundary; keep detailed rules in current canonical owners.",
+    "verification": [
+      "Exact generated Skill equality test",
+      "All inherited regressions for mandatory entry, latest intent, deep routing, authority, evolution, completion, Progress and host uncertainty",
+      "Hard native Skill budget <=8000 characters",
+      "User-account installed Skill bytes NOT asserted current"
+    ],
+    "further_work": "Real prompt/trace A-B test for native current account when host instrumentation exists; independently verify actual user-visible behavior instead of relying on generator tests."
   }
 }
