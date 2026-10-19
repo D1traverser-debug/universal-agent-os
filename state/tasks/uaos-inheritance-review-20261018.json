@@ -28,10 +28,11 @@
     "docs/research/uaos-inheritance-review-20261018/14_cloudflare_security_audit_source_learning.md",
     "docs/research/uaos-inheritance-review-20261018/15_paperclip_multi_agent_control_plane_source_learning.md",
     "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md",
-    "state/observations/uaos-five-repo-binding-20261019.json"
+    "state/observations/uaos-five-repo-binding-20261019.json",
+    "state/observations/knowledge-retrieval-recency-drift-20261019.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-18T20:51:01.719Z",
+  "updated_at": "2026-10-19T01:25:33.722Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -634,5 +635,20 @@
     "child_min_common_contract": "1.6.0",
     "financial_child_status": "RUNNING_NOT_DEFAULT",
     "next_validation": "Select high-risk cross-owner mutation or actual direct-child host handshake path. Real provider/host evidence and independent business outcome V&V remain required."
+  },
+  "knowledge_inventory_scope_drift_20261019": {
+    "status": "CANDIDATE_CODE_AND_POLICY__CI_AND_PRODUCTION_READBACK_PENDING",
+    "origin": "state/observations/knowledge-retrieval-recency-drift-20261019.json",
+    "diagnosis": "Assistant misreported a 4-item recent source-study queue as the full personal knowledge system; current registered domains and relevant historical connected sources were not enumerated.",
+    "intervention": [
+      "ENTRYPOINT.md#broad_knowledge_route",
+      "config/RETRIEVAL_POLICY.json#knowledge_inventory_routing",
+      "src/uaos/integrations/retrieval.py#RetrievalPolicy.admit_broad_knowledge_inventory",
+      "tests/integrations/test_retrieval_policy.py"
+    ],
+    "acceptance": "Controlled test must reject recent-only broad inventory, missing GitHub child owner, unverified historical source, or hidden not-connected source; status still not evidence of native ChatGPT invocation.",
+    "privacy": "NO_PERSONAL_EXTERNAL_CONNECTOR_DOCUMENT_URLS_OR_IDENTIFIERS_ADDED_TO_PUBLIC_GITHUB",
+    "past_project_status": "Older project-study names from prior conversations are not automatically certified as persisted artifacts without locating original source.",
+    "native_limit": "UNVERIFIED_NATIVE_CHATGPT_AUTO_RETRIEVAL_AND_FULL_HISTORY_PRESENCE"
   }
 }
