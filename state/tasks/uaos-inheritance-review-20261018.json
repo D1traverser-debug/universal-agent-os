@@ -4,7 +4,7 @@
   "task_type": "controller_maintenance",
   "status": "RUNNING",
   "current_stage": "SOURCE_FILELIST_ROUTER_PROMOTED__NATIVE_HOOK_AND_SEMANTIC_KNOWLEDGE_APPLICATION_OPEN",
-  "next_action": "Complete and prove six-axis deep-research admission on controlled controller path without bypassing historic coverage/quality/authority tests; compare every-turn forced-depth vs prior baseline, verify final output and independent outcome, then evaluate native/direct-child host extension using actual observed traces.",
+  "next_action": "Use source-grounded topic library and existing UAOS knowledge/evolution owner to compare requirements, product, architecture, software, workflow, cognitive methods, tools/plugins, and evaluation on real held-out task traces. Find semantically wrong yet structurally passing PR#163 cases; test alternate designs and true outcomes before any new gate/rewrite, preserve child authority and no-extra-paid-services boundary.",
   "state_ref": "state/tasks/uaos-inheritance-review-20261018.json",
   "evolution_ref": "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
   "last_verified_phase": "FIVE_REPO_SOURCE_INVENTORY_COMPLETE__DEEP_AND_REAL_BUSINESS_VALIDATION_INCOMPLETE",
@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T10:20:40.754Z",
+  "updated_at": "2026-10-19T12:01:25.219Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -452,5 +452,22 @@
       "https://aclanthology.org/2026.findings-acl.1199/"
     ],
     "open": "Actual native session invocation, direct child compatibility, honest semantic evidence verification, per-turn latency/cost and cross-task outcome comparison."
+  },
+  "outside_in_multidisciplinary_study_20261019": {
+    "status": "EIGHT_SOURCE_STUDY_DOCUMENTS_CANDIDATE__BEHAVIORAL_HOLDOUT_OPEN",
+    "owner_ref": "EVO-20261018-INHERITANCE-REVIEW",
+    "knowledge_index_ref": "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/README.md",
+    "module_count": 7,
+    "declared_method_roles": [
+      "requirements_product_system",
+      "architecture_interactions_formal",
+      "cognition_learning_distillation",
+      "management_workflow",
+      "tools_plugins_security",
+      "evaluation_governance_search",
+      "integrated_synthesis_holdouts"
+    ],
+    "evidence_limits": "Source study is not web exhaustion, full copyrighted standard access, installed native skill, independent semantic behavior or business outcome success",
+    "next_validation": "Evaluate PR#163 semantic-passing-but-wrong example plus native continuation/new-domain holdouts before material architecture changes"
   }
 }
