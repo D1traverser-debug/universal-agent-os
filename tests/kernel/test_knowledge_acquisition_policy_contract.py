@@ -15,7 +15,7 @@ def test_deep_task_profile_points_to_existing_problem_space_acquisition_owner():
     assert profile["knowledge_acquisition_admission"] == "src/uaos/kernel/problem_space.py#require_knowledge_acquisition_admission"
     assert system_map["controller"]["knowledge_acquisition_admission"] == profile["knowledge_acquisition_admission"]
     assert "literal claim" in profile["coverage_oriented_knowledge_acquisition"]["non_exhaustiveness_rule"]
-    assert "known-need lookup" in profile["coverage_oriented_knowledge_acquisition"]["narrow_lookup_rule"]
+    assert "narrow factual lookup" in profile["coverage_oriented_knowledge_acquisition"]["narrow_lookup_rule"]
 
 
 def test_comprehensive_learning_is_an_internal_escalation_not_a_session_entry_precondition():
