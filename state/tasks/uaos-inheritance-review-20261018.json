@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T07:40:39.960Z",
+  "updated_at": "2026-10-19T08:19:06.451Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -650,6 +650,24 @@
       ],
       "skill_blob": "c2b174e6caeafec8af8fe7a9fa49111891661a53",
       "native_file_reads": "NOT_VERIFIED"
+    },
+    "postrelease_host_observation": {
+      "status": "LIVE_SELECTED_SESSION_SOURCE_READ_AND_CODE_CORRECTION_OBSERVED__NATIVE_AUTOMATIC_ENFORCEMENT_UNVERIFIED",
+      "evidence": {
+        "prior_main": "040c83259ffc1d3c57b59f0201dda162092ff8d0",
+        "verified_new_main": "969b43e908bac39bd6d2dbe38245a778d1128f0f",
+        "correction_pr": 157,
+        "correction_ci": "676 passed, 2 skipped",
+        "corrected_path": "src/uaos/integrations/retrieval.py",
+        "verified_main_readback": true,
+        "live_tool_scope": "Current selected UAOS chat used actual GitHub connector fetch/read and code-change tools; no independent full native pre-tool or pre-send trace"
+      },
+      "failure_class": "CONTROLLER_RESUME_ELIGIBILITY_DIVERGENCE_IN_SOURCE_FILELIST_ROUTER",
+      "original_observation": "Controller source-read plan admitted a default task without verifying resume_eligible and controller_maintenance type",
+      "released_bounded_fix": "Controller plan now rejects ineligible or noncontroller defaults; new parameterized negative regression verified and main source reread",
+      "adjacent_open": "Domain source plan uses its own task-row filtering, rather than proving equivalent eligibility through current control resolver. No unauthorized domain selection has been observed; treat as a candidate, not a confirmed live incident",
+      "actual_goal_validation": "One source-backed source-read/correction loop only; no cross-session semantic holdout, native autonomous trigger, or broad learning-transfer result",
+      "next_test": "Exercise a controlled end-to-end domain/controller task selection against eligible, ineligible, ambiguous and completed rows, bind actual caller outputs and state effects; compare with canonical resolver before selecting any broader fix"
     }
   },
   "latest_user_skill_deployment_20261019": {
