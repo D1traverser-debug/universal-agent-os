@@ -81,7 +81,11 @@
     "tests/state/test_portable_snapshot.py",
     "tests/integrations/test_fresh_chat_resume.py",
     "docs/research/uaos-inheritance-review-20261018/11_file_authority_lifecycle_and_mutation_surface_audit.md",
-    "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md"
+    "docs/research/uaos-inheritance-review-20261018/16_host_observed_turn_origin_provenance_fencing.md",
+    "config/RETRIEVAL_POLICY.json",
+    "src/uaos/integrations/retrieval.py",
+    "tests/integrations/test_retrieval_policy.py",
+    "state/observations/knowledge-retrieval-recency-drift-20261019.json"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -414,5 +418,55 @@
     "assurance": "CONTROLLED_PYTHON_HOST_ONLY__NATIVE_CHATGPT_ACTUAL_HOST_ENUMERATION_UNVERIFIED__NO_FINANCIAL_CHILD_WRITE",
     "post_promotion": "MAIN_SOURCE_AND_EXACT_TASK_AND_EVOLUTION_REREAD_SUCCESS__CONTROLLED_HOST_ONLY__FRESH_NATIVE_CHATGPT_HOST_ORIGIN_CAPTURE_UNAVAILABLE",
     "assurance_ceiling": "TRUSTED_HOST_PYTHON_RECEIVER_ORIGIN_FENCING__NO_ACTUAL_NATIVE_CHATGPT_INTERCEPTOR__NO_REAL_HOST_ORIGIN_FEED_IN_THIS_SESSION__NO_CHILD_DOMAIN_COVERAGE_CLAIM"
+  },
+  "knowledge_inventory_scope_drift_20261019": {
+    "status": "CANDIDATE__CONTROLLED_RETRIEVAL_POLICY_AND_REGRESSION_PENDING_CI",
+    "origin_kind": "OBSERVED_ASSISTANT_SCOPE_FAILURE",
+    "governing_outcome": "Broad knowledge inventory must discover all current registered owner repositories and relevant historical external stores, not just the latest four open-source skill studies.",
+    "evidence": [
+      "state/observations/knowledge-retrieval-recency-drift-20261019.json",
+      "config/SYSTEM_MAP.json",
+      "config/RETRIEVAL_POLICY.json"
+    ],
+    "contrasting_causes": [
+      "RECENCY_BIAS_IN_ASSISTANT_SUMMARY_SUPPORTED_BY_VISIBLE_REPLY",
+      "CURRENT_CHILD_KNOWLEDGE_ROOTS_OMITTED_SUPPORTED_BY_FIVE_REPO_MAIN_TREE",
+      "DRIVE_NOTION_LIBRARY_PREVIOUSLY_NOT_CONSULTED_SUPPORTED_BY_CURRENT_CONNECTED_SEARCH",
+      "FULL_NATIVE_CHATGPT_RETRIEVAL_INJECTION_NOT_AVAILABLE_IN_REPOSITORY"
+    ],
+    "selected_intervention": "Extend current canonical retrieval-policy owner + bootstrap route; controlled source-role coverage receipt requires host-verifiable GitHub and historical evidence; no duplicate knowledge index",
+    "rejected": [
+      "CREATE_SECOND_GLOBAL_KNOWLEDGE_STORE",
+      "ASSUME_RECENT_FOUR_ARE_FULL_INVENTORY",
+      "REASSERT_ONLY_I_WILL_REMEMBER",
+      "TREAT_LEGACY_NOTION_DRIVE_AS_CURRENT_GOVERNANCE"
+    ],
+    "frozen_acceptance": [
+      "all current SYSTEM_MAP repositories covered for broad query",
+      "recent-four-only repository ref is rejected",
+      "current owner evidence must be host verified",
+      "past-work query needs Drive Notion Library and conversation dispositions",
+      "searched external sources require verified refs; unavailable remains explicit",
+      "current business and knowledge state authority unaffected",
+      "private external source URLs/IDs not copied into public repo",
+      "GitHub CI green and main reread",
+      "native host invocation and full historical completeness remain unverified"
+    ],
+    "method_reuse": "Existing SOURCE_ROLE_AND_AUTHORITY_BINDING; CSA-02 coverage ledger analogy CANDIDATE, Hindsight knowledge provenance analogy CANDIDATE; no canonical method promotion",
+    "implementation_refs": [
+      "ENTRYPOINT.md",
+      "config/RETRIEVAL_POLICY.json",
+      "src/uaos/integrations/retrieval.py",
+      "tests/integrations/test_retrieval_policy.py",
+      "state/observations/knowledge-retrieval-recency-drift-20261019.json",
+      "state/tasks/uaos-inheritance-review-20261018.json"
+    ],
+    "evaluation": {
+      "source_breadth": "FIVE_CURRENT_GITHUB_REPOS_PLUS_CONNECTED_DRIVE_NOTION_LIBRARY_RECONFIRMED",
+      "runtime_proof": "CONTROLLED_UNIT_TEST_ONLY_PENDING",
+      "external_history_exhaustiveness": "OPEN"
+    },
+    "post_promotion_observation": "PENDING_CI_MAIN_READBACK",
+    "native_limit": "NO_VERIFIED_CHATGPT_HOST_COMPLETE_MEDIATION_OR_CROSS_SESSION_RETRIEVAL_AUTO_INVOCATION"
   }
 }

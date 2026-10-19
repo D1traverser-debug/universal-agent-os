@@ -1,14 +1,183 @@
 {
-  "schema_version":"2.0",
-  "scope":"CONTROLLER_AND_DOMAIN_REPOSITORIES",
-  "unlisted_repository_action":"ALLOW_AS_EXTERNAL_REFERENCE_NOT_AUTHORITY",
-  "historical_requires_explicit_intent":true,
-  "retired_repositories":["D1traverser-debug/universal-continuity-agent"],
-  "repositories":{
-    "D1traverser-debug/financial-writing-agent":{"allow_exact":["UAOS_SKILL.md",".uaos/MANIFEST.json",".uaos/ADAPTER.json",".uaos/CAPABILITIES.json","config/EXECUTION_CONTRACT.json"],"deny_patterns":["continuity/**"],"allow_prefixes":["references/","financial_writing_agent/","workspaces/articles/","config/"]},
-    "D1traverser-debug/a-share-event-driven-agent":{"allow_exact":["UAOS_SKILL.md",".uaos/MANIFEST.json",".uaos/ADAPTER.json",".uaos/CAPABILITIES.json","config/RUNTIME_AUTHORITY.json"],"deny_patterns":["continuity/**","config/cutover_status.json"],"allow_prefixes":["references/","ashare_event_agent/","config/","audits/"]},
-    "D1traverser-debug/novel-writing-agent":{"allow_exact":["UAOS_SKILL.md",".uaos/MANIFEST.json",".uaos/ADAPTER.json",".uaos/CAPABILITIES.json","config/ARTIFACT_CONTEXT_GOVERNANCE.json","protocols/ACTIVE_RULEBOOK.md","protocols/NOVEL_MASTERY_MODEL.md"],"deny_patterns":["continuity/**","migration/**","CONTINUITY_ADAPTER.json","TASK_INDEX.json","ENTRYPOINT.md","PROTOCOL.md"],"allow_prefixes":["projects/","protocols/","research/","runtime/","config/"]},
-    "D1traverser-debug/video-growth-agent":{"allow_exact":["UAOS_SKILL.md",".uaos/MANIFEST.json",".uaos/ADAPTER.json",".uaos/CAPABILITIES.json"],"deny_patterns":["continuity/**"],"allow_prefixes":["skills/video-growth-agent/references/","video_growth_agent/","projects/"]}
+  "schema_version": "2.0",
+  "scope": "CONTROLLER_AND_DOMAIN_REPOSITORIES",
+  "unlisted_repository_action": "ALLOW_AS_EXTERNAL_REFERENCE_NOT_AUTHORITY",
+  "historical_requires_explicit_intent": true,
+  "retired_repositories": [
+    "D1traverser-debug/universal-continuity-agent"
+  ],
+  "repositories": {
+    "D1traverser-debug/financial-writing-agent": {
+      "allow_exact": [
+        "UAOS_SKILL.md",
+        ".uaos/MANIFEST.json",
+        ".uaos/ADAPTER.json",
+        ".uaos/CAPABILITIES.json",
+        "config/EXECUTION_CONTRACT.json"
+      ],
+      "deny_patterns": [
+        "continuity/**"
+      ],
+      "allow_prefixes": [
+        "references/",
+        "financial_writing_agent/",
+        "workspaces/articles/",
+        "config/"
+      ]
+    },
+    "D1traverser-debug/a-share-event-driven-agent": {
+      "allow_exact": [
+        "UAOS_SKILL.md",
+        ".uaos/MANIFEST.json",
+        ".uaos/ADAPTER.json",
+        ".uaos/CAPABILITIES.json",
+        "config/RUNTIME_AUTHORITY.json"
+      ],
+      "deny_patterns": [
+        "continuity/**",
+        "config/cutover_status.json"
+      ],
+      "allow_prefixes": [
+        "references/",
+        "ashare_event_agent/",
+        "config/",
+        "audits/"
+      ]
+    },
+    "D1traverser-debug/novel-writing-agent": {
+      "allow_exact": [
+        "UAOS_SKILL.md",
+        ".uaos/MANIFEST.json",
+        ".uaos/ADAPTER.json",
+        ".uaos/CAPABILITIES.json",
+        "config/ARTIFACT_CONTEXT_GOVERNANCE.json",
+        "protocols/ACTIVE_RULEBOOK.md",
+        "protocols/NOVEL_MASTERY_MODEL.md"
+      ],
+      "deny_patterns": [
+        "continuity/**",
+        "migration/**",
+        "CONTINUITY_ADAPTER.json",
+        "TASK_INDEX.json",
+        "ENTRYPOINT.md",
+        "PROTOCOL.md"
+      ],
+      "allow_prefixes": [
+        "projects/",
+        "protocols/",
+        "research/",
+        "runtime/",
+        "config/"
+      ]
+    },
+    "D1traverser-debug/video-growth-agent": {
+      "allow_exact": [
+        "UAOS_SKILL.md",
+        ".uaos/MANIFEST.json",
+        ".uaos/ADAPTER.json",
+        ".uaos/CAPABILITIES.json"
+      ],
+      "deny_patterns": [
+        "continuity/**"
+      ],
+      "allow_prefixes": [
+        "skills/video-growth-agent/references/",
+        "video_growth_agent/",
+        "projects/"
+      ]
+    }
   },
-  "semantic_rules":["BROAD_SEARCH_MUST_EXCLUDE_RETIRED_AND_DENIED_PATHS","HISTORICAL_ACCESS_REQUIRES_EXPLICIT_HISTORICAL_INTENT","SEARCH_PRESENCE_IS_NOT_AUTHORITY","HISTORY_NEVER_OVERRIDES_CURRENT_AUTHORITY","ACTIVE_RETRIEVAL_STARTS_FROM_SYSTEM_MAP_REGISTRY_TASK_SKILL_MANIFEST_ADAPTER"]
+  "semantic_rules": [
+    "BROAD_SEARCH_MUST_EXCLUDE_RETIRED_AND_DENIED_PATHS",
+    "HISTORICAL_ACCESS_REQUIRES_EXPLICIT_HISTORICAL_INTENT",
+    "SEARCH_PRESENCE_IS_NOT_AUTHORITY",
+    "HISTORY_NEVER_OVERRIDES_CURRENT_AUTHORITY",
+    "ACTIVE_RETRIEVAL_STARTS_FROM_SYSTEM_MAP_REGISTRY_TASK_SKILL_MANIFEST_ADAPTER"
+  ],
+  "knowledge_inventory_routing": {
+    "role": "NON_AUTHORITATIVE_RETRIEVAL_SCOPE_AND_COMPLETENESS_GUIDE__NOT_ANOTHER_KNOWLEDGE_STORE",
+    "applies_when": [
+      "USER_ASKS_WHERE_KNOWLEDGE_IS",
+      "USER_ASKS_WHAT_WAS_LEARNED_BEFORE",
+      "USER_ASKS_TO_FIND_REUSE_OR_COMPARE_PRIOR_METHODS",
+      "USER_ASKS_FOR_ALL_PREVIOUS_STUDY_OR_RESEARCH"
+    ],
+    "current_authoritative_discovery": "Read controller ENTRYPOINT.md and CURRENT_SYSTEM.json; resolve current registered owner repositories dynamically from config/SYSTEM_MAP.json and config/AGENT_REGISTRY.json. Each business knowledge authority stays in the original child domain, not a controller copy.",
+    "source_roles": {
+      "controller_git": {
+        "repository_from": "config/SYSTEM_MAP.json#controller.repository",
+        "knowledge_roots": [
+          "docs/research/",
+          "docs/adr/",
+          "state/evolution/",
+          "src/uaos/state/knowledge.py"
+        ],
+        "note": "Recent external-skill study 12-15 is a subset, not a global inventory. Source notes can be CANDIDATE."
+      },
+      "registered_child_git": {
+        "repositories_from": "config/SYSTEM_MAP.json#domains",
+        "root_hints_by_domain": {
+          "financial_writing": [
+            "knowledge/",
+            "references/",
+            "evals/"
+          ],
+          "ashare": [
+            "references/",
+            "audits/",
+            "ashare_event_agent/resources/references/"
+          ],
+          "novel": [
+            "research/masterworks/",
+            "protocols/",
+            "projects/"
+          ],
+          "video": [
+            "projects/",
+            "skills/video-growth-agent/references/",
+            "docs/"
+          ]
+        },
+        "authority_rule": "Read each child's UAOS_SKILL.md and current business authority before claiming runtime or canonical business knowledge; no parent task-id equality assumption."
+      },
+      "optional_connected_historical_surfaces": [
+        {
+          "surface": "GOOGLE_DRIVE",
+          "role": "EXTERNAL_USER_OWNED_SOURCE__MAY_INCLUDE_OLDER_KNOWLEDGE_OR_PRIMARY_CORPUS",
+          "access_condition": "SEARCH_ONLY_IF_CONNECTED_AND_RELEVANT",
+          "authority_limit": "Legacy/migrated documents never override current domain canonical authority"
+        },
+        {
+          "surface": "NOTION",
+          "role": "EXTERNAL_USER_OWNED_SOURCE__MAY_INCLUDE_OLDER_KNOWLEDGE_OR_METHOD_BASES",
+          "access_condition": "SEARCH_ONLY_IF_CONNECTED_AND_RELEVANT",
+          "authority_limit": "Treat migrated/history marked pages as historical evidence, not current governing rule"
+        },
+        {
+          "surface": "CHATGPT_LIBRARY",
+          "role": "USER_UPLOADED_OR_GENERATED_FILES_AND_PRIOR_SOURCE_MATERIALS",
+          "access_condition": "SEARCH_LIBRARY_WHEN_PRIOR_FILES_MATERIALLY_RELEVANT",
+          "authority_limit": "Original corpus is not automatically a finished research finding or active task"
+        },
+        {
+          "surface": "PRIOR_CONVERSATIONS",
+          "role": "HISTORICAL_STUDY_REQUESTS_AND_FEEDBACK_NOT_NECESSARILY_PERSISTED",
+          "access_condition": "RETRIEVE_WHEN_USER_REFERENCES_PREVIOUS_WORK_AND_CURRENT_CHAT_IS_INCOMPLETE",
+          "authority_limit": "Earlier discussion must not be called a durable knowledge artifact without source verification"
+        }
+      ]
+    },
+    "completeness_invariants": [
+      "DO_NOT_REDUCE_ALL_KNOWLEDGE_TO_RECENT_FOUR_EXTERNAL_SKILL_STUDIES",
+      "FOR_BROAD_KNOWLEDGE_INVENTORY_DISCOVER_ALL_CURRENT_REGISTERED_DOMAIN_OWNERS_BEFORE_SUMMARIZING",
+      "CHECK_RELEVANT_CONNECTED_HISTORICAL_SURFACES_WHEN_THE_USER_ASKS_ABOUT_PRIOR_WORK_BEYOND_GITHUB",
+      "SEPARATE_VERIFIED_PERSISTED_ARTIFACTS_FROM_PRIOR_CONVERSATION_STUDY_NAMES_AND_UNVERIFIED_IMPORTS",
+      "IF_SOURCE_UNAVAILABLE_OR_SCOPE_UNCHECKED_REPORT_PARTIAL_AND_NAME_MISSING_SURFACES",
+      "GIT_BLOB_OR_NOTE_EXISTENCE_DOES_NOT_ESTABLISH_CANONICAL_KNOWLEDGE_STATE_OR_LIVE_NATIVE_HOST_INVOCATION",
+      "NEVER_COPY_PRIVATE_EXTERNAL_CONNECTOR_URLS_IDENTIFIERS_OR_CONTENT_INTO_PUBLIC_GITHUB_METADATA",
+      "REUSE_EXISTING_OWNER_AND_KNOWLEDGE_LIFECYCLE_NO_SECOND_ROUTER_OR_STUDY_STATUS_STORE"
+    ],
+    "query_success_rule": "When the question is about all earlier knowledge, prove breadth at source-role level before claiming completeness; if only the recent-four folder was read, label it a recent subset and expand. For a narrowly named item, use owner-first pinpoint retrieval, not compulsory exhaustive scans.",
+    "native_limit": "CONTROLLED_CONFIG_AND_TEST_INVARIANT__NO_VERIFIED_CHATGPT_NATIVE_NON_BYPASSABLE_RETRIEVAL_HOOK"
+  }
 }
