@@ -373,7 +373,9 @@ def admit_final_response(response: str, context: FinalizationContext) -> Finaliz
     )):
         raise FinalizationBlocked("UNSOLICITED_PRODUCT_OUTCOME_CLOSURE_EVIDENCE")
 
-    if context.work_remaining_without_user_input and not context.user_input_required:
+    # An unrelated user-choice dependency cannot excuse work that the host
+    # confirms is independently executable without that choice.
+    if context.work_remaining_without_user_input:
         raise FinalizationBlocked("ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT")
 
     deep_required = _deep_task_required(context)
