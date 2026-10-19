@@ -481,7 +481,7 @@
     "native_limit": "NO_VERIFIED_CHATGPT_HOST_COMPLETE_MEDIATION_OR_CROSS_SESSION_RETRIEVAL_AUTO_INVOCATION"
   },
   "progress_behavioral_recurrence_20261019": {
-    "status": "CANDIDATE_SOURCE_PROJECTION_REPAIR__NATIVE_OUTPUT_BEHAVIOR_STILL_FAILING_OR_UNVERIFIED",
+    "status": "SOURCE_SKILL_PROJECTION_PROMOTED_PR142__NATIVE_AUTONOMOUS_SELF_DETECTION_STILL_OPEN",
     "origin_kind": "INCIDENT__LIVE_USER_CORRECTION__REPEATED_PRIOR_20261016_20261018",
     "governing_outcome": "Independently detect and correct own controller behavior drift, enforce mandatory final selected-context 10-field Progress, validate root governance outcome instead of PR closure.",
     "incident_ref": "state/observations/native-cognition-progress-replay-20261018.json",
@@ -535,7 +535,21 @@
       "candidate_head_ci": "PENDING",
       "production_reread": "PENDING",
       "native_cold_chat_samples": "NONE_INDEPENDENT",
-      "real_recurrence": "OBSERVED_VISIBLE"
+      "real_recurrence": "OBSERVED_VISIBLE",
+      "release": {
+        "pr": 142,
+        "merged_main": "a90ea756b0d8a6a85cb642d074cd6d36944576f8",
+        "candidate_head": "9dc5f52924ec42dae0fa0de142b79b85d8599707",
+        "promotion_gate": 39187649744,
+        "pytest": "649 passed, 2 skipped",
+        "integration_run": 39187649462,
+        "integration_conclusion": "success",
+        "openai_provider": "skipped",
+        "main_readback": true,
+        "compiled_skill_blob": "b9d2e395cde7b6f0616265416bdbf526f906b6cd",
+        "assurance": "CONTROLLED_CODE_COMPILATION_AND_CI_ONLY__NO_ACTUAL_NATIVE_CHATGPT_SKILL_BYTE_OR_PRE_SEND_VERIFICATION"
+      },
+      "observed_native_after_release": "NOT_VERIFIED__NOT_INFERRED_FROM_SDK_OR_REPO_TESTS"
     },
     "rollback": "If generated Skill equality, normal selected-context handling, or precise progress regression fails, reject candidate; revert source/Skill together without reducing canonical Progress requirement.",
     "assurance": "GITHUB_SOURCE_VERIFIED_WHEN_GREEN__CANNOT_ASSERT_CURRENT_CHATGPT_REAL_PRE_SEND_PROGRESS_CHECK_OR_AUTONOMOUS_DISCOVERY"

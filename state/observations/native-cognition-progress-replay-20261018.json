@@ -188,7 +188,20 @@
       "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
       "state/tasks/uaos-inheritance-review-20261018.json"
     ],
-    "outcome": "SOURCE_FIX_IN_CANDIDATE__NATIVE_CHATGPT_SELECTED_SESSION_AUTOMATIC_OUTPUT_GUARD_STILL_UNVERIFIED",
-    "caveat": "User's report triggered current repair. Do not mislabel as independent pre-send auto-detection. Independent side finding: compiled runtime Skill omission and escaped markdown separator."
+    "outcome": "SOURCE_GENERATOR_SKILL_MAIN_PROMOTED__OLD_VISIBLE_RESPONSES_REPLAY_FAILED__NATIVE_BEHAVIOR_NOT_PROVEN",
+    "caveat": "User's report triggered current repair. Do not mislabel as independent pre-send auto-detection. Independent side finding: compiled runtime Skill omission and escaped markdown separator.",
+    "production_evidence": {
+      "pr": 142,
+      "merged_main": "a90ea756b0d8a6a85cb642d074cd6d36944576f8",
+      "candidate_head": "9dc5f52924ec42dae0fa0de142b79b85d8599707",
+      "promotion_gate": 39187649744,
+      "pytest": "649 passed, 2 skipped",
+      "integration_run": 39187649462,
+      "integration_conclusion": "success",
+      "openai_provider": "skipped",
+      "main_readback": true,
+      "compiled_skill_blob": "b9d2e395cde7b6f0616265416bdbf526f906b6cd",
+      "assurance": "CONTROLLED_CODE_COMPILATION_AND_CI_ONLY__NO_ACTUAL_NATIVE_CHATGPT_SKILL_BYTE_OR_PRE_SEND_VERIFICATION"
+    }
   }
 }
