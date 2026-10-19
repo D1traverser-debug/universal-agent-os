@@ -93,7 +93,8 @@
     "config/INTENT_RESOLUTION_POLICY.json",
     "docs/integration/UAOS_CHATGPT_CUSTOM_INSTRUCTIONS.txt",
     "docs/integration/CHATGPT_CUSTOM_INSTRUCTIONS.md",
-    "docs/research/uaos-inheritance-review-20261018/17_goal_semantic_alignment_and_agent_eval_source_study.md"
+    "docs/research/uaos-inheritance-review-20261018/17_goal_semantic_alignment_and_agent_eval_source_study.md",
+    "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "frozen_acceptance": [
     "ALL_FIVE_REPOSITORIES_EVIDENCED",
@@ -659,5 +660,48 @@
       "status": "STUDIED_FROM_FIRST_PARTY_GUIDANCE__NOT_APPLIED_TO_HOST",
       "exact_source_claim": "CognitionCase validates IDs, types and evidence; free-text intervention-to-goal semantic fit not established."
     }
+  },
+  "systemic_autonomous_evolution_learning_20261019": {
+    "status": "ARCHITECTURAL_SOURCE_STUDY_AND_HOST_CONFIGURATION_UPDATED__ACTUAL_LIVE_OUTCOME_UNVERIFIED",
+    "source": "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md",
+    "governing_outcome": "Proactively identify gaps in UAOS itself, challenge existing controlling assumptions, learn independently, act with authority and verify runtime/user impact instead of incident-only prompt patches.",
+    "source_facts": [
+      "CHATGPT_HOST_AUTO_AUDIT_PREVIOUSLY_DISABLED_AND_NEVER_RUN",
+      "EXISTING_WEEKLY_AUTO_TASK_NOW_ENABLED__FIRST_RUN_NOT_OBSERVED",
+      "CI_AND_TYPED_COGNITION_ARE_NOT_NATIVE_HOST_EXECUTION",
+      "DOMAIN_HEALTH_WORKFLOW_ONLY_AUDITS_REVISIONS",
+      "PRIOR_HINDSIGHT_PAPERCLIP_AND_SIX_METHOD_RESEARCH_EXISTS_WITHOUT_PROVEN_LATER_APPLICATION"
+    ],
+    "candidates": [
+      "DO_NOTHING_REACTIVE_ONLY__REJECT",
+      "PROMPT_ONLY_MORE_RULES__REJECT_AS_COMPLETE",
+      "PARALLEL_SUPERVISOR_OR_MEMORY_DATABASE__REJECT_WITHOUT_EVIDENCE",
+      "REBUILD_ALL_KERNELS__DEFER_PENDING_COMPARATIVE_HOST_EVIDENCE",
+      "REUSE_EVOLUTION_AND_KNOWLEDGE_WITH_REAL_EXISTING_HOST_TRIGGER__SELECT_BOUNDED_CURRENT_ACTION",
+      "DEPLOY_CONTROLLED_HOST_TRACE_AND_INDEPENDENT_EVAL__FUTURE_FEASIBILITY_EVALUATION"
+    ],
+    "method_learning": [
+      "Argyris double-loop",
+      "Reflexion feedback episodic memory",
+      "Voyager automatic curriculum self-verification",
+      "Anthropic multi-trial agent evaluation",
+      "OpenAI end-to-end trace grading",
+      "NIST continual govern-map-measure-manage"
+    ],
+    "execution_evidence": "Existing ChatGPT automation update responded enabled=true using the same task (not a second monitor). No observed first run or outcome.",
+    "falsifiers": [
+      "ENABLED_NO_RUN_OR_MISSING_AUTHORIZATION",
+      "RUN_PRODUCES_REPORT_ONLY_WITHOUT_EXECUTABLE_ACTION",
+      "FIRST_OUTCOME_FAILS_TARGET_AND_REPEATS_PAST_ERRORS",
+      "SOURCE_METHOD_NEVER_RETRIEVED_OR_APPLIED_ON_NEW_CASE",
+      "HOST_EXECUTION_DIFFERS_FROM_DOCUMENTED_GATE"
+    ],
+    "acceptance_left_open": [
+      "FIRST_REAL_PROACTIVE_RUN",
+      "ACTION_AND_OUTCOME_RECEIPT",
+      "NOVEL_CASE_GENERALIZATION_AND_METHOD_TRANSFER",
+      "INDEPENDENT_NATIVE_CHATGPT_CONFORMANCE"
+    ],
+    "assurance": "PARTIAL_TRIGGER_RESTORED_AND_RESEARCH_RECORDED__NATIVE_CAPABILITY_NOT_PROVEN"
   }
 }
