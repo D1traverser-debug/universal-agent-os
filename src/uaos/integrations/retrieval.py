@@ -19,6 +19,13 @@ class RetrievalDenied(PermissionError):
 
 
 @dataclass(frozen=True, slots=True)
+class KnowledgeInventoryCoverageReceipt:
+    checked_repositories: tuple[str, ...]
+    unavailable_historical_surfaces: tuple[str, ...]
+    assurance: str = "SOURCE_ROLES_INSPECTED__CONTENT_EXHAUSTIVENESS_AND_NATIVE_INVOCATION_UNVERIFIED"
+
+
+@dataclass(frozen=True, slots=True)
 class RepositoryRetrievalRule:
     allow_exact: frozenset[str]
     deny_patterns: tuple[str, ...]
@@ -95,7 +102,8 @@ class RetrievalPolicy:
         verify_source_ref: Callable[[str], bool] | None,
         prior_work_requested: bool,
         historical_surface_outcomes: Mapping[str, str] | None = None,
-    ) -> tuple[str, ...]:
+        historical_surface_evidence_refs: Mapping[str, str] | None = None,
+    ) -> KnowledgeInventoryCoverageReceipt:
         """Require source-role breadth before claiming a broad knowledge inventory.
 
         Reuses retrieval policy and the current SYSTEM_MAP; it does not store
@@ -128,6 +136,7 @@ class RetrievalPolicy:
             if not isinstance(source_ref, str) or not source_ref.strip() or not verify_source_ref(source_ref):
                 raise RetrievalDenied("unverified knowledge repository read: " + repo)
 
+        unavailable: set[str] = set()
         if prior_work_requested:
             historical = self.knowledge_inventory_routing.get("source_roles", {})
             optional = historical.get("optional_connected_historical_surfaces", ()) if isinstance(historical, Mapping) else ()
@@ -142,4 +151,14 @@ class RetrievalPolicy:
             allowed = {"SEARCHED_WITH_EVIDENCE", "UNAVAILABLE_OR_NOT_CONNECTED"}
             if any(historical_surface_outcomes[surface] not in allowed for surface in expected_surfaces):
                 raise RetrievalDenied("historical source result must be searched or explicitly unavailable")
-        return tuple(sorted(expected))
+            for surface in expected_surfaces:
+                if historical_surface_outcomes[surface] == "UNAVAILABLE_OR_NOT_CONNECTED":
+                    unavailable.add(surface)
+                    continue
+                ref = (historical_surface_evidence_refs or {}).get(surface)
+                if not isinstance(ref, str) or not ref.strip() or not verify_source_ref(ref):
+                    raise RetrievalDenied("unverified historical knowledge source read: " + surface)
+        return KnowledgeInventoryCoverageReceipt(
+            checked_repositories=tuple(sorted(expected)),
+            unavailable_historical_surfaces=tuple(sorted(unavailable)),
+        )
