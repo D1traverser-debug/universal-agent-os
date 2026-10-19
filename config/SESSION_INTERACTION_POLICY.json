@@ -83,7 +83,7 @@
     "required": true,
     "scope": "BEFORE_EVERY_SUBSTANTIVE_RESPONSE_TOOL_CALL_OR_ACTION_AFTER_A_CONTROLLER_OR_DOMAIN_HAS_BEEN_SELECTED",
     "role": "LIGHTWEIGHT_ROUTER__NOT_A_SECOND_COGNITION_STATE_MACHINE",
-    "responsibility": "Always enter a cheap control step before substantive work, then independently route only the minimum sufficient execution, research, cognition, Deep Task, evolution, verification and mutation depth required by the current governing outcome and newly acquired evidence.",
+    "responsibility": "Each selected controller response begins full-dimensional, substantive evidence research; findings enter the existing integrated cognition/deep-task/knowledge/evolution loop. This is not a shallow triage or a new controller.",
     "checks": [
       "recover the current outcome, owner, exact state, unfinished actions and evidence provenance before accepting user/model/prior-system narratives as facts",
       "actively challenge causal explanations AND the governing rules, architecture and learning method itself; seek other contributing causes, contradictions, unknown gaps and post-action effects even without user correction",
@@ -95,7 +95,7 @@
     "anti_circularity": "Complexity, unknown knowledge, architecture/systemic status, problem classification or need for deep research are INTERNAL ROUTING SIGNALS, not prerequisites for entering this sentinel. The sentinel must run so those signals can be discovered rather than requiring the pre-entry model interpretation to already know them.",
     "clear_path": "NO_ESCALATION_NEEDED__CONTINUE_NORMAL_WORK_WITH_MINIMUM_SUFFICIENT_DEPTH",
     "autonomous_goal_loop": "WHILE_THE_ADMITTED_OBJECTIVE_REMAINS_UNFINISHED_AND_NO_GENUINE_USER_INPUT_AUTHORIZATION_SAFETY_BUDGET_OR_EXTERNAL_BLOCKER_EXISTS__SELECT_THE_NEXT_EVIDENCE_SUPPORTED_ACTION__EXECUTE__VERIFY__REASSESS__CONTINUE_UNTIL_COMPLETION_OR_REAL_STOP_CONDITION",
-    "anti_bloat": "Mandatory entry is cheap routing, not mandatory heavy deliberation, web research, Deep Task or Evolution. Simple/familiar turns should pass through quickly.",
+    "anti_bloat": "Use the existing one controller and evidence owners, but do not replace the explicit user-required deep per-dimension study with a shallow scan; avoid duplicating retrieval of verified identical source material.",
     "native_chatgpt_boundary": "Native ChatGPT execution of this entry remains behavioral; there is no verified repository-controlled pre-send/pre-tool hook."
   },
   "always_on_problem_detection_sentinel": {
@@ -121,13 +121,13 @@
     "checks": [
       "derive current semantic evidence for explicit_user_depth_request, material_high_uncertainty, unknown_knowledge, architecture_or_control_plane, repeated_systemic, ordinary_structured_evidence_insufficient and comprehensive_knowledge_acquisition_required rather than relying on keyword aliases",
       "treat an explicit user request for deeper analysis or comprehensive learning as a mandatory force signal for the relevant evidence profile, not as the only path into it",
-      "when ordinary STRUCTURED execution remains sufficient, keep the task lightweight and do not manufacture Deep Task or broad-research ceremony",
+      "selected UAOS controller turns always complete the canonical six-axis substantive study and cover all fifteen baseline concerns; other controlled execution depth is not falsely called native enforced",
       "when assess_deep_task_requirement requires the profile, activate the current repository Deep Task evidence admission without waiting for the user to diagnose the task type or ask for a better solution",
       "if new evidence discovered during execution changes the depth classification, re-evaluate before material completion rather than freezing the initial classification"
     ],
     "clear_path": "ORDINARY_EXECUTION_DEPTH__CONTINUE_WITH_THE_MINIMUM_SUFFICIENT_CURRENT_SEARCH_MODE",
     "triggered_path": "ACTIVATE_CURRENT_DELIBERATION_AND_DEEP_TASK_EVIDENCE_PROFILE__NO_SECOND_COGNITION_STATE_MACHINE",
-    "anti_bloat": "Always-on means always-on lightweight depth routing, not permanent deep research. Simple/familiar/low-uncertainty tasks remain lightweight.",
+    "anti_bloat": "Execution and answer formatting can be concise; each selected controller turn still requires verified full-dimensional deep research. Other registered direct-domain scope remains an open integration and must not be called guaranteed.",
     "native_chatgpt_boundary": "This is a behavioral session responsibility. Native ChatGPT still has no verified repository-controlled non-bypassable semantic-signal injector or pre-send/pre-tool hook."
   },
   "problem_cognition_action_transaction": {
@@ -235,7 +235,7 @@
     "deliberation_rule": "When any current-turn problem signal was observed, deliberation_state must not be NOT_TRIGGERED. Report the evidence/control escalation used without exposing private chain-of-thought.",
     "consistency_rule": "A response that explicitly reports a defect, contradiction, drift, failure, user correction or unreliable-goal signal cannot simultaneously report Deliberation: NOT_TRIGGERED or Evolution: NO_EVOLUTION_TRIGGER unless the observation is explicitly classified as non-problematic with a reason.",
     "action_closure_rule": "A response that reports repair/no-change must be consistent with admitted causal/intervention evidence and evolution disposition; a cognitively admitted authorized repair cannot stop at recommendation-only.",
-    "assurance_rule": "If progress, authority scope, cognition/evolution state, assurance level or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value."
+    "assurance_rule": "If progress, authority scope, cognition/evolution state, assurance level or version freshness cannot be verified, label it UNVERIFIED or UNKNOWN rather than fabricating a value. Full-dimensional research is UNVERIFIED unless each axis/concern has real source and host-bound review evidence."
   },
   "controller_inheritance_review": {
     "required": true,
@@ -264,5 +264,48 @@
       "evolution_learning"
     ],
     "evidence_admission_ref": "src/uaos/assurance/controller_review.py#require_controller_review_admission"
+  },
+  "full_dimension_deep_study": {
+    "required": true,
+    "scope": "EVERY_SELECTED_CONTROLLER_RESPONSE__INCLUDING_CLEAN_QUERY_AND_READ_ONLY_TURNS",
+    "objective": "EVERY_TURN_SUBSTANTIVE_DEEP_RESEARCH_ACROSS_EVERY_DIMENSION_AND_ALL_BASELINE_CONCERNS__CROSS_LINKS__UNKNOWN_DISCOVERY__NO_SHALLOW_SCAN_SUBSTITUTION",
+    "dimensions": [
+      "OBJECT",
+      "EVENT",
+      "CAPABILITY",
+      "EVALUATION",
+      "RELATION",
+      "TIME"
+    ],
+    "baseline_work_concerns": [
+      "GOALS_REQUIREMENTS",
+      "NORMAL_TASK_WORK",
+      "INCIDENTS_FAILURES",
+      "LATENT_FAULT_DISCOVERY",
+      "CAPABILITY_OPPORTUNITIES",
+      "KNOWLEDGE_LEARNING",
+      "COGNITION_DECISION",
+      "ARCHITECTURE_OPTIMIZATION",
+      "EXECUTION_COORDINATION",
+      "VALIDATION_QUALITY",
+      "FEEDBACK_CORRECTION",
+      "EXPERIENCE_TRANSFER",
+      "GOVERNANCE",
+      "CONTINUITY_RECOVERY",
+      "SYSTEM_EVOLUTION"
+    ],
+    "required_per_dimension": [
+      "at least two independently verifiable local observations",
+      "at least two independently verifiable professional method sources",
+      "at least one falsification/counterexample source",
+      "at least one task-outcome verification source",
+      "explicit competing explanation and effect on the real user goal",
+      "links to at least two other dimensions"
+    ],
+    "unknown_discovery": "STATE_NEW_OR_UNKNOWN_CONCERNS_AND_SOURCE_GAPS_EXPLICITLY__DO_NOT_CLAIM_SIX_OR_FIFTEEN_IS_AN_EXHAUSTIVE_WORLD_ONTOLOGY",
+    "controlled_admission_ref": "src/uaos/runtime/epistemic_entry.py#admit_full_dimension_study",
+    "controlled_finalization_ref": "src/uaos/runtime/finalization.py#admit_final_response",
+    "output_rule": "DEEP_INTERNAL_RESEARCH_EVERY_SELECTED_CONTROLLER_TURN__VISIBLE_REPORT_MAY_REMAIN_FOCUSED__DO_NOT_CLAIM_COMPLETED_IF_ANY_DIMENSION_UNVERIFIED",
+    "native_assurance": "BEHAVIORAL_NATIVE_CHATGPT__NO_NON_BYPASSABLE_PRE_SEND_OR_INDEPENDENT_SEMANTIC_JUDGE"
   }
 }
