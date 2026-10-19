@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T06:25:23.292Z",
+  "updated_at": "2026-10-19T06:45:40.386Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -894,5 +894,31 @@
       "skill_sha": "f86fffcb7179a57ff4c664ca34ca1a30ae0031ed",
       "test_assurance": "COMPILED_SOURCE_CHECKED__ACCOUNT_INSTALLED_BYTES_NOT_OBSERVED"
     }
+  },
+  "source_read_plan_20261019": {
+    "status": "CANDIDATE_SAME_OWNER_FILELIST_RESOLVER__CI_PENDING__NATIVE_HOST_FETCH_UNVERIFIED",
+    "goal": "Resolve which current registered repository and exact task files a request needs, distinguish cold/bootstrap/continuation/domain/broad knowledge, and prevent silent reliance on recent studies only.",
+    "architecture": "No separate dispatcher or task state machine. Existing RetrievalPolicy selects exact source paths from SYSTEM_MAP and TASK_INDEX; script exports a read-only JSON plan; native tool calls still must execute reads.",
+    "alternatives": [
+      "ALWAYS_READ_ALL_400_PLUS_FILES:REJECT_BLOAT_AND_FALSE_ASSURANCE",
+      "STATIC_FILELIST_HARDCODED_IN_CUSTOM_INSTRUCTIONS:REJECT_STALE",
+      "READ_ONLY_OWNER_RESOLVED_PLAN_REUSING_RETRIEVAL_POLICY:SELECTED",
+      "SECOND_CONTROLLER_FOR_ROUTING:REJECT_DUPLICATE_AUTHORITY"
+    ],
+    "files": [
+      "src/uaos/integrations/retrieval.py",
+      "scripts/uaos_read_plan.py",
+      "tests/integrations/test_retrieval_policy.py",
+      "src/uaos/runtime/native_runtime_skill.py",
+      "skills/uaos-controller-runtime/SKILL.md"
+    ],
+    "acceptance": [
+      "Cold-start reads ENTRYPOINT and CURRENT_SYSTEM before owner/task; continuation fetches live source-owner and exact default task only",
+      "All four child domains plan their own owner and current binding manifest; unknown project/day paths cannot be guessed",
+      "Broad knowledge discovers five currently registered owners and their relevant roots; it is not evidence the actual content was fetched",
+      "Invalid ambiguous controller selection or unsafe source path fails closed",
+      "Generated Skill remains < 8000 chars and includes exact runnable filelist path",
+      "Scope remains SOURCE_PLANNING_ONLY with actual native ChatGPT invocation/fetch/knowledge application separately unverified"
+    ]
   }
 }
