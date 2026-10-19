@@ -109,7 +109,6 @@ def build_native_runtime_skill(
         "## 3. Route adaptively",
         "",
         "Every selected turn derives its own depth. For suspected errors, use `src/uaos/kernel/cognition_case.py` plus independent falsification; for unfamiliar broad research use `src/uaos/kernel/problem_space.py` with source coverage; for systemic/multi-step work use `src/uaos/kernel/deep_task.py`. Execute under the original owner; outcome, not policy wording, determines success.",
-        "For selected UAOS controller turns, the canonical full_dimension_deep_study overrides ordinary adaptive depth: study OBJECT, EVENT, CAPABILITY, EVALUATION, RELATION and TIME substantively, cover the fifteen baseline work concerns, connect dimensions, verify sources and report gaps. Preserve one cognition, knowledge and evolution authority; direct domains keep their own governed scope.",
         "Only current tool/host evidence proves an action happened. Keep user requirements distinct from proposed fixes and never replace an actual problem with a convenient proxy.",
         "",
         "## 4. Keep claims and requirements distinct",
