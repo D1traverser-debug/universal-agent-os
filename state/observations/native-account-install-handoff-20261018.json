@@ -160,6 +160,19 @@
     "candidate_branch": "refactor/compact-runtime-20261019",
     "bytes": 7870,
     "installed_in_account": "UNVERIFIED",
-    "source_change_does_not_install_skill": true
+    "source_change_does_not_install_skill": true,
+    "production_status": "MAIN_SOURCE_VERIFIED__ACCOUNT_INSTALLED_BYTES_UNKNOWN",
+    "release": {
+      "pr": 150,
+      "main": "51308cf85558f6dd99f45f95e51f60b5bc0c77b4",
+      "gate_run": 39209447382,
+      "gate": "660 passed, 2 skipped",
+      "live_run": 39209447381,
+      "live": "success, OpenAI provider skipped",
+      "skill_bytes_before": 11270,
+      "skill_bytes_after": 7870,
+      "skill_sha": "f86fffcb7179a57ff4c664ca34ca1a30ae0031ed",
+      "test_assurance": "COMPILED_SOURCE_CHECKED__ACCOUNT_INSTALLED_BYTES_NOT_OBSERVED"
+    }
   }
 }
