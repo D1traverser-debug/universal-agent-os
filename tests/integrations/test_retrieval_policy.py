@@ -238,6 +238,26 @@ def test_read_plan_rejects_wrong_domain_and_ambiguous_default_instead_of_guessin
         build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY)
 
 
+@pytest.mark.parametrize(
+    "field,invalid_value",
+    [
+        ("resume_eligible", False),
+        ("resume_eligible", None),
+        ("task_type", "article_workspace_router"),
+        ("authority_context", "DOMAIN:video"),
+        ("status", "COMPLETE"),
+    ],
+)
+def test_controller_source_plan_rejects_ineligible_or_noncontroller_default(field, invalid_value):
+    system, index = _current_read_plan_source()
+    changed = dict(index)
+    changed["controller_tasks"] = [dict(t) for t in index["controller_tasks"]]
+    target = next(t for t in changed["controller_tasks"] if t["default_resume"])
+    target[field] = invalid_value
+    with pytest.raises(RetrievalDenied, match="controller task authority, type, eligibility or status"):
+        build_source_read_plan(system_map=system, task_index=changed, retrieval_policy=POLICY)
+
+
 def test_read_plan_rejects_unsafe_task_refs_and_missing_children_instead_of_search_guess():
     system, index = _current_read_plan_source()
     changed = dict(index)
