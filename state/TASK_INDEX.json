@@ -3,7 +3,7 @@
   "authority": "UAOS",
   "index_role": "DISCOVERY_METADATA__EXACT_STATE_LIVES_IN_STATE_REF",
   "resolution_note": "Aliases are convenience metadata only. Natural-language continuation is resolved semantically by intent/domain/task context, then mechanically by exact/default-resume rules. A bare generic inheritance request with no resolved target opens the current selector instead of silently selecting a task. Registered domain routers do not own child business identities; exact child references are resolved by the owning domain. Controller maintenance uses the same index under controller_tasks and exact state under state/tasks; it does not create a second continuity system.",
-  "updated_at": "2026-10-19T02:56:11.318Z",
+  "updated_at": "2026-10-19T03:33:48Z",
   "controller_tasks": [
     {
       "task_id": "uaos:maintenance:financial-system-governed-recovery-20261018",
@@ -25,8 +25,8 @@
       "status": "RUNNING",
       "resume_eligible": true,
       "default_resume": true,
-      "semantic_summary": "DEFAULT UAOS controller ongoing: repair own understanding/judgment/autonomous correction failure with goal-target fidelity, without suspending other legitimate business/domain governance. Source-policy and compiled Skill candidate; live semantic behavioral verification not established. Five-repo evidence-backed work continues. Finance parent recovery RUNNING/not default.",
-      "current_stage": "CONTROLLER_SELF_GOVERNANCE_CAPABILITY_REPAIR__GOAL_FIDELITY_AND_FIVE_REPO_WORK_PARALLEL__NATIVE_BEHAVIOR_UNVERIFIED",
+      "semantic_summary": "RUNNING UAOS controller: pre-existing weekly proactive learning/evolution host task was disabled and never run, now enabled with evidence-led research, assumption-challenge, owner-authorized real action and feedback. First actual execution, native semantic correctness and method transfer remain unverified. Do not report automated performance from configuration/CI. Existing child work and Financial recovery remain active.",
+      "current_stage": "AUTONOMOUS_EVOLUTION_HOST_TRIGGER_ENABLED__FIRST_REAL_RUN_AND_NATIVE_SEMANTIC_PROOF_OPEN",
       "state_ref": "state/tasks/uaos-inheritance-review-20261018.json"
     },
     {
