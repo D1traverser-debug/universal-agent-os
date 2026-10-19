@@ -35,7 +35,7 @@
     "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T08:35:36.257Z",
+  "updated_at": "2026-10-19T08:38:10.014Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -71,7 +71,9 @@
   },
   "epistemic_entry_implementation": {
     "status": "CONTROLLED_GATE_PRODUCTION_VERIFIED__NATIVE_STABILITY_UNVERIFIED",
-    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#epistemic_entry_implementation"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#epistemic_entry_implementation",
+    "task_ref": "state/tasks/uaos-epistemic-entry-20261018.json",
+    "native_host": "UNVERIFIED_PRE_SEND_PRE_TOOL_HOOK"
   },
   "native_account_cutover": {
     "status": "ACCOUNT_SKILL_UPDATE_USER_CONFIRMED__FIRST_CANARY_PARTIAL__INSTALLED_BYTES_UNVERIFIED",
@@ -192,7 +194,8 @@
   },
   "self_assurance_priority_gate_20261019": {
     "status": "RETRACTED_AND_PRODUCTION_MAIN_VERIFIED__UNRELATED_CHILD_AUDIT_HOLD_CANCELLED",
-    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#self_assurance_priority_gate_20261019"
+    "historical_detail_ref": "D1traverser-debug/universal-agent-os@b11a2a86ef99085678dac1f73c345b19c245f92b:state/tasks/uaos-inheritance-review-20261018.json#self_assurance_priority_gate_20261019",
+    "suspended_scope": "NONE__NORMAL_AUTHORIZED_WORK_CONTINUES"
   },
   "controller_goal_fidelity_20261019": {
     "status": "SOURCE_POLICY_POINTER_SKILL_PROMOTED__PR145_MAIN_REREAD__NATIVE_SELF_CORRECTION_UNVERIFIED",
