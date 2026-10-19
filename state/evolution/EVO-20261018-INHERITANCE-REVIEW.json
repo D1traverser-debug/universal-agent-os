@@ -926,5 +926,29 @@
     ],
     "native_boundary": "NO_NATIVE_CHATGPT_COMPLETE_MEDIATION_PROOF__CONTROLLED_CALLER_ONLY",
     "method_reuse": "Existing DeepTask, KnowledgeAcquisition, CognitionCase and one EvolutionTransaction, no parallel controller or memory owner."
+  },
+  "outside_in_multidisciplinary_study_20261019": {
+    "status": "SOURCE_STUDY_INDEXED__METHOD_CANDIDATES_ONLY__TRANSFER_AND_NATIVE_NOT_OBSERVED",
+    "index_ref": "docs/research/uaos-inheritance-review-20261018/knowledge-study-20261019/README.md",
+    "source_roles": [
+      "original_standards_and_research",
+      "product_and_system_practitioners",
+      "software_and_formal_methods",
+      "agent_implementation",
+      "evaluation_and_security"
+    ],
+    "primary_findings": [
+      "PR#163 six-axis/15-concern check is structural not semantic",
+      "Full-depth user constraint and outcome/latency research must be compared, not falsely reconciled by checklist",
+      "Knowledge docs exist, selectively applicable cross-owner method has not yet been observed",
+      "Native ChatGPT complete interception has no proof"
+    ],
+    "no_promoted_method": true,
+    "open_checks": [
+      "independent semantically irrelevant but structurally valid fixture",
+      "native host behavior trace",
+      "cross-domain method holdouts",
+      "real business outcome, cost and latency compare"
+    ]
   }
 }
