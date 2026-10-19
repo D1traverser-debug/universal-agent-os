@@ -293,6 +293,32 @@ def test_real_user_choice_can_be_a_terminal_blocker_without_fake_cognition_case(
     assert receipt.adherence.passed
 
 
+def test_user_input_blocker_cannot_hide_independent_actionable_work():
+    """A real missing user choice never excuses other safe work still runnable."""
+    closure = ProblemClosureSignals(problem_detected=True, user_choice_required=True)
+    response = _report(
+        problem=True, next_action="等待用户提供真正缺失的授权范围",
+    ).replace(
+        "Evolution：DURABLE_EVOLUTION_UPDATED__EVO-X",
+        "Evolution：PENDING__BLOCKED_BY_USER_FACT",
+    ).replace(
+        "Deliberation：TRIGGERED__CAUSAL_INTERVENTION_ADMITTED",
+        "Deliberation：TRIGGERED__BLOCKED_BEFORE_CAUSAL_ADMISSION",
+    )
+    with pytest.raises(FinalizationBlocked) as exc:
+        admit_final_response(
+            response,
+            FinalizationContext(
+                context_selected=True,
+                problem_signal_observed=True,
+                user_input_required=True,
+                work_remaining_without_user_input=True,
+                closure_signals=closure,
+            ),
+        )
+    assert "ACTIONABLE_WORK_REMAINS_WITHOUT_USER_INPUT" in exc.value.reasons
+
+
 def test_controlled_finalization_rejects_fabricated_prior_method_without_trusted_resolver():
     prior = KnowledgeItem(
         knowledge_id="prior:repeated-incident-analysis",
