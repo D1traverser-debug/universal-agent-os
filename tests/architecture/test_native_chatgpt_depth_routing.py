@@ -167,7 +167,7 @@ def test_session_policy_requires_user_independent_execution_depth_routing():
     assert "user is not responsible" in sentinel["responsibility"].lower()
     checks = " ".join(sentinel["checks"]).lower()
     assert "not as the only path" in checks
-    assert "ordinary structured" in checks
+    assert "selected uaos controller turns always complete" in checks
     assert "assess_deep_task_requirement" in sentinel["assessment_ref"]
 
 
