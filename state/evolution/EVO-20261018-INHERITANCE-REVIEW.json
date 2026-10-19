@@ -759,5 +759,39 @@
       "native_selected_chat_end_to_end": "NOT_INTERCEPTED_BY_THIS_CODE"
     },
     "assurance": "CONTROLLED_ADAPTER_ONLY__DO_NOT_CONFLATE_SOURCE_OR_CI_WITH_PRODUCT_NATIVE_BEHAVIOR"
+  },
+  "native_dispatcher_context_refactor_20261019": {
+    "status": "CANDIDATE__CANONICAL_RUNTIME_SKILL_COMPACTION__NATIVE_BEHAVIOR_UNVERIFIED",
+    "governing_outcome": "Reduce always-loaded policy repetition while retaining native selected-context goal fidelity, source retrieval, actual tools, controlled mutation and mandatory Progress.",
+    "candidates": [
+      {
+        "name": "KEEP_11K_DUPLICATED_ENTRY",
+        "decision": "REJECT_CONTEXT_COST"
+      },
+      {
+        "name": "COPY_POLICY_INTO_CUSTOM_INSTRUCTIONS",
+        "decision": "REJECT_SHADOW_AUTHORITY"
+      },
+      {
+        "name": "MAKE_7_8K_GENERATED_SKILL_AND_LAZY_CANONICAL_OWNER_READ",
+        "decision": "SELECT"
+      },
+      {
+        "name": "REPLACE_WITH_SECOND_RUNTIME_POLICY_STORE",
+        "decision": "REJECT_DUPLICATE_OWNER"
+      }
+    ],
+    "source_references": [
+      "src/uaos/runtime/native_runtime_skill.py",
+      "skills/uaos-controller-runtime/SKILL.md",
+      "tests/architecture/test_uaos_controller_runtime_skill.py"
+    ],
+    "acceptance": [
+      "Exact generated Skill equality test",
+      "All inherited regressions for mandatory entry, latest intent, deep routing, authority, evolution, completion, Progress and host uncertainty",
+      "Hard native Skill budget <=8000 characters",
+      "User-account installed Skill bytes NOT asserted current"
+    ],
+    "assurance": "GITHUB_COMPILED_HOT_PATH_ONLY__ACCOUNT_INSTALLED_SKILL_BYTES_UNKNOWN__NATIVE_ACTUAL_USAGE_UNVERIFIED"
   }
 }
