@@ -148,6 +148,22 @@ def test_all_dimensions_must_have_qualified_sources():
         )
 
 
+def test_missing_concerns_and_cross_axis_links_are_rejected():
+    study = _full_dimension_study()
+    first = replace(study.studies[0], covered_concerns=("GOALS_REQUIREMENTS",))
+    with pytest.raises(EntryAdmissionError, match="omits baseline work concerns"):
+        admit_full_dimension_study(
+            replace(study, studies=(first, *study.studies[1:])),
+            verify_evidence=lambda _: True,
+        )
+    first = replace(study.studies[0], cross_axes=("TIME",))
+    with pytest.raises(EntryAdmissionError, match="cross-dimension connections"):
+        admit_full_dimension_study(
+            replace(study, studies=(first, *study.studies[1:])),
+            verify_evidence=lambda _: True,
+        )
+
+
 def test_selected_controller_must_submit_dimensional_study():
     with pytest.raises(FinalizationBlocked, match="MISSING_FULL_DIMENSION_RESEARCH"):
         admit_final_response(_report(), _context(_entry(), full_dimension_study=None))
