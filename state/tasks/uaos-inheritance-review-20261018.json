@@ -32,7 +32,7 @@
     "state/observations/knowledge-retrieval-recency-drift-20261019.json"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T01:25:33.722Z",
+  "updated_at": "2026-10-19T01:27:37.512Z",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -637,7 +637,7 @@
     "next_validation": "Select high-risk cross-owner mutation or actual direct-child host handshake path. Real provider/host evidence and independent business outcome V&V remain required."
   },
   "knowledge_inventory_scope_drift_20261019": {
-    "status": "CANDIDATE_CODE_AND_POLICY__CI_AND_PRODUCTION_READBACK_PENDING",
+    "status": "CONTROLLED_RETRIEVAL_POLICY_PROMOTED__PR140_CI_MAIN_REREAD__NATIVE_UNVERIFIED",
     "origin": "state/observations/knowledge-retrieval-recency-drift-20261019.json",
     "diagnosis": "Assistant misreported a 4-item recent source-study queue as the full personal knowledge system; current registered domains and relevant historical connected sources were not enumerated.",
     "intervention": [
@@ -649,6 +649,14 @@
     "acceptance": "Controlled test must reject recent-only broad inventory, missing GitHub child owner, unverified historical source, or hidden not-connected source; status still not evidence of native ChatGPT invocation.",
     "privacy": "NO_PERSONAL_EXTERNAL_CONNECTOR_DOCUMENT_URLS_OR_IDENTIFIERS_ADDED_TO_PUBLIC_GITHUB",
     "past_project_status": "Older project-study names from prior conversations are not automatically certified as persisted artifacts without locating original source.",
-    "native_limit": "UNVERIFIED_NATIVE_CHATGPT_AUTO_RETRIEVAL_AND_FULL_HISTORY_PRESENCE"
+    "native_limit": "UNVERIFIED_NATIVE_CHATGPT_AUTO_RETRIEVAL_AND_FULL_HISTORY_PRESENCE",
+    "release": {
+      "pr": 140,
+      "merge_sha": "855bb7653bad114064209ee2d9812efcb9216162",
+      "promotion_gate_ci": 39185321990,
+      "pytest": "645 passed, 2 skipped",
+      "main_reread": true,
+      "verification_scope": "SOURCE_AND_CONTROLLED_RETRIEVAL_CONTRACT_ONLY"
+    }
   }
 }

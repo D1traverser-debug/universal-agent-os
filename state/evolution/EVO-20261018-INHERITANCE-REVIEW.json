@@ -420,7 +420,7 @@
     "assurance_ceiling": "TRUSTED_HOST_PYTHON_RECEIVER_ORIGIN_FENCING__NO_ACTUAL_NATIVE_CHATGPT_INTERCEPTOR__NO_REAL_HOST_ORIGIN_FEED_IN_THIS_SESSION__NO_CHILD_DOMAIN_COVERAGE_CLAIM"
   },
   "knowledge_inventory_scope_drift_20261019": {
-    "status": "CANDIDATE__CONTROLLED_RETRIEVAL_POLICY_AND_REGRESSION_PENDING_CI",
+    "status": "CONTROLLED_POLICY_SOURCE_AND_REGRESSION_PROMOTED__NATIVE_RUNTIME_RETRIEVAL_UNVERIFIED",
     "origin_kind": "OBSERVED_ASSISTANT_SCOPE_FAILURE",
     "governing_outcome": "Broad knowledge inventory must discover all current registered owner repositories and relevant historical external stores, not just the latest four open-source skill studies.",
     "evidence": [
@@ -464,9 +464,16 @@
     "evaluation": {
       "source_breadth": "FIVE_CURRENT_GITHUB_REPOS_PLUS_CONNECTED_DRIVE_NOTION_LIBRARY_RECONFIRMED",
       "runtime_proof": "CONTROLLED_UNIT_TEST_ONLY_PENDING",
-      "external_history_exhaustiveness": "OPEN"
+      "external_history_exhaustiveness": "OPEN",
+      "candidate_ci_run": 39185321990,
+      "pytest": "645 passed, 2 skipped",
+      "conclusion": "success",
+      "main_sha": "855bb7653bad114064209ee2d9812efcb9216162",
+      "current_source_readback": "ENTRYPOINT_RETRIEVAL_POLICY_HELPER_TESTS_AND_TASK_MAIN_VERIFIED",
+      "native_host_effect": "UNVERIFIED",
+      "source_historical_completeness": "PARTIAL_ROLE_COVERAGE__NOT_ALL_PAST_PROJECTS_IMPORT_VERIFIED"
     },
-    "post_promotion_observation": "PENDING_CI_MAIN_READBACK",
+    "post_promotion_observation": "GITHUB_MAIN_CODE_AND_POLICY_READBACK_TRUE__CONTROLLER_STILL_RUNNING__NATIVE_AUTO_INVOCATION_AND_FULL_PRIOR_PROJECT_IMPORT_OPEN",
     "native_limit": "NO_VERIFIED_CHATGPT_HOST_COMPLETE_MEDIATION_OR_CROSS_SESSION_RETRIEVAL_AUTO_INVOCATION"
   }
 }
