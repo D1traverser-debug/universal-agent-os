@@ -162,3 +162,136 @@ class RetrievalPolicy:
             checked_repositories=tuple(sorted(expected)),
             unavailable_historical_surfaces=tuple(sorted(unavailable)),
         )
+
+
+@dataclass(frozen=True, slots=True)
+class PlannedSourceRead:
+    repository: str
+    path: str
+    phase: str
+    purpose: str
+
+
+@dataclass(frozen=True, slots=True)
+class SourceReadPlan:
+    """Deterministic owner/file discovery, NOT a model invocation or fetched-content proof."""
+    selected_domain: str | None
+    reads: tuple[PlannedSourceRead, ...]
+    discovery_roots: tuple[tuple[str, str], ...] = ()
+    assurance: str = "SOURCE_PATHS_RESOLVED_ONLY__NO_FILES_FETCHED_OR_NATIVE_ACTIVATION"
+
+
+def build_source_read_plan(
+    *,
+    system_map: Mapping[str, object],
+    task_index: Mapping[str, object],
+    retrieval_policy: RetrievalPolicy,
+    selected_domain: str | None = None,
+    cold_start: bool = False,
+    broad_knowledge: bool = False,
+) -> SourceReadPlan:
+    """Resolve the already-owned repository filelist; do not invent a second router.
+
+    Plan only exact files whose owner has been resolved by SYSTEM_MAP/TASK_INDEX.
+    Child-specific current business state is deliberately NOT guessed from templates.
+    A caller must really fetch each source and prove freshness independently.
+    """
+    owner = system_map.get("controller")
+    domains = system_map.get("domains")
+    if not isinstance(owner, Mapping) or not isinstance(domains, Mapping):
+        raise RetrievalDenied("current controller or domain map unavailable")
+    parent = owner.get("repository")
+    if not isinstance(parent, str) or not parent.strip():
+        raise RetrievalDenied("controller repository unresolved")
+    if selected_domain is not None and selected_domain not in domains:
+        raise RetrievalDenied("domain not registered in current SYSTEM_MAP")
+    reads: list[PlannedSourceRead] = []
+    discovery: list[tuple[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+
+    def add(repo: str, path: str, phase: str, purpose: str) -> None:
+        if not isinstance(repo, str) or not repo.strip():
+            raise RetrievalDenied("source repository unresolved")
+        if not isinstance(path, str) or not path.strip() or path.startswith("/") or (
+            any(segment in {".", ".."} for segment in path.split("/"))
+        ):
+            raise RetrievalDenied("source path missing or unsafe")
+        retrieval_policy.authorize(repo, path)
+        key = (repo, path)
+        if key not in seen:
+            reads.append(PlannedSourceRead(repo, path, phase, purpose))
+            seen.add(key)
+
+    # Cold-start is a distinct, explicit bootstrap phase; don't reload a giant
+    # entrypoint for every turn, but don't pretend a task pointer is its contents.
+    if cold_start:
+        add(parent, str(owner.get("entrypoint", "")), "BOOTSTRAP", "current entry and contract")
+        add(parent, str(owner.get("system_state", "")), "BOOTSTRAP", "system identity and owner pointers")
+    add(parent, "config/SYSTEM_MAP.json", "AUTHORITY", "live source owners")
+    add(parent, str(owner.get("task_index", "")), "AUTHORITY", "exact task selection")
+
+    if selected_domain is None:
+        tasks = task_index.get("controller_tasks")
+        if not isinstance(tasks, list):
+            raise RetrievalDenied("controller task index missing")
+        selected = [t for t in tasks if isinstance(t, Mapping) and t.get("default_resume") is True]
+        if len(selected) != 1:
+            raise RetrievalDenied("expected exactly one active default controller task")
+        task = selected[0]
+        if task.get("authority_context") != "UAOS" or task.get("status") not in {"RUNNING", "HOLD"}:
+            raise RetrievalDenied("selected controller authority or status invalid")
+        task_ref = task.get("state_ref")
+        if not isinstance(task_ref, str) or not task_ref.startswith("state/tasks/"):
+            raise RetrievalDenied("controller state reference unresolved")
+        add(parent, task_ref, "CURRENT_TASK", "current task stage, goal and next action")
+    else:
+        domain = domains[selected_domain]
+        if not isinstance(domain, Mapping):
+            raise RetrievalDenied("registered domain mapping malformed")
+        children = task_index.get("tasks")
+        if not isinstance(children, list):
+            raise RetrievalDenied("domain task index missing")
+        bound = [row for row in children if isinstance(row, Mapping) and row.get("domain_id") == selected_domain]
+        if len(bound) != 1:
+            raise RetrievalDenied("domain owner task missing or ambiguous")
+        parent_ref = bound[0].get("state_ref")
+        if not isinstance(parent_ref, str) or not parent_ref.startswith("state/tasks/"):
+            raise RetrievalDenied("parent domain router state reference unresolved")
+        add(parent, parent_ref, "CURRENT_TASK", "parent router pointer, not child business state")
+        child_repo = domain.get("repository")
+        child_entry = domain.get("entrypoint")
+        if not isinstance(child_repo, str) or not isinstance(child_entry, str):
+            raise RetrievalDenied("registered child repository/entry unresolved")
+        add(child_repo, child_entry, "CHILD_AUTHORITY", "child owns current business instructions")
+        for item in (".uaos/MANIFEST.json", ".uaos/ADAPTER.json", ".uaos/CAPABILITIES.json"):
+            add(child_repo, item, "CHILD_BINDING", "current capability and parent binding")
+        # Child business task IDs, project files and checkpoints can depend on the
+        # requested project/day. Do not guess those files from a generic router.
+        for root in domain.get("rule_roots", ()):
+            if not isinstance(root, str) or not root.strip():
+                raise RetrievalDenied("malformed child evidence root")
+            discovery.append((child_repo, root.rstrip("/") + "/"))
+
+    if broad_knowledge:
+        all_sources: list[tuple[str, Mapping[str, object]]] = [(parent, owner)]
+        for name, domain in domains.items():
+            if not isinstance(domain, Mapping):
+                raise RetrievalDenied("malformed domain in broad inventory")
+            repo = domain.get("repository")
+            entry = domain.get("entrypoint")
+            if not isinstance(repo, str) or not isinstance(entry, str):
+                raise RetrievalDenied("unresolved domain in broad inventory")
+            all_sources.append((repo, domain))
+            add(repo, entry, "KNOWLEDGE_OWNER", "source owner first; study content is not automatically canonical")
+        roots = retrieval_policy.knowledge_inventory_routing.get("source_roles", {})
+        child = roots.get("registered_child_git", {}) if isinstance(roots, Mapping) else {}
+        hints = child.get("root_hints_by_domain", {}) if isinstance(child, Mapping) else {}
+        if not isinstance(hints, Mapping) or set(hints) != set(domains):
+            raise RetrievalDenied("broad knowledge root hints do not match current registered domains")
+        ctrl = roots.get("controller_git", {}) if isinstance(roots, Mapping) else {}
+        for root in ctrl.get("knowledge_roots", ()):
+            discovery.append((parent, str(root).rstrip("/") + "/"))
+        for name, domain in domains.items():
+            for root in hints.get(name, ()):
+                discovery.append((str(domain["repository"]), str(root).rstrip("/") + "/"))
+    return SourceReadPlan(selected_domain, tuple(reads), tuple(dict.fromkeys(discovery)))
