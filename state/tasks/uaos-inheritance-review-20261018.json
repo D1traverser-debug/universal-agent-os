@@ -36,7 +36,7 @@
     "docs/research/uaos-inheritance-review-20261018/19_retrieval_path_identity_policy_boundary_20261026.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-26T09:17:53+08:00",
+  "updated_at": "2026-10-26T09:25:00+08:00",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -485,7 +485,7 @@
     }
   },
   "retrieval_path_identity_20261026": {
-    "status": "CANDIDATE_IMPLEMENTED__CI_AND_MAIN_REREAD_PENDING",
+    "status": "REPOSITORY_POLICY_PROMOTED__CI_AND_MAIN_REREAD_VERIFIED__NATIVE_HOST_AND_TRANSFER_OPEN",
     "goal": "Policy decisions must bind to the same unambiguous repository-relative source identity used for fetch.",
     "observed": "Direct RetrievalPolicy.authorize accepted projects/../continuity/... against a continuity/** deny; read-plan caller had a separate literal-dot guard.",
     "research_ref": "docs/research/uaos-inheritance-review-20261018/19_retrieval_path_identity_policy_boundary_20261026.md",
@@ -509,6 +509,23 @@
       "INDEPENDENT_METHOD_TRANSFER_OPEN",
       "SIX_AXIS_SEMANTIC_HOLDOUT_XFAIL",
       "FINANCIAL_OUTCOME_OPEN"
-    ]
+    ],
+    "release": {
+      "pr": 167,
+      "ci_run": 40253842057,
+      "ci_job": 121351324605,
+      "ci_result": "693 passed, 2 skipped, 1 xfailed",
+      "candidate_head": "a84ed0cdc507f2674f85e4be2fcb5858355a18d5",
+      "merged_main": "fed3a9f4fe82963b509977915b8dcda59fad7a27",
+      "production_readback": [
+        "src/uaos/integrations/retrieval.py",
+        "tests/integrations/test_retrieval_policy.py",
+        "state/tasks/uaos-inheritance-review-20261018.json",
+        "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
+        "docs/research/uaos-inheritance-review-20261018/19_retrieval_path_identity_policy_boundary_20261026.md"
+      ],
+      "outcome": "CONTROLLED_RETRIEVAL_POLICY_SOURCE_PATH_ADMISSION_REPAIRED",
+      "limits": "ONE_LIVE_GITHUB_MERGE_AND_MAIN_SOURCE_REREAD__NOT_NATIVE_COMPLETE_MEDIATION_OR_REAL_DENIED_FETCH_PROOF"
+    }
   }
 }
