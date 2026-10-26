@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import fnmatch
 import json
+import re
 from datetime import datetime, timezone
 from dataclasses import dataclass
 from enum import StrEnum
@@ -36,6 +37,29 @@ class RepositoryRetrievalRule:
     allow_prefixes: tuple[str, ...]
 
 
+def _validated_repo_relative_path(path: str) -> str:
+    """Keep policy matching and downstream GitHub paths on one unambiguous identity.
+
+    Reject ambiguous encodings rather than guessing how a transport, host or
+    future caller will decode or normalize a path. This is policy admission,
+    not a filesystem sandbox or proof that every native host invokes it.
+    """
+    if not isinstance(path, str) or not path.strip() or path.startswith("/") or (
+        "\\" in path or re.match(r"^[A-Za-z]:", path)
+        or re.search(r"%[0-9a-fA-F]{2}", path)
+        or any(ord(ch) < 32 or ord(ch) == 127 for ch in path)
+    ):
+        raise RetrievalDenied("source path missing or unsafe")
+    segments = path.split("/")
+    # Directory discovery roots may end with '/', but interior empty segments
+    # and all dot segments have no canonical repository-file identity.
+    if segments[-1] == "":
+        segments = segments[:-1]
+    if not segments or any(segment in {"", ".", ".."} for segment in segments):
+        raise RetrievalDenied("source path missing or unsafe")
+    return path
+
+
 class RetrievalPolicy:
     def __init__(self, *, retired_repositories: frozenset[str], uaos_cold_patterns: tuple[str, ...], repository_rules: dict[str, RepositoryRetrievalRule], historical_requires_explicit_intent: bool = True, knowledge_inventory_routing: Mapping[str, object] | None = None) -> None:
         self.retired_repositories = retired_repositories
@@ -64,7 +88,7 @@ class RetrievalPolicy:
         )
 
     def authorize(self, repository: str, path: str, *, purpose: RetrievalPurpose = RetrievalPurpose.ACTIVE_EXECUTION, explicit_historical: bool = False) -> None:
-        normalized = path.lstrip("/")
+        normalized = _validated_repo_relative_path(path)
         historical = purpose is RetrievalPurpose.HISTORICAL_QUERY
         if historical and self.historical_requires_explicit_intent and not explicit_historical:
             raise RetrievalDenied("historical retrieval requires explicit historical intent")
@@ -268,14 +292,11 @@ def build_source_read_plan(
     def add(repo: str, path: str, phase: str, purpose: str) -> None:
         if not isinstance(repo, str) or not repo.strip():
             raise RetrievalDenied("source repository unresolved")
-        if not isinstance(path, str) or not path.strip() or path.startswith("/") or (
-            any(segment in {".", ".."} for segment in path.split("/"))
-        ):
-            raise RetrievalDenied("source path missing or unsafe")
-        retrieval_policy.authorize(repo, path)
-        key = (repo, path)
+        normalized = _validated_repo_relative_path(path)
+        retrieval_policy.authorize(repo, normalized)
+        key = (repo, normalized)
         if key not in seen:
-            reads.append(PlannedSourceRead(repo, path, phase, purpose))
+            reads.append(PlannedSourceRead(repo, normalized, phase, purpose))
             seen.add(key)
 
     # Cold-start is a distinct, explicit bootstrap phase; don't reload a giant

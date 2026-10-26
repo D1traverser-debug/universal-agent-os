@@ -322,3 +322,44 @@ def test_source_plan_is_not_a_state_machine_or_a_host_fetch_receipt():
     assert not hasattr(plan, "completed")
     assert not hasattr(plan, "fetch")
     assert "NATIVE_ACTIVATION" in plan.assurance
+
+# A direct RetrievalPolicy caller previously bypassed deny_patterns by
+# laundering a denied path through an allowed prefix with '..'. The read-plan
+# caller had its own partial guard; this tests the owning policy boundary.
+@pytest.mark.parametrize("unsafe_path", [
+    "projects/../continuity/tasks/retired.json",
+    "projects/./continuity/tasks/retired.json",
+    "projects//continuity/tasks/retired.json",
+    "projects\\..\\continuity\\tasks\\retired.json",
+    "/continuity/tasks/retired.json",
+    "projects/%2e%2e/continuity/tasks/retired.json",
+    "projects/%252e%252e/continuity/tasks/retired.json",
+    "C:/continuity/tasks/retired.json",
+    "projects/\x00/continuity/tasks/retired.json",
+])
+def test_direct_retrieval_policy_rejects_ambiguous_path_identity(unsafe_path):
+    for repo in (
+        "D1traverser-debug/video-growth-agent",
+        "D1traverser-debug/financial-writing-agent",
+        "D1traverser-debug/novel-writing-agent",
+        "D1traverser-debug/a-share-event-driven-agent",
+    ):
+        with pytest.raises(RetrievalDenied, match="unsafe"):
+            POLICY.authorize(repo, unsafe_path)
+        assert not POLICY.is_allowed(repo, unsafe_path)
+
+
+def test_policy_denies_canonical_retired_sources_but_preserves_current_and_explicit_history():
+    video = "D1traverser-debug/video-growth-agent"
+    novel = "D1traverser-debug/novel-writing-agent"
+    assert not POLICY.is_allowed(video, "continuity/tasks/retired.json")
+    assert not POLICY.is_allowed(novel, "migration/retired.json")
+    assert POLICY.is_allowed(video, "projects/current/PROJECT_MANIFEST.json")
+    assert POLICY.is_allowed(novel, "projects/FQ001_MINGRI_ORDER/checkpoints/CURRENT_CHECKPOINT.json")
+    POLICY.authorize(video, "continuity/tasks/retired.json",
+                     purpose=RetrievalPurpose.HISTORICAL_QUERY, explicit_historical=True)
+    with pytest.raises(RetrievalDenied, match="unsafe"):
+        POLICY.authorize(video, "projects/../continuity/tasks/retired.json",
+                         purpose=RetrievalPurpose.HISTORICAL_QUERY, explicit_historical=True)
+
+

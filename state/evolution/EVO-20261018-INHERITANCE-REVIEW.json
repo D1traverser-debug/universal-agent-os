@@ -992,5 +992,32 @@
       "user goal and business outcomes improved without violating owner permissions"
     ],
     "native_host_assurance": "UNVERIFIED"
+  },
+  "retrieval_path_identity_20261026": {
+    "status": "CANDIDATE__EVALUATION_AND_PRODUCTION_OBSERVATION_OPEN",
+    "origin_kind": "CAPABILITY_GAP",
+    "task_ref": "state/tasks/uaos-inheritance-review-20261018.json",
+    "research_ref": "docs/research/uaos-inheritance-review-20261018/19_retrieval_path_identity_policy_boundary_20261026.md",
+    "raw_evidence": [
+      "src/uaos/integrations/retrieval.py#RetrievalPolicy.authorize",
+      "src/uaos/integrations/retrieval.py#build_source_read_plan",
+      "config/RETRIEVAL_POLICY.json"
+    ],
+    "alternatives": [
+      "NO_CHANGE",
+      "LOCAL_READ_PLAN_PATCH",
+      "CENTRAL_EXISTING_POLICY_VALIDATOR_SELECTED",
+      "NEW_PROXY_REJECTED"
+    ],
+    "frozen_acceptance": [
+      "DIRECT_POLICY_NONCANONICAL_NEGATIVES",
+      "SIBLING_CHILD_RETIRED_PATH_NEGATIVES",
+      "CURRENT_CANONICAL_POSITIVES",
+      "EXPLICIT_HISTORY_POSITIVE",
+      "FULL_EXISTING_PROMOTION_GATE",
+      "PRODUCTION_MAIN_REREAD"
+    ],
+    "evaluation": "PENDING_CANDIDATE_CI",
+    "assurance": "SOURCE_LEVEL_BYPASS_CONFIRMED__NATIVE_EXPLOITABILITY_UNVERIFIED__SEMANTIC_AND_INDEPENDENT_TRANSFER_OPEN"
   }
 }

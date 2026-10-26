@@ -32,10 +32,11 @@
     "state/observations/knowledge-retrieval-recency-drift-20261019.json",
     "state/observations/native-cognition-progress-replay-20261018.json",
     "docs/research/uaos-inheritance-review-20261018/17_goal_semantic_alignment_and_agent_eval_source_study.md",
-    "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md"
+    "docs/research/uaos-inheritance-review-20261018/18_systemic_self_evolution_runtime_and_double_loop_learning.md",
+    "docs/research/uaos-inheritance-review-20261018/19_retrieval_path_identity_policy_boundary_20261026.md"
   ],
   "assurance": "REPOSITORY_RULES_AND_CONTROLLED_GATE__NO_PHYSICAL_NATIVE_ENTRY_GUARANTEE",
-  "updated_at": "2026-10-19T12:25:10.583Z",
+  "updated_at": "2026-10-26T09:17:53+08:00",
   "production_gate_evidence": {
     "pr": 93,
     "merged_sha": "8fd3c6ecb640b48a6ed8938464f40e221f53ab60",
@@ -482,5 +483,32 @@
       "observed_use": "Compared native-controller early stop, semantically irrelevant six-axis evidence, and parent-vs-child outcome using genuine original owner sources; no native autonomous recall receipt",
       "unverified": "Goal-driven recall on unseen tasks, correct method-fit classification, actual action orchestration and outcome gains"
     }
+  },
+  "retrieval_path_identity_20261026": {
+    "status": "CANDIDATE_IMPLEMENTED__CI_AND_MAIN_REREAD_PENDING",
+    "goal": "Policy decisions must bind to the same unambiguous repository-relative source identity used for fetch.",
+    "observed": "Direct RetrievalPolicy.authorize accepted projects/../continuity/... against a continuity/** deny; read-plan caller had a separate literal-dot guard.",
+    "research_ref": "docs/research/uaos-inheritance-review-20261018/19_retrieval_path_identity_policy_boundary_20261026.md",
+    "source_ref": "src/uaos/integrations/retrieval.py",
+    "test_ref": "tests/integrations/test_retrieval_policy.py",
+    "competing_causes": [
+      "CALLER_ONLY_GUARD_SUFFICIENT_FOR_KNOWN_PLAN_NOT_PUBLIC_POLICY",
+      "CONNECTOR_NORMALIZATION_IMPACT_UNVERIFIED",
+      "POLICY_RAW_PATH_IDENTITY_BYPASS_SOURCE_SUPPORTED"
+    ],
+    "selected": "ONE_EXISTING_RETRIEVAL_POLICY_PATH_VALIDATOR_REUSED_BY_PLAN",
+    "independent_sources": [
+      "https://cwe.mitre.org/data/definitions/22.html",
+      "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+      "https://openai.github.io/openai-agents-js/guides/tracing/"
+    ],
+    "open": [
+      "NATIVE_HOST_MEDIATION_UNVERIFIED",
+      "CONNECTOR_REAL_FETCH_UNVERIFIED",
+      "INDEPENDENT_METHOD_TRANSFER_OPEN",
+      "SIX_AXIS_SEMANTIC_HOLDOUT_XFAIL",
+      "FINANCIAL_OUTCOME_OPEN"
+    ]
   }
 }
