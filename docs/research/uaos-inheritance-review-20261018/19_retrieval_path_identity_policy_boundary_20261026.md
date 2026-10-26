@@ -44,3 +44,10 @@ The active task is still RUNNING. Recent PRs #163–#166 added a structurally st
 4. Claim is bounded to controlled repository policy. **OPEN:** native ChatGPT/Skill invocation, connector normalization, real-world denied fetch prevention, independent transfer, semantic six-axis study validity, and the Financial business outcome.
 
 **Rollback:** revert the isolated helper/read-plan call-site change via PR if a legitimate GitHub path is rejected or an owner workflow regresses. Preserve this case as a candidate until real-host and holdout evidence exists.
+
+## 2026-10-26 production observation (bounded)
+
+- Candidate PR: https://github.com/D1traverser-debug/universal-agent-os/pull/167 ; head `a84ed0cdc507f2674f85e4be2fcb5858355a18d5`.
+- Actual GitHub Actions promotion-gate: https://github.com/D1traverser-debug/universal-agent-os/actions/runs/40253842057 ; job `121351324605`, **693 passed, 2 skipped, 1 xfailed**, success. The xfailed case is the previously known six-axis semantic-irrelevance holdout, **not** a successful semantic judge.
+- Merged production commit: `fed3a9f4fe82963b509977915b8dcda59fad7a27`. Reread on `main` confirmed the policy helper, direct-policy regression tests, current task, existing Evolution record and this research document.
+- Verified improvement: direct controlled retrieval policy no longer admits ambiguous repository-relative path identities through the tested variants, and existing regression suite remains green. This does not certify native ChatGPT tool interception, downstream URL handling, security against untested encodings, or cross-task method generalization. The current controller task remains RUNNING.
