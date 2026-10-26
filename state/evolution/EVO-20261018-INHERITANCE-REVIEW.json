@@ -994,7 +994,7 @@
     "native_host_assurance": "UNVERIFIED"
   },
   "retrieval_path_identity_20261026": {
-    "status": "CANDIDATE__EVALUATION_AND_PRODUCTION_OBSERVATION_OPEN",
+    "status": "POLICY_PROMOTED__SOURCE_AND_CI_OBSERVED__NATIVE_AND_INDEPENDENT_TRANSFER_OPEN",
     "origin_kind": "CAPABILITY_GAP",
     "task_ref": "state/tasks/uaos-inheritance-review-20261018.json",
     "research_ref": "docs/research/uaos-inheritance-review-20261018/19_retrieval_path_identity_policy_boundary_20261026.md",
@@ -1017,7 +1017,25 @@
       "FULL_EXISTING_PROMOTION_GATE",
       "PRODUCTION_MAIN_REREAD"
     ],
-    "evaluation": "PENDING_CANDIDATE_CI",
-    "assurance": "SOURCE_LEVEL_BYPASS_CONFIRMED__NATIVE_EXPLOITABILITY_UNVERIFIED__SEMANTIC_AND_INDEPENDENT_TRANSFER_OPEN"
+    "evaluation": "CANDIDATE_PROMOTION_GATE_SUCCESS_693_PASSED_2_SKIPPED_1_XFAILED",
+    "assurance": "SOURCE_LEVEL_BYPASS_CONFIRMED__NATIVE_EXPLOITABILITY_UNVERIFIED__SEMANTIC_AND_INDEPENDENT_TRANSFER_OPEN",
+    "production_evidence": {
+      "pr": 167,
+      "ci_run": 40253842057,
+      "ci_job": 121351324605,
+      "ci_result": "693 passed, 2 skipped, 1 xfailed",
+      "candidate_head": "a84ed0cdc507f2674f85e4be2fcb5858355a18d5",
+      "merged_main": "fed3a9f4fe82963b509977915b8dcda59fad7a27",
+      "production_readback": [
+        "src/uaos/integrations/retrieval.py",
+        "tests/integrations/test_retrieval_policy.py",
+        "state/tasks/uaos-inheritance-review-20261018.json",
+        "state/evolution/EVO-20261018-INHERITANCE-REVIEW.json",
+        "docs/research/uaos-inheritance-review-20261018/19_retrieval_path_identity_policy_boundary_20261026.md"
+      ],
+      "outcome": "CONTROLLED_RETRIEVAL_POLICY_SOURCE_PATH_ADMISSION_REPAIRED",
+      "limits": "ONE_LIVE_GITHUB_MERGE_AND_MAIN_SOURCE_REREAD__NOT_NATIVE_COMPLETE_MEDIATION_OR_REAL_DENIED_FETCH_PROOF"
+    },
+    "post_promotion_observation": "Main exact source, tests, task, evolution and research reread; no evidence of native Skill invocation or actual denied connector fetch. Keep semantic xfail and independent transfer OPEN."
   }
 }
